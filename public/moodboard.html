@@ -1820,31 +1820,132 @@ body.map-expanded .scroll-counter{display:none!important}
   <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Home</a>
   <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Work</a>
   <a href="#" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>Play</a>
-  <a href="/about" target="_top" id="aboutBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>About</a>
+  <a href="#" id="aboutBtn" onclick="toggleAboutPanel(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>About</a>
   <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg>Contact</a>
 </nav>
 
 <style>
-.page-transition-overlay {
-  position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:0;
-  background:radial-gradient(circle at var(--tx,50%) var(--ty,50%), rgba(255,255,255,1) 0%, rgba(245,245,245,1) 100%);
-  transition:opacity 0.45s cubic-bezier(0.4,0,0.2,1);
-}
-.page-transition-overlay.active { opacity:1;pointer-events:all; }
 .bottom-nav a { transition:transform 0.15s ease, color 0.2s ease; }
 .bottom-nav a:active { transform:scale(0.88); }
+
+.about-backdrop {
+  position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0);
+  pointer-events:none;transition:background 0.4s ease;
+}
+.about-backdrop.open { background:rgba(0,0,0,0.4);pointer-events:all; }
+
+.about-panel {
+  position:fixed;left:0;right:0;bottom:0;z-index:9999;
+  max-height:92vh;
+  background:#fafafa;
+  border-radius:20px 20px 0 0;
+  transform:translateY(100%);
+  transition:transform 0.45s cubic-bezier(0.32,0.72,0,1);
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  box-shadow:0 -8px 40px rgba(0,0,0,0.15);
+}
+.about-panel.open { transform:translateY(0); }
+
+.about-panel .handle {
+  width:36px;height:5px;border-radius:3px;background:#ccc;
+  margin:10px auto 0;
+}
+.about-panel .about-inner { padding:8px 24px 100px; }
+.about-panel .about-back {
+  width:44px;height:44px;border-radius:50%;border:1px solid #ddd;
+  display:flex;align-items:center;justify-content:center;
+  background:transparent;cursor:pointer;margin:12px 0 20px;
+  transition:background 0.2s;
+}
+.about-panel .about-back:active { background:#eee; }
+.about-panel h2 {
+  font-size:2.8rem;font-weight:800;color:#111;letter-spacing:-0.02em;
+  margin:0 0 28px;line-height:1.1;
+}
+.about-panel .journey {
+  color:#999;font-size:1.05rem;margin-bottom:20px;
+}
+.about-panel .bio {
+  color:#777;font-size:1.05rem;line-height:1.7;margin-bottom:40px;
+}
+.about-panel .quote {
+  color:#111;font-size:1.45rem;font-weight:700;line-height:1.4;
+  margin-bottom:40px;
+}
+.about-panel .philosophy {
+  color:#777;font-size:1.05rem;line-height:1.7;margin-bottom:40px;
+}
+.about-panel .photo-frame {
+  padding:6px;border-radius:16px;margin-bottom:40px;
+  background:linear-gradient(135deg, #3cd070, #f5c842, #e85050, #a855f7, #3b82f6);
+  box-shadow:0 8px 32px -8px rgba(168,85,247,0.35), 0 4px 16px -4px rgba(232,80,80,0.25);
+}
+.about-panel .photo-frame img {
+  width:100%;display:block;border-radius:11px;
+  aspect-ratio:4/3;object-fit:cover;object-position:top;
+}
+.about-panel .skill-tags { display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px; }
+.about-panel .skill-tag {
+  padding:10px 20px;border-radius:99px;font-size:0.8rem;
+  font-weight:700;letter-spacing:0.04em;color:#fff;
+}
+
+/* stagger animations */
+.about-panel .anim-item {
+  opacity:0;transform:translateY(18px);
+  transition:opacity 0.4s ease, transform 0.4s ease;
+}
+.about-panel.open .anim-item { opacity:1;transform:translateY(0); }
+.about-panel.open .anim-item:nth-child(1){transition-delay:0.08s}
+.about-panel.open .anim-item:nth-child(2){transition-delay:0.14s}
+.about-panel.open .anim-item:nth-child(3){transition-delay:0.20s}
+.about-panel.open .anim-item:nth-child(4){transition-delay:0.26s}
+.about-panel.open .anim-item:nth-child(5){transition-delay:0.32s}
+.about-panel.open .anim-item:nth-child(6){transition-delay:0.38s}
+.about-panel.open .anim-item:nth-child(7){transition-delay:0.44s}
+.about-panel.open .anim-item:nth-child(8){transition-delay:0.50s}
 </style>
-<div class="page-transition-overlay" id="pageTransition"></div>
+
+<div class="about-backdrop" id="aboutBackdrop" onclick="closeAboutPanel()"></div>
+<div class="about-panel" id="aboutPanel">
+  <div class="handle"></div>
+  <div class="about-inner">
+    <button class="about-back anim-item" onclick="closeAboutPanel()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="anim-item">My story</h2>
+    <p class="journey anim-item">Engineering → Product → Web3 → AI</p>
+    <p class="bio anim-item">I started in computer science engineering, moved into product management across fintech, edtech, and Web3, and somewhere along the way fell in love with building products from 0 to 1. Now I sit at the intersection of product thinking and emerging technology — scaling platforms to 5,000+ users, achieving product-market fit, and driving teams to ship faster.</p>
+    <p class="quote anim-item">I believe the best products happen when craft meets curiosity. I care about the details that most people won't notice but everyone will feel — the clarity of a user flow, the precision of a roadmap, the moment a feature earns its place.</p>
+    <p class="philosophy anim-item">I build with AI the way a photographer works with light — it's a medium, not a shortcut. The taste, the decisions, the product direction? That's still very human. That's still mine.</p>
+    <div class="photo-frame anim-item">
+      <img src="/images/akash-photo.jpeg" alt="Akash Matania" />
+    </div>
+    <div class="skill-tags anim-item">
+      <span class="skill-tag" style="background:#3cd070">PRODUCT STRATEGY</span>
+      <span class="skill-tag" style="background:#f5c842">USER RESEARCH</span>
+      <span class="skill-tag" style="background:#e85050">WEB3 & FINTECH</span>
+      <span class="skill-tag" style="background:#f5c842">GROWTH & ANALYTICS</span>
+      <span class="skill-tag" style="background:#3cd070">TECHNICAL PRDs</span>
+      <span class="skill-tag" style="background:#e85050">AI-ASSISTED DEVELOPMENT</span>
+    </div>
+  </div>
+</div>
+
 <script>
-function navigateToAbout(e){
+function toggleAboutPanel(e){
   e.preventDefault();e.stopPropagation();
-  var btn=document.getElementById('aboutBtn');
-  var rect=btn.getBoundingClientRect();
-  var overlay=document.getElementById('pageTransition');
-  overlay.style.setProperty('--tx',rect.left+rect.width/2+'px');
-  overlay.style.setProperty('--ty',rect.top+rect.height/2+'px');
-  overlay.classList.add('active');
-  setTimeout(function(){ (window.top||window).location.href='/about'; },400);
+  var panel=document.getElementById('aboutPanel');
+  var bd=document.getElementById('aboutBackdrop');
+  panel.classList.add('open');
+  bd.classList.add('open');
+}
+function closeAboutPanel(){
+  var panel=document.getElementById('aboutPanel');
+  var bd=document.getElementById('aboutBackdrop');
+  panel.classList.remove('open');
+  bd.classList.remove('open');
 }
 </script>
 <script>
