@@ -1957,6 +1957,162 @@ const journalContent = {
 
 timeline: `
 <div class="timeline">
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v34.0 — Green Grid Theme for Big Map</div>
+    <div class="tl-date">Session 34 · March 25, 2026</div>
+    <div class="tl-desc">Applied the small minimap's dark green grid theme to the expanded big map for visual consistency. Updated roads, water, regions, and vignette to match.</div>
+    <ul class="tl-changes">
+      <li>Big map background: #3a5a2a with green grid lines</li>
+      <li>Roads: semi-transparent green, water: dark green tint</li>
+      <li>Region labels: green palette (#4CAF50 variants)</li>
+      <li>Enhanced vignette overlay for immersive feel</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v33.0 — Snapchat Theme + Radar Colors</div>
+    <div class="tl-date">Session 33 · March 25, 2026</div>
+    <div class="tl-desc">Big map restyled with Snapchat-inspired warm beige background, white roads, blue water. Radar sweep changed to alternating yellow-red. Bottom bars hidden in fullscreen map.</div>
+    <ul class="tl-changes">
+      <li>Snapchat palette: beige #E8E4D0, white roads, blue water</li>
+      <li>Radar: yellow-red conic-gradient (was green)</li>
+      <li>Bottom nav hidden during map fullscreen via body.map-expanded</li>
+      <li>Terrain patches and roads regenerated with warm colors</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v32.0 — Mood Map LIVE + Neon Glow + Cycle HUD</div>
+    <div class="tl-date">Session 32 · March 25, 2026</div>
+    <div class="tl-desc">Renamed to "Mood Map LIVE". Cleaned up waypoint lines to only show for active item. Added glassmorphic cycle counter HUD (1/5 with arrows). Neon glow on selected items. Procedural roads and terrain. Zone names shown on map itself.</div>
+    <ul class="tl-changes">
+      <li>Cycle Counter HUD: shows item count + nav arrows at top of map</li>
+      <li>Neon glow animation: pulsing radium/neon outline on active items</li>
+      <li>Realistic terrain: multi-stop green gradient, procedural roads</li>
+      <li>Zone markers with bold typography and shadows</li>
+      <li>Waypoint lines only for currently active filtered item</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v31.0 — Waypoint Markers + Minimap Polish</div>
+    <div class="tl-date">Session 31 · March 25, 2026</div>
+    <div class="tl-desc">Pulsing waypoint markers with distance display. Minimap size reduced, blur/attachment effects added. Radar sweep animation with rotating green line.</div>
+    <ul class="tl-changes">
+      <li>Waypoint system: pulsing markers + distance labels to selected items</li>
+      <li>Minimap: smaller size, frosted glass blur, attached feel</li>
+      <li>Radar sweep: rotating green line animation on minimap</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v30.0 — Zone Names + Filter Animation + Close Button</div>
+    <div class="tl-date">Session 30 · March 25, 2026</div>
+    <div class="tl-desc">Street/zone name display below minimap (GTA-style). Big map also shows zone names. Filter cycling shows active item with effects and animations. Enhanced close map button.</div>
+    <ul class="tl-changes">
+      <li>Zone name display below minimap like GTA area names</li>
+      <li>Big map zone name overlay</li>
+      <li>Active item highlight effects during filter cycling</li>
+      <li>Redesigned close map button with better visibility</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v29.0 — Minimap HUD Redesign</div>
+    <div class="tl-date">Session 29 · March 25, 2026</div>
+    <div class="tl-desc">Thickened borders, enhanced N/AM compass markers, added more map HUD details inspired by game interfaces.</div>
+    <ul class="tl-changes">
+      <li>Thicker HUD borders with multi-ring design</li>
+      <li>Enhanced compass markers (N, S, E, W) with better typography</li>
+      <li>AM/PM time indicator on HUD</li>
+      <li>Additional game-style HUD details</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v28.0 — Compass + Zoom + Filter Redesign</div>
+    <div class="tl-date">Session 28 · March 25, 2026</div>
+    <div class="tl-desc">Added compass, zoom in/out and recentre buttons. More filter buttons on map. Subtle design improvements and polish.</div>
+    <ul class="tl-changes">
+      <li>Compass widget on map</li>
+      <li>Zoom in/out controls with scale display</li>
+      <li>Recentre button to reset view</li>
+      <li>More filter categories + redesigned filter buttons</li>
+      <li>Subtle map design improvements</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v27.0 — Filter Bar + Map Polish</div>
+    <div class="tl-date">Session 27 · March 25, 2026</div>
+    <div class="tl-desc">Made filter bar subtle, integrated with map design. Fixed zoom buttons. Redesigned filter as legend buttons. Multi-click cycling: activate → navigate to item → cycle through items.</div>
+    <ul class="tl-changes">
+      <li>Subtle integrated filter bar design</li>
+      <li>Multi-click cycling: 1st=activate, 2nd=go to item, 3rd+=cycle</li>
+      <li>Total area display on map</li>
+      <li>Removed non-functional buttons</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v26.0 — Legend Filters + Map Cleanup</div>
+    <div class="tl-date">Session 26 · March 25, 2026</div>
+    <div class="tl-desc">Removed fog of war, explorer level, and info buttons. Replaced filter with legend-style filter buttons. Added total area display subtly on map.</div>
+    <ul class="tl-changes">
+      <li>Removed fog of war effect</li>
+      <li>Removed explored %, level badge, info buttons</li>
+      <li>Legend-style filter buttons replacing old filter</li>
+      <li>Total area text integrated into map</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v25.0 — Arrow Marker + Remove Bitmoji</div>
+    <div class="tl-date">Session 25 · March 25, 2026</div>
+    <div class="tl-desc">Reverted to arrow player marker, removed Bitmoji avatar and its bounding box.</div>
+    <ul class="tl-changes">
+      <li>Arrow marker restored (no box)</li>
+      <li>Bitmoji avatar removed</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v24.0 — Fog of War + Bitmoji Avatar</div>
+    <div class="tl-date">Session 24 · March 25, 2026</div>
+    <div class="tl-desc">Added fog of war effect dimming unexplored map areas. Bitmoji-style avatar as player marker. Removed Akash tag from fullscreen map. Added borders and game HUD elements.</div>
+    <ul class="tl-changes">
+      <li>Fog of war: dimmed unexplored areas, revealed on scroll</li>
+      <li>Bitmoji-style avatar player marker</li>
+      <li>Removed top-left logo from fullscreen map</li>
+      <li>Map borders and game HUD overlays</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v23.0 — Snapchat Map Theme</div>
+    <div class="tl-date">Session 23 · March 25, 2026</div>
+    <div class="tl-desc">Changed map theme to Snapchat-style with warm colors, terrain patches, roads, and water features. Map redesigned to look like a real map instead of a moodboard.</div>
+    <ul class="tl-changes">
+      <li>Snapchat-inspired warm color palette</li>
+      <li>Terrain patches, roads, water bodies</li>
+      <li>Map-like visual design instead of moodboard aesthetic</li>
+      <li>Game HUD elements for game-map feel</li>
+    </ul>
+  </div>
+
   <div class="tl-item">
     <div class="tl-dot"></div>
     <div class="tl-version">v22.0 — Polish: Zoom, Map HUD, Splash, Edge Fix</div>
