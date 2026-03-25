@@ -2394,35 +2394,38 @@ function closeWorkPanel(){
     <!-- Skills with Progress Bars -->
     <p class="section-label w-anim">Core Skills</p>
     <div class="skills-section w-anim">
-      <div class="skill-row">
+      <div class="skill-row" onclick="toggleFunFact(this)" data-fact="I once rewrote an entire PRD at 2am because the user flow 'didn't feel right' — shipped 3x faster than the original. 🚀">
         <div class="sk-top"><span class="sk-icon">🎯</span><span class="sk-name">Product Strategy</span><span class="sk-pct">95%</span></div>
         <div class="sk-bar"><div class="sk-fill" style="--pct:95%;background:linear-gradient(90deg,#a8d8b9,#7bc49a)"></div></div>
         <div class="sk-tags"><span class="sk-tag">Roadmaps</span><span class="sk-tag">PRDs</span><span class="sk-tag">OKRs</span><span class="sk-tag">GTM</span></div>
+        <div class="sk-fact"></div>
       </div>
-      <div class="skill-row">
+      <div class="skill-row" onclick="toggleFunFact(this)" data-fact="Interviewed 30+ film studio owners in 2 months. My notes app has more user quotes than my photo gallery has selfies. 📝">
         <div class="sk-top"><span class="sk-icon">🔬</span><span class="sk-name">User Research</span><span class="sk-pct">90%</span></div>
         <div class="sk-bar"><div class="sk-fill" style="--pct:90%;background:linear-gradient(90deg,#f5deb3,#e8c88a)"></div></div>
         <div class="sk-tags"><span class="sk-tag">Discovery</span><span class="sk-tag">A/B Testing</span><span class="sk-tag">Funnels</span></div>
+        <div class="sk-fact"></div>
       </div>
-      <div class="skill-row">
+      <div class="skill-row" onclick="toggleFunFact(this)" data-fact="Reduced churn from 55% to under 10% in one week. The secret? Watching 20 admins struggle with the old onboarding — then burning it down. 🔥">
         <div class="sk-top"><span class="sk-icon">📈</span><span class="sk-name">Growth & Metrics</span><span class="sk-pct">88%</span></div>
         <div class="sk-bar"><div class="sk-fill" style="--pct:88%;background:linear-gradient(90deg,#d4b8e8,#b892d4)"></div></div>
         <div class="sk-tags"><span class="sk-tag">PLG</span><span class="sk-tag">Retention</span><span class="sk-tag">Revenue</span><span class="sk-tag">Churn</span></div>
+        <div class="sk-fact"></div>
       </div>
-      <div class="skill-row">
+      <div class="skill-row" onclick="toggleFunFact(this)" data-fact="I review API docs for fun. Once found a webhook bug in a vendor's system before their own engineers did. They sent me swag. 🎁">
         <div class="sk-top"><span class="sk-icon">⚙️</span><span class="sk-name">Technical</span><span class="sk-pct">85%</span></div>
         <div class="sk-bar"><div class="sk-fill" style="--pct:85%;background:linear-gradient(90deg,#b8d4f0,#8fb8e0)"></div></div>
         <div class="sk-tags"><span class="sk-tag">APIs</span><span class="sk-tag">System Design</span><span class="sk-tag">Webhooks</span></div>
+        <div class="sk-fact"></div>
       </div>
-      <div class="skill-row">
+      <div class="skill-row" onclick="toggleFunFact(this)" data-fact="Led a team of 6 where nobody had worked together before. By sprint 3, velocity was up 30% — and we had a Slack emoji for every team member. 💪">
         <div class="sk-top"><span class="sk-icon">🤝</span><span class="sk-name">Stakeholder Management</span><span class="sk-pct">92%</span></div>
         <div class="sk-bar"><div class="sk-fill" style="--pct:92%;background:linear-gradient(90deg,#f0b8b8,#e0908f)"></div></div>
         <div class="sk-tags"><span class="sk-tag">Cross-functional</span><span class="sk-tag">Sprints</span><span class="sk-tag">Agile</span></div>
+        <div class="sk-fact"></div>
       </div>
+      <p style="font-size:0.68rem;color:#c5c0b8;text-align:center;margin-top:12px;font-style:italic">↑ tap a skill for a fun fact</p>
     </div>
-    <button class="shuffle-btn w-anim" onclick="shuffleSkills()">
-      <span class="shuffle-icon">🎲</span> Shuffle my skills
-    </button>
 
     <!-- Experience Timeline -->
     <p class="section-label w-anim">Journey</p>
