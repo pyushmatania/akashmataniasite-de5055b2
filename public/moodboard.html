@@ -1967,51 +1967,7 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="meme-sub">Salary Roulette</div>
 </div>
 
-<!-- ===== ZONE SIGNPOSTS — 3D Theme-Park Arch Style (3x bigger) ===== -->
-<div class="sticker zone-signpost" style="left:900px;top:200px;pointer-events:none;user-select:none">
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
-  <div class="signpost-board" style="background:linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)">
-    📸 ORIGIN STORY
-  </div>
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
-  <div class="signpost-ground"></div>
-</div>
-
-<div class="sticker zone-signpost" style="left:4900px;top:200px;pointer-events:none;user-select:none">
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
-  <div class="signpost-board" style="background:linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)">
-    🎯 THE WAR ROOM
-  </div>
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
-  <div class="signpost-ground"></div>
-</div>
-
-<div class="sticker zone-signpost" style="left:900px;top:1900px;pointer-events:none;user-select:none">
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
-  <div class="signpost-board" style="background:linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)">
-    🚀 LAUNCH PAD
-  </div>
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
-  <div class="signpost-ground"></div>
-</div>
-
-<div class="sticker zone-signpost" style="left:1600px;top:3500px;pointer-events:none;user-select:none">
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
-  <div class="signpost-board" style="background:linear-gradient(135deg,#E65100,#FF9800,#EF6C00)">
-    🎮 THE PLAYGROUND
-  </div>
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
-  <div class="signpost-ground"></div>
-</div>
-
-<div class="sticker zone-signpost" style="left:6400px;top:3500px;pointer-events:none;user-select:none">
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
-  <div class="signpost-board" style="background:linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)">
-    😂 MEME ALLEY
-  </div>
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
-  <div class="signpost-ground"></div>
-</div>
+<!-- Zone signposts removed from moodboard canvas (only shown on big map) -->
   </div>
 </div>
 
@@ -2260,6 +2216,10 @@ body.map-expanded .scroll-counter{display:none!important}
         <button class="mc" onclick="event.stopPropagation();filt('meme',this)"><div class="legend-dot" style="background:#CE93D8"></div>😂 Memes</button>
         <button class="mc" onclick="event.stopPropagation();filt('badge',this)"><div class="legend-dot" style="background:#FFD54F"></div>🏷️ Badges</button>
         <button class="mc" onclick="event.stopPropagation();filt('interactive',this)"><div class="legend-dot" style="background:#FF7043"></div>🎮 Interactive</button>
+        <button class="mc" onclick="event.stopPropagation();filt('emoji',this)"><div class="legend-dot" style="background:#FFEE58"></div>😊 Emoji</button>
+        <button class="mc" onclick="event.stopPropagation();filt('postit',this)"><div class="legend-dot" style="background:#FFF176"></div>📝 Post-its</button>
+        <button class="mc" onclick="event.stopPropagation();filt('stamp',this)"><div class="legend-dot" style="background:#EF9A9A"></div>🎖️ Stamps</button>
+        <button class="mc" onclick="event.stopPropagation();filt('text',this)"><div class="legend-dot" style="background:#B0BEC5"></div>✏️ Text</button>
         <button class="mc" onclick="event.stopPropagation();filt('other',this)"><div class="legend-dot" style="background:#90A4AE"></div>📦 Other</button>
       </div>
       <div class="bar-info">
@@ -2287,7 +2247,7 @@ body.map-expanded .scroll-counter{display:none!important}
       <button class="map-ctrl-btn" onclick="event.stopPropagation();mapZoom(1)" title="Zoom in">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="7" x2="12" y2="17"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
       </button>
-      <div class="map-zoom-level" id="mapZoomLevel">0.75×</div>
+      <div class="map-zoom-level" id="mapZoomLevel">0.5×</div>
       <button class="map-ctrl-btn" onclick="event.stopPropagation();mapZoom(-1)" title="Zoom out">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><line x1="7" y1="12" x2="17" y2="12"/></svg>
       </button>
@@ -4791,7 +4751,7 @@ const mmInner=document.getElementById('mmInner');
 const mapCount=document.getElementById('mapCount');
 let mmExp=false,navLine=null,mFilt='all';
 let mapTransitioning=false;
-let mapZoomScale=0.75;
+let mapZoomScale=0.5;
 let stickerData=[];
 let smallMapPanX=0,smallMapPanY=0;
 let activeDestinationMarker=null;
@@ -4951,7 +4911,7 @@ function toggleMap(){
 
   if(!mmExp){
     mmExp=true;
-    mapZoomScale=0.75;
+    mapZoomScale=0.5;
     setMapZoomLabel();
 
     mc.classList.remove('map-closing');
@@ -5960,7 +5920,7 @@ function navigateToFilteredItem(cat,idx){
 }
 
 // Filter with cycle-through navigation
-const mainCats=['photo','meme','badge','interactive'];
+const mainCats=['photo','meme','badge','interactive','emoji','postit','stamp','text'];
 function matchesFilter(cat,filt){
   if(filt==='all')return true;
   if(filt==='other')return !mainCats.includes(cat);
