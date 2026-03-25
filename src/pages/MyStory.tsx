@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import akashPhoto from "@/assets/akash-photo.png";
 
 const skills = [
   { label: "PRODUCT STRATEGY", color: "hsl(145, 63%, 49%)" },
@@ -38,7 +37,7 @@ const MyStory = () => {
           <span className="mx-1">→</span> AI
         </p>
 
-        {/* Bio Paragraph */}
+        {/* Bio */}
         <p className="text-muted-foreground text-lg leading-relaxed mb-16">
           I started in computer science engineering, moved into product
           management across fintech, edtech, and Web3, and somewhere along the
@@ -63,37 +62,22 @@ const MyStory = () => {
           direction? That's still very human. That's still mine.
         </p>
 
-        {/* Photo with colorful frame */}
-        <div className="relative mb-16">
-          <div
-            className="absolute -inset-2 rounded-2xl"
-            style={{
-              background:
-                "linear-gradient(135deg, hsl(145, 63%, 49%), hsl(43, 96%, 56%), hsl(0, 78%, 62%), hsl(280, 70%, 55%), hsl(200, 80%, 55%))",
-              padding: "4px",
-            }}
-          />
-          <div className="relative rounded-2xl overflow-hidden border-4 border-transparent" style={{
-            borderImage: "linear-gradient(135deg, hsl(145, 63%, 49%), hsl(43, 96%, 56%), hsl(0, 78%, 62%), hsl(280, 70%, 55%), hsl(200, 80%, 55%)) 1",
-            borderRadius: "1rem",
-          }}>
-            <div className="rounded-xl overflow-hidden" style={{
-              outline: "4px solid transparent",
-              outlineOffset: "-4px",
-              background: "linear-gradient(135deg, hsl(145,63%,49%), hsl(43,96%,56%), hsl(0,78%,62%), hsl(280,70%,55%), hsl(200,80%,55%)) padding-box",
-            }}>
-              <img
-                src={akashPhoto}
-                alt="Akash Matania"
-                className="w-full h-auto object-cover rounded-xl"
-                loading="lazy"
-              />
-            </div>
+        {/* Photo with colorful gradient frame */}
+        <div className="relative p-1 rounded-2xl mb-16" style={{
+          background: "linear-gradient(135deg, hsl(145,63%,49%), hsl(43,96%,56%), hsl(0,78%,62%), hsl(280,70%,55%), hsl(200,80%,55%))",
+        }}>
+          <div className="rounded-xl overflow-hidden bg-background">
+            <img
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"
+              alt="Akash Matania"
+              className="w-full aspect-[4/3] object-cover"
+              loading="lazy"
+            />
           </div>
         </div>
 
         {/* Skill Tags */}
-        <div className="flex flex-wrap gap-3 mb-16">
+        <div className="flex flex-wrap gap-3 pb-16">
           {skills.map((skill) => (
             <span
               key={skill.label}
