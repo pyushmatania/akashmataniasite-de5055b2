@@ -2993,61 +2993,15 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
   if(mapCount)mapCount.textContent=count+' items';
 }
 
-// Waypoint system — only show line to ACTIVE target
+// Waypoint system — only glow, no lines or markers
 function clearWaypoints(){
-  mapCanvas.querySelectorAll('.waypoint-marker,.waypoint-dist,.waypoint-line,.waypoint-line-active,.neon-active').forEach(e=>{
-    if(e.classList.contains('neon-active')){e.classList.remove('neon-active');e.style.outline='';e.style.boxShadow=''}
-    else e.remove();
+  mapCanvas.querySelectorAll('.neon-active').forEach(e=>{
+    e.classList.remove('neon-active');e.style.outline='';e.style.boxShadow='';e.style.filter='';e.style.transform='';
   });
 }
 function addWaypoints(cat, activeIdx){
   clearWaypoints();
-  if(cat==='all'||!drawMap._sc)return;
-  const sc=drawMap._sc||0.05;
-  const ox=drawMap._ox||0,oy=drawMap._oy||0;
-  const cT=parseInt(mapCanvas.style.top)||0;
-  const playerWX=vp.scrollLeft+vp.clientWidth/2;
-  const playerWY=vp.scrollTop+vp.clientHeight/2;
-  const playerMX=(playerWX-ox)*sc;
-  const playerMY=(playerWY-oy)*sc+cT;
-  const matching=stickerData.filter(d=>d.cat===cat);
-  const hasActive=typeof activeIdx==='number'&&activeIdx>=0&&activeIdx<matching.length;
-  
-  matching.forEach((d,i)=>{
-    const mx=(d.left-ox)*sc;
-    const my=(d.top-oy)*sc+cT;
-    const dist=Math.round(Math.sqrt(Math.pow(d.left-playerWX,2)+Math.pow(d.top-playerWY,2)));
-    const distLabel=dist>1000?(dist/1000).toFixed(1)+'k':dist+'';
-    // Only show waypoint pin, no line — unless it's the active one
-    const wp=document.createElement('div');
-    wp.className='waypoint-marker';
-    wp.style.left=mx+'px';wp.style.top=my+'px';
-    wp.style.animationDelay=(i*0.3)+'s';
-    if(hasActive&&i===activeIdx){
-      wp.style.background='rgba(0,255,128,0.9)';
-      wp.style.borderColor='#fff';
-      wp.style.boxShadow='0 0 12px rgba(0,255,128,0.7),0 0 25px rgba(0,255,128,0.3)';
-    }
-    mapCanvas.appendChild(wp);
-    // Distance label
-    const dl=document.createElement('div');
-    dl.className='waypoint-dist';
-    dl.style.left=mx+'px';dl.style.top=(my+10)+'px';
-    dl.textContent=distLabel+'px';
-    mapCanvas.appendChild(dl);
-    // Only draw line to the ACTIVE item
-    if(hasActive&&i===activeIdx){
-      const dx=mx-playerMX,dy=my-playerMY;
-      const len=Math.sqrt(dx*dx+dy*dy);
-      const angle=Math.atan2(dy,dx)*180/Math.PI;
-      const line=document.createElement('div');
-      line.className='waypoint-line-active';
-      line.style.left=playerMX+'px';line.style.top=playerMY+'px';
-      line.style.width=len+'px';
-      line.style.transform='rotate('+angle+'deg)';
-      mapCanvas.appendChild(line);
-    }
-  });
+  // No markers or lines — just glow via applyNeonGlow
 }
 
 // Apply neon glow to a specific map item
