@@ -756,12 +756,42 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .minimap-container.expanded .map-header{display:flex!important}
 .map-title{font-family:var(--font-fun);font-weight:700;font-size:0.95rem;color:var(--text)}
 .map-close-btn{
-  width:32px;height:32px;border-radius:50%;
-  background:rgba(0,0,0,0.06);border:none;cursor:pointer;
-  font-size:0.8rem;display:flex;align-items:center;justify-content:center;
-  transition:background 0.2s;
+  width:40px;height:40px;border-radius:12px;
+  background:rgba(15,15,15,0.75);border:1.5px solid rgba(255,255,255,0.1);
+  cursor:pointer;font-size:1.1rem;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.25s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  box-shadow:0 4px 16px rgba(0,0,0,0.2);
 }
-.map-close-btn:hover{background:rgba(0,0,0,0.12)}
+.map-close-btn:hover{background:rgba(229,57,53,0.85);transform:scale(1.08);box-shadow:0 4px 20px rgba(229,57,53,0.3)}
+.map-close-btn:active{transform:scale(0.92)}
+
+/* Cycle highlight animation */
+@keyframes cycleSpotlight{
+  0%{box-shadow:0 0 0 0 rgba(255,202,40,0.6),0 0 0 0 rgba(255,202,40,0.3);outline-color:rgba(255,202,40,1)}
+  40%{box-shadow:0 0 30px 10px rgba(255,202,40,0.3),0 0 60px 20px rgba(255,202,40,0.1);outline-color:rgba(255,202,40,0.8)}
+  100%{box-shadow:0 0 0 0 rgba(255,202,40,0),0 0 0 0 rgba(255,202,40,0);outline-color:rgba(255,202,40,0.3)}
+}
+@keyframes cycleBounce{
+  0%,100%{transform:scale(1)}
+  30%{transform:scale(1.08)}
+  60%{transform:scale(0.97)}
+}
+@keyframes cycleRipple{
+  0%{opacity:1;transform:translate(-50%,-50%) scale(0.5)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(3)}
+}
+.cycle-ripple{
+  position:absolute;pointer-events:none;z-index:100;
+  width:40px;height:40px;border-radius:50%;
+  border:2px solid rgba(255,202,40,0.7);
+  animation:cycleRipple 0.8s ease-out forwards;
+}
+.cycle-target{
+  animation:cycleSpotlight 1.5s ease-out forwards,cycleBounce 0.5s ease-out;
+  outline:3px solid rgba(255,202,40,1)!important;outline-offset:6px!important;
+  z-index:200!important;
+}
 
 /* Filter chips */
 .map-chips{
