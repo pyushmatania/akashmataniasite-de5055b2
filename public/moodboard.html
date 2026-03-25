@@ -4340,7 +4340,10 @@ function mapClientToWorld(clientX,clientY){
   const cT=parseFloat(mapCanvas.style.top)||0;
   const mapX=clientX-innerRect.left+mmInner.scrollLeft-cL;
   const mapY=clientY-innerRect.top+mmInner.scrollTop-cT;
-  return {x:mapX/sc+ox,y:mapY/sc+oy};
+  return {
+    x:clampValue(mapX/sc+ox,0,MOODBOARD_WORLD_WIDTH),
+    y:clampValue(mapY/sc+oy,0,MOODBOARD_WORLD_HEIGHT)
+  };
 }
 
 function mapWorldToCanvas(worldX,worldY){
@@ -5003,11 +5006,9 @@ function drawMap(){
   const mr=mmInner.getBoundingClientRect();
   const mw=mr.width||64,mh=mr.height||64;
   
-   // Use real moodboard extents (including out-of-bounds stickers) so map coordinates stay exact.
-   const stickerMaxX=stickerData.reduce((m,d)=>Math.max(m,d.left+d.w),0);
-   const stickerMaxY=stickerData.reduce((m,d)=>Math.max(m,d.top+d.h),0);
-   const contentW=Math.max(cv.scrollWidth||0,cv.offsetWidth||0,stickerMaxX+120,10000);
-   const contentH=Math.max(cv.scrollHeight||0,cv.offsetHeight||0,stickerMaxY+120,7000);
+   // Keep map extents locked to moodboard boundaries.
+   const contentW=Math.max(cv.scrollWidth||0,cv.offsetWidth||0,MOODBOARD_WORLD_WIDTH);
+   const contentH=Math.max(cv.scrollHeight||0,cv.offsetHeight||0,MOODBOARD_WORLD_HEIGHT);
    const minL=0, minT=0;
   
   let sc,offsetX,offsetY,canvasW,canvasH;
@@ -5729,6 +5730,7 @@ vp.addEventListener('scroll',()=>{
 // Scan once on load, then draw + greeting
 function bootstrapMap(forceRescan){
   try{
+    normalizeAllStickerBounds();
     ensureMapData(forceRescan);
     drawMap();
     mapBootstrapped=true;
