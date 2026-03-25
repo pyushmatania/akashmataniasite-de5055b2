@@ -4777,18 +4777,12 @@ function addMapDecorations(cw,ch){
 
   // === AREA NAME SIGNPOSTS ===
   const areaNames=[
-    {x:15,y:22,t:'The Origin Story',icon:'📸',bg:'#4CAF50'},
-    {x:55,y:16,t:'The Hustle District',icon:'💼',bg:'#42A5F5'},
-    {x:82,y:8,t:'The Hobby Lobby',icon:'🎸',bg:'#E91E63'},
-    {x:13,y:40,t:'Cloud Nine',icon:'☁️',bg:'#AB47BC'},
-    {x:48,y:44,t:'Akash Unplugged',icon:'⭐',bg:'linear-gradient(135deg,#FFB300,#FF8F00)'},
-    {x:15,y:58,t:'LOL-lywood',icon:'🎬',bg:'#F9A825'},
-    {x:18,y:75,t:'Wanderlust Way',icon:'🌍',bg:'#1976D2'},
-    {x:62,y:38,t:'The Matrix Dojo',icon:'🥋',bg:'#2E7D32'},
-    {x:55,y:58,t:'La La Land',icon:'🎪',bg:'#E64A19'},
-    {x:78,y:72,t:'The Recharge Room',icon:'🧘',bg:'#7B1FA2'},
-    {x:35,y:72,t:'The Backyard',icon:'🏡',bg:'#795548'},
-    {x:48,y:28,t:'The Crossroads',icon:'🛤️',bg:'#607D8B'},
+    {x:14,y:22,t:'Origin Story',icon:'📸',bg:'#4CAF50'},
+    {x:55,y:14,t:'The War Room',icon:'🎯',bg:'#E53935'},
+    {x:14,y:38,t:'Launch Pad',icon:'🚀',bg:'#42A5F5'},
+    {x:48,y:28,t:'Akash Unplugged',icon:'⭐',bg:'linear-gradient(135deg,#FFB300,#FF8F00)'},
+    {x:18,y:62,t:'The Playground',icon:'🎮',bg:'#FF9800'},
+    {x:65,y:58,t:'Meme Alley',icon:'😂',bg:'#AB47BC'},
   ];
   areaNames.forEach(z=>{
     const wrap=document.createElement('div');
@@ -4809,14 +4803,28 @@ function addMapDecorations(cw,ch){
     mapCanvas.appendChild(wrap);
   });
 
+  // === GROUND-PAINTED ZONE LABELS (written on terrain) ===
+  const groundLabels=[
+    {x:14,y:12,t:'ORIGIN STORY',rot:-3,color:'rgba(40,80,30,0.12)',size:0.025},
+    {x:55,y:8,t:'THE WAR ROOM',rot:2,color:'rgba(120,30,30,0.12)',size:0.022},
+    {x:14,y:32,t:'LAUNCH PAD',rot:-1,color:'rgba(30,60,120,0.12)',size:0.022},
+    {x:35,y:25,t:'AKASH UNPLUGGED',rot:0,color:'rgba(180,140,30,0.08)',size:0.018},
+    {x:20,y:55,t:'THE PLAYGROUND',rot:3,color:'rgba(160,80,0,0.1)',size:0.022},
+    {x:65,y:50,t:'MEME ALLEY',rot:-2,color:'rgba(100,30,120,0.1)',size:0.022},
+  ];
+  groundLabels.forEach(g=>{
+    const el=document.createElement('div');
+    const fs=Math.max(12,cw*g.size);
+    el.textContent=g.t;
+    el.style.cssText='position:absolute;left:'+g.x+'%;top:'+g.y+'%;transform:translate(-50%,-50%) rotate('+g.rot+'deg);font-family:"Arial Black",Impact,sans-serif;font-weight:900;font-size:'+fs+'px;color:'+g.color+';text-transform:uppercase;letter-spacing:0.35em;pointer-events:none;z-index:1;white-space:nowrap;text-shadow:0 2px 8px rgba(255,255,255,0.05);user-select:none';
+    mapCanvas.appendChild(el);
+  });
+
   // === POI MARKERS ===
   const pois=[
-    {x:15,y:24,emoji:'📸',color:'#81C784'},{x:55,y:18,emoji:'💼',color:'#64B5F6'},
-    {x:82,y:10,emoji:'🎸',color:'#E91E63'},{x:13,y:42,emoji:'☁️',color:'#CE93D8'},
-    {x:62,y:40,emoji:'🥋',color:'#FFD54F'},{x:15,y:60,emoji:'🎬',color:'#FFD54F'},
-    {x:55,y:60,emoji:'🎪',color:'#FF7043'},{x:48,y:46,emoji:'⭐',color:'#FFD54F'},
-    {x:36,y:40,emoji:'⛵',color:'#64B5F6'},{x:18,y:77,emoji:'🌍',color:'#2196F3'},
-    {x:78,y:74,emoji:'🧘',color:'#9C27B0'},{x:35,y:74,emoji:'🏡',color:'#795548'},
+    {x:14,y:24,emoji:'📸',color:'#4CAF50'},{x:55,y:16,emoji:'🎯',color:'#E53935'},
+    {x:14,y:40,emoji:'🚀',color:'#42A5F5'},{x:48,y:30,emoji:'⭐',color:'#FFD54F'},
+    {x:20,y:60,emoji:'🎮',color:'#FF9800'},{x:65,y:56,emoji:'😂',color:'#AB47BC'},
   ];
   pois.forEach(p=>{
     const el=document.createElement('div');el.className='map-poi';
