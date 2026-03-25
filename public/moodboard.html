@@ -3480,7 +3480,7 @@ function drawMap(){
       if(zx<-30||zx>canvasW+30||zy<-30||zy>canvasH+30)return;
       const lbl=document.createElement('div');
       lbl.textContent=z.name.replace('The ','');
-      lbl.style.cssText='position:absolute;left:'+zx+'px;top:'+zy+'px;transform:translate(-50%,-50%);font-family:Arial Black,sans-serif;font-size:3.5px;font-weight:900;color:rgba(60,80,40,0.25);text-transform:uppercase;letter-spacing:0.5px;pointer-events:none;white-space:nowrap;';
+      lbl.style.cssText='position:absolute;left:'+zx+'px;top:'+zy+'px;transform:translate(-50%,-50%);font-family:Arial Black,sans-serif;font-size:5.5px;font-weight:900;color:rgba(50,70,30,0.4);text-transform:uppercase;letter-spacing:0.3px;pointer-events:none;white-space:nowrap;';
       mapCanvas.appendChild(lbl);
     });
   }
