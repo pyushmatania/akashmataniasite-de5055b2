@@ -1539,7 +1539,11 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <script>
 const vp=document.getElementById('viewport'),cv=document.getElementById('canvas');
-vp.scrollLeft=1600;vp.scrollTop=1100;
+// Center on the Akash hero sticker (left:800, top:600, width:290, ~height:350)
+const SCALE=0.85;
+const akashCX=(800+145)*SCALE, akashCY=(600+175)*SCALE;
+vp.scrollLeft=Math.max(0,akashCX-vp.clientWidth/2);
+vp.scrollTop=Math.max(0,akashCY-vp.clientHeight/2);
 
 // SCROLL COUNTER
 let _mmScrollRAF=null;
