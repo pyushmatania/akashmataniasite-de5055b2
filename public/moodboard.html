@@ -413,10 +413,30 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 
 
 /* ===== MAP v6 — GTA-STYLE HUD ===== */
+/* Map expand/collapse animations */
+@keyframes mapExpandIn{
+  0%{clip-path:circle(42px at calc(100% - 52px) calc(100% - 102px));opacity:0.7}
+  40%{clip-path:circle(40% at 60% 55%);opacity:0.9}
+  100%{clip-path:circle(150% at 50% 50%);opacity:1}
+}
+@keyframes mapCollapseOut{
+  0%{clip-path:circle(150% at 50% 50%);opacity:1}
+  60%{clip-path:circle(40% at 60% 55%);opacity:0.9}
+  100%{clip-path:circle(42px at calc(100% - 52px) calc(100% - 102px));opacity:0}
+}
+@keyframes mapContentFadeIn{
+  0%{opacity:0;transform:scale(0.96)}
+  100%{opacity:1;transform:scale(1)}
+}
+@keyframes mapContentFadeOut{
+  0%{opacity:1;transform:scale(1)}
+  100%{opacity:0;transform:scale(0.96)}
+}
+
 .minimap-container{
   position:fixed;bottom:60px;right:10px;z-index:998;
   width:85px;height:85px;
-  transition:all 0.4s cubic-bezier(0.25,1,0.5,1);
+  transition:none;
   filter:none;
 }
 /* Grounding shadow beneath minimap */
@@ -431,6 +451,24 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   filter:none;
 }
 .minimap-container.expanded::before{display:none}
+.minimap-container.map-opening{
+  inset:0;width:100vw;height:100vh;bottom:0;right:0;
+}
+.minimap-container.map-opening::before{display:none}
+.minimap-container.map-opening .minimap{
+  border-radius:0;border:none;box-shadow:none;
+  animation:mapExpandIn 0.5s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+.minimap-container.map-closing .minimap{
+  animation:mapCollapseOut 0.45s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+/* Fade in expanded UI elements */
+.minimap-container.map-opening .map-header,
+.minimap-container.map-opening .map-bottom-bar,
+.minimap-container.map-opening .map-controls-right,
+.minimap-container.map-opening .map-coord-display{
+  animation:mapContentFadeIn 0.3s ease-out 0.25s both;
+}
 .minimap{
   width:100%;height:100%;border-radius:50%;overflow:hidden;
   border:3.5px solid rgba(10,10,10,0.95);
@@ -439,10 +477,10 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
     0 0 0 3px rgba(10,10,10,0.6),
     inset 0 0 12px rgba(0,0,0,0.3);
   position:relative;cursor:pointer;
-  transition:border-radius 0.35s;
+  transition:none;
   background:#3a5a2a;
 }
-.minimap-container.expanded .minimap{border-radius:0;border:none;box-shadow:none;background:#E8E4D0}
+.minimap-container.expanded .minimap{border-radius:0;border:none;box-shadow:none;background:#f0edd8}
 
 /* Cardinal direction markers on minimap rim */
 .minimap-cardinal{
@@ -484,12 +522,13 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-zone-banner{
   position:absolute;bottom:130px;left:50%;transform:translateX(-50%);z-index:1001;
   display:none;font-family:var(--font-fun);font-weight:800;font-size:0.75rem;
-  color:rgba(100,80,50,0.8);background:rgba(232,228,208,0.7);
+  color:rgba(100,80,50,0.8);background:rgba(255,255,255,0.65);
   padding:5px 18px;border-radius:10px;
-  border:1px solid rgba(180,170,150,0.2);
+  border:1px solid rgba(255,255,255,0.3);
   white-space:nowrap;letter-spacing:0.04em;
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   transition:opacity 0.3s,transform 0.3s;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
 }
 .minimap-container.expanded .map-zone-banner{display:block}
 
@@ -629,7 +668,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   transform-origin:0 0;
 }
 .minimap-container.expanded .map-canvas{
-  background:#E8E4D0 !important;
+  background:#f0edd8 !important;
 }
 .map-canvas-grid{
   position:absolute;inset:0;pointer-events:none;
@@ -679,12 +718,13 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 #mapCanvas::before{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
   background:
-    radial-gradient(ellipse at 20% 30%, rgba(139,195,74,0.18) 0%, transparent 30%),
-    radial-gradient(ellipse at 70% 60%, rgba(165,214,167,0.22) 0%, transparent 25%),
-    radial-gradient(ellipse at 45% 80%, rgba(100,181,246,0.08) 0%, transparent 20%),
-    radial-gradient(ellipse at 85% 15%, rgba(255,241,118,0.08) 0%, transparent 20%),
-    radial-gradient(ellipse at 15% 70%, rgba(178,223,219,0.15) 0%, transparent 25%),
-    radial-gradient(ellipse at 55% 15%, rgba(174,213,129,0.15) 0%, transparent 22%);
+    radial-gradient(ellipse at 20% 30%, rgba(156,204,101,0.2) 0%, transparent 30%),
+    radial-gradient(ellipse at 70% 60%, rgba(174,213,129,0.25) 0%, transparent 25%),
+    radial-gradient(ellipse at 45% 80%, rgba(137,207,240,0.12) 0%, transparent 20%),
+    radial-gradient(ellipse at 85% 15%, rgba(255,245,157,0.1) 0%, transparent 20%),
+    radial-gradient(ellipse at 15% 70%, rgba(178,223,219,0.18) 0%, transparent 25%),
+    radial-gradient(ellipse at 55% 15%, rgba(197,225,165,0.18) 0%, transparent 22%),
+    radial-gradient(ellipse at 50% 50%, rgba(240,237,216,0.3) 0%, transparent 50%);
 }
 #mapCanvas::after{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
@@ -706,9 +746,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   box-shadow:inset 0 0 15px rgba(100,181,246,0.15);
 }
 .minimap-container.expanded .map-water{
-  background:rgba(100,181,246,0.7);
-  border-color:rgba(66,165,245,0.5);
-  box-shadow:inset 0 0 20px rgba(66,165,245,0.3);
+  background:rgba(137,207,240,0.75);
+  border-color:rgba(100,181,246,0.3);
+  box-shadow:inset 0 0 25px rgba(100,181,246,0.2),0 0 8px rgba(100,181,246,0.1);
 }
 
 /* Road/path lines — Snapchat white/gray roads */
@@ -719,9 +759,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   border:0.5px solid rgba(200,200,200,0.3);
 }
 .minimap-container.expanded .map-road{
-  background:rgba(255,255,255,0.9);
-  box-shadow:0 0.5px 2px rgba(0,0,0,0.08);
-  border-color:rgba(200,200,200,0.4);
+  background:rgba(255,255,255,0.95);
+  box-shadow:0 0.5px 3px rgba(0,0,0,0.1);
+  border-color:rgba(210,210,210,0.5);
 }
 
 /* Zone label markers on map — written on the land like Snapchat */
@@ -733,21 +773,21 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   text-shadow:0 1px 3px rgba(255,255,255,0.8);
 }
 .minimap-container.expanded .map-zone-marker{
-  font-size:1rem;color:rgba(80,80,80,0.55);font-weight:800;letter-spacing:0.15em;
-  text-shadow:0 1px 2px rgba(255,255,255,0.5);
+  font-size:0.85rem;color:rgba(130,115,85,0.65);font-weight:800;letter-spacing:0.18em;
+  text-shadow:0 1px 2px rgba(255,255,255,0.4);
 }
 
 /* 3D Building blocks on Snapchat map */
 .map-building-3d{
   position:absolute;pointer-events:none;z-index:3;
-  background:linear-gradient(145deg,#D5D0C0,#C8C3B3);
+  background:linear-gradient(145deg,#E2DDD0,#D8D3C5);
   border-radius:2px;
-  box-shadow:2px 3px 0 #B8B3A3,-1px -1px 0 rgba(255,255,255,0.3);
-  border:0.5px solid rgba(0,0,0,0.08);
+  box-shadow:2px 3px 0 #CAC5B5,-1px -1px 0 rgba(255,255,255,0.4);
+  border:0.5px solid rgba(0,0,0,0.06);
 }
 .map-building-tall{
-  box-shadow:3px 5px 0 #A8A393,-1px -1px 0 rgba(255,255,255,0.4);
-  background:linear-gradient(145deg,#CFC9B8,#BFB9A8);
+  box-shadow:3px 5px 0 #B8B3A3,-1px -1px 0 rgba(255,255,255,0.5);
+  background:linear-gradient(145deg,#D8D3C5,#CCC7B8);
 }
 /* Green park areas */
 .map-park{
@@ -756,13 +796,13 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   border-radius:30% 40% 35% 45%;
 }
 .minimap-container.expanded .map-park{
-  background:rgba(139,195,74,0.5);
-  box-shadow:inset 0 0 10px rgba(104,159,56,0.2);
+  background:rgba(156,204,101,0.55);
+  box-shadow:inset 0 0 12px rgba(104,159,56,0.15);
 }
 /* Beach/sand areas */
 .map-beach{
   position:absolute;pointer-events:none;z-index:1;
-  background:rgba(255,224,178,0.6);
+  background:rgba(255,230,186,0.65);
   border-radius:40% 50% 45% 35%;
 }
 /* Highway/main road */
@@ -818,10 +858,29 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-bottom-bar{
   position:absolute;bottom:0;left:0;right:0;z-index:1000;
   display:none;flex-direction:column;
-  background:linear-gradient(0deg,rgba(232,228,208,0.7) 0%,rgba(232,228,208,0.3) 60%,transparent 100%);
+  background:linear-gradient(0deg,rgba(240,237,216,0.8) 0%,rgba(240,237,216,0.4) 60%,transparent 100%);
   padding:10px 10px max(10px,env(safe-area-inset-bottom,0px)+54px);
 }
 .minimap-container.expanded .map-bottom-bar{display:flex}
+.minimap-container.map-opening .map-bottom-bar{display:flex}
+.minimap-container.map-opening .map-controls-right{display:flex}
+.minimap-container.map-opening .map-coord-display{display:block}
+.minimap-container.map-opening .map-zone-banner{display:block}
+.minimap-container.map-opening .minimap-cardinal{display:none}
+.minimap-container.map-opening .minimap-north-pip{display:none}
+.minimap-container.map-opening .minimap-zone-name{display:none}
+.minimap-container.map-opening .minimap-radar{display:none}
+.minimap-container.map-opening .minimap::after{display:none}
+.minimap-container.map-opening .minimap{background:#f0edd8}
+/* During closing, keep small map styling */
+.minimap-container.map-closing .minimap-cardinal{display:none}
+.minimap-container.map-closing .minimap-north-pip{display:none}
+.minimap-container.map-closing .minimap-zone-name{display:none}
+.minimap-container.map-closing .minimap-radar{display:none}
+.minimap-container.map-closing .minimap::after{display:none}
+.minimap-container.map-closing{inset:0;width:100vw;height:100vh;bottom:0;right:0}
+.minimap-container.map-closing::before{display:none}
+.minimap-container.map-closing .minimap{border-radius:0;border:none;box-shadow:none;background:#f0edd8}
 .map-bottom-bar .bar-filters{
   display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin-bottom:4px;
 }
@@ -832,19 +891,20 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .bar-count{font-family:var(--font-fun);font-size:0.5rem;color:rgba(100,80,50,0.35);font-weight:500}
 .bar-coords{font-family:var(--font-fun);font-size:0.45rem;color:rgba(100,80,50,0.3);font-variant-numeric:tabular-nums;letter-spacing:0.02em}
 
-/* Filter chips — map-integrated style */
+/* Filter chips — Snapchat-style pills */
 .mc{
-  padding:4px 10px;border-radius:14px;font-family:var(--font-fun);
+  padding:5px 12px;border-radius:20px;font-family:var(--font-fun);
   font-size:0.55rem;font-weight:600;cursor:pointer;
-  border:1px solid rgba(180,170,150,0.2);
+  border:none;
   transition:all 0.2s cubic-bezier(0.25,1,0.5,1);
   display:flex;align-items:center;gap:4px;
-  background:rgba(255,255,255,0.5);color:rgba(100,80,50,0.5);
+  background:rgba(255,255,255,0.7);color:rgba(80,70,50,0.65);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  box-shadow:0 1px 4px rgba(0,0,0,0.06);
 }
 .mc.active{
-  background:rgba(255,213,79,0.4);color:rgba(100,70,20,0.85);
-  border-color:rgba(255,193,7,0.4);
-  box-shadow:0 1px 6px rgba(255,193,7,0.15);
+  background:rgba(255,213,79,0.5);color:rgba(80,60,20,0.9);
+  box-shadow:0 2px 8px rgba(255,193,7,0.2);
 }
 .mc:not(.active):hover{background:rgba(255,255,255,0.65);color:rgba(100,80,50,0.7)}
 .mc:active{transform:scale(0.95)}
@@ -870,7 +930,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-controls-right{
   position:absolute;right:10px;top:50%;transform:translateY(-50%);z-index:1000;
   display:none;flex-direction:column;gap:4px;
-  background:rgba(255,255,255,0.5);
+  background:rgba(255,255,255,0.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   border-radius:12px;padding:6px;border:1px solid rgba(180,170,150,0.15);
 }
 .minimap-container.expanded .map-controls-right{display:flex}
@@ -956,20 +1016,21 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   position:absolute;top:0;left:0;right:0;z-index:1000;
   padding:max(env(safe-area-inset-top,8px),8px) 16px 8px;
   display:none;align-items:center;justify-content:space-between;
-  background:linear-gradient(180deg,rgba(232,228,208,0.97),rgba(232,228,208,0.85),transparent);
+  background:linear-gradient(180deg,rgba(240,237,216,0.97),rgba(240,237,216,0.85),transparent);
 }
 .map-header{display:none!important}
 .minimap-container.expanded .map-header{display:flex!important}
+.minimap-container.map-opening .map-header{display:flex!important}
 .map-title{font-family:var(--font-fun);font-weight:700;font-size:0.95rem;color:var(--text)}
 .map-close-btn{
-  width:40px;height:40px;border-radius:12px;
-  background:rgba(15,15,15,0.75);border:1.5px solid rgba(255,255,255,0.1);
-  cursor:pointer;font-size:1.1rem;color:#fff;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,0.85);border:none;
+  cursor:pointer;font-size:1rem;color:rgba(0,0,0,0.5);
   display:flex;align-items:center;justify-content:center;
-  transition:all 0.25s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  box-shadow:0 4px 16px rgba(0,0,0,0.2);
+  transition:all 0.25s;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
 }
-.map-close-btn:hover{background:rgba(229,57,53,0.85);transform:scale(1.08);box-shadow:0 4px 20px rgba(229,57,53,0.3)}
+.map-close-btn:hover{background:rgba(255,255,255,0.95);color:rgba(0,0,0,0.7);transform:scale(1.08)}
 .map-close-btn:active{transform:scale(0.92)}
 
 /* Cycle highlight animation */
@@ -3015,26 +3076,38 @@ function gCat(s){
 let mapTransitioning=false;
 function toggleMap(){
   if(mapTransitioning)return;
-  mmExp=!mmExp;
   mapTransitioning=true;
-  mc.classList.toggle('expanded',mmExp);
-  document.body.classList.toggle('map-expanded',mmExp);
+  
   if(!mmExp){
-    // Reset zoom and state immediately
+    // OPENING
+    mmExp=true;
+    mc.classList.add('map-opening');
+    mc.classList.add('expanded');
+    document.body.classList.add('map-expanded');
+    // Draw content immediately so it's visible during animation
+    setTimeout(()=>{drawMap();setTimeout(recenter,150)},50);
+    setTimeout(()=>{
+      mc.classList.remove('map-opening');
+      mapTransitioning=false;
+    },550);
+  } else {
+    // CLOSING
+    mmExp=false;
     mapZoomScale=1;mapCanvas.style.transform='';
     const zl=document.getElementById('mapZoomLevel');if(zl)zl.textContent='1×';
     filtClickCount={};
     const hud=document.getElementById('cycleHud');if(hud)hud.classList.remove('visible');
     clearWaypoints();
-    // Clear expanded content immediately to avoid stale renders
-    mapCanvas.innerHTML='';
-  }
-  if(mmExp){
-    // Opening: wait for transition to finish, then draw
-    setTimeout(()=>{mapTransitioning=false;drawMap();setTimeout(recenter,200)},450);
-  } else {
-    // Closing: wait for transition to fully complete so dimensions are correct
-    setTimeout(()=>{mapTransitioning=false;drawMap()},450);
+    // Play collapse animation
+    mc.classList.add('map-closing');
+    mc.classList.remove('expanded');
+    document.body.classList.remove('map-expanded');
+    setTimeout(()=>{
+      mc.classList.remove('map-closing');
+      mapCanvas.innerHTML='';
+      mapTransitioning=false;
+      drawMap();
+    },500);
   }
 }
 
@@ -3267,7 +3340,7 @@ function drawMap(){
   mapCanvas.style.position='absolute';
   mapCanvas.style.borderRadius=mmExp?'0':'inherit';
   if(mmExp){
-    mapCanvas.style.background='#E8E4D0';
+    mapCanvas.style.background='#f0edd8';
     mapCanvas.style.backgroundImage='none';
     mapCanvas.style.backgroundSize='';
   } else {
