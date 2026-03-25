@@ -4993,7 +4993,7 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
   
   let count=0;
   stickerData.forEach(d=>{
-    if(mFilt!=='all'&&d.cat!==mFilt)return;
+    if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
     const dx=(d.left-ox)*sc, dy=(d.top-oy)*sc;
     // Only render if in visible viewport
     const iw=d.w*sc, ih=d.h*sc;
