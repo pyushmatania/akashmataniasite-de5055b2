@@ -3510,6 +3510,8 @@ function toggleMap(){
     mc.classList.add('map-closing');
     mc.classList.remove('expanded');
     document.body.classList.remove('map-expanded');
+    // Move player back outside canvas before clearing
+    mmInner.appendChild(mapPlayer);
     setTimeout(()=>{
       mc.classList.remove('map-closing');
       mapCanvas.innerHTML='';
