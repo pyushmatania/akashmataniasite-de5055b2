@@ -165,103 +165,141 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker-counter .c-count{font-family:var(--font-fun);font-weight:700;font-size:1.4rem;color:var(--text);min-width:30px}
 .sticker-counter .c-label{font-size:0.7rem;color:var(--text3)}
 
-/* 3D Game-style Zone Signpost — wooden post with hanging board */
+/* ===== 3D THEME-PARK ARCH SIGNPOST ===== */
 .zone-signpost{
-  display:flex;flex-direction:column;align-items:center;
+  display:flex;align-items:flex-end;gap:0;
   z-index:100!important;
-  filter:drop-shadow(0 16px 32px rgba(0,0,0,0.35))!important;
+  filter:drop-shadow(0 20px 40px rgba(0,0,0,0.4))!important;
   transform-style:preserve-3d;
-  perspective:600px;
+  perspective:800px;
+  position:absolute;
+}
+.zone-signpost:hover{
+  filter:drop-shadow(0 24px 48px rgba(0,0,0,0.5))!important;
 }
 .zone-signpost:hover .signpost-board{
-  transform:rotateY(-4deg) rotateX(2deg);
+  transform:perspective(600px) rotateX(-3deg) rotateY(2deg) scale(1.03);
 }
 
-/* Wooden pole */
-.signpost-pole{
-  width:16px;height:120px;
+/* Stone/marble pillar */
+.signpost-pillar{
+  width:28px;flex-shrink:0;position:relative;z-index:3;
+  display:flex;flex-direction:column;align-items:center;
+}
+/* Pillar shaft */
+.pillar-shaft{
+  width:22px;flex:1;min-height:110px;
   background:
-    linear-gradient(90deg,#8B6914 0%,#C49A28 15%,#A67B1E 30%,#D4A83A 50%,#A67B1E 70%,#8B6914 100%);
-  border-radius:4px;
-  position:relative;z-index:2;
+    linear-gradient(90deg,
+      #d4cfc8 0%,#e8e4de 20%,#f5f2ed 40%,#e8e4de 60%,#d4cfc8 80%,#bbb6ac 100%);
+  border-radius:3px;
+  position:relative;
   box-shadow:
-    3px 0 0 rgba(0,0,0,0.15),
-    -1px 0 0 rgba(255,255,255,0.15),
-    0 6px 12px rgba(0,0,0,0.2);
+    3px 0 0 rgba(0,0,0,0.08),
+    -1px 0 0 rgba(255,255,255,0.3),
+    0 6px 16px rgba(0,0,0,0.15);
 }
-/* Wood grain texture */
-.signpost-pole::before{
-  content:'';position:absolute;inset:0;border-radius:4px;
-  background:repeating-linear-gradient(180deg,
-    transparent 0px, rgba(0,0,0,0.04) 3px, transparent 6px,
-    rgba(255,255,255,0.06) 9px, transparent 12px);
-  pointer-events:none;
+/* Pillar fluting texture */
+.pillar-shaft::before{
+  content:'';position:absolute;inset:0;border-radius:3px;pointer-events:none;
+  background:repeating-linear-gradient(90deg,
+    transparent 0px,rgba(0,0,0,0.03) 1px,transparent 2px,
+    rgba(0,0,0,0.02) 3px,transparent 4px,
+    rgba(255,255,255,0.06) 5px,transparent 6px);
 }
-/* Pole cap — rounded metal top */
-.signpost-pole::after{
-  content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);
-  width:24px;height:14px;
-  background:radial-gradient(ellipse at 40% 30%,#E0E0E0,#9E9E9E 50%,#757575);
-  border-radius:12px 12px 4px 4px;
-  border:1px solid rgba(0,0,0,0.2);
-  box-shadow:0 -2px 4px rgba(0,0,0,0.15),inset 0 2px 2px rgba(255,255,255,0.4);
-}
-/* Nail details on pole */
-
-/* ===== THE BOARD — 3D wooden plank with carved text ===== */
-.signpost-board{
-  font-family:var(--font-fun);font-weight:800;font-size:1.5rem;
-  color:#fff;padding:18px 40px 18px 40px;
-  border-radius:6px;
-  letter-spacing:0.08em;white-space:nowrap;
-  position:relative;z-index:1;
-  margin-top:-4px;
-  text-shadow:0 2px 0 rgba(0,0,0,0.4),0 -1px 0 rgba(255,255,255,0.15);
-  transform:perspective(500px) rotateY(-2deg);
-  transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-  /* 3D plank effect */
-  border-top:3px solid rgba(255,255,255,0.35);
-  border-left:2px solid rgba(255,255,255,0.2);
-  border-right:3px solid rgba(0,0,0,0.2);
-  border-bottom:4px solid rgba(0,0,0,0.3);
-  box-shadow:
-    0 8px 24px rgba(0,0,0,0.35),
-    0 16px 48px rgba(0,0,0,0.15),
-    inset 0 2px 0 rgba(255,255,255,0.2),
-    inset 0 -4px 8px rgba(0,0,0,0.2),
-    inset 4px 0 8px rgba(0,0,0,0.08),
-    inset -4px 0 8px rgba(0,0,0,0.08);
-}
-/* Wood grain overlay on board */
-.signpost-board::before{
-  content:'';position:absolute;inset:0;border-radius:4px;pointer-events:none;
-  background:
-    repeating-linear-gradient(95deg,
-      transparent 0px,rgba(0,0,0,0.03) 2px,transparent 4px,
-      rgba(255,255,255,0.04) 6px,transparent 8px),
-    linear-gradient(180deg,rgba(255,255,255,0.2) 0%,transparent 40%,rgba(0,0,0,0.1) 100%);
-}
-/* Hanging chains/nails visual — two small dots */
-.signpost-board::after{
-  content:'';position:absolute;top:-6px;left:20px;
-  width:8px;height:8px;
-  background:radial-gradient(circle at 35% 35%,#ccc,#888);
+/* Pillar capital — ornamental top ball */
+.pillar-cap{
+  width:34px;height:34px;
+  background:radial-gradient(ellipse at 35% 30%,#f5f2ed,#d4cfc8 50%,#bbb6ac);
   border-radius:50%;
+  border:2px solid rgba(0,0,0,0.08);
   box-shadow:
-    0 0 0 1px rgba(0,0,0,0.3),
-    calc(100% - 40px + 100px) 0 0 0 #aaa,
-    calc(100% - 40px + 100px) 0 0 1px rgba(0,0,0,0.3);
+    0 -3px 8px rgba(0,0,0,0.1),
+    inset 0 4px 6px rgba(255,255,255,0.5),
+    inset 0 -2px 4px rgba(0,0,0,0.1);
+  margin-bottom:-2px;
+  position:relative;z-index:4;
+}
+/* Pillar base — wider footing */
+.pillar-base{
+  width:32px;height:18px;
+  background:linear-gradient(180deg,#d4cfc8,#bbb6ac);
+  border-radius:2px 2px 4px 4px;
+  border-top:2px solid rgba(255,255,255,0.3);
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  margin-top:-2px;
 }
 
-/* Hanging chain connectors — small rectangles */
-.signpost-nail{
-  position:absolute;top:-5px;width:6px;height:6px;
-  background:radial-gradient(circle at 35% 35%,#D4D4D4,#888);
-  border-radius:50%;border:1px solid rgba(0,0,0,0.25);
-  box-shadow:inset 0 1px 1px rgba(255,255,255,0.5);
+/* ===== THE ARCH BOARD — colorful themed sign ===== */
+.signpost-board{
+  font-family:var(--font-fun);font-weight:900;font-size:1.6rem;
+  color:#fff;
+  padding:20px 36px;
+  border-radius:12px;
+  letter-spacing:0.1em;white-space:nowrap;
+  position:relative;z-index:5;
+  margin:0 -6px;
+  align-self:flex-start;
+  margin-top:30px;
+  text-shadow:
+    0 3px 0 rgba(0,0,0,0.35),
+    0 -1px 0 rgba(255,255,255,0.2),
+    0 0 20px rgba(0,0,0,0.15);
+  transform:perspective(600px) rotateX(-2deg);
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),filter 0.3s;
+  /* 3D thick board effect */
+  border:4px solid rgba(255,255,255,0.4);
+  border-bottom:6px solid rgba(0,0,0,0.25);
+  border-right:5px solid rgba(0,0,0,0.15);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.35),
+    0 20px 60px rgba(0,0,0,0.15),
+    inset 0 3px 0 rgba(255,255,255,0.3),
+    inset 0 -6px 12px rgba(0,0,0,0.2),
+    inset 6px 0 12px rgba(0,0,0,0.06),
+    inset -6px 0 12px rgba(0,0,0,0.06);
 }
-.signpost-nail.left{left:22px}
-.signpost-nail.right{right:22px}
+/* Board shine overlay */
+.signpost-board::before{
+  content:'';position:absolute;inset:0;border-radius:8px;pointer-events:none;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,0.35) 0%,transparent 40%,transparent 60%,rgba(0,0,0,0.1) 100%);
+}
+/* Board icon badge — circular emblem */
+.signpost-board .board-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:42px;height:42px;
+  background:radial-gradient(circle at 40% 35%,rgba(255,255,255,0.4),rgba(0,0,0,0.1));
+  border-radius:50%;
+  border:3px solid rgba(255,255,255,0.5);
+  font-size:1.4rem;
+  margin-right:10px;
+  box-shadow:0 3px 8px rgba(0,0,0,0.2),inset 0 2px 4px rgba(255,255,255,0.3);
+  vertical-align:middle;
+  text-shadow:none;
+}
+/* Decorative rivets on the board */
+.signpost-rivet{
+  position:absolute;width:10px;height:10px;
+  background:radial-gradient(circle at 35% 30%,#f0ece6,#bbb6ac 60%,#9e9a94);
+  border-radius:50%;
+  border:1px solid rgba(0,0,0,0.15);
+  box-shadow:inset 0 2px 2px rgba(255,255,255,0.6),0 2px 4px rgba(0,0,0,0.15);
+}
+.signpost-rivet.tl{top:8px;left:10px}
+.signpost-rivet.tr{top:8px;right:10px}
+.signpost-rivet.bl{bottom:8px;left:10px}
+.signpost-rivet.br{bottom:8px;right:10px}
+
+/* Ground shadow under the signpost */
+.signpost-ground{
+  position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);
+  width:90%;height:10px;
+  background:radial-gradient(ellipse,rgba(0,0,0,0.2),transparent 70%);
+  border-radius:50%;
+  filter:blur(3px);
+  z-index:0;
+}
 .sticker-fortune{background:linear-gradient(135deg,#FFE0B2,#FFB74D);border-radius:16px;padding:18px 22px;max-width:220px;box-shadow:0 3px 12px rgba(0,0,0,0.08);cursor:pointer}
 .sticker-fortune .f-icon{font-size:2rem;margin-bottom:6px}
 .sticker-fortune .f-text{font-family:var(--font-hand);font-size:1rem;color:#5D4037;line-height:1.4}
@@ -1937,48 +1975,56 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="meme-sub">Salary Roulette</div>
 </div>
 
-<!-- ===== ZONE SIGNPOSTS ===== -->
-<!-- ===== ZONE SIGNPOSTS — 3D Game-style wooden boards ===== -->
-<div class="sticker zone-signpost" style="left:1200px;top:500px;pointer-events:none;user-select:none">
-  <div class="signpost-pole"></div>
-  <div class="signpost-board" style="background:linear-gradient(135deg,#2E7D32,#4CAF50,#388E3C)">
-    <div class="signpost-nail left"></div><div class="signpost-nail right"></div>
-    📸 ORIGIN STORY
+<!-- ===== ZONE SIGNPOSTS — 3D Theme-Park Arch Style ===== -->
+<div class="sticker zone-signpost" style="left:1050px;top:400px;pointer-events:none;user-select:none">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-board" style="background:linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)">
+    <div class="signpost-rivet tl"></div><div class="signpost-rivet tr"></div><div class="signpost-rivet bl"></div><div class="signpost-rivet br"></div>
+    <span class="board-icon">📸</span> ORIGIN STORY
   </div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-ground"></div>
 </div>
-<div class="sticker zone-signpost" style="left:5200px;top:500px;pointer-events:none;user-select:none">
-  <div class="signpost-pole"></div>
-  <div class="signpost-board" style="background:linear-gradient(135deg,#B71C1C,#E53935,#C62828)">
-    <div class="signpost-nail left"></div><div class="signpost-nail right"></div>
-    🎯 THE WAR ROOM
+
+<div class="sticker zone-signpost" style="left:5050px;top:400px;pointer-events:none;user-select:none">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-board" style="background:linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)">
+    <div class="signpost-rivet tl"></div><div class="signpost-rivet tr"></div><div class="signpost-rivet bl"></div><div class="signpost-rivet br"></div>
+    <span class="board-icon">🎯</span> THE WAR ROOM
   </div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-ground"></div>
 </div>
-<div class="sticker zone-signpost" style="left:1200px;top:2100px;pointer-events:none;user-select:none">
-  <div class="signpost-pole"></div>
-  <div class="signpost-board" style="background:linear-gradient(135deg,#1565C0,#42A5F5,#1976D2)">
-    <div class="signpost-nail left"></div><div class="signpost-nail right"></div>
-    🚀 LAUNCH PAD
+
+<div class="sticker zone-signpost" style="left:1050px;top:2000px;pointer-events:none;user-select:none">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-board" style="background:linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)">
+    <div class="signpost-rivet tl"></div><div class="signpost-rivet tr"></div><div class="signpost-rivet bl"></div><div class="signpost-rivet br"></div>
+    <span class="board-icon">🚀</span> LAUNCH PAD
   </div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-ground"></div>
 </div>
-<div class="sticker zone-signpost" style="left:3200px;top:2100px;pointer-events:none;user-select:none">
-  <div class="signpost-pole" style="height:140px;width:20px"></div>
-  <div class="signpost-board" style="background:linear-gradient(135deg,#E65100,#FFB300,#FF8F00);font-size:2rem;padding:24px 52px;border-radius:8px">
-    <div class="signpost-nail left"></div><div class="signpost-nail right"></div>
-    ⭐ AKASH UNPLUGGED
-  </div>
-</div>
-<div class="sticker zone-signpost" style="left:2000px;top:3700px;pointer-events:none;user-select:none">
-  <div class="signpost-pole"></div>
+
+<div class="sticker zone-signpost" style="left:1800px;top:3600px;pointer-events:none;user-select:none">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#E65100,#FF9800,#EF6C00)">
-    <div class="signpost-nail left"></div><div class="signpost-nail right"></div>
-    🎮 THE PLAYGROUND
+    <div class="signpost-rivet tl"></div><div class="signpost-rivet tr"></div><div class="signpost-rivet bl"></div><div class="signpost-rivet br"></div>
+    <span class="board-icon">🎮</span> THE PLAYGROUND
   </div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-ground"></div>
 </div>
-<div class="sticker zone-signpost" style="left:6800px;top:3700px;pointer-events:none;user-select:none">
-  <div class="signpost-pole"></div>
-  <div class="signpost-board" style="background:linear-gradient(135deg,#6A1B9A,#AB47BC,#7B1FA2)">
-    <div class="signpost-nail left"></div><div class="signpost-nail right"></div>
-    😂 MEME ALLEY
+
+<div class="sticker zone-signpost" style="left:6600px;top:3600px;pointer-events:none;user-select:none">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-board" style="background:linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)">
+    <div class="signpost-rivet tl"></div><div class="signpost-rivet tr"></div><div class="signpost-rivet bl"></div><div class="signpost-rivet br"></div>
+    <span class="board-icon">😂</span> MEME ALLEY
+  </div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-ground"></div>
+</div>
   </div>
 </div>
 
@@ -5360,31 +5406,41 @@ function addMapDecorations(cw,ch){
     wrap.appendChild(svg);
   });
 
-  // === AREA NAME SIGNPOSTS ===
+  // === AREA NAME SIGNPOSTS (theme-park arch style) ===
   const areaNames=[
-    {x:14,y:22,t:'Origin Story',icon:'📸',bg:'#4CAF50'},
-    {x:55,y:14,t:'The War Room',icon:'🎯',bg:'#E53935'},
-    {x:14,y:38,t:'Launch Pad',icon:'🚀',bg:'#42A5F5'},
-    {x:48,y:28,t:'Akash Unplugged',icon:'⭐',bg:'linear-gradient(135deg,#FFB300,#FF8F00)'},
-    {x:18,y:62,t:'The Playground',icon:'🎮',bg:'#FF9800'},
-    {x:65,y:58,t:'Meme Alley',icon:'😂',bg:'#AB47BC'},
+    {x:14,y:22,t:'Origin Story',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)'},
+    {x:55,y:14,t:'The War Room',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)'},
+    {x:14,y:38,t:'Launch Pad',icon:'🚀',bg:'linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)'},
+    {x:18,y:62,t:'The Playground',icon:'🎮',bg:'linear-gradient(135deg,#E65100,#FF9800,#EF6C00)'},
+    {x:65,y:58,t:'Meme Alley',icon:'😂',bg:'linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)'},
   ];
   areaNames.forEach(z=>{
     const wrap=document.createElement('div');
-    wrap.className='map-signpost';
-    wrap.style.cssText='left:'+z.x+'%;top:'+z.y+'%';
-    const pole=document.createElement('div');
-    const poleH=Math.max(14,cw*0.012);
-    pole.style.cssText='width:'+Math.max(2,cw*0.0015)+'px;height:'+poleH+'px;background:linear-gradient(90deg,#BDBDBD,#9E9E9E,#757575);border-radius:2px';
-    wrap.appendChild(pole);
+    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%);display:flex;align-items:flex-end;z-index:9;pointer-events:none;gap:0';
+    const fontSize=Math.max(5,cw*0.004);
+    const pillarW=Math.max(3,cw*0.002);
+    const pillarH=Math.max(12,cw*0.01);
+    const capS=Math.max(4,pillarW*1.4);
+    // Left pillar
+    const mkPillar=()=>{
+      const p=document.createElement('div');
+      p.style.cssText='display:flex;flex-direction:column;align-items:center;flex-shrink:0';
+      const cap=document.createElement('div');
+      cap.style.cssText='width:'+capS+'px;height:'+capS+'px;border-radius:50%;background:radial-gradient(ellipse at 35% 30%,#f5f2ed,#bbb6ac);border:1px solid rgba(0,0,0,0.1);margin-bottom:-1px;box-shadow:inset 0 2px 3px rgba(255,255,255,0.5)';
+      const shaft=document.createElement('div');
+      shaft.style.cssText='width:'+pillarW+'px;height:'+pillarH+'px;background:linear-gradient(90deg,#d4cfc8,#f5f2ed 40%,#d4cfc8);border-radius:1px;box-shadow:1px 0 0 rgba(0,0,0,0.05)';
+      const base=document.createElement('div');
+      base.style.cssText='width:'+(pillarW*1.4)+'px;height:'+(pillarW*0.6)+'px;background:linear-gradient(180deg,#d4cfc8,#bbb6ac);border-radius:0 0 1px 1px;margin-top:-1px';
+      p.appendChild(cap);p.appendChild(shaft);p.appendChild(base);
+      return p;
+    };
+    wrap.appendChild(mkPillar());
+    // Board
     const board=document.createElement('div');
-    const fontSize=Math.max(5,cw*0.0042);
-    board.textContent=z.icon+' '+z.t.toUpperCase();
-    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:800;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(3,fontSize*0.45)+'px '+Math.max(6,fontSize*1.1)+'px;border-radius:5px;white-space:nowrap;letter-spacing:0.06em;background:'+z.bg+';border:1.5px solid rgba(255,255,255,0.35);box-shadow:0 3px 12px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.25),inset 0 -1px 3px rgba(0,0,0,0.1);text-shadow:0 1px 2px rgba(0,0,0,0.35);margin-top:-1px';
+    board.innerHTML='<span style="display:inline-flex;align-items:center;justify-content:center;width:'+(fontSize*2)+'px;height:'+(fontSize*2)+'px;background:radial-gradient(circle,rgba(255,255,255,0.35),rgba(0,0,0,0.05));border-radius:50%;border:1.5px solid rgba(255,255,255,0.45);font-size:'+(fontSize*0.85)+'px;margin-right:'+(fontSize*0.4)+'px;text-shadow:none;vertical-align:middle">'+z.icon+'</span>'+z.t.toUpperCase();
+    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(3,fontSize*0.5)+'px '+Math.max(6,fontSize*1)+'px;border-radius:'+Math.max(2,fontSize*0.3)+'px;white-space:nowrap;letter-spacing:0.08em;background:'+z.bg+';border:'+Math.max(1,fontSize*0.15)+'px solid rgba(255,255,255,0.4);border-bottom:'+Math.max(2,fontSize*0.2)+'px solid rgba(0,0,0,0.2);box-shadow:0 3px 12px rgba(0,0,0,0.35),inset 0 2px 0 rgba(255,255,255,0.25),inset 0 -3px 6px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.3);margin:0 -1px;margin-top:'+(pillarH*0.25)+'px;position:relative;display:flex;align-items:center';
     wrap.appendChild(board);
-    const shadow=document.createElement('div');
-    shadow.style.cssText='width:60%;height:3px;background:radial-gradient(ellipse,rgba(0,0,0,0.15),transparent 70%);border-radius:50%;margin-top:1px;filter:blur(1px)';
-    wrap.appendChild(shadow);
+    wrap.appendChild(mkPillar());
     mapCanvas.appendChild(wrap);
   });
 
@@ -5393,7 +5449,6 @@ function addMapDecorations(cw,ch){
     {x:14,y:12,t:'ORIGIN STORY',rot:-3,color:'rgba(40,80,30,0.12)',size:0.025},
     {x:55,y:8,t:'THE WAR ROOM',rot:2,color:'rgba(120,30,30,0.12)',size:0.022},
     {x:14,y:32,t:'LAUNCH PAD',rot:-1,color:'rgba(30,60,120,0.12)',size:0.022},
-    {x:35,y:25,t:'AKASH UNPLUGGED',rot:0,color:'rgba(180,140,30,0.08)',size:0.018},
     {x:20,y:55,t:'THE PLAYGROUND',rot:3,color:'rgba(160,80,0,0.1)',size:0.022},
     {x:65,y:50,t:'MEME ALLEY',rot:-2,color:'rgba(100,30,120,0.1)',size:0.022},
   ];
