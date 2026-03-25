@@ -169,93 +169,110 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .zone-signpost{
   display:flex;align-items:flex-end;gap:0;
   z-index:100!important;
-  filter:drop-shadow(0 20px 40px rgba(0,0,0,0.4))!important;
   transform-style:preserve-3d;
-  perspective:800px;
+  perspective:900px;
   position:absolute;
+  /* Standing on ground — slight bottom-up perspective */
+  transform:perspective(900px) rotateX(6deg);
 }
 .zone-signpost:hover{
-  filter:drop-shadow(0 24px 48px rgba(0,0,0,0.5))!important;
-}
-.zone-signpost:hover .signpost-board{
-  transform:perspective(600px) rotateX(-3deg) rotateY(2deg) scale(1.03);
+  transform:perspective(900px) rotateX(4deg) scale(1.02);
 }
 
 /* Stone/marble pillar */
 .signpost-pillar{
-  width:28px;flex-shrink:0;position:relative;z-index:3;
+  width:36px;flex-shrink:0;position:relative;z-index:3;
   display:flex;flex-direction:column;align-items:center;
 }
 /* Pillar shaft */
 .pillar-shaft{
-  width:22px;flex:1;min-height:110px;
+  width:26px;flex:1;min-height:140px;
   background:
     linear-gradient(90deg,
-      #d4cfc8 0%,#e8e4de 20%,#f5f2ed 40%,#e8e4de 60%,#d4cfc8 80%,#bbb6ac 100%);
+      #c4bfb6 0%,#d8d4cc 15%,#eae7e1 35%,#f5f2ed 50%,#eae7e1 65%,#d8d4cc 85%,#c4bfb6 100%);
   border-radius:3px;
   position:relative;
   box-shadow:
-    3px 0 0 rgba(0,0,0,0.08),
-    -1px 0 0 rgba(255,255,255,0.3),
-    0 6px 16px rgba(0,0,0,0.15);
+    4px 0 0 rgba(0,0,0,0.1),
+    -2px 0 0 rgba(255,255,255,0.25),
+    0 8px 20px rgba(0,0,0,0.2),
+    0 16px 40px rgba(0,0,0,0.1);
 }
-/* Pillar fluting texture */
+/* Pillar fluting — vertical grooves */
 .pillar-shaft::before{
-  content:'';position:absolute;inset:0;border-radius:3px;pointer-events:none;
+  content:'';position:absolute;inset:4px 2px;border-radius:2px;pointer-events:none;
   background:repeating-linear-gradient(90deg,
-    transparent 0px,rgba(0,0,0,0.03) 1px,transparent 2px,
-    rgba(0,0,0,0.02) 3px,transparent 4px,
-    rgba(255,255,255,0.06) 5px,transparent 6px);
+    transparent 0px,rgba(0,0,0,0.04) 1px,transparent 2px,
+    rgba(0,0,0,0.03) 3px,transparent 4px,
+    rgba(255,255,255,0.08) 5px,transparent 6px,
+    rgba(0,0,0,0.02) 7px,transparent 8px);
 }
-/* Pillar capital — ornamental top ball */
+/* Pillar highlight edge */
+.pillar-shaft::after{
+  content:'';position:absolute;top:0;left:0;width:40%;height:100%;border-radius:3px 0 0 3px;
+  background:linear-gradient(90deg,rgba(255,255,255,0.15),transparent);
+  pointer-events:none;
+}
+/* Pillar capital — ornamental ball top */
 .pillar-cap{
-  width:34px;height:34px;
-  background:radial-gradient(ellipse at 35% 30%,#f5f2ed,#d4cfc8 50%,#bbb6ac);
+  width:42px;height:42px;
+  background:radial-gradient(ellipse at 35% 28%,#f8f6f2,#e0dbd4 40%,#c4bfb6 70%,#a8a298);
   border-radius:50%;
-  border:2px solid rgba(0,0,0,0.08);
+  border:2px solid rgba(0,0,0,0.06);
   box-shadow:
-    0 -3px 8px rgba(0,0,0,0.1),
-    inset 0 4px 6px rgba(255,255,255,0.5),
-    inset 0 -2px 4px rgba(0,0,0,0.1);
-  margin-bottom:-2px;
+    0 -4px 10px rgba(0,0,0,0.12),
+    0 6px 12px rgba(0,0,0,0.15),
+    inset 0 5px 8px rgba(255,255,255,0.5),
+    inset 0 -3px 6px rgba(0,0,0,0.12);
+  margin-bottom:-3px;
   position:relative;z-index:4;
 }
-/* Pillar base — wider footing */
+/* Pillar base — wider stepped footing */
 .pillar-base{
-  width:32px;height:18px;
-  background:linear-gradient(180deg,#d4cfc8,#bbb6ac);
-  border-radius:2px 2px 4px 4px;
-  border-top:2px solid rgba(255,255,255,0.3);
-  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  width:40px;height:24px;
+  background:linear-gradient(180deg,#d4cfc8 0%,#bbb6ac 50%,#a8a298 100%);
+  border-radius:2px 2px 5px 5px;
+  border-top:2px solid rgba(255,255,255,0.35);
+  box-shadow:
+    0 6px 16px rgba(0,0,0,0.25),
+    0 12px 32px rgba(0,0,0,0.1),
+    inset 0 -2px 4px rgba(0,0,0,0.1);
   margin-top:-2px;
+  position:relative;
+}
+/* Base step detail */
+.pillar-base::after{
+  content:'';position:absolute;bottom:-6px;left:-4px;right:-4px;height:8px;
+  background:linear-gradient(180deg,#b5b0a8,#9e9a92);
+  border-radius:2px 2px 6px 6px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* ===== THE ARCH BOARD — colorful themed sign ===== */
+/* ===== THE BOARD — colorful themed sign ===== */
 .signpost-board{
-  font-family:var(--font-fun);font-weight:900;font-size:1.6rem;
+  font-family:var(--font-fun);font-weight:900;font-size:2rem;
   color:#fff;
-  padding:20px 36px;
-  border-radius:12px;
+  padding:24px 44px;
+  border-radius:10px;
   letter-spacing:0.1em;white-space:nowrap;
   position:relative;z-index:5;
-  margin:0 -6px;
+  margin:0 -8px;
   align-self:flex-start;
-  margin-top:30px;
+  margin-top:36px;
   text-shadow:
-    0 3px 0 rgba(0,0,0,0.35),
+    0 3px 0 rgba(0,0,0,0.4),
     0 -1px 0 rgba(255,255,255,0.2),
-    0 0 20px rgba(0,0,0,0.15);
-  transform:perspective(600px) rotateX(-2deg);
-  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),filter 0.3s;
+    0 0 24px rgba(0,0,0,0.1);
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
   /* 3D thick board effect */
-  border:4px solid rgba(255,255,255,0.4);
-  border-bottom:6px solid rgba(0,0,0,0.25);
-  border-right:5px solid rgba(0,0,0,0.15);
+  border:4px solid rgba(255,255,255,0.35);
+  border-bottom:8px solid rgba(0,0,0,0.3);
+  border-right:6px solid rgba(0,0,0,0.18);
   box-shadow:
-    0 10px 30px rgba(0,0,0,0.35),
-    0 20px 60px rgba(0,0,0,0.15),
+    0 12px 36px rgba(0,0,0,0.4),
+    0 24px 64px rgba(0,0,0,0.15),
     inset 0 3px 0 rgba(255,255,255,0.3),
-    inset 0 -6px 12px rgba(0,0,0,0.2),
+    inset 0 -8px 16px rgba(0,0,0,0.2),
     inset 6px 0 12px rgba(0,0,0,0.06),
     inset -6px 0 12px rgba(0,0,0,0.06);
 }
@@ -263,41 +280,16 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .signpost-board::before{
   content:'';position:absolute;inset:0;border-radius:8px;pointer-events:none;
   background:
-    linear-gradient(135deg,rgba(255,255,255,0.35) 0%,transparent 40%,transparent 60%,rgba(0,0,0,0.1) 100%);
+    linear-gradient(135deg,rgba(255,255,255,0.3) 0%,transparent 35%,transparent 65%,rgba(0,0,0,0.1) 100%);
 }
-/* Board icon badge — circular emblem */
-.signpost-board .board-icon{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:42px;height:42px;
-  background:radial-gradient(circle at 40% 35%,rgba(255,255,255,0.4),rgba(0,0,0,0.1));
-  border-radius:50%;
-  border:3px solid rgba(255,255,255,0.5);
-  font-size:1.4rem;
-  margin-right:10px;
-  box-shadow:0 3px 8px rgba(0,0,0,0.2),inset 0 2px 4px rgba(255,255,255,0.3);
-  vertical-align:middle;
-  text-shadow:none;
-}
-/* Decorative rivets on the board */
-.signpost-rivet{
-  position:absolute;width:10px;height:10px;
-  background:radial-gradient(circle at 35% 30%,#f0ece6,#bbb6ac 60%,#9e9a94);
-  border-radius:50%;
-  border:1px solid rgba(0,0,0,0.15);
-  box-shadow:inset 0 2px 2px rgba(255,255,255,0.6),0 2px 4px rgba(0,0,0,0.15);
-}
-.signpost-rivet.tl{top:8px;left:10px}
-.signpost-rivet.tr{top:8px;right:10px}
-.signpost-rivet.bl{bottom:8px;left:10px}
-.signpost-rivet.br{bottom:8px;right:10px}
 
-/* Ground shadow under the signpost */
+/* Ground shadow — elliptical shadow under the whole signpost */
 .signpost-ground{
-  position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);
-  width:90%;height:10px;
-  background:radial-gradient(ellipse,rgba(0,0,0,0.2),transparent 70%);
+  position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);
+  width:110%;height:18px;
+  background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,0.3) 0%,rgba(0,0,0,0.15) 40%,transparent 75%);
   border-radius:50%;
-  filter:blur(3px);
+  filter:blur(4px);
   z-index:0;
 }
 .sticker-fortune{background:linear-gradient(135deg,#FFE0B2,#FFB74D);border-radius:16px;padding:18px 22px;max-width:220px;box-shadow:0 3px 12px rgba(0,0,0,0.08);cursor:pointer}
@@ -1977,52 +1969,47 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <!-- ===== ZONE SIGNPOSTS — 3D Theme-Park Arch Style ===== -->
 <div class="sticker zone-signpost" style="left:1050px;top:400px;pointer-events:none;user-select:none">
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)">
-    <div class="signpost-rivet tl"></div><div class="signpost-rivet tr"></div><div class="signpost-rivet bl"></div><div class="signpost-rivet br"></div>
-    <span class="board-icon">📸</span> ORIGIN STORY
+    📸 ORIGIN STORY
   </div>
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
 </div>
 
 <div class="sticker zone-signpost" style="left:5050px;top:400px;pointer-events:none;user-select:none">
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)">
-    <div class="signpost-rivet tl"></div><div class="signpost-rivet tr"></div><div class="signpost-rivet bl"></div><div class="signpost-rivet br"></div>
-    <span class="board-icon">🎯</span> THE WAR ROOM
+    🎯 THE WAR ROOM
   </div>
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
 </div>
 
 <div class="sticker zone-signpost" style="left:1050px;top:2000px;pointer-events:none;user-select:none">
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)">
-    <div class="signpost-rivet tl"></div><div class="signpost-rivet tr"></div><div class="signpost-rivet bl"></div><div class="signpost-rivet br"></div>
-    <span class="board-icon">🚀</span> LAUNCH PAD
+    🚀 LAUNCH PAD
   </div>
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
 </div>
 
 <div class="sticker zone-signpost" style="left:1800px;top:3600px;pointer-events:none;user-select:none">
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#E65100,#FF9800,#EF6C00)">
-    <div class="signpost-rivet tl"></div><div class="signpost-rivet tr"></div><div class="signpost-rivet bl"></div><div class="signpost-rivet br"></div>
-    <span class="board-icon">🎮</span> THE PLAYGROUND
+    🎮 THE PLAYGROUND
   </div>
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
 </div>
 
 <div class="sticker zone-signpost" style="left:6600px;top:3600px;pointer-events:none;user-select:none">
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)">
-    <div class="signpost-rivet tl"></div><div class="signpost-rivet tr"></div><div class="signpost-rivet bl"></div><div class="signpost-rivet br"></div>
-    <span class="board-icon">😂</span> MEME ALLEY
+    😂 MEME ALLEY
   </div>
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:100px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
 </div>
   </div>
@@ -5406,7 +5393,7 @@ function addMapDecorations(cw,ch){
     wrap.appendChild(svg);
   });
 
-  // === AREA NAME SIGNPOSTS (theme-park arch style) ===
+  // === AREA NAME SIGNPOSTS (theme-park arch style, bigger) ===
   const areaNames=[
     {x:14,y:22,t:'Origin Story',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)'},
     {x:55,y:14,t:'The War Room',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)'},
@@ -5416,31 +5403,34 @@ function addMapDecorations(cw,ch){
   ];
   areaNames.forEach(z=>{
     const wrap=document.createElement('div');
-    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%);display:flex;align-items:flex-end;z-index:9;pointer-events:none;gap:0';
-    const fontSize=Math.max(5,cw*0.004);
-    const pillarW=Math.max(3,cw*0.002);
-    const pillarH=Math.max(12,cw*0.01);
-    const capS=Math.max(4,pillarW*1.4);
-    // Left pillar
+    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%) perspective(400px) rotateX(5deg);display:flex;align-items:flex-end;z-index:9;pointer-events:none;gap:0';
+    const fontSize=Math.max(6,cw*0.005);
+    const pillarW=Math.max(4,cw*0.003);
+    const pillarH=Math.max(18,cw*0.016);
+    const capS=Math.max(6,pillarW*1.5);
+    const baseW=Math.max(5,pillarW*1.5);
     const mkPillar=()=>{
       const p=document.createElement('div');
       p.style.cssText='display:flex;flex-direction:column;align-items:center;flex-shrink:0';
       const cap=document.createElement('div');
-      cap.style.cssText='width:'+capS+'px;height:'+capS+'px;border-radius:50%;background:radial-gradient(ellipse at 35% 30%,#f5f2ed,#bbb6ac);border:1px solid rgba(0,0,0,0.1);margin-bottom:-1px;box-shadow:inset 0 2px 3px rgba(255,255,255,0.5)';
+      cap.style.cssText='width:'+capS+'px;height:'+capS+'px;border-radius:50%;background:radial-gradient(ellipse at 35% 28%,#f8f6f2,#c4bfb6);border:1px solid rgba(0,0,0,0.08);margin-bottom:-1px;box-shadow:inset 0 2px 3px rgba(255,255,255,0.5),0 2px 4px rgba(0,0,0,0.15)';
       const shaft=document.createElement('div');
-      shaft.style.cssText='width:'+pillarW+'px;height:'+pillarH+'px;background:linear-gradient(90deg,#d4cfc8,#f5f2ed 40%,#d4cfc8);border-radius:1px;box-shadow:1px 0 0 rgba(0,0,0,0.05)';
+      shaft.style.cssText='width:'+pillarW+'px;height:'+pillarH+'px;background:linear-gradient(90deg,#c4bfb6,#eae7e1 35%,#f5f2ed 50%,#eae7e1 65%,#c4bfb6);border-radius:1px;box-shadow:2px 0 0 rgba(0,0,0,0.06),0 4px 8px rgba(0,0,0,0.12)';
       const base=document.createElement('div');
-      base.style.cssText='width:'+(pillarW*1.4)+'px;height:'+(pillarW*0.6)+'px;background:linear-gradient(180deg,#d4cfc8,#bbb6ac);border-radius:0 0 1px 1px;margin-top:-1px';
+      base.style.cssText='width:'+baseW+'px;height:'+(pillarW*0.7)+'px;background:linear-gradient(180deg,#d4cfc8,#a8a298);border-radius:0 0 2px 2px;margin-top:-1px;box-shadow:0 3px 6px rgba(0,0,0,0.15)';
       p.appendChild(cap);p.appendChild(shaft);p.appendChild(base);
       return p;
     };
     wrap.appendChild(mkPillar());
-    // Board
     const board=document.createElement('div');
-    board.innerHTML='<span style="display:inline-flex;align-items:center;justify-content:center;width:'+(fontSize*2)+'px;height:'+(fontSize*2)+'px;background:radial-gradient(circle,rgba(255,255,255,0.35),rgba(0,0,0,0.05));border-radius:50%;border:1.5px solid rgba(255,255,255,0.45);font-size:'+(fontSize*0.85)+'px;margin-right:'+(fontSize*0.4)+'px;text-shadow:none;vertical-align:middle">'+z.icon+'</span>'+z.t.toUpperCase();
-    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(3,fontSize*0.5)+'px '+Math.max(6,fontSize*1)+'px;border-radius:'+Math.max(2,fontSize*0.3)+'px;white-space:nowrap;letter-spacing:0.08em;background:'+z.bg+';border:'+Math.max(1,fontSize*0.15)+'px solid rgba(255,255,255,0.4);border-bottom:'+Math.max(2,fontSize*0.2)+'px solid rgba(0,0,0,0.2);box-shadow:0 3px 12px rgba(0,0,0,0.35),inset 0 2px 0 rgba(255,255,255,0.25),inset 0 -3px 6px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.3);margin:0 -1px;margin-top:'+(pillarH*0.25)+'px;position:relative;display:flex;align-items:center';
+    board.textContent=z.icon+' '+z.t.toUpperCase();
+    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(4,fontSize*0.55)+'px '+Math.max(8,fontSize*1.1)+'px;border-radius:'+Math.max(3,fontSize*0.25)+'px;white-space:nowrap;letter-spacing:0.08em;background:'+z.bg+';border:'+Math.max(1.5,fontSize*0.12)+'px solid rgba(255,255,255,0.35);border-bottom:'+Math.max(2,fontSize*0.18)+'px solid rgba(0,0,0,0.25);box-shadow:0 4px 16px rgba(0,0,0,0.4),inset 0 2px 0 rgba(255,255,255,0.25),inset 0 -4px 8px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.35);margin:0 -1px;margin-top:'+(pillarH*0.25)+'px';
     wrap.appendChild(board);
     wrap.appendChild(mkPillar());
+    // Ground shadow
+    const shadow=document.createElement('div');
+    shadow.style.cssText='position:absolute;bottom:-'+(capS*0.5)+'px;left:50%;transform:translateX(-50%);width:80%;height:'+(capS*0.4)+'px;background:radial-gradient(ellipse,rgba(0,0,0,0.2),transparent 70%);border-radius:50%;filter:blur(2px)';
+    wrap.appendChild(shadow);
     mapCanvas.appendChild(wrap);
   });
 
