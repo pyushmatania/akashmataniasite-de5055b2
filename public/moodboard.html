@@ -2966,6 +2966,12 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
     const barCoords=document.getElementById('barCoords');
     if(coordEl)coordEl.textContent='x: '+cx+' · y: '+cy;
     if(barCoords)barCoords.textContent='x:'+cx+' y:'+cy;
+    // Update big map zone banner
+    const bigZone=document.getElementById('mapZoneBanner');
+    if(bigZone){
+      const zn=getZoneName(cx,cy);
+      bigZone.textContent=zn;
+    }
   }
   if(mmExp && drawMap._sc){
     clearTimeout(mapCloneTimer);
