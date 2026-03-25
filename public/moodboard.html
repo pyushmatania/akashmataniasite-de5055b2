@@ -55,6 +55,29 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
 .sticker:active{cursor:grabbing}
 .sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important}
+
+/* ===== ZONE VISUAL TINTS ===== */
+.zone-tint{position:absolute;pointer-events:none;z-index:1;border-radius:40px;opacity:0.06;transition:opacity 0.3s}
+.zone-tint-origin{background:radial-gradient(ellipse at center,#4CAF50,transparent 70%)}
+.zone-tint-warroom{background:radial-gradient(ellipse at center,#E53935,transparent 70%)}
+.zone-tint-launchpad{background:radial-gradient(ellipse at center,#42A5F5,transparent 70%)}
+.zone-tint-hub{background:radial-gradient(ellipse at center,#FFB300,transparent 70%)}
+.zone-tint-playground{background:radial-gradient(ellipse at center,#FF9800,transparent 70%)}
+.zone-tint-memealley{background:radial-gradient(ellipse at center,#AB47BC,transparent 70%)}
+.zone-divider{position:absolute;pointer-events:none;z-index:2}
+.zone-divider-h{height:2px;background:repeating-linear-gradient(90deg,transparent,transparent 12px,rgba(201,169,110,0.12) 12px,rgba(201,169,110,0.12) 24px)}
+.zone-divider-v{width:2px;background:repeating-linear-gradient(180deg,transparent,transparent 12px,rgba(201,169,110,0.12) 12px,rgba(201,169,110,0.12) 24px)}
+
+/* ===== PROJECT SHOWCASE CARDS ===== */
+.sticker-project{background:#fff;border-radius:18px;padding:20px;border:2px solid #f0ece6;width:240px;box-shadow:0 4px 24px rgba(0,0,0,0.08);transition:transform 0.2s,box-shadow 0.2s}
+.sticker-project:hover{transform:translateY(-4px) !important;box-shadow:0 8px 32px rgba(0,0,0,0.12) !important}
+.sticker-project .proj-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sticker-project .proj-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem}
+.sticker-project .proj-title{font-family:var(--font-fun);font-weight:700;font-size:0.85rem;color:var(--text)}
+.sticker-project .proj-tag{font-size:0.6rem;font-weight:600;letter-spacing:0.05em;color:var(--text3);text-transform:uppercase}
+.sticker-project .proj-desc{font-size:0.78rem;color:var(--text2);line-height:1.6;margin-bottom:14px}
+.sticker-project .proj-stats{display:flex;gap:8px;flex-wrap:wrap}
+.sticker-project .proj-stat{padding:4px 10px;border-radius:12px;font-size:0.6rem;font-weight:600;letter-spacing:0.03em}
 .sticker[data-anim]::after{content:'tap me!';position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-family:var(--font-hand);font-size:0.7rem;color:var(--text3);opacity:0;transition:opacity 0.2s;white-space:nowrap;pointer-events:none}
 .sticker[data-anim]:hover::after{opacity:0.6}
 
