@@ -3595,20 +3595,16 @@ function drawMap(){
     mapCanvas.style.left='0';
     mapCanvas.style.top='50px';
   } else {
-    // SMALL MAP: zoomed-in view centered on player for visible arrow movement
-    const zoomFactor=4; // show ~1/4 of canvas width
+    // SMALL MAP: zoomed view where arrow moves, bg pans when arrow nears edge
+    const zoomFactor=3.5;
     sc=mw/(contentW/zoomFactor);
     canvasW=contentW*sc;
     canvasH=contentH*sc;
-    // Center map on player position, offset applied in updMap
-    const px=vp.scrollLeft+vp.clientWidth/2;
-    const py=vp.scrollTop+vp.clientHeight/2;
     offsetX=0;
     offsetY=0;
-    const mapPx=px*sc;
-    const mapPy=py*sc;
-    mapCanvas.style.left=(mw/2-mapPx)+'px';
-    mapCanvas.style.top=(mh/2-mapPy)+'px';
+    // Position will be set dynamically in updMap via bg-sync
+    mapCanvas.style.left='0px';
+    mapCanvas.style.top='0px';
   }
   
   drawMap._sc=sc;drawMap._ox=offsetX;drawMap._oy=offsetY;
