@@ -5015,17 +5015,16 @@ function addMapDecorations(cw,ch){
     addDiv('map-ripple','left:'+x+'%;top:'+y+'%;animation-delay:'+(Math.random()*3)+'s');
   }
 
-  // === MAIN LAND MASSES ===
+  // === MAIN LAND MASSES (bigger to cover all items) ===
   const lands=[
-    {x:8,y:10,w:80,h:75,bg:'linear-gradient(160deg,#7dc462 0%,#5db844 25%,#4da638 50%,#6bc452 75%,#8dd470 100%)',r:'42% 58% 45% 55% / 48% 52% 48% 52%'},
-    {x:65,y:2,w:30,h:25,bg:'linear-gradient(135deg,#9dd882 0%,#6bc452 100%)',r:'55% 45% 50% 50% / 45% 55% 50% 50%'},
-    {x:2,y:72,w:22,h:22,bg:'linear-gradient(145deg,#e8c86a 0%,#d4a843 50%,#c89e3d 100%)',r:'50% 45% 55% 50% / 55% 50% 45% 55%'},
-    {x:72,y:75,w:24,h:20,bg:'linear-gradient(155deg,#deb85a 0%,#c8a342 100%)',r:'48% 52% 50% 50% / 52% 48% 50% 50%'},
-    {x:2,y:5,w:15,h:18,bg:'linear-gradient(135deg,#8dd470 0%,#6bc452 100%)',r:'55% 45% 48% 52% / 50% 55% 45% 50%'},
-    {x:55,y:0,w:42,h:12,bg:'linear-gradient(180deg,#f0f4f8 0%,#d5e3d0 60%,#9dd882 100%)',r:'0 0 48% 52%'},
+    {x:3,y:4,w:92,h:88,bg:'linear-gradient(160deg,#7dc462 0%,#5db844 25%,#4da638 50%,#6bc452 75%,#8dd470 100%)',r:'38% 52% 42% 48% / 42% 48% 52% 45%'},
+    {x:0,y:0,w:20,h:15,bg:'linear-gradient(135deg,#9dd882 0%,#6bc452 100%)',r:'0 0 55% 0 / 0 0 50% 0'},
+    {x:82,y:0,w:18,h:20,bg:'linear-gradient(135deg,#9dd882 0%,#6bc452 100%)',r:'0 0 0 55% / 0 0 0 50%'},
+    {x:0,y:80,w:18,h:20,bg:'linear-gradient(145deg,#e8c86a 0%,#d4a843 50%,#c89e3d 100%)',r:'0 55% 0 0 / 0 50% 0 0'},
+    {x:78,y:82,w:22,h:18,bg:'linear-gradient(155deg,#deb85a 0%,#c8a342 100%)',r:'55% 0 0 0 / 50% 0 0 0'},
   ];
   lands.forEach(l=>{
-    addDiv('map-land','left:'+l.x+'%;top:'+l.y+'%;width:'+l.w+'%;height:'+l.h+'%;background:'+l.bg+';border-radius:'+l.r+';box-shadow:0 6px 30px rgba(0,0,0,0.18),inset 0 -10px 40px rgba(0,0,0,0.1),inset 0 6px 20px rgba(255,255,255,0.2);border:2px solid rgba(0,0,0,0.04)');
+    addDiv('map-land','left:'+l.x+'%;top:'+l.y+'%;width:'+l.w+'%;height:'+l.h+'%;background:'+l.bg+';border-radius:'+l.r+';box-shadow:0 6px 30px rgba(0,0,0,0.18),inset 0 -10px 40px rgba(0,0,0,0.1),inset 0 6px 20px rgba(255,255,255,0.15);border:2px solid rgba(0,0,0,0.04)');
   });
 
   // === BEACHES ===
