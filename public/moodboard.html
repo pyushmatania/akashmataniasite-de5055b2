@@ -471,56 +471,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 @keyframes splashWave{0%{width:40px;height:40px;opacity:.8;transform:translate(-50%,-50%) scale(.3)}100%{width:400px;height:400px;opacity:0;transform:translate(-50%,-50%) scale(1)}}
 
 
-/* ===== CONTRA SOLDIER ===== */
-.sticker-contra{
-  position:relative;cursor:pointer;
-}
-.contra-label{
-  font-family:var(--font-fun);font-weight:800;font-size:0.7rem;
-  color:#FF1744;text-align:center;letter-spacing:0.15em;
-  text-transform:uppercase;margin-top:6px;
-  text-shadow:1px 1px 0 rgba(0,0,0,0.2);
-}
-.contra-badge{
-  background:#000;border:2px solid #FF1744;border-radius:8px;
-  padding:4px 10px;margin-top:4px;text-align:center;
-  font-family:var(--font-fun);font-size:0.55rem;font-weight:700;
-  color:#FFD54F;letter-spacing:0.1em;
-}
 
-/* Bullet */
-.bullet{
-  position:fixed;pointer-events:none;z-index:99990;
-  width:16px;height:4px;background:linear-gradient(90deg,#FF6F00,#FFD54F,#FFF);
-  border-radius:2px;box-shadow:0 0 8px rgba(255,160,0,0.8),0 0 20px rgba(255,100,0,0.4);
-}
-/* Muzzle flash */
-.muzzle-flash{
-  position:fixed;pointer-events:none;z-index:99989;
-  width:30px;height:30px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,255,200,0.9),rgba(255,160,0,0.6),transparent);
-  animation:muzzleFlash 0.15s ease-out forwards;
-}
-@keyframes muzzleFlash{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(2)}}
 
-/* Explosion on sticker */
-.sticker-explosion{
-  position:absolute;pointer-events:none;z-index:99991;
-  width:80px;height:80px;
-  background:radial-gradient(circle,rgba(255,200,50,0.9) 0%,rgba(255,100,0,0.7) 30%,rgba(255,50,0,0.3) 60%,transparent 70%);
-  border-radius:50%;
-  animation:explode 0.5s ease-out forwards;
-}
-@keyframes explode{0%{opacity:1;transform:translate(-50%,-50%) scale(0.3)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}}
-
-.sticker-destroyed{
-  animation:destroySticker 0.4s ease-in forwards;
-}
-@keyframes destroySticker{
-  0%{opacity:1;transform:scale(1)}
-  30%{transform:scale(1.1) rotate(5deg)}
-  100%{opacity:0;transform:scale(0.3) rotate(20deg) translateY(30px)}
-}
 
 
 /* ===== MAP v6 — GTA-STYLE HUD ===== */
@@ -1486,53 +1438,8 @@ body.map-expanded .scroll-counter{display:none!important}
 
 
 
-<!-- CONTRA SOLDIER - tap to fire! -->
-<div class="sticker sticker-contra" data-anim="shake" data-contra="true" style="left:3200px;top:1400px;transform:rotate(0deg)">
-  <svg width="120" height="140" viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated">
-    <!-- Pixel art run-and-gun soldier -->
-    <!-- Head -->
-    <rect x="22" y="2" width="16" height="4" fill="#1565C0"/>
-    <rect x="20" y="6" width="20" height="4" fill="#1565C0"/>
-    <rect x="20" y="6" width="4" height="2" fill="#0D47A1"/>
-    <rect x="36" y="6" width="4" height="2" fill="#0D47A1"/>
-    <!-- Face -->
-    <rect x="22" y="10" width="16" height="8" fill="#FFAB91"/>
-    <rect x="24" y="12" width="4" height="2" fill="#FFF"/>
-    <rect x="32" y="12" width="4" height="2" fill="#FFF"/>
-    <rect x="25" y="13" width="2" height="1" fill="#333"/>
-    <rect x="33" y="13" width="2" height="1" fill="#333"/>
-    <rect x="27" y="16" width="6" height="1" fill="#E57373"/>
-    <!-- Body / Tank top -->
-    <rect x="18" y="18" width="24" height="4" fill="#FFAB91"/>
-    <rect x="20" y="22" width="20" height="12" fill="#E0E0E0"/>
-    <rect x="22" y="24" width="16" height="8" fill="#BDBDBD"/>
-    <rect x="26" y="22" width="8" height="2" fill="#FFAB91"/>
-    <!-- Arms -->
-    <rect x="10" y="22" width="10" height="4" fill="#FFAB91"/>
-    <rect x="40" y="22" width="10" height="4" fill="#FFAB91"/>
-    <rect x="40" y="20" width="4" height="4" fill="#FFAB91"/>
-    <!-- Gun -->
-    <rect x="46" y="20" width="14" height="3" fill="#616161"/>
-    <rect x="46" y="19" width="4" height="2" fill="#757575"/>
-    <rect x="56" y="19" width="4" height="5" fill="#FF6F00"/>
-    <rect x="44" y="23" width="4" height="6" fill="#795548"/>
-    <!-- Pants -->
-    <rect x="20" y="34" width="8" height="14" fill="#1565C0"/>
-    <rect x="32" y="34" width="8" height="14" fill="#1565C0"/>
-    <rect x="22" y="34" width="4" height="2" fill="#0D47A1"/>
-    <rect x="34" y="34" width="4" height="2" fill="#0D47A1"/>
-    <!-- Belt -->
-    <rect x="20" y="33" width="20" height="2" fill="#5D4037"/>
-    <rect x="28" y="33" width="4" height="2" fill="#FFD54F"/>
-    <!-- Boots -->
-    <rect x="18" y="48" width="12" height="4" fill="#4E342E"/>
-    <rect x="30" y="48" width="12" height="4" fill="#4E342E"/>
-    <rect x="16" y="50" width="14" height="4" fill="#3E2723"/>
-    <rect x="30" y="50" width="14" height="4" fill="#3E2723"/>
-  </svg>
-  <div class="contra-label">COMMANDO</div>
-  <div class="contra-badge">⚡ TAP TO FIRE ⚡</div>
-</div>
+
+
 
 
 <!-- ===== NEW STICKERS: 96 items across 5 zones ===== -->
@@ -2140,11 +2047,8 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-emoji huge" data-anim="spin" style="left:1200px;top:4600px;font-size:6rem">🧃</div>
 
 <!-- ===== MEME ALLEY 😂 (right side 5000-9500, 3600-6800) — Fun & Memes ===== -->
-<div class="sticker sticker-contra" data-anim="shake" data-contra="true" style="left:7200px;top:4000px;transform:rotate(0deg)">
-  <svg width="50" height="60" viewBox="0 0 50 60"><circle cx="25" cy="12" r="9" fill="#8D6E63"/><circle cx="25" cy="12" r="7.5" fill="#FFCCBC"/><rect x="23" y="10" width="1.5" height="2" rx="0.5" fill="#5D4037"/><rect x="26" y="10" width="1.5" height="2" rx="0.5" fill="#5D4037"/><circle cx="23.5" cy="10.5" r="0.4" fill="#fff"/><circle cx="26.5" cy="10.5" r="0.4" fill="#fff"/><path d="M23 14.5 Q25 16 27 14.5" stroke="#5D4037" stroke-width="0.8" fill="none"/><rect x="22" y="4" width="7" height="4" rx="1" fill="#558B2F"/><path d="M18 20 L32 20 L34 45 L16 45 Z" fill="#558B2F"/><rect x="19" y="25" width="12" height="6" rx="1" fill="#33691E"/><rect x="22" y="22" width="6" height="3" rx="1" fill="#FFCC02"/><path d="M16 45 L14 58 L20 58 L22 45" fill="#455A64"/><path d="M28 45 L30 58 L36 58 L34 45" fill="#455A64"/><rect x="13" y="56" width="8" height="3" rx="1" fill="#37474F"/><rect x="29" y="56" width="8" height="3" rx="1" fill="#37474F"/><path d="M18 22 L8 30 L10 32 L18 26" fill="#8D6E63"/><rect x="4" y="28" width="8" height="2" rx="1" fill="#616161" transform="rotate(-25 8 29)"/><path d="M32 22 L42 28 L40 30 L32 26" fill="#8D6E63"/></svg>
-  <div class="contra-label">CONTRA MODE</div>
-  <div class="contra-badge">← → ← → B A</div>
-</div>
+
+
 <div class="sticker sticker-meme" data-anim="wiggle" style="left:5200px;top:3800px;transform:rotate(3deg)"><div class="meme-emoji">🤖</div><div class="meme-text">"Let me just ask Claude real quick"</div><div class="meme-sub">— me, every 5 minutes</div></div>
 <div class="sticker sticker-meme" data-anim="shake" style="left:6400px;top:4200px;transform:rotate(-4deg)"><div class="meme-emoji">📊</div><div class="meme-text">PM: "one more feature?"<br>Backlog: 📈📈📈</div><div class="meme-sub">story of my life</div></div>
 <div class="sticker sticker-meme" data-anim="jelly" style="left:5600px;top:4400px;transform:rotate(2deg)"><div class="meme-emoji">🎨</div><div class="meme-text">"Can you make the logo bigger?"</div><div class="meme-sub">— every client ever</div></div>
@@ -3211,7 +3115,7 @@ function identifyStickerGroup(sticker){
   const text=(sticker.textContent||'').toLowerCase();
   if(c.contains('zone-signpost'))return 'signpost';
   if(c.contains('sticker-hero-photo')||c.contains('sticker-photo-polaroid')||c.contains('sticker-photo-tilt')||c.contains('sticker-photo-circle')||c.contains('sticker-highlight')||c.contains('sticker-text')||c.contains('sticker-washi'))return 'personal';
-  if(c.contains('sticker-project')||c.contains('sticker-illustrated')||c.contains('sticker-contra'))return 'portfolio';
+  if(c.contains('sticker-project')||c.contains('sticker-illustrated'))return 'portfolio';
   if(c.contains('sticker-badge')||c.contains('sticker-stamp')||c.contains('sticker-swatches'))return 'work';
   if(c.contains('sticker-postit')){
     if(/product|strategy|fintech|web3|growth|analytics|roadmap|kpi|launch|sprint|founder|saas|edtech|prd|war room|ship|b2b|ai/i.test(text))return 'work';
@@ -3478,7 +3382,7 @@ function sU(e){
   if(isRotating){isRotating=false;as=null;return;}
   if(!didMove&&(Date.now()-tapTime)<400){
     if(as.dataset.splash)doSplash(as,e);
-    if(as.dataset.contra)contraFire(as,e);
+    
     if(as.dataset.anim)triggerAnim(as,e);
     if(as.onclick)as.onclick(e);
   }
@@ -3569,142 +3473,7 @@ function doSplash(el,e){
   const tn=document.createElement('div');tn.style.cssText='position:fixed;inset:0;background:rgba(50,120,200,.15);pointer-events:none;z-index:99996;transition:opacity 1s';document.body.appendChild(tn);setTimeout(()=>{tn.style.opacity='0'},200);setTimeout(()=>tn.remove(),1300);
 }
 
-// ===== CONTRA GUN FIRE =====
-function contraFire(el, e){
-  let cx,cy;
-  if(e&&e.changedTouches){cx=e.changedTouches[0].clientX;cy=e.changedTouches[0].clientY;}
-  else if(e){cx=e.clientX;cy=e.clientY;}
-  else{const r=el.getBoundingClientRect();cx=r.left+r.width/2;cy=r.top+r.height/2;}
-  
-  const elRect = el.getBoundingClientRect();
-  const gunX = elRect.right - 10;
-  const gunY = elRect.top + elRect.height * 0.32;
-  
-  // Muzzle flash
-  const flash = document.createElement('div');
-  flash.className = 'muzzle-flash';
-  flash.style.left = gunX + 'px';
-  flash.style.top = (gunY - 15) + 'px';
-  document.body.appendChild(flash);
-  setTimeout(()=>flash.remove(), 200);
-  
-  // Gun sound
-  try{
-    const ac = new(window.AudioContext||window.webkitAudioContext)();
-    // Gunshot: sharp noise + low thump
-    const bs = ac.sampleRate * 0.08;
-    const bf = ac.createBuffer(1, bs, ac.sampleRate);
-    const dt = bf.getChannelData(0);
-    for(let i=0;i<bs;i++){const t=i/bs; dt[i]=(Math.random()*2-1)*Math.pow(1-t,4)*0.8;}
-    const s = ac.createBufferSource(); s.buffer = bf;
-    const hp = ac.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=1000;
-    s.connect(hp); hp.connect(ac.destination); s.start();
-    // Low boom
-    const o = ac.createOscillator(); o.frequency.setValueAtTime(200,ac.currentTime);
-    o.frequency.exponentialRampToValueAtTime(30,ac.currentTime+0.1);
-    const g = ac.createGain(); g.gain.setValueAtTime(0.6,ac.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.15);
-    o.connect(g); g.connect(ac.destination); o.start(); o.stop(ac.currentTime+0.15);
-  }catch(ex){}
-  
-  // Find 3 nearby stickers to destroy (not the contra itself, not hero photos)
-  const allStickers = [...document.querySelectorAll('.sticker')];
-  const targets = allStickers
-    .filter(s => s !== el && !s.dataset.contra && !s.classList.contains('sticker-hero-photo'))
-    .map(s => {
-      const r = s.getBoundingClientRect();
-      const scx = r.left + r.width/2, scy = r.top + r.height/2;
-      const dist = Math.sqrt(Math.pow(scx-gunX,2)+Math.pow(scy-gunY,2));
-      return {el:s, cx:scx, cy:scy, dist};
-    })
-    .sort((a,b) => a.dist - b.dist)
-    .slice(0, 3);
-  
-  // Fire bullets at each target
-  targets.forEach((target, i) => {
-    setTimeout(() => {
-      // Create bullet
-      const bullet = document.createElement('div');
-      bullet.className = 'bullet';
-      bullet.style.left = gunX + 'px';
-      bullet.style.top = gunY + 'px';
-      
-      const dx = target.cx - gunX;
-      const dy = target.cy - gunY;
-      const angle = Math.atan2(dy, dx);
-      bullet.style.transform = 'rotate(' + (angle * 180 / Math.PI) + 'deg)';
-      document.body.appendChild(bullet);
-      
-      // Animate bullet flight
-      const dist = target.dist;
-      const duration = Math.min(400, dist * 0.5);
-      bullet.style.transition = 'left ' + duration + 'ms linear, top ' + duration + 'ms linear';
-      
-      requestAnimationFrame(() => {
-        bullet.style.left = target.cx + 'px';
-        bullet.style.top = target.cy + 'px';
-      });
-      
-      // On impact: explosion + destroy sticker
-      setTimeout(() => {
-        bullet.remove();
-        
-        // Explosion
-        const exp = document.createElement('div');
-        exp.className = 'sticker-explosion';
-        exp.style.left = target.cx + 'px';
-        exp.style.top = target.cy + 'px';
-        exp.style.position = 'fixed';
-        document.body.appendChild(exp);
-        setTimeout(()=>exp.remove(), 600);
-        
-        // Explosion sound
-        try{
-          const ac = new(window.AudioContext||window.webkitAudioContext)();
-          const bs = ac.sampleRate * 0.2;
-          const bf = ac.createBuffer(1, bs, ac.sampleRate);
-          const dt = bf.getChannelData(0);
-          for(let j=0;j<bs;j++){const t=j/bs; dt[j]=(Math.random()*2-1)*Math.pow(1-t,2)*0.5;}
-          const s = ac.createBufferSource(); s.buffer = bf;
-          const lp = ac.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=500;
-          s.connect(lp); lp.connect(ac.destination); s.start();
-        }catch(ex){}
-        
-        // Confetti from explosion
-        try{spawnConfetti(target.cx, target.cy)}catch(e){}
-        
-        // Destroy the sticker (hide with animation)
-        const origDisplay = target.el.style.display;
-        const origOpacity = target.el.style.opacity;
-        target.el.classList.add('sticker-destroyed');
-        
-        // Respawn after 5 seconds
-        setTimeout(() => {
-          target.el.classList.remove('sticker-destroyed');
-          target.el.style.display = origDisplay;
-          target.el.style.opacity = '1';
-          // Pop back in
-          target.el.style.transform = 'scale(0)';
-          setTimeout(() => {
-            target.el.style.transition = 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1)';
-            target.el.style.transform = 'scale(1)';
-            setTimeout(() => { target.el.style.transition = ''; }, 500);
-          }, 50);
-        }, 5000);
-        
-      }, duration);
-      
-      // Another muzzle flash for each shot
-      const flash2 = document.createElement('div');
-      flash2.className = 'muzzle-flash';
-      flash2.style.left = gunX + 'px';
-      flash2.style.top = (gunY - 15) + 'px';
-      document.body.appendChild(flash2);
-      setTimeout(()=>flash2.remove(), 200);
-      
-    }, i * 250); // Stagger shots
-  });
-}
+
 
 // ===== TOY STORY ANIMATIONS =====
 const allAnims=['wiggle','bounce','spin','jelly','dance','wave','float','pop','flip','shake','rocket','heartbeat','dizzy','rubberband','tada'];
@@ -6315,42 +6084,64 @@ vp.addEventListener('scroll',()=>{
   }
 });
 
+// ===== SHARED AUDIO CONTEXT (reuse for performance) =====
+let _sharedAC=null;
+function getAC(){if(!_sharedAC||_sharedAC.state==='closed')_sharedAC=new(window.AudioContext||window.webkitAudioContext)();if(_sharedAC.state==='suspended')_sharedAC.resume();return _sharedAC}
+
+function playSfx(type){
+  try{
+    const ac=getAC(),t=ac.currentTime;
+    if(type==='click'){const o=ac.createOscillator();o.type='sine';o.frequency.setValueAtTime(800,t);o.frequency.exponentialRampToValueAtTime(1200,t+0.05);const g=ac.createGain();g.gain.setValueAtTime(0.3,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.08);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+0.08)}
+    else if(type==='spin'){const o=ac.createOscillator();o.type='sawtooth';o.frequency.setValueAtTime(200,t);o.frequency.exponentialRampToValueAtTime(800,t+0.4);const g=ac.createGain();g.gain.setValueAtTime(0.15,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.5);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+0.5)}
+    else if(type==='win'){[523.25,659.25,783.99].forEach((f,i)=>{const o=ac.createOscillator();o.type='sine';o.frequency.value=f;const g=ac.createGain();g.gain.setValueAtTime(0.25,t+i*0.1);g.gain.exponentialRampToValueAtTime(0.001,t+i*0.1+0.3);o.connect(g);g.connect(ac.destination);o.start(t+i*0.1);o.stop(t+i*0.1+0.3)})}
+    else if(type==='pop'){const bs=ac.sampleRate*0.06;const bf=ac.createBuffer(1,bs,ac.sampleRate);const dt=bf.getChannelData(0);for(let i=0;i<bs;i++){dt[i]=(Math.random()*2-1)*Math.pow(1-i/bs,3)*0.4}const s=ac.createBufferSource();s.buffer=bf;s.connect(ac.destination);s.start()}
+    else if(type==='crunch'){const bs=ac.sampleRate*0.1;const bf=ac.createBuffer(1,bs,ac.sampleRate);const dt=bf.getChannelData(0);for(let i=0;i<bs;i++){const p=i/bs;dt[i]=(Math.random()*2-1)*Math.pow(1-p,2)*0.5*(Math.sin(p*80)>0?1:-1)}const s=ac.createBufferSource();s.buffer=bf;s.connect(ac.destination);s.start()}
+    else if(type==='kaching'){const o=ac.createOscillator();o.type='triangle';o.frequency.setValueAtTime(2000,t);o.frequency.exponentialRampToValueAtTime(4000,t+0.05);o.frequency.exponentialRampToValueAtTime(2500,t+0.15);const g=ac.createGain();g.gain.setValueAtTime(0.2,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.2);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+0.2)}
+    else if(type==='fail'){const o=ac.createOscillator();o.type='sine';o.frequency.setValueAtTime(400,t);o.frequency.exponentialRampToValueAtTime(150,t+0.3);const g=ac.createGain();g.gain.setValueAtTime(0.25,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.4);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+0.4)}
+    else if(type==='bingo'){[523.25,659.25,783.99,1046.5].forEach((f,i)=>{const o=ac.createOscillator();o.type='square';o.frequency.value=f;const g=ac.createGain();g.gain.setValueAtTime(0.15,t+i*0.08);g.gain.exponentialRampToValueAtTime(0.001,t+i*0.08+0.2);o.connect(g);g.connect(ac.destination);o.start(t+i*0.08);o.stop(t+i*0.08+0.2)})}
+    else if(type==='airhorn'){const o=ac.createOscillator();o.type='sawtooth';o.frequency.setValueAtTime(440,t);o.frequency.linearRampToValueAtTime(880,t+0.05);const g=ac.createGain();g.gain.setValueAtTime(0.3,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.4);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+0.4)}
+    else if(type==='error'){const o=ac.createOscillator();o.type='square';o.frequency.setValueAtTime(200,t);o.frequency.setValueAtTime(150,t+0.15);const g=ac.createGain();g.gain.setValueAtTime(0.2,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.3);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+0.3)}
+    else if(type==='splash'){const bs=ac.sampleRate*0.15;const bf=ac.createBuffer(1,bs,ac.sampleRate);const dt=bf.getChannelData(0);for(let i=0;i<bs;i++){const p=i/bs;dt[i]=(Math.random()*2-1)*Math.pow(1-p,1.5)*0.3}const s=ac.createBufferSource();s.buffer=bf;const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2000;s.connect(lp);lp.connect(ac.destination);s.start()}
+  }catch(ex){}
+}
+
 // ===== NEW INTERACTIVE FUNCTIONS =====
 const pivotOptions=['Pivot to AI 🤖','Pivot to Crypto 🪙','Pivot to D2C 📦','Stay the course (boring) 😐','Pivot to Chai Stall 🫖','Pivot to SaaS ☁️','Pivot to Web3 🔗','Pivot to EdTech 📚'];
-function pivotSlot(el,e){e.stopPropagation();const r=el.querySelector('.meme-text');r.textContent='🎰 Spinning...';el.style.animation='shake 0.5s';setTimeout(()=>{r.textContent=pivotOptions[Math.floor(Math.random()*pivotOptions.length)];el.style.animation='';spawnConfetti(e.clientX||0,e.clientY||0)},600)}
+function pivotSlot(el,e){e.stopPropagation();playSfx('spin');const r=el.querySelector('.meme-text');r.textContent='🎰 Spinning...';el.style.animation='shake 0.5s';setTimeout(()=>{r.textContent=pivotOptions[Math.floor(Math.random()*pivotOptions.length)];el.style.animation='';playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0)},600)}
 const jiraTickets=['PROD-6969: The button feels emotionally distant. P1.','PROD-420: Logo needs more vibes. Blocker.','PROD-1337: Dropdown has commitment issues. P0.','PROD-2077: This feature sparks no joy. Critical.','PROD-9001: User said "meh." Incident declared.','PROD-404: The vibe is off. Regression.','PROD-666: Dark mode is too dark. Existential.'];
-function jiraTicket(el,e){e.stopPropagation();el.querySelector('.meme-text').textContent=jiraTickets[Math.floor(Math.random()*jiraTickets.length)];spawnConfetti(e.clientX||0,e.clientY||0)}
+function jiraTicket(el,e){e.stopPropagation();playSfx('pop');el.querySelector('.meme-text').textContent=jiraTickets[Math.floor(Math.random()*jiraTickets.length)];spawnConfetti(e.clientX||0,e.clientY||0)}
 const velocities=[{v:3,r:'💀 Disaster'},{v:8,r:'😬 Rough sprint'},{v:13,r:'😐 Meh'},{v:21,r:'🎯 Solid!'},{v:34,r:'🔥 On fire!'},{v:69,r:'😏 Nice.'},{v:100,r:'🚀 LEGENDARY'}];
-function sprintWheel(el,e){e.stopPropagation();const r=el.querySelector('.meme-text');r.textContent='⏳ Spinning...';setTimeout(()=>{const v=velocities[Math.floor(Math.random()*velocities.length)];r.textContent='Velocity: '+v.v+' — '+v.r;spawnConfetti(e.clientX||0,e.clientY||0)},500)}
-function movieInvest(el,e){e.stopPropagation();const r=el.querySelector('.meme-text');const win=Math.random()>0.4;const mult=win?(1.5+Math.random()*2):(0.2+Math.random()*0.5);const ret=Math.round(1000*mult);r.textContent=win?'Your ₹1000 is now ₹'+ret+'! 🎉':'FLOP! ₹1000 → ₹'+ret+' 💀';spawnConfetti(e.clientX||0,e.clientY||0)}
+function sprintWheel(el,e){e.stopPropagation();playSfx('spin');const r=el.querySelector('.meme-text');r.textContent='⏳ Spinning...';setTimeout(()=>{const v=velocities[Math.floor(Math.random()*velocities.length)];r.textContent='Velocity: '+v.v+' — '+v.r;playSfx(v.v>=21?'win':'fail');spawnConfetti(e.clientX||0,e.clientY||0)},500)}
+function movieInvest(el,e){e.stopPropagation();playSfx('spin');const r=el.querySelector('.meme-text');const win=Math.random()>0.4;const mult=win?(1.5+Math.random()*2):(0.2+Math.random()*0.5);const ret=Math.round(1000*mult);setTimeout(()=>{r.textContent=win?'Your ₹1000 is now ₹'+ret+'! 🎉':'FLOP! ₹1000 → ₹'+ret+' 💀';playSfx(win?'kaching':'fail');spawnConfetti(e.clientX||0,e.clientY||0)},400)}
 const graves=['RIP Dark Mode (2023-2023)','RIP Chat Feature (never made it past PRD)','RIP Gamification (killed in stakeholder review)','RIP Social Feed (pivoted after 2 sprints)','RIP Voice Notes (nobody asked for this)','RIP NFT Integration (winter came)'];
 let graveIdx=0;
-function graveyard(el,e){e.stopPropagation();el.querySelector('.meme-text').textContent='🪦 '+graves[graveIdx%graves.length];graveIdx++;spawnConfetti(e.clientX||0,e.clientY||0)}
+function graveyard(el,e){e.stopPropagation();playSfx('error');el.querySelector('.meme-text').textContent='🪦 '+graves[graveIdx%graves.length];graveIdx++;spawnConfetti(e.clientX||0,e.clientY||0)}
 const cities=[{n:'Jeypore',m:'Where it started 🏔️'},{n:'Bhubaneswar',m:'First startup, first failure, first 5000 users 🚀'},{n:'Bengaluru',m:'Circles, Neural OS, everything 🌟'}];
 let cityIdx=0;
-function journeyMap(el,e){e.stopPropagation();const c=cities[cityIdx%cities.length];el.querySelector('.meme-text').textContent='📍 '+c.n+': '+c.m;cityIdx++;spawnConfetti(e.clientX||0,e.clientY||0)}
+function journeyMap(el,e){e.stopPropagation();playSfx('click');const c=cities[cityIdx%cities.length];el.querySelector('.meme-text').textContent='📍 '+c.n+': '+c.m;cityIdx++;spawnConfetti(e.clientX||0,e.clientY||0)}
 const phoenixReveals=['From the ashes of Harrier… rose EnterCircles 🔥','From trading losses… rose better risk instincts 📈','From failed startup… rose a better founder 💪','From scoliosis surgery… rose unbreakable resilience 🦴'];
-function phoenixScratch(el,e){e.stopPropagation();el.style.display='none';const r=el.parentElement.querySelector('.scratch-reveal');r.style.display='block';r.textContent=phoenixReveals[Math.floor(Math.random()*phoenixReveals.length)];spawnConfetti(e.clientX||0,e.clientY||0)}
+function phoenixScratch(el,e){e.stopPropagation();playSfx('win');el.style.display='none';const r=el.parentElement.querySelector('.scratch-reveal');r.style.display='block';r.textContent=phoenixReveals[Math.floor(Math.random()*phoenixReveals.length)];spawnConfetti(e.clientX||0,e.clientY||0)}
 const comebackStages=['Scoliosis surgery 🦴','Car caught fire 🔥','Trading hit 📉','Startup death 💀','Still here. Still building. 💪'];
-function comebackCount(el,e){e.stopPropagation();const cd=el.querySelector('.c-count');let n=parseInt(cd.dataset.count)+1;if(n>comebackStages.length)n=1;cd.dataset.count=n;cd.textContent=n;el.querySelector('.c-label').textContent=comebackStages[Math.min(n-1,comebackStages.length-1)];triggerAnim(el,e)}
+function comebackCount(el,e){e.stopPropagation();playSfx('click');const cd=el.querySelector('.c-count');let n=parseInt(cd.dataset.count)+1;if(n>comebackStages.length)n=1;cd.dataset.count=n;cd.textContent=n;el.querySelector('.c-label').textContent=comebackStages[Math.min(n-1,comebackStages.length-1)];triggerAnim(el,e)}
 const tradingMoods=['🟢 Moon','🟡 Coping','🔴 Stop Loss','💀 Rekt','🚀 Buying the Dip','🧘 Zen (lying)'];
 let tradingIdx=0;
-function tradingMood(el,e){e.stopPropagation();tradingIdx=(tradingIdx+1)%tradingMoods.length;el.querySelector('.meme-text').textContent=tradingMoods[tradingIdx];spawnConfetti(e.clientX||0,e.clientY||0)}
+function tradingMood(el,e){e.stopPropagation();playSfx('click');tradingIdx=(tradingIdx+1)%tradingMoods.length;el.querySelector('.meme-text').textContent=tradingMoods[tradingIdx];spawnConfetti(e.clientX||0,e.clientY||0)}
 const puchuMoods=[{f:'🐕😊',l:'Happy pupper!'},{f:'🐕💨',l:'ZOOMIES!'},{f:'🐕😴',l:'Sleepy boi...'},{f:'🐕🍖',l:'Feed me NOW!'},{f:'🐕❤️',l:"I love you but where's my treat?"}];
 let puchuIdx=0;
-function puchuMood(el,e){e.stopPropagation();puchuIdx=(puchuIdx+1)%puchuMoods.length;const m=puchuMoods[puchuIdx];el.querySelector('.meme-emoji').textContent=m.f;el.querySelector('.meme-text').textContent=m.l;spawnConfetti(e.clientX||0,e.clientY||0)}
+function puchuMood(el,e){e.stopPropagation();playSfx('pop');puchuIdx=(puchuIdx+1)%puchuMoods.length;const m=puchuMoods[puchuIdx];el.querySelector('.meme-emoji').textContent=m.f;el.querySelector('.meme-text').textContent=m.l;spawnConfetti(e.clientX||0,e.clientY||0)}
 const cryptoFortunes=["HODL isn't a strategy, it's a personality","Satoshi would be proud (probably)","Your portfolio is down but your karma is up","Buy the rumor, sell the panipuri","Not your keys, not your crypto","In Vitalik we trust","Wen lambo? More like wen break-even"];
-function cryptoFortune(el,e){e.stopPropagation();el.querySelector('.f-text').textContent=cryptoFortunes[Math.floor(Math.random()*cryptoFortunes.length)];el.querySelector('.f-label').textContent='tap again for more wisdom';spawnConfetti(e.clientX||0,e.clientY||0)}
-function panipuriCount(el,e){e.stopPropagation();const cd=el.querySelector('.c-count');let n=parseInt(cd.dataset.count)+1;cd.dataset.count=n;cd.textContent=n;const ms={5:'warm up 🔥',10:'in the zone 💪',15:'legendary status 👑',20:'someone call an ambulance but not for me 🚑🔥'};const lbl=el.querySelector('.c-label');lbl.textContent=ms[n]||'puris eaten today';triggerAnim(el,e)}
+function cryptoFortune(el,e){e.stopPropagation();playSfx('pop');el.querySelector('.f-text').textContent=cryptoFortunes[Math.floor(Math.random()*cryptoFortunes.length)];el.querySelector('.f-label').textContent='tap again for more wisdom';spawnConfetti(e.clientX||0,e.clientY||0)}
+function panipuriCount(el,e){e.stopPropagation();playSfx('crunch');const cd=el.querySelector('.c-count');let n=parseInt(cd.dataset.count)+1;cd.dataset.count=n;cd.textContent=n;const ms={5:'warm up 🔥',10:'in the zone 💪',15:'legendary status 👑',20:'someone call an ambulance but not for me 🚑🔥'};const lbl=el.querySelector('.c-label');if(ms[n]){playSfx('win');lbl.textContent=ms[n]}else{lbl.textContent='puris eaten today'}if(n%3===0)playSfx('splash');triggerAnim(el,e)}
 const corpBSPhrases=['Let\'s leverage synergies to ideate on a paradigm-shifting vertical','We need to boil the ocean to move the needle on our north star','Let\'s align on the alignment of our alignment','We need to circle back on our circle-back strategy','Let\'s take this offline to an offline meeting about going online'];
-function corpBS_gen(el,e){e.stopPropagation();el.querySelector('.meme-text').textContent=corpBSPhrases[Math.floor(Math.random()*corpBSPhrases.length)];spawnConfetti(e.clientX||0,e.clientY||0)}
-const startupSounds=['Ka-ching 💰 Revenue!','Whoooosh 🚀 Deployed!','Sad trombone 📉 Bug found','AIRHORN 📢 Launch!','Windows error 💀 Prod down','Applause 👏 Demo day!'];
-function startupSound(el,e){e.stopPropagation();el.querySelector('.meme-text').textContent=startupSounds[Math.floor(Math.random()*startupSounds.length)];spawnConfetti(e.clientX||0,e.clientY||0)}
+function corpBS_gen(el,e){e.stopPropagation();playSfx('pop');el.querySelector('.meme-text').textContent=corpBSPhrases[Math.floor(Math.random()*corpBSPhrases.length)];spawnConfetti(e.clientX||0,e.clientY||0)}
+const startupSoundMap={'Ka-ching 💰 Revenue!':'kaching','Whoooosh 🚀 Deployed!':'airhorn','Sad trombone 📉 Bug found':'fail','AIRHORN 📢 Launch!':'airhorn','Windows error 💀 Prod down':'error','Applause 👏 Demo day!':'win'};
+const startupSoundList=Object.keys(startupSoundMap);
+function startupSound(el,e){e.stopPropagation();const pick=startupSoundList[Math.floor(Math.random()*startupSoundList.length)];playSfx(startupSoundMap[pick]);el.querySelector('.meme-text').textContent=pick;spawnConfetti(e.clientX||0,e.clientY||0)}
 const bingoWords=['Synergy','You\'re on mute','Can you see my screen?','Let\'s take this offline','Per the last email','Action items','Bandwidth','Circle back','Deep dive'];
 let bingoMarked=[];
-function meetingBingo(el,e){e.stopPropagation();const word=bingoWords[Math.floor(Math.random()*bingoWords.length)];if(!bingoMarked.includes(word))bingoMarked.push(word);el.querySelector('.meme-text').textContent='✅ '+word+' ('+bingoMarked.length+'/9)';if(bingoMarked.length>=5){el.querySelector('.meme-sub').textContent='🎉 BINGO! You win!';for(let i=0;i<20;i++)setTimeout(()=>spawnConfetti(e.clientX||0,e.clientY||0),i*50);bingoMarked=[]}else{spawnConfetti(e.clientX||0,e.clientY||0)}}
+function meetingBingo(el,e){e.stopPropagation();playSfx('click');const word=bingoWords[Math.floor(Math.random()*bingoWords.length)];if(!bingoMarked.includes(word))bingoMarked.push(word);el.querySelector('.meme-text').textContent='✅ '+word+' ('+bingoMarked.length+'/9)';if(bingoMarked.length>=5){el.querySelector('.meme-sub').textContent='🎉 BINGO! You win!';playSfx('bingo');for(let i=0;i<20;i++)setTimeout(()=>spawnConfetti(e.clientX||0,e.clientY||0),i*50);bingoMarked=[]}else{spawnConfetti(e.clientX||0,e.clientY||0)}}
 const salaries=['Startup equity (worth TBD) 📊','Paid in experience 🎓','Paid in learnings 📚','Actual money (rare!) 💰','Paid in pizza on demo day 🍕','Stock options (cliff: ♾️)'];
-function salaryRoulette(el,e){e.stopPropagation();const r=el.querySelector('.meme-text');r.textContent='🎡 Spinning...';setTimeout(()=>{r.textContent=salaries[Math.floor(Math.random()*salaries.length)];spawnConfetti(e.clientX||0,e.clientY||0)},500)}
+function salaryRoulette(el,e){e.stopPropagation();playSfx('spin');const r=el.querySelector('.meme-text');r.textContent='🎡 Spinning...';setTimeout(()=>{const pick=salaries[Math.floor(Math.random()*salaries.length)];r.textContent=pick;playSfx(pick.includes('money')?'kaching':'fail');spawnConfetti(e.clientX||0,e.clientY||0)},500)}
 
 // Scan once on load, then draw + greeting
 function bootstrapMap(forceRescan){
