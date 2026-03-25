@@ -2562,32 +2562,15 @@ function closeWorkPanel(){
   });
 })();
 
-// Shuffle skills
-function shuffleSkills(){
-  var btn=document.querySelector('.shuffle-btn');
-  btn.classList.add('spinning');
-  setTimeout(function(){btn.classList.remove('spinning')},500);
-
-  var rows=document.querySelectorAll('.skill-row');
-  var pcts=[];
-  rows.forEach(function(r){
-    var fill=r.querySelector('.sk-fill');
-    var cur=parseInt(fill.style.getPropertyValue('--pct'));
-    pcts.push(cur);
-  });
-  // Fisher-Yates
-  for(var i=pcts.length-1;i>0;i--){
-    var j=Math.floor(Math.random()*(i+1));
-    var t=pcts[i];pcts[i]=pcts[j];pcts[j]=t;
+// Fun fact toggle
+function toggleFunFact(row){
+  var wasOpen=row.classList.contains('fact-open');
+  document.querySelectorAll('.skill-row.fact-open').forEach(function(r){r.classList.remove('fact-open')});
+  if(!wasOpen){
+    var fact=row.getAttribute('data-fact');
+    row.querySelector('.sk-fact').textContent=fact;
+    row.classList.add('fact-open');
   }
-  rows.forEach(function(r,i){
-    r.classList.add('shuffling');
-    var fill=r.querySelector('.sk-fill');
-    var pctEl=r.querySelector('.sk-pct');
-    fill.style.setProperty('--pct',pcts[i]+'%');
-    pctEl.textContent=pcts[i]+'%';
-    setTimeout(function(){r.classList.remove('shuffling')},700);
-  });
 }
 </script>
 <script>
