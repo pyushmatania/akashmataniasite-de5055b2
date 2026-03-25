@@ -758,11 +758,11 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 /* Recenter — now handled by controls-right panel */
 
 
-/* Hint */
+/* Hint — hidden, replaced by cardinals */
 .map-hint{
-  position:absolute;bottom:1px;left:50%;transform:translateX(-50%);
-  font-size:0.25rem;color:rgba(0,0,0,0.2);z-index:10;
-  font-family:var(--font-fun);white-space:nowrap;
+  position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
+  font-size:0;color:transparent;z-index:10;
+  pointer-events:none;display:none;
 }
 .minimap-container.expanded .map-hint{display:none}
 
