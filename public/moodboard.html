@@ -2509,6 +2509,86 @@ function closeWorkPanel(){
   </div>
 </div>
 <script>
+(function(){
+  var confettiColors=['#a8d8b9','#f5deb3','#d4b8e8','#b8d4f0','#f0b8b8','#f5c842','#7bc49a'];
+
+  function burstConfetti(x,y,count){
+    for(var i=0;i<count;i++){
+      var el=document.createElement('div');
+      el.className='confetti-piece';
+      el.style.left=(x+Math.random()*60-30)+'px';
+      el.style.top=(y+Math.random()*20-10)+'px';
+      el.style.background=confettiColors[Math.floor(Math.random()*confettiColors.length)];
+      el.style.width=(5+Math.random()*6)+'px';
+      el.style.height=(5+Math.random()*6)+'px';
+      el.style.borderRadius=Math.random()>0.5?'50%':'2px';
+      var angle=(Math.random()-0.5)*120;
+      var dist=60+Math.random()*80;
+      el.style.setProperty('--tx',(Math.sin(angle*Math.PI/180)*dist)+'px');
+      el.style.setProperty('--ty',(-40-Math.random()*100)+'px');
+      el.style.animation='confetti-burst 0.8s cubic-bezier(0.25,0.46,0.45,0.94) forwards';
+      document.body.appendChild(el);
+      setTimeout(function(e){e.remove()}.bind(null,el),900);
+    }
+  }
+
+  // Add burst keyframes
+  var style=document.createElement('style');
+  style.textContent='@keyframes confetti-burst{0%{opacity:1;transform:translate(0,0) rotate(0deg) scale(1)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) rotate('+Math.random()*720+'deg) scale(0.2)}}';
+  document.head.appendChild(style);
+
+  // Stat pill tap → confetti + pop
+  document.querySelectorAll('.stat-pill').forEach(function(pill){
+    pill.addEventListener('click',function(e){
+      var r=pill.getBoundingClientRect();
+      burstConfetti(r.left+r.width/2, r.top+r.height/2, 18);
+      pill.classList.remove('popped');
+      void pill.offsetWidth;
+      pill.classList.add('popped');
+      setTimeout(function(){pill.classList.remove('popped')},500);
+    });
+  });
+
+  // Tool chip tap → bounce
+  document.querySelectorAll('.tool-chip').forEach(function(chip){
+    chip.addEventListener('click',function(){
+      chip.classList.remove('bounced');
+      void chip.offsetWidth;
+      chip.classList.add('bounced');
+      setTimeout(function(){chip.classList.remove('bounced')},600);
+    });
+  });
+})();
+
+// Shuffle skills
+function shuffleSkills(){
+  var btn=document.querySelector('.shuffle-btn');
+  btn.classList.add('spinning');
+  setTimeout(function(){btn.classList.remove('spinning')},500);
+
+  var rows=document.querySelectorAll('.skill-row');
+  var pcts=[];
+  rows.forEach(function(r){
+    var fill=r.querySelector('.sk-fill');
+    var cur=parseInt(fill.style.getPropertyValue('--pct'));
+    pcts.push(cur);
+  });
+  // Fisher-Yates
+  for(var i=pcts.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var t=pcts[i];pcts[i]=pcts[j];pcts[j]=t;
+  }
+  rows.forEach(function(r,i){
+    r.classList.add('shuffling');
+    var fill=r.querySelector('.sk-fill');
+    var pctEl=r.querySelector('.sk-pct');
+    fill.style.setProperty('--pct',pcts[i]+'%');
+    pctEl.textContent=pcts[i]+'%';
+    setTimeout(function(){r.classList.remove('shuffling')},700);
+  });
+}
+</script>
+<script>
 const vp=document.getElementById('viewport'),cv=document.getElementById('canvas');
 // Center on the Akash hero sticker (left:800, top:600, width:290, ~height:350)
 const SCALE=0.85;
