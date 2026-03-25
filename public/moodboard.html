@@ -2361,6 +2361,42 @@ function closeWorkPanel(){
   max-height:120px;opacity:1;padding:12px 14px;margin-top:10px;
 }
 .skill-row { cursor:pointer; }
+
+/* Hidden skills */
+.hidden-skill {
+  max-height:0;overflow:hidden;opacity:0;margin-bottom:0;padding:0 20px;
+  border-color:transparent;
+  transition:max-height 0.5s cubic-bezier(0.25,0.46,0.45,0.94),
+             opacity 0.4s ease, margin 0.4s ease, padding 0.4s ease,
+             border-color 0.3s ease;
+}
+.hidden-skill.revealed {
+  max-height:200px;opacity:1;margin-bottom:10px;padding:18px 20px;
+  border-color:#f0ede8;
+}
+.hidden-skill.revealed .sk-fill {
+  transition:width 1s cubic-bezier(0.25,0.46,0.45,0.94) 0.3s;
+}
+
+/* More dot button */
+.more-skills-dot {
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  padding:14px;cursor:pointer;margin:8px 0;
+  transition:transform 0.2s;
+}
+.more-skills-dot:active { transform:scale(0.95); }
+.more-skills-dot .dot {
+  width:7px;height:7px;border-radius:50%;background:#d5d0c8;
+  transition:background 0.3s, transform 0.3s;
+}
+.more-skills-dot:hover .dot { background:#b5b0a8; }
+.more-skills-dot .more-label {
+  font-size:0.7rem;font-weight:600;color:#b5b0a8;
+  margin-left:8px;letter-spacing:0.03em;
+  transition:color 0.2s;
+}
+.more-skills-dot:hover .more-label { color:#7a756d; }
+.more-skills-dot.hidden { display:none; }
 </style>
 
 <div class="work-backdrop" id="workBackdrop" onclick="closeWorkPanel()"></div>
@@ -2422,6 +2458,38 @@ function closeWorkPanel(){
         <div class="sk-bar"><div class="sk-fill" style="--pct:92%;background:linear-gradient(90deg,#f0b8b8,#e0908f)"></div></div>
         <div class="sk-tags"><span class="sk-tag">Cross-functional</span><span class="sk-tag">Sprints</span><span class="sk-tag">Agile</span></div>
         <div class="sk-fact"></div>
+      </div>
+
+      <!-- Hidden skills -->
+      <div class="skill-row hidden-skill" onclick="toggleFunFact(this)" data-fact="I treat every product like a story — if the narrative doesn't hold, the feature doesn't ship. My decks have been called 'dangerously convincing.' 🎤">
+        <div class="sk-top"><span class="sk-icon">🧠</span><span class="sk-name">Product Thinking</span><span class="sk-pct">94%</span></div>
+        <div class="sk-bar"><div class="sk-fill" style="--pct:94%;background:linear-gradient(90deg,#c8e6c9,#81c784)"></div></div>
+        <div class="sk-tags"><span class="sk-tag">Storytelling</span><span class="sk-tag">Prioritization</span><span class="sk-tag">RICE</span></div>
+        <div class="sk-fact"></div>
+      </div>
+      <div class="skill-row hidden-skill" onclick="toggleFunFact(this)" data-fact="Built a full analytics pipeline tracking 12 key user actions in 2 weeks. Now I can't use any app without mentally mapping their event schema. 📊">
+        <div class="sk-top"><span class="sk-icon">📊</span><span class="sk-name">Data & Analytics</span><span class="sk-pct">87%</span></div>
+        <div class="sk-bar"><div class="sk-fill" style="--pct:87%;background:linear-gradient(90deg,#ffccbc,#ff8a65)"></div></div>
+        <div class="sk-tags"><span class="sk-tag">SQL</span><span class="sk-tag">Mixpanel</span><span class="sk-tag">Amplitude</span><span class="sk-tag">Tableau</span></div>
+        <div class="sk-fact"></div>
+      </div>
+      <div class="skill-row hidden-skill" onclick="toggleFunFact(this)" data-fact="Wireframed 40+ screens in Figma before breakfast once. My designers say I think in components. I take that as a compliment. ✏️">
+        <div class="sk-top"><span class="sk-icon">🎨</span><span class="sk-name">Design & UX</span><span class="sk-pct">82%</span></div>
+        <div class="sk-bar"><div class="sk-fill" style="--pct:82%;background:linear-gradient(90deg,#e1bee7,#ce93d8)"></div></div>
+        <div class="sk-tags"><span class="sk-tag">Figma</span><span class="sk-tag">Wireframes</span><span class="sk-tag">Prototyping</span></div>
+        <div class="sk-fact"></div>
+      </div>
+      <div class="skill-row hidden-skill" onclick="toggleFunFact(this)" data-fact="Wrote smart contracts, reviewed tokenomics models, and somehow convinced traditional film studios that blockchain isn't scary. 🔗">
+        <div class="sk-top"><span class="sk-icon">⛓️</span><span class="sk-name">Web3 & Blockchain</span><span class="sk-pct">83%</span></div>
+        <div class="sk-bar"><div class="sk-fill" style="--pct:83%;background:linear-gradient(90deg,#b3e5fc,#4fc3f7)"></div></div>
+        <div class="sk-tags"><span class="sk-tag">Smart Contracts</span><span class="sk-tag">NFT</span><span class="sk-tag">DeFi</span><span class="sk-tag">Tokenomics</span></div>
+        <div class="sk-fact"></div>
+      </div>
+
+      <!-- More dot -->
+      <div class="more-skills-dot" id="moreSkillsDot" onclick="revealHiddenSkills()">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="more-label">4 more skills</span>
       </div>
       <p style="font-size:0.68rem;color:#c5c0b8;text-align:center;margin-top:12px;font-style:italic">↑ tap a skill for a fun fact</p>
     </div>
@@ -2571,6 +2639,17 @@ function toggleFunFact(row){
     row.querySelector('.sk-fact').textContent=fact;
     row.classList.add('fact-open');
   }
+}
+
+function revealHiddenSkills(){
+  var dot=document.getElementById('moreSkillsDot');
+  dot.classList.add('hidden');
+  var hidden=document.querySelectorAll('.hidden-skill');
+  hidden.forEach(function(el,i){
+    setTimeout(function(){
+      el.classList.add('revealed');
+    }, i*120);
+  });
 }
 </script>
 <script>
