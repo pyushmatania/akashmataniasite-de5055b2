@@ -3649,30 +3649,50 @@ function addMapDecorations(cw,ch){
     }
   });
 
-  // === AREA NAME LABELS — SimCity district names ===
+  // === AREA NAME LABELS — 3D Signpost boards matching moodboard ===
   const areaNames=[
-    {x:15,y:12,t:'The Origin Story',size:0.9,rot:0},
-    {x:55,y:12,t:'The Hustle District',size:0.95,rot:0},
-    {x:82,y:12,t:'The Hobby Lobby',size:0.9,rot:0},
-    {x:15,y:36,t:'Cloud Nine',size:0.85,rot:0},
-    {x:45,y:44,t:'Akash Unplugged',size:1.1,rot:0},
-    {x:15,y:55,t:'LOL-lywood',size:0.95,rot:0},
-    {x:15,y:78,t:'Wanderlust Way',size:0.9,rot:0},
-    {x:60,y:36,t:'The Matrix Dojo',size:0.85,rot:0},
-    {x:55,y:55,t:'La La Land',size:0.9,rot:0},
-    {x:75,y:78,t:'The Recharge Room',size:0.9,rot:0},
-    {x:38,y:80,t:'The Backyard',size:0.8,rot:0},
-    {x:36,y:40,t:'Lake Akash',size:0.7,rot:0,color:'rgba(150,200,255,0.8)'},
-    {x:50,y:7,t:'North Shore',size:0.7,rot:0},
+    {x:15,y:12,t:'The Origin Story',icon:'📸',bg:'#4CAF50'},
+    {x:55,y:12,t:'The Hustle District',icon:'💼',bg:'#42A5F5'},
+    {x:82,y:12,t:'The Hobby Lobby',icon:'🎸',bg:'#E91E63'},
+    {x:15,y:36,t:'Cloud Nine',icon:'☁️',bg:'#AB47BC'},
+    {x:45,y:44,t:'Akash Unplugged',icon:'⭐',bg:'linear-gradient(135deg,#FFB300,#FF8F00)'},
+    {x:15,y:55,t:'LOL-lywood',icon:'🎬',bg:'#F9A825'},
+    {x:15,y:78,t:'Wanderlust Way',icon:'🌍',bg:'#1976D2'},
+    {x:60,y:36,t:'The Matrix Dojo',icon:'🥋',bg:'#2E7D32'},
+    {x:55,y:55,t:'La La Land',icon:'🎪',bg:'#E64A19'},
+    {x:75,y:78,t:'The Recharge Room',icon:'🧘',bg:'#7B1FA2'},
+    {x:38,y:80,t:'The Backyard',icon:'🏡',bg:'#795548'},
+    {x:50,y:28,t:'The Crossroads',icon:'🛤️',bg:'#607D8B'},
   ];
   areaNames.forEach(z=>{
-    const el=document.createElement('div');el.className='map-zone-marker';
-    el.style.left=z.x+'%';el.style.top=z.y+'%';el.textContent=z.t;
-    if(z.size)el.style.fontSize=(z.size)+'rem';
-    el.style.transform='translate(-50%,-50%)';
-    if(z.color)el.style.color=z.color;
-    mapCanvas.appendChild(el);
+    const wrap=document.createElement('div');
+    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none;z-index:9;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.3));';
+    // Pole
+    const pole=document.createElement('div');
+    const poleH=Math.max(15,cw*0.012);
+    pole.style.cssText='width:'+Math.max(3,cw*0.002)+'px;height:'+poleH+'px;background:linear-gradient(90deg,#BDBDBD,#9E9E9E,#757575);border-radius:2px;box-shadow:1px 0 0 rgba(255,255,255,0.2),-1px 0 0 rgba(0,0,0,0.15);';
+    wrap.appendChild(pole);
+    // Board
+    const board=document.createElement('div');
+    const fontSize=Math.max(6,cw*0.005);
+    board.textContent=z.icon+' '+z.t.toUpperCase();
+    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:800;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(3,fontSize*0.5)+'px '+Math.max(6,fontSize*1.2)+'px;border-radius:3px;white-space:nowrap;letter-spacing:0.08em;background:'+z.bg+';border:1.5px solid rgba(255,255,255,0.35);box-shadow:0 3px 8px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.25),inset 0 -1px 3px rgba(0,0,0,0.15);text-shadow:0 1px 2px rgba(0,0,0,0.4);margin-top:-1px;position:relative;';
+    wrap.appendChild(board);
+    // Board shine
+    const shine=document.createElement('div');
+    shine.style.cssText='position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(180deg,rgba(255,255,255,0.2),transparent);border-radius:2px 2px 0 0;pointer-events:none;';
+    board.appendChild(shine);
+    // Ground shadow
+    const shadow=document.createElement('div');
+    shadow.style.cssText='width:60%;height:4px;background:radial-gradient(ellipse,rgba(0,0,0,0.15),transparent 70%);border-radius:50%;margin-top:2px;filter:blur(1px);';
+    wrap.appendChild(shadow);
+    mapCanvas.appendChild(wrap);
   });
+  // Lake Akash label (water label, no signpost)
+  const lakeEl=document.createElement('div');lakeEl.className='map-zone-marker';
+  lakeEl.style.cssText='left:36%;top:40%;font-size:'+Math.max(6,cw*0.004)+'px;transform:translate(-50%,-50%);color:rgba(150,200,255,0.8);';
+  lakeEl.textContent='Lake Akash';
+  mapCanvas.appendChild(lakeEl);
 
   // === ROUTE BADGES — SimCity highway shields ===
   const routeBadges=[
