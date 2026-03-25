@@ -575,15 +575,16 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .minimap-container.expanded .map-controls-right{display:flex}
 .map-ctrl-btn{
   width:40px;height:40px;border-radius:12px;
-  background:rgba(40,60,40,0.7);border:1.5px solid rgba(100,160,100,0.2);
-  cursor:pointer;font-size:1rem;color:#81C784;
+  background:rgba(255,255,255,0.9);border:1px solid rgba(0,0,0,0.08);
+  cursor:pointer;font-size:1rem;color:#555;
   display:flex;align-items:center;justify-content:center;
   transition:all 0.2s;backdrop-filter:blur(8px);
+  box-shadow:0 1px 6px rgba(0,0,0,0.1);
 }
-.map-ctrl-btn:hover{background:rgba(76,175,80,0.3);border-color:rgba(76,175,80,0.4)}
+.map-ctrl-btn:hover{background:rgba(255,235,59,0.3);border-color:rgba(255,193,7,0.4)}
 .map-ctrl-btn:active{transform:scale(0.92)}
-.map-ctrl-btn svg{width:20px;height:20px}
-.map-ctrl-divider{width:30px;height:0;border-top:1px solid rgba(100,160,100,0.1);align-self:center}
+.map-ctrl-btn svg{width:20px;height:20px;stroke:#555}
+.map-ctrl-divider{width:30px;height:0;border-top:1px solid rgba(0,0,0,0.06);align-self:center}
 
 /* Map item — simple colored rectangle */
 .mi{
