@@ -3130,11 +3130,16 @@ function drawMap(){
   mapCanvas.style.width=canvasW+'px';
   mapCanvas.style.height=canvasH+'px';
   mapCanvas.style.position='absolute';
-  mapCanvas.style.background='linear-gradient(160deg,#d4e8c2 0%,#c8deb4 20%,#d9e8cb 40%,#cfe0b8 60%,#daeacf 80%,#c5d9af 100%)';
-  mapCanvas.style.borderRadius=mmExp?'0':'inherit';
-  const gridS=Math.max(20,canvasW/20),gridL=Math.max(60,canvasW/5);
-  mapCanvas.style.backgroundImage='linear-gradient(rgba(200,230,201,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(200,230,201,0.5) 1px,transparent 1px),linear-gradient(rgba(165,214,167,0.3) 2px,transparent 2px),linear-gradient(90deg,rgba(165,214,167,0.3) 2px,transparent 2px)';
-  mapCanvas.style.backgroundSize=gridS+'px '+gridS+'px,'+gridS+'px '+gridS+'px,'+gridL+'px '+gridL+'px,'+gridL+'px '+gridL+'px';
+  if(mmExp){
+    mapCanvas.style.background='#E8E4D0';
+    mapCanvas.style.backgroundImage='none';
+    mapCanvas.style.backgroundSize='';
+  } else {
+    mapCanvas.style.background='linear-gradient(160deg,#d4e8c2 0%,#c8deb4 20%,#d9e8cb 40%,#cfe0b8 60%,#daeacf 80%,#c5d9af 100%)';
+    const gridS=Math.max(20,canvasW/20),gridL=Math.max(60,canvasW/5);
+    mapCanvas.style.backgroundImage='linear-gradient(rgba(200,230,201,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(200,230,201,0.5) 1px,transparent 1px),linear-gradient(rgba(165,214,167,0.3) 2px,transparent 2px),linear-gradient(90deg,rgba(165,214,167,0.3) 2px,transparent 2px)';
+    mapCanvas.style.backgroundSize=gridS+'px '+gridS+'px,'+gridS+'px '+gridS+'px,'+gridL+'px '+gridL+'px,'+gridL+'px '+gridL+'px';
+  }
   
   if(mmExp){
     // EXPANDED: render real sticker clones (virtualized — only visible ones)
