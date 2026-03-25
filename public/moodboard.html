@@ -169,46 +169,46 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 /* 3D Zone signpost boards — pole on top, board hanging below */
 .zone-signpost{
   display:flex;flex-direction:column;align-items:center;
-  filter:drop-shadow(0 8px 20px rgba(0,0,0,0.2)) drop-shadow(0 2px 4px rgba(0,0,0,0.15))!important;
-  z-index:5!important;
+  filter:drop-shadow(0 12px 30px rgba(0,0,0,0.3)) drop-shadow(0 4px 8px rgba(0,0,0,0.2))!important;
+  z-index:100!important;
 }
-.zone-signpost:hover{filter:drop-shadow(0 8px 20px rgba(0,0,0,0.2)) drop-shadow(0 2px 4px rgba(0,0,0,0.15))!important;z-index:5!important}
+.zone-signpost:hover{filter:drop-shadow(0 12px 30px rgba(0,0,0,0.3)) drop-shadow(0 4px 8px rgba(0,0,0,0.2))!important;z-index:100!important}
 .signpost-pole{
-  width:7px;height:55px;
+  width:10px;height:80px;
   background:linear-gradient(90deg,#BDBDBD 0%,#9E9E9E 30%,#757575 60%,#616161 100%);
-  border-radius:3px;
+  border-radius:4px;
   box-shadow:2px 0 0 rgba(255,255,255,0.2),-1px 0 0 rgba(0,0,0,0.15),0 4px 8px rgba(0,0,0,0.15);
   position:relative;z-index:2;
 }
 .signpost-pole::before{
   content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:13px;height:5px;background:linear-gradient(180deg,#BDBDBD,#9E9E9E);
-  border-radius:2px 2px 0 0;
+  width:18px;height:6px;background:linear-gradient(180deg,#BDBDBD,#9E9E9E);
+  border-radius:3px 3px 0 0;
   box-shadow:0 -1px 3px rgba(0,0,0,0.15);
 }
 .signpost-board{
-  font-family:var(--font-fun);font-weight:800;font-size:0.9rem;
-  color:#fff;padding:10px 22px;border-radius:5px;
-  letter-spacing:0.08em;white-space:nowrap;
-  border:2.5px solid rgba(255,255,255,0.35);
+  font-family:var(--font-fun);font-weight:800;font-size:1.4rem;
+  color:#fff;padding:16px 36px;border-radius:8px;
+  letter-spacing:0.1em;white-space:nowrap;
+  border:3px solid rgba(255,255,255,0.4);
   box-shadow:
-    0 4px 12px rgba(0,0,0,0.25),
-    0 8px 25px rgba(0,0,0,0.15),
-    inset 0 2px 0 rgba(255,255,255,0.25),
-    inset 0 -2px 4px rgba(0,0,0,0.15);
+    0 6px 20px rgba(0,0,0,0.3),
+    0 12px 40px rgba(0,0,0,0.2),
+    inset 0 3px 0 rgba(255,255,255,0.3),
+    inset 0 -3px 6px rgba(0,0,0,0.15);
   position:relative;z-index:1;
-  text-shadow:0 1px 3px rgba(0,0,0,0.4);
+  text-shadow:0 2px 4px rgba(0,0,0,0.5);
   margin-top:-2px;
 }
 .signpost-board::before{
   content:'';position:absolute;top:0;left:0;right:0;height:50%;
-  background:linear-gradient(180deg,rgba(255,255,255,0.2),transparent);
-  border-radius:3px 3px 0 0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,0.25),transparent);
+  border-radius:6px 6px 0 0;pointer-events:none;
 }
 .signpost-board::after{
-  content:'';position:absolute;bottom:-6px;left:15%;right:15%;height:6px;
-  background:radial-gradient(ellipse,rgba(0,0,0,0.2) 0%,transparent 75%);
-  border-radius:50%;pointer-events:none;filter:blur(2px);
+  content:'';position:absolute;bottom:-8px;left:15%;right:15%;height:8px;
+  background:radial-gradient(ellipse,rgba(0,0,0,0.25) 0%,transparent 75%);
+  border-radius:50%;pointer-events:none;filter:blur(3px);
 }
 .sticker-fortune{background:linear-gradient(135deg,#FFE0B2,#FFB74D);border-radius:16px;padding:18px 22px;max-width:220px;box-shadow:0 3px 12px rgba(0,0,0,0.08);cursor:pointer}
 .sticker-fortune .f-icon{font-size:2rem;margin-bottom:6px}
