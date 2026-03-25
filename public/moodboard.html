@@ -2489,6 +2489,17 @@ function addMapDecorations(cw,ch){
       mapCanvas.appendChild(el);
     }
   });
+  // Subtle total area watermark
+  const areaLabels=[
+    {x:50,y:50,size:Math.max(cw*0.012,12),text:'7,000 × 5,000 px'},
+    {x:50,y:53,size:Math.max(cw*0.006,7),text:'35,000,000 sq px · Akash\'s World'},
+  ];
+  areaLabels.forEach(a=>{
+    const el=document.createElement('div');el.className='map-area-label';
+    el.style.cssText='left:'+a.x+'%;top:'+a.y+'%;font-size:'+a.size+'px;transform:translate(-50%,-50%)';
+    el.textContent=a.text;
+    mapCanvas.appendChild(el);
+  });
 }
 
 function drawMap(){
