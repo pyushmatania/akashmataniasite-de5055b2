@@ -5061,14 +5061,16 @@ function drawMap(){
       }
     });
     if(mapCount)mapCount.textContent=count+' items';
-    // Draw subtle zone names on small minimap
+    // Draw zone names on small minimap with zone-specific colors
+    const zoneColors={'Origin Story':'#4CAF50','The War Room':'#E53935','Launch Pad':'#42A5F5','Akash Unplugged':'#FFB300','The Playground':'#FF9800','Meme Alley':'#AB47BC'};
     mapZones.forEach(z=>{
       const zx=((z.x1+z.x2)/2-offsetX)*sc;
       const zy=((z.y1+z.y2)/2-offsetY)*sc;
       if(zx<-30||zx>canvasW+30||zy<-30||zy>canvasH+30)return;
+      const zc=zoneColors[z.name]||'rgba(40,60,30,0.5)';
       const lbl=document.createElement('div');
       lbl.textContent=z.icon+' '+z.name.replace('The ','');
-      lbl.style.cssText='position:absolute;left:'+zx+'px;top:'+zy+'px;transform:translate(-50%,-50%);font-family:Arial Black,sans-serif;font-size:4px;font-weight:900;color:rgba(40,60,30,0.4);text-transform:uppercase;letter-spacing:0.5px;pointer-events:none;white-space:nowrap;text-shadow:0 0.5px 1px rgba(255,255,255,0.15);';
+      lbl.style.cssText='position:absolute;left:'+zx+'px;top:'+zy+'px;transform:translate(-50%,-50%);font-family:Arial Black,sans-serif;font-size:5px;font-weight:900;color:'+zc+';text-transform:uppercase;letter-spacing:0.5px;pointer-events:none;white-space:nowrap;text-shadow:0 0.5px 1px rgba(0,0,0,0.3);opacity:0.7';
       mapCanvas.appendChild(lbl);
     });
   }
