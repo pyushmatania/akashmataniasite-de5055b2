@@ -119,6 +119,19 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .hl-sketch{position:relative;display:inline;padding:2px 8px;z-index:1}
 .hl-sketch::before{content:'';position:absolute;inset:-2px -6px;z-index:-1;border:2.5px solid rgba(255,204,188,0.7);border-radius:55% 45% 50% 50% / 60% 55% 45% 40%;transform:rotate(-1deg)}
 .hl-sketch::after{content:'';position:absolute;inset:-5px -9px;z-index:-1;border:2px dashed rgba(225,190,231,0.45);border-radius:45% 55% 50% 50% / 40% 50% 60% 50%;transform:rotate(1.5deg)}
+
+/* === Doodle decorations === */
+.doodle{display:inline-block;vertical-align:middle;margin-left:4px;position:relative;top:-2px}
+.doodle svg{overflow:visible}
+@keyframes doodle-draw{from{stroke-dashoffset:60}to{stroke-dashoffset:0}}
+@keyframes doodle-sparkle{0%,100%{opacity:0.5;transform:scale(0.85)}50%{opacity:1;transform:scale(1.1)}}
+.doodle-sparkle svg{animation:doodle-sparkle 2s ease-in-out infinite}
+.doodle-arrow svg path{stroke-dasharray:60;stroke-dashoffset:60;animation:doodle-draw 1s ease-out 0.5s forwards}
+@keyframes doodle-twinkle-1{0%,100%{opacity:0.4;transform:scale(0.7) rotate(0deg)}50%{opacity:1;transform:scale(1.15) rotate(15deg)}}
+@keyframes doodle-twinkle-2{0%,100%{opacity:0.6;transform:scale(0.8) rotate(0deg)}50%{opacity:1;transform:scale(1.2) rotate(-10deg)}}
+.doodle-stars .star-1{animation:doodle-twinkle-1 2.5s ease-in-out infinite}
+.doodle-stars .star-2{animation:doodle-twinkle-2 3s ease-in-out 0.4s infinite}
+.doodle-stars .star-3{animation:doodle-twinkle-1 2s ease-in-out 0.8s infinite}
 .sticker-meme{background:#fff;border-radius:14px;padding:16px 20px;border:2px solid #f0ece6;max-width:220px;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
 .sticker-meme .meme-emoji{font-size:2rem;margin-bottom:8px}
 .sticker-meme .meme-text{font-family:var(--font-hand);font-size:1.05rem;color:var(--text);line-height:1.4}
