@@ -5348,12 +5348,18 @@ function navigateToFilteredItem(cat,idx){
 }
 
 // Filter with cycle-through navigation
+const mainCats=['photo','meme','badge','interactive'];
+function matchesFilter(cat,filt){
+  if(filt==='all')return true;
+  if(filt==='other')return !mainCats.includes(cat);
+  return cat===filt;
+}
 let filtClickCount={};
 function filt(c,btn){
   const wasActive=(mFilt===c);
   if(wasActive && c!=='all'){
     if(!filtClickCount[c])filtClickCount[c]=0;
-    const matching=stickerData.filter(d=>d.cat===c);
+    const matching=stickerData.filter(d=>matchesFilter(d.cat,c));
     if(matching.length>0){
       const idx=filtClickCount[c]%matching.length;
       filtClickCount[c]++;
@@ -5365,7 +5371,6 @@ function filt(c,btn){
   filtClickCount[c]=0;
   document.querySelectorAll('.mc').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  // Hide HUD when switching to all
   if(c==='all'){
     const hud=document.getElementById('cycleHud');
     if(hud)hud.classList.remove('visible');
