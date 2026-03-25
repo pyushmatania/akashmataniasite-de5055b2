@@ -1110,7 +1110,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 }
 /* Smooth canvas panning in small map */
 .minimap-container:not(.expanded) .map-canvas{
-  transition:left 0.3s ease-out,top 0.3s ease-out;
+  transition:none;
 }
 .map-arrow{object-fit:cover;display:block}
 .map-arrow-head{display:none}
@@ -3390,6 +3390,10 @@ let mapZoomScale=0.75;
 let stickerData=[];
 const MOODBOARD_VIEW_SCALE=0.85;
 let smallMapPanX=0,smallMapPanY=0;
+let activeDestinationMarker=null;
+let activeDestinationWorld=null;
+let mapBootstrapped=false;
+let mapResizeTimer=null;
 
 function viewportToWorld(vx,vy){
   return {x:vx/MOODBOARD_VIEW_SCALE,y:vy/MOODBOARD_VIEW_SCALE};
@@ -3406,10 +3410,39 @@ function getViewportCenterWorld(){
 function mapClientToWorld(clientX,clientY){
   const sc=drawMap._sc||0.05;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
-  const rect=mapCanvas.getBoundingClientRect();
-  const mapX=clientX-rect.left;
-  const mapY=clientY-rect.top;
+  const innerRect=mmInner.getBoundingClientRect();
+  const cL=parseFloat(mapCanvas.style.left)||0;
+  const cT=parseFloat(mapCanvas.style.top)||0;
+  const mapX=clientX-innerRect.left+mmInner.scrollLeft-cL;
+  const mapY=clientY-innerRect.top+mmInner.scrollTop-cT;
   return {x:mapX/sc+ox,y:mapY/sc+oy};
+}
+
+function mapWorldToCanvas(worldX,worldY){
+  const sc=drawMap._sc||0.05;
+  const ox=drawMap._ox||0,oy=drawMap._oy||0;
+  return {x:(worldX-ox)*sc,y:(worldY-oy)*sc};
+}
+
+function positionMapOverlayAtWorld(el,worldX,worldY){
+  if(!el)return;
+  const p=mapWorldToCanvas(worldX,worldY);
+  el.style.left=p.x+'px';
+  el.style.top=p.y+'px';
+}
+
+function clearActiveDestinationMarker(){
+  if(activeDestinationMarker){
+    activeDestinationMarker.remove();
+  }
+  activeDestinationMarker=null;
+  activeDestinationWorld=null;
+}
+
+function ensureMapData(force){
+  if(force||!stickerData.length){
+    scanStickers();
+  }
 }
 
 function scanStickers(){
@@ -3521,6 +3554,7 @@ function toggleMap(){
       mapCanvas.appendChild(mapPlayer);
     }
 
+    ensureMapData(false);
     drawMap();
     recenter();
     updMap();
@@ -3535,6 +3569,7 @@ function toggleMap(){
   mmExp=false;
   document.body.classList.remove('map-expanded');
   mc.classList.add('map-closing');
+  clearActiveDestinationMarker();
 
   if(mapPlayer.parentElement!==mm){
     mm.appendChild(mapPlayer);
@@ -3787,6 +3822,7 @@ function addMapDecorations(cw,ch){
 function drawMap(){
   const playerWasInCanvas=mapPlayer.parentElement===mapCanvas;
   mapCanvas.innerHTML='';
+  if(!stickerData.length)scanStickers();
   const mr=mmInner.getBoundingClientRect();
   const mw=mr.width||64,mh=mr.height||64;
   
@@ -3967,6 +4003,7 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
   mapPlayer.style.left=targetMX+'px';
   mapPlayer.style.top=targetMY+'px';
   // Destination target marker
+  clearActiveDestinationMarker();
   const destMarker=document.createElement('div');
   destMarker.style.cssText='position:absolute;left:'+targetMX+'px;top:'+targetMY+'px;z-index:9990;pointer-events:none;transform:translate(-50%,-50%);width:40px;height:40px;';
   destMarker.innerHTML='<div style="position:absolute;inset:0;border:2.5px solid rgba(76,175,80,0.8);border-radius:50%;animation:destPulse 1s ease-in-out infinite"></div>'
@@ -3974,8 +4011,22 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
     +'<div style="position:absolute;inset:12px;background:rgba(76,175,80,0.3);border-radius:50%;animation:destPulse 1s ease-in-out infinite 0.5s"></div>'
     +'<div style="position:absolute;inset:-2px;border-radius:50%;border:1px solid rgba(76,175,80,0.2);animation:destRipple 1.5s ease-out infinite"></div>';
   mapCanvas.appendChild(destMarker);
+  activeDestinationMarker=destMarker;
+  activeDestinationWorld={x:worldX,y:worldY};
+  positionMapOverlayAtWorld(destMarker,worldX,worldY);
   // Remove marker when walk ends
-  setTimeout(()=>{destMarker.style.transition='opacity 0.4s';destMarker.style.opacity='0';setTimeout(()=>destMarker.remove(),500)},WALK_DURATION);
+  setTimeout(()=>{
+    if(destMarker!==activeDestinationMarker)return;
+    destMarker.style.transition='opacity 0.4s';
+    destMarker.style.opacity='0';
+    setTimeout(()=>{
+      if(destMarker===activeDestinationMarker){
+        clearActiveDestinationMarker();
+      }else{
+        destMarker.remove();
+      }
+    },500);
+  },WALK_DURATION);
   // Footstep trail on map
   const dx=targetMX-startX,dy=targetMY-startY;
   const dist=Math.sqrt(dx*dx+dy*dy);
@@ -4200,7 +4251,7 @@ function navigateToFilteredItem(cat,idx){
   const target=matching[idx%matching.length];
   const sc=drawMap._sc||0.05;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
-  const cT=parseInt(mapCanvas.style.top)||0;
+  const cT=parseFloat(mapCanvas.style.top)||0;
   const px=(target.left-ox)*sc;
   const py=(target.top-oy)*sc+cT;
   mmInner.scrollTo({left:px-mmInner.clientWidth/2,top:py-mmInner.clientHeight/2,behavior:'smooth'});
@@ -4258,7 +4309,7 @@ function recenter(){
   const sc=drawMap._sc||0.05;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
   const mr=mmInner.getBoundingClientRect();
-  const cT=parseInt(mapCanvas.style.top)||0;
+  const cT=parseFloat(mapCanvas.style.top)||0;
   const centerWorld=getViewportCenterWorld();
   const px=(centerWorld.x-ox)*sc;
   const py=(centerWorld.y-oy)*sc+cT;
@@ -4328,6 +4379,16 @@ function getZoneName(px,py){
   return '🗺️ Akash Unplugged';
 }
 
+function clampSmallMapPan(rawPx,rawPy,mw,mh,cw,ch){
+  let panX=mw/2-rawPx;
+  let panY=mh/2-rawPy;
+  if(cw<=mw)panX=(mw-cw)/2;
+  else panX=Math.max(mw-cw,Math.min(0,panX));
+  if(ch<=mh)panY=(mh-ch)/2;
+  else panY=Math.max(mh-ch,Math.min(0,panY));
+  return {panX,panY};
+}
+
 let _lastScrollX=0,_lastScrollY=0,_lastArrowAngle=0;
 function updMap(){
   if(!drawMap._sc)return;
@@ -4341,35 +4402,23 @@ function updMap(){
   const centerWorld={x:worldTopLeft.x+worldVpW/2,y:worldTopLeft.y+worldVpH/2};
   
   if(!mmExp){
-    // SMALL MAP: smooth arrow movement with gradual re-centering
+    // SMALL MAP: deterministic centering + clamped pan (no drift)
     const mr=mmInner.getBoundingClientRect();
     const mw=mr.width||64,mh=mr.height||64;
-    const edgePad=14; // edge zone where canvas starts panning
-    // Player position in map-space (absolute)
+    const cw=drawMap._cw||0,ch=drawMap._ch||0;
     const rawPx=(centerWorld.x-ox)*sc;
     const rawPy=(centerWorld.y-oy)*sc;
-    // Current canvas offset
-    let cL=smallMapPanX;
-    let cT=smallMapPanY;
-    // Arrow position relative to minimap
-    let arrowX=cL+rawPx;
-    let arrowY=cT+rawPy;
-    // Smooth re-centering: when arrow nears edge, lerp canvas to re-center
-    const idealCL=mw/2-rawPx;
-    const idealCT=mh/2-rawPy;
-    if(arrowX<edgePad||arrowX>mw-edgePad||arrowY<edgePad||arrowY>mh-edgePad){
-      // Lerp toward center — smooth gradual re-centering
-      const lerpSpeed=0.12;
-      cL+=(idealCL-cL)*lerpSpeed;
-      cT+=(idealCT-cT)*lerpSpeed;
-    }
-    mapCanvas.style.left=cL+'px';
-    mapCanvas.style.top=cT+'px';
+    const pan=clampSmallMapPan(rawPx,rawPy,mw,mh,cw,ch);
+    const cL=pan.panX,cT=pan.panY;
     smallMapPanX=cL;
     smallMapPanY=cT;
-    // Recalculate arrow position with new offset
-    arrowX=cL+rawPx;
-    arrowY=cT+rawPy;
+    mapCanvas.style.left=cL+'px';
+    mapCanvas.style.top=cT+'px';
+    let arrowX=cL+rawPx;
+    let arrowY=cT+rawPy;
+    const pad=8;
+    arrowX=Math.max(pad,Math.min(mw-pad,arrowX));
+    arrowY=Math.max(pad,Math.min(mh-pad,arrowY));
     mapPlayer.style.left=arrowX+'px';
     mapPlayer.style.top=arrowY+'px';
     mapPlayer.style.opacity='1';
@@ -4391,15 +4440,20 @@ function updMap(){
     mapVP.style.width=(worldVpW*sc)+'px';
     mapVP.style.height=(worldVpH*sc)+'px';
   } else {
-    // EXPANDED: mapPlayer is inside mapCanvas, so position relative to canvas (no cL/cT offset)
-    const px=(centerWorld.x-ox)*sc;
-    const py=(centerWorld.y-oy)*sc;
-    mapPlayer.style.left=px+'px';
-    mapPlayer.style.top=py+'px';
+    // EXPANDED: keep click-walk position during walking, otherwise follow viewport center
+    if(!walkingInProgress){
+      const px=(centerWorld.x-ox)*sc;
+      const py=(centerWorld.y-oy)*sc;
+      mapPlayer.style.left=px+'px';
+      mapPlayer.style.top=py+'px';
+    }
     mapPlayer.style.opacity='1';
     mapPlayer.style.visibility='visible';
-    const cL=parseInt(mapCanvas.style.left)||0;
-    const cT=parseInt(mapCanvas.style.top)||0;
+    if(activeDestinationMarker&&activeDestinationWorld){
+      positionMapOverlayAtWorld(activeDestinationMarker,activeDestinationWorld.x,activeDestinationWorld.y);
+    }
+    const cL=parseFloat(mapCanvas.style.left)||0;
+    const cT=parseFloat(mapCanvas.style.top)||0;
     mapVP.style.left=(cL+(worldTopLeft.x-ox)*sc)+'px';
     mapVP.style.top=(cT+(worldTopLeft.y-oy)*sc)+'px';
     mapVP.style.width=(worldVpW*sc)+'px';
@@ -4419,7 +4473,7 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
   if(mapTransitioning)return;
   if(mmExp&&drawMap._sc){
     const ox=drawMap._ox||0,oy=drawMap._oy||0,sc=drawMap._sc;
-    const cT=parseInt(mapCanvas.style.top)||0;
+    const cT=parseFloat(mapCanvas.style.top)||0;
     const cx=Math.round((mmInner.scrollLeft+mmInner.clientWidth/2)/sc+ox);
     const cy=Math.round((mmInner.scrollTop-cT+mmInner.clientHeight/2)/sc+oy);
     const coordEl=document.getElementById('mapCoords');
@@ -4448,43 +4502,40 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
     },150);
   }
 });
-// Continuous lerp loop for smooth re-centering
-let _mapLerpRAF=null;
-function mapLerpLoop(){
-  if(mmExp||!drawMap._sc){_mapLerpRAF=null;return}
-  updMap();
-  // Check if arrow is still near edge — keep lerping
-  const mr=mmInner.getBoundingClientRect();
-  const mw=mr.width||64,mh=mr.height||64;
-  const ax=parseFloat(mapPlayer.style.left)||0;
-  const ay=parseFloat(mapPlayer.style.top)||0;
-  const pad=18;
-  if(ax<pad||ax>mw-pad||ay<pad||ay>mh-pad){
-    _mapLerpRAF=requestAnimationFrame(mapLerpLoop);
-  } else {
-    _mapLerpRAF=null;
-  }
-}
 vp.addEventListener('scroll',()=>{
   if(mapTransitioning)return;
   updMap();
   if(!mmExp){
     clearTimeout(mapScrollTimer);mapScrollTimer=setTimeout(drawMap,320);
-    // Start lerp loop if not running
-    if(!_mapLerpRAF)_mapLerpRAF=requestAnimationFrame(mapLerpLoop);
   }
 });
 
 // Scan once on load, then draw + greeting
+function bootstrapMap(forceRescan){
+  try{
+    ensureMapData(forceRescan);
+    drawMap();
+    mapBootstrapped=true;
+  }catch(e){
+    console.error('Init error:',e)
+  }
+}
+
 setTimeout(()=>{
-  try{scanStickers();drawMap()}catch(e){console.error('Init error:',e)}
+  bootstrapMap(true);
   // Show bitmoji greeting
   const greet=document.createElement('div');
   greet.className='bitmoji-greeting';
   greet.innerHTML='<div class="greet-bubble">Hey there! 👋</div><img src="/images/bitmoji-full.png" alt="Akash waving"/>';
   document.body.appendChild(greet);
   setTimeout(()=>greet.remove(),3200);
-},600)
+},120)
+
+window.addEventListener('load',()=>bootstrapMap(true));
+window.addEventListener('resize',()=>{
+  clearTimeout(mapResizeTimer);
+  mapResizeTimer=setTimeout(()=>{if(mapBootstrapped)bootstrapMap(true)},140);
+});
 
 
 
