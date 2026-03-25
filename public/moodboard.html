@@ -3292,18 +3292,25 @@ function placeZoneSignposts(signposts){
 }
 
 function autoArrangeMoodboardItems(){
-  const groups={signpost:[],personal:[],work:[],portfolio:[],fun:[]};
+  const groups={signpost:[],personal:[],work:[],portfolio:[],hobby:[],fun:[]};
   const stickers=getAllStickers();
   stickers.forEach(sticker=>{
     const group=identifyStickerGroup(sticker);
     if(groups[group])groups[group].push(sticker);
+    else groups.fun.push(sticker);
   });
 
   placeZoneSignposts(groups.signpost);
-  layoutGroupInGrid(groups.personal,{x1:300,y1:290,x2:2520,y2:1620});
-  layoutGroupInGrid(groups.work,{x1:4050,y1:260,x2:6900,y2:1700});
-  layoutGroupInGrid(groups.portfolio,{x1:2550,y1:1860,x2:4700,y2:3340});
-  layoutGroupInGrid(groups.fun,{x1:2150,y1:3050,x2:7800,y2:6400});
+  // Origin/Personal — top-left (wider area for ~30 items)
+  layoutGroupInGrid(groups.personal,{x1:200,y1:250,x2:2600,y2:1700});
+  // Work — top-right (wider for ~30 items)
+  layoutGroupInGrid(groups.work,{x1:4000,y1:200,x2:9600,y2:1700});
+  // Portfolio — center band (wider for ~20 items)
+  layoutGroupInGrid(groups.portfolio,{x1:200,y1:1900,x2:4800,y2:3400});
+  // Hobby — bottom-left spread (large area for ~27 items)
+  layoutGroupInGrid(groups.hobby,{x1:200,y1:3600,x2:4800,y2:6600});
+  // Fun/Memes — bottom-right spread (large area for ~17+ items)
+  layoutGroupInGrid(groups.fun,{x1:5000,y1:3600,x2:9600,y2:6600});
   normalizeAllStickerBounds();
 }
 
