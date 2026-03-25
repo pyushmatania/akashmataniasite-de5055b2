@@ -2829,7 +2829,7 @@ function sM(e){
   if(Math.abs(cx-tapSX)>10||Math.abs(cy-tapSY)>10){
     didMove=true;as.classList.add('dragging');
     const cr=cv.getBoundingClientRect();
-    const scale=0.85;
+    const scale=0.5;
     as.style.left=Math.max(0,Math.min((cx-cr.left-sox)/scale,cv.offsetWidth-as.offsetWidth))+'px';
     as.style.top=Math.max(0,Math.min((cy-cr.top-soy)/scale,cv.offsetHeight-as.offsetHeight))+'px';
     e.preventDefault();
