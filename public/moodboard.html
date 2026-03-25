@@ -618,25 +618,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   position:absolute;z-index:999;transform:translate(-50%,-50%);
   pointer-events:none;transition:left 0.2s,top 0.2s;
 }
-.map-arrow-mini{filter:drop-shadow(0 0 4px rgba(255,213,79,0.8));width:10px;height:10px}
-.map-bitmoji{display:flex;flex-direction:column;align-items:center;position:relative}
-.minimap-container:not(.expanded) .bitmoji-avatar{display:none}
-.minimap-container:not(.expanded) .bitmoji-shadow{display:none}
-.minimap-container:not(.expanded) .map-arrow-mini{display:block;width:10px;height:10px}
-.minimap-container.expanded .map-arrow-mini{display:none}
-.bitmoji-avatar{width:40px;height:48px;position:relative}
-.bitmoji-body{display:flex;flex-direction:column;align-items:center}
-.bitmoji-head{width:30px;height:30px;background:#FFD9B3;border-radius:50%;position:relative;border:2px solid #333;overflow:hidden;z-index:2}
-.bitmoji-hair{position:absolute;top:-2px;left:-2px;right:-2px;height:14px;background:#4A2C0A;border-radius:15px 15px 0 0}
-.bitmoji-face{position:absolute;bottom:4px;left:0;right:0;display:flex;flex-direction:column;align-items:center}
-.bitmoji-eyes{display:flex;gap:6px;margin-bottom:2px}
-.bitmoji-eyes span{width:4px;height:5px;background:#333;border-radius:50%}
-.bitmoji-mouth{width:8px;height:4px;border-bottom:2px solid #E57373;border-radius:0 0 4px 4px}
-.bitmoji-torso{width:24px;height:14px;background:#FFCA28;border-radius:4px 4px 8px 8px;border:2px solid #333;margin-top:-4px;z-index:1}
-.bitmoji-shadow{width:24px;height:6px;background:rgba(0,0,0,0.12);border-radius:50%;margin-top:2px;filter:blur(2px)}
-.minimap-container.expanded .bitmoji-avatar{display:block}
-.minimap-container.expanded .bitmoji-shadow{display:block}
-.minimap-container.expanded .map-player-ping{inset:-12px;border-width:2.5px;border-color:rgba(255,202,40,0.25)}
+.map-arrow{filter:drop-shadow(0 0 4px rgba(255,213,79,0.8));width:12px;height:12px}
+.minimap-container.expanded .map-arrow{width:24px;height:24px;filter:drop-shadow(0 0 8px rgba(255,202,40,0.8)) drop-shadow(0 0 14px rgba(255,152,0,0.4))}
 .map-player-ping{
   position:absolute;inset:-4px;border-radius:50%;
   border:1.5px solid rgba(255,213,79,0.2);
@@ -647,10 +630,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 
 /* Viewport rect */
 .map-vp-rect{
-  position:absolute;border:2px solid rgba(255,202,40,0.5);
-  border-radius:3px;z-index:998;pointer-events:none;
-  background:rgba(255,235,59,0.06);
-  box-shadow:0 0 10px rgba(255,202,40,0.15);
+  display:none;
 }
 
 /* Controls */
@@ -1122,22 +1102,7 @@ body.map-expanded .logo,body.map-expanded .settings-btn{display:none!important}
       </div>
       <div class="map-player" id="mapPlayer">
         <div class="map-player-ping"></div>
-        <div class="map-bitmoji">
-          <svg class="map-arrow-mini" width="10" height="10" viewBox="0 0 24 24"><polygon points="12,2 22,22 12,17 2,22" fill="#FFD54F" stroke="#FF8F00" stroke-width="1.5"/></svg>
-          <div class="bitmoji-avatar">
-            <div class="bitmoji-body">
-              <div class="bitmoji-head">
-                <div class="bitmoji-hair"></div>
-                <div class="bitmoji-face">
-                  <div class="bitmoji-eyes"><span></span><span></span></div>
-                  <div class="bitmoji-mouth"></div>
-                </div>
-              </div>
-              <div class="bitmoji-torso"></div>
-            </div>
-          </div>
-          <div class="bitmoji-shadow"></div>
-        </div>
+        <svg class="map-arrow" width="18" height="18" viewBox="0 0 24 24"><defs><filter id="glow"><feGaussianBlur stdDeviation="2" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><polygon points="12,2 22,22 12,17 2,22" fill="#FFD54F" stroke="#FF8F00" stroke-width="1.5" filter="url(#glow)"/></svg>
       </div>
       <div class="map-vp-rect" id="mapVP"></div>
     </div>
