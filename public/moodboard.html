@@ -2772,6 +2772,11 @@ function identifyStickerGroup(sticker){
   return 'fun';
 }
 
+function seededRandom(seed){
+  let s=seed;
+  return function(){s=(s*16807+0)%2147483647;return(s-1)/2147483646;};
+}
+
 function layoutGroupInGrid(stickers,area){
   if(!stickers.length)return;
   const ordered=stickers.slice().sort((a,b)=>{
@@ -2786,17 +2791,28 @@ function layoutGroupInGrid(stickers,area){
   const rows=Math.max(1,Math.ceil(ordered.length/cols));
   const cellW=areaW/cols;
   const cellH=areaH/rows;
+  // Use seeded random so layout is consistent across reloads
+  const rng=seededRandom(area.x1*7+area.y1*13+ordered.length*31);
 
   ordered.forEach((sticker,index)=>{
     const col=index%cols;
     const row=Math.floor(index/cols);
     const w=sticker.offsetWidth||180;
     const h=sticker.offsetHeight||100;
-    const left=area.x1+col*cellW+Math.max(0,(cellW-w)/2);
-    const top=area.y1+row*cellH+Math.max(0,(cellH-h)/2);
+    // Base position centered in cell
+    let left=area.x1+col*cellW+Math.max(0,(cellW-w)/2);
+    let top=area.y1+row*cellH+Math.max(0,(cellH-h)/2);
+    // Add organic randomness — offset up to 30% of cell size
+    const offsetX=(rng()-0.5)*cellW*0.5;
+    const offsetY=(rng()-0.5)*cellH*0.4;
+    left+=offsetX;
+    top+=offsetY;
     const clamped=clampStickerToMoodboard(sticker,left,top);
     sticker.style.left=clamped.left+'px';
     sticker.style.top=clamped.top+'px';
+    // Add slight random rotation for organic feel
+    const rot=(rng()-0.5)*12; // -6 to +6 degrees
+    sticker.style.transform='rotate('+rot.toFixed(1)+'deg)';
   });
 }
 
