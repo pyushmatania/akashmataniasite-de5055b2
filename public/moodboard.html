@@ -5352,15 +5352,17 @@ function addMapDecorations(cw,ch){
 
   // === AREA NAME SIGNPOSTS (theme-park arch style, 3x bigger with glow) ===
   const areaNames=[
-    {x:14,y:22,t:'Origin Story',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)',glow:'rgba(76,175,80,0.5)'},
-    {x:55,y:14,t:'The War Room',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)',glow:'rgba(229,57,53,0.5)'},
-    {x:14,y:38,t:'Launch Pad',icon:'🚀',bg:'linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)',glow:'rgba(66,165,245,0.5)'},
-    {x:18,y:62,t:'The Playground',icon:'🎮',bg:'linear-gradient(135deg,#E65100,#FF9800,#EF6C00)',glow:'rgba(255,152,0,0.5)'},
-    {x:65,y:58,t:'Meme Alley',icon:'😂',bg:'linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)',glow:'rgba(171,71,188,0.5)'},
+    {x:14,y:22,t:'Origin Story',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)',glow:'rgba(76,175,80,0.5)',desc:'Personal story, photos, education & bio'},
+    {x:55,y:14,t:'The War Room',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)',glow:'rgba(229,57,53,0.5)',desc:'Work experience, skills & professional journey'},
+    {x:14,y:38,t:'Launch Pad',icon:'🚀',bg:'linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)',glow:'rgba(66,165,245,0.5)',desc:'Projects, portfolio & creative builds'},
+    {x:18,y:62,t:'The Playground',icon:'🎮',bg:'linear-gradient(135deg,#E65100,#FF9800,#EF6C00)',glow:'rgba(255,152,0,0.5)',desc:'Hobbies, music, travel & interests'},
+    {x:65,y:58,t:'Meme Alley',icon:'😂',bg:'linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)',glow:'rgba(171,71,188,0.5)',desc:'Memes, fun stuff & interactive surprises'},
   ];
   areaNames.forEach(z=>{
     const wrap=document.createElement('div');
-    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%) perspective(400px) rotateX(5deg);display:flex;align-items:flex-end;z-index:9;pointer-events:none;gap:0';
+    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%) perspective(400px) rotateX(5deg);display:flex;flex-direction:column;align-items:center;z-index:9;pointer-events:none;gap:0';
+    const signRow=document.createElement('div');
+    signRow.style.cssText='display:flex;align-items:flex-end;gap:0';
     const fontSize=Math.max(12,cw*0.016);
     const pillarW=Math.max(8,cw*0.008);
     const pillarH=Math.max(40,cw*0.045);
@@ -5378,12 +5380,19 @@ function addMapDecorations(cw,ch){
       p.appendChild(cap);p.appendChild(shaft);p.appendChild(base);
       return p;
     };
-    wrap.appendChild(mkPillar());
+    signRow.appendChild(mkPillar());
     const board=document.createElement('div');
     board.textContent=z.icon+' '+z.t.toUpperCase();
     board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(8,fontSize*0.55)+'px '+Math.max(16,fontSize*1.1)+'px;border-radius:'+Math.max(4,fontSize*0.25)+'px;white-space:nowrap;letter-spacing:0.1em;background:'+z.bg+';border:'+Math.max(2,fontSize*0.12)+'px solid rgba(255,255,255,0.4);border-bottom:'+Math.max(3,fontSize*0.18)+'px solid rgba(0,0,0,0.25);box-shadow:0 6px 28px '+z.glow+',0 10px 40px rgba(0,0,0,0.3),inset 0 3px 0 rgba(255,255,255,0.3),inset 0 -5px 10px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.35),0 0 14px rgba(255,255,255,0.2);margin:0 -2px;margin-top:'+(pillarH*0.2)+'px';
-    wrap.appendChild(board);
-    wrap.appendChild(mkPillar());
+    signRow.appendChild(board);
+    signRow.appendChild(mkPillar());
+    wrap.appendChild(signRow);
+    // Description below signpost
+    const descSize=Math.max(8,fontSize*0.55);
+    const desc=document.createElement('div');
+    desc.textContent=z.desc;
+    desc.style.cssText='font-family:Fredoka,sans-serif;font-weight:500;font-size:'+descSize+'px;color:rgba(255,255,255,0.85);background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);padding:'+Math.max(4,descSize*0.4)+'px '+Math.max(10,descSize*1.2)+'px;border-radius:'+Math.max(3,descSize*0.3)+'px;margin-top:'+Math.max(4,fontSize*0.3)+'px;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,0.4);letter-spacing:0.03em';
+    wrap.appendChild(desc);
     const shadow=document.createElement('div');
     shadow.style.cssText='position:absolute;bottom:-'+(capS*0.6)+'px;left:50%;transform:translateX(-50%);width:95%;height:'+(capS*0.6)+'px;background:radial-gradient(ellipse,rgba(0,0,0,0.3),transparent 70%);border-radius:50%;filter:blur(3px)';
     wrap.appendChild(shadow);
