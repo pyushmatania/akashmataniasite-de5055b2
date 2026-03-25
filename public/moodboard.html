@@ -5390,22 +5390,22 @@ function addMapDecorations(cw,ch){
     wrap.appendChild(svg);
   });
 
-  // === AREA NAME SIGNPOSTS (theme-park arch style, bigger) ===
+  // === AREA NAME SIGNPOSTS (theme-park arch style, bigger with glow) ===
   const areaNames=[
-    {x:14,y:22,t:'Origin Story',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)'},
-    {x:55,y:14,t:'The War Room',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)'},
-    {x:14,y:38,t:'Launch Pad',icon:'🚀',bg:'linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)'},
-    {x:18,y:62,t:'The Playground',icon:'🎮',bg:'linear-gradient(135deg,#E65100,#FF9800,#EF6C00)'},
-    {x:65,y:58,t:'Meme Alley',icon:'😂',bg:'linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)'},
+    {x:14,y:22,t:'Origin Story',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)',glow:'rgba(76,175,80,0.5)'},
+    {x:55,y:14,t:'The War Room',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)',glow:'rgba(229,57,53,0.5)'},
+    {x:14,y:38,t:'Launch Pad',icon:'🚀',bg:'linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)',glow:'rgba(66,165,245,0.5)'},
+    {x:18,y:62,t:'The Playground',icon:'🎮',bg:'linear-gradient(135deg,#E65100,#FF9800,#EF6C00)',glow:'rgba(255,152,0,0.5)'},
+    {x:65,y:58,t:'Meme Alley',icon:'😂',bg:'linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)',glow:'rgba(171,71,188,0.5)'},
   ];
   areaNames.forEach(z=>{
     const wrap=document.createElement('div');
     wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%) perspective(400px) rotateX(5deg);display:flex;align-items:flex-end;z-index:9;pointer-events:none;gap:0';
-    const fontSize=Math.max(6,cw*0.005);
+    const fontSize=Math.max(7,cw*0.006);
     const pillarW=Math.max(4,cw*0.003);
-    const pillarH=Math.max(18,cw*0.016);
-    const capS=Math.max(6,pillarW*1.5);
-    const baseW=Math.max(5,pillarW*1.5);
+    const pillarH=Math.max(20,cw*0.018);
+    const capS=Math.max(7,pillarW*1.5);
+    const baseW=Math.max(6,pillarW*1.5);
     const mkPillar=()=>{
       const p=document.createElement('div');
       p.style.cssText='display:flex;flex-direction:column;align-items:center;flex-shrink:0';
@@ -5421,12 +5421,11 @@ function addMapDecorations(cw,ch){
     wrap.appendChild(mkPillar());
     const board=document.createElement('div');
     board.textContent=z.icon+' '+z.t.toUpperCase();
-    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(4,fontSize*0.55)+'px '+Math.max(8,fontSize*1.1)+'px;border-radius:'+Math.max(3,fontSize*0.25)+'px;white-space:nowrap;letter-spacing:0.08em;background:'+z.bg+';border:'+Math.max(1.5,fontSize*0.12)+'px solid rgba(255,255,255,0.35);border-bottom:'+Math.max(2,fontSize*0.18)+'px solid rgba(0,0,0,0.25);box-shadow:0 4px 16px rgba(0,0,0,0.4),inset 0 2px 0 rgba(255,255,255,0.25),inset 0 -4px 8px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.35);margin:0 -1px;margin-top:'+(pillarH*0.25)+'px';
+    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(5,fontSize*0.6)+'px '+Math.max(10,fontSize*1.2)+'px;border-radius:'+Math.max(3,fontSize*0.3)+'px;white-space:nowrap;letter-spacing:0.1em;background:'+z.bg+';border:'+Math.max(1.5,fontSize*0.12)+'px solid rgba(255,255,255,0.4);border-bottom:'+Math.max(2,fontSize*0.2)+'px solid rgba(0,0,0,0.25);box-shadow:0 4px 20px '+z.glow+',0 8px 30px rgba(0,0,0,0.3),inset 0 2px 0 rgba(255,255,255,0.3),inset 0 -4px 8px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.35),0 0 12px rgba(255,255,255,0.2);margin:0 -1px;margin-top:'+(pillarH*0.25)+'px';
     wrap.appendChild(board);
     wrap.appendChild(mkPillar());
-    // Ground shadow
     const shadow=document.createElement('div');
-    shadow.style.cssText='position:absolute;bottom:-'+(capS*0.5)+'px;left:50%;transform:translateX(-50%);width:80%;height:'+(capS*0.4)+'px;background:radial-gradient(ellipse,rgba(0,0,0,0.2),transparent 70%);border-radius:50%;filter:blur(2px)';
+    shadow.style.cssText='position:absolute;bottom:-'+(capS*0.5)+'px;left:50%;transform:translateX(-50%);width:90%;height:'+(capS*0.5)+'px;background:radial-gradient(ellipse,rgba(0,0,0,0.25),transparent 70%);border-radius:50%;filter:blur(2px)';
     wrap.appendChild(shadow);
     mapCanvas.appendChild(wrap);
   });
