@@ -3012,13 +3012,30 @@ function gCat(s){
   return 'other';
 }
 
+let mapTransitioning=false;
 function toggleMap(){
+  if(mapTransitioning)return;
   mmExp=!mmExp;
+  mapTransitioning=true;
   mc.classList.toggle('expanded',mmExp);
   document.body.classList.toggle('map-expanded',mmExp);
-  // Reset zoom on close
-  if(!mmExp){mapZoomScale=1;mapCanvas.style.transform='';const zl=document.getElementById('mapZoomLevel');if(zl)zl.textContent='1×';filtClickCount={};const hud=document.getElementById('cycleHud');if(hud)hud.classList.remove('visible');clearWaypoints();}
-  setTimeout(()=>{drawMap();if(mmExp)setTimeout(recenter,200)},mmExp?450:50);
+  if(!mmExp){
+    // Reset zoom and state immediately
+    mapZoomScale=1;mapCanvas.style.transform='';
+    const zl=document.getElementById('mapZoomLevel');if(zl)zl.textContent='1×';
+    filtClickCount={};
+    const hud=document.getElementById('cycleHud');if(hud)hud.classList.remove('visible');
+    clearWaypoints();
+    // Clear expanded content immediately to avoid stale renders
+    mapCanvas.innerHTML='';
+  }
+  if(mmExp){
+    // Opening: wait for transition to finish, then draw
+    setTimeout(()=>{mapTransitioning=false;drawMap();setTimeout(recenter,200)},450);
+  } else {
+    // Closing: wait for transition to fully complete so dimensions are correct
+    setTimeout(()=>{mapTransitioning=false;drawMap()},450);
+  }
 }
 
 function addMapDecorations(cw,ch){
@@ -3597,7 +3614,7 @@ let mapScrollTimer=null;
 let mapCloneTimer=null;
 // Re-render visible clones when scrolling expanded map
 document.getElementById('mmInner').addEventListener('scroll',()=>{
-  // Update coordinates display
+  if(mapTransitioning)return;
   if(mmExp&&drawMap._sc){
     const ox=drawMap._ox||0,oy=drawMap._oy||0,sc=drawMap._sc;
     const cx=Math.round((mmInner.scrollLeft+mmInner.clientWidth/2)/sc+ox);
@@ -3629,6 +3646,7 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
   }
 });
 vp.addEventListener('scroll',()=>{
+  if(mapTransitioning)return;
   updMap();
   if(!mmExp){clearTimeout(mapScrollTimer);mapScrollTimer=setTimeout(drawMap,250)}
 });
