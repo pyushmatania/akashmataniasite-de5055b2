@@ -462,6 +462,29 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 }
 .minimap-container.expanded .minimap-north-pip{display:none}
 
+/* Zone name display below minimap — GTA style */
+.minimap-zone-name{
+  position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);z-index:21;
+  font-family:'Arial Black',sans-serif;font-weight:900;font-size:0.45rem;
+  color:rgba(240,240,230,0.9);text-shadow:0 1px 3px rgba(0,0,0,0.7),0 0 6px rgba(0,0,0,0.3);
+  white-space:nowrap;letter-spacing:0.04em;text-transform:uppercase;
+  pointer-events:none;transition:opacity 0.3s;
+}
+.minimap-container.expanded .minimap-zone-name{display:none}
+
+/* Big map zone banner */
+.map-zone-banner{
+  position:absolute;bottom:130px;left:50%;transform:translateX(-50%);z-index:1001;
+  display:none;font-family:var(--font-fun);font-weight:800;font-size:0.75rem;
+  color:rgba(27,94,32,0.8);background:rgba(232,245,233,0.7);
+  padding:5px 18px;border-radius:10px;
+  border:1px solid rgba(46,125,50,0.12);
+  white-space:nowrap;letter-spacing:0.04em;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:opacity 0.3s,transform 0.3s;
+}
+.minimap-container.expanded .map-zone-banner{display:block}
+
 /* Minimap inner vignette for small view */
 .minimap::after{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:15;
@@ -733,12 +756,42 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .minimap-container.expanded .map-header{display:flex!important}
 .map-title{font-family:var(--font-fun);font-weight:700;font-size:0.95rem;color:var(--text)}
 .map-close-btn{
-  width:32px;height:32px;border-radius:50%;
-  background:rgba(0,0,0,0.06);border:none;cursor:pointer;
-  font-size:0.8rem;display:flex;align-items:center;justify-content:center;
-  transition:background 0.2s;
+  width:40px;height:40px;border-radius:12px;
+  background:rgba(15,15,15,0.75);border:1.5px solid rgba(255,255,255,0.1);
+  cursor:pointer;font-size:1.1rem;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.25s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  box-shadow:0 4px 16px rgba(0,0,0,0.2);
 }
-.map-close-btn:hover{background:rgba(0,0,0,0.12)}
+.map-close-btn:hover{background:rgba(229,57,53,0.85);transform:scale(1.08);box-shadow:0 4px 20px rgba(229,57,53,0.3)}
+.map-close-btn:active{transform:scale(0.92)}
+
+/* Cycle highlight animation */
+@keyframes cycleSpotlight{
+  0%{box-shadow:0 0 0 0 rgba(255,202,40,0.6),0 0 0 0 rgba(255,202,40,0.3);outline-color:rgba(255,202,40,1)}
+  40%{box-shadow:0 0 30px 10px rgba(255,202,40,0.3),0 0 60px 20px rgba(255,202,40,0.1);outline-color:rgba(255,202,40,0.8)}
+  100%{box-shadow:0 0 0 0 rgba(255,202,40,0),0 0 0 0 rgba(255,202,40,0);outline-color:rgba(255,202,40,0.3)}
+}
+@keyframes cycleBounce{
+  0%,100%{transform:scale(1)}
+  30%{transform:scale(1.08)}
+  60%{transform:scale(0.97)}
+}
+@keyframes cycleRipple{
+  0%{opacity:1;transform:translate(-50%,-50%) scale(0.5)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(3)}
+}
+.cycle-ripple{
+  position:absolute;pointer-events:none;z-index:100;
+  width:40px;height:40px;border-radius:50%;
+  border:2px solid rgba(255,202,40,0.7);
+  animation:cycleRipple 0.8s ease-out forwards;
+}
+.cycle-target{
+  animation:cycleSpotlight 1.5s ease-out forwards,cycleBounce 0.5s ease-out;
+  outline:3px solid rgba(255,202,40,1)!important;outline-offset:6px!important;
+  z-index:200!important;
+}
 
 /* Filter chips */
 .map-chips{
@@ -1094,6 +1147,7 @@ body.map-expanded .logo,body.map-expanded .settings-btn{display:none!important}
   <div class="minimap-cardinal mc-e">E</div>
   <div class="minimap-cardinal mc-w">W</div>
   <div class="minimap-north-pip"></div>
+  <div class="minimap-zone-name" id="minimapZoneName">Central Hub</div>
   <div class="minimap" id="mm" onclick="if(!mmExp){toggleMap();event.stopPropagation()}">
     <div class="minimap-inner" id="mmInner">
       <div class="map-canvas" id="mapCanvas">
@@ -1108,10 +1162,13 @@ body.map-expanded .logo,body.map-expanded .settings-btn{display:none!important}
     <div class="map-hint"></div>
     <div class="map-header">
       <div class="map-title">🗺️ Sticker World <span class="map-title-badge">LIVE</span></div>
-      <button class="map-close-btn" onclick="event.stopPropagation();toggleMap()">✕</button>
+      <button class="map-close-btn" onclick="event.stopPropagation();toggleMap()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
     
     <div class="map-coord-display" id="mapCoords">0, 0</div>
+    <div class="map-zone-banner" id="mapZoneBanner">📍 Central Hub</div>
     <div class="map-bottom-bar">
       <div class="bar-filters">
         <button class="mc active" onclick="event.stopPropagation();filt('all',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#66BB6A,#43A047)"></div>All</button>
@@ -2775,18 +2832,43 @@ function filt(c,btn){
       const px=(target.left-ox)*sc;
       const py=(target.top-oy)*sc+cT;
       mmInner.scrollTo({left:px-mmInner.clientWidth/2,top:py-mmInner.clientHeight/2,behavior:'smooth'});
-      // Flash highlight nearby items
+      // Enhanced spotlight effect on target
       setTimeout(()=>{
+        // Remove previous highlights
+        mapCanvas.querySelectorAll('.cycle-target,.cycle-ripple').forEach(e=>e.remove());
         const items=mapCanvas.querySelectorAll('.sticker,.mi');
         items.forEach(el=>{
           const elL=parseFloat(el.style.left),elT=parseFloat(el.style.top);
           if(Math.abs(elL-px)<30 && Math.abs(elT-py)<30){
-            el.style.outline='3px solid #66BB6A';el.style.outlineOffset='4px';
-            el.style.boxShadow='0 4px 20px rgba(102,187,106,0.5)';
-            setTimeout(()=>{el.style.outline='none';el.style.boxShadow='none'},1500);
+            el.classList.add('cycle-target');
+            // Add ripple effect
+            const ripple=document.createElement('div');
+            ripple.className='cycle-ripple';
+            ripple.style.left=elL+'px';ripple.style.top=elT+'px';
+            mapCanvas.appendChild(ripple);
+            // Second ripple delayed
+            setTimeout(()=>{
+              const r2=document.createElement('div');
+              r2.className='cycle-ripple';
+              r2.style.left=elL+'px';r2.style.top=elT+'px';
+              mapCanvas.appendChild(r2);
+            },200);
+            setTimeout(()=>{
+              el.classList.remove('cycle-target');
+              el.style.outline='none';el.style.boxShadow='none';
+            },2000);
           }
         });
       },400);
+      // Update zone banner
+      const bigZone=document.getElementById('mapZoneBanner');
+      if(bigZone){
+        const zn=getZoneName(target.left,target.top);
+        bigZone.textContent=zn+' · '+(idx+1)+'/'+matching.length;
+        bigZone.style.background='rgba(255,235,59,0.25)';
+        bigZone.style.borderColor='rgba(255,193,7,0.3)';
+        setTimeout(()=>{bigZone.style.background='';bigZone.style.borderColor=''},1500);
+      }
       const mc=document.getElementById('mapCount');
       if(mc)mc.textContent=(idx+1)+'/'+matching.length;
     }
@@ -2851,6 +2933,25 @@ function showNav(tx,ty){
   setTimeout(()=>{if(navLine===svg){svg.remove();navLine=null}},5000);
 }
 
+// Zone definitions for name lookup
+const mapZones=[
+  {x1:0,y1:0,x2:2000,y2:1500,name:'Photo District',icon:'📸'},
+  {x1:2000,y1:800,x2:4000,y2:2300,name:'Central Hub',icon:'⭐'},
+  {x1:4000,y1:0,x2:6000,y2:1500,name:'Creative Quarter',icon:'🎨'},
+  {x1:0,y1:1500,x2:2200,y2:3000,name:'Arcade Zone',icon:'🎮'},
+  {x1:2200,y1:2300,x2:4500,y2:3800,name:'Meme Valley',icon:'😂'},
+  {x1:4500,y1:1500,x2:6500,y2:3200,name:'Launch Pad',icon:'🚀'},
+  {x1:0,y1:3000,x2:3000,y2:5000,name:'Sticker Park',icon:'✨'},
+  {x1:3000,y1:3500,x2:7000,y2:5000,name:'Chill Island',icon:'🏝️'},
+  {x1:5000,y1:0,x2:7000,y2:1500,name:'Builder\'s Edge',icon:'🔧'},
+];
+function getZoneName(px,py){
+  for(const z of mapZones){
+    if(px>=z.x1&&px<=z.x2&&py>=z.y1&&py<=z.y2)return z.icon+' '+z.name;
+  }
+  return '🗺️ Akash\'s World';
+}
+
 function updMap(){
   if(!drawMap._sc)return;
   const sc=drawMap._sc;
@@ -2869,6 +2970,12 @@ function updMap(){
   mapVP.style.top=(cT+(sy-oy)*sc)+'px';
   mapVP.style.width=(vpW*sc)+'px';
   mapVP.style.height=(vpH*sc)+'px';
+  
+  // Update zone name on minimap
+  const worldX=sx+vpW/2, worldY=sy+vpH/2;
+  const zoneName=getZoneName(worldX,worldY);
+  const mmZone=document.getElementById('minimapZoneName');
+  if(mmZone)mmZone.textContent=zoneName;
 }
 
 let mapScrollTimer=null;
@@ -2884,6 +2991,12 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
     const barCoords=document.getElementById('barCoords');
     if(coordEl)coordEl.textContent='x: '+cx+' · y: '+cy;
     if(barCoords)barCoords.textContent='x:'+cx+' y:'+cy;
+    // Update big map zone banner
+    const bigZone=document.getElementById('mapZoneBanner');
+    if(bigZone){
+      const zn=getZoneName(cx,cy);
+      bigZone.textContent=zn;
+    }
   }
   if(mmExp && drawMap._sc){
     clearTimeout(mapCloneTimer);
