@@ -2123,57 +2123,92 @@ function closeWorkPanel(){
   color:#9e9890;font-size:0.95rem;line-height:1.6;margin:0 0 40px;
 }
 
-/* Skills Grid */
-.work-panel .skills-grid {
-  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:48px;
-}
-.work-panel .skill-card {
+/* Skills - Progress Bars */
+.work-panel .skills-section { margin-bottom:48px; }
+.work-panel .skill-row {
   background:#fff;border:1px solid #f0ede8;border-radius:16px;
-  padding:20px 18px;transition:transform 0.2s, box-shadow 0.2s;
+  padding:18px 20px;margin-bottom:10px;
+  transition:transform 0.2s;
 }
-.work-panel .skill-card:active { transform:scale(0.97); }
-.work-panel .skill-card .sk-icon { font-size:1.6rem;margin-bottom:10px; }
-.work-panel .skill-card .sk-name {
-  font-size:0.8rem;font-weight:700;color:#2c2c2c;letter-spacing:0.02em;
-  margin-bottom:4px;
+.work-panel .skill-row:active { transform:scale(0.98); }
+.work-panel .skill-row .sk-top {
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px;
 }
-.work-panel .skill-card .sk-detail {
-  font-size:0.7rem;color:#b5b0a8;line-height:1.4;
+.work-panel .skill-row .sk-icon { font-size:1.2rem; }
+.work-panel .skill-row .sk-name {
+  flex:1;margin-left:12px;
+  font-size:0.82rem;font-weight:700;color:#2c2c2c;
+}
+.work-panel .skill-row .sk-pct {
+  font-size:0.7rem;font-weight:700;color:#b5b0a8;
+}
+.work-panel .skill-row .sk-bar {
+  height:6px;border-radius:3px;background:#f0ede8;overflow:hidden;
+}
+.work-panel .skill-row .sk-fill {
+  height:100%;border-radius:3px;
+  width:0;transition:width 1.2s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.work-panel.open .skill-row .sk-fill { width:var(--pct); }
+.work-panel .skill-row .sk-tags {
+  display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;
+}
+.work-panel .skill-row .sk-tag {
+  font-size:0.6rem;padding:3px 10px;border-radius:99px;
+  background:#faf9f7;color:#9e9890;border:1px solid #f0ede8;
+  font-weight:500;
 }
 
-/* Experience Cards */
-.work-panel .exp-timeline { margin-bottom:48px; }
+/* Experience Timeline */
+.work-panel .exp-timeline { margin-bottom:48px;position:relative; }
+.work-panel .exp-timeline::before {
+  content:'';position:absolute;left:18px;top:30px;bottom:30px;
+  width:2px;background:linear-gradient(to bottom, #e8e5df, #f0ede8);
+}
 .work-panel .exp-card {
   background:#fff;border:1px solid #f0ede8;border-radius:20px;
-  padding:24px;margin-bottom:16px;position:relative;overflow:hidden;
+  padding:24px 24px 24px 48px;margin-bottom:16px;position:relative;
   transition:transform 0.2s;
 }
 .work-panel .exp-card:active { transform:scale(0.98); }
+.work-panel .exp-card::before {
+  content:'';position:absolute;left:13px;top:32px;
+  width:12px;height:12px;border-radius:50%;
+  background:#fff;border:2.5px solid var(--dot-color, #c5c0b8);
+  z-index:1;
+}
 .work-panel .exp-card .exp-badge {
   display:inline-block;padding:5px 14px;border-radius:99px;
   font-size:0.65rem;font-weight:700;letter-spacing:0.06em;
   margin-bottom:14px;
 }
 .work-panel .exp-card .exp-role {
-  font-size:1.1rem;font-weight:700;color:#2c2c2c;margin-bottom:4px;
+  font-size:1.05rem;font-weight:700;color:#2c2c2c;margin-bottom:4px;
   line-height:1.3;
 }
 .work-panel .exp-card .exp-company {
-  font-size:0.85rem;color:#7a756d;margin-bottom:6px;
+  font-size:0.82rem;color:#7a756d;margin-bottom:6px;
 }
 .work-panel .exp-card .exp-period {
-  font-size:0.72rem;color:#b5b0a8;letter-spacing:0.04em;margin-bottom:16px;
+  font-size:0.7rem;color:#b5b0a8;letter-spacing:0.04em;margin-bottom:16px;
 }
 .work-panel .exp-card .exp-highlights { list-style:none;padding:0;margin:0; }
 .work-panel .exp-card .exp-highlights li {
-  font-size:0.8rem;color:#7a756d;line-height:1.6;
+  font-size:0.78rem;color:#7a756d;line-height:1.6;
   padding-left:18px;position:relative;margin-bottom:6px;
 }
 .work-panel .exp-card .exp-highlights li::before {
   content:'→';position:absolute;left:0;color:#c5c0b8;
 }
+.work-panel .exp-card .exp-impact {
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:12px;padding:6px 14px;border-radius:99px;
+  background:#faf9f7;border:1px solid #f0ede8;
+  font-size:0.68rem;font-weight:700;color:#5a8a6a;
+}
 
-/* Stats Row */
+/* Stats Row - Enhanced */
 .work-panel .stats-row {
   display:flex;gap:12px;margin-bottom:48px;overflow-x:auto;
   -webkit-overflow-scrolling:touch;padding-bottom:4px;
@@ -2181,6 +2216,11 @@ function closeWorkPanel(){
 .work-panel .stat-pill {
   flex:0 0 auto;background:#fff;border:1px solid #f0ede8;
   border-radius:16px;padding:18px 22px;text-align:center;min-width:110px;
+  position:relative;overflow:hidden;
+}
+.work-panel .stat-pill::after {
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:var(--accent, #e5e1da);
 }
 .work-panel .stat-pill .stat-num {
   font-size:1.6rem;font-weight:800;color:#2c2c2c;letter-spacing:-0.02em;
@@ -2190,7 +2230,7 @@ function closeWorkPanel(){
   text-transform:uppercase;margin-top:4px;font-weight:600;
 }
 
-/* Tools */
+/* Tools - with icons */
 .work-panel .tools-wrap {
   display:flex;flex-wrap:wrap;gap:8px;margin-bottom:48px;
 }
@@ -2198,12 +2238,18 @@ function closeWorkPanel(){
   padding:8px 16px;border-radius:99px;font-size:0.72rem;
   font-weight:600;background:#fff;color:#7a756d;
   border:1px solid #f0ede8;letter-spacing:0.03em;
+  display:flex;align-items:center;gap:6px;
+  transition:transform 0.15s, border-color 0.2s;
+}
+.work-panel .tool-chip:active { transform:scale(0.94); }
+.work-panel .tool-chip .t-dot {
+  width:6px;height:6px;border-radius:50%;
 }
 
 /* Education */
 .work-panel .edu-card {
   background:#fff;border:1px solid #f0ede8;border-radius:20px;
-  padding:24px;margin-bottom:48px;
+  padding:24px;margin-bottom:20px;
 }
 .work-panel .edu-card .edu-icon { font-size:1.4rem;margin-bottom:10px; }
 .work-panel .edu-card .edu-degree {
@@ -2214,6 +2260,18 @@ function closeWorkPanel(){
 }
 .work-panel .edu-card .edu-year {
   font-size:0.72rem;color:#b5b0a8;letter-spacing:0.04em;
+}
+
+/* Decorative Quote */
+.work-panel .work-quote {
+  text-align:center;padding:40px 20px;margin-bottom:48px;
+}
+.work-panel .work-quote .wq-mark {
+  font-size:3rem;color:#e8e5df;line-height:1;margin-bottom:12px;
+}
+.work-panel .work-quote .wq-text {
+  font-size:1.1rem;font-weight:600;color:#3a3632;line-height:1.5;
+  font-style:italic;
 }
 
 /* Section Divider */
@@ -2243,6 +2301,10 @@ function closeWorkPanel(){
 .work-panel.open .w-anim:nth-child(14){transition-delay:0.58s}
 .work-panel.open .w-anim:nth-child(15){transition-delay:0.62s}
 .work-panel.open .w-anim:nth-child(16){transition-delay:0.66s}
+.work-panel.open .w-anim:nth-child(17){transition-delay:0.70s}
+.work-panel.open .w-anim:nth-child(18){transition-delay:0.74s}
+.work-panel.open .w-anim:nth-child(19){transition-delay:0.78s}
+.work-panel.open .w-anim:nth-child(20){transition-delay:0.82s}
 </style>
 
 <div class="work-backdrop" id="workBackdrop" onclick="closeWorkPanel()"></div>
@@ -2260,42 +2322,53 @@ function closeWorkPanel(){
     <!-- Stats -->
     <p class="section-label w-anim">By the numbers</p>
     <div class="stats-row w-anim">
-      <div class="stat-pill"><div class="stat-num">8+</div><div class="stat-label">Years</div></div>
-      <div class="stat-pill"><div class="stat-num">5K+</div><div class="stat-label">Users</div></div>
-      <div class="stat-pill"><div class="stat-num">13+</div><div class="stat-label">Projects</div></div>
-      <div class="stat-pill"><div class="stat-num">30%</div><div class="stat-label">Velocity ↑</div></div>
+      <div class="stat-pill" style="--accent:#a8d8b9"><div class="stat-num">8+</div><div class="stat-label">Years</div></div>
+      <div class="stat-pill" style="--accent:#f5deb3"><div class="stat-num">5K+</div><div class="stat-label">Users</div></div>
+      <div class="stat-pill" style="--accent:#d4b8e8"><div class="stat-num">13+</div><div class="stat-label">Projects</div></div>
+      <div class="stat-pill" style="--accent:#b8d4f0"><div class="stat-num">30%</div><div class="stat-label">Velocity ↑</div></div>
     </div>
 
-    <!-- Skills -->
+    <!-- Decorative Quote -->
+    <div class="work-quote w-anim">
+      <div class="wq-mark">✦</div>
+      <div class="wq-text">"Ship fast, learn faster,<br>never stop iterating."</div>
+    </div>
+
+    <!-- Skills with Progress Bars -->
     <p class="section-label w-anim">Core Skills</p>
-    <div class="skills-grid w-anim">
-      <div class="skill-card">
-        <div class="sk-icon">🎯</div>
-        <div class="sk-name">Product Strategy</div>
-        <div class="sk-detail">Roadmaps, PRDs, OKRs, Go-to-Market</div>
+    <div class="skills-section w-anim">
+      <div class="skill-row">
+        <div class="sk-top"><span class="sk-icon">🎯</span><span class="sk-name">Product Strategy</span><span class="sk-pct">95%</span></div>
+        <div class="sk-bar"><div class="sk-fill" style="--pct:95%;background:linear-gradient(90deg,#a8d8b9,#7bc49a)"></div></div>
+        <div class="sk-tags"><span class="sk-tag">Roadmaps</span><span class="sk-tag">PRDs</span><span class="sk-tag">OKRs</span><span class="sk-tag">GTM</span></div>
       </div>
-      <div class="skill-card">
-        <div class="sk-icon">🔬</div>
-        <div class="sk-name">User Research</div>
-        <div class="sk-detail">Discovery, A/B Testing, Funnel Analysis</div>
+      <div class="skill-row">
+        <div class="sk-top"><span class="sk-icon">🔬</span><span class="sk-name">User Research</span><span class="sk-pct">90%</span></div>
+        <div class="sk-bar"><div class="sk-fill" style="--pct:90%;background:linear-gradient(90deg,#f5deb3,#e8c88a)"></div></div>
+        <div class="sk-tags"><span class="sk-tag">Discovery</span><span class="sk-tag">A/B Testing</span><span class="sk-tag">Funnels</span></div>
       </div>
-      <div class="skill-card">
-        <div class="sk-icon">📈</div>
-        <div class="sk-name">Growth</div>
-        <div class="sk-detail">PLG, Retention, Churn, Revenue</div>
+      <div class="skill-row">
+        <div class="sk-top"><span class="sk-icon">📈</span><span class="sk-name">Growth & Metrics</span><span class="sk-pct">88%</span></div>
+        <div class="sk-bar"><div class="sk-fill" style="--pct:88%;background:linear-gradient(90deg,#d4b8e8,#b892d4)"></div></div>
+        <div class="sk-tags"><span class="sk-tag">PLG</span><span class="sk-tag">Retention</span><span class="sk-tag">Revenue</span><span class="sk-tag">Churn</span></div>
       </div>
-      <div class="skill-card">
-        <div class="sk-icon">⚙️</div>
-        <div class="sk-name">Technical</div>
-        <div class="sk-detail">APIs, System Design, SDLC, Webhooks</div>
+      <div class="skill-row">
+        <div class="sk-top"><span class="sk-icon">⚙️</span><span class="sk-name">Technical</span><span class="sk-pct">85%</span></div>
+        <div class="sk-bar"><div class="sk-fill" style="--pct:85%;background:linear-gradient(90deg,#b8d4f0,#8fb8e0)"></div></div>
+        <div class="sk-tags"><span class="sk-tag">APIs</span><span class="sk-tag">System Design</span><span class="sk-tag">Webhooks</span></div>
+      </div>
+      <div class="skill-row">
+        <div class="sk-top"><span class="sk-icon">🤝</span><span class="sk-name">Stakeholder Management</span><span class="sk-pct">92%</span></div>
+        <div class="sk-bar"><div class="sk-fill" style="--pct:92%;background:linear-gradient(90deg,#f0b8b8,#e0908f)"></div></div>
+        <div class="sk-tags"><span class="sk-tag">Cross-functional</span><span class="sk-tag">Sprints</span><span class="sk-tag">Agile</span></div>
       </div>
     </div>
 
-    <!-- Experience -->
-    <p class="section-label w-anim">Experience</p>
+    <!-- Experience Timeline -->
+    <p class="section-label w-anim">Journey</p>
     <div class="exp-timeline w-anim">
 
-      <div class="exp-card">
+      <div class="exp-card" style="--dot-color:#5a8a6a">
         <span class="exp-badge" style="background:#eef6f0;color:#5a8a6a">FOUNDER</span>
         <div class="exp-role">Founder & Product Lead</div>
         <div class="exp-company">EnterCircles Labs · Media & Fintech Tokenisation</div>
@@ -2305,9 +2378,10 @@ function closeWorkPanel(){
           <li>Validated PMF with 3 signed agreements worth ₹15Cr+ pipeline</li>
           <li>Led team of 6, boosted velocity 30%, cut rework 40%</li>
         </ul>
+        <div class="exp-impact">✦ ₹15Cr+ pipeline secured</div>
       </div>
 
-      <div class="exp-card">
+      <div class="exp-card" style="--dot-color:#7a6a9a">
         <span class="exp-badge" style="background:#f3eff8;color:#7a6a9a">WEB3</span>
         <div class="exp-role">Lead Product Consultant</div>
         <div class="exp-company">Freelance · Blockchain, NFT, DeFi Projects</div>
@@ -2316,9 +2390,10 @@ function closeWorkPanel(){
           <li>Saved $80K–$120K across 13+ projects via technical feasibility reviews</li>
           <li>Launched 8 sold-out crypto products, 40K+ transactions</li>
         </ul>
+        <div class="exp-impact">✦ $120K saved in eng costs</div>
       </div>
 
-      <div class="exp-card">
+      <div class="exp-card" style="--dot-color:#b07d3a">
         <span class="exp-badge" style="background:#fdf5eb;color:#b07d3a">EDTECH</span>
         <div class="exp-role">Founder & Product Manager</div>
         <div class="exp-company">Recess · EdTech SaaS Platform</div>
@@ -2328,9 +2403,10 @@ function closeWorkPanel(){
           <li>Cut onboarding from 45 to 12 minutes (73% reduction)</li>
           <li>Scaled to 5,000+ paying users, ₹80L+ annual revenue</li>
         </ul>
+        <div class="exp-impact">✦ 5K+ users · ₹80L+ ARR</div>
       </div>
 
-      <div class="exp-card">
+      <div class="exp-card" style="--dot-color:#5a7faa">
         <span class="exp-badge" style="background:#eef3fa;color:#5a7faa">SAAS</span>
         <div class="exp-role">Product Consultant</div>
         <div class="exp-company">Freelance · US-based SaaS & D2C Startups</div>
@@ -2339,25 +2415,26 @@ function closeWorkPanel(){
           <li>Increased lead-to-paid conversion 15–30% across 3 B2B clients</li>
           <li>Drove 45% organic traffic growth over 6 months</li>
         </ul>
+        <div class="exp-impact">✦ 30% conversion lift</div>
       </div>
 
     </div>
 
-    <!-- Tools -->
+    <!-- Tools with colored dots -->
     <p class="section-label w-anim">Toolkit</p>
     <div class="tools-wrap w-anim">
-      <span class="tool-chip">Jira</span>
-      <span class="tool-chip">Figma</span>
-      <span class="tool-chip">Miro</span>
-      <span class="tool-chip">Linear</span>
-      <span class="tool-chip">Mixpanel</span>
-      <span class="tool-chip">Amplitude</span>
-      <span class="tool-chip">SQL</span>
-      <span class="tool-chip">Postman</span>
-      <span class="tool-chip">Git</span>
-      <span class="tool-chip">Tableau</span>
-      <span class="tool-chip">Confluence</span>
-      <span class="tool-chip">Google Analytics</span>
+      <span class="tool-chip"><span class="t-dot" style="background:#4a90d9"></span>Jira</span>
+      <span class="tool-chip"><span class="t-dot" style="background:#a259ff"></span>Figma</span>
+      <span class="tool-chip"><span class="t-dot" style="background:#f5c842"></span>Miro</span>
+      <span class="tool-chip"><span class="t-dot" style="background:#6c5ce7"></span>Linear</span>
+      <span class="tool-chip"><span class="t-dot" style="background:#7b68ee"></span>Mixpanel</span>
+      <span class="tool-chip"><span class="t-dot" style="background:#2196f3"></span>Amplitude</span>
+      <span class="tool-chip"><span class="t-dot" style="background:#e67e22"></span>SQL</span>
+      <span class="tool-chip"><span class="t-dot" style="background:#ff6b35"></span>Postman</span>
+      <span class="tool-chip"><span class="t-dot" style="background:#24292e"></span>Git</span>
+      <span class="tool-chip"><span class="t-dot" style="background:#e97627"></span>Tableau</span>
+      <span class="tool-chip"><span class="t-dot" style="background:#4a90d9"></span>Confluence</span>
+      <span class="tool-chip"><span class="t-dot" style="background:#f4b400"></span>Analytics</span>
     </div>
 
     <!-- Education -->
