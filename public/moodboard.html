@@ -5393,7 +5393,7 @@ function addMapDecorations(cw,ch){
     wrap.appendChild(svg);
   });
 
-  // === AREA NAME SIGNPOSTS (theme-park arch style) ===
+  // === AREA NAME SIGNPOSTS (theme-park arch style, bigger) ===
   const areaNames=[
     {x:14,y:22,t:'Origin Story',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)'},
     {x:55,y:14,t:'The War Room',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)'},
@@ -5403,31 +5403,34 @@ function addMapDecorations(cw,ch){
   ];
   areaNames.forEach(z=>{
     const wrap=document.createElement('div');
-    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%);display:flex;align-items:flex-end;z-index:9;pointer-events:none;gap:0';
-    const fontSize=Math.max(5,cw*0.004);
-    const pillarW=Math.max(3,cw*0.002);
-    const pillarH=Math.max(12,cw*0.01);
-    const capS=Math.max(4,pillarW*1.4);
-    // Left pillar
+    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%) perspective(400px) rotateX(5deg);display:flex;align-items:flex-end;z-index:9;pointer-events:none;gap:0';
+    const fontSize=Math.max(6,cw*0.005);
+    const pillarW=Math.max(4,cw*0.003);
+    const pillarH=Math.max(18,cw*0.016);
+    const capS=Math.max(6,pillarW*1.5);
+    const baseW=Math.max(5,pillarW*1.5);
     const mkPillar=()=>{
       const p=document.createElement('div');
       p.style.cssText='display:flex;flex-direction:column;align-items:center;flex-shrink:0';
       const cap=document.createElement('div');
-      cap.style.cssText='width:'+capS+'px;height:'+capS+'px;border-radius:50%;background:radial-gradient(ellipse at 35% 30%,#f5f2ed,#bbb6ac);border:1px solid rgba(0,0,0,0.1);margin-bottom:-1px;box-shadow:inset 0 2px 3px rgba(255,255,255,0.5)';
+      cap.style.cssText='width:'+capS+'px;height:'+capS+'px;border-radius:50%;background:radial-gradient(ellipse at 35% 28%,#f8f6f2,#c4bfb6);border:1px solid rgba(0,0,0,0.08);margin-bottom:-1px;box-shadow:inset 0 2px 3px rgba(255,255,255,0.5),0 2px 4px rgba(0,0,0,0.15)';
       const shaft=document.createElement('div');
-      shaft.style.cssText='width:'+pillarW+'px;height:'+pillarH+'px;background:linear-gradient(90deg,#d4cfc8,#f5f2ed 40%,#d4cfc8);border-radius:1px;box-shadow:1px 0 0 rgba(0,0,0,0.05)';
+      shaft.style.cssText='width:'+pillarW+'px;height:'+pillarH+'px;background:linear-gradient(90deg,#c4bfb6,#eae7e1 35%,#f5f2ed 50%,#eae7e1 65%,#c4bfb6);border-radius:1px;box-shadow:2px 0 0 rgba(0,0,0,0.06),0 4px 8px rgba(0,0,0,0.12)';
       const base=document.createElement('div');
-      base.style.cssText='width:'+(pillarW*1.4)+'px;height:'+(pillarW*0.6)+'px;background:linear-gradient(180deg,#d4cfc8,#bbb6ac);border-radius:0 0 1px 1px;margin-top:-1px';
+      base.style.cssText='width:'+baseW+'px;height:'+(pillarW*0.7)+'px;background:linear-gradient(180deg,#d4cfc8,#a8a298);border-radius:0 0 2px 2px;margin-top:-1px;box-shadow:0 3px 6px rgba(0,0,0,0.15)';
       p.appendChild(cap);p.appendChild(shaft);p.appendChild(base);
       return p;
     };
     wrap.appendChild(mkPillar());
-    // Board
     const board=document.createElement('div');
-    board.innerHTML='<span style="display:inline-flex;align-items:center;justify-content:center;width:'+(fontSize*2)+'px;height:'+(fontSize*2)+'px;background:radial-gradient(circle,rgba(255,255,255,0.35),rgba(0,0,0,0.05));border-radius:50%;border:1.5px solid rgba(255,255,255,0.45);font-size:'+(fontSize*0.85)+'px;margin-right:'+(fontSize*0.4)+'px;text-shadow:none;vertical-align:middle">'+z.icon+'</span>'+z.t.toUpperCase();
-    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(3,fontSize*0.5)+'px '+Math.max(6,fontSize*1)+'px;border-radius:'+Math.max(2,fontSize*0.3)+'px;white-space:nowrap;letter-spacing:0.08em;background:'+z.bg+';border:'+Math.max(1,fontSize*0.15)+'px solid rgba(255,255,255,0.4);border-bottom:'+Math.max(2,fontSize*0.2)+'px solid rgba(0,0,0,0.2);box-shadow:0 3px 12px rgba(0,0,0,0.35),inset 0 2px 0 rgba(255,255,255,0.25),inset 0 -3px 6px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.3);margin:0 -1px;margin-top:'+(pillarH*0.25)+'px;position:relative;display:flex;align-items:center';
+    board.textContent=z.icon+' '+z.t.toUpperCase();
+    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(4,fontSize*0.55)+'px '+Math.max(8,fontSize*1.1)+'px;border-radius:'+Math.max(3,fontSize*0.25)+'px;white-space:nowrap;letter-spacing:0.08em;background:'+z.bg+';border:'+Math.max(1.5,fontSize*0.12)+'px solid rgba(255,255,255,0.35);border-bottom:'+Math.max(2,fontSize*0.18)+'px solid rgba(0,0,0,0.25);box-shadow:0 4px 16px rgba(0,0,0,0.4),inset 0 2px 0 rgba(255,255,255,0.25),inset 0 -4px 8px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.35);margin:0 -1px;margin-top:'+(pillarH*0.25)+'px';
     wrap.appendChild(board);
     wrap.appendChild(mkPillar());
+    // Ground shadow
+    const shadow=document.createElement('div');
+    shadow.style.cssText='position:absolute;bottom:-'+(capS*0.5)+'px;left:50%;transform:translateX(-50%);width:80%;height:'+(capS*0.4)+'px;background:radial-gradient(ellipse,rgba(0,0,0,0.2),transparent 70%);border-radius:50%;filter:blur(2px)';
+    wrap.appendChild(shadow);
     mapCanvas.appendChild(wrap);
   });
 
