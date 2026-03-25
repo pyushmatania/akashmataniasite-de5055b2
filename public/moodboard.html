@@ -3558,14 +3558,14 @@ function drawMap(){
     mapCanvas.style.left='0';
     mapCanvas.style.top='50px';
   } else {
-    const cx=vp.scrollLeft+vp.clientWidth/2;
-    const cy=vp.scrollTop+vp.clientHeight/2;
-    const viewR=700;
-    offsetX=Math.max(0,cx-viewR);
-    offsetY=Math.max(0,cy-viewR);
-    sc=Math.min(mw/(viewR*2),mh/(viewR*2));
-    canvasW=mw;canvasH=mh;
-    mapCanvas.style.left='0';mapCanvas.style.top='0';
+    // SMALL MAP: show entire canvas so arrow actually moves
+    sc=Math.min(mw/contentW,mh/contentH);
+    canvasW=contentW*sc;
+    canvasH=contentH*sc;
+    offsetX=0;
+    offsetY=0;
+    mapCanvas.style.left=((mw-canvasW)/2)+'px';
+    mapCanvas.style.top=((mh-canvasH)/2)+'px';
   }
   
   drawMap._sc=sc;drawMap._ox=offsetX;drawMap._oy=offsetY;
