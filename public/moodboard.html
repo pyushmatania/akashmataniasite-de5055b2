@@ -3378,140 +3378,23 @@ stats: `
 
 // ===== MAP v6 — LIGHTWEIGHT =====
 const mc=document.getElementById('mc');
+const mm=document.getElementById('mm');
 const mapCanvas=document.getElementById('mapCanvas');
 const mapPlayer=document.getElementById('mapPlayer');
 const mapVP=document.getElementById('mapVP');
 const mmInner=document.getElementById('mmInner');
 const mapCount=document.getElementById('mapCount');
 let mmExp=false,navLine=null,mFilt='all';
-
-// Scan stickers ONCE and cache their data
-const stickerData=[];
-function scanStickers(){
-  stickerData.length=0;
-  if(!document.getElementById('canvas'))return;
-  document.querySelectorAll('#canvas > .sticker').forEach(s=>{
-    const r={
-      left:parseInt(s.style.left)||0,
-      top:parseInt(s.style.top)||0,
-      w:s.offsetWidth||80,
-      h:s.offsetHeight||60,
-      cat:gCat(s),
-      bg:'#fff',
-      emoji:'',
-      label:'',
-      border:'',
-      radius:'3px',
-      ref:s
-    };
-    // Extract visual properties per type
-    if(s.classList.contains('sticker-emoji')){
-      r.bg='transparent';r.emoji=s.textContent.trim();r.radius='0';r.border='none';
-    }else if(s.classList.contains('sticker-postit')){
-      r.bg=s.style.background||s.style.backgroundColor||'#FFF176';r.radius='2px';
-      r.label=s.textContent.trim().slice(0,15);
-    }else if(s.classList.contains('sticker-meme')){
-      const em=s.querySelector('.meme-emoji');r.emoji=em?em.textContent:'';
-      r.label=(s.querySelector('.meme-text')||{}).textContent?.slice(0,20)||'';r.radius='8px';
-    }else if(s.classList.contains('sticker-hero-photo')){
-      r.bg=s.style.background||'linear-gradient(135deg,#64B5F6,#1E88E5)';
-      r.radius='10px';r.border='2px solid #fff';r.label='📸';
-    }else if(s.classList.contains('sticker-badge')){
-      r.bg='#f5f2ed';r.radius='14px';r.label=s.textContent.trim().slice(0,12);
-    }else if(s.classList.contains('sticker-stamp')){
-      r.bg='transparent';r.border='2px solid '+(s.style.color||'#C9A96E');
-      r.label=s.textContent.trim().slice(0,8);r.radius='3px';
-    }else if(s.dataset.contra){
-      r.bg='#1a1a1a';r.border='2px solid #FF1744';r.emoji='⚔️';r.radius='6px';
-    }else if(s.classList.contains('sticker-illustrated')){
-      r.bg='#fff';r.border='1px solid #eee';r.emoji='🎨';r.radius='10px';
-    }else if(s.classList.contains('sticker-counter')){
-      const em=s.querySelector('.c-emoji');r.emoji=em?em.textContent:'🎮';
-      r.bg='#fff';r.border='1px solid #eee';r.radius='12px';
-      r.label=(s.querySelector('.c-label')||{}).textContent||'';
-    }else if(s.classList.contains('sticker-fortune')){
-      r.bg='linear-gradient(135deg,#FFE0B2,#FFB74D)';r.emoji='🥠';r.radius='10px';
-    }else if(s.classList.contains('sticker-scratch')){
-      r.bg='#fff';r.emoji='🎰';r.radius='8px';r.border='1px solid #eee';
-    }else if(s.classList.contains('sticker-mood')){
-      r.bg='#fff';r.emoji='😊';r.radius='8px';r.border='1px solid #eee';
-    }else if(s.classList.contains('sticker-progress')){
-      r.bg='#fff';r.emoji='🎯';r.radius='8px';r.border='1px solid #eee';
-    }else if(s.classList.contains('sticker-polaroid')){
-      r.bg='#fff';r.radius='2px';r.border='1px solid #ddd';r.emoji='🖼️';
-    }else if(s.classList.contains('sticker-work')){
-      r.bg='#fff';r.radius='8px';r.border='1px solid #eee';r.emoji='💼';
-    }else if(s.classList.contains('sticker-swatches')){
-      r.bg='linear-gradient(90deg,#C9A96E,#1A1A1A,#FAF8F5,#7B1FA2)';r.radius='6px';
-    }else if(s.classList.contains('sticker-washi')){
-      r.bg='rgba(206,147,216,0.25)';r.radius='0';r.border='none';
-    }else if(s.classList.contains('sticker-text')){
-      r.bg='transparent';r.border='none';r.emoji='✍️';
-    }else if(s.classList.contains('sticker-highlight')){
-      r.bg='rgba(255,241,118,0.5)';r.border='none';r.label='Akash';r.radius='4px';
-    }else if(s.classList.contains('sticker-photo-card')){
-      r.bg=s.style.background||'linear-gradient(135deg,#80CBC4,#4DB6AC)';r.radius='10px';
-    }else if(s.classList.contains('sticker-toggle')){
-      r.bg='#fff';r.radius='14px';r.border='1px solid #eee';
-    }else{
-      r.bg='rgba(200,200,200,0.2)';
-    }
-    stickerData.push(r);
-  });
-  // Update chip counts
-  const counts={all:stickerData.length,photo:0,meme:0,interactive:0,emoji:0};
-  stickerData.forEach(d=>{if(counts[d.cat]!==undefined)counts[d.cat]++});
-  try{
-    document.getElementById('ccAll').textContent=counts.all;
-    document.getElementById('ccPhoto').textContent=counts.photo;
-    document.getElementById('ccMeme').textContent=counts.meme;
-    document.getElementById('ccInt').textContent=counts.interactive;
-    document.getElementById('ccEmoji').textContent=counts.emoji;
-  }catch(e){}
-}
-
-function gCat(s){
-  if(s.classList.contains('sticker-hero-photo'))return 'photo';
-  if(s.classList.contains('sticker-meme'))return 'meme';
-  if(s.classList.contains('sticker-counter')||s.classList.contains('sticker-fortune')||s.classList.contains('sticker-scratch')||s.classList.contains('sticker-mood')||s.classList.contains('sticker-progress'))return 'interactive';
-  if(s.dataset.contra)return 'contra';
-  if(s.classList.contains('sticker-emoji'))return 'emoji';
-  return 'other';
-}
-
-let mapTransitioning=false;
-function toggleMap(){
-  if(mapTransitioning)return;
-  mapTransitioning=true;
-  
-  if(!mmExp){
-    // OPENING
-    mmExp=true;
-    mc.classList.add('map-opening');
-    mc.classList.add('expanded');
+...
     document.body.classList.add('map-expanded');
     // Move player inside canvas so it scrolls with map content
     mapCanvas.appendChild(mapPlayer);
     // Draw content immediately so it's visible during animation
     setTimeout(()=>{drawMap();setTimeout(recenter,150)},50);
-    setTimeout(()=>{
-      mc.classList.remove('map-opening');
-      mapTransitioning=false;
-    },550);
-  } else {
-    // CLOSING
-    mmExp=false;
-    mapZoomScale=1;mapCanvas.style.transform='';
-    const zl=document.getElementById('mapZoomLevel');if(zl)zl.textContent='1×';
-    filtClickCount={};
-    const hud=document.getElementById('cycleHud');if(hud)hud.classList.remove('visible');
-    clearWaypoints();
-    // Play collapse animation
-    mc.classList.add('map-closing');
-    mc.classList.remove('expanded');
+...
     document.body.classList.remove('map-expanded');
-    // Move player back outside canvas before clearing
-    mmInner.appendChild(mapPlayer);
+    // Move player back to minimap root for proper small-map coordinates
+    mm.appendChild(mapPlayer);
     setTimeout(()=>{
       mc.classList.remove('map-closing');
       mapCanvas.innerHTML='';
