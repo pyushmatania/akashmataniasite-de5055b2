@@ -4927,7 +4927,7 @@ function drawMap(){
     // SMALL: render mini sticker previews with actual content
     let count=0;
     stickerData.forEach(d=>{
-      if(mFilt!=='all'&&d.cat!==mFilt)return;
+     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
       const dx=(d.left-offsetX)*sc, dy=(d.top-offsetY)*sc;
       if(dx<-30||dx>canvasW+30||dy<-30||dy>canvasH+30)return;
       count++;
