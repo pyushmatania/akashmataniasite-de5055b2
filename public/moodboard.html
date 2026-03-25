@@ -2832,18 +2832,43 @@ function filt(c,btn){
       const px=(target.left-ox)*sc;
       const py=(target.top-oy)*sc+cT;
       mmInner.scrollTo({left:px-mmInner.clientWidth/2,top:py-mmInner.clientHeight/2,behavior:'smooth'});
-      // Flash highlight nearby items
+      // Enhanced spotlight effect on target
       setTimeout(()=>{
+        // Remove previous highlights
+        mapCanvas.querySelectorAll('.cycle-target,.cycle-ripple').forEach(e=>e.remove());
         const items=mapCanvas.querySelectorAll('.sticker,.mi');
         items.forEach(el=>{
           const elL=parseFloat(el.style.left),elT=parseFloat(el.style.top);
           if(Math.abs(elL-px)<30 && Math.abs(elT-py)<30){
-            el.style.outline='3px solid #66BB6A';el.style.outlineOffset='4px';
-            el.style.boxShadow='0 4px 20px rgba(102,187,106,0.5)';
-            setTimeout(()=>{el.style.outline='none';el.style.boxShadow='none'},1500);
+            el.classList.add('cycle-target');
+            // Add ripple effect
+            const ripple=document.createElement('div');
+            ripple.className='cycle-ripple';
+            ripple.style.left=elL+'px';ripple.style.top=elT+'px';
+            mapCanvas.appendChild(ripple);
+            // Second ripple delayed
+            setTimeout(()=>{
+              const r2=document.createElement('div');
+              r2.className='cycle-ripple';
+              r2.style.left=elL+'px';r2.style.top=elT+'px';
+              mapCanvas.appendChild(r2);
+            },200);
+            setTimeout(()=>{
+              el.classList.remove('cycle-target');
+              el.style.outline='none';el.style.boxShadow='none';
+            },2000);
           }
         });
       },400);
+      // Update zone banner
+      const bigZone=document.getElementById('mapZoneBanner');
+      if(bigZone){
+        const zn=getZoneName(target.left,target.top);
+        bigZone.textContent=zn+' · '+(idx+1)+'/'+matching.length;
+        bigZone.style.background='rgba(255,235,59,0.25)';
+        bigZone.style.borderColor='rgba(255,193,7,0.3)';
+        setTimeout(()=>{bigZone.style.background='';bigZone.style.borderColor=''},1500);
+      }
       const mc=document.getElementById('mapCount');
       if(mc)mc.textContent=(idx+1)+'/'+matching.length;
     }
