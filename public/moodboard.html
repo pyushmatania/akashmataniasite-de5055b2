@@ -3490,6 +3490,8 @@ function toggleMap(){
     mc.classList.add('map-opening');
     mc.classList.add('expanded');
     document.body.classList.add('map-expanded');
+    // Move player inside canvas so it scrolls with map content
+    mapCanvas.appendChild(mapPlayer);
     // Draw content immediately so it's visible during animation
     setTimeout(()=>{drawMap();setTimeout(recenter,150)},50);
     setTimeout(()=>{
