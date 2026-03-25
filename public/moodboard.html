@@ -1116,7 +1116,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 }
 .map-player.walking{
   animation:bitmoji-walk 0.6s ease-in-out infinite;
-  transition:left 1.2s ease-in-out,top 1.2s ease-in-out;
+  transition:left 2.5s ease-in-out,top 2.5s ease-in-out;
 }
 /* Greeting wave animation */
 @keyframes bitmoji-wave{
@@ -3761,58 +3761,10 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     // Remove ::after hints
     clone.style.setProperty('--no-after','1');
     
-    // Click to navigate — bitmoji walks to target with footstep trail
+    // Click to navigate — bitmoji walks to target
     clone.addEventListener('click',ev=>{
       ev.stopPropagation();
-      const sc=drawMap._sc||0.05;
-      const ox=drawMap._ox||0,oy=drawMap._oy||0;
-      const cT=parseInt(mapCanvas.style.top)||0;
-      const targetMX=(d.left-ox)*sc;
-      const targetMY=(d.top-oy)*sc+cT;
-      const startX=parseFloat(mapPlayer.style.left)||0;
-      const startY=parseFloat(mapPlayer.style.top)||0;
-      // Start walking animation
-      mapPlayer.classList.add('walking');
-      mapPlayer.style.left=targetMX+'px';
-      mapPlayer.style.top=targetMY+'px';
-      // Drop footstep particles along the path
-      const dx=targetMX-startX,dy=targetMY-startY;
-      const dist=Math.sqrt(dx*dx+dy*dy);
-      const steps=Math.min(Math.floor(dist/18),20);
-      const footprints=['👣','·','•'];
-      for(let i=1;i<=steps;i++){
-        setTimeout(()=>{
-          const t=i/steps;
-          const fx=startX+dx*t+((i%2===0?1:-1)*4);
-          const fy=startY+dy*t;
-          const fp=document.createElement('div');
-          fp.textContent=i%3===0?'👣':'';
-          fp.style.cssText='position:absolute;left:'+fx+'px;top:'+fy+'px;z-index:9998;pointer-events:none;font-size:'+(i%3===0?'10px':'6px')+';opacity:0.7;transform:translate(-50%,-50%) rotate('+Math.atan2(dy,dx)*(180/Math.PI)+'deg);transition:opacity 0.8s;';
-          if(i%3!==0){
-            fp.style.width='5px';fp.style.height='5px';fp.style.borderRadius='50%';
-            fp.style.background='rgba(139,119,80,0.5)';fp.style.boxShadow='0 0 4px rgba(139,119,80,0.3)';
-          }
-          mmInner.appendChild(fp);
-          // Dust puff
-          const dust=document.createElement('div');
-          dust.style.cssText='position:absolute;left:'+fx+'px;top:'+fy+'px;z-index:9997;pointer-events:none;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle,rgba(180,160,120,0.4),transparent);transform:translate(-50%,-50%) scale(0.5);transition:transform 0.5s,opacity 0.5s;';
-          mmInner.appendChild(dust);
-          requestAnimationFrame(()=>{dust.style.transform='translate(-50%,-50%) scale(2)';dust.style.opacity='0'});
-          // Fade out footprint
-          setTimeout(()=>{fp.style.opacity='0'},600);
-          setTimeout(()=>{fp.remove();dust.remove()},1400);
-        },i*(1200/steps));
-      }
-      // After walk completes, close map and navigate
-      setTimeout(()=>{
-        mapPlayer.classList.remove('walking');
-        toggleMap();
-        setTimeout(()=>{
-          showNav(d.left,d.top);
-          vp.scrollTo({left:d.left-vp.clientWidth/2,top:d.top-vp.clientHeight/2,behavior:'smooth'});
-          setTimeout(()=>{if(d.ref&&d.ref.dataset&&d.ref.dataset.anim)triggerAnim(d.ref,null)},800);
-        },450);
-      },1300);
+      walkBitmojiTo(d.left,d.top);
     });
     
     // Hover highlight
@@ -3824,7 +3776,91 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
   if(mapCount)mapCount.textContent=count+' items';
 }
 
-// Waypoint system — only show line to ACTIVE target
+// ===== WALK BITMOJI TO TARGET =====
+let walkingInProgress=false;
+function walkBitmojiTo(worldX,worldY){
+  if(walkingInProgress||!mmExp)return;
+  walkingInProgress=true;
+  const WALK_DURATION=2500;
+  const sc=drawMap._sc||0.05;
+  const ox=drawMap._ox||0,oy=drawMap._oy||0;
+  const cT=parseInt(mapCanvas.style.top)||0;
+  const targetMX=(worldX-ox)*sc;
+  const targetMY=(worldY-oy)*sc+cT;
+  const startX=parseFloat(mapPlayer.style.left)||0;
+  const startY=parseFloat(mapPlayer.style.top)||0;
+  // Start walking
+  mapPlayer.classList.add('walking');
+  mapPlayer.style.left=targetMX+'px';
+  mapPlayer.style.top=targetMY+'px';
+  // Footstep trail
+  const dx=targetMX-startX,dy=targetMY-startY;
+  const dist=Math.sqrt(dx*dx+dy*dy);
+  const steps=Math.min(Math.max(Math.floor(dist/14),6),30);
+  for(let i=1;i<=steps;i++){
+    setTimeout(()=>{
+      const t=i/steps;
+      const fx=startX+dx*t+((i%2===0?1:-1)*4);
+      const fy=startY+dy*t;
+      const fp=document.createElement('div');
+      fp.textContent=i%3===0?'👣':'';
+      fp.style.cssText='position:absolute;left:'+fx+'px;top:'+fy+'px;z-index:9998;pointer-events:none;font-size:'+(i%3===0?'10px':'6px')+';opacity:0.7;transform:translate(-50%,-50%) rotate('+Math.atan2(dy,dx)*(180/Math.PI)+'deg);transition:opacity 1s;';
+      if(i%3!==0){
+        fp.style.width='5px';fp.style.height='5px';fp.style.borderRadius='50%';
+        fp.style.background='rgba(139,119,80,0.5)';fp.style.boxShadow='0 0 4px rgba(139,119,80,0.3)';
+      }
+      mmInner.appendChild(fp);
+      const dust=document.createElement('div');
+      dust.style.cssText='position:absolute;left:'+fx+'px;top:'+fy+'px;z-index:9997;pointer-events:none;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,rgba(180,160,120,0.4),transparent);transform:translate(-50%,-50%) scale(0.5);transition:transform 0.6s,opacity 0.6s;';
+      mmInner.appendChild(dust);
+      requestAnimationFrame(()=>{dust.style.transform='translate(-50%,-50%) scale(2.5)';dust.style.opacity='0'});
+      setTimeout(()=>{fp.style.opacity='0'},800);
+      setTimeout(()=>{fp.remove();dust.remove()},1800);
+    },i*(WALK_DURATION/steps));
+  }
+  // After walk completes, close map and navigate
+  setTimeout(()=>{
+    mapPlayer.classList.remove('walking');
+    walkingInProgress=false;
+    toggleMap();
+    setTimeout(()=>{
+      showNav(worldX,worldY);
+      vp.scrollTo({left:worldX-vp.clientWidth/2,top:worldY-vp.clientHeight/2,behavior:'smooth'});
+    },450);
+  },WALK_DURATION+300);
+}
+
+// ===== LONG-PRESS ON BLANK SPACE TO WALK THERE =====
+let longPressTimer=null;
+let longPressTarget=null;
+mmInner.addEventListener('pointerdown',ev=>{
+  if(!mmExp||walkingInProgress)return;
+  longPressTarget={x:ev.clientX,y:ev.clientY};
+  longPressTimer=setTimeout(()=>{
+    if(!mmExp||!drawMap._sc)return;
+    const sc=drawMap._sc||0.05;
+    const ox=drawMap._ox||0,oy=drawMap._oy||0;
+    const cT=parseInt(mapCanvas.style.top)||0;
+    const rect=mapCanvas.getBoundingClientRect();
+    const mapX=ev.clientX-rect.left;
+    const mapY=ev.clientY-rect.top;
+    const worldX=mapX/sc+ox;
+    const worldY=(mapY-cT)/sc+oy;
+    // Haptic feedback
+    try{if(navigator.vibrate)navigator.vibrate(50)}catch(e){}
+    walkBitmojiTo(worldX,worldY);
+  },3000);
+});
+mmInner.addEventListener('pointerup',()=>{clearTimeout(longPressTimer);longPressTimer=null});
+mmInner.addEventListener('pointermove',ev=>{
+  if(longPressTarget&&longPressTimer){
+    const dx=ev.clientX-longPressTarget.x,dy=ev.clientY-longPressTarget.y;
+    if(Math.sqrt(dx*dx+dy*dy)>15){clearTimeout(longPressTimer);longPressTimer=null}
+  }
+});
+mmInner.addEventListener('pointercancel',()=>{clearTimeout(longPressTimer);longPressTimer=null});
+
+
 function clearWaypoints(){
   mapCanvas.querySelectorAll('.waypoint-marker,.waypoint-dist,.waypoint-line,.waypoint-line-active,.neon-active').forEach(e=>{
     if(e.classList.contains('neon-active')){e.classList.remove('neon-active');e.style.outline='';e.style.boxShadow=''}
