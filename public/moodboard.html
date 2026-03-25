@@ -706,12 +706,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   box-shadow:inset 0 0 15px rgba(100,181,246,0.15);
 }
 .minimap-container.expanded .map-water{
-  background:rgba(46,125,50,0.3);
-  border-color:rgba(76,175,80,0.3);
-  box-shadow:inset 0 0 20px rgba(100,181,246,0.2);
+  background:rgba(100,181,246,0.7);
+  border-color:rgba(66,165,245,0.5);
+  box-shadow:inset 0 0 20px rgba(66,165,245,0.3);
 }
 
-/* Road/path lines — Snapchat white roads */
+/* Road/path lines — Snapchat white/gray roads */
 .map-road{
   position:absolute;pointer-events:none;z-index:2;
   background:rgba(255,255,255,0.85);border-radius:2px;
@@ -719,12 +719,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   border:0.5px solid rgba(200,200,200,0.3);
 }
 .minimap-container.expanded .map-road{
-  background:rgba(76,175,80,0.15);
-  box-shadow:0 0.5px 2px rgba(0,0,0,0.1);
-  border-color:rgba(180,180,180,0.3);
+  background:rgba(255,255,255,0.9);
+  box-shadow:0 0.5px 2px rgba(0,0,0,0.08);
+  border-color:rgba(200,200,200,0.4);
 }
 
-/* Zone label markers on map */
+/* Zone label markers on map — written on the land like Snapchat */
 .map-zone-marker{
   position:absolute;z-index:6;pointer-events:none;
   font-family:var(--font-fun);font-weight:600;font-size:0.5rem;
@@ -732,7 +732,67 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   transform:translate(-50%,-50%);white-space:nowrap;
   text-shadow:0 1px 3px rgba(255,255,255,0.8);
 }
-.minimap-container.expanded .map-zone-marker{font-size:0.85rem;color:rgba(50,50,50,0.5);font-weight:700;letter-spacing:0.1em}
+.minimap-container.expanded .map-zone-marker{
+  font-size:1rem;color:rgba(80,80,80,0.55);font-weight:800;letter-spacing:0.15em;
+  text-shadow:0 1px 2px rgba(255,255,255,0.5);
+}
+
+/* 3D Building blocks on Snapchat map */
+.map-building-3d{
+  position:absolute;pointer-events:none;z-index:3;
+  background:linear-gradient(145deg,#D5D0C0,#C8C3B3);
+  border-radius:2px;
+  box-shadow:2px 3px 0 #B8B3A3,-1px -1px 0 rgba(255,255,255,0.3);
+  border:0.5px solid rgba(0,0,0,0.08);
+}
+.map-building-tall{
+  box-shadow:3px 5px 0 #A8A393,-1px -1px 0 rgba(255,255,255,0.4);
+  background:linear-gradient(145deg,#CFC9B8,#BFB9A8);
+}
+/* Green park areas */
+.map-park{
+  position:absolute;pointer-events:none;z-index:1;
+  background:rgba(139,195,74,0.45);
+  border-radius:30% 40% 35% 45%;
+}
+.minimap-container.expanded .map-park{
+  background:rgba(139,195,74,0.5);
+  box-shadow:inset 0 0 10px rgba(104,159,56,0.2);
+}
+/* Beach/sand areas */
+.map-beach{
+  position:absolute;pointer-events:none;z-index:1;
+  background:rgba(255,224,178,0.6);
+  border-radius:40% 50% 45% 35%;
+}
+/* Highway/main road */
+.map-highway{
+  position:absolute;pointer-events:none;z-index:3;
+  background:rgba(158,158,158,0.6);
+  border-radius:2px;
+  box-shadow:0 0.5px 1px rgba(0,0,0,0.12);
+}
+.minimap-container.expanded .map-highway{
+  background:rgba(120,120,120,0.5);
+}
+/* Section label badges — like district markers on Snapchat */
+.map-section-badge{
+  position:absolute;z-index:7;pointer-events:none;
+  background:rgba(255,255,255,0.85);
+  padding:3px 10px;border-radius:12px;
+  font-family:var(--font-fun);font-size:0.55rem;font-weight:700;
+  color:#555;white-space:nowrap;
+  box-shadow:0 1px 4px rgba(0,0,0,0.1);
+  transform:translate(-50%,-50%);
+  backdrop-filter:blur(4px);
+}
+/* Tree dots for parks */
+.map-tree{
+  position:absolute;pointer-events:none;z-index:2;
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(76,175,80,0.6);
+  box-shadow:0 1px 2px rgba(0,0,0,0.1);
+}
 
 /* Map compass rose */
 .map-compass-rose{
