@@ -2904,6 +2904,104 @@ function toggleCompass(){
   document.getElementById('mm').appendChild(c);
 }
 
+// === FOG OF WAR ===
+const FOG_GRID=50; // grid cell size in canvas pixels
+const canvasFullW=7000,canvasFullH=5000;
+const fogCols=Math.ceil(canvasFullW/FOG_GRID),fogRows=Math.ceil(canvasFullH/FOG_GRID);
+const fogVisited=new Uint8Array(fogCols*fogRows); // 0=unvisited, 1=visited
+let fogTotal=fogCols*fogRows,fogRevealed=0;
+
+function trackFog(){
+  const sx=vp.scrollLeft,sy=vp.scrollTop;
+  const vpW=vp.clientWidth,vpH=vp.clientHeight;
+  const c1=Math.max(0,Math.floor(sx/FOG_GRID));
+  const r1=Math.max(0,Math.floor(sy/FOG_GRID));
+  const c2=Math.min(fogCols-1,Math.floor((sx+vpW)/FOG_GRID));
+  const r2=Math.min(fogRows-1,Math.floor((sy+vpH)/FOG_GRID));
+  let changed=false;
+  for(let r=r1;r<=r2;r++){
+    for(let c=c1;c<=c2;c++){
+      const idx=r*fogCols+c;
+      if(!fogVisited[idx]){fogVisited[idx]=1;fogRevealed++;changed=true}
+    }
+  }
+  if(changed)updateFogHUD();
+}
+
+function updateFogHUD(){
+  const pct=Math.round((fogRevealed/fogTotal)*100);
+  const fill=document.getElementById('fogFill');
+  const pctEl=document.getElementById('fogPct');
+  if(fill)fill.style.width=pct+'%';
+  if(pctEl)pctEl.textContent=pct+'%';
+}
+
+function renderFog(){
+  const fogCanvas=document.getElementById('fogCanvas');
+  if(!fogCanvas||!drawMap._sc)return;
+  const sc=drawMap._sc,ox=drawMap._ox||0,oy=drawMap._oy||0;
+  const cw=parseFloat(mapCanvas.style.width)||100;
+  const ch=parseFloat(mapCanvas.style.height)||100;
+  fogCanvas.width=cw;fogCanvas.height=ch;
+  fogCanvas.style.width=cw+'px';fogCanvas.style.height=ch+'px';
+  fogCanvas.style.left=mapCanvas.style.left;fogCanvas.style.top=mapCanvas.style.top;
+  const ctx=fogCanvas.getContext('2d');
+  // Fill with fog
+  ctx.fillStyle='rgba(40,40,40,0.55)';
+  ctx.fillRect(0,0,cw,ch);
+  // Clear visited cells
+  ctx.globalCompositeOperation='destination-out';
+  for(let r=0;r<fogRows;r++){
+    for(let c=0;c<fogCols;c++){
+      if(!fogVisited[r*fogCols+c])continue;
+      const x=(c*FOG_GRID-ox)*sc;
+      const y=(r*FOG_GRID-oy)*sc;
+      const w=FOG_GRID*sc;
+      const h=FOG_GRID*sc;
+      // Soft circle reveal for smoother look
+      const cx2=x+w/2,cy2=y+h/2,rad=Math.max(w,h)*0.8;
+      const grad=ctx.createRadialGradient(cx2,cy2,0,cx2,cy2,rad);
+      grad.addColorStop(0,'rgba(0,0,0,1)');
+      grad.addColorStop(0.7,'rgba(0,0,0,0.8)');
+      grad.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=grad;
+      ctx.fillRect(x-rad*0.3,y-rad*0.3,w+rad*0.6,h+rad*0.6);
+    }
+  }
+  ctx.globalCompositeOperation='source-over';
+}
+
+// Track fog on scroll
+vp.addEventListener('scroll',trackFog);
+// Initial track
+trackFog();
+
+// Hook into drawMap to also render fog
+const _origDrawMap=drawMap;
+// Override isn't clean, so we hook via updMap and toggleMap
+const _origUpdMap=updMap;
+
+// Re-render fog when map is drawn
+const _origToggleMap=toggleMap;
+
+// Patch: render fog after map draws
+const __origDrawMap=window.drawMap;
+(function(){
+  const origDM=drawMap;
+  drawMap=function(){
+    origDM.apply(this,arguments);
+    if(mmExp)setTimeout(renderFog,50);
+  };
+  drawMap._sc=origDM._sc;drawMap._ox=origDM._ox;drawMap._oy=origDM._oy;
+  drawMap._cw=origDM._cw;drawMap._ch=origDM._ch;
+  // Copy over stored values via getter
+  Object.defineProperty(drawMap,'_sc',{get(){return origDM._sc},set(v){origDM._sc=v},configurable:true});
+  Object.defineProperty(drawMap,'_ox',{get(){return origDM._ox},set(v){origDM._ox=v},configurable:true});
+  Object.defineProperty(drawMap,'_oy',{get(){return origDM._oy},set(v){origDM._oy=v},configurable:true});
+  Object.defineProperty(drawMap,'_cw',{get(){return origDM._cw},set(v){origDM._cw=v},configurable:true});
+  Object.defineProperty(drawMap,'_ch',{get(){return origDM._ch},set(v){origDM._ch=v},configurable:true});
+})();
+
 </script>
 
 <!-- ===== EASTER EGG: BUILD JOURNAL ===== -->
