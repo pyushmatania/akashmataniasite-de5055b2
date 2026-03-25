@@ -625,17 +625,24 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .minimap-inner{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
 .minimap-container.expanded .minimap-inner{overflow:auto;-webkit-overflow-scrolling:touch}
 
-/* Map canvas — lightweight colored rectangles */
+/* Map canvas — Snapchat map style */
 .map-canvas{
   position:absolute;top:0;left:0;
   transform-origin:0 0;
 }
+.minimap-container.expanded .map-canvas{
+  background:#E8E4D0 !important;
+}
 .map-canvas-grid{
   position:absolute;inset:0;pointer-events:none;
+  background-image:none;
+  z-index:0;
+}
+.minimap-container.expanded .map-canvas-grid{
   background-image:
-    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
-  background-size:5% 5%;z-index:0;
+    linear-gradient(rgba(0,0,0,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.015) 1px, transparent 1px);
+  background-size:5% 5%;
 }
 
 /* Map vignette overlay */
