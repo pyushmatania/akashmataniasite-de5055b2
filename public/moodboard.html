@@ -1647,6 +1647,47 @@ vp.addEventListener('scroll',()=>{
   }
 });
 
+// ===== BOUNCE-BACK EDGE DETECTION =====
+const bounceFlash=document.getElementById('bounceFlash');
+let bounceTimeout=null;
+let lastBounceEdge='';
+const BOUNCE_STRENGTH=80; // pixels to push back
+const EDGE_THRESHOLD=5; // pixels from edge to trigger
+
+function triggerBounce(edge){
+  if(lastBounceEdge===edge && bounceTimeout) return;
+  lastBounceEdge=edge;
+  // Visual flash
+  bounceFlash.className='bounce-flash '+edge;
+  bounceFlash.style.opacity='1';
+  clearTimeout(bounceTimeout);
+  bounceTimeout=setTimeout(()=>{bounceFlash.style.opacity='0';lastBounceEdge='';bounceTimeout=null},400);
+  // Haptic-like vibration if available
+  try{if(navigator.vibrate)navigator.vibrate(30)}catch(e){}
+  // Bounce back with smooth scroll
+  const maxX=vp.scrollWidth-vp.clientWidth;
+  const maxY=vp.scrollHeight-vp.clientHeight;
+  if(edge==='left') vp.scrollTo({left:Math.min(BOUNCE_STRENGTH,maxX),behavior:'smooth'});
+  else if(edge==='right') vp.scrollTo({left:maxX-BOUNCE_STRENGTH,behavior:'smooth'});
+  else if(edge==='top') vp.scrollTo({top:Math.min(BOUNCE_STRENGTH,maxY),behavior:'smooth'});
+  else if(edge==='bottom') vp.scrollTo({top:maxY-BOUNCE_STRENGTH,behavior:'smooth'});
+}
+
+// Check edges on scroll
+let edgeCheckRAF=null;
+vp.addEventListener('scroll',()=>{
+  if(edgeCheckRAF)return;
+  edgeCheckRAF=requestAnimationFrame(()=>{
+    edgeCheckRAF=null;
+    const maxX=vp.scrollWidth-vp.clientWidth;
+    const maxY=vp.scrollHeight-vp.clientHeight;
+    if(vp.scrollLeft<=EDGE_THRESHOLD && maxX>0) triggerBounce('left');
+    else if(vp.scrollLeft>=maxX-EDGE_THRESHOLD && maxX>0) triggerBounce('right');
+    else if(vp.scrollTop<=EDGE_THRESHOLD && maxY>0) triggerBounce('top');
+    else if(vp.scrollTop>=maxY-EDGE_THRESHOLD && maxY>0) triggerBounce('bottom');
+  });
+});
+
 // DRAG SCROLL (canvas background)
 let iD=false,dsx,dsy,slx,sly;
 vp.addEventListener('mousedown',e=>{
