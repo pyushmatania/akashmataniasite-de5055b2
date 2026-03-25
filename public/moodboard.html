@@ -2004,6 +2004,36 @@ function closeWorkPanel(){
   document.getElementById('workBackdrop').classList.remove('open');
   document.body.style.overflow='';
 }
+
+// ===== ZONE NAVIGATION FROM BOTTOM NAV =====
+const zoneTargets={
+  hub:{x:3500,y:2500},
+  origin:{x:1400,y:900},
+  warroom:{x:5500,y:900},
+  launchpad:{x:1400,y:2600},
+  playground:{x:2400,y:5000},
+  memealley:{x:7000,y:5000}
+};
+function scrollToZone(e,zone){
+  e.preventDefault();e.stopPropagation();
+  const target=zoneTargets[zone];
+  if(!target)return;
+  const scaled={x:target.x*MOODBOARD_VIEW_SCALE,y:target.y*MOODBOARD_VIEW_SCALE};
+  const vp=document.getElementById('viewport');
+  const maxX=Math.max(0,vp.scrollWidth-vp.clientWidth);
+  const maxY=Math.max(0,vp.scrollHeight-vp.clientHeight);
+  vp.scrollTo({
+    left:Math.max(0,Math.min(scaled.x-vp.clientWidth/2,maxX)),
+    top:Math.max(0,Math.min(scaled.y-vp.clientHeight/2,maxY)),
+    behavior:'smooth'
+  });
+  // Brief highlight flash
+  const flash=document.getElementById('bounceFlash');
+  flash.style.background='radial-gradient(circle at 50% 50%,rgba(201,169,110,0.15),transparent 60%)';
+  flash.style.opacity='1';
+  setTimeout(()=>{flash.style.opacity='0'},400);
+}
+const MOODBOARD_VIEW_SCALE_NAV=0.85;
 </script>
 
 <!-- ==================== CONTACT PANEL ==================== -->
