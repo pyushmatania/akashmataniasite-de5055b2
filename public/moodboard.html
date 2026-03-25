@@ -5390,7 +5390,7 @@ function addMapDecorations(cw,ch){
     wrap.appendChild(svg);
   });
 
-  // === AREA NAME SIGNPOSTS (theme-park arch style, bigger with glow) ===
+  // === AREA NAME SIGNPOSTS (theme-park arch style, 3x bigger with glow) ===
   const areaNames=[
     {x:14,y:22,t:'Origin Story',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)',glow:'rgba(76,175,80,0.5)'},
     {x:55,y:14,t:'The War Room',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)',glow:'rgba(229,57,53,0.5)'},
@@ -5401,31 +5401,31 @@ function addMapDecorations(cw,ch){
   areaNames.forEach(z=>{
     const wrap=document.createElement('div');
     wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%) perspective(400px) rotateX(5deg);display:flex;align-items:flex-end;z-index:9;pointer-events:none;gap:0';
-    const fontSize=Math.max(7,cw*0.006);
-    const pillarW=Math.max(4,cw*0.003);
-    const pillarH=Math.max(20,cw*0.018);
-    const capS=Math.max(7,pillarW*1.5);
-    const baseW=Math.max(6,pillarW*1.5);
+    const fontSize=Math.max(12,cw*0.016);
+    const pillarW=Math.max(8,cw*0.008);
+    const pillarH=Math.max(40,cw*0.045);
+    const capS=Math.max(14,pillarW*1.6);
+    const baseW=Math.max(12,pillarW*1.5);
     const mkPillar=()=>{
       const p=document.createElement('div');
       p.style.cssText='display:flex;flex-direction:column;align-items:center;flex-shrink:0';
       const cap=document.createElement('div');
-      cap.style.cssText='width:'+capS+'px;height:'+capS+'px;border-radius:50%;background:radial-gradient(ellipse at 35% 28%,#f8f6f2,#c4bfb6);border:1px solid rgba(0,0,0,0.08);margin-bottom:-1px;box-shadow:inset 0 2px 3px rgba(255,255,255,0.5),0 2px 4px rgba(0,0,0,0.15)';
+      cap.style.cssText='width:'+capS+'px;height:'+capS+'px;border-radius:50%;background:radial-gradient(ellipse at 35% 28%,#f8f6f2,#c4bfb6);border:1.5px solid rgba(0,0,0,0.08);margin-bottom:-2px;box-shadow:inset 0 3px 5px rgba(255,255,255,0.5),0 3px 6px rgba(0,0,0,0.2)';
       const shaft=document.createElement('div');
-      shaft.style.cssText='width:'+pillarW+'px;height:'+pillarH+'px;background:linear-gradient(90deg,#c4bfb6,#eae7e1 35%,#f5f2ed 50%,#eae7e1 65%,#c4bfb6);border-radius:1px;box-shadow:2px 0 0 rgba(0,0,0,0.06),0 4px 8px rgba(0,0,0,0.12)';
+      shaft.style.cssText='width:'+pillarW+'px;height:'+pillarH+'px;background:linear-gradient(90deg,#c4bfb6,#eae7e1 35%,#f5f2ed 50%,#eae7e1 65%,#c4bfb6);border-radius:2px;box-shadow:3px 0 0 rgba(0,0,0,0.08),0 6px 12px rgba(0,0,0,0.15)';
       const base=document.createElement('div');
-      base.style.cssText='width:'+baseW+'px;height:'+(pillarW*0.7)+'px;background:linear-gradient(180deg,#d4cfc8,#a8a298);border-radius:0 0 2px 2px;margin-top:-1px;box-shadow:0 3px 6px rgba(0,0,0,0.15)';
+      base.style.cssText='width:'+baseW+'px;height:'+(pillarW*0.8)+'px;background:linear-gradient(180deg,#d4cfc8,#a8a298);border-radius:0 0 3px 3px;margin-top:-1px;box-shadow:0 4px 10px rgba(0,0,0,0.2)';
       p.appendChild(cap);p.appendChild(shaft);p.appendChild(base);
       return p;
     };
     wrap.appendChild(mkPillar());
     const board=document.createElement('div');
     board.textContent=z.icon+' '+z.t.toUpperCase();
-    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(5,fontSize*0.6)+'px '+Math.max(10,fontSize*1.2)+'px;border-radius:'+Math.max(3,fontSize*0.3)+'px;white-space:nowrap;letter-spacing:0.1em;background:'+z.bg+';border:'+Math.max(1.5,fontSize*0.12)+'px solid rgba(255,255,255,0.4);border-bottom:'+Math.max(2,fontSize*0.2)+'px solid rgba(0,0,0,0.25);box-shadow:0 4px 20px '+z.glow+',0 8px 30px rgba(0,0,0,0.3),inset 0 2px 0 rgba(255,255,255,0.3),inset 0 -4px 8px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.35),0 0 12px rgba(255,255,255,0.2);margin:0 -1px;margin-top:'+(pillarH*0.25)+'px';
+    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(8,fontSize*0.55)+'px '+Math.max(16,fontSize*1.1)+'px;border-radius:'+Math.max(4,fontSize*0.25)+'px;white-space:nowrap;letter-spacing:0.1em;background:'+z.bg+';border:'+Math.max(2,fontSize*0.12)+'px solid rgba(255,255,255,0.4);border-bottom:'+Math.max(3,fontSize*0.18)+'px solid rgba(0,0,0,0.25);box-shadow:0 6px 28px '+z.glow+',0 10px 40px rgba(0,0,0,0.3),inset 0 3px 0 rgba(255,255,255,0.3),inset 0 -5px 10px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.35),0 0 14px rgba(255,255,255,0.2);margin:0 -2px;margin-top:'+(pillarH*0.2)+'px';
     wrap.appendChild(board);
     wrap.appendChild(mkPillar());
     const shadow=document.createElement('div');
-    shadow.style.cssText='position:absolute;bottom:-'+(capS*0.5)+'px;left:50%;transform:translateX(-50%);width:90%;height:'+(capS*0.5)+'px;background:radial-gradient(ellipse,rgba(0,0,0,0.25),transparent 70%);border-radius:50%;filter:blur(2px)';
+    shadow.style.cssText='position:absolute;bottom:-'+(capS*0.6)+'px;left:50%;transform:translateX(-50%);width:95%;height:'+(capS*0.6)+'px;background:radial-gradient(ellipse,rgba(0,0,0,0.3),transparent 70%);border-radius:50%;filter:blur(3px)';
     wrap.appendChild(shadow);
     mapCanvas.appendChild(wrap);
   });
