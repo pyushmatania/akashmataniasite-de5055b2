@@ -16,8 +16,8 @@
 }
 html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);background:#FAF8F5;margin:0;padding:0}
 *{-webkit-tap-highlight-color:transparent}
-.canvas-viewport{width:100vw;height:100vh;overflow:auto;cursor:grab;position:relative;margin:0;padding:0;background:#FAF8F5;overscroll-behavior:none}
-.canvas{transform:scale(0.5);transform-origin:0 0;overflow:hidden}
+.canvas-viewport{width:100vw;height:100vh;overflow:auto;cursor:grab;position:relative;margin:0;padding:0;background:#FAF8F5;overscroll-behavior:none;will-change:scroll-position}
+.canvas{transform:scale(0.5);transform-origin:0 0;overflow:hidden;contain:layout style}
 .canvas-viewport:active{cursor:grabbing}
 .canvas-viewport::-webkit-scrollbar{width:6px;height:6px}
 .canvas-viewport::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.06);border-radius:3px}
@@ -50,7 +50,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .bounce-flash.bottom{background:linear-gradient(0deg,rgba(201,169,110,0.3),transparent 30%)}
 
 /* STICKER BASE */
-.sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1))}
+.sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));contain:layout style paint;content-visibility:auto;contain-intrinsic-size:200px 120px}
 .sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
 .sticker:active{cursor:grabbing}
 .sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important}
@@ -548,7 +548,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 @keyframes splashRing{0%{width:20px;height:20px;opacity:1;transform:translate(-50%,-50%) scale(.5)}100%{width:200px;height:200px;opacity:0;transform:translate(-50%,-50%) scale(1)}}
 .splash-drop{position:fixed;pointer-events:none;z-index:99998;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:linear-gradient(180deg,rgba(50,130,210,.8),rgba(30,90,170,.95));animation:splashDrop .7s ease-out forwards}
 @keyframes splashDrop{0%{opacity:1;transform:translate(0,0) scale(1)}60%{opacity:.8}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.3)}}
-.wet-spot{position:absolute;pointer-events:none;z-index:1;border-radius:50%;background:radial-gradient(ellipse,rgba(40,100,160,0.25) 0%,rgba(40,100,160,0.15) 40%,rgba(40,100,160,0.06) 65%,transparent 80%);animation:wetFade 6s ease-out forwards;backdrop-filter:blur(1px)}
+.wet-spot{position:absolute;pointer-events:none;z-index:1;border-radius:50%;background:radial-gradient(ellipse,rgba(40,100,160,0.25) 0%,rgba(40,100,160,0.15) 40%,rgba(40,100,160,0.06) 65%,transparent 80%);animation:wetFade 6s ease-out forwards}
 @keyframes wetFade{0%{opacity:0;transform:scale(0.2)}10%{opacity:1;transform:scale(1)}60%{opacity:0.9}85%{opacity:0.5}100%{opacity:0;transform:scale(1.15)}}
 .splash-wave{position:fixed;pointer-events:none;z-index:99997;border-radius:50%;border:2px solid rgba(100,180,255,.3);animation:splashWave 1.2s ease-out forwards}
 @keyframes splashWave{0%{width:40px;height:40px;opacity:.8;transform:translate(-50%,-50%) scale(.3)}100%{width:400px;height:400px;opacity:0;transform:translate(-50%,-50%) scale(1)}}
@@ -758,7 +758,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   padding:2px 6px;border-radius:6px;white-space:nowrap;
   transform:translate(-50%,0);top:calc(100% + 10px);left:50%;
   box-shadow:0 1px 4px rgba(0,0,0,0.3);
-  backdrop-filter:blur(4px);
+  box-shadow:0 1px 4px rgba(0,0,0,0.3);
 }
 /* Waypoint line (dashed) — only for active target */
 .waypoint-line{
@@ -789,7 +789,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .cycle-counter-hud{
   position:absolute;top:60px;left:50%;transform:translateX(-50%);z-index:1002;
   display:none;align-items:center;gap:8px;
-  background:rgba(0,0,0,0.75);backdrop-filter:blur(12px);
+  background:rgba(0,0,0,0.85);
   padding:8px 16px;border-radius:10px;
   border:1px solid rgba(0,255,128,0.3);
   box-shadow:0 4px 20px rgba(0,0,0,0.3),0 0 15px rgba(0,255,128,0.15);
@@ -896,11 +896,11 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 
 /* Mountain SVG elements */
 .map-mountain{position:absolute;pointer-events:none;z-index:3}
-.map-mountain svg{width:100%;height:100%;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.2))}
+.map-mountain svg{width:100%;height:100%}
 
 /* Forest / tree clusters */
 .map-tree-cluster{position:absolute;pointer-events:none;z-index:3}
-.map-tree-cluster svg{width:100%;height:100%;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.12))}
+.map-tree-cluster svg{width:100%;height:100%}
 
 /* Winding dashed path */
 .map-path{position:absolute;pointer-events:none;z-index:4}
@@ -909,7 +909,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 /* Cloud decoration */
 .map-cloud{position:absolute;pointer-events:none;z-index:6;opacity:0.7}
 @keyframes cloudDrift{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
-.map-cloud svg{width:100%;height:100%;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.08))}
+.map-cloud svg{width:100%;height:100%}
 
 /* Zone label markers */
 .map-zone-marker{
@@ -937,13 +937,13 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   position:absolute;z-index:9;pointer-events:none;
   transform:translate(-50%,-50%);
   display:flex;flex-direction:column;align-items:center;
-  filter:drop-shadow(0 3px 8px rgba(0,0,0,0.25));
+  
 }
 
 /* Section badge — game checkpoint */
 .map-section-badge{
   position:absolute;z-index:10;pointer-events:none;
-  background:rgba(60,60,60,0.8);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  background:rgba(60,60,60,0.85);
   padding:3px 10px;border-radius:6px;
   font-family:var(--font-fun);font-size:0.5rem;font-weight:700;
   color:#fff;white-space:nowrap;letter-spacing:0.04em;
@@ -970,30 +970,30 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 
 /* === ISOMETRIC 3D BUILDINGS === */
 .map-building-iso{position:absolute;pointer-events:none;z-index:5}
-.map-building-iso svg{width:100%;height:100%;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.25))}
+.map-building-iso svg{width:100%;height:100%}
 
 /* === ANIMATED FERRIS WHEEL === */
 @keyframes ferrisRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 .map-ferris{position:absolute;pointer-events:none;z-index:6}
-.map-ferris svg{width:100%;height:100%;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.2))}
+.map-ferris svg{width:100%;height:100%}
 .ferris-wheel-group{animation:ferrisRotate 12s linear infinite;transform-origin:50% 42%}
 
 /* === ANIMATED WINDMILL === */
 @keyframes windmillSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 .map-windmill{position:absolute;pointer-events:none;z-index:5}
-.map-windmill svg{width:100%;height:100%;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.2))}
+.map-windmill svg{width:100%;height:100%}
 .windmill-blades{animation:windmillSpin 4s linear infinite;transform-origin:50% 30%}
 
 /* === ANIMATED BOATS === */
 @keyframes boatBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-3px) rotate(2deg)}}
 @keyframes boatSail{0%{transform:translateX(0)}100%{transform:translateX(40px)}}
 .map-boat{position:absolute;pointer-events:none;z-index:2;animation:boatBob 3s ease-in-out infinite}
-.map-boat svg{filter:drop-shadow(0 2px 6px rgba(0,0,0,0.15))}
+.map-boat svg{}
 
 /* === LIGHTHOUSE === */
 @keyframes lighthouseBeam{0%,100%{opacity:0.1}50%{opacity:0.5}}
 .map-lighthouse{position:absolute;pointer-events:none;z-index:5}
-.map-lighthouse svg{width:100%;height:100%;filter:drop-shadow(0 3px 10px rgba(0,0,0,0.2))}
+.map-lighthouse svg{width:100%;height:100%}
 .lighthouse-beam{animation:lighthouseBeam 3s ease-in-out infinite}
 
 /* === SPARKLE PARTICLES === */
@@ -1053,7 +1053,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   transition:all 0.2s cubic-bezier(0.25,1,0.5,1);
   display:flex;align-items:center;gap:4px;
   background:rgba(0,0,0,0.4);color:rgba(255,255,255,0.7);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  box-shadow:0 1px 4px rgba(0,0,0,0.15);
   box-shadow:0 1px 4px rgba(0,0,0,0.15);
 }
 .mc.active{
@@ -1084,7 +1084,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-controls-right{
   position:absolute;right:10px;top:50%;transform:translateY(-50%);z-index:1000;
   display:none;flex-direction:column;gap:4px;
-  background:rgba(0,0,0,0.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  background:rgba(0,0,0,0.7);
   border-radius:12px;padding:6px;border:1px solid rgba(255,255,255,0.08);
 }
 .minimap-container.expanded .map-controls-right{display:flex}
@@ -1321,7 +1321,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   background:rgba(255,255,255,0.85);border:none;
   cursor:pointer;font-size:1rem;color:rgba(0,0,0,0.5);
   display:flex;align-items:center;justify-content:center;
-  transition:all 0.25s;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:all 0.25s;
   box-shadow:0 2px 10px rgba(0,0,0,0.1);
 }
 .map-close-btn:hover{background:rgba(255,255,255,0.95);color:rgba(0,0,0,0.7);transform:scale(1.08)}
@@ -3325,10 +3325,10 @@ vp.addEventListener('scroll',()=>{
   const bounds=getViewportPanBounds();
   const mx=bounds.maxX,my=bounds.maxY;
   document.getElementById('scrollCounter').textContent=Math.round(((vp.scrollLeft+vp.scrollTop)/(mx+my))*100);
-  // Update small minimap on scroll
+  // Update small minimap on scroll (throttled)
   if(!mmExp && typeof drawMap==='function'){
     if(!_mmScrollRAF){
-      _mmScrollRAF=requestAnimationFrame(()=>{_mmScrollRAF=null;drawMap();});
+      _mmScrollRAF=setTimeout(()=>{_mmScrollRAF=null;drawMap();},300);
     }
   }
 });
@@ -5391,7 +5391,7 @@ function addMapDecorations(cw,ch){
     const descSize=Math.max(8,fontSize*0.55);
     const desc=document.createElement('div');
     desc.textContent=z.desc;
-    desc.style.cssText='font-family:Fredoka,sans-serif;font-weight:500;font-size:'+descSize+'px;color:rgba(255,255,255,0.85);background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);padding:'+Math.max(4,descSize*0.4)+'px '+Math.max(10,descSize*1.2)+'px;border-radius:'+Math.max(3,descSize*0.3)+'px;margin-top:'+Math.max(4,fontSize*0.3)+'px;white-space:normal;max-width:'+Math.max(180,fontSize*16)+'px;text-align:center;line-height:1.4;text-shadow:0 1px 2px rgba(0,0,0,0.4);letter-spacing:0.03em';
+    desc.style.cssText='font-family:Fredoka,sans-serif;font-weight:500;font-size:'+descSize+'px;color:rgba(255,255,255,0.85);background:rgba(0,0,0,0.55);padding:'+Math.max(4,descSize*0.4)+'px '+Math.max(10,descSize*1.2)+'px;border-radius:'+Math.max(3,descSize*0.3)+'px;margin-top:'+Math.max(4,fontSize*0.3)+'px;white-space:normal;max-width:'+Math.max(180,fontSize*16)+'px;text-align:center;line-height:1.4;text-shadow:0 1px 2px rgba(0,0,0,0.4);letter-spacing:0.03em';
     wrap.appendChild(desc);
     const shadow=document.createElement('div');
     shadow.style.cssText='position:absolute;bottom:-'+(capS*0.6)+'px;left:50%;transform:translateX(-50%);width:95%;height:'+(capS*0.6)+'px;background:radial-gradient(ellipse,rgba(0,0,0,0.3),transparent 70%);border-radius:50%;filter:blur(3px)';
@@ -5582,39 +5582,18 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     if(dx+iw<visL||dx>visR||dy+ih<visT||dy>visB)return;
     
     count++;
-    // Clone the real sticker
-    const clone=d.ref.cloneNode(true);
-    clone.style.position='absolute';
-    clone.style.left=dx+'px';
-    clone.style.top=dy+'px';
-    clone.style.transform='scale('+sc+')';
-    clone.style.transformOrigin='0 0';
-    clone.style.zIndex='4';
-    clone.style.pointerEvents='all';
-    clone.style.cursor='pointer';
-    clone.style.animation='none';
-    clone.style.transition='none';
-    clone.style.filter='none';
-    clone.removeAttribute('data-anim');
-    clone.removeAttribute('data-splash');
-    clone.removeAttribute('data-contra');
-    clone.removeAttribute('onclick');
-    clone.classList.remove('dragging');
-    // Kill child animations
-    clone.querySelectorAll('*').forEach(c=>{c.style.animation='none';c.style.transition='none'});
-    // Remove ::after hints
-    clone.style.setProperty('--no-after','1');
+    // Create lightweight representation instead of heavy cloneNode
+    const clone=document.createElement('div');
+    clone.className='mi';
+    clone.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+(d.w*sc)+'px;height:'+(d.h*sc)+'px;background:'+d.bg+';border-radius:'+d.radius+';z-index:4;cursor:pointer;'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
+    if(d.emoji){const l=document.createElement('span');l.textContent=d.emoji;l.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:'+Math.max(Math.min(d.w*sc*0.4,24),6)+'px;pointer-events:none';clone.appendChild(l)}
     
-    // Click to navigate — bitmoji walks to target
+    // Click to navigate
     clone.addEventListener('click',ev=>{
       ev.stopPropagation();
       const target=mapClientToWorld(ev.clientX,ev.clientY);
       walkBitmojiTo(target.x,target.y,d.ref);
     });
-    
-    // Hover highlight
-    clone.addEventListener('mouseenter',()=>{clone.style.outline='3px solid #FFCA28';clone.style.outlineOffset='4px';clone.style.boxShadow='0 2px 12px rgba(255,202,40,0.3)'});
-    clone.addEventListener('mouseleave',()=>{clone.style.outline='none';clone.style.boxShadow='none'});
     
     mapCanvas.appendChild(clone);
   });
@@ -6146,12 +6125,12 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
       const sc=drawMap._sc,ox=drawMap._ox,oy=drawMap._oy;
       const cw=drawMap._cw,ch=drawMap._ch;
       try{
-        const items=mapCanvas.querySelectorAll('.sticker,.mi');
+        const items=mapCanvas.querySelectorAll('.mi');
         items.forEach(i=>i.remove());
         renderVisibleClones(sc,ox,oy,cw,ch);
         updMap();
       }catch(e){}
-    },150);
+    },250);
   }
 });
 vp.addEventListener('scroll',()=>{
