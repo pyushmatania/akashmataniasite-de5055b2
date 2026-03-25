@@ -1824,6 +1824,29 @@ body.map-expanded .scroll-counter{display:none!important}
   <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg>Contact</a>
 </nav>
 
+<style>
+.page-transition-overlay {
+  position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at var(--tx,50%) var(--ty,50%), rgba(255,255,255,1) 0%, rgba(245,245,245,1) 100%);
+  transition:opacity 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+.page-transition-overlay.active { opacity:1;pointer-events:all; }
+.bottom-nav a { transition:transform 0.15s ease, color 0.2s ease; }
+.bottom-nav a:active { transform:scale(0.88); }
+</style>
+<div class="page-transition-overlay" id="pageTransition"></div>
+<script>
+function navigateToAbout(e){
+  e.preventDefault();e.stopPropagation();
+  var btn=document.getElementById('aboutBtn');
+  var rect=btn.getBoundingClientRect();
+  var overlay=document.getElementById('pageTransition');
+  overlay.style.setProperty('--tx',rect.left+rect.width/2+'px');
+  overlay.style.setProperty('--ty',rect.top+rect.height/2+'px');
+  overlay.classList.add('active');
+  setTimeout(function(){ (window.top||window).location.href='/about'; },400);
+}
+</script>
 <script>
 const vp=document.getElementById('viewport'),cv=document.getElementById('canvas');
 // Center on the Akash hero sticker (left:800, top:600, width:290, ~height:350)
