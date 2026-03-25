@@ -3288,13 +3288,17 @@ function addMapDecorations(cw,ch){
 
   // === SimCity ZONE GRIDS (dashed zone borders) ===
   const zoneGrids=[
-    {x:5,y:5,w:35,h:30,color:'rgba(76,175,80,0.5)'},     // The Origin Story
-    {x:55,y:5,w:40,h:30,color:'rgba(66,165,245,0.5)'},    // The Hustle District
-    {x:5,y:32,w:35,h:20,color:'rgba(171,71,188,0.4)'},    // Cloud Nine
-    {x:5,y:55,w:35,h:35,color:'rgba(255,193,7,0.5)'},     // LOL-lywood
-    {x:60,y:32,w:35,h:20,color:'rgba(0,255,128,0.4)'},    // The Matrix Dojo
-    {x:55,y:55,w:40,h:35,color:'rgba(255,87,34,0.4)'},    // La La Land
-    {x:38,y:38,w:20,h:25,color:'rgba(201,169,110,0.3)'},  // Akash Unplugged center
+    {x:5,y:5,w:28,h:26,color:'rgba(76,175,80,0.5)'},     // The Origin Story
+    {x:40,y:5,w:30,h:26,color:'rgba(66,165,245,0.5)'},    // The Hustle District
+    {x:70,y:3,w:27,h:29,color:'rgba(233,30,99,0.4)'},     // The Hobby Lobby
+    {x:5,y:28,w:28,h:15,color:'rgba(171,71,188,0.4)'},    // Cloud Nine
+    {x:5,y:44,w:28,h:25,color:'rgba(255,193,7,0.5)'},     // LOL-lywood
+    {x:5,y:69,w:28,h:28,color:'rgba(33,150,243,0.4)'},    // Wanderlust Way
+    {x:48,y:28,w:22,h:15,color:'rgba(0,255,128,0.4)'},    // The Matrix Dojo
+    {x:40,y:44,w:30,h:20,color:'rgba(255,87,34,0.4)'},    // La La Land
+    {x:33,y:34,w:15,h:16,color:'rgba(201,169,110,0.3)'},  // Akash Unplugged center
+    {x:50,y:65,w:47,h:32,color:'rgba(156,39,176,0.4)'},   // The Recharge Room
+    {x:28,y:69,w:22,h:28,color:'rgba(121,85,72,0.35)'},   // The Backyard
   ];
   zoneGrids.forEach(z=>{
     const el=document.createElement('div');el.className='map-zone-grid';
