@@ -6125,12 +6125,12 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
       const sc=drawMap._sc,ox=drawMap._ox,oy=drawMap._oy;
       const cw=drawMap._cw,ch=drawMap._ch;
       try{
-        const items=mapCanvas.querySelectorAll('.sticker,.mi');
+        const items=mapCanvas.querySelectorAll('.mi');
         items.forEach(i=>i.remove());
         renderVisibleClones(sc,ox,oy,cw,ch);
         updMap();
       }catch(e){}
-    },150);
+    },250);
   }
 });
 vp.addEventListener('scroll',()=>{
