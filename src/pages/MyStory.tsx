@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import akashPhoto from "@/assets/akash-photo.jpeg";
 
 const skills = [
   { label: "PRODUCT STRATEGY", color: "hsl(145, 63%, 49%)" },
@@ -63,14 +64,15 @@ const MyStory = () => {
         </p>
 
         {/* Photo with colorful gradient frame */}
-        <div className="relative p-1 rounded-2xl mb-16" style={{
+        <div className="relative p-1.5 rounded-2xl mb-16" style={{
           background: "linear-gradient(135deg, hsl(145,63%,49%), hsl(43,96%,56%), hsl(0,78%,62%), hsl(280,70%,55%), hsl(200,80%,55%))",
+          boxShadow: "0 8px 32px -8px hsla(280,70%,55%,0.35), 0 4px 16px -4px hsla(0,78%,62%,0.25)",
         }}>
           <div className="rounded-xl overflow-hidden bg-background">
             <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"
+              src={akashPhoto}
               alt="Akash Matania"
-              className="w-full aspect-[4/3] object-cover"
+              className="w-full aspect-[4/3] object-cover object-top"
               loading="lazy"
             />
           </div>
