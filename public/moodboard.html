@@ -1558,10 +1558,10 @@ let _mmScrollRAF=null;
 vp.addEventListener('scroll',()=>{
   const mx=cv.scrollWidth-vp.clientWidth,my=cv.scrollHeight-vp.clientHeight;
   document.getElementById('scrollCounter').textContent=Math.round(((vp.scrollLeft+vp.scrollTop)/(mx+my))*100);
-  // Update small minimap on scroll
-  if(!mmExp && typeof drawMap==='function'){
+  // Update arrow position on small minimap (no full redraw needed)
+  if(!mmExp && typeof updMap==='function'){
     if(!_mmScrollRAF){
-      _mmScrollRAF=requestAnimationFrame(()=>{_mmScrollRAF=null;drawMap();});
+      _mmScrollRAF=requestAnimationFrame(()=>{_mmScrollRAF=null;updMap();});
     }
   }
 });
