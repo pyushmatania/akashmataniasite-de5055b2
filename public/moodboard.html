@@ -2908,6 +2908,25 @@ function showNav(tx,ty){
   setTimeout(()=>{if(navLine===svg){svg.remove();navLine=null}},5000);
 }
 
+// Zone definitions for name lookup
+const mapZones=[
+  {x1:0,y1:0,x2:2000,y2:1500,name:'Photo District',icon:'📸'},
+  {x1:2000,y1:800,x2:4000,y2:2300,name:'Central Hub',icon:'⭐'},
+  {x1:4000,y1:0,x2:6000,y2:1500,name:'Creative Quarter',icon:'🎨'},
+  {x1:0,y1:1500,x2:2200,y2:3000,name:'Arcade Zone',icon:'🎮'},
+  {x1:2200,y1:2300,x2:4500,y2:3800,name:'Meme Valley',icon:'😂'},
+  {x1:4500,y1:1500,x2:6500,y2:3200,name:'Launch Pad',icon:'🚀'},
+  {x1:0,y1:3000,x2:3000,y2:5000,name:'Sticker Park',icon:'✨'},
+  {x1:3000,y1:3500,x2:7000,y2:5000,name:'Chill Island',icon:'🏝️'},
+  {x1:5000,y1:0,x2:7000,y2:1500,name:'Builder\'s Edge',icon:'🔧'},
+];
+function getZoneName(px,py){
+  for(const z of mapZones){
+    if(px>=z.x1&&px<=z.x2&&py>=z.y1&&py<=z.y2)return z.icon+' '+z.name;
+  }
+  return '🗺️ Akash\'s World';
+}
+
 function updMap(){
   if(!drawMap._sc)return;
   const sc=drawMap._sc;
@@ -2926,6 +2945,12 @@ function updMap(){
   mapVP.style.top=(cT+(sy-oy)*sc)+'px';
   mapVP.style.width=(vpW*sc)+'px';
   mapVP.style.height=(vpH*sc)+'px';
+  
+  // Update zone name on minimap
+  const worldX=sx+vpW/2, worldY=sy+vpH/2;
+  const zoneName=getZoneName(worldX,worldY);
+  const mmZone=document.getElementById('minimapZoneName');
+  if(mmZone)mmZone.textContent=zoneName;
 }
 
 let mapScrollTimer=null;
