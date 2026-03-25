@@ -4378,10 +4378,31 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
     },150);
   }
 });
+// Continuous lerp loop for smooth re-centering
+let _mapLerpRAF=null;
+function mapLerpLoop(){
+  if(mmExp||!drawMap._sc){_mapLerpRAF=null;return}
+  updMap();
+  // Check if arrow is still near edge — keep lerping
+  const mr=mmInner.getBoundingClientRect();
+  const mw=mr.width||64,mh=mr.height||64;
+  const ax=parseFloat(mapPlayer.style.left)||0;
+  const ay=parseFloat(mapPlayer.style.top)||0;
+  const pad=18;
+  if(ax<pad||ax>mw-pad||ay<pad||ay>mh-pad){
+    _mapLerpRAF=requestAnimationFrame(mapLerpLoop);
+  } else {
+    _mapLerpRAF=null;
+  }
+}
 vp.addEventListener('scroll',()=>{
   if(mapTransitioning)return;
   updMap();
-  if(!mmExp){clearTimeout(mapScrollTimer);mapScrollTimer=setTimeout(drawMap,250)}
+  if(!mmExp){
+    clearTimeout(mapScrollTimer);mapScrollTimer=setTimeout(drawMap,250);
+    // Start lerp loop if not running
+    if(!_mapLerpRAF)_mapLerpRAF=requestAnimationFrame(mapLerpLoop);
+  }
 });
 
 // Scan once on load, then draw + greeting
