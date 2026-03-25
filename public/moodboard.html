@@ -4276,24 +4276,29 @@ function updMap(){
   const vpW=vp.clientWidth,vpH=vp.clientHeight;
   
   if(!mmExp){
-    // SMALL MAP: arrow moves, bg syncs when arrow nears edge
+    // SMALL MAP: smooth arrow movement with gradual re-centering
     const mr=mmInner.getBoundingClientRect();
     const mw=mr.width||64,mh=mr.height||64;
-    const pad=12; // padding from edge before bg starts panning
+    const edgePad=14; // edge zone where canvas starts panning
+    const centerZone=0.35; // fraction of map considered "center" 
     // Player position in map-space (absolute)
     const rawPx=(sx+vpW/2-ox)*sc;
     const rawPy=(sy+vpH/2-oy)*sc;
     // Current canvas offset
-    let cL=parseInt(mapCanvas.style.left)||0;
-    let cT=parseInt(mapCanvas.style.top)||0;
+    let cL=parseFloat(mapCanvas.style.left)||0;
+    let cT=parseFloat(mapCanvas.style.top)||0;
     // Arrow position relative to minimap
     let arrowX=cL+rawPx;
     let arrowY=cT+rawPy;
-    // If arrow would go outside minimap bounds, shift the canvas
-    if(arrowX<pad){cL=pad-rawPx}
-    else if(arrowX>mw-pad){cL=(mw-pad)-rawPx}
-    if(arrowY<pad){cT=pad-rawPy}
-    else if(arrowY>mh-pad){cT=(mh-pad)-rawPy}
+    // Smooth re-centering: when arrow nears edge, lerp canvas to re-center
+    const idealCL=mw/2-rawPx;
+    const idealCT=mh/2-rawPy;
+    if(arrowX<edgePad||arrowX>mw-edgePad||arrowY<edgePad||arrowY>mh-edgePad){
+      // Lerp toward center — smooth gradual re-centering
+      const lerpSpeed=0.12;
+      cL+=(idealCL-cL)*lerpSpeed;
+      cT+=(idealCT-cT)*lerpSpeed;
+    }
     mapCanvas.style.left=cL+'px';
     mapCanvas.style.top=cT+'px';
     // Recalculate arrow position with new offset
@@ -4301,6 +4306,18 @@ function updMap(){
     arrowY=cT+rawPy;
     mapPlayer.style.left=arrowX+'px';
     mapPlayer.style.top=arrowY+'px';
+    // Rotate arrow to face swipe direction
+    const arrowSvg=mapPlayer.querySelector('.map-arrow-svg');
+    if(arrowSvg&&typeof _lastScrollX!=='undefined'){
+      const dsx=sx-_lastScrollX;
+      const dsy=sy-_lastScrollY;
+      if(Math.abs(dsx)>1||Math.abs(dsy)>1){
+        const angle=Math.atan2(dsy,dsx)*(180/Math.PI)+90; // +90 because arrow points up
+        arrowSvg.style.transform='rotate('+angle+'deg)';
+        _lastArrowAngle=angle;
+      }
+    }
+    _lastScrollX=sx;_lastScrollY=sy;
     mapVP.style.left=(cL+(sx-ox)*sc)+'px';
     mapVP.style.top=(cT+(sy-oy)*sc)+'px';
     mapVP.style.width=(vpW*sc)+'px';
