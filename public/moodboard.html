@@ -4680,14 +4680,13 @@ function drawMap(){
   mapCanvas.style.position='absolute';
   mapCanvas.style.borderRadius=mmExp?'0':'inherit';
   if(mmExp){
-    mapCanvas.style.background='#6B9B37';
+    mapCanvas.style.background='linear-gradient(180deg,#4a9bd9 0%,#5baae0 40%,#3d8cc7 100%)';
     mapCanvas.style.backgroundImage='none';
     mapCanvas.style.backgroundSize='';
   } else {
-    mapCanvas.style.background='linear-gradient(160deg,#d4e8c2 0%,#c8deb4 20%,#d9e8cb 40%,#cfe0b8 60%,#daeacf 80%,#c5d9af 100%)';
-    const gridS=Math.max(20,canvasW/20),gridL=Math.max(60,canvasW/5);
-    mapCanvas.style.backgroundImage='linear-gradient(rgba(200,230,201,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(200,230,201,0.5) 1px,transparent 1px),linear-gradient(rgba(165,214,167,0.3) 2px,transparent 2px),linear-gradient(90deg,rgba(165,214,167,0.3) 2px,transparent 2px)';
-    mapCanvas.style.backgroundSize=gridS+'px '+gridS+'px,'+gridS+'px '+gridS+'px,'+gridL+'px '+gridL+'px,'+gridL+'px '+gridL+'px';
+    mapCanvas.style.background='linear-gradient(160deg,#6db8e4 0%,#5baae0 30%,#4a9bd9 60%,#3d8cc7 100%)';
+    mapCanvas.style.backgroundImage='none';
+    mapCanvas.style.backgroundSize='';
   }
   
   if(mmExp){
