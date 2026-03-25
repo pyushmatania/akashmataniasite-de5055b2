@@ -838,23 +838,18 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 
 /* Mountain SVG elements */
 .map-mountain{position:absolute;pointer-events:none;z-index:3}
-.map-mountain svg{width:100%;height:100%;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15))}
+.map-mountain svg{width:100%;height:100%;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.2))}
 
 /* Forest / tree clusters */
 .map-tree-cluster{position:absolute;pointer-events:none;z-index:3}
 .map-tree-cluster svg{width:100%;height:100%;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.12))}
 
 /* Winding dashed path */
-.map-path{
-  position:absolute;pointer-events:none;z-index:4;
-}
+.map-path{position:absolute;pointer-events:none;z-index:4}
 .map-path svg{width:100%;height:100%}
 
 /* Cloud decoration */
-.map-cloud{
-  position:absolute;pointer-events:none;z-index:6;
-  opacity:0.7;
-}
+.map-cloud{position:absolute;pointer-events:none;z-index:6;opacity:0.7}
 @keyframes cloudDrift{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
 .map-cloud svg{width:100%;height:100%;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.08))}
 
@@ -877,9 +872,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   display:flex;flex-direction:column;align-items:center;
   transform:translate(-50%,-100%);
 }
-.map-landmark-icon{
-  font-size:1.5rem;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.3));
-}
+.map-landmark-icon{font-size:1.5rem;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.3))}
 
 /* Illustrated signpost labels */
 .map-signpost{
@@ -901,36 +894,57 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   border:1.5px solid rgba(255,255,255,0.2);
 }
 
-/* Tree dots for parks */
 .map-tree{position:absolute;pointer-events:none;z-index:2;width:8px;height:8px;border-radius:50%;background:rgba(56,142,60,0.7);box-shadow:0 1px 2px rgba(0,0,0,0.15)}
-
-/* Green park areas */
 .map-park{position:absolute;pointer-events:none;z-index:2;background:rgba(76,175,80,0.45);border-radius:30% 40% 35% 45%}
 .minimap-container.expanded .map-park{background:linear-gradient(135deg,rgba(102,187,106,0.55),rgba(76,175,80,0.45));box-shadow:inset 0 0 15px rgba(56,142,60,0.15)}
-
-/* Beach/sand areas */
 .map-beach{position:absolute;pointer-events:none;z-index:1;background:rgba(255,224,130,0.65);border-radius:40% 50% 45% 35%}
-
-/* Highway — illustrated road */
 .map-highway{position:absolute;pointer-events:none;z-index:3;background:rgba(255,255,255,0.6);border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
 .minimap-container.expanded .map-highway{background:rgba(255,255,255,0.55);box-shadow:0 1px 4px rgba(0,0,0,0.15)}
-
-/* Road/path */
 .map-road{position:absolute;pointer-events:none;z-index:3;background:rgba(255,255,255,0.4);border-radius:1px;box-shadow:0 0.5px 1px rgba(0,0,0,0.06);border:none}
 .minimap-container.expanded .map-road{background:rgba(255,255,255,0.45)}
-
-/* Zone grid — subtle */
 .map-zone-grid{position:absolute;pointer-events:none;z-index:2;border:1.5px dashed;border-radius:3px;opacity:0.15}
-
-/* Map compass rose */
 .map-compass-rose{position:absolute;z-index:11;pointer-events:none;opacity:0.2}
 .minimap-container.expanded .map-compass-rose{opacity:0.4}
-
-/* Map scale bar */
 .map-scale-bar{position:absolute;bottom:8px;right:8px;z-index:11;display:none;align-items:center;gap:4px;font-family:var(--font-fun);font-size:0.4rem;color:rgba(255,255,255,0.5)}
 .minimap-container.expanded .map-scale-bar{color:rgba(255,255,255,0.6);display:flex}
 .minimap-container.expanded .scale-line{border-color:rgba(255,255,255,0.4)}
 .scale-line{width:40px;height:0;border-top:1.5px solid rgba(0,0,0,0.2);border-left:1.5px solid rgba(0,0,0,0.2);border-right:1.5px solid rgba(0,0,0,0.2);height:4px}
+
+/* === ISOMETRIC 3D BUILDINGS === */
+.map-building-iso{position:absolute;pointer-events:none;z-index:5}
+.map-building-iso svg{width:100%;height:100%;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.25))}
+
+/* === ANIMATED FERRIS WHEEL === */
+@keyframes ferrisRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.map-ferris{position:absolute;pointer-events:none;z-index:6}
+.map-ferris svg{width:100%;height:100%;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.2))}
+.ferris-wheel-group{animation:ferrisRotate 12s linear infinite;transform-origin:50% 42%}
+
+/* === ANIMATED WINDMILL === */
+@keyframes windmillSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.map-windmill{position:absolute;pointer-events:none;z-index:5}
+.map-windmill svg{width:100%;height:100%;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.2))}
+.windmill-blades{animation:windmillSpin 4s linear infinite;transform-origin:50% 30%}
+
+/* === ANIMATED BOATS === */
+@keyframes boatBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-3px) rotate(2deg)}}
+@keyframes boatSail{0%{transform:translateX(0)}100%{transform:translateX(40px)}}
+.map-boat{position:absolute;pointer-events:none;z-index:2;animation:boatBob 3s ease-in-out infinite}
+.map-boat svg{filter:drop-shadow(0 2px 6px rgba(0,0,0,0.15))}
+
+/* === LIGHTHOUSE === */
+@keyframes lighthouseBeam{0%,100%{opacity:0.1}50%{opacity:0.5}}
+.map-lighthouse{position:absolute;pointer-events:none;z-index:5}
+.map-lighthouse svg{width:100%;height:100%;filter:drop-shadow(0 3px 10px rgba(0,0,0,0.2))}
+.lighthouse-beam{animation:lighthouseBeam 3s ease-in-out infinite}
+
+/* === SPARKLE PARTICLES === */
+@keyframes sparkleFloat{0%{opacity:0;transform:translateY(0) scale(0.5)}50%{opacity:1;transform:translateY(-8px) scale(1)}100%{opacity:0;transform:translateY(-16px) scale(0.3)}}
+.map-sparkle{position:absolute;pointer-events:none;z-index:7;width:4px;height:4px;background:rgba(255,255,200,0.9);border-radius:50%;animation:sparkleFloat 2.5s ease-in-out infinite}
+
+/* === WATER RIPPLE === */
+@keyframes ripple{0%{transform:scale(0.5);opacity:0.6}100%{transform:scale(2.5);opacity:0}}
+.map-ripple{position:absolute;pointer-events:none;z-index:1;width:12px;height:12px;border:1.5px solid rgba(255,255,255,0.3);border-radius:50%;animation:ripple 3s ease-out infinite}
 
 
 .map-loading-text{font-family:var(--font-fun);font-size:0.55rem;color:rgba(0,0,0,0.3)}
