@@ -1541,9 +1541,16 @@ const vp=document.getElementById('viewport'),cv=document.getElementById('canvas'
 vp.scrollLeft=1600;vp.scrollTop=1100;
 
 // SCROLL COUNTER
+let _mmScrollRAF=null;
 vp.addEventListener('scroll',()=>{
   const mx=cv.scrollWidth-vp.clientWidth,my=cv.scrollHeight-vp.clientHeight;
   document.getElementById('scrollCounter').textContent=Math.round(((vp.scrollLeft+vp.scrollTop)/(mx+my))*100);
+  // Update small minimap on scroll
+  if(!mmExp && typeof drawMap==='function'){
+    if(!_mmScrollRAF){
+      _mmScrollRAF=requestAnimationFrame(()=>{_mmScrollRAF=null;drawMap();});
+    }
+  }
 });
 
 // DRAG SCROLL (canvas background)
