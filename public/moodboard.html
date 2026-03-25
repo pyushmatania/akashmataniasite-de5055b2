@@ -2426,7 +2426,7 @@ function toggleMap(){
   mc.classList.toggle('expanded',mmExp);
   document.body.classList.toggle('map-expanded',mmExp);
   // Reset zoom on close
-  if(!mmExp){mapZoomScale=1;mapCanvas.style.transform='';mapCanvas._prevZoom=1;const zl=document.getElementById('mapZoomLevel');if(zl)zl.textContent='1×';}
+  if(!mmExp){mapZoomScale=1;mapCanvas.style.transform='';const zl=document.getElementById('mapZoomLevel');if(zl)zl.textContent='1×';filtClickCount={};}
   setTimeout(()=>{drawMap();if(mmExp)setTimeout(recenter,200)},mmExp?450:50);
 }
 
