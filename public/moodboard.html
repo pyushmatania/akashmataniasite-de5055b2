@@ -3387,6 +3387,94 @@ const mapCount=document.getElementById('mapCount');
 let mmExp=false,navLine=null,mFilt='all';
 let mapTransitioning=false;
 let mapZoomScale=0.5;
+let stickerData=[];
+
+function scanStickers(){
+  stickerData=[];
+  const stickers=document.querySelectorAll('#canvas > .sticker');
+  stickers.forEach(s=>{
+    const r=s.getBoundingClientRect();
+    const left=parseInt(s.style.left)||0;
+    const top=parseInt(s.style.top)||0;
+    const w=s.offsetWidth||r.width||60;
+    const h=s.offsetHeight||r.height||40;
+    // Determine category
+    let cat='other';
+    if(s.classList.contains('sticker-hero-photo')||s.classList.contains('sticker-photo-polaroid')||s.classList.contains('sticker-photo-tilt')||s.classList.contains('sticker-photo-circle'))cat='photo';
+    else if(s.classList.contains('sticker-meme'))cat='meme';
+    else if(s.classList.contains('sticker-counter')||s.classList.contains('sticker-mood')||s.classList.contains('sticker-scratch')||s.classList.contains('sticker-progress')||s.classList.contains('sticker-fortune'))cat='interactive';
+    else if(s.classList.contains('sticker-emoji'))cat='emoji';
+    else if(s.classList.contains('sticker-badge'))cat='badge';
+    else if(s.classList.contains('sticker-text'))cat='text';
+    else if(s.classList.contains('sticker-postit'))cat='postit';
+    else if(s.classList.contains('sticker-stamp'))cat='stamp';
+    else if(s.classList.contains('sticker-swatches'))cat='swatches';
+    else if(s.classList.contains('sticker-contra'))cat='contra';
+    else if(s.classList.contains('zone-signpost'))cat='other';
+    // Determine visual properties
+    let bg='rgba(200,200,200,0.5)';
+    let emoji='';
+    let border='';
+    let radius='3px';
+    const cs=getComputedStyle(s);
+    if(s.classList.contains('sticker-emoji')){
+      bg='transparent';
+      emoji=s.textContent.trim().substring(0,2);
+      radius='0';
+    } else if(s.classList.contains('sticker-postit')){
+      bg=cs.backgroundColor||'#FFF176';
+      radius='3px';
+    } else if(s.classList.contains('sticker-meme')){
+      bg='#fff';
+      const me=s.querySelector('.meme-emoji');
+      if(me)emoji=me.textContent.trim().substring(0,2);
+      radius='14px';
+      border='2px solid #f0ece6';
+    } else if(s.classList.contains('sticker-badge')){
+      bg='#fff';
+      radius='28px';
+      border='2px solid #E8E4DF';
+    } else if(s.classList.contains('sticker-hero-photo')){
+      bg='linear-gradient(135deg,#ddd,#bbb)';
+      radius='20px';
+    } else if(s.classList.contains('sticker-photo-polaroid')){
+      bg='#fff';radius='3px';
+    } else if(s.classList.contains('sticker-photo-tilt')){
+      bg='#fff';radius='4px';
+    } else if(s.classList.contains('sticker-photo-circle')){
+      bg='#ddd';radius='50%';
+    } else if(s.classList.contains('sticker-stamp')){
+      bg='transparent';
+      border='3px solid '+(cs.color||'#999');
+      radius='6px';
+    } else if(s.classList.contains('sticker-counter')){
+      bg='#fff';radius='20px';border='2px solid #f0ece6';
+      const ce=s.querySelector('.c-emoji');
+      if(ce)emoji=ce.textContent.trim().substring(0,2);
+    } else if(s.classList.contains('sticker-fortune')){
+      bg='linear-gradient(135deg,#FFE0B2,#FFB74D)';radius='16px';
+    } else if(s.classList.contains('sticker-scratch')){
+      bg='#fff';radius='14px';border='2px solid #f0ece6';
+    } else if(s.classList.contains('sticker-mood')){
+      bg='#fff';radius='14px';border='2px solid #f0ece6';
+    } else if(s.classList.contains('sticker-progress')){
+      bg='#fff';radius='14px';border='2px solid #f0ece6';
+    } else if(s.classList.contains('sticker-swatches')){
+      bg='#fff';radius='10px';
+    } else if(s.classList.contains('sticker-text')){
+      bg='transparent';radius='0';
+    } else if(s.classList.contains('sticker-illustrated')){
+      bg='#fff';radius='16px';border='2px solid #f0ece6';
+    } else if(s.classList.contains('zone-signpost')){
+      bg='transparent';radius='0';
+    } else if(s.classList.contains('sticker-contra')){
+      bg='#000';radius='8px';border='2px solid #FF1744';
+    } else {
+      bg=cs.backgroundColor||'rgba(200,200,200,0.5)';
+    }
+    stickerData.push({left,top,w,h,bg,emoji,cat,ref:s,border,radius});
+  });
+}
 
 function setMapZoomLabel(){
   const zl=document.getElementById('mapZoomLevel');
