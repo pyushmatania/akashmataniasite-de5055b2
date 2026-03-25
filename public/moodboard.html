@@ -1090,10 +1090,13 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   pointer-events:none;transition:left 0.2s,top 0.2s;
 }
 .map-arrow{object-fit:cover}
-.map-arrow-head{width:32px;height:32px;border-radius:50%;border:2.5px solid #FFD54F;filter:drop-shadow(0 0 6px rgba(255,213,79,0.9)) drop-shadow(0 0 3px rgba(0,0,0,0.6));background:#fff}
+.map-arrow-head{display:none}
+.map-arrow-svg{width:16px;height:16px;filter:drop-shadow(0 0 4px rgba(255,213,79,0.9)) drop-shadow(0 0 8px rgba(255,152,0,0.5)) drop-shadow(0 1px 2px rgba(0,0,0,0.5))}
 .map-arrow-full{width:52px;height:auto;border-radius:0;border:none;filter:drop-shadow(0 0 8px rgba(255,202,40,0.6)) drop-shadow(0 2px 6px rgba(0,0,0,0.4))}
 .minimap-container:not(.expanded) .map-arrow-full{display:none!important}
-.minimap-container:not(.expanded) .map-arrow-head{display:block!important}
+.minimap-container:not(.expanded) .map-arrow-svg{display:block!important}
+.minimap-container:not(.expanded) .map-arrow-head{display:none!important}
+.minimap-container.expanded .map-arrow-svg{display:none!important}
 .minimap-container.expanded .map-arrow-head{display:none!important}
 .minimap-container.expanded .map-arrow-full{display:block!important}
 .map-player-ping{
@@ -1649,6 +1652,7 @@ body.map-expanded .scroll-counter{display:none!important}
       </div>
       <div class="map-player" id="mapPlayer">
         <div class="map-player-ping"></div>
+        <svg class="map-arrow-svg" width="16" height="16" viewBox="0 0 24 24"><defs><linearGradient id="arrowGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFE082"/><stop offset="100%" stop-color="#FFB300"/></linearGradient></defs><polygon points="12,1 22,22 12,16 2,22" fill="url(#arrowGrad)" stroke="#E65100" stroke-width="1.2" stroke-linejoin="round"/></svg>
         <img class="map-arrow map-arrow-head" src="images/bitmoji-head.png" alt="You" />
         <img class="map-arrow map-arrow-full" src="images/bitmoji-full.png" alt="You" />
       </div>
@@ -3657,7 +3661,7 @@ function drawMap(){
     mapCanvas.style.top='50px';
   } else {
     // SMALL MAP: zoomed view where arrow moves, bg pans when arrow nears edge
-    const zoomFactor=3.5;
+    const zoomFactor=5;
     sc=mw/(contentW/zoomFactor);
     canvasW=contentW*sc;
     canvasH=contentH*sc;
