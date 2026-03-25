@@ -2,12 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
 const skills = [
-  { label: "BRAND IDENTITY", color: "hsl(145, 63%, 49%)" },
-  { label: "PACKAGING SYSTEMS", color: "hsl(43, 96%, 56%)" },
-  { label: "WEB DESIGN & DEV", color: "hsl(0, 85%, 60%)" },
-  { label: "DESIGN SYSTEMS", color: "hsl(43, 96%, 56%)" },
-  { label: "TYPOGRAPHY", color: "hsl(145, 63%, 49%)" },
-  { label: "AI-ASSISTED DEVELOPMENT", color: "hsl(0, 85%, 60%)" },
+  { label: "PRODUCT STRATEGY", color: "hsl(145, 63%, 49%)" },
+  { label: "USER RESEARCH", color: "hsl(43, 96%, 56%)" },
+  { label: "WEB3 & FINTECH", color: "hsl(0, 78%, 62%)" },
+  { label: "GROWTH & ANALYTICS", color: "hsl(43, 96%, 56%)" },
+  { label: "TECHNICAL PRDs", color: "hsl(145, 63%, 49%)" },
+  { label: "AI-ASSISTED DEVELOPMENT", color: "hsl(0, 78%, 62%)" },
 ];
 
 const MyStory = () => {
@@ -18,7 +18,7 @@ const MyStory = () => {
       <div className="max-w-2xl mx-auto px-6 py-8">
         {/* Back Button */}
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/")}
           className="w-12 h-12 rounded-full border border-border flex items-center justify-center mb-8 hover:bg-muted transition-colors"
         >
           <ArrowLeft className="w-5 h-5 text-foreground" />
@@ -31,48 +31,53 @@ const MyStory = () => {
 
         {/* Journey Path */}
         <p className="text-muted-foreground text-lg mb-8">
-          Architecture{" "}
-          <span className="mx-1">→</span> Brand{" "}
-          <span className="mx-1">→</span> Web{" "}
+          Engineering{" "}
+          <span className="mx-1">→</span> Product{" "}
+          <span className="mx-1">→</span> Web3{" "}
           <span className="mx-1">→</span> AI
         </p>
 
-        {/* Bio Paragraph */}
+        {/* Bio */}
         <p className="text-muted-foreground text-lg leading-relaxed mb-16">
-          I started in architecture, moved into brand and packaging design, and
-          somewhere along the way fell in love with building for the screen. Now
-          I sit at the intersection of design thinking and emerging technology —
-          making things that feel considered, from the first sketch to the final
-          pixel.
+          I started in computer science engineering, moved into product
+          management across fintech, edtech, and Web3, and somewhere along the
+          way fell in love with building products from 0 to 1. Now I sit at the
+          intersection of product thinking and emerging technology — scaling
+          platforms to 5,000+ users, achieving product-market fit, and driving
+          teams to ship faster.
         </p>
 
         {/* Bold Quote */}
         <p className="text-foreground text-2xl md:text-[1.7rem] font-bold leading-snug mb-16">
-          I believe the best work happens when craft meets curiosity. I care
+          I believe the best products happen when craft meets curiosity. I care
           about the details that most people won't notice but everyone will feel
-          — the weight of a typeface, the rhythm of a layout, the moment an
-          interaction earns a smile.
+          — the clarity of a user flow, the precision of a roadmap, the moment
+          a feature earns its place.
         </p>
 
         {/* AI Philosophy */}
         <p className="text-muted-foreground text-lg leading-relaxed mb-16">
           I build with AI the way a photographer works with light — it's a
-          medium, not a shortcut. The taste, the decisions, the creative
+          medium, not a shortcut. The taste, the decisions, the product
           direction? That's still very human. That's still mine.
         </p>
 
-        {/* Photo */}
-        <div className="rounded-2xl overflow-hidden mb-16">
-          <img
-            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80"
-            alt="Designer at workspace"
-            className="w-full h-auto object-cover"
-            loading="lazy"
-          />
+        {/* Photo with colorful gradient frame */}
+        <div className="relative p-1 rounded-2xl mb-16" style={{
+          background: "linear-gradient(135deg, hsl(145,63%,49%), hsl(43,96%,56%), hsl(0,78%,62%), hsl(280,70%,55%), hsl(200,80%,55%))",
+        }}>
+          <div className="rounded-xl overflow-hidden bg-background">
+            <img
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"
+              alt="Akash Matania"
+              className="w-full aspect-[4/3] object-cover"
+              loading="lazy"
+            />
+          </div>
         </div>
 
         {/* Skill Tags */}
-        <div className="flex flex-wrap gap-3 mb-16">
+        <div className="flex flex-wrap gap-3 pb-16">
           {skills.map((skill) => (
             <span
               key={skill.label}
