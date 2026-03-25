@@ -1836,7 +1836,7 @@ body.map-expanded .scroll-counter{display:none!important}
 
 .about-panel {
   position:fixed;inset:0;z-index:9999;
-  background:#fff;
+  background:#faf9f7;
   transform:translateY(100%);
   transition:transform 0.5s cubic-bezier(0.32,0.72,0,1);
   overflow-y:auto;overflow-x:hidden;
@@ -1849,45 +1849,45 @@ body.map-expanded .scroll-counter{display:none!important}
   padding:60px 28px 120px;
 }
 .about-panel .about-back {
-  width:46px;height:46px;border-radius:50%;border:1.5px solid #e0e0e0;
+  width:46px;height:46px;border-radius:50%;border:1.5px solid #e8e6e1;
   display:flex;align-items:center;justify-content:center;
   background:transparent;cursor:pointer;margin:0 0 48px;
   transition:background 0.2s, border-color 0.2s;
 }
-.about-panel .about-back:hover { border-color:#aaa; }
-.about-panel .about-back:active { background:#f5f5f5; }
+.about-panel .about-back:hover { border-color:#c5c2bb; }
+.about-panel .about-back:active { background:#f0eeea; }
 
 .about-panel h2 {
   font-family:'DM Sans',system-ui,sans-serif;
-  font-size:3.2rem;font-weight:800;color:#0a0a0a;letter-spacing:-0.03em;
+  font-size:3.2rem;font-weight:800;color:#2c2c2c;letter-spacing:-0.03em;
   margin:0 0 40px;line-height:1;
 }
 .about-panel .journey {
-  color:#b0b0b0;font-size:0.95rem;letter-spacing:0.08em;
+  color:#b5b0a8;font-size:0.9rem;letter-spacing:0.1em;
   text-transform:uppercase;margin-bottom:32px;font-weight:500;
 }
-.about-panel .journey span { margin:0 6px;color:#d0d0d0; }
+.about-panel .journey span { margin:0 8px;color:#d5d0c8; }
 .about-panel .bio {
-  color:#666;font-size:1.05rem;line-height:1.8;margin-bottom:56px;
+  color:#7a756d;font-size:1.05rem;line-height:1.85;margin-bottom:56px;
   font-weight:400;
 }
 .about-panel .quote {
-  color:#0a0a0a;font-size:1.5rem;font-weight:700;line-height:1.45;
+  color:#3a3632;font-size:1.4rem;font-weight:600;line-height:1.5;
   margin-bottom:56px;letter-spacing:-0.01em;
-  border-left:3px solid #0a0a0a;padding-left:24px;
+  border-left:2.5px solid #d4cfc6;padding-left:24px;
 }
 .about-panel .philosophy {
-  color:#888;font-size:1rem;line-height:1.8;margin-bottom:56px;
+  color:#9e9890;font-size:1rem;line-height:1.85;margin-bottom:56px;
   font-style:italic;
 }
 
 .about-panel .photo-frame {
-  padding:5px;border-radius:20px;margin-bottom:56px;
-  background:linear-gradient(135deg, #3cd070, #f5c842, #e85050, #a855f7, #3b82f6);
-  box-shadow:0 12px 40px -12px rgba(168,85,247,0.3);
+  padding:4px;border-radius:20px;margin-bottom:56px;
+  background:linear-gradient(135deg, #a8d8b9, #f5deb3, #f0b8b8, #d4b8e8, #b8d4f0);
+  box-shadow:0 12px 40px -12px rgba(180,160,200,0.2);
 }
 .about-panel .photo-frame img {
-  width:100%;display:block;border-radius:16px;
+  width:100%;display:block;border-radius:17px;
   aspect-ratio:4/3;object-fit:cover;object-position:top;
 }
 
@@ -1895,9 +1895,10 @@ body.map-expanded .scroll-counter{display:none!important}
   display:flex;flex-wrap:wrap;gap:10px;
 }
 .about-panel .skill-tag {
-  padding:10px 22px;border-radius:99px;font-size:0.75rem;
-  font-weight:700;letter-spacing:0.06em;color:#fff;
-  transition:transform 0.2s ease;
+  padding:10px 22px;border-radius:99px;font-size:0.73rem;
+  font-weight:600;letter-spacing:0.05em;
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
+  border:1px solid transparent;
 }
 .about-panel .skill-tag:active { transform:scale(0.94); }
 
@@ -1916,7 +1917,7 @@ body.map-expanded .scroll-counter{display:none!important}
 .about-panel.open .anim-item:nth-child(8){transition-delay:0.66s}
 
 .about-panel .divider {
-  width:40px;height:2px;background:#e5e5e5;margin:0 0 56px;border:none;
+  width:40px;height:1.5px;background:#e5e1da;margin:0 0 56px;border:none;
 }
 </style>
 
@@ -1936,12 +1937,12 @@ body.map-expanded .scroll-counter{display:none!important}
       <img src="/images/akash-photo.jpeg" alt="Akash Matania" />
     </div>
     <div class="skill-tags anim-item">
-      <span class="skill-tag" style="background:#e8f5e9;color:#2e7d32">PRODUCT STRATEGY</span>
-      <span class="skill-tag" style="background:#fff3e0;color:#e65100">USER RESEARCH</span>
-      <span class="skill-tag" style="background:#e3f2fd;color:#1565c0">WEB3 & FINTECH</span>
-      <span class="skill-tag" style="background:#fce4ec;color:#c62828">GROWTH & ANALYTICS</span>
-      <span class="skill-tag" style="background:#f3e5f5;color:#7b1fa2">TECHNICAL PRDs</span>
-      <span class="skill-tag" style="background:#e0f7fa;color:#00838f">AI-ASSISTED DEVELOPMENT</span>
+      <span class="skill-tag" style="background:#eef5ee;color:#5a8a5a;border-color:#d5e8d5">PRODUCT STRATEGY</span>
+      <span class="skill-tag" style="background:#fdf5eb;color:#b07d3a;border-color:#f0e0c4">USER RESEARCH</span>
+      <span class="skill-tag" style="background:#eef3fa;color:#5a7faa;border-color:#d4e2f0">WEB3 & FINTECH</span>
+      <span class="skill-tag" style="background:#faf0ef;color:#b06a6a;border-color:#ecd8d8">GROWTH & ANALYTICS</span>
+      <span class="skill-tag" style="background:#f3eff8;color:#7a6a9a;border-color:#e0d6ec">TECHNICAL PRDs</span>
+      <span class="skill-tag" style="background:#eef6f8;color:#5a8a8f;border-color:#d4e8eb">AI-ASSISTED DEVELOPMENT</span>
     </div>
   </div>
 </div>
