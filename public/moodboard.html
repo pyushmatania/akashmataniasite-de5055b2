@@ -1558,10 +1558,10 @@ let _mmScrollRAF=null;
 vp.addEventListener('scroll',()=>{
   const mx=cv.scrollWidth-vp.clientWidth,my=cv.scrollHeight-vp.clientHeight;
   document.getElementById('scrollCounter').textContent=Math.round(((vp.scrollLeft+vp.scrollTop)/(mx+my))*100);
-  // Update small minimap on scroll
-  if(!mmExp && typeof drawMap==='function'){
+  // Update arrow position on small minimap (no full redraw needed)
+  if(!mmExp && typeof updMap==='function'){
     if(!_mmScrollRAF){
-      _mmScrollRAF=requestAnimationFrame(()=>{_mmScrollRAF=null;drawMap();});
+      _mmScrollRAF=requestAnimationFrame(()=>{_mmScrollRAF=null;updMap();});
     }
   }
 });
@@ -3426,12 +3426,11 @@ function drawMap(){
     mapCanvas.style.left='0';
     mapCanvas.style.top='50px';
   } else {
-    const cx=vp.scrollLeft+vp.clientWidth/2;
-    const cy=vp.scrollTop+vp.clientHeight/2;
-    const viewR=700;
-    offsetX=Math.max(0,cx-viewR);
-    offsetY=Math.max(0,cy-viewR);
-    sc=Math.min(mw/(viewR*2),mh/(viewR*2));
+    // SMALL: show entire canvas so arrow moves, not background
+    offsetX=0;
+    offsetY=0;
+    const fullW=5500, fullH=4000;
+    sc=Math.min(mw/fullW, mh/fullH);
     canvasW=mw;canvasH=mh;
     mapCanvas.style.left='0';mapCanvas.style.top='0';
   }
@@ -3481,7 +3480,7 @@ function drawMap(){
       if(zx<-30||zx>canvasW+30||zy<-30||zy>canvasH+30)return;
       const lbl=document.createElement('div');
       lbl.textContent=z.name.replace('The ','');
-      lbl.style.cssText='position:absolute;left:'+zx+'px;top:'+zy+'px;transform:translate(-50%,-50%);font-family:Arial Black,sans-serif;font-size:3.5px;font-weight:900;color:rgba(60,80,40,0.25);text-transform:uppercase;letter-spacing:0.5px;pointer-events:none;white-space:nowrap;';
+      lbl.style.cssText='position:absolute;left:'+zx+'px;top:'+zy+'px;transform:translate(-50%,-50%);font-family:Arial Black,sans-serif;font-size:5.5px;font-weight:900;color:rgba(50,70,30,0.4);text-transform:uppercase;letter-spacing:0.3px;pointer-events:none;white-space:nowrap;';
       mapCanvas.appendChild(lbl);
     });
   }
