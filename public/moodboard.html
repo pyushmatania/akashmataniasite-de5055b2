@@ -4060,10 +4060,17 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
     setTimeout(()=>{
       // Center selected item in viewport after returning to moodboard
       centerMoodboardOn(worldX,worldY,'smooth');
+      // Multiple resyncs to ensure small map catches the final scroll position
       setTimeout(()=>{
         centerMoodboardOn(worldX,worldY,'auto');
-        if(!mmExp){drawMap();updMap();}
+        if(!mmExp){ensureMapData(true);drawMap();updMap();}
       },650);
+      setTimeout(()=>{
+        if(!mmExp){drawMap();updMap();}
+      },1200);
+      setTimeout(()=>{
+        if(!mmExp){updMap();}
+      },1800);
       
       // Calculate footstep path on moodboard
       const vpCX=vp.scrollLeft+vp.clientWidth/2;
