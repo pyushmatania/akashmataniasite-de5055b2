@@ -2537,8 +2537,8 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     });
     
     // Hover highlight
-    clone.addEventListener('mouseenter',()=>{clone.style.outline='3px solid #FFD54F';clone.style.outlineOffset='4px'});
-    clone.addEventListener('mouseleave',()=>{clone.style.outline='none'});
+    clone.addEventListener('mouseenter',()=>{clone.style.outline='3px solid #FFCA28';clone.style.outlineOffset='4px';clone.style.boxShadow='0 2px 12px rgba(255,202,40,0.3)'});
+    clone.addEventListener('mouseleave',()=>{clone.style.outline='none';clone.style.boxShadow='none'});
     
     mapCanvas.appendChild(clone);
   });
