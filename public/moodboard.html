@@ -442,7 +442,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   transition:border-radius 0.35s;
   background:#3a5a2a;
 }
-.minimap-container.expanded .minimap{border-radius:0;border:none;box-shadow:none;background:#E8F5E9}
+.minimap-container.expanded .minimap{border-radius:0;border:none;box-shadow:none;background:linear-gradient(160deg,#d4e8c2,#cfe0b8,#daeacf)}
 
 /* Cardinal direction markers on minimap rim */
 .minimap-cardinal{
@@ -570,12 +570,53 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   box-shadow:0 1px 4px rgba(0,0,0,0.3);
   backdrop-filter:blur(4px);
 }
-/* Waypoint line (dashed) */
+/* Waypoint line (dashed) — only for active target */
 .waypoint-line{
   position:absolute;pointer-events:none;z-index:140;
   border-top:1.5px dashed rgba(244,67,54,0.35);
   transform-origin:0 0;height:0;
 }
+/* Active waypoint line — glowing */
+.waypoint-line-active{
+  position:absolute;pointer-events:none;z-index:141;
+  border-top:2px dashed rgba(0,255,128,0.6);
+  transform-origin:0 0;height:0;
+  filter:drop-shadow(0 0 4px rgba(0,255,128,0.4));
+}
+
+/* ===== NEON GLOW on active item ===== */
+@keyframes neonGlow{
+  0%,100%{box-shadow:0 0 8px rgba(0,255,128,0.6),0 0 20px rgba(0,255,128,0.3),0 0 40px rgba(0,255,128,0.15);outline-color:rgba(0,255,128,0.9)}
+  50%{box-shadow:0 0 15px rgba(0,255,128,0.8),0 0 35px rgba(0,255,128,0.4),0 0 60px rgba(0,255,128,0.2);outline-color:rgba(0,255,128,1)}
+}
+.neon-active{
+  outline:2px solid rgba(0,255,128,0.9)!important;outline-offset:5px!important;
+  animation:neonGlow 1.5s ease-in-out infinite!important;
+  z-index:300!important;
+}
+
+/* ===== CYCLE COUNTER HUD ===== */
+.cycle-counter-hud{
+  position:absolute;top:60px;left:50%;transform:translateX(-50%);z-index:1002;
+  display:none;align-items:center;gap:8px;
+  background:rgba(0,0,0,0.75);backdrop-filter:blur(12px);
+  padding:8px 16px;border-radius:10px;
+  border:1px solid rgba(0,255,128,0.3);
+  box-shadow:0 4px 20px rgba(0,0,0,0.3),0 0 15px rgba(0,255,128,0.15);
+  font-family:var(--font-fun);color:#fff;
+}
+.minimap-container.expanded .cycle-counter-hud.visible{display:flex}
+.cycle-counter-hud .cc-icon{font-size:1.1rem}
+.cycle-counter-hud .cc-label{font-size:0.7rem;font-weight:600;color:rgba(255,255,255,0.7)}
+.cycle-counter-hud .cc-num{font-size:0.85rem;font-weight:800;color:#69F0AE;text-shadow:0 0 8px rgba(0,255,128,0.5)}
+.cycle-counter-hud .cc-nav{
+  width:24px;height:24px;border-radius:6px;
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);
+  color:#fff;font-size:0.8rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+}
+.cycle-counter-hud .cc-nav:hover{background:rgba(0,255,128,0.25);border-color:rgba(0,255,128,0.4)}
 
 .minimap-inner{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
 .minimap-container.expanded .minimap-inner{overflow:auto;-webkit-overflow-scrolling:touch}
@@ -632,10 +673,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 #mapCanvas::before{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
   background:
-    radial-gradient(ellipse at 20% 30%, rgba(165,214,167,0.35) 0%, transparent 40%),
-    radial-gradient(ellipse at 70% 60%, rgba(200,230,201,0.3) 0%, transparent 35%),
-    radial-gradient(ellipse at 45% 80%, rgba(178,223,219,0.25) 0%, transparent 30%),
-    radial-gradient(ellipse at 55% 15%, rgba(255,245,157,0.15) 0%, transparent 30%);
+    radial-gradient(ellipse at 20% 30%, rgba(139,195,74,0.25) 0%, transparent 35%),
+    radial-gradient(ellipse at 70% 60%, rgba(165,214,167,0.3) 0%, transparent 30%),
+    radial-gradient(ellipse at 45% 80%, rgba(100,181,246,0.12) 0%, transparent 25%),
+    radial-gradient(ellipse at 85% 15%, rgba(255,241,118,0.12) 0%, transparent 25%),
+    radial-gradient(ellipse at 15% 70%, rgba(178,223,219,0.2) 0%, transparent 30%),
+    radial-gradient(ellipse at 55% 15%, rgba(174,213,129,0.2) 0%, transparent 28%);
 }
 #mapCanvas::after{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
@@ -652,15 +695,17 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 /* Water features on map */
 .map-water{
   position:absolute;pointer-events:none;z-index:1;
-  background:rgba(129,212,250,0.35);border-radius:40%;
-  border:1px solid rgba(79,195,247,0.2);
+  background:rgba(100,181,230,0.4);border-radius:40%;
+  border:1.5px solid rgba(66,165,245,0.3);
+  box-shadow:inset 0 0 10px rgba(66,165,245,0.2);
 }
 
 /* Road/path lines */
 .map-road{
-  position:absolute;pointer-events:none;z-index:1;
-  background:rgba(255,255,255,0.7);border-radius:3px;
-  box-shadow:0 0.5px 2px rgba(0,0,0,0.06);
+  position:absolute;pointer-events:none;z-index:2;
+  background:rgba(220,210,190,0.85);border-radius:2px;
+  box-shadow:0 0.5px 2px rgba(0,0,0,0.08);
+  border:0.5px solid rgba(180,170,150,0.3);
 }
 
 /* Zone label markers on map */
@@ -669,8 +714,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   font-family:var(--font-fun);font-weight:600;font-size:0.5rem;
   color:rgba(100,100,100,0.4);text-transform:uppercase;letter-spacing:0.08em;
   transform:translate(-50%,-50%);white-space:nowrap;
+  text-shadow:0 1px 3px rgba(255,255,255,0.8);
 }
-.minimap-container.expanded .map-zone-marker{font-size:0.7rem;color:rgba(80,80,80,0.45)}
+.minimap-container.expanded .map-zone-marker{font-size:0.85rem;color:rgba(50,50,50,0.5);font-weight:700;letter-spacing:0.1em}
 
 /* Map compass rose */
 .map-compass-rose{
@@ -1246,10 +1292,18 @@ body.map-expanded .logo,body.map-expanded .settings-btn{display:none!important}
     <div class="map-hint"></div>
     <div class="minimap-radar"></div>
     <div class="map-header">
-      <div class="map-title">🗺️ Sticker World <span class="map-title-badge">LIVE</span></div>
+      <div class="map-title">🗺️ Mood Map <span class="map-title-badge">LIVE</span></div>
       <button class="map-close-btn" onclick="event.stopPropagation();toggleMap()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
+    </div>
+    
+    <div class="cycle-counter-hud" id="cycleHud">
+      <button class="cc-nav" onclick="event.stopPropagation();cycleNav(-1)">‹</button>
+      <span class="cc-icon" id="cycleIcon">📸</span>
+      <span class="cc-label" id="cycleLabel">Photos</span>
+      <span class="cc-num" id="cycleNum">1/2</span>
+      <button class="cc-nav" onclick="event.stopPropagation();cycleNav(1)">›</button>
     </div>
     
     <div class="map-coord-display" id="mapCoords">0, 0</div>
@@ -2611,7 +2665,7 @@ function toggleMap(){
   mc.classList.toggle('expanded',mmExp);
   document.body.classList.toggle('map-expanded',mmExp);
   // Reset zoom on close
-  if(!mmExp){mapZoomScale=1;mapCanvas.style.transform='';const zl=document.getElementById('mapZoomLevel');if(zl)zl.textContent='1×';filtClickCount={};}
+  if(!mmExp){mapZoomScale=1;mapCanvas.style.transform='';const zl=document.getElementById('mapZoomLevel');if(zl)zl.textContent='1×';filtClickCount={};const hud=document.getElementById('cycleHud');if(hud)hud.classList.remove('visible');clearWaypoints();}
   setTimeout(()=>{drawMap();if(mmExp)setTimeout(recenter,200)},mmExp?450:50);
 }
 
@@ -2804,7 +2858,7 @@ function drawMap(){
   mapCanvas.style.width=canvasW+'px';
   mapCanvas.style.height=canvasH+'px';
   mapCanvas.style.position='absolute';
-  mapCanvas.style.background='#E8F5E9';
+  mapCanvas.style.background='linear-gradient(160deg,#d4e8c2 0%,#c8deb4 20%,#d9e8cb 40%,#cfe0b8 60%,#daeacf 80%,#c5d9af 100%)';
   mapCanvas.style.borderRadius=mmExp?'0':'inherit';
   const gridS=Math.max(20,canvasW/20),gridL=Math.max(60,canvasW/5);
   mapCanvas.style.backgroundImage='linear-gradient(rgba(200,230,201,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(200,230,201,0.5) 1px,transparent 1px),linear-gradient(rgba(165,214,167,0.3) 2px,transparent 2px),linear-gradient(90deg,rgba(165,214,167,0.3) 2px,transparent 2px)';
@@ -2899,33 +2953,41 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
   if(mapCount)mapCount.textContent=count+' items';
 }
 
-// Waypoint system
+// Waypoint system — only show line to ACTIVE target
 function clearWaypoints(){
-  mapCanvas.querySelectorAll('.waypoint-marker,.waypoint-dist,.waypoint-line').forEach(e=>e.remove());
+  mapCanvas.querySelectorAll('.waypoint-marker,.waypoint-dist,.waypoint-line,.waypoint-line-active,.neon-active').forEach(e=>{
+    if(e.classList.contains('neon-active')){e.classList.remove('neon-active');e.style.outline='';e.style.boxShadow=''}
+    else e.remove();
+  });
 }
-function addWaypoints(cat){
+function addWaypoints(cat, activeIdx){
   clearWaypoints();
   if(cat==='all'||!drawMap._sc)return;
   const sc=drawMap._sc||0.05;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
   const cT=parseInt(mapCanvas.style.top)||0;
-  // Player position in world coords
   const playerWX=vp.scrollLeft+vp.clientWidth/2;
   const playerWY=vp.scrollTop+vp.clientHeight/2;
   const playerMX=(playerWX-ox)*sc;
   const playerMY=(playerWY-oy)*sc+cT;
   const matching=stickerData.filter(d=>d.cat===cat);
+  const hasActive=typeof activeIdx==='number'&&activeIdx>=0&&activeIdx<matching.length;
+  
   matching.forEach((d,i)=>{
     const mx=(d.left-ox)*sc;
     const my=(d.top-oy)*sc+cT;
-    // Distance in world px
     const dist=Math.round(Math.sqrt(Math.pow(d.left-playerWX,2)+Math.pow(d.top-playerWY,2)));
     const distLabel=dist>1000?(dist/1000).toFixed(1)+'k':dist+'';
-    // Waypoint pin
+    // Only show waypoint pin, no line — unless it's the active one
     const wp=document.createElement('div');
     wp.className='waypoint-marker';
     wp.style.left=mx+'px';wp.style.top=my+'px';
     wp.style.animationDelay=(i*0.3)+'s';
+    if(hasActive&&i===activeIdx){
+      wp.style.background='rgba(0,255,128,0.9)';
+      wp.style.borderColor='#fff';
+      wp.style.boxShadow='0 0 12px rgba(0,255,128,0.7),0 0 25px rgba(0,255,128,0.3)';
+    }
     mapCanvas.appendChild(wp);
     // Distance label
     const dl=document.createElement('div');
@@ -2933,17 +2995,81 @@ function addWaypoints(cat){
     dl.style.left=mx+'px';dl.style.top=(my+10)+'px';
     dl.textContent=distLabel+'px';
     mapCanvas.appendChild(dl);
-    // Dashed line from player to waypoint
-    const dx=mx-playerMX,dy=my-playerMY;
-    const len=Math.sqrt(dx*dx+dy*dy);
-    const angle=Math.atan2(dy,dx)*180/Math.PI;
-    const line=document.createElement('div');
-    line.className='waypoint-line';
-    line.style.left=playerMX+'px';line.style.top=playerMY+'px';
-    line.style.width=len+'px';
-    line.style.transform='rotate('+angle+'deg)';
-    mapCanvas.appendChild(line);
+    // Only draw line to the ACTIVE item
+    if(hasActive&&i===activeIdx){
+      const dx=mx-playerMX,dy=my-playerMY;
+      const len=Math.sqrt(dx*dx+dy*dy);
+      const angle=Math.atan2(dy,dx)*180/Math.PI;
+      const line=document.createElement('div');
+      line.className='waypoint-line-active';
+      line.style.left=playerMX+'px';line.style.top=playerMY+'px';
+      line.style.width=len+'px';
+      line.style.transform='rotate('+angle+'deg)';
+      mapCanvas.appendChild(line);
+    }
   });
+}
+
+// Apply neon glow to a specific map item
+function applyNeonGlow(target){
+  // Clear previous
+  mapCanvas.querySelectorAll('.neon-active').forEach(el=>{el.classList.remove('neon-active');el.style.outline='';el.style.boxShadow=''});
+  const sc=drawMap._sc||0.05;
+  const ox=drawMap._ox||0,oy=drawMap._oy||0;
+  const cT=parseInt(mapCanvas.style.top)||0;
+  const px=(target.left-ox)*sc;
+  const py=(target.top-oy)*sc+cT;
+  const items=mapCanvas.querySelectorAll('.sticker,.mi');
+  items.forEach(el=>{
+    const elL=parseFloat(el.style.left),elT=parseFloat(el.style.top);
+    if(Math.abs(elL-px)<30 && Math.abs(elT-py)<30){
+      el.classList.add('neon-active');
+    }
+  });
+}
+
+// Cycle navigation from HUD arrows
+function cycleNav(dir){
+  if(mFilt==='all')return;
+  const matching=stickerData.filter(d=>d.cat===mFilt);
+  if(!matching.length)return;
+  if(!filtClickCount[mFilt])filtClickCount[mFilt]=0;
+  filtClickCount[mFilt]=(filtClickCount[mFilt]+dir+matching.length)%matching.length;
+  navigateToFilteredItem(mFilt,filtClickCount[mFilt]);
+}
+
+const catNames={photo:'Photos',meme:'Memes',interactive:'Games',emoji:'Emojis',badge:'Badges',text:'Texts',postit:'Notes',stamp:'Stamps',swatches:'Colors',fortune:'Fortune',contra:'Contra',other:'Other'};
+const catIcons={photo:'📸',meme:'😂',interactive:'🎮',emoji:'✨',badge:'🏷️',text:'💬',postit:'📝',stamp:'🔖',swatches:'🎨',fortune:'🔮',contra:'⚔️',other:'📦'};
+
+function navigateToFilteredItem(cat,idx){
+  const matching=stickerData.filter(d=>d.cat===cat);
+  if(!matching.length)return;
+  const target=matching[idx%matching.length];
+  const sc=drawMap._sc||0.05;
+  const ox=drawMap._ox||0,oy=drawMap._oy||0;
+  const cT=parseInt(mapCanvas.style.top)||0;
+  const px=(target.left-ox)*sc;
+  const py=(target.top-oy)*sc+cT;
+  mmInner.scrollTo({left:px-mmInner.clientWidth/2,top:py-mmInner.clientHeight/2,behavior:'smooth'});
+  // Update HUD
+  const hud=document.getElementById('cycleHud');
+  if(hud){
+    hud.classList.add('visible');
+    document.getElementById('cycleIcon').textContent=catIcons[cat]||'📦';
+    document.getElementById('cycleLabel').textContent=catNames[cat]||cat;
+    document.getElementById('cycleNum').textContent=(idx%matching.length+1)+'/'+matching.length;
+  }
+  // Neon glow on target
+  setTimeout(()=>{
+    applyNeonGlow(target);
+    addWaypoints(cat,idx%matching.length);
+  },400);
+  // Update zone banner
+  const bigZone=document.getElementById('mapZoneBanner');
+  if(bigZone){
+    const zn=getZoneName(target.left,target.top);
+    bigZone.textContent=zn;
+  }
 }
 
 // Filter with cycle-through navigation
@@ -2951,57 +3077,12 @@ let filtClickCount={};
 function filt(c,btn){
   const wasActive=(mFilt===c);
   if(wasActive && c!=='all'){
-    // Already on this filter — cycle to next item
     if(!filtClickCount[c])filtClickCount[c]=0;
     const matching=stickerData.filter(d=>d.cat===c);
     if(matching.length>0){
       const idx=filtClickCount[c]%matching.length;
-      const target=matching[idx];
       filtClickCount[c]++;
-      const sc=drawMap._sc||0.05;
-      const ox=drawMap._ox||0,oy=drawMap._oy||0;
-      const cT=parseInt(mapCanvas.style.top)||0;
-      const px=(target.left-ox)*sc;
-      const py=(target.top-oy)*sc+cT;
-      mmInner.scrollTo({left:px-mmInner.clientWidth/2,top:py-mmInner.clientHeight/2,behavior:'smooth'});
-      // Enhanced spotlight effect on target
-      setTimeout(()=>{
-        mapCanvas.querySelectorAll('.cycle-target,.cycle-ripple').forEach(e=>{e.classList.remove('cycle-target');e.remove()});
-        const items=mapCanvas.querySelectorAll('.sticker,.mi');
-        items.forEach(el=>{
-          const elL=parseFloat(el.style.left),elT=parseFloat(el.style.top);
-          if(Math.abs(elL-px)<30 && Math.abs(elT-py)<30){
-            el.classList.add('cycle-target');
-            const ripple=document.createElement('div');
-            ripple.className='cycle-ripple';
-            ripple.style.left=elL+'px';ripple.style.top=elT+'px';
-            mapCanvas.appendChild(ripple);
-            setTimeout(()=>{
-              const r2=document.createElement('div');
-              r2.className='cycle-ripple';
-              r2.style.left=elL+'px';r2.style.top=elT+'px';
-              mapCanvas.appendChild(r2);
-            },200);
-            setTimeout(()=>{
-              el.classList.remove('cycle-target');
-              el.style.outline='none';el.style.boxShadow='none';
-            },2000);
-          }
-        });
-      },400);
-      // Update waypoints with new distances
-      addWaypoints(c);
-      // Update zone banner
-      const bigZone=document.getElementById('mapZoneBanner');
-      if(bigZone){
-        const zn=getZoneName(target.left,target.top);
-        bigZone.textContent=zn+' · '+(idx+1)+'/'+matching.length;
-        bigZone.style.background='rgba(255,235,59,0.25)';
-        bigZone.style.borderColor='rgba(255,193,7,0.3)';
-        setTimeout(()=>{bigZone.style.background='';bigZone.style.borderColor=''},1500);
-      }
-      const mc=document.getElementById('mapCount');
-      if(mc)mc.textContent=(idx+1)+'/'+matching.length;
+      navigateToFilteredItem(c,idx);
     }
     return;
   }
@@ -3009,9 +3090,14 @@ function filt(c,btn){
   filtClickCount[c]=0;
   document.querySelectorAll('.mc').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+  // Hide HUD when switching to all
+  if(c==='all'){
+    const hud=document.getElementById('cycleHud');
+    if(hud)hud.classList.remove('visible');
+    clearWaypoints();
+  }
   drawMap();
-  // Add waypoints after map redraws
-  setTimeout(()=>addWaypoints(c),100);
+  if(c!=='all')setTimeout(()=>addWaypoints(c),100);
 }
 
 function recenter(){
