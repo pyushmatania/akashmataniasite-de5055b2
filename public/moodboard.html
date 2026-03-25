@@ -3388,6 +3388,28 @@ let mmExp=false,navLine=null,mFilt='all';
 let mapTransitioning=false;
 let mapZoomScale=0.5;
 let stickerData=[];
+const MOODBOARD_VIEW_SCALE=0.85;
+
+function viewportToWorld(vx,vy){
+  return {x:vx/MOODBOARD_VIEW_SCALE,y:vy/MOODBOARD_VIEW_SCALE};
+}
+
+function worldToViewport(wx,wy){
+  return {x:wx*MOODBOARD_VIEW_SCALE,y:wy*MOODBOARD_VIEW_SCALE};
+}
+
+function getViewportCenterWorld(){
+  return viewportToWorld(vp.scrollLeft+vp.clientWidth/2,vp.scrollTop+vp.clientHeight/2);
+}
+
+function mapClientToWorld(clientX,clientY){
+  const sc=drawMap._sc||0.05;
+  const ox=drawMap._ox||0,oy=drawMap._oy||0;
+  const rect=mapCanvas.getBoundingClientRect();
+  const mapX=clientX-rect.left;
+  const mapY=clientY-rect.top;
+  return {x:mapX/sc+ox,y:mapY/sc+oy};
+}
 
 function scanStickers(){
   stickerData=[];
@@ -3769,11 +3791,12 @@ function drawMap(){
   const mr=mmInner.getBoundingClientRect();
   const mw=mr.width||64,mh=mr.height||64;
   
-  // Use full canvas dimensions to ensure entire map is covered
-  const isMobile=window.innerWidth<=768;
-  const fullW=isMobile?8000:10000, fullH=isMobile?5500:7000;
-  const minL=0, minT=0, maxR=fullW, maxB=fullH;
-  const contentW=fullW, contentH=fullH;
+   // Use real moodboard extents (including out-of-bounds stickers) so map coordinates stay exact.
+   const stickerMaxX=stickerData.reduce((m,d)=>Math.max(m,d.left+d.w),0);
+   const stickerMaxY=stickerData.reduce((m,d)=>Math.max(m,d.top+d.h),0);
+   const contentW=Math.max(cv.scrollWidth||0,cv.offsetWidth||0,stickerMaxX+120,10000);
+   const contentH=Math.max(cv.scrollHeight||0,cv.offsetHeight||0,stickerMaxY+120,7000);
+   const minL=0, minT=0;
   
   let sc,offsetX,offsetY,canvasW,canvasH;
   
@@ -3904,7 +3927,8 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     // Click to navigate — bitmoji walks to target
     clone.addEventListener('click',ev=>{
       ev.stopPropagation();
-      walkBitmojiTo(d.left+d.w/2,d.top+d.h/2,d.ref);
+      const target=mapClientToWorld(ev.clientX,ev.clientY);
+      walkBitmojiTo(target.x,target.y,d.ref);
     });
     
     // Hover highlight
@@ -3920,10 +3944,11 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
 let walkingInProgress=false;
 
 function centerMoodboardOn(worldX,worldY,behavior){
-  const maxX=Math.max(0,cv.scrollWidth-vp.clientWidth);
-  const maxY=Math.max(0,cv.scrollHeight-vp.clientHeight);
-  const targetLeft=Math.max(0,Math.min(worldX-vp.clientWidth/2,maxX));
-  const targetTop=Math.max(0,Math.min(worldY-vp.clientHeight/2,maxY));
+  const scaled=worldToViewport(worldX,worldY);
+  const maxX=Math.max(0,vp.scrollWidth-vp.clientWidth);
+  const maxY=Math.max(0,vp.scrollHeight-vp.clientHeight);
+  const targetLeft=Math.max(0,Math.min(scaled.x-vp.clientWidth/2,maxX));
+  const targetTop=Math.max(0,Math.min(scaled.y-vp.clientHeight/2,maxY));
   vp.scrollTo({left:targetLeft,top:targetTop,behavior:behavior||'smooth'});
 }
 
@@ -4060,17 +4085,10 @@ mmInner.addEventListener('pointerdown',ev=>{
   longPressTarget={x:ev.clientX,y:ev.clientY};
   longPressTimer=setTimeout(()=>{
     if(!mmExp||!drawMap._sc)return;
-    const sc=drawMap._sc||0.05;
-    const ox=drawMap._ox||0,oy=drawMap._oy||0;
-    const cT=parseInt(mapCanvas.style.top)||0;
-    const rect=mapCanvas.getBoundingClientRect();
-    const mapX=ev.clientX-rect.left;
-    const mapY=ev.clientY-rect.top;
-    const worldX=mapX/sc+ox;
-    const worldY=(mapY-cT)/sc+oy;
+    const target=mapClientToWorld(ev.clientX,ev.clientY);
     // Haptic feedback
     try{if(navigator.vibrate)navigator.vibrate(50)}catch(e){}
-    walkBitmojiTo(worldX,worldY);
+    walkBitmojiTo(target.x,target.y);
   },3000);
 });
 mmInner.addEventListener('pointerup',()=>{clearTimeout(longPressTimer);longPressTimer=null});
@@ -4081,6 +4099,14 @@ mmInner.addEventListener('pointermove',ev=>{
   }
 });
 mmInner.addEventListener('pointercancel',()=>{clearTimeout(longPressTimer);longPressTimer=null});
+
+// Single tap on big map blank area = walk to exact tapped world coordinate
+mapCanvas.addEventListener('click',ev=>{
+  if(!mmExp||walkingInProgress)return;
+  if(ev.target.closest('.sticker'))return;
+  const target=mapClientToWorld(ev.clientX,ev.clientY);
+  walkBitmojiTo(target.x,target.y);
+});
 
 
 function clearWaypoints(){
@@ -4094,17 +4120,17 @@ function addWaypoints(cat, activeIdx){
   if(cat==='all'||!drawMap._sc)return;
   const sc=drawMap._sc||0.05;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
-  const cT=parseInt(mapCanvas.style.top)||0;
-  const playerWX=vp.scrollLeft+vp.clientWidth/2;
-  const playerWY=vp.scrollTop+vp.clientHeight/2;
+  const centerWorld=getViewportCenterWorld();
+  const playerWX=centerWorld.x;
+  const playerWY=centerWorld.y;
   const playerMX=(playerWX-ox)*sc;
-  const playerMY=(playerWY-oy)*sc+cT;
+  const playerMY=(playerWY-oy)*sc;
   const matching=stickerData.filter(d=>d.cat===cat);
   const hasActive=typeof activeIdx==='number'&&activeIdx>=0&&activeIdx<matching.length;
   
   matching.forEach((d,i)=>{
     const mx=(d.left-ox)*sc;
-    const my=(d.top-oy)*sc+cT;
+    const my=(d.top-oy)*sc;
     const dist=Math.round(Math.sqrt(Math.pow(d.left-playerWX,2)+Math.pow(d.top-playerWY,2)));
     const distLabel=dist>1000?(dist/1000).toFixed(1)+'k':dist+'';
     // Only show waypoint pin, no line — unless it's the active one
@@ -4145,9 +4171,8 @@ function applyNeonGlow(target){
   mapCanvas.querySelectorAll('.neon-active').forEach(el=>{el.classList.remove('neon-active');el.style.outline='';el.style.boxShadow=''});
   const sc=drawMap._sc||0.05;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
-  const cT=parseInt(mapCanvas.style.top)||0;
   const px=(target.left-ox)*sc;
-  const py=(target.top-oy)*sc+cT;
+  const py=(target.top-oy)*sc;
   const items=mapCanvas.querySelectorAll('.sticker,.mi');
   items.forEach(el=>{
     const elL=parseFloat(el.style.left),elT=parseFloat(el.style.top);
@@ -4235,8 +4260,9 @@ function recenter(){
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
   const mr=mmInner.getBoundingClientRect();
   const cT=parseInt(mapCanvas.style.top)||0;
-  const px=(vp.scrollLeft+vp.clientWidth/2-ox)*sc;
-  const py=(vp.scrollTop+vp.clientHeight/2-oy)*sc+cT;
+  const centerWorld=getViewportCenterWorld();
+  const px=(centerWorld.x-ox)*sc;
+  const py=(centerWorld.y-oy)*sc+cT;
   mmInner.scrollTo({left:px-mr.width/2,top:py-mr.height/2,behavior:'smooth'});
 }
 
@@ -4310,6 +4336,10 @@ function updMap(){
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
   const sx=vp.scrollLeft,sy=vp.scrollTop;
   const vpW=vp.clientWidth,vpH=vp.clientHeight;
+  const worldTopLeft=viewportToWorld(sx,sy);
+  const worldVpW=vpW/MOODBOARD_VIEW_SCALE;
+  const worldVpH=vpH/MOODBOARD_VIEW_SCALE;
+  const centerWorld={x:worldTopLeft.x+worldVpW/2,y:worldTopLeft.y+worldVpH/2};
   
   if(!mmExp){
     // SMALL MAP: smooth arrow movement with gradual re-centering
@@ -4317,8 +4347,8 @@ function updMap(){
     const mw=mr.width||64,mh=mr.height||64;
     const edgePad=14; // edge zone where canvas starts panning
     // Player position in map-space (absolute)
-    const rawPx=(sx+vpW/2-ox)*sc;
-    const rawPy=(sy+vpH/2-oy)*sc;
+    const rawPx=(centerWorld.x-ox)*sc;
+    const rawPy=(centerWorld.y-oy)*sc;
     // Current canvas offset
     let cL=parseFloat(mapCanvas.style.left)||0;
     let cT=parseFloat(mapCanvas.style.top)||0;
@@ -4355,29 +4385,28 @@ function updMap(){
       }
     }
     _lastScrollX=sx;_lastScrollY=sy;
-    mapVP.style.left=(cL+(sx-ox)*sc)+'px';
-    mapVP.style.top=(cT+(sy-oy)*sc)+'px';
-    mapVP.style.width=(vpW*sc)+'px';
-    mapVP.style.height=(vpH*sc)+'px';
+    mapVP.style.left=(cL+(worldTopLeft.x-ox)*sc)+'px';
+    mapVP.style.top=(cT+(worldTopLeft.y-oy)*sc)+'px';
+    mapVP.style.width=(worldVpW*sc)+'px';
+    mapVP.style.height=(worldVpH*sc)+'px';
   } else {
     // EXPANDED: mapPlayer is inside mapCanvas, so position relative to canvas (no cL/cT offset)
-    const px=(sx+vpW/2-ox)*sc;
-    const py=(sy+vpH/2-oy)*sc;
+    const px=(centerWorld.x-ox)*sc;
+    const py=(centerWorld.y-oy)*sc;
     mapPlayer.style.left=px+'px';
     mapPlayer.style.top=py+'px';
     mapPlayer.style.opacity='1';
     mapPlayer.style.visibility='visible';
     const cL=parseInt(mapCanvas.style.left)||0;
     const cT=parseInt(mapCanvas.style.top)||0;
-    mapVP.style.left=(cL+(sx-ox)*sc)+'px';
-    mapVP.style.top=(cT+(sy-oy)*sc)+'px';
-    mapVP.style.width=(vpW*sc)+'px';
-    mapVP.style.height=(vpH*sc)+'px';
+    mapVP.style.left=(cL+(worldTopLeft.x-ox)*sc)+'px';
+    mapVP.style.top=(cT+(worldTopLeft.y-oy)*sc)+'px';
+    mapVP.style.width=(worldVpW*sc)+'px';
+    mapVP.style.height=(worldVpH*sc)+'px';
   }
   
   // Update zone name on minimap
-  const worldX=sx+vpW/2, worldY=sy+vpH/2;
-  const zoneName=getZoneName(worldX,worldY);
+  const zoneName=getZoneName(centerWorld.x,centerWorld.y);
   const mmZone=document.getElementById('minimapZoneName');
   if(mmZone)mmZone.textContent=zoneName;
 }
@@ -4389,8 +4418,9 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
   if(mapTransitioning)return;
   if(mmExp&&drawMap._sc){
     const ox=drawMap._ox||0,oy=drawMap._oy||0,sc=drawMap._sc;
+    const cT=parseInt(mapCanvas.style.top)||0;
     const cx=Math.round((mmInner.scrollLeft+mmInner.clientWidth/2)/sc+ox);
-    const cy=Math.round((mmInner.scrollTop+mmInner.clientHeight/2)/sc+oy);
+    const cy=Math.round((mmInner.scrollTop-cT+mmInner.clientHeight/2)/sc+oy);
     const coordEl=document.getElementById('mapCoords');
     const barCoords=document.getElementById('barCoords');
     if(coordEl)coordEl.textContent='x: '+cx+' · y: '+cy;
