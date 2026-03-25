@@ -442,7 +442,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   transition:border-radius 0.35s;
   background:#3a5a2a;
 }
-.minimap-container.expanded .minimap{border-radius:0;border:none;box-shadow:none;background:#3a5a2a}
+.minimap-container.expanded .minimap{border-radius:0;border:none;box-shadow:none;background:#E8E4D0}
 
 /* Cardinal direction markers on minimap rim */
 .minimap-cardinal{
@@ -484,9 +484,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-zone-banner{
   position:absolute;bottom:130px;left:50%;transform:translateX(-50%);z-index:1001;
   display:none;font-family:var(--font-fun);font-weight:800;font-size:0.75rem;
-  color:rgba(27,94,32,0.8);background:rgba(232,245,233,0.7);
+  color:rgba(100,80,50,0.8);background:rgba(232,228,208,0.7);
   padding:5px 18px;border-radius:10px;
-  border:1px solid rgba(46,125,50,0.12);
+  border:1px solid rgba(180,170,150,0.2);
   white-space:nowrap;letter-spacing:0.04em;
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   transition:opacity 0.3s,transform 0.3s;
@@ -508,23 +508,21 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   transform-origin:0 0;
   background:conic-gradient(
     from 0deg,
-    rgba(255,193,7,0) 0deg,
-    rgba(244,67,54,0) 160deg,
-    rgba(244,67,54,0.15) 175deg,
-    rgba(255,193,7,0.25) 180deg,
-    rgba(255,193,7,0) 185deg,
-    rgba(255,193,7,0) 340deg,
-    rgba(244,67,54,0.12) 355deg,
-    rgba(255,193,7,0.25) 360deg
+    rgba(0,255,60,0) 0deg,
+    rgba(0,255,60,0) 300deg,
+    rgba(0,255,60,0.08) 330deg,
+    rgba(0,255,60,0.35) 350deg,
+    rgba(0,255,60,0.6) 358deg,
+    rgba(0,255,60,0.7) 360deg
   );
-  animation:radarSweep 4s linear infinite;
+  animation:radarSweep 3s linear infinite;
 }
 /* Radar crosshair lines */
 .minimap-radar::after{
   content:'';position:absolute;inset:0;
   background:
-    linear-gradient(0deg, transparent 49.5%, rgba(255,193,7,0.08) 49.5%, rgba(255,193,7,0.08) 50.5%, transparent 50.5%),
-    linear-gradient(90deg, transparent 49.5%, rgba(244,67,54,0.08) 49.5%, rgba(244,67,54,0.08) 50.5%, transparent 50.5%);
+    linear-gradient(0deg, transparent 49.5%, rgba(0,255,60,0.12) 49.5%, rgba(0,255,60,0.12) 50.5%, transparent 50.5%),
+    linear-gradient(90deg, transparent 49.5%, rgba(0,255,60,0.12) 49.5%, rgba(0,255,60,0.12) 50.5%, transparent 50.5%);
 }
 .minimap-container.expanded .minimap-radar{display:none}
 
@@ -631,7 +629,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   transform-origin:0 0;
 }
 .minimap-container.expanded .map-canvas{
-  background:#3a5a2a !important;
+  background:#E8E4D0 !important;
 }
 .map-canvas-grid{
   position:absolute;inset:0;pointer-events:none;
@@ -639,32 +637,29 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   z-index:0;
 }
 .minimap-container.expanded .map-canvas-grid{
-  background-image:
-    linear-gradient(rgba(76,175,80,0.15) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(76,175,80,0.15) 1px, transparent 1px);
-  background-size:5% 5%;
+  background-image:none;
 }
 
 /* Map vignette overlay */
 .map-border-overlay{
   position:absolute;inset:0;pointer-events:none;z-index:999;
-  box-shadow:inset 0 0 60px rgba(0,0,0,0.2),inset 0 0 120px rgba(0,0,0,0.1);
+  box-shadow:inset 0 0 40px rgba(0,0,0,0.08);
   display:none;
 }
 .minimap-container.expanded .map-border-overlay{display:block}
 
-/* Map region borders */
+/* Map region borders — invisible on Snapchat style */
 .map-region{
   position:absolute;pointer-events:none;z-index:2;
-  border:1.5px dashed rgba(0,0,0,0.08);border-radius:12px;
+  border:none;border-radius:0;
 }
 .map-region-label{
   position:absolute;top:6px;left:8px;
   font-family:var(--font-fun);font-size:0.45rem;font-weight:600;
   color:rgba(0,0,0,0.2);letter-spacing:0.06em;text-transform:uppercase;
 }
-.minimap-container.expanded .map-region{border-width:2px;border-color:rgba(76,175,80,0.2)}
-.minimap-container.expanded .map-region-label{font-size:0.7rem;color:rgba(76,175,80,0.4)}
+.minimap-container.expanded .map-region{border:none}
+.minimap-container.expanded .map-region-label{display:none}
 
 /* POI markers */
 .map-poi{
@@ -711,12 +706,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   box-shadow:inset 0 0 15px rgba(100,181,246,0.15);
 }
 .minimap-container.expanded .map-water{
-  background:rgba(46,125,50,0.3);
-  border-color:rgba(76,175,80,0.3);
-  box-shadow:inset 0 0 20px rgba(100,181,246,0.2);
+  background:rgba(100,181,246,0.7);
+  border-color:rgba(66,165,245,0.5);
+  box-shadow:inset 0 0 20px rgba(66,165,245,0.3);
 }
 
-/* Road/path lines — Snapchat white roads */
+/* Road/path lines — Snapchat white/gray roads */
 .map-road{
   position:absolute;pointer-events:none;z-index:2;
   background:rgba(255,255,255,0.85);border-radius:2px;
@@ -724,12 +719,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   border:0.5px solid rgba(200,200,200,0.3);
 }
 .minimap-container.expanded .map-road{
-  background:rgba(76,175,80,0.15);
-  box-shadow:0 0.5px 2px rgba(0,0,0,0.1);
-  border-color:rgba(180,180,180,0.3);
+  background:rgba(255,255,255,0.9);
+  box-shadow:0 0.5px 2px rgba(0,0,0,0.08);
+  border-color:rgba(200,200,200,0.4);
 }
 
-/* Zone label markers on map */
+/* Zone label markers on map — written on the land like Snapchat */
 .map-zone-marker{
   position:absolute;z-index:6;pointer-events:none;
   font-family:var(--font-fun);font-weight:600;font-size:0.5rem;
@@ -737,7 +732,67 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   transform:translate(-50%,-50%);white-space:nowrap;
   text-shadow:0 1px 3px rgba(255,255,255,0.8);
 }
-.minimap-container.expanded .map-zone-marker{font-size:0.85rem;color:rgba(50,50,50,0.5);font-weight:700;letter-spacing:0.1em}
+.minimap-container.expanded .map-zone-marker{
+  font-size:1rem;color:rgba(80,80,80,0.55);font-weight:800;letter-spacing:0.15em;
+  text-shadow:0 1px 2px rgba(255,255,255,0.5);
+}
+
+/* 3D Building blocks on Snapchat map */
+.map-building-3d{
+  position:absolute;pointer-events:none;z-index:3;
+  background:linear-gradient(145deg,#D5D0C0,#C8C3B3);
+  border-radius:2px;
+  box-shadow:2px 3px 0 #B8B3A3,-1px -1px 0 rgba(255,255,255,0.3);
+  border:0.5px solid rgba(0,0,0,0.08);
+}
+.map-building-tall{
+  box-shadow:3px 5px 0 #A8A393,-1px -1px 0 rgba(255,255,255,0.4);
+  background:linear-gradient(145deg,#CFC9B8,#BFB9A8);
+}
+/* Green park areas */
+.map-park{
+  position:absolute;pointer-events:none;z-index:1;
+  background:rgba(139,195,74,0.45);
+  border-radius:30% 40% 35% 45%;
+}
+.minimap-container.expanded .map-park{
+  background:rgba(139,195,74,0.5);
+  box-shadow:inset 0 0 10px rgba(104,159,56,0.2);
+}
+/* Beach/sand areas */
+.map-beach{
+  position:absolute;pointer-events:none;z-index:1;
+  background:rgba(255,224,178,0.6);
+  border-radius:40% 50% 45% 35%;
+}
+/* Highway/main road */
+.map-highway{
+  position:absolute;pointer-events:none;z-index:3;
+  background:rgba(158,158,158,0.6);
+  border-radius:2px;
+  box-shadow:0 0.5px 1px rgba(0,0,0,0.12);
+}
+.minimap-container.expanded .map-highway{
+  background:rgba(120,120,120,0.5);
+}
+/* Section label badges — like district markers on Snapchat */
+.map-section-badge{
+  position:absolute;z-index:7;pointer-events:none;
+  background:rgba(255,255,255,0.85);
+  padding:3px 10px;border-radius:12px;
+  font-family:var(--font-fun);font-size:0.55rem;font-weight:700;
+  color:#555;white-space:nowrap;
+  box-shadow:0 1px 4px rgba(0,0,0,0.1);
+  transform:translate(-50%,-50%);
+  backdrop-filter:blur(4px);
+}
+/* Tree dots for parks */
+.map-tree{
+  position:absolute;pointer-events:none;z-index:2;
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(76,175,80,0.6);
+  box-shadow:0 1px 2px rgba(0,0,0,0.1);
+}
 
 /* Map compass rose */
 .map-compass-rose{
@@ -763,7 +818,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-bottom-bar{
   position:absolute;bottom:0;left:0;right:0;z-index:1000;
   display:none;flex-direction:column;
-  background:linear-gradient(0deg,rgba(232,245,233,0.6) 0%,rgba(232,245,233,0.3) 60%,transparent 100%);
+  background:linear-gradient(0deg,rgba(232,228,208,0.7) 0%,rgba(232,228,208,0.3) 60%,transparent 100%);
   padding:10px 10px max(10px,env(safe-area-inset-bottom,0px)+54px);
 }
 .minimap-container.expanded .map-bottom-bar{display:flex}
@@ -774,24 +829,24 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   display:flex;justify-content:center;align-items:center;gap:12px;
   padding:3px 8px;
 }
-.bar-count{font-family:var(--font-fun);font-size:0.5rem;color:rgba(60,80,60,0.35);font-weight:500}
-.bar-coords{font-family:var(--font-fun);font-size:0.45rem;color:rgba(60,80,60,0.3);font-variant-numeric:tabular-nums;letter-spacing:0.02em}
+.bar-count{font-family:var(--font-fun);font-size:0.5rem;color:rgba(100,80,50,0.35);font-weight:500}
+.bar-coords{font-family:var(--font-fun);font-size:0.45rem;color:rgba(100,80,50,0.3);font-variant-numeric:tabular-nums;letter-spacing:0.02em}
 
 /* Filter chips — map-integrated style */
 .mc{
   padding:4px 10px;border-radius:14px;font-family:var(--font-fun);
   font-size:0.55rem;font-weight:600;cursor:pointer;
-  border:1px solid rgba(46,125,50,0.12);
+  border:1px solid rgba(180,170,150,0.2);
   transition:all 0.2s cubic-bezier(0.25,1,0.5,1);
   display:flex;align-items:center;gap:4px;
-  background:rgba(255,255,255,0.45);color:rgba(60,80,60,0.5);
+  background:rgba(255,255,255,0.5);color:rgba(100,80,50,0.5);
 }
 .mc.active{
-  background:rgba(102,187,106,0.25);color:rgba(27,94,32,0.85);
-  border-color:rgba(76,175,80,0.35);
-  box-shadow:0 1px 6px rgba(76,175,80,0.15);
+  background:rgba(255,213,79,0.4);color:rgba(100,70,20,0.85);
+  border-color:rgba(255,193,7,0.4);
+  box-shadow:0 1px 6px rgba(255,193,7,0.15);
 }
-.mc:not(.active):hover{background:rgba(255,255,255,0.65);color:rgba(60,80,60,0.7)}
+.mc:not(.active):hover{background:rgba(255,255,255,0.65);color:rgba(100,80,50,0.7)}
 .mc:active{transform:scale(0.95)}
 .mc .legend-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .mc .chip-count{
@@ -803,9 +858,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-coord-display{
   position:absolute;top:54px;left:12px;z-index:1000;
   display:none;font-family:var(--font-fun);font-size:0.5rem;
-  color:rgba(46,125,50,0.35);background:rgba(232,245,233,0.5);
+  color:rgba(100,80,50,0.4);background:rgba(255,255,255,0.5);
   padding:3px 8px;border-radius:6px;
-  border:1px solid rgba(46,125,50,0.08);
+  border:1px solid rgba(180,170,150,0.15);
   font-variant-numeric:tabular-nums;
 }
 .minimap-container.expanded .map-coord-display{display:block}
@@ -815,37 +870,37 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-controls-right{
   position:absolute;right:10px;top:50%;transform:translateY(-50%);z-index:1000;
   display:none;flex-direction:column;gap:4px;
-  background:rgba(232,245,233,0.45);
-  border-radius:12px;padding:6px;border:1px solid rgba(46,125,50,0.1);
+  background:rgba(255,255,255,0.5);
+  border-radius:12px;padding:6px;border:1px solid rgba(180,170,150,0.15);
 }
 .minimap-container.expanded .map-controls-right{display:flex}
 .map-ctrl-btn{
   width:32px;height:32px;border-radius:8px;
-  background:rgba(255,255,255,0.4);border:1px solid rgba(46,125,50,0.08);
-  cursor:pointer;font-size:0.9rem;color:rgba(46,125,50,0.5);
+  background:rgba(255,255,255,0.4);border:1px solid rgba(180,170,150,0.15);
+  cursor:pointer;font-size:0.9rem;color:rgba(100,80,50,0.5);
   display:flex;align-items:center;justify-content:center;
   transition:all 0.2s;position:relative;
 }
-.map-ctrl-btn:hover{background:rgba(102,187,106,0.2);color:rgba(27,94,32,0.7)}
+.map-ctrl-btn:hover{background:rgba(255,213,79,0.2);color:rgba(80,60,30,0.7)}
 .map-ctrl-btn:active{transform:scale(0.9)}
-.map-ctrl-btn svg{width:16px;height:16px;stroke:rgba(46,125,50,0.5)}
-.map-ctrl-btn:hover svg{stroke:rgba(27,94,32,0.7)}
-.map-ctrl-divider{width:18px;height:0;border-top:1px solid rgba(46,125,50,0.08);align-self:center;margin:1px auto}
+.map-ctrl-btn svg{width:16px;height:16px;stroke:rgba(100,80,50,0.5)}
+.map-ctrl-btn:hover svg{stroke:rgba(80,60,30,0.7)}
+.map-ctrl-divider{width:18px;height:0;border-top:1px solid rgba(180,170,150,0.15);align-self:center;margin:1px auto}
 
 /* Compass widget */
 .map-compass-widget{
   width:38px;height:38px;border-radius:50%;
-  background:rgba(255,255,255,0.5);border:1px solid rgba(46,125,50,0.1);
+  background:rgba(255,255,255,0.5);border:1px solid rgba(180,170,150,0.15);
   display:flex;align-items:center;justify-content:center;
   cursor:pointer;transition:all 0.2s;align-self:center;margin-bottom:2px;
 }
-.map-compass-widget:hover{background:rgba(102,187,106,0.2)}
+.map-compass-widget:hover{background:rgba(255,213,79,0.2)}
 .map-compass-widget:active{transform:scale(0.9)}
 .map-compass-widget svg{width:24px;height:24px}
 
 /* Zoom level indicator */
 .map-zoom-level{
-  font-family:var(--font-fun);font-size:0.4rem;color:rgba(46,125,50,0.35);
+  font-family:var(--font-fun);font-size:0.4rem;color:rgba(100,80,50,0.35);
   text-align:center;padding:1px 0;font-weight:600;
 }
 
@@ -901,7 +956,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   position:absolute;top:0;left:0;right:0;z-index:1000;
   padding:max(env(safe-area-inset-top,8px),8px) 16px 8px;
   display:none;align-items:center;justify-content:space-between;
-  background:linear-gradient(180deg,rgba(255,255,255,0.97),rgba(255,255,255,0.85),transparent);
+  background:linear-gradient(180deg,rgba(232,228,208,0.97),rgba(232,228,208,0.85),transparent);
 }
 .map-header{display:none!important}
 .minimap-container.expanded .map-header{display:flex!important}
@@ -1334,16 +1389,9 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="map-bottom-bar">
       <div class="bar-filters">
         <button class="mc active" onclick="event.stopPropagation();filt('all',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#66BB6A,#43A047)"></div>All</button>
-        <button class="mc" onclick="event.stopPropagation();filt('photo',this)"><div class="legend-dot" style="background:#81D4FA"></div>📸</button>
-        <button class="mc" onclick="event.stopPropagation();filt('meme',this)"><div class="legend-dot" style="background:#CE93D8"></div>😂</button>
-        <button class="mc" onclick="event.stopPropagation();filt('interactive',this)"><div class="legend-dot" style="background:#FFD54F"></div>🎮</button>
-        <button class="mc" onclick="event.stopPropagation();filt('emoji',this)"><div class="legend-dot" style="background:#A5D6A7"></div>✨</button>
-        <button class="mc" onclick="event.stopPropagation();filt('badge',this)"><div class="legend-dot" style="background:#FFAB91"></div>🏷️</button>
-        <button class="mc" onclick="event.stopPropagation();filt('text',this)"><div class="legend-dot" style="background:#FFF59D"></div>💬</button>
-        <button class="mc" onclick="event.stopPropagation();filt('postit',this)"><div class="legend-dot" style="background:#F48FB1"></div>📝</button>
-        <button class="mc" onclick="event.stopPropagation();filt('stamp',this)"><div class="legend-dot" style="background:#80CBC4"></div>🔖</button>
-        <button class="mc" onclick="event.stopPropagation();filt('swatches',this)"><div class="legend-dot" style="background:#B39DDB"></div>🎨</button>
-        <button class="mc" onclick="event.stopPropagation();filt('fortune',this)"><div class="legend-dot" style="background:#FFE0B2"></div>🔮</button>
+        <button class="mc" onclick="event.stopPropagation();filt('photo',this)"><div class="legend-dot" style="background:#81D4FA"></div>📸 Photos</button>
+        <button class="mc" onclick="event.stopPropagation();filt('meme',this)"><div class="legend-dot" style="background:#CE93D8"></div>😂 Memes</button>
+        <button class="mc" onclick="event.stopPropagation();filt('interactive',this)"><div class="legend-dot" style="background:#FFD54F"></div>🎮 Games</button>
       </div>
       <div class="bar-info">
         <span class="bar-count" id="mapCount">98 items</span>
@@ -2891,52 +2939,85 @@ function toggleMap(){
 }
 
 function addMapDecorations(cw,ch){
-  // Topographic contour lines
-  const contours=[
-    {x:15,y:25,w:25,h:20},{x:60,y:55,w:20,h:18},{x:35,y:75,w:22,h:15},
-    {x:80,y:20,w:15,h:22},{x:10,y:65,w:18,h:14},{x:50,y:10,w:18,h:12},
-    {x:70,y:40,w:15,h:16},{x:25,y:88,w:20,h:10},
+  // === OCEAN — large blue water surrounding the map edges ===
+  const oceans=[
+    {x:-5,y:-5,w:110,h:12,r:'0'},   // top ocean strip
+    {x:-5,y:90,w:110,h:15,r:'0'},    // bottom ocean strip
+    {x:-5,y:-5,w:10,h:110,r:'0'},    // left ocean
+    {x:92,y:-5,w:13,h:110,r:'0'},    // right ocean
   ];
-  contours.forEach(c=>{
-    for(let r=0;r<3;r++){
-      const el=document.createElement('div');el.className='topo-line';
-      const s=1+r*0.4;
-      el.style.cssText='left:'+c.x+'%;top:'+c.y+'%;width:'+(c.w*s)+'%;height:'+(c.h*s)+'%;transform:translate(-50%,-50%) rotate('+(r*8-5)+'deg)';
-      mapCanvas.appendChild(el);
+  oceans.forEach(o=>{
+    const el=document.createElement('div');el.className='map-water';
+    el.style.cssText='left:'+o.x+'%;top:'+o.y+'%;width:'+o.w+'%;height:'+o.h+'%;border-radius:'+o.r+';background:rgba(100,181,246,0.7);border:none;box-shadow:none;z-index:0';
+    mapCanvas.appendChild(el);
+  });
+
+  // === BEACHES — sandy edges between land and ocean ===
+  const beaches=[
+    {x:4,y:5,w:88,h:4,r:'0 0 50% 50%'},
+    {x:4,y:87,w:88,h:4,r:'50% 50% 0 0'},
+    {x:3,y:8,w:4,h:80,r:'0 50% 50% 0'},
+    {x:89,y:8,w:4,h:80,r:'50% 0 0 50%'},
+  ];
+  beaches.forEach(b=>{
+    const el=document.createElement('div');el.className='map-beach';
+    el.style.cssText='left:'+b.x+'%;top:'+b.y+'%;width:'+b.w+'%;height:'+b.h+'%;border-radius:'+b.r;
+    mapCanvas.appendChild(el);
+  });
+
+  // === GREEN PARKS ===
+  const parks=[
+    {x:8,y:20,w:14,h:10},{x:55,y:42,w:16,h:12},{x:75,y:65,w:10,h:15},
+    {x:30,y:68,w:18,h:8},{x:82,y:12,w:8,h:12},{x:18,y:78,w:10,h:7},
+    {x:42,y:15,w:8,h:6},{x:62,y:80,w:12,h:6},
+  ];
+  parks.forEach(p=>{
+    const el=document.createElement('div');el.className='map-park';
+    el.style.cssText='left:'+p.x+'%;top:'+p.y+'%;width:'+p.w+'%;height:'+p.h+'%';
+    mapCanvas.appendChild(el);
+    // Add tree dots
+    for(let t=0;t<Math.floor(Math.random()*5+3);t++){
+      const tree=document.createElement('div');tree.className='map-tree';
+      const tx=p.x+Math.random()*p.w,ty=p.y+Math.random()*p.h;
+      const sz=5+Math.random()*6;
+      tree.style.cssText='left:'+tx+'%;top:'+ty+'%;width:'+sz+'px;height:'+sz+'px;background:rgba('+(60+Math.random()*40)+','+Math.floor(140+Math.random()*60)+','+Math.floor(60+Math.random()*30)+',0.5)';
+      mapCanvas.appendChild(tree);
     }
   });
 
-  // Terrain patches (green areas like parks — Snapchat style)
-  const terrains=[
-    {x:8,y:20,w:15,h:12,c:'rgba(139,195,74,0.3)',r:'40%'},
-    {x:55,y:45,w:18,h:14,c:'rgba(165,214,167,0.35)',r:'45%'},
-    {x:75,y:65,w:12,h:18,c:'rgba(129,199,132,0.25)',r:'50%'},
-    {x:30,y:70,w:20,h:10,c:'rgba(139,195,74,0.25)',r:'35%'},
-    {x:85,y:10,w:10,h:15,c:'rgba(165,214,167,0.2)',r:'40%'},
-    {x:42,y:32,w:10,h:8,c:'rgba(129,199,132,0.2)',r:'45%'},
-    {x:18,y:85,w:12,h:8,c:'rgba(165,214,167,0.25)',r:'50%'},
+  // === WATER BODIES (lakes/rivers) ===
+  const waters=[
+    {x:22,y:40,w:12,h:7,r:'45% 55% 50% 50%'},
+    {x:68,y:68,w:8,h:10,r:'50% 45% 55% 50%'},
+    {x:45,y:12,w:6,h:5,r:'50%'},
+    {x:35,y:55,w:4,h:15,r:'40%'},  // river-like
   ];
-  terrains.forEach(t=>{
-    const el=document.createElement('div');
-    el.style.cssText='position:absolute;pointer-events:none;z-index:1;left:'+t.x+'%;top:'+t.y+'%;width:'+t.w+'%;height:'+t.h+'%;background:'+t.c+';border-radius:'+t.r;
-    mapCanvas.appendChild(el);
-  });
-
-  // Water features (lakes)
-  const waters=[{x:25,y:45,w:8,h:5},{x:72,y:70,w:6,h:8},{x:45,y:15,w:5,h:6},{x:88,y:50,w:7,h:4}];
   waters.forEach(w=>{
     const el=document.createElement('div');el.className='map-water';
-    el.style.cssText='left:'+w.x+'%;top:'+w.y+'%;width:'+w.w+'%;height:'+w.h+'%';
+    el.style.cssText='left:'+w.x+'%;top:'+w.y+'%;width:'+w.w+'%;height:'+w.h+'%;border-radius:'+w.r;
     mapCanvas.appendChild(el);
   });
 
-  // Roads — Snapchat-style white roads
+  // === HIGHWAYS (thick gray) ===
+  const highways=[
+    {x:5,y:35,w:88,h:1.5,rot:1},
+    {x:40,y:5,w:1.5,h:88,rot:-2},
+    {x:20,y:60,w:55,h:1.2,rot:-4},
+  ];
+  highways.forEach(r=>{
+    const el=document.createElement('div');el.className='map-highway';
+    el.style.cssText='left:'+r.x+'%;top:'+r.y+'%;width:'+r.w+'%;height:'+r.h+'%;transform:rotate('+r.rot+'deg)';
+    mapCanvas.appendChild(el);
+  });
+
+  // === ROADS (white, Snapchat-style) ===
   const roads=[
-    {x:5,y:35,w:90,h:3,rot:2},{x:40,y:5,w:3,h:90,rot:-3},
-    {x:20,y:60,w:60,h:2.2,rot:-5},{x:10,y:15,w:45,h:2,rot:8},
-    {x:55,y:75,w:40,h:2.5,rot:3},{x:65,y:10,w:2.5,h:60,rot:5},
-    {x:30,y:40,w:35,h:2,rot:-2},{x:75,y:30,w:20,h:2,rot:15},
-    {x:15,y:50,w:50,h:1.8,rot:10},{x:50,y:20,w:2,h:40,rot:-8},
+    {x:10,y:25,w:40,h:0.8,rot:5},{x:50,y:50,w:35,h:0.8,rot:-3},
+    {x:15,y:70,w:50,h:0.7,rot:2},{x:65,y:15,w:25,h:0.8,rot:12},
+    {x:25,y:10,w:0.7,h:35,rot:-5},{x:60,y:30,w:0.7,h:40,rot:4},
+    {x:75,y:45,w:15,h:0.7,rot:8},{x:35,y:45,w:20,h:0.6,rot:-2},
+    {x:80,y:20,w:0.6,h:30,rot:3},{x:12,y:45,w:25,h:0.6,rot:6},
+    {x:48,y:65,w:30,h:0.7,rot:-1},{x:18,y:55,w:0.6,h:20,rot:-3},
   ];
   roads.forEach(r=>{
     const el=document.createElement('div');el.className='map-road';
@@ -2944,96 +3025,98 @@ function addMapDecorations(cw,ch){
     mapCanvas.appendChild(el);
   });
 
-  // Region borders (dashed)
-  const regions=[
-    {x:5,y:5,w:28,h:30,label:'📸 Photo District'},
-    {x:38,y:18,w:25,h:25,label:'🎯 Central Hub'},
-    {x:68,y:5,w:27,h:28,label:'🎨 Creative Quarter'},
-    {x:5,y:42,w:30,h:28,label:'🎮 Arcade Zone'},
-    {x:40,y:48,w:28,h:30,label:'💬 Meme Valley'},
-    {x:72,y:40,w:24,h:30,label:'🚀 Launch Pad'},
-    {x:15,y:75,w:35,h:20,label:'✨ Sticker Park'},
-    {x:58,y:75,w:35,h:20,label:'🏝️ Chill Island'},
+  // === 3D BUILDING CLUSTERS ===
+  const buildingClusters=[
+    {x:45,y:25,count:12,label:'Work District',spread:5},    // WORK section
+    {x:15,y:45,count:10,label:'Arcade Zone',spread:4},       // GAME section
+    {x:75,y:18,count:8,label:'Creative Quarter',spread:4},
+    {x:58,y:50,count:10,label:'Meme Valley',spread:5},
+    {x:32,y:75,count:6,label:'Sticker Park',spread:3},
+    {x:78,y:55,count:7,label:'Launch Pad',spread:4},
+    {x:25,y:15,count:8,label:'Photo District',spread:4},
+    {x:68,y:78,count:5,label:'Chill Island',spread:3},
   ];
-  regions.forEach(r=>{
-    const el=document.createElement('div');el.className='map-region';
-    el.style.cssText='left:'+r.x+'%;top:'+r.y+'%;width:'+r.w+'%;height:'+r.h+'%';
-    const lbl=document.createElement('div');lbl.className='map-region-label';lbl.textContent=r.label;
-    el.appendChild(lbl);
+  buildingClusters.forEach(b=>{
+    for(let i=0;i<b.count;i++){
+      const el=document.createElement('div');
+      const tall=Math.random()>0.6;
+      el.className='map-building-3d'+(tall?' map-building-tall':'');
+      const bw=0.5+Math.random()*1.2, bh=0.3+Math.random()*0.9;
+      const ox=(Math.random()-0.5)*b.spread, oy=(Math.random()-0.5)*b.spread*0.7;
+      el.style.cssText='left:'+(b.x+ox)+'%;top:'+(b.y+oy)+'%;width:'+bw+'%;height:'+bh+'%';
+      mapCanvas.appendChild(el);
+    }
+  });
+
+  // === AREA NAME LABELS (written ON the land like Snapchat) ===
+  const areaNames=[
+    {x:15,y:12,t:'Photo District',size:1.1,rot:-3},
+    {x:48,y:23,t:'Work District',size:1.2,rot:2},
+    {x:80,y:14,t:'Creative Quarter',size:1,rot:-1},
+    {x:17,y:48,t:'Arcade Zone',size:1.1,rot:4},
+    {x:55,y:53,t:'Meme Valley',size:1.1,rot:-2},
+    {x:80,y:50,t:'Launch Pad',size:1,rot:1},
+    {x:30,y:78,t:'Sticker Park',size:1,rot:3},
+    {x:72,y:80,t:'Chill Island',size:1,rot:-1},
+    {x:25,y:42,t:'Lake Akash',size:0.8,rot:0,color:'rgba(30,100,180,0.5)'},
+    {x:48,y:10,t:'North Beach',size:0.8,rot:0},
+    {x:70,y:70,t:'Sunset Bay',size:0.8,rot:2,color:'rgba(30,100,180,0.5)'},
+  ];
+  areaNames.forEach(z=>{
+    const el=document.createElement('div');el.className='map-zone-marker';
+    el.style.left=z.x+'%';el.style.top=z.y+'%';el.textContent=z.t;
+    if(z.size)el.style.fontSize=(z.size)+'rem';
+    if(z.rot)el.style.transform='translate(-50%,-50%) rotate('+z.rot+'deg)';
+    if(z.color)el.style.color=z.color;
     mapCanvas.appendChild(el);
   });
 
-  // POI markers (like map pins)
+  // === ROUTE/HIGHWAY NUMBER BADGES (like the "26" shield in Snapchat) ===
+  const routeBadges=[
+    {x:42,y:35,num:'A1'},{x:62,y:36,num:'26'},{x:30,y:60,num:'97'},
+    {x:75,y:45,num:'66'},{x:50,y:70,num:'M4'},
+  ];
+  routeBadges.forEach(rb=>{
+    const el=document.createElement('div');el.className='map-section-badge';
+    el.style.cssText='left:'+rb.x+'%;top:'+rb.y+'%;background:rgba(255,213,79,0.9);color:#5D4037;font-size:0.5rem;padding:2px 7px;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,0.15)';
+    el.textContent=rb.num;
+    mapCanvas.appendChild(el);
+  });
+
+  // === POI MARKERS (like Snapchat location pins) ===
   const pois=[
-    {x:18,y:18,emoji:'📸',color:'#E1BEE7'},{x:50,y:30,emoji:'⭐',color:'#FFCA28'},
-    {x:82,y:18,emoji:'🎨',color:'#B3E5FC'},{x:18,y:55,emoji:'🎮',color:'#C8E6C9'},
-    {x:60,y:60,emoji:'😂',color:'#FFCCBC'},{x:80,y:55,emoji:'🚀',color:'#FFE082'},
-    {x:30,y:82,emoji:'✨',color:'#F8BBD0'},{x:72,y:82,emoji:'🏖️',color:'#B2DFDB'},
+    {x:18,y:18,emoji:'📸',color:'#E1BEE7'},{x:50,y:28,emoji:'💼',color:'#90CAF9'},
+    {x:82,y:18,emoji:'🎨',color:'#B3E5FC'},{x:18,y:50,emoji:'🎮',color:'#C8E6C9'},
+    {x:60,y:58,emoji:'😂',color:'#FFCCBC'},{x:80,y:52,emoji:'🚀',color:'#FFE082'},
+    {x:30,y:80,emoji:'✨',color:'#F8BBD0'},{x:72,y:80,emoji:'🏖️',color:'#B2DFDB'},
+    {x:45,y:45,emoji:'☕',color:'#D7CCC8'},{x:35,y:30,emoji:'🏠',color:'#FFAB91'},
   ];
   pois.forEach(p=>{
     const el=document.createElement('div');el.className='map-poi';
     el.style.cssText='left:'+p.x+'%;top:'+p.y+'%;border-color:'+p.color+';';
     el.textContent=p.emoji;
-    // Pin triangle inherits border color
-    el.style.setProperty('--pin-color',p.color);
     mapCanvas.appendChild(el);
   });
 
-  // Zone markers (text labels)
-  const zones=[
-    {x:15,y:12,t:'Photo Zone'},{x:50,y:28,t:'Central Hub'},
-    {x:82,y:15,t:'Creative Corner'},{x:18,y:50,t:'Play Area'},
-    {x:60,y:55,t:'Meme District'},{x:35,y:80,t:'Sticker Park'},
-    {x:80,y:72,t:'Launch Pad'},
-  ];
-  zones.forEach(z=>{
-    const el=document.createElement('div');el.className='map-zone-marker';
-    el.style.left=z.x+'%';el.style.top=z.y+'%';el.textContent=z.t;
-    mapCanvas.appendChild(el);
-  });
-
-  // Scale bar
-  const sb=document.createElement('div');sb.className='map-scale-bar';
-  sb.innerHTML='<div class="scale-line"></div>500px';
-  mapCanvas.appendChild(sb);
-  
-  // Compass rose
+  // === COMPASS ROSE ===
   const compass=document.createElement('div');
   compass.className='map-compass-rose';
   compass.style.cssText='right:3%;top:3%;width:'+Math.max(30,cw*0.025)+'px;height:'+Math.max(30,cw*0.025)+'px';
   compass.innerHTML='<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="rgba(0,0,0,0.1)" stroke-width="0.5"/><circle cx="20" cy="20" r="12" stroke="rgba(0,0,0,0.06)" stroke-width="0.5"/><polygon points="20,3 22,16 18,16" fill="rgba(244,67,54,0.6)"/><polygon points="20,37 22,24 18,24" fill="rgba(0,0,0,0.15)"/><polygon points="3,20 16,18 16,22" fill="rgba(0,0,0,0.1)"/><polygon points="37,20 24,18 24,22" fill="rgba(0,0,0,0.1)"/><text x="20" y="10" text-anchor="middle" fill="rgba(244,67,54,0.6)" font-size="5" font-weight="900" font-family="sans-serif">N</text></svg>';
   mapCanvas.appendChild(compass);
-  
-  // Elevation markers
-  const elevations=[{x:22,y:30,h:'△ 120'},{x:65,y:58,h:'△ 85'},{x:40,y:78,h:'△ 95'},{x:12,y:60,h:'△ 65'},{x:78,y:42,h:'△ 110'}];
-  elevations.forEach(e=>{
-    const el=document.createElement('div');
-    el.style.cssText='position:absolute;left:'+e.x+'%;top:'+e.y+'%;font-family:var(--font-fun);font-size:0.35rem;color:rgba(0,0,0,0.15);pointer-events:none;z-index:2;transform:translate(-50%,-50%)';
-    el.textContent=e.h;
-    mapCanvas.appendChild(el);
-  });
 
-  // Building clusters (small rectangles to look like city blocks)
-  const buildings=[
-    {x:48,y:25,count:6},{x:15,y:48,count:4},{x:78,y:18,count:5},{x:60,y:52,count:4},{x:35,y:78,count:3},
-  ];
-  buildings.forEach(b=>{
-    for(let i=0;i<b.count;i++){
-      const el=document.createElement('div');
-      const bw=Math.random()*1.2+0.4,bh=Math.random()*1+0.3;
-      const ox=Math.random()*3-1.5,oy=Math.random()*2-1;
-      el.style.cssText='position:absolute;pointer-events:none;z-index:1;left:'+(b.x+ox)+'%;top:'+(b.y+oy)+'%;width:'+bw+'%;height:'+bh+'%;background:rgba(224,224,224,0.4);border-radius:2px;border:0.5px solid rgba(0,0,0,0.04)';
-      mapCanvas.appendChild(el);
-    }
-  });
-  // Subtle total area watermark
+  // === SCALE BAR ===
+  const sb=document.createElement('div');sb.className='map-scale-bar';
+  sb.innerHTML='<div class="scale-line"></div>500px';
+  mapCanvas.appendChild(sb);
+
+  // === SUBTLE AREA WATERMARK ===
   const areaLabels=[
-    {x:50,y:50,size:Math.max(cw*0.012,12),text:'7,000 × 5,000 px'},
-    {x:50,y:53,size:Math.max(cw*0.006,7),text:'35,000,000 sq px · Akash\'s World'},
+    {x:50,y:50,size:Math.max(cw*0.008,8),text:'Akash\'s World'},
   ];
   areaLabels.forEach(a=>{
     const el=document.createElement('div');el.className='map-area-label';
-    el.style.cssText='left:'+a.x+'%;top:'+a.y+'%;font-size:'+a.size+'px;transform:translate(-50%,-50%)';
+    el.style.cssText='left:'+a.x+'%;top:'+a.y+'%;font-size:'+a.size+'px;transform:translate(-50%,-50%);color:rgba(0,0,0,0.04)';
     el.textContent=a.text;
     mapCanvas.appendChild(el);
   });
@@ -3082,14 +3165,21 @@ function drawMap(){
   mapCanvas.style.width=canvasW+'px';
   mapCanvas.style.height=canvasH+'px';
   mapCanvas.style.position='absolute';
-  mapCanvas.style.background='linear-gradient(160deg,#d4e8c2 0%,#c8deb4 20%,#d9e8cb 40%,#cfe0b8 60%,#daeacf 80%,#c5d9af 100%)';
   mapCanvas.style.borderRadius=mmExp?'0':'inherit';
-  const gridS=Math.max(20,canvasW/20),gridL=Math.max(60,canvasW/5);
-  mapCanvas.style.backgroundImage='linear-gradient(rgba(200,230,201,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(200,230,201,0.5) 1px,transparent 1px),linear-gradient(rgba(165,214,167,0.3) 2px,transparent 2px),linear-gradient(90deg,rgba(165,214,167,0.3) 2px,transparent 2px)';
-  mapCanvas.style.backgroundSize=gridS+'px '+gridS+'px,'+gridS+'px '+gridS+'px,'+gridL+'px '+gridL+'px,'+gridL+'px '+gridL+'px';
+  if(mmExp){
+    mapCanvas.style.background='#E8E4D0';
+    mapCanvas.style.backgroundImage='none';
+    mapCanvas.style.backgroundSize='';
+  } else {
+    mapCanvas.style.background='linear-gradient(160deg,#d4e8c2 0%,#c8deb4 20%,#d9e8cb 40%,#cfe0b8 60%,#daeacf 80%,#c5d9af 100%)';
+    const gridS=Math.max(20,canvasW/20),gridL=Math.max(60,canvasW/5);
+    mapCanvas.style.backgroundImage='linear-gradient(rgba(200,230,201,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(200,230,201,0.5) 1px,transparent 1px),linear-gradient(rgba(165,214,167,0.3) 2px,transparent 2px),linear-gradient(90deg,rgba(165,214,167,0.3) 2px,transparent 2px)';
+    mapCanvas.style.backgroundSize=gridS+'px '+gridS+'px,'+gridS+'px '+gridS+'px,'+gridL+'px '+gridL+'px,'+gridL+'px '+gridL+'px';
+  }
   
   if(mmExp){
-    // EXPANDED: render real sticker clones (virtualized — only visible ones)
+    // EXPANDED: add Snapchat-style decorations first, then sticker clones
+    addMapDecorations(canvasW,canvasH);
     renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
   } else {
     // SMALL: lightweight colored boxes
@@ -3107,8 +3197,6 @@ function drawMap(){
       mapCanvas.appendChild(el);
     });
     if(mapCount)mapCount.textContent=count+' items';
-  // Add map decorations in expanded mode
-  if(mmExp){addMapDecorations(canvasW,canvasH);}
   }
   updMap();
 }
