@@ -2707,52 +2707,45 @@ function toggleMap(){
 }
 
 function addMapDecorations(cw,ch){
-  // Topographic contour lines
-  const contours=[
-    {x:15,y:25,w:25,h:20},{x:60,y:55,w:20,h:18},{x:35,y:75,w:22,h:15},
-    {x:80,y:20,w:15,h:22},{x:10,y:65,w:18,h:14},{x:50,y:10,w:18,h:12},
-    {x:70,y:40,w:15,h:16},{x:25,y:88,w:20,h:10},
+  // Parks (green areas — Apple Maps style)
+  const parks=[
+    {x:8,y:20,w:12,h:10,r:'45% 55% 50% 50%'},
+    {x:55,y:45,w:15,h:11,r:'50% 45% 55% 48%'},
+    {x:75,y:65,w:10,h:14,r:'48% 52% 46% 54%'},
+    {x:30,y:70,w:16,h:8,r:'52% 48% 50% 50%'},
+    {x:85,y:10,w:8,h:12,r:'46% 54% 48% 52%'},
+    {x:42,y:32,w:8,h:6,r:'50% 50% 45% 55%'},
   ];
-  contours.forEach(c=>{
-    for(let r=0;r<3;r++){
-      const el=document.createElement('div');el.className='topo-line';
-      const s=1+r*0.4;
-      el.style.cssText='left:'+c.x+'%;top:'+c.y+'%;width:'+(c.w*s)+'%;height:'+(c.h*s)+'%;transform:translate(-50%,-50%) rotate('+(r*8-5)+'deg)';
-      mapCanvas.appendChild(el);
-    }
-  });
-
-  // Terrain patches (green areas like parks — Snapchat style)
-  const terrains=[
-    {x:8,y:20,w:15,h:12,c:'rgba(139,195,74,0.3)',r:'40%'},
-    {x:55,y:45,w:18,h:14,c:'rgba(165,214,167,0.35)',r:'45%'},
-    {x:75,y:65,w:12,h:18,c:'rgba(129,199,132,0.25)',r:'50%'},
-    {x:30,y:70,w:20,h:10,c:'rgba(139,195,74,0.25)',r:'35%'},
-    {x:85,y:10,w:10,h:15,c:'rgba(165,214,167,0.2)',r:'40%'},
-    {x:42,y:32,w:10,h:8,c:'rgba(129,199,132,0.2)',r:'45%'},
-    {x:18,y:85,w:12,h:8,c:'rgba(165,214,167,0.25)',r:'50%'},
-  ];
-  terrains.forEach(t=>{
-    const el=document.createElement('div');
-    el.style.cssText='position:absolute;pointer-events:none;z-index:1;left:'+t.x+'%;top:'+t.y+'%;width:'+t.w+'%;height:'+t.h+'%;background:'+t.c+';border-radius:'+t.r;
+  parks.forEach(p=>{
+    const el=document.createElement('div');el.className='map-park';
+    el.style.cssText='left:'+p.x+'%;top:'+p.y+'%;width:'+p.w+'%;height:'+p.h+'%;border-radius:'+p.r;
     mapCanvas.appendChild(el);
   });
 
-  // Water features (lakes)
-  const waters=[{x:25,y:45,w:8,h:5},{x:72,y:70,w:6,h:8},{x:45,y:15,w:5,h:6},{x:88,y:50,w:7,h:4}];
+  // Water features (lakes/rivers — Apple Maps blue)
+  const waters=[
+    {x:25,y:45,w:8,h:5},{x:72,y:70,w:6,h:8},{x:45,y:15,w:5,h:6},{x:88,y:50,w:7,h:4},
+    // River-like elongated
+    {x:20,y:55,w:25,h:1.5},{x:60,y:40,w:2,h:20},
+  ];
   waters.forEach(w=>{
     const el=document.createElement('div');el.className='map-water';
     el.style.cssText='left:'+w.x+'%;top:'+w.y+'%;width:'+w.w+'%;height:'+w.h+'%';
+    if(w.h<3||w.w<3)el.style.borderRadius='20px';
     mapCanvas.appendChild(el);
   });
 
-  // Roads — Snapchat-style white roads
+  // Roads — Apple Maps white roads with grid layout
   const roads=[
-    {x:5,y:35,w:90,h:3,rot:2},{x:40,y:5,w:3,h:90,rot:-3},
-    {x:20,y:60,w:60,h:2.2,rot:-5},{x:10,y:15,w:45,h:2,rot:8},
-    {x:55,y:75,w:40,h:2.5,rot:3},{x:65,y:10,w:2.5,h:60,rot:5},
-    {x:30,y:40,w:35,h:2,rot:-2},{x:75,y:30,w:20,h:2,rot:15},
-    {x:15,y:50,w:50,h:1.8,rot:10},{x:50,y:20,w:2,h:40,rot:-8},
+    // Major roads (wider)
+    {x:5,y:35,w:90,h:2.5,rot:0},{x:40,y:5,w:2.5,h:90,rot:0},
+    {x:20,y:60,w:60,h:2,rot:0},{x:65,y:10,w:2,h:60,rot:0},
+    // Secondary roads
+    {x:10,y:20,w:40,h:1.5,rot:0},{x:55,y:75,w:40,h:1.5,rot:0},
+    {x:25,y:10,w:1.5,h:50,rot:0},{x:80,y:25,w:1.5,h:55,rot:0},
+    // Minor roads (thinner, angled)
+    {x:30,y:40,w:30,h:1,rot:-3},{x:70,y:30,w:20,h:1,rot:8},
+    {x:15,y:50,w:25,h:1,rot:5},{x:50,y:65,w:30,h:1,rot:-2},
   ];
   roads.forEach(r=>{
     const el=document.createElement('div');el.className='map-road';
@@ -2760,38 +2753,40 @@ function addMapDecorations(cw,ch){
     mapCanvas.appendChild(el);
   });
 
-  // Region borders (dashed)
+  // Building blocks — Apple Maps style (dense clusters of rectangles)
+  const buildingClusters=[
+    {x:46,y:23,count:12},{x:15,y:46,count:8},{x:76,y:16,count:10},
+    {x:58,y:50,count:9},{x:33,y:76,count:6},{x:70,y:38,count:7},
+    {x:28,y:18,count:5},{x:85,y:60,count:6},{x:42,y:58,count:8},
+    {x:18,y:32,count:5},{x:62,y:25,count:7},{x:50,y:82,count:4},
+    {x:38,y:45,count:6},{x:72,y:55,count:5},{x:22,y:62,count:4},
+  ];
+  buildingClusters.forEach(b=>{
+    for(let i=0;i<b.count;i++){
+      const el=document.createElement('div');el.className='map-building';
+      const bw=Math.random()*1.5+0.3,bh=Math.random()*1.2+0.2;
+      const ox=Math.random()*4-2,oy=Math.random()*3-1.5;
+      el.style.cssText='left:'+(b.x+ox)+'%;top:'+(b.y+oy)+'%;width:'+bw+'%;height:'+bh+'%';
+      mapCanvas.appendChild(el);
+    }
+  });
+
+  // Region borders (subtle dashed)
   const regions=[
-    {x:5,y:5,w:28,h:30,label:'📸 Photo District'},
-    {x:38,y:18,w:25,h:25,label:'🎯 Central Hub'},
-    {x:68,y:5,w:27,h:28,label:'🎨 Creative Quarter'},
-    {x:5,y:42,w:30,h:28,label:'🎮 Arcade Zone'},
-    {x:40,y:48,w:28,h:30,label:'💬 Meme Valley'},
-    {x:72,y:40,w:24,h:30,label:'🚀 Launch Pad'},
-    {x:15,y:75,w:35,h:20,label:'✨ Sticker Park'},
-    {x:58,y:75,w:35,h:20,label:'🏝️ Chill Island'},
+    {x:5,y:5,w:28,h:30,label:'Photo District'},
+    {x:38,y:18,w:25,h:25,label:'Central Hub'},
+    {x:68,y:5,w:27,h:28,label:'Creative Quarter'},
+    {x:5,y:42,w:30,h:28,label:'Arcade Zone'},
+    {x:40,y:48,w:28,h:30,label:'Meme Valley'},
+    {x:72,y:40,w:24,h:30,label:'Launch Pad'},
+    {x:15,y:75,w:35,h:20,label:'Sticker Park'},
+    {x:58,y:75,w:35,h:20,label:'Chill Island'},
   ];
   regions.forEach(r=>{
     const el=document.createElement('div');el.className='map-region';
     el.style.cssText='left:'+r.x+'%;top:'+r.y+'%;width:'+r.w+'%;height:'+r.h+'%';
     const lbl=document.createElement('div');lbl.className='map-region-label';lbl.textContent=r.label;
     el.appendChild(lbl);
-    mapCanvas.appendChild(el);
-  });
-
-  // POI markers (like map pins)
-  const pois=[
-    {x:18,y:18,emoji:'📸',color:'#E1BEE7'},{x:50,y:30,emoji:'⭐',color:'#FFCA28'},
-    {x:82,y:18,emoji:'🎨',color:'#B3E5FC'},{x:18,y:55,emoji:'🎮',color:'#C8E6C9'},
-    {x:60,y:60,emoji:'😂',color:'#FFCCBC'},{x:80,y:55,emoji:'🚀',color:'#FFE082'},
-    {x:30,y:82,emoji:'✨',color:'#F8BBD0'},{x:72,y:82,emoji:'🏖️',color:'#B2DFDB'},
-  ];
-  pois.forEach(p=>{
-    const el=document.createElement('div');el.className='map-poi';
-    el.style.cssText='left:'+p.x+'%;top:'+p.y+'%;border-color:'+p.color+';';
-    el.textContent=p.emoji;
-    // Pin triangle inherits border color
-    el.style.setProperty('--pin-color',p.color);
     mapCanvas.appendChild(el);
   });
 
@@ -2817,30 +2812,21 @@ function addMapDecorations(cw,ch){
   const compass=document.createElement('div');
   compass.className='map-compass-rose';
   compass.style.cssText='right:3%;top:3%;width:'+Math.max(30,cw*0.025)+'px;height:'+Math.max(30,cw*0.025)+'px';
-  compass.innerHTML='<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="rgba(0,0,0,0.1)" stroke-width="0.5"/><circle cx="20" cy="20" r="12" stroke="rgba(0,0,0,0.06)" stroke-width="0.5"/><polygon points="20,3 22,16 18,16" fill="rgba(244,67,54,0.6)"/><polygon points="20,37 22,24 18,24" fill="rgba(0,0,0,0.15)"/><polygon points="3,20 16,18 16,22" fill="rgba(0,0,0,0.1)"/><polygon points="37,20 24,18 24,22" fill="rgba(0,0,0,0.1)"/><text x="20" y="10" text-anchor="middle" fill="rgba(244,67,54,0.6)" font-size="5" font-weight="900" font-family="sans-serif">N</text></svg>';
+  compass.innerHTML='<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="rgba(0,0,0,0.08)" stroke-width="0.5"/><circle cx="20" cy="20" r="12" stroke="rgba(0,0,0,0.05)" stroke-width="0.5"/><polygon points="20,3 22,16 18,16" fill="rgba(244,67,54,0.5)"/><polygon points="20,37 22,24 18,24" fill="rgba(0,0,0,0.12)"/><polygon points="3,20 16,18 16,22" fill="rgba(0,0,0,0.08)"/><polygon points="37,20 24,18 24,22" fill="rgba(0,0,0,0.08)"/><text x="20" y="10" text-anchor="middle" fill="rgba(244,67,54,0.5)" font-size="5" font-weight="900" font-family="sans-serif">N</text></svg>';
   mapCanvas.appendChild(compass);
-  
-  // Elevation markers
-  const elevations=[{x:22,y:30,h:'△ 120'},{x:65,y:58,h:'△ 85'},{x:40,y:78,h:'△ 95'},{x:12,y:60,h:'△ 65'},{x:78,y:42,h:'△ 110'}];
-  elevations.forEach(e=>{
-    const el=document.createElement('div');
-    el.style.cssText='position:absolute;left:'+e.x+'%;top:'+e.y+'%;font-family:var(--font-fun);font-size:0.35rem;color:rgba(0,0,0,0.15);pointer-events:none;z-index:2;transform:translate(-50%,-50%)';
-    el.textContent=e.h;
-    mapCanvas.appendChild(el);
-  });
 
-  // Building clusters (small rectangles to look like city blocks)
-  const buildings=[
-    {x:48,y:25,count:6},{x:15,y:48,count:4},{x:78,y:18,count:5},{x:60,y:52,count:4},{x:35,y:78,count:3},
+  // Street name labels (subtle, like Apple Maps)
+  const streetNames=[
+    {x:30,y:34,t:'Main St',rot:0},{x:39,y:50,t:'1st Ave',rot:90},
+    {x:55,y:59,t:'Park Blvd',rot:0},{x:64,y:30,t:'Oak Dr',rot:90},
+    {x:15,y:19,t:'Elm Rd',rot:0},{x:75,y:74,t:'Pine Way',rot:0},
+    {x:80,y:24,t:'Maple Ln',rot:90},{x:45,y:14,t:'Cedar Ave',rot:0},
   ];
-  buildings.forEach(b=>{
-    for(let i=0;i<b.count;i++){
-      const el=document.createElement('div');
-      const bw=Math.random()*1.2+0.4,bh=Math.random()*1+0.3;
-      const ox=Math.random()*3-1.5,oy=Math.random()*2-1;
-      el.style.cssText='position:absolute;pointer-events:none;z-index:1;left:'+(b.x+ox)+'%;top:'+(b.y+oy)+'%;width:'+bw+'%;height:'+bh+'%;background:rgba(224,224,224,0.4);border-radius:2px;border:0.5px solid rgba(0,0,0,0.04)';
-      mapCanvas.appendChild(el);
-    }
+  streetNames.forEach(s=>{
+    const el=document.createElement('div');
+    el.style.cssText='position:absolute;left:'+s.x+'%;top:'+s.y+'%;font-family:var(--font-fun);font-size:0.3rem;color:rgba(120,120,120,0.35);pointer-events:none;z-index:3;transform:translate(-50%,-50%) rotate('+s.rot+'deg);letter-spacing:0.15em;text-transform:uppercase;white-space:nowrap';
+    el.textContent=s.t;
+    mapCanvas.appendChild(el);
   });
   // Subtle total area watermark
   const areaLabels=[
