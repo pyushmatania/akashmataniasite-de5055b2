@@ -725,7 +725,11 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 }
 .cycle-counter-hud .cc-nav:hover{background:rgba(0,255,128,0.25);border-color:rgba(0,255,128,0.4)}
 
-.minimap-inner{position:absolute;inset:0;overflow:hidden;border-radius:inherit;clip-path:circle(50% at 50% 50%)}
+.minimap-inner{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
+.minimap-container:not(.expanded):not(.map-opening):not(.map-closing) .minimap-inner{clip-path:circle(50% at 50% 50%)}
+.minimap-container.expanded .minimap-inner,
+.minimap-container.map-opening .minimap-inner,
+.minimap-container.map-closing .minimap-inner{clip-path:none;border-radius:0}
 .minimap-container.expanded .minimap-inner{overflow:auto;-webkit-overflow-scrolling:touch}
 
 /* Map canvas — SimCity style */
