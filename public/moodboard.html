@@ -3490,6 +3490,8 @@ function toggleMap(){
     mc.classList.add('map-opening');
     mc.classList.add('expanded');
     document.body.classList.add('map-expanded');
+    // Move player inside canvas so it scrolls with map content
+    mapCanvas.appendChild(mapPlayer);
     // Draw content immediately so it's visible during animation
     setTimeout(()=>{drawMap();setTimeout(recenter,150)},50);
     setTimeout(()=>{
@@ -3508,6 +3510,8 @@ function toggleMap(){
     mc.classList.add('map-closing');
     mc.classList.remove('expanded');
     document.body.classList.remove('map-expanded');
+    // Move player back outside canvas before clearing
+    mmInner.appendChild(mapPlayer);
     setTimeout(()=>{
       mc.classList.remove('map-closing');
       mapCanvas.innerHTML='';
@@ -3908,9 +3912,9 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
   const WALK_DURATION=2500;
   const sc=drawMap._sc||0.05;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
-  const cT=parseInt(mapCanvas.style.top)||0;
+  // mapPlayer is inside mapCanvas, no canvas offset needed
   const targetMX=(worldX-ox)*sc;
-  const targetMY=(worldY-oy)*sc+cT;
+  const targetMY=(worldY-oy)*sc;
   const startX=parseFloat(mapPlayer.style.left)||0;
   const startY=parseFloat(mapPlayer.style.top)||0;
   // Start walking
@@ -4332,14 +4336,15 @@ function updMap(){
     mapVP.style.width=(vpW*sc)+'px';
     mapVP.style.height=(vpH*sc)+'px';
   } else {
-    const cL=parseInt(mapCanvas.style.left)||0;
-    const cT=parseInt(mapCanvas.style.top)||0;
-    const px=cL+(sx+vpW/2-ox)*sc;
-    const py=cT+(sy+vpH/2-oy)*sc;
+    // EXPANDED: mapPlayer is inside mapCanvas, so position relative to canvas (no cL/cT offset)
+    const px=(sx+vpW/2-ox)*sc;
+    const py=(sy+vpH/2-oy)*sc;
     mapPlayer.style.left=px+'px';
     mapPlayer.style.top=py+'px';
     mapPlayer.style.opacity='1';
     mapPlayer.style.visibility='visible';
+    const cL=parseInt(mapCanvas.style.left)||0;
+    const cT=parseInt(mapCanvas.style.top)||0;
     mapVP.style.left=(cL+(sx-ox)*sc)+'px';
     mapVP.style.top=(cT+(sy-oy)*sc)+'px';
     mapVP.style.width=(vpW*sc)+'px';
