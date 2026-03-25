@@ -5313,8 +5313,8 @@ function cycleNav(dir){
   navigateToFilteredItem(mFilt,filtClickCount[mFilt]);
 }
 
-const catNames={photo:'Photos',meme:'Memes',interactive:'Games',emoji:'Emojis',badge:'Badges',text:'Texts',postit:'Notes',stamp:'Stamps',swatches:'Colors',fortune:'Fortune',contra:'Contra',other:'Other'};
-const catIcons={photo:'📸',meme:'😂',interactive:'🎮',emoji:'✨',badge:'🏷️',text:'💬',postit:'📝',stamp:'🔖',swatches:'🎨',fortune:'🔮',contra:'⚔️',other:'📦'};
+const catNames={photo:'Photos',meme:'Memes',interactive:'Interactive',badge:'Badges',emoji:'Emojis',text:'Texts',postit:'Notes',stamp:'Stamps',swatches:'Colors',fortune:'Fortune',contra:'Contra',other:'Other'};
+const catIcons={photo:'📸',meme:'😂',interactive:'🎮',badge:'🏷️',emoji:'✨',text:'💬',postit:'📝',stamp:'🔖',swatches:'🎨',fortune:'🔮',contra:'⚔️',other:'📦'};
 
 function navigateToFilteredItem(cat,idx){
   const matching=stickerData.filter(d=>d.cat===cat);
