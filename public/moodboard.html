@@ -5306,7 +5306,7 @@ function applyNeonGlow(target){
 // Cycle navigation from HUD arrows
 function cycleNav(dir){
   if(mFilt==='all')return;
-  const matching=stickerData.filter(d=>d.cat===mFilt);
+  const matching=stickerData.filter(d=>matchesFilter(d.cat,mFilt));
   if(!matching.length)return;
   if(!filtClickCount[mFilt])filtClickCount[mFilt]=0;
   filtClickCount[mFilt]=(filtClickCount[mFilt]+dir+matching.length)%matching.length;
