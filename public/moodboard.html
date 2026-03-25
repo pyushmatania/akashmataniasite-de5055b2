@@ -1115,11 +1115,12 @@ body.map-expanded .logo,body.map-expanded .settings-btn{display:none!important}
     <div class="map-coord-display" id="mapCoords">0, 0</div>
     <div class="map-bottom-bar">
       <div class="bar-filters">
-        <button class="mc active" onclick="event.stopPropagation();filt('all',this)">All <span class="chip-count" id="ccAll">98</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('photo',this)">📸 Photos <span class="chip-count" id="ccPhoto">2</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('meme',this)">😂 Memes <span class="chip-count" id="ccMeme">14</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('interactive',this)">🎮 Games <span class="chip-count" id="ccInt">7</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('emoji',this)">✨ Emojis <span class="chip-count" id="ccEmoji">20</span></button>
+        <button class="mc active" onclick="event.stopPropagation();filt('all',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#FFCA28,#66BB6A)"></div>All <span class="chip-count" id="ccAll">98</span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('photo',this)"><div class="legend-dot" style="background:#B3E5FC"></div>📸 Photos <span class="chip-count" id="ccPhoto">2</span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('meme',this)"><div class="legend-dot" style="background:#E1BEE7"></div>😂 Memes <span class="chip-count" id="ccMeme">14</span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('interactive',this)"><div class="legend-dot" style="background:#FFCA28"></div>🎮 Games <span class="chip-count" id="ccInt">7</span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('emoji',this)"><div class="legend-dot" style="background:#C8E6C9"></div>✨ Emojis <span class="chip-count" id="ccEmoji">20</span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('badge',this)"><div class="legend-dot" style="background:#FFCCBC"></div>🏷️ Badges <span class="chip-count" id="ccBadge">—</span></button>
       </div>
       <div class="bar-info">
         <span class="bar-count" id="mapCount">98 items</span>
@@ -1130,36 +1131,7 @@ body.map-expanded .logo,body.map-expanded .settings-btn{display:none!important}
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
     </button>
     
-    <!-- Game HUD -->
-    <div class="map-hud-xp">
-      <span class="hud-level">LVL 23</span>
-      <div class="hud-xp-bar"><div class="hud-xp-fill"></div></div>
-      <span class="hud-xp-text">72 / 100 XP</span>
-    </div>
-    
-    <div class="map-hud-stats">
-      <div class="hud-stat"><span class="hud-stat-icon">📌</span><div><div class="hud-stat-val" id="hudStickers">98</div><div class="hud-stat-label">Stickers</div></div></div>
-      <div class="hud-stat"><span class="hud-stat-icon">🗺️</span><div><div class="hud-stat-val">7000²</div><div class="hud-stat-label">World Size</div></div></div>
-      <div class="hud-stat"><span class="hud-stat-icon">⚡</span><div><div class="hud-stat-val">15</div><div class="hud-stat-label">Animations</div></div></div>
-      <div class="hud-stat"><span class="hud-stat-icon">🎨</span><div><div class="hud-stat-val">11</div><div class="hud-stat-label">Themes</div></div></div>
-    </div>
-    
-    <div class="map-legend">
-      <div class="legend-title">LEGEND</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#FFCA28"></div>Interactive</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#E1BEE7"></div>Memes</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#B3E5FC"></div>Photos</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#C8E6C9"></div>Emojis</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#FFCCBC"></div>Badges</div>
-    </div>
-    
     <div class="map-border-overlay"></div>
-    <canvas class="fog-canvas" id="fogCanvas"></canvas>
-    <div class="fog-hud">
-      <div class="fog-hud-title">🌫️ Explored</div>
-      <div class="fog-hud-bar"><div class="fog-hud-fill" id="fogFill" style="width:0%"></div></div>
-      <div class="fog-hud-pct" id="fogPct">0%</div>
-    </div>
   </div>
 </div>
 
