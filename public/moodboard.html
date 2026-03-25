@@ -4385,227 +4385,235 @@ function toggleMap(){
 }
 
 function addMapDecorations(cw,ch){
-  // === OCEAN — deep SimCity blue water ===
-  const oceans=[
-    {x:-5,y:-5,w:110,h:10,r:'0'},
-    {x:-5,y:92,w:110,h:13,r:'0'},
-    {x:-5,y:-5,w:8,h:110,r:'0'},
-    {x:93,y:-5,w:12,h:110,r:'0'},
+  // Helper to create SVG element
+  function svgEl(tag,attrs){
+    const el=document.createElementNS('http://www.w3.org/2000/svg',tag);
+    Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
+    return el;
+  }
+  function addDiv(cls,css){
+    const el=document.createElement('div');el.className=cls;el.style.cssText=css;
+    mapCanvas.appendChild(el);return el;
+  }
+
+  // === OCEAN WAVES ===
+  for(let i=0;i<35;i++){
+    const x=Math.random()*100,y=Math.random()*100;
+    const w=8+Math.random()*20;
+    addDiv('map-wave','left:'+x+'%;top:'+y+'%;width:'+w+'px;animation-delay:'+(Math.random()*3)+'s;animation-duration:'+(2.5+Math.random()*2)+'s');
+  }
+
+  // === MAIN LAND MASSES — organic island shapes ===
+  const lands=[
+    // Central main continent
+    {x:8,y:10,w:80,h:75,bg:'linear-gradient(160deg,#7dc462 0%,#5db844 25%,#4da638 50%,#6bc452 75%,#8dd470 100%)',r:'42% 58% 45% 55% / 48% 52% 48% 52%'},
+    // Top-right peninsula
+    {x:65,y:2,w:30,h:25,bg:'linear-gradient(135deg,#9dd882 0%,#6bc452 100%)',r:'55% 45% 50% 50% / 45% 55% 50% 50%'},
+    // Bottom-left island
+    {x:2,y:72,w:22,h:22,bg:'linear-gradient(145deg,#e8c86a 0%,#d4a843 50%,#c89e3d 100%)',r:'50% 45% 55% 50% / 55% 50% 45% 55%'},
+    // Bottom-right island
+    {x:72,y:75,w:24,h:20,bg:'linear-gradient(155deg,#deb85a 0%,#c8a342 100%)',r:'48% 52% 50% 50% / 52% 48% 50% 50%'},
+    // Small island top-left
+    {x:2,y:5,w:15,h:18,bg:'linear-gradient(135deg,#8dd470 0%,#6bc452 100%)',r:'55% 45% 48% 52% / 50% 55% 45% 50%'},
+    // Snowy top area
+    {x:55,y:0,w:42,h:12,bg:'linear-gradient(180deg,#f0f4f8 0%,#d5e3d0 60%,#9dd882 100%)',r:'0 0 48% 52%'},
   ];
-  oceans.forEach(o=>{
-    const el=document.createElement('div');el.className='map-water';
-    el.style.cssText='left:'+o.x+'%;top:'+o.y+'%;width:'+o.w+'%;height:'+o.h+'%;border-radius:'+o.r+';background:linear-gradient(135deg,rgba(25,80,140,0.85),rgba(41,121,191,0.75));border:none;box-shadow:none;z-index:0';
-    mapCanvas.appendChild(el);
+  lands.forEach(l=>{
+    const el=addDiv('map-land','left:'+l.x+'%;top:'+l.y+'%;width:'+l.w+'%;height:'+l.h+'%;background:'+l.bg+';border-radius:'+l.r+';box-shadow:0 4px 20px rgba(0,0,0,0.15),inset 0 -8px 30px rgba(0,0,0,0.08),inset 0 4px 15px rgba(255,255,255,0.15);border:2px solid rgba(0,0,0,0.05)');
   });
 
-  // === BEACHES — sandy coastline ===
+  // === BEACHES around land edges ===
   const beaches=[
-    {x:3,y:4,w:90,h:3,r:'0 0 40% 40%'},
-    {x:3,y:89,w:90,h:3.5,r:'40% 40% 0 0'},
-    {x:2,y:6,w:3,h:84,r:'0 40% 40% 0'},
-    {x:91,y:6,w:3,h:84,r:'40% 0 0 40%'},
+    {x:6,y:78,w:84,h:6,r:'0 0 45% 55%',bg:'rgba(245,222,130,0.7)'},
+    {x:5,y:12,w:6,h:65,r:'55% 0 0 45%',bg:'rgba(245,222,130,0.6)'},
+    {x:83,y:15,w:6,h:60,r:'0 55% 45% 0',bg:'rgba(245,222,130,0.6)'},
+    {x:8,y:8,w:78,h:5,r:'45% 55% 0 0',bg:'rgba(245,222,130,0.5)'},
   ];
   beaches.forEach(b=>{
-    const el=document.createElement('div');el.className='map-beach';
-    el.style.cssText='left:'+b.x+'%;top:'+b.y+'%;width:'+b.w+'%;height:'+b.h+'%;border-radius:'+b.r;
-    mapCanvas.appendChild(el);
+    addDiv('map-beach','left:'+b.x+'%;top:'+b.y+'%;width:'+b.w+'%;height:'+b.h+'%;border-radius:'+b.r+';background:'+b.bg);
   });
 
-  // === SimCity ZONE GRIDS (dashed zone borders) ===
-  const zoneGrids=[
-    {x:5,y:5,w:28,h:26,color:'rgba(76,175,80,0.5)'},     // The Origin Story
-    {x:40,y:5,w:30,h:26,color:'rgba(66,165,245,0.5)'},    // The Hustle District
-    {x:70,y:3,w:27,h:29,color:'rgba(233,30,99,0.4)'},     // The Hobby Lobby
-    {x:5,y:28,w:28,h:15,color:'rgba(171,71,188,0.4)'},    // Cloud Nine
-    {x:5,y:44,w:28,h:25,color:'rgba(255,193,7,0.5)'},     // LOL-lywood
-    {x:5,y:69,w:28,h:28,color:'rgba(33,150,243,0.4)'},    // Wanderlust Way
-    {x:48,y:28,w:22,h:15,color:'rgba(0,255,128,0.4)'},    // The Matrix Dojo
-    {x:40,y:44,w:30,h:20,color:'rgba(255,87,34,0.4)'},    // La La Land
-    {x:33,y:34,w:15,h:16,color:'rgba(201,169,110,0.3)'},  // Akash Unplugged center
-    {x:50,y:65,w:47,h:32,color:'rgba(156,39,176,0.4)'},   // The Recharge Room
-    {x:28,y:69,w:22,h:28,color:'rgba(121,85,72,0.35)'},   // The Backyard
+  // === MOUNTAINS — SVG illustrated peaks ===
+  const mountains=[
+    {x:15,y:18,s:50},{x:20,y:15,s:65},{x:25,y:20,s:45},
+    {x:58,y:12,s:55},{x:63,y:8,s:70},{x:68,y:14,s:50},
+    {x:78,y:5,s:60},{x:82,y:3,s:45},{x:75,y:8,s:40},
+    {x:42,y:45,s:48},{x:46,y:42,s:55},{x:50,y:48,s:42},
+    {x:35,y:55,s:40},{x:38,y:52,s:50},
   ];
-  zoneGrids.forEach(z=>{
-    const el=document.createElement('div');el.className='map-zone-grid';
-    el.style.cssText='left:'+z.x+'%;top:'+z.y+'%;width:'+z.w+'%;height:'+z.h+'%;border-color:'+z.color;
-    mapCanvas.appendChild(el);
+  mountains.forEach(m=>{
+    const wrap=addDiv('map-mountain','left:'+m.x+'%;top:'+m.y+'%;width:'+m.s+'px;height:'+(m.s*0.8)+'px');
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 60 48');
+    const snowH=12+Math.random()*6;
+    // Mountain body
+    const path1=svgEl('path',{d:'M5 48 L30 4 L55 48 Z',fill:'#6b8c52',stroke:'#5a7a44','stroke-width':'1'});
+    // Snow cap
+    const path2=svgEl('path',{d:'M22 '+snowH+' L30 4 L38 '+snowH+' Q30 '+(snowH+3)+' 22 '+snowH+' Z',fill:'#f5f5f5',stroke:'#e0e0e0','stroke-width':'0.5'});
+    // Shadow side
+    const path3=svgEl('path',{d:'M30 4 L55 48 L30 48 Z',fill:'rgba(0,0,0,0.1)'});
+    svg.appendChild(path1);svg.appendChild(path3);svg.appendChild(path2);
+    wrap.appendChild(svg);
   });
 
-  // === GREEN PARKS with trees ===
-  const parks=[
-    {x:32,y:14,w:6,h:5},{x:62,y:35,w:5,h:8},{x:15,y:62,w:8,h:6},
-    {x:85,y:38,w:5,h:7},{x:48,y:62,w:10,h:6},{x:75,y:75,w:6,h:5},
-    {x:20,y:30,w:4,h:4},{x:55,y:85,w:7,h:4},
+  // === TREE CLUSTERS — illustrated forests ===
+  const forests=[
+    {x:10,y:30,count:8,spread:6},{x:30,y:25,count:10,spread:8},
+    {x:50,y:20,count:6,spread:5},{x:70,y:20,count:8,spread:6},
+    {x:20,y:50,count:7,spread:5},{x:60,y:55,count:9,spread:7},
+    {x:40,y:35,count:5,spread:4},{x:75,y:40,count:6,spread:5},
+    {x:12,y:65,count:5,spread:4},{x:55,y:65,count:7,spread:6},
+    {x:85,y:55,count:5,spread:4},{x:30,y:70,count:6,spread:5},
   ];
-  parks.forEach(p=>{
-    const el=document.createElement('div');el.className='map-park';
-    el.style.cssText='left:'+p.x+'%;top:'+p.y+'%;width:'+p.w+'%;height:'+p.h+'%';
-    mapCanvas.appendChild(el);
-    for(let t=0;t<Math.floor(Math.random()*6+4);t++){
-      const tree=document.createElement('div');tree.className='map-tree';
-      const tx=p.x+Math.random()*p.w,ty=p.y+Math.random()*p.h;
-      const sz=4+Math.random()*5;
-      tree.style.cssText='left:'+tx+'%;top:'+ty+'%;width:'+sz+'px;height:'+sz+'px;background:rgba('+(40+Math.random()*30)+','+Math.floor(120+Math.random()*50)+','+Math.floor(40+Math.random()*30)+',0.65);border-radius:50%;box-shadow:0 1px 2px rgba(0,0,0,0.2)';
-      mapCanvas.appendChild(tree);
+  forests.forEach(f=>{
+    for(let i=0;i<f.count;i++){
+      const tx=f.x+(Math.random()-0.5)*f.spread;
+      const ty=f.y+(Math.random()-0.5)*f.spread*0.7;
+      const s=12+Math.random()*14;
+      const shade=Math.floor(70+Math.random()*40);
+      const wrap=addDiv('map-tree-cluster','left:'+tx+'%;top:'+ty+'%;width:'+s+'px;height:'+s+'px');
+      const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      svg.setAttribute('viewBox','0 0 20 24');
+      // Trunk
+      svg.appendChild(svgEl('rect',{x:'8.5',y:'16',width:'3',height:'8',rx:'1',fill:'#8B6914'}));
+      // Foliage layers
+      const g='rgba('+shade+','+Math.floor(140+Math.random()*60)+','+Math.floor(40+Math.random()*30)+',0.9)';
+      svg.appendChild(svgEl('ellipse',{cx:'10',cy:'13',rx:'7',ry:'6',fill:g}));
+      svg.appendChild(svgEl('ellipse',{cx:'10',cy:'9',rx:'5.5',ry:'5',fill:'rgba('+(shade+10)+','+(150+Math.floor(Math.random()*40))+',50,0.85)'}));
+      svg.appendChild(svgEl('ellipse',{cx:'10',cy:'6',rx:'4',ry:'3.5',fill:'rgba('+(shade+20)+','+(160+Math.floor(Math.random()*30))+',55,0.8)'}));
+      wrap.appendChild(svg);
     }
   });
 
-  // === WATER BODIES (lakes) ===
+  // === WINDING DASHED PATHS between zones ===
+  const pathsSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  pathsSvg.setAttribute('viewBox','0 0 100 100');
+  pathsSvg.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4';
+  pathsSvg.setAttribute('preserveAspectRatio','none');
+  const pathRoutes=[
+    'M12 20 Q20 18 28 22 Q35 26 42 30 Q48 34 50 42',
+    'M50 42 Q55 50 62 48 Q68 45 75 42',
+    'M50 42 Q45 50 40 58 Q35 65 30 70',
+    'M75 42 Q80 50 82 60 Q80 68 78 75',
+    'M12 20 Q10 30 12 40 Q14 50 16 58',
+    'M28 22 Q40 18 55 15 Q65 12 75 10',
+    'M75 10 Q82 12 88 18 Q85 25 82 30',
+    'M16 58 Q20 65 25 70 Q28 72 30 70',
+    'M30 70 Q40 72 50 68 Q60 65 65 60',
+    'M65 60 Q70 65 75 70 Q77 73 78 75',
+  ];
+  pathRoutes.forEach(d=>{
+    const p=svgEl('path',{d:d,fill:'none',stroke:'rgba(255,255,255,0.7)','stroke-width':'0.8','stroke-dasharray':'2 1.5','stroke-linecap':'round'});
+    pathsSvg.appendChild(p);
+  });
+  mapCanvas.appendChild(pathsSvg);
+
+  // === WATER BODIES (lakes/rivers) ===
   const waters=[
     {x:35,y:38,w:8,h:5,r:'45% 55% 50% 50%'},
-    {x:72,y:65,w:6,h:8,r:'50% 45% 55% 50%'},
-    {x:20,y:52,w:5,h:4,r:'50%'},
+    {x:72,y:58,w:5,h:7,r:'50% 45% 55% 50%'},
+    {x:18,y:48,w:4,h:4,r:'50%'},
   ];
   waters.forEach(w=>{
-    const el=document.createElement('div');el.className='map-water';
-    el.style.cssText='left:'+w.x+'%;top:'+w.y+'%;width:'+w.w+'%;height:'+w.h+'%;border-radius:'+w.r;
-    mapCanvas.appendChild(el);
+    addDiv('map-water','left:'+w.x+'%;top:'+w.y+'%;width:'+w.w+'%;height:'+w.h+'%;border-radius:'+w.r+';background:linear-gradient(135deg,rgba(58,140,199,0.85),rgba(100,181,246,0.8));box-shadow:inset 0 0 10px rgba(30,100,170,0.2),0 0 8px rgba(58,140,199,0.15);z-index:2');
   });
 
-  // === HIGHWAYS (SimCity avenues — wider, darker) ===
-  const highways=[
-    {x:4,y:33,w:90,h:1.8,rot:0},
-    {x:45,y:4,w:1.8,h:90,rot:0},
-    {x:15,y:62,w:65,h:1.4,rot:0},
+  // === CLOUDS around edges ===
+  const clouds=[
+    {x:-3,y:2,s:80,o:0.6},{x:88,y:0,s:90,o:0.5},{x:-5,y:88,s:100,o:0.55},
+    {x:85,y:85,s:85,o:0.5},{x:40,y:-3,s:70,o:0.4},{x:60,y:92,s:75,o:0.45},
+    {x:-4,y:45,s:60,o:0.35},{x:92,y:40,s:65,o:0.35},
+    {x:15,y:93,s:70,o:0.5},{x:75,y:-2,s:55,o:0.4},
   ];
-  highways.forEach(r=>{
-    const el=document.createElement('div');el.className='map-highway';
-    el.style.cssText='left:'+r.x+'%;top:'+r.y+'%;width:'+r.w+'%;height:'+r.h+'%;transform:rotate('+r.rot+'deg)';
-    mapCanvas.appendChild(el);
-    // Highway center line
-    const cl=document.createElement('div');
-    cl.style.cssText='position:absolute;pointer-events:none;z-index:3;left:'+(r.x)+'%;top:'+(r.y+r.h*0.35)+'%;width:'+r.w+'%;height:'+(r.h*0.15)+'%;background:rgba(255,235,59,0.4);transform:rotate('+r.rot+'deg)';
-    mapCanvas.appendChild(cl);
+  clouds.forEach((c,i)=>{
+    const wrap=addDiv('map-cloud','left:'+c.x+'%;top:'+c.y+'%;width:'+c.s+'px;height:'+(c.s*0.5)+'px;opacity:'+c.o+';animation:cloudDrift '+(4+i%3)+'s ease-in-out '+(i*0.5)+'s infinite alternate');
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 100 50');
+    const cloud=svgEl('path',{d:'M15 40 Q5 40 5 32 Q5 24 15 22 Q14 12 25 10 Q36 8 40 16 Q44 6 56 8 Q68 10 66 22 Q78 18 82 26 Q86 34 78 38 Q82 44 72 46 Q62 48 55 44 Q48 48 38 46 Q28 48 22 44 Z',fill:'white',stroke:'rgba(200,210,220,0.3)','stroke-width':'0.5'});
+    svg.appendChild(cloud);
+    wrap.appendChild(svg);
   });
 
-  // === ROADS (SimCity streets — clean grid) ===
-  const roads=[
-    // Horizontal streets
-    {x:8,y:20,w:30,h:0.6,rot:0},{x:42,y:20,w:25,h:0.6,rot:0},
-    {x:70,y:22,w:22,h:0.6,rot:0},{x:10,y:45,w:32,h:0.6,rot:0},
-    {x:48,y:50,w:30,h:0.6,rot:0},{x:8,y:75,w:40,h:0.6,rot:0},
-    {x:55,y:78,w:35,h:0.6,rot:0},{x:80,y:55,w:12,h:0.6,rot:0},
-    // Vertical streets
-    {x:18,y:8,w:0.6,h:25,rot:0},{x:30,y:6,w:0.6,h:28,rot:0},
-    {x:60,y:8,w:0.6,h:26,rot:0},{x:75,y:10,w:0.6,h:24,rot:0},
-    {x:18,y:40,w:0.6,h:22,rot:0},{x:30,y:38,w:0.6,h:40,rot:0},
-    {x:60,y:35,w:0.6,h:30,rot:0},{x:75,y:38,w:0.6,h:25,rot:0},
-    {x:85,y:30,w:0.6,h:35,rot:0},{x:50,y:68,w:0.6,h:22,rot:0},
-  ];
-  roads.forEach(r=>{
-    const el=document.createElement('div');el.className='map-road';
-    el.style.cssText='left:'+r.x+'%;top:'+r.y+'%;width:'+r.w+'%;height:'+r.h+'%;transform:rotate('+r.rot+'deg)';
-    mapCanvas.appendChild(el);
-  });
-
-  // === SimCity BUILDING CLUSTERS with zone-based colors ===
-  const bldTypes=['residential','commercial','industrial','landmark'];
-  const buildingClusters=[
-    {x:15,y:14,count:14,spread:7,type:0,label:'The Origin Story'},
-    {x:55,y:14,count:16,spread:8,type:1,label:'The Hustle District'},
-    {x:82,y:12,count:12,spread:7,type:0,label:'The Hobby Lobby'},
-    {x:15,y:38,count:10,spread:6,type:3,label:'Cloud Nine'},
-    {x:50,y:48,count:8,spread:5,type:3,label:'Akash Unplugged'},
-    {x:15,y:55,count:14,spread:8,type:1,label:'LOL-lywood'},
-    {x:15,y:78,count:12,spread:7,type:1,label:'Wanderlust Way'},
-    {x:60,y:38,count:10,spread:6,type:2,label:'The Matrix Dojo'},
-    {x:55,y:55,count:12,spread:7,type:0,label:'La La Land'},
-    {x:50,y:28,count:6,spread:4,type:1,label:'The Crossroads'},
-    {x:75,y:78,count:14,spread:8,type:3,label:'The Recharge Room'},
-    {x:38,y:80,count:8,spread:5,type:0,label:'The Backyard'},
-  ];
-  buildingClusters.forEach(b=>{
-    for(let i=0;i<b.count;i++){
-      const el=document.createElement('div');
-      const tall=Math.random()>0.55;
-      const typeClass='map-bld-'+bldTypes[b.type];
-      el.className='map-building-3d '+typeClass+(tall?' map-building-tall':'');
-      const bw=0.6+Math.random()*1.4, bh=0.4+Math.random()*1;
-      const ox=(Math.random()-0.5)*b.spread, oy=(Math.random()-0.5)*b.spread*0.6;
-      el.style.cssText='left:'+(b.x+ox)+'%;top:'+(b.y+oy)+'%;width:'+bw+'%;height:'+bh+'%';
-      mapCanvas.appendChild(el);
-    }
-  });
-
-  // === AREA NAME LABELS — 3D Signpost boards matching moodboard ===
+  // === AREA NAME SIGNPOSTS — game-style illustrated labels ===
   const areaNames=[
-    {x:15,y:12,t:'The Origin Story',icon:'📸',bg:'#4CAF50'},
-    {x:55,y:12,t:'The Hustle District',icon:'💼',bg:'#42A5F5'},
-    {x:82,y:12,t:'The Hobby Lobby',icon:'🎸',bg:'#E91E63'},
-    {x:15,y:36,t:'Cloud Nine',icon:'☁️',bg:'#AB47BC'},
-    {x:45,y:44,t:'Akash Unplugged',icon:'⭐',bg:'linear-gradient(135deg,#FFB300,#FF8F00)'},
-    {x:15,y:55,t:'LOL-lywood',icon:'🎬',bg:'#F9A825'},
-    {x:15,y:78,t:'Wanderlust Way',icon:'🌍',bg:'#1976D2'},
-    {x:60,y:36,t:'The Matrix Dojo',icon:'🥋',bg:'#2E7D32'},
-    {x:55,y:55,t:'La La Land',icon:'🎪',bg:'#E64A19'},
-    {x:75,y:78,t:'The Recharge Room',icon:'🧘',bg:'#7B1FA2'},
-    {x:38,y:80,t:'The Backyard',icon:'🏡',bg:'#795548'},
-    {x:50,y:28,t:'The Crossroads',icon:'🛤️',bg:'#607D8B'},
+    {x:15,y:22,t:'The Origin Story',icon:'📸',bg:'#4CAF50'},
+    {x:55,y:16,t:'The Hustle District',icon:'💼',bg:'#42A5F5'},
+    {x:82,y:8,t:'The Hobby Lobby',icon:'🎸',bg:'#E91E63'},
+    {x:13,y:40,t:'Cloud Nine',icon:'☁️',bg:'#AB47BC'},
+    {x:48,y:44,t:'Akash Unplugged',icon:'⭐',bg:'linear-gradient(135deg,#FFB300,#FF8F00)'},
+    {x:15,y:58,t:'LOL-lywood',icon:'🎬',bg:'#F9A825'},
+    {x:18,y:75,t:'Wanderlust Way',icon:'🌍',bg:'#1976D2'},
+    {x:62,y:38,t:'The Matrix Dojo',icon:'🥋',bg:'#2E7D32'},
+    {x:55,y:58,t:'La La Land',icon:'🎪',bg:'#E64A19'},
+    {x:78,y:72,t:'The Recharge Room',icon:'🧘',bg:'#7B1FA2'},
+    {x:35,y:72,t:'The Backyard',icon:'🏡',bg:'#795548'},
+    {x:48,y:28,t:'The Crossroads',icon:'🛤️',bg:'#607D8B'},
   ];
   areaNames.forEach(z=>{
     const wrap=document.createElement('div');
-    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none;z-index:9;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.3));';
-    // Pole
+    wrap.className='map-signpost';
+    wrap.style.cssText='left:'+z.x+'%;top:'+z.y+'%';
+    // Pin/pole
     const pole=document.createElement('div');
-    const poleH=Math.max(15,cw*0.012);
-    pole.style.cssText='width:'+Math.max(3,cw*0.002)+'px;height:'+poleH+'px;background:linear-gradient(90deg,#BDBDBD,#9E9E9E,#757575);border-radius:2px;box-shadow:1px 0 0 rgba(255,255,255,0.2),-1px 0 0 rgba(0,0,0,0.15);';
+    const poleH=Math.max(12,cw*0.01);
+    pole.style.cssText='width:'+Math.max(2,cw*0.0015)+'px;height:'+poleH+'px;background:linear-gradient(90deg,#BDBDBD,#9E9E9E,#757575);border-radius:2px';
     wrap.appendChild(pole);
     // Board
     const board=document.createElement('div');
-    const fontSize=Math.max(6,cw*0.005);
+    const fontSize=Math.max(5,cw*0.004);
     board.textContent=z.icon+' '+z.t.toUpperCase();
-    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:800;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(3,fontSize*0.5)+'px '+Math.max(6,fontSize*1.2)+'px;border-radius:3px;white-space:nowrap;letter-spacing:0.08em;background:'+z.bg+';border:1.5px solid rgba(255,255,255,0.35);box-shadow:0 3px 8px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.25),inset 0 -1px 3px rgba(0,0,0,0.15);text-shadow:0 1px 2px rgba(0,0,0,0.4);margin-top:-1px;position:relative;';
+    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:800;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(2,fontSize*0.4)+'px '+Math.max(5,fontSize)+'px;border-radius:4px;white-space:nowrap;letter-spacing:0.06em;background:'+z.bg+';border:1.5px solid rgba(255,255,255,0.3);box-shadow:0 2px 8px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.2);text-shadow:0 1px 2px rgba(0,0,0,0.3);margin-top:-1px';
     wrap.appendChild(board);
-    // Board shine
-    const shine=document.createElement('div');
-    shine.style.cssText='position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(180deg,rgba(255,255,255,0.2),transparent);border-radius:2px 2px 0 0;pointer-events:none;';
-    board.appendChild(shine);
     // Ground shadow
     const shadow=document.createElement('div');
-    shadow.style.cssText='width:60%;height:4px;background:radial-gradient(ellipse,rgba(0,0,0,0.15),transparent 70%);border-radius:50%;margin-top:2px;filter:blur(1px);';
+    shadow.style.cssText='width:50%;height:3px;background:radial-gradient(ellipse,rgba(0,0,0,0.12),transparent 70%);border-radius:50%;margin-top:1px;filter:blur(1px)';
     wrap.appendChild(shadow);
     mapCanvas.appendChild(wrap);
   });
-  // Lake Akash label (water label, no signpost)
-  const lakeEl=document.createElement('div');lakeEl.className='map-zone-marker';
-  lakeEl.style.cssText='left:36%;top:40%;font-size:'+Math.max(6,cw*0.004)+'px;transform:translate(-50%,-50%);color:rgba(150,200,255,0.8);';
-  lakeEl.textContent='Lake Akash';
-  mapCanvas.appendChild(lakeEl);
 
-  // === ROUTE BADGES — SimCity highway shields ===
-  const routeBadges=[
-    {x:25,y:33,num:'OS'},{x:55,y:33,num:'HD'},{x:45,y:62,num:'AU'},
-    {x:60,y:33,num:'MD'},{x:25,y:55,num:'LL'},{x:82,y:15,num:'HL'},
-    {x:15,y:78,num:'WW'},{x:75,y:78,num:'RR'},{x:38,y:80,num:'BY'},
-  ];
-  routeBadges.forEach(rb=>{
-    const el=document.createElement('div');el.className='map-section-badge';
-    el.style.cssText='left:'+rb.x+'%;top:'+rb.y+'%';
-    el.textContent=rb.num;
-    mapCanvas.appendChild(el);
-  });
-
-  // === POI MARKERS ===
+  // === POI MARKERS — game checkpoint pins ===
   const pois=[
-    {x:15,y:15,emoji:'📸',color:'#81C784'},{x:55,y:15,emoji:'💼',color:'#64B5F6'},
-    {x:82,y:12,emoji:'🎸',color:'#E91E63'},{x:15,y:36,emoji:'☁️',color:'#CE93D8'},
-    {x:60,y:36,emoji:'🥋',color:'#FFD54F'},{x:15,y:55,emoji:'🎬',color:'#FFD54F'},
-    {x:55,y:55,emoji:'🎪',color:'#FF7043'},{x:45,y:44,emoji:'⭐',color:'#FFD54F'},
-    {x:38,y:40,emoji:'⛵',color:'#64B5F6'},{x:15,y:78,emoji:'🌍',color:'#2196F3'},
-    {x:75,y:78,emoji:'🧘',color:'#9C27B0'},{x:38,y:80,emoji:'🏡',color:'#795548'},
+    {x:15,y:24,emoji:'📸',color:'#81C784'},{x:55,y:18,emoji:'💼',color:'#64B5F6'},
+    {x:82,y:10,emoji:'🎸',color:'#E91E63'},{x:13,y:42,emoji:'☁️',color:'#CE93D8'},
+    {x:62,y:40,emoji:'🥋',color:'#FFD54F'},{x:15,y:60,emoji:'🎬',color:'#FFD54F'},
+    {x:55,y:60,emoji:'🎪',color:'#FF7043'},{x:48,y:46,emoji:'⭐',color:'#FFD54F'},
+    {x:36,y:40,emoji:'⛵',color:'#64B5F6'},{x:18,y:77,emoji:'🌍',color:'#2196F3'},
+    {x:78,y:74,emoji:'🧘',color:'#9C27B0'},{x:35,y:74,emoji:'🏡',color:'#795548'},
   ];
   pois.forEach(p=>{
     const el=document.createElement('div');el.className='map-poi';
-    el.style.cssText='left:'+p.x+'%;top:'+p.y+'%;border-color:'+p.color+';';
+    el.style.cssText='left:'+p.x+'%;top:'+p.y+'%;border-color:'+p.color;
     el.textContent=p.emoji;
     mapCanvas.appendChild(el);
+  });
+
+  // === Small illustrated buildings/houses scattered ===
+  const houses=[
+    {x:18,y:26,s:12},{x:22,y:28,s:10},{x:50,y:20,s:11},{x:53,y:22,s:9},
+    {x:78,y:15,s:10},{x:80,y:18,s:8},{x:16,y:44,s:11},{x:58,y:42,s:10},
+    {x:18,y:62,s:9},{x:52,y:62,s:10},{x:74,y:68,s:11},{x:32,y:74,s:9},
+    {x:42,y:48,s:8},{x:68,y:52,s:9},{x:28,y:35,s:8},{x:62,y:28,s:9},
+  ];
+  houses.forEach(h=>{
+    const wrap=addDiv('','position:absolute;pointer-events:none;z-index:3;left:'+h.x+'%;top:'+h.y+'%;width:'+h.s+'px;height:'+h.s+'px');
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 16 16');
+    svg.style.cssText='filter:drop-shadow(0 1px 2px rgba(0,0,0,0.2))';
+    const colors=['#e8845c','#d47248','#c4956a','#b8845a','#e0a060'];
+    const roofColors=['#8B4513','#6B3410','#9B5523','#7B4020'];
+    const bc=colors[Math.floor(Math.random()*colors.length)];
+    const rc=roofColors[Math.floor(Math.random()*roofColors.length)];
+    svg.appendChild(svgEl('rect',{x:'3',y:'8',width:'10',height:'8',fill:bc,rx:'0.5'}));
+    svg.appendChild(svgEl('polygon',{points:'1 8.5, 8 2, 15 8.5',fill:rc}));
+    svg.appendChild(svgEl('rect',{x:'6',y:'10',width:'4',height:'6',fill:'rgba(255,255,200,0.6)',rx:'0.3'}));
+    wrap.appendChild(svg);
   });
 
   // === COMPASS ROSE ===
   const compass=document.createElement('div');
   compass.className='map-compass-rose';
-  compass.style.cssText='right:3%;top:3%;width:'+Math.max(30,cw*0.025)+'px;height:'+Math.max(30,cw*0.025)+'px';
-  compass.innerHTML='<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/><circle cx="20" cy="20" r="12" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/><polygon points="20,3 22,16 18,16" fill="rgba(244,67,54,0.7)"/><polygon points="20,37 22,24 18,24" fill="rgba(255,255,255,0.2)"/><polygon points="3,20 16,18 16,22" fill="rgba(255,255,255,0.15)"/><polygon points="37,20 24,18 24,22" fill="rgba(255,255,255,0.15)"/><text x="20" y="10" text-anchor="middle" fill="rgba(244,67,54,0.7)" font-size="5" font-weight="900" font-family="sans-serif">N</text></svg>';
+  compass.style.cssText='right:3%;top:3%;width:'+Math.max(35,cw*0.028)+'px;height:'+Math.max(35,cw*0.028)+'px';
+  compass.innerHTML='<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/><circle cx="20" cy="20" r="12" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/><polygon points="20,3 22,16 18,16" fill="rgba(220,60,50,0.8)"/><polygon points="20,37 22,24 18,24" fill="rgba(255,255,255,0.3)"/><polygon points="3,20 16,18 16,22" fill="rgba(255,255,255,0.2)"/><polygon points="37,20 24,18 24,22" fill="rgba(255,255,255,0.2)"/><text x="20" y="10" text-anchor="middle" fill="rgba(220,60,50,0.85)" font-size="5" font-weight="900" font-family="sans-serif">N</text></svg>';
   mapCanvas.appendChild(compass);
 
   // === SCALE BAR ===
@@ -4613,9 +4621,15 @@ function addMapDecorations(cw,ch){
   sb.innerHTML='<div class="scale-line"></div>500px';
   mapCanvas.appendChild(sb);
 
+  // Lake label
+  const lakeEl=document.createElement('div');lakeEl.className='map-zone-marker';
+  lakeEl.style.cssText='left:36%;top:40%;font-size:'+Math.max(5,cw*0.003)+'px;transform:translate(-50%,-50%);color:rgba(180,220,255,0.7);font-style:italic';
+  lakeEl.textContent='Lake Akash';
+  mapCanvas.appendChild(lakeEl);
+
   // === SUBTLE CENTER WATERMARK ===
   const wm=document.createElement('div');wm.className='map-area-label';
-  wm.style.cssText='left:50%;top:50%;font-size:'+Math.max(cw*0.008,8)+'px;transform:translate(-50%,-50%);color:rgba(255,255,255,0.06);font-family:var(--font-fun);font-weight:800;letter-spacing:0.2em;text-transform:uppercase;position:absolute;z-index:1;pointer-events:none';
+  wm.style.cssText='left:50%;top:50%;font-size:'+Math.max(cw*0.008,8)+'px;transform:translate(-50%,-50%);color:rgba(255,255,255,0.04);font-family:var(--font-fun);font-weight:800;letter-spacing:0.2em;text-transform:uppercase;position:absolute;z-index:1;pointer-events:none';
   wm.textContent="Akash Unplugged";
   mapCanvas.appendChild(wm);
 }
