@@ -31,7 +31,24 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
     linear-gradient(#E8E4DF 1px, transparent 1px),
     linear-gradient(90deg, #E8E4DF 1px, transparent 1px);
   background-size:100% 100%,100% 100%,100% 100%,40px 40px,40px 40px;
+  border:6px solid transparent;
+  border-image:repeating-linear-gradient(90deg,#C9A96E 0px,#C9A96E 12px,transparent 12px,transparent 20px) 6;
+  box-shadow:inset 0 0 0 2px rgba(201,169,110,0.15);
 }
+/* Decorative border corners */
+.canvas::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:9999;
+  border:4px dashed rgba(201,169,110,0.25);border-radius:0;
+}
+/* Bounce flash overlay */
+.bounce-flash{
+  position:fixed;inset:0;pointer-events:none;z-index:99999;
+  transition:opacity 0.3s ease-out;opacity:0;
+}
+.bounce-flash.left{background:linear-gradient(90deg,rgba(201,169,110,0.3),transparent 30%)}
+.bounce-flash.right{background:linear-gradient(-90deg,rgba(201,169,110,0.3),transparent 30%)}
+.bounce-flash.top{background:linear-gradient(180deg,rgba(201,169,110,0.3),transparent 30%)}
+.bounce-flash.bottom{background:linear-gradient(0deg,rgba(201,169,110,0.3),transparent 30%)}
 
 /* STICKER BASE */
 .sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1))}
@@ -1234,6 +1251,7 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <div class="scroll-counter" id="scrollCounter">0</div>
 <div class="swipe-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Swipe to explore · Tap stickers!</div>
+<div class="bounce-flash" id="bounceFlash"></div>
 
 <div class="canvas-viewport" id="viewport">
 <div class="canvas" id="canvas">
@@ -1465,12 +1483,12 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-badge" data-anim="tada" style="left:8500px;top:1100px;transform:rotate(3deg)">AMATEUR CHEF 🍳</div>
 <div class="sticker sticker-badge" data-anim="pop" style="left:7800px;top:1500px;transform:rotate(-2deg)">BOOKWORM IN TRAINING 📖</div>
 <div class="sticker sticker-emoji big" data-anim="heartbeat" style="left:8800px;top:400px">🎨</div>
-<div class="sticker sticker-emoji" data-anim="dance" style="left:9200px;top:700px">📷</div>
+<div class="sticker sticker-emoji" data-anim="dance" style="left:9100px;top:700px">📷</div>
 <div class="sticker sticker-emoji big" data-anim="float" style="left:7600px;top:1700px">🎵</div>
 <div class="sticker sticker-emoji" data-anim="spin" style="left:8600px;top:1600px">🏃</div>
 <div class="sticker sticker-stamp" data-anim="tada" style="left:9000px;top:1200px;transform:rotate(8deg);color:#E91E63;border-color:#E91E63">HOBBY COLLECTOR ✓</div>
 <div class="sticker sticker-postit" data-anim="jelly" style="left:8900px;top:300px;transform:rotate(-5deg);background:var(--purple)">Tried painting once 🎨<br>Canvas looked like modern art<br>(not the good kind)</div>
-<div class="sticker sticker-postit" data-anim="wave" style="left:9300px;top:1000px;transform:rotate(3deg);background:var(--orange)">Music playlist: 847 songs<br>Still plays the same 12 🎧</div>
+<div class="sticker sticker-postit" data-anim="wave" style="left:9100px;top:1000px;transform:rotate(3deg);background:var(--orange)">Music playlist: 847 songs<br>Still plays the same 12 🎧</div>
 
 <!-- ===== WANDERLUST WAY 🌍 (bottom-left 200-2800, 4800-6800) ===== -->
 <div class="sticker" style="left:800px;top:4800px;font-family:var(--font-hand);font-size:2rem;color:rgba(33,150,243,0.22);transform:rotate(2deg);pointer-events:none;user-select:none">🌍 wanderlust way</div>
@@ -1484,10 +1502,10 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-badge" data-anim="tada" style="left:400px;top:6200px;transform:rotate(-3deg)">CHAI CONNOISSEUR ☕</div>
 <div class="sticker sticker-emoji huge" data-anim="rocket" style="left:1800px;top:6400px;font-size:6rem">🗺️</div>
 <div class="sticker sticker-emoji big" data-anim="float" style="left:2600px;top:5800px">🌅</div>
-<div class="sticker sticker-emoji" data-anim="dance" style="left:500px;top:6600px">🏕️</div>
+<div class="sticker sticker-emoji" data-anim="dance" style="left:500px;top:6300px">🏕️</div>
 <div class="sticker sticker-emoji big" data-anim="heartbeat" style="left:2200px;top:6200px">🌴</div>
 <div class="sticker sticker-stamp" data-anim="tada" style="left:1200px;top:6000px;transform:rotate(-12deg);color:#2196F3;border-color:#2196F3">WANDERER ✓</div>
-<div class="sticker sticker-postit" data-anim="pop" style="left:2500px;top:6500px;transform:rotate(5deg);background:var(--mint)">Bucket list:<br>Northern lights 🌌<br>Scuba diving 🤿<br>Mountain trek 🏔️</div>
+<div class="sticker sticker-postit" data-anim="pop" style="left:2500px;top:6200px;transform:rotate(5deg);background:var(--mint)">Bucket list:<br>Northern lights 🌌<br>Scuba diving 🤿<br>Mountain trek 🏔️</div>
 
 <!-- ===== THE RECHARGE ROOM 🧘 (bottom-right 5000-9500, 4500-6800) ===== -->
 <div class="sticker" style="left:6500px;top:4600px;font-family:var(--font-hand);font-size:2rem;color:rgba(156,39,176,0.22);transform:rotate(-2deg);pointer-events:none;user-select:none">🧘 the recharge room</div>
@@ -1501,18 +1519,18 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-badge" data-anim="pop" style="left:7600px;top:5800px;transform:rotate(-2deg)">CERTIFIED OVERTHINKER 🧠</div>
 <div class="sticker sticker-badge" data-anim="tada" style="left:5800px;top:6200px;transform:rotate(3deg)">NAP CHAMPION 💤</div>
 <div class="sticker sticker-emoji huge" data-anim="float" style="left:8500px;top:5000px;font-size:6rem">🌙</div>
-<div class="sticker sticker-emoji big" data-anim="heartbeat" style="left:9000px;top:5500px">💆</div>
-<div class="sticker sticker-emoji" data-anim="wave" style="left:6000px;top:6500px">🫖</div>
+<div class="sticker sticker-emoji big" data-anim="heartbeat" style="left:8800px;top:5500px">💆</div>
+<div class="sticker sticker-emoji" data-anim="wave" style="left:6000px;top:6200px">🫖</div>
 <div class="sticker sticker-emoji big" data-anim="dance" style="left:7800px;top:6400px">🌿</div>
 <div class="sticker sticker-stamp" data-anim="tada" style="left:8800px;top:6000px;transform:rotate(10deg);color:#9C27B0;border-color:#9C27B0">RECHARGING... ✓</div>
-<div class="sticker sticker-postit" data-anim="pop" style="left:9200px;top:5800px;transform:rotate(-4deg);background:var(--yellow)">Affirmation:<br>I am enough 💛<br>(even when CI fails)</div>
+<div class="sticker sticker-postit" data-anim="pop" style="left:9000px;top:5800px;transform:rotate(-4deg);background:var(--yellow)">Affirmation:<br>I am enough 💛<br>(even when CI fails)</div>
 <div class="sticker sticker-postit" data-anim="jelly" style="left:8400px;top:6300px;transform:rotate(3deg);background:var(--pink)">Comfort movies:<br>🎬 Interstellar<br>🎬 Good Will Hunting<br>🎬 3 Idiots</div>
-<div class="sticker sticker-emoji" data-anim="spin" style="left:9500px;top:6600px">✨</div>
+<div class="sticker sticker-emoji" data-anim="spin" style="left:9300px;top:6300px">✨</div>
 
-<!-- Corner anchor stickers to ensure full coverage -->
-<div class="sticker sticker-emoji" data-anim="float" style="left:9600px;top:200px">⭐</div>
-<div class="sticker sticker-emoji" data-anim="wave" style="left:9600px;top:6700px">🌊</div>
-<div class="sticker sticker-emoji" data-anim="dance" style="left:200px;top:6700px">🏝️</div>
+<!-- Corner anchor stickers (within bounds) -->
+<div class="sticker sticker-emoji" data-anim="float" style="left:9400px;top:300px">⭐</div>
+<div class="sticker sticker-emoji" data-anim="wave" style="left:9400px;top:6400px">🌊</div>
+<div class="sticker sticker-emoji" data-anim="dance" style="left:300px;top:6400px">🏝️</div>
 <div class="sticker sticker-emoji" data-anim="heartbeat" style="left:200px;top:200px">🌟</div>
 
 </div></div>
@@ -1627,6 +1645,47 @@ vp.addEventListener('scroll',()=>{
       _mmScrollRAF=requestAnimationFrame(()=>{_mmScrollRAF=null;drawMap();});
     }
   }
+});
+
+// ===== BOUNCE-BACK EDGE DETECTION =====
+const bounceFlash=document.getElementById('bounceFlash');
+let bounceTimeout=null;
+let lastBounceEdge='';
+const BOUNCE_STRENGTH=80; // pixels to push back
+const EDGE_THRESHOLD=5; // pixels from edge to trigger
+
+function triggerBounce(edge){
+  if(lastBounceEdge===edge && bounceTimeout) return;
+  lastBounceEdge=edge;
+  // Visual flash
+  bounceFlash.className='bounce-flash '+edge;
+  bounceFlash.style.opacity='1';
+  clearTimeout(bounceTimeout);
+  bounceTimeout=setTimeout(()=>{bounceFlash.style.opacity='0';lastBounceEdge='';bounceTimeout=null},400);
+  // Haptic-like vibration if available
+  try{if(navigator.vibrate)navigator.vibrate(30)}catch(e){}
+  // Bounce back with smooth scroll
+  const maxX=vp.scrollWidth-vp.clientWidth;
+  const maxY=vp.scrollHeight-vp.clientHeight;
+  if(edge==='left') vp.scrollTo({left:Math.min(BOUNCE_STRENGTH,maxX),behavior:'smooth'});
+  else if(edge==='right') vp.scrollTo({left:maxX-BOUNCE_STRENGTH,behavior:'smooth'});
+  else if(edge==='top') vp.scrollTo({top:Math.min(BOUNCE_STRENGTH,maxY),behavior:'smooth'});
+  else if(edge==='bottom') vp.scrollTo({top:maxY-BOUNCE_STRENGTH,behavior:'smooth'});
+}
+
+// Check edges on scroll
+let edgeCheckRAF=null;
+vp.addEventListener('scroll',()=>{
+  if(edgeCheckRAF)return;
+  edgeCheckRAF=requestAnimationFrame(()=>{
+    edgeCheckRAF=null;
+    const maxX=vp.scrollWidth-vp.clientWidth;
+    const maxY=vp.scrollHeight-vp.clientHeight;
+    if(vp.scrollLeft<=EDGE_THRESHOLD && maxX>0) triggerBounce('left');
+    else if(vp.scrollLeft>=maxX-EDGE_THRESHOLD && maxX>0) triggerBounce('right');
+    else if(vp.scrollTop<=EDGE_THRESHOLD && maxY>0) triggerBounce('top');
+    else if(vp.scrollTop>=maxY-EDGE_THRESHOLD && maxY>0) triggerBounce('bottom');
+  });
 });
 
 // DRAG SCROLL (canvas background)
