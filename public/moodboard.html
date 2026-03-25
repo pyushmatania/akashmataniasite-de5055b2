@@ -3951,18 +3951,49 @@ function updMap(){
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
   const sx=vp.scrollLeft,sy=vp.scrollTop;
   const vpW=vp.clientWidth,vpH=vp.clientHeight;
-  const cL=parseInt(mapCanvas.style.left)||0;
-  const cT=parseInt(mapCanvas.style.top)||0;
   
-  const px=cL+(sx+vpW/2-ox)*sc;
-  const py=cT+(sy+vpH/2-oy)*sc;
-  mapPlayer.style.left=px+'px';
-  mapPlayer.style.top=py+'px';
-  
-  mapVP.style.left=(cL+(sx-ox)*sc)+'px';
-  mapVP.style.top=(cT+(sy-oy)*sc)+'px';
-  mapVP.style.width=(vpW*sc)+'px';
-  mapVP.style.height=(vpH*sc)+'px';
+  if(!mmExp){
+    // SMALL MAP: arrow moves, bg syncs when arrow nears edge
+    const mr=mmInner.getBoundingClientRect();
+    const mw=mr.width||64,mh=mr.height||64;
+    const pad=12; // padding from edge before bg starts panning
+    // Player position in map-space (absolute)
+    const rawPx=(sx+vpW/2-ox)*sc;
+    const rawPy=(sy+vpH/2-oy)*sc;
+    // Current canvas offset
+    let cL=parseInt(mapCanvas.style.left)||0;
+    let cT=parseInt(mapCanvas.style.top)||0;
+    // Arrow position relative to minimap
+    let arrowX=cL+rawPx;
+    let arrowY=cT+rawPy;
+    // If arrow would go outside minimap bounds, shift the canvas
+    if(arrowX<pad){cL=pad-rawPx}
+    else if(arrowX>mw-pad){cL=(mw-pad)-rawPx}
+    if(arrowY<pad){cT=pad-rawPy}
+    else if(arrowY>mh-pad){cT=(mh-pad)-rawPy}
+    mapCanvas.style.left=cL+'px';
+    mapCanvas.style.top=cT+'px';
+    // Recalculate arrow position with new offset
+    arrowX=cL+rawPx;
+    arrowY=cT+rawPy;
+    mapPlayer.style.left=arrowX+'px';
+    mapPlayer.style.top=arrowY+'px';
+    mapVP.style.left=(cL+(sx-ox)*sc)+'px';
+    mapVP.style.top=(cT+(sy-oy)*sc)+'px';
+    mapVP.style.width=(vpW*sc)+'px';
+    mapVP.style.height=(vpH*sc)+'px';
+  } else {
+    const cL=parseInt(mapCanvas.style.left)||0;
+    const cT=parseInt(mapCanvas.style.top)||0;
+    const px=cL+(sx+vpW/2-ox)*sc;
+    const py=cT+(sy+vpH/2-oy)*sc;
+    mapPlayer.style.left=px+'px';
+    mapPlayer.style.top=py+'px';
+    mapVP.style.left=(cL+(sx-ox)*sc)+'px';
+    mapVP.style.top=(cT+(sy-oy)*sc)+'px';
+    mapVP.style.width=(vpW*sc)+'px';
+    mapVP.style.height=(vpH*sc)+'px';
+  }
   
   // Update zone name on minimap
   const worldX=sx+vpW/2, worldY=sy+vpH/2;
