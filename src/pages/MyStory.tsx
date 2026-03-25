@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
-const skills = [
+import akashPhoto from "@/assets/akash-photo.jpeg";
   { label: "PRODUCT STRATEGY", color: "hsl(145, 63%, 49%)" },
   { label: "USER RESEARCH", color: "hsl(43, 96%, 56%)" },
   { label: "WEB3 & FINTECH", color: "hsl(0, 78%, 62%)" },
