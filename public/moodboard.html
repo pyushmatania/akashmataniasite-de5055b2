@@ -3200,6 +3200,13 @@ function normalizeAllStickerBounds(){
 }
 
 function identifyStickerGroup(sticker){
+  // Priority: use data-zone attribute if present
+  const zone=sticker.dataset.zone;
+  if(zone==='work')return 'work';
+  if(zone==='portfolio')return 'portfolio';
+  if(zone==='origin')return 'personal';
+  if(zone==='hobby')return 'hobby';
+  if(zone==='fun')return 'fun';
   const c=sticker.classList;
   const text=(sticker.textContent||'').toLowerCase();
   if(c.contains('zone-signpost'))return 'signpost';
