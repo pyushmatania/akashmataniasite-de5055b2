@@ -1096,10 +1096,17 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 }
 .mi:hover .mi-tip{opacity:1}
 
-/* Player — now direct child of .minimap, above radar/vignette */
+/* Player — direct child of .minimap, above radar/vignette */
 .map-player{
   position:absolute;z-index:9999;transform:translate(-50%,-50%);
-  pointer-events:none;transition:left 0.2s,top 0.2s;
+  pointer-events:none;transition:left 0.15s linear,top 0.15s linear;
+}
+.map-player .map-arrow-svg{
+  transition:transform 0.25s ease-out;
+}
+/* Smooth canvas panning in small map */
+.minimap-container:not(.expanded) .map-canvas{
+  transition:left 0.3s ease-out,top 0.3s ease-out;
 }
 .map-arrow{object-fit:cover}
 .map-arrow-head{display:none}
