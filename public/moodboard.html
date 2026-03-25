@@ -548,55 +548,53 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-loading-text{font-family:var(--font-fun);font-size:0.55rem;color:rgba(0,0,0,0.3)}
 
 /* Enhanced bottom bar */
+/* Enhanced bottom bar — subtle & integrated */
 .map-bottom-bar{
   position:absolute;bottom:0;left:0;right:0;z-index:1000;
   display:none;flex-direction:column;
-  background:linear-gradient(0deg,rgba(255,255,255,0.97) 0%,rgba(255,255,255,0.92) 70%,rgba(255,255,255,0.5) 90%,transparent 100%);
-  padding:20px 14px max(14px,env(safe-area-inset-bottom,0px)+58px);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  background:linear-gradient(0deg,rgba(232,245,233,0.6) 0%,rgba(232,245,233,0.3) 60%,transparent 100%);
+  padding:10px 10px max(10px,env(safe-area-inset-bottom,0px)+54px);
 }
 .minimap-container.expanded .map-bottom-bar{display:flex}
 .map-bottom-bar .bar-filters{
-  display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;
+  display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin-bottom:4px;
 }
 .map-bottom-bar .bar-info{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:6px 12px;background:rgba(0,0,0,0.03);border-radius:10px;
+  display:flex;justify-content:center;align-items:center;gap:12px;
+  padding:3px 8px;
 }
-.bar-count{font-family:var(--font-fun);font-size:0.6rem;color:rgba(0,0,0,0.45);font-weight:500}
-.bar-coords{font-family:var(--font-fun);font-size:0.55rem;color:rgba(0,0,0,0.35);font-variant-numeric:tabular-nums;letter-spacing:0.02em}
+.bar-count{font-family:var(--font-fun);font-size:0.5rem;color:rgba(60,80,60,0.35);font-weight:500}
+.bar-coords{font-family:var(--font-fun);font-size:0.45rem;color:rgba(60,80,60,0.3);font-variant-numeric:tabular-nums;letter-spacing:0.02em}
 
-/* Filter chip redesign */
+/* Filter chips — map-integrated style */
 .mc{
-  padding:8px 18px;border-radius:24px;font-family:var(--font-fun);
-  font-size:0.7rem;font-weight:600;cursor:pointer;
-  border:1.5px solid rgba(0,0,0,0.06);
+  padding:4px 10px;border-radius:14px;font-family:var(--font-fun);
+  font-size:0.55rem;font-weight:600;cursor:pointer;
+  border:1px solid rgba(46,125,50,0.12);
   transition:all 0.2s cubic-bezier(0.25,1,0.5,1);
-  display:flex;align-items:center;gap:5px;
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  display:flex;align-items:center;gap:4px;
+  background:rgba(255,255,255,0.45);color:rgba(60,80,60,0.5);
 }
 .mc.active{
-  background:linear-gradient(135deg,#FFEB3B,#FFC107);color:#333;
-  border-color:rgba(255,193,7,0.4);
-  box-shadow:0 2px 12px rgba(255,193,7,0.3),0 0 0 1px rgba(255,193,7,0.15);
-  transform:scale(1.02);
+  background:rgba(102,187,106,0.25);color:rgba(27,94,32,0.85);
+  border-color:rgba(76,175,80,0.35);
+  box-shadow:0 1px 6px rgba(76,175,80,0.15);
 }
-.mc:not(.active){background:rgba(255,255,255,0.85);color:rgba(0,0,0,0.5);border-color:rgba(0,0,0,0.08)}
-.mc:hover:not(.active){background:rgba(255,255,255,0.95);transform:scale(1.02);color:rgba(0,0,0,0.7)}
-.mc:active{transform:scale(0.97)}
+.mc:not(.active):hover{background:rgba(255,255,255,0.65);color:rgba(60,80,60,0.7)}
+.mc:active{transform:scale(0.95)}
+.mc .legend-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .mc .chip-count{
-  background:rgba(255,255,255,0.1);border-radius:10px;padding:2px 7px;
-  font-size:0.5rem;font-weight:700;min-width:18px;text-align:center;
+  font-size:0.4rem;font-weight:700;opacity:0.6;min-width:12px;text-align:center;
 }
-.mc.active .chip-count{background:rgba(0,0,0,0.08)}
+.mc.active .chip-count{opacity:0.8}
 
 /* Coordinates display on map */
 .map-coord-display{
   position:absolute;top:54px;left:12px;z-index:1000;
-  display:none;font-family:var(--font-fun);font-size:0.55rem;
-  color:rgba(0,0,0,0.5);background:rgba(255,255,255,0.85);
-  padding:4px 10px;border-radius:8px;backdrop-filter:blur(6px);
-  border:1px solid rgba(0,0,0,0.06);box-shadow:0 1px 4px rgba(0,0,0,0.08);
+  display:none;font-family:var(--font-fun);font-size:0.5rem;
+  color:rgba(46,125,50,0.35);background:rgba(232,245,233,0.5);
+  padding:3px 8px;border-radius:6px;
+  border:1px solid rgba(46,125,50,0.08);
   font-variant-numeric:tabular-nums;
 }
 .minimap-container.expanded .map-coord-display{display:block}
