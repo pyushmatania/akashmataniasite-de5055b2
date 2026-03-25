@@ -2714,8 +2714,43 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
   if(mapCount)mapCount.textContent=count+' items';
 }
 
+// Filter with cycle-through navigation
+let filtClickCount={};
 function filt(c,btn){
+  const wasActive=(mFilt===c);
+  if(wasActive && c!=='all'){
+    // Already on this filter — cycle to next item
+    if(!filtClickCount[c])filtClickCount[c]=0;
+    const matching=stickerData.filter(d=>d.cat===c);
+    if(matching.length>0){
+      const idx=filtClickCount[c]%matching.length;
+      const target=matching[idx];
+      filtClickCount[c]++;
+      const sc=drawMap._sc||0.05;
+      const ox=drawMap._ox||0,oy=drawMap._oy||0;
+      const cT=parseInt(mapCanvas.style.top)||0;
+      const px=(target.left-ox)*sc;
+      const py=(target.top-oy)*sc+cT;
+      mmInner.scrollTo({left:px-mmInner.clientWidth/2,top:py-mmInner.clientHeight/2,behavior:'smooth'});
+      // Flash highlight nearby items
+      setTimeout(()=>{
+        const items=mapCanvas.querySelectorAll('.sticker,.mi');
+        items.forEach(el=>{
+          const elL=parseFloat(el.style.left),elT=parseFloat(el.style.top);
+          if(Math.abs(elL-px)<30 && Math.abs(elT-py)<30){
+            el.style.outline='3px solid #66BB6A';el.style.outlineOffset='4px';
+            el.style.boxShadow='0 4px 20px rgba(102,187,106,0.5)';
+            setTimeout(()=>{el.style.outline='none';el.style.boxShadow='none'},1500);
+          }
+        });
+      },400);
+      const mc=document.getElementById('mapCount');
+      if(mc)mc.textContent=(idx+1)+'/'+matching.length;
+    }
+    return;
+  }
   mFilt=c;
+  filtClickCount[c]=0;
   document.querySelectorAll('.mc').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');drawMap();
 }
@@ -2738,19 +2773,27 @@ function mapZoom(dir){
   let idx=steps.indexOf(mapZoomScale);
   if(idx===-1)idx=2;
   idx=Math.max(0,Math.min(steps.length-1,idx+dir));
+  if(steps[idx]===mapZoomScale)return;
+  const oldZoom=mapZoomScale;
   mapZoomScale=steps[idx];
   const zl=document.getElementById('mapZoomLevel');
   if(zl)zl.textContent=mapZoomScale+'×';
-  // Apply zoom via CSS transform on mapCanvas
+  const factor=mapZoomScale/oldZoom;
   const cx=mmInner.scrollLeft+mmInner.clientWidth/2;
   const cy=mmInner.scrollTop+mmInner.clientHeight/2;
-  mapCanvas.style.transform='scale('+mapZoomScale+')';
-  mapCanvas.style.transformOrigin='0 0';
-  // Adjust scroll to keep centered
-  const newCx=cx*mapZoomScale/((mapCanvas._prevZoom)||1);
-  const newCy=cy*mapZoomScale/((mapCanvas._prevZoom)||1);
-  mapCanvas._prevZoom=mapZoomScale;
-  mmInner.scrollTo({left:newCx-mmInner.clientWidth/2,top:newCy-mmInner.clientHeight/2});
+  const cw=parseFloat(mapCanvas.style.width)*factor;
+  const ch=parseFloat(mapCanvas.style.height)*factor;
+  drawMap._sc=(drawMap._sc||0.05)*factor;
+  drawMap._cw=cw;drawMap._ch=ch;
+  mapCanvas.style.width=cw+'px';
+  mapCanvas.style.height=ch+'px';
+  mapCanvas.style.transform='none';
+  const ox=drawMap._ox,oy=drawMap._oy;
+  const items=mapCanvas.querySelectorAll('.sticker,.mi');
+  items.forEach(i=>i.remove());
+  renderVisibleClones(drawMap._sc,ox,oy,cw,ch);
+  updMap();
+  mmInner.scrollTo({left:cx*factor-mmInner.clientWidth/2,top:cy*factor-mmInner.clientHeight/2});
 }
 
 function showNav(tx,ty){
