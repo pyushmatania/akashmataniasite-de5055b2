@@ -1537,9 +1537,9 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-meme" data-anim="shake" style="left:1600px;top:5800px;transform:rotate(-3deg)"><div class="meme-emoji">🏖️</div><div class="meme-text">Goes to beach for peace<br>Opens laptop<br>"Just one email"</div><div class="meme-sub">workation™</div></div>
 <div class="sticker sticker-badge" data-anim="pop" style="left:2400px;top:5400px;transform:rotate(2deg)">ROAD TRIP ENTHUSIAST 🚗</div>
 <div class="sticker sticker-badge" data-anim="tada" style="left:400px;top:6200px;transform:rotate(-3deg)">CHAI CONNOISSEUR ☕</div>
-<div class="sticker sticker-emoji huge" data-anim="rocket" style="left:1800px;top:6400px;font-size:6rem">🗺️</div>
+<div class="sticker sticker-emoji huge" data-anim="rocket" style="left:1800px;top:6000px;font-size:6rem">🗺️</div>
 <div class="sticker sticker-emoji big" data-anim="float" style="left:2600px;top:5800px">🌅</div>
-<div class="sticker sticker-emoji" data-anim="dance" style="left:500px;top:6300px">🏕️</div>
+<div class="sticker sticker-emoji" data-anim="dance" style="left:500px;top:5900px">🏕️</div>
 <div class="sticker sticker-emoji big" data-anim="heartbeat" style="left:2200px;top:6200px">🌴</div>
 <div class="sticker sticker-stamp" data-anim="tada" style="left:1200px;top:6000px;transform:rotate(-12deg);color:#2196F3;border-color:#2196F3">WANDERER ✓</div>
 <div class="sticker sticker-postit" data-anim="pop" style="left:2500px;top:6200px;transform:rotate(5deg);background:var(--mint)">Bucket list:<br>Northern lights 🌌<br>Scuba diving 🤿<br>Mountain trek 🏔️</div>
@@ -1558,16 +1558,16 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-emoji huge" data-anim="float" style="left:8500px;top:5000px;font-size:6rem">🌙</div>
 <div class="sticker sticker-emoji big" data-anim="heartbeat" style="left:8800px;top:5500px">💆</div>
 <div class="sticker sticker-emoji" data-anim="wave" style="left:6000px;top:6200px">🫖</div>
-<div class="sticker sticker-emoji big" data-anim="dance" style="left:7800px;top:6400px">🌿</div>
+<div class="sticker sticker-emoji big" data-anim="dance" style="left:7800px;top:6000px">🌿</div>
 <div class="sticker sticker-stamp" data-anim="tada" style="left:8800px;top:6000px;transform:rotate(10deg);color:#9C27B0;border-color:#9C27B0">RECHARGING... ✓</div>
 <div class="sticker sticker-postit" data-anim="pop" style="left:9000px;top:5800px;transform:rotate(-4deg);background:var(--yellow)">Affirmation:<br>I am enough 💛<br>(even when CI fails)</div>
-<div class="sticker sticker-postit" data-anim="jelly" style="left:8400px;top:6300px;transform:rotate(3deg);background:var(--pink)">Comfort movies:<br>🎬 Interstellar<br>🎬 Good Will Hunting<br>🎬 3 Idiots</div>
-<div class="sticker sticker-emoji" data-anim="spin" style="left:9300px;top:6300px">✨</div>
+<div class="sticker sticker-postit" data-anim="jelly" style="left:8400px;top:5900px;transform:rotate(3deg);background:var(--pink)">Comfort movies:<br>🎬 Interstellar<br>🎬 Good Will Hunting<br>🎬 3 Idiots</div>
+<div class="sticker sticker-emoji" data-anim="spin" style="left:8800px;top:5900px">✨</div>
 
 <!-- Corner anchor stickers (within bounds) -->
-<div class="sticker sticker-emoji" data-anim="float" style="left:9400px;top:300px">⭐</div>
-<div class="sticker sticker-emoji" data-anim="wave" style="left:9400px;top:6400px">🌊</div>
-<div class="sticker sticker-emoji" data-anim="dance" style="left:300px;top:6400px">🏝️</div>
+<div class="sticker sticker-emoji" data-anim="float" style="left:9000px;top:400px">⭐</div>
+<div class="sticker sticker-emoji" data-anim="wave" style="left:9000px;top:6000px">🌊</div>
+<div class="sticker sticker-emoji" data-anim="dance" style="left:400px;top:6000px">🏝️</div>
 <div class="sticker sticker-emoji" data-anim="heartbeat" style="left:200px;top:200px">🌟</div>
 
 </div></div>
@@ -3595,14 +3595,20 @@ function drawMap(){
     mapCanvas.style.left='0';
     mapCanvas.style.top='50px';
   } else {
-    // SMALL MAP: show entire canvas so arrow actually moves
-    sc=Math.min(mw/contentW,mh/contentH);
+    // SMALL MAP: zoomed-in view centered on player for visible arrow movement
+    const zoomFactor=4; // show ~1/4 of canvas width
+    sc=mw/(contentW/zoomFactor);
     canvasW=contentW*sc;
     canvasH=contentH*sc;
+    // Center map on player position, offset applied in updMap
+    const px=vp.scrollLeft+vp.clientWidth/2;
+    const py=vp.scrollTop+vp.clientHeight/2;
     offsetX=0;
     offsetY=0;
-    mapCanvas.style.left=((mw-canvasW)/2)+'px';
-    mapCanvas.style.top=((mh-canvasH)/2)+'px';
+    const mapPx=px*sc;
+    const mapPy=py*sc;
+    mapCanvas.style.left=(mw/2-mapPx)+'px';
+    mapCanvas.style.top=(mh/2-mapPy)+'px';
   }
   
   drawMap._sc=sc;drawMap._ox=offsetX;drawMap._oy=offsetY;
