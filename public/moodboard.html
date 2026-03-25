@@ -2640,6 +2640,17 @@ function toggleFunFact(row){
     row.classList.add('fact-open');
   }
 }
+
+function revealHiddenSkills(){
+  var dot=document.getElementById('moreSkillsDot');
+  dot.classList.add('hidden');
+  var hidden=document.querySelectorAll('.hidden-skill');
+  hidden.forEach(function(el,i){
+    setTimeout(function(){
+      el.classList.add('revealed');
+    }, i*120);
+  });
+}
 </script>
 <script>
 const vp=document.getElementById('viewport'),cv=document.getElementById('canvas');
