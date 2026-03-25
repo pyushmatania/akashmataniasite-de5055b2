@@ -719,105 +719,16 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .minimap-container.expanded~.logo,.minimap-container.expanded~.settings-btn{display:none!important}
 body.map-expanded .logo,body.map-expanded .settings-btn{display:none!important}
 
-/* === GAME HUD === */
-.map-hud-xp{
-  position:absolute;top:50px;left:50%;transform:translateX(-50%);z-index:1001;
-  display:none;align-items:center;gap:8px;
-  background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);
-  padding:6px 16px;border-radius:20px;border:1px solid rgba(0,0,0,0.06);
-  box-shadow:0 2px 12px rgba(0,0,0,0.08);
-}
-.minimap-container.expanded .map-hud-xp{display:flex}
-.hud-level{font-family:var(--font-fun);font-weight:700;font-size:0.75rem;color:#FF8F00;
-  background:linear-gradient(135deg,#FFF8E1,#FFECB3);padding:3px 10px;border-radius:12px;
-  border:1.5px solid #FFCA28}
-.hud-xp-bar{width:100px;height:6px;background:rgba(0,0,0,0.06);border-radius:3px;overflow:hidden}
-.hud-xp-fill{height:100%;width:72%;background:linear-gradient(90deg,#FFCA28,#FF9800);border-radius:3px;transition:width 0.5s}
-.hud-xp-text{font-family:var(--font-fun);font-size:0.55rem;color:rgba(0,0,0,0.4)}
+/* Legend dots in filter chips */
+.mc .legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
-.map-hud-stats{
-  position:absolute;top:90px;right:14px;z-index:1001;
-  display:none;flex-direction:column;gap:6px;
+/* Total area watermark on map */
+.map-area-label{
+  position:absolute;z-index:2;pointer-events:none;
+  font-family:var(--font-fun);font-weight:600;
+  color:rgba(0,0,0,0.06);letter-spacing:0.15em;
+  text-transform:uppercase;
 }
-.minimap-container.expanded .map-hud-stats{display:flex}
-.hud-stat{
-  background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);
-  padding:8px 12px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);
-  box-shadow:0 1px 6px rgba(0,0,0,0.06);
-  font-family:var(--font-fun);font-size:0.6rem;color:#555;
-  display:flex;align-items:center;gap:6px;min-width:90px;
-}
-.hud-stat-icon{font-size:0.9rem}
-.hud-stat-val{font-weight:700;color:#333;font-size:0.75rem}
-.hud-stat-label{font-size:0.5rem;color:#999}
-
-/* Map border overlay */
-.map-border-overlay{
-  position:absolute;inset:0;pointer-events:none;z-index:997;display:none;
-  border:3px solid rgba(0,0,0,0.04);
-  box-shadow:inset 0 0 60px rgba(0,0,0,0.03),inset 0 0 120px rgba(76,175,80,0.02);
-}
-.minimap-container.expanded .map-border-overlay{display:block}
-
-/* Map region borders */
-.map-region{
-  position:absolute;pointer-events:none;z-index:2;
-  border:1.5px dashed rgba(0,0,0,0.08);border-radius:16px;
-}
-.map-region-label{
-  position:absolute;top:-10px;left:12px;
-  font-family:var(--font-fun);font-size:0.45rem;font-weight:600;
-  color:rgba(0,0,0,0.18);text-transform:uppercase;letter-spacing:0.1em;
-  background:#E8F5E9;padding:1px 6px;border-radius:4px;
-}
-
-/* Map POI markers */
-.map-poi{
-  position:absolute;z-index:5;pointer-events:none;
-  width:24px;height:24px;border-radius:50%;
-  background:rgba(255,255,255,0.9);border:2px solid;
-  display:flex;align-items:center;justify-content:center;
-  font-size:0.65rem;box-shadow:0 2px 8px rgba(0,0,0,0.1);
-  transform:translate(-50%,-50%);
-}
-.map-poi::after{
-  content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);
-  width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;
-  border-top:6px solid;border-top-color:inherit;
-}
-
-/* Mini legend */
-.map-legend{
-  position:absolute;bottom:140px;left:14px;z-index:1001;
-  display:none;flex-direction:column;gap:3px;
-  background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);
-  padding:10px 12px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);
-  box-shadow:0 1px 8px rgba(0,0,0,0.06);
-}
-.minimap-container.expanded .map-legend{display:flex}
-.legend-title{font-family:var(--font-fun);font-weight:700;font-size:0.55rem;color:#333;margin-bottom:2px}
-.legend-item{display:flex;align-items:center;gap:6px;font-family:var(--font-fun);font-size:0.48rem;color:#777}
-.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-
-/* === FOG OF WAR === */
-.fog-canvas{
-  position:absolute;inset:0;z-index:996;pointer-events:none;
-  mix-blend-mode:multiply;
-}
-.minimap-container:not(.expanded) .fog-canvas{display:none}
-.fog-hud{
-  position:absolute;top:90px;left:14px;z-index:1001;
-  display:none;
-  background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);
-  padding:8px 14px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);
-  box-shadow:0 1px 6px rgba(0,0,0,0.06);
-  font-family:var(--font-fun);
-}
-.minimap-container.expanded .fog-hud{display:block}
-.fog-hud-title{font-size:0.5rem;color:#999;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px}
-.fog-hud-bar{width:80px;height:5px;background:rgba(0,0,0,0.06);border-radius:3px;overflow:hidden}
-.fog-hud-fill{height:100%;background:linear-gradient(90deg,#66BB6A,#43A047);border-radius:3px;transition:width 0.4s}
-.fog-hud-pct{font-size:0.6rem;font-weight:700;color:#43A047;margin-top:2px}
 </style>
 </head>
 <body>
@@ -1115,11 +1026,12 @@ body.map-expanded .logo,body.map-expanded .settings-btn{display:none!important}
     <div class="map-coord-display" id="mapCoords">0, 0</div>
     <div class="map-bottom-bar">
       <div class="bar-filters">
-        <button class="mc active" onclick="event.stopPropagation();filt('all',this)">All <span class="chip-count" id="ccAll">98</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('photo',this)">📸 Photos <span class="chip-count" id="ccPhoto">2</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('meme',this)">😂 Memes <span class="chip-count" id="ccMeme">14</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('interactive',this)">🎮 Games <span class="chip-count" id="ccInt">7</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('emoji',this)">✨ Emojis <span class="chip-count" id="ccEmoji">20</span></button>
+        <button class="mc active" onclick="event.stopPropagation();filt('all',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#FFCA28,#66BB6A)"></div>All <span class="chip-count" id="ccAll">98</span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('photo',this)"><div class="legend-dot" style="background:#B3E5FC"></div>📸 Photos <span class="chip-count" id="ccPhoto">2</span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('meme',this)"><div class="legend-dot" style="background:#E1BEE7"></div>😂 Memes <span class="chip-count" id="ccMeme">14</span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('interactive',this)"><div class="legend-dot" style="background:#FFCA28"></div>🎮 Games <span class="chip-count" id="ccInt">7</span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('emoji',this)"><div class="legend-dot" style="background:#C8E6C9"></div>✨ Emojis <span class="chip-count" id="ccEmoji">20</span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('badge',this)"><div class="legend-dot" style="background:#FFCCBC"></div>🏷️ Badges <span class="chip-count" id="ccBadge">—</span></button>
       </div>
       <div class="bar-info">
         <span class="bar-count" id="mapCount">98 items</span>
@@ -1130,36 +1042,7 @@ body.map-expanded .logo,body.map-expanded .settings-btn{display:none!important}
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
     </button>
     
-    <!-- Game HUD -->
-    <div class="map-hud-xp">
-      <span class="hud-level">LVL 23</span>
-      <div class="hud-xp-bar"><div class="hud-xp-fill"></div></div>
-      <span class="hud-xp-text">72 / 100 XP</span>
-    </div>
-    
-    <div class="map-hud-stats">
-      <div class="hud-stat"><span class="hud-stat-icon">📌</span><div><div class="hud-stat-val" id="hudStickers">98</div><div class="hud-stat-label">Stickers</div></div></div>
-      <div class="hud-stat"><span class="hud-stat-icon">🗺️</span><div><div class="hud-stat-val">7000²</div><div class="hud-stat-label">World Size</div></div></div>
-      <div class="hud-stat"><span class="hud-stat-icon">⚡</span><div><div class="hud-stat-val">15</div><div class="hud-stat-label">Animations</div></div></div>
-      <div class="hud-stat"><span class="hud-stat-icon">🎨</span><div><div class="hud-stat-val">11</div><div class="hud-stat-label">Themes</div></div></div>
-    </div>
-    
-    <div class="map-legend">
-      <div class="legend-title">LEGEND</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#FFCA28"></div>Interactive</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#E1BEE7"></div>Memes</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#B3E5FC"></div>Photos</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#C8E6C9"></div>Emojis</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#FFCCBC"></div>Badges</div>
-    </div>
-    
     <div class="map-border-overlay"></div>
-    <canvas class="fog-canvas" id="fogCanvas"></canvas>
-    <div class="fog-hud">
-      <div class="fog-hud-title">🌫️ Explored</div>
-      <div class="fog-hud-bar"><div class="fog-hud-fill" id="fogFill" style="width:0%"></div></div>
-      <div class="fog-hud-pct" id="fogPct">0%</div>
-    </div>
   </div>
 </div>
 
@@ -2606,6 +2489,17 @@ function addMapDecorations(cw,ch){
       mapCanvas.appendChild(el);
     }
   });
+  // Subtle total area watermark
+  const areaLabels=[
+    {x:50,y:50,size:Math.max(cw*0.012,12),text:'7,000 × 5,000 px'},
+    {x:50,y:53,size:Math.max(cw*0.006,7),text:'35,000,000 sq px · Akash\'s World'},
+  ];
+  areaLabels.forEach(a=>{
+    const el=document.createElement('div');el.className='map-area-label';
+    el.style.cssText='left:'+a.x+'%;top:'+a.y+'%;font-size:'+a.size+'px;transform:translate(-50%,-50%)';
+    el.textContent=a.text;
+    mapCanvas.appendChild(el);
+  });
 }
 
 function drawMap(){
@@ -2869,103 +2763,6 @@ function toggleCompass(){
   document.getElementById('mm').appendChild(c);
 }
 
-// === FOG OF WAR ===
-const FOG_GRID=50; // grid cell size in canvas pixels
-const canvasFullW=7000,canvasFullH=5000;
-const fogCols=Math.ceil(canvasFullW/FOG_GRID),fogRows=Math.ceil(canvasFullH/FOG_GRID);
-const fogVisited=new Uint8Array(fogCols*fogRows); // 0=unvisited, 1=visited
-let fogTotal=fogCols*fogRows,fogRevealed=0;
-
-function trackFog(){
-  const sx=vp.scrollLeft,sy=vp.scrollTop;
-  const vpW=vp.clientWidth,vpH=vp.clientHeight;
-  const c1=Math.max(0,Math.floor(sx/FOG_GRID));
-  const r1=Math.max(0,Math.floor(sy/FOG_GRID));
-  const c2=Math.min(fogCols-1,Math.floor((sx+vpW)/FOG_GRID));
-  const r2=Math.min(fogRows-1,Math.floor((sy+vpH)/FOG_GRID));
-  let changed=false;
-  for(let r=r1;r<=r2;r++){
-    for(let c=c1;c<=c2;c++){
-      const idx=r*fogCols+c;
-      if(!fogVisited[idx]){fogVisited[idx]=1;fogRevealed++;changed=true}
-    }
-  }
-  if(changed)updateFogHUD();
-}
-
-function updateFogHUD(){
-  const pct=Math.round((fogRevealed/fogTotal)*100);
-  const fill=document.getElementById('fogFill');
-  const pctEl=document.getElementById('fogPct');
-  if(fill)fill.style.width=pct+'%';
-  if(pctEl)pctEl.textContent=pct+'%';
-}
-
-function renderFog(){
-  const fogCanvas=document.getElementById('fogCanvas');
-  if(!fogCanvas||!drawMap._sc)return;
-  const sc=drawMap._sc,ox=drawMap._ox||0,oy=drawMap._oy||0;
-  const cw=parseFloat(mapCanvas.style.width)||100;
-  const ch=parseFloat(mapCanvas.style.height)||100;
-  fogCanvas.width=cw;fogCanvas.height=ch;
-  fogCanvas.style.width=cw+'px';fogCanvas.style.height=ch+'px';
-  fogCanvas.style.left=mapCanvas.style.left;fogCanvas.style.top=mapCanvas.style.top;
-  const ctx=fogCanvas.getContext('2d');
-  // Fill with fog
-  ctx.fillStyle='rgba(40,40,40,0.55)';
-  ctx.fillRect(0,0,cw,ch);
-  // Clear visited cells
-  ctx.globalCompositeOperation='destination-out';
-  for(let r=0;r<fogRows;r++){
-    for(let c=0;c<fogCols;c++){
-      if(!fogVisited[r*fogCols+c])continue;
-      const x=(c*FOG_GRID-ox)*sc;
-      const y=(r*FOG_GRID-oy)*sc;
-      const w=FOG_GRID*sc;
-      const h=FOG_GRID*sc;
-      // Soft circle reveal for smoother look
-      const cx2=x+w/2,cy2=y+h/2,rad=Math.max(w,h)*0.8;
-      const grad=ctx.createRadialGradient(cx2,cy2,0,cx2,cy2,rad);
-      grad.addColorStop(0,'rgba(0,0,0,1)');
-      grad.addColorStop(0.7,'rgba(0,0,0,0.8)');
-      grad.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=grad;
-      ctx.fillRect(x-rad*0.3,y-rad*0.3,w+rad*0.6,h+rad*0.6);
-    }
-  }
-  ctx.globalCompositeOperation='source-over';
-}
-
-// Track fog on scroll
-vp.addEventListener('scroll',trackFog);
-// Initial track
-trackFog();
-
-// Hook into drawMap to also render fog
-const _origDrawMap=drawMap;
-// Override isn't clean, so we hook via updMap and toggleMap
-const _origUpdMap=updMap;
-
-// Re-render fog when map is drawn
-const _origToggleMap=toggleMap;
-
-// Patch: render fog after map draws
-const __origDrawMap=window.drawMap;
-(function(){
-  const origDM=drawMap;
-  drawMap=function(){
-    origDM.apply(this,arguments);
-    if(mmExp)setTimeout(renderFog,50);
-  };
-  drawMap._sc=origDM._sc;drawMap._ox=origDM._ox;drawMap._oy=origDM._oy;
-  drawMap._cw=origDM._cw;drawMap._ch=origDM._ch;
-  // Copy over stored values via getter
-  Object.defineProperty(drawMap,'_sc',{get(){return origDM._sc},set(v){origDM._sc=v},configurable:true});
-  Object.defineProperty(drawMap,'_ox',{get(){return origDM._ox},set(v){origDM._ox=v},configurable:true});
-  Object.defineProperty(drawMap,'_oy',{get(){return origDM._oy},set(v){origDM._oy=v},configurable:true});
-  Object.defineProperty(drawMap,'_cw',{get(){return origDM._cw},set(v){origDM._cw=v},configurable:true});
-  Object.defineProperty(drawMap,'_ch',{get(){return origDM._ch},set(v){origDM._ch=v},configurable:true});
-})();
 
 </script>
 
