@@ -2008,6 +2008,30 @@ timeline: `
 
   <div class="tl-item">
     <div class="tl-dot"></div>
+    <div class="tl-version">v35.0 — Full Snapchat Map Rebuild</div>
+    <div class="tl-date">Session 35 · March 25, 2026</div>
+    <div class="tl-desc">Complete rebuild of the big map from scratch to look like Snapchat's Snap Map. Beige land, blue ocean borders, sandy beaches, green parks with tree dots, 3D buildings with shadow depth, area names written on the land, highway route badges, and only 3-4 filters. Radar sweep made brighter green and more visible. Small minimap left completely untouched.</div>
+    <ul class="tl-changes">
+      <li>Map background: Snapchat beige #E8E4D0 with no grid lines</li>
+      <li>Ocean: blue water borders around all map edges</li>
+      <li>Beaches: sandy beige strips between land and ocean</li>
+      <li>Green parks with procedural tree dots (varying sizes/shades)</li>
+      <li>Lakes and rivers with Snapchat blue (#64B5F6)</li>
+      <li>3D buildings with shadow depth across 8 districts</li>
+      <li>Tall buildings with enhanced drop shadows</li>
+      <li>Area names written ON the land (Photo District, Work District, Lake Akash, North Beach, etc.)</li>
+      <li>Highway route number badges (A1, 26, 97, 66, M4) like road shields</li>
+      <li>White roads (Snapchat style) + gray highways</li>
+      <li>Filters reduced from 11 to 4: All, 📸 Photos, 😂 Memes, 🎮 Games</li>
+      <li>Radar sweep: bright green conic-gradient, faster rotation (3s), much more visible</li>
+      <li>Radar crosshairs: green lines replacing yellow/red</li>
+      <li>All UI elements (controls, chips, bars) recolored to warm Snapchat palette</li>
+      <li>Small minimap: completely unchanged (dark green grid theme preserved)</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
     <div class="tl-version">v34.0 — Green Grid Theme for Big Map</div>
     <div class="tl-date">Session 34 · March 25, 2026</div>
     <div class="tl-desc">Applied the small minimap's dark green grid theme to the expanded big map for visual consistency. Updated roads, water, regions, and vignette to match.</div>
@@ -2607,9 +2631,60 @@ interactive: `
     <strong>The fix (v3+):</strong> On mousedown/touchstart, we record the starting position and set totalDragDist = 0. On every mousemove/touchmove, we accumulate the absolute delta. If totalDragDist stays under 8px when the finger lifts, it's treated as a TAP → trigger animation + confetti. If it exceeds 8px, it's a DRAG → reposition the sticker. This solved the original issue where taps were being swallowed by the drag handler.
   </p>
 </div>
-`,
 
-themes: `
+<div class="inv-section">
+  <h3>🗺️ Map System — Small Map (Minimap HUD)</h3>
+  <table class="inv-table">
+    <tr><th>Feature</th><th>Details</th></tr>
+    <tr><td>Shape & Size</td><td>85×85px circle, fixed bottom-right, dark green (#3a5a2a) background</td></tr>
+    <tr><td>Border</td><td>3.5px solid dark border with grounding shadow beneath</td></tr>
+    <tr><td>Cardinal Markers</td><td>N/S/E/W letters on the rim (Arial Black, 0.4rem)</td></tr>
+    <tr><td>North Pip</td><td>Red diamond indicator at top of minimap</td></tr>
+    <tr><td>Radar Sweep</td><td>Bright green conic-gradient rotating every 3s. Green crosshair lines.</td></tr>
+    <tr><td>Zone Name</td><td>GTA-style current area name below minimap (e.g. "📸 Photo District")</td></tr>
+    <tr><td>Player Arrow</td><td>Gold arrow (#FFD54F) with glow filter, ping animation ring</td></tr>
+    <tr><td>Vignette</td><td>Inner box-shadow for depth (inset 18px + 5px rgba black)</td></tr>
+    <tr><td>Grid</td><td>Green grid lines on dark green background (small + large grid)</td></tr>
+    <tr><td>Sticker Dots</td><td>Color-coded mini rectangles showing sticker positions</td></tr>
+    <tr><td>Tap Action</td><td>Expands to fullscreen big map view</td></tr>
+  </table>
+</div>
+
+<div class="inv-section">
+  <h3>🌍 Map System — Big Map (Expanded View)</h3>
+  <table class="inv-table">
+    <tr><th>Feature</th><th>Details</th></tr>
+    <tr><td>Theme</td><td>Snapchat-style beige (#E8E4D0) with no grid lines</td></tr>
+    <tr><td>Ocean</td><td>Blue water borders on all 4 edges (rgba 100,181,246,0.7)</td></tr>
+    <tr><td>Beaches</td><td>Sandy beige strips between land and ocean edges</td></tr>
+    <tr><td>Parks</td><td>7+ green patches with procedural tree dots (varying sizes/shades)</td></tr>
+    <tr><td>Water Bodies</td><td>4 lakes/rivers with Snapchat blue, organic border-radius shapes</td></tr>
+    <tr><td>Roads</td><td>12 white roads (Snapchat style) + 3 gray highways</td></tr>
+    <tr><td>3D Buildings</td><td>8 building clusters with CSS shadow depth. Tall buildings get extra shadow.</td></tr>
+    <tr><td>Area Names</td><td>Written ON the land: Photo District, Work District, Creative Quarter, Arcade Zone, Meme Valley, Launch Pad, Sticker Park, Chill Island, Lake Akash, North Beach, Sunset Bay</td></tr>
+    <tr><td>Route Badges</td><td>Highway shields: A1, 26, 97, 66, M4 (yellow badges like road signs)</td></tr>
+    <tr><td>POI Markers</td><td>10 emoji pins (📸💼🎨🎮😂🚀✨🏖️☕🏠) with colored borders</td></tr>
+    <tr><td>Filters</td><td>4 filter chips: All, 📸 Photos, 😂 Memes, 🎮 Games</td></tr>
+    <tr><td>Cycle Navigation</td><td>Click filter multiple times → cycles through matching items with neon glow</td></tr>
+    <tr><td>Waypoints</td><td>Pulsing markers with distance labels, dashed line to active target</td></tr>
+    <tr><td>Neon Glow</td><td>Active item gets green neon outline animation (0 0 15px rgba green)</td></tr>
+    <tr><td>Cycle HUD</td><td>Counter showing "📸 Photos 1/5" with ‹ › navigation arrows</td></tr>
+    <tr><td>Zone Banner</td><td>Current zone name displayed at bottom of map view</td></tr>
+    <tr><td>Controls</td><td>Right panel: Compass widget, Zoom +/− with scale display</td></tr>
+    <tr><td>Coordinates</td><td>Live x/y coordinate display, updates on scroll</td></tr>
+    <tr><td>Sticker Clones</td><td>Virtualized rendering — only visible stickers are cloned for performance</td></tr>
+    <tr><td>Click-to-Navigate</td><td>Click any sticker clone → closes map, scrolls to original, triggers animation</td></tr>
+    <tr><td>Hidden Elements</td><td>Bottom nav, scroll counter, logo, settings all hidden in fullscreen</td></tr>
+  </table>
+</div>
+
+<div class="inv-section">
+  <h3>🔄 Map Evolution</h3>
+  <p style="font-size:0.8rem;color:var(--text2);line-height:1.7">
+    The map system evolved through 20+ iterations: started as simple colored dots (v9), then real emoji icons (v10), Snapchat warm theme (v23), Bitmoji avatar (v24, reverted v25), fog of war (v24, removed v26), GTA-style HUD with zone names (v29-30), waypoints and neon glow (v31-32), radar sweep (v32), yellow-red radar (v33), green grid theme (v34), and finally a complete Snapchat-style rebuild from scratch with 3D buildings, ocean borders, parks, area names on land, and route badges (v35).
+  </p>
+</div>
+`,
 <div class="inv-section">
   <h3>🎨 Theme Catalog (11 themes)</h3>
   <table class="inv-table">
@@ -2778,6 +2853,12 @@ prompts: `
 
   <div class="prompt-block"><div class="prompt-label">Prompt 28</div><div class="prompt-text">"Add the small map green grid theme to the big map"</div></div>
   <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v34.0: Applied dark green grid theme (#3a5a2a) to expanded big map matching the minimap. Green-tinted roads, water, region labels, enhanced vignette.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 29</div><div class="prompt-text">"Build the full map view from scratch. Make it look like a snap chat map. Add different sections like work, game, and different 3d buildings, and waters make it more realistic funky look. The area name should be written on the land itself. Keep only 3-4 filters. Dont change anything to the small map. Just change the radar sweep colour and make it more visible" [with Snapchat map + GTA 6 map reference images]</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v35.0: Complete map rebuild from scratch. Snapchat beige (#E8E4D0) land, blue ocean borders, sandy beaches, green parks with tree dots, lakes/rivers, 3D buildings with shadow depth across 8 districts, area names written on the land (Photo District, Work District, Lake Akash, North Beach, Sunset Bay), highway route badges (A1, 26, 97, 66, M4), white roads + gray highways. Filters reduced to 4 (All, Photos, Memes, Games). Radar sweep changed to bright green with faster 3s rotation. Small minimap untouched.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 30</div><div class="prompt-text">"Update the easter egg build journal with the latest Snapchat map rebuild changes and other features which are not mentioned on the easter egg like small map and big map and others"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v35.1: Updated Build Journal with full v35 timeline entry (15 bullet points), added Prompt 29-30, added Map System section to Interactive tab documenting small map HUD + big map features, updated stats to 35 versions and 42 prompts.</div></div>
 </div>
 `,
 
@@ -2794,9 +2875,11 @@ stats: `
     <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">Interactive Toys</div></div>
     <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Hero Photos</div></div>
     <div class="stat-card"><div class="stat-num">16</div><div class="stat-label">Confetti Emojis</div></div>
-    <div class="stat-card"><div class="stat-num">40</div><div class="stat-label">Build Prompts</div></div>
-    <div class="stat-card"><div class="stat-num">34</div><div class="stat-label">Major Versions</div></div>
+    <div class="stat-card"><div class="stat-num">42</div><div class="stat-label">Build Prompts</div></div>
+    <div class="stat-card"><div class="stat-num">35</div><div class="stat-label">Major Versions</div></div>
     <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">Easter Egg 🥚</div></div>
+    <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Map Districts</div></div>
+    <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Map Filters</div></div>
   </div>
 </div>
 
