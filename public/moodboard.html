@@ -2401,7 +2401,7 @@ function addMapDecorations(cw,ch){
   const elevations=[{x:22,y:30,h:'△ 120'},{x:65,y:58,h:'△ 85'},{x:40,y:78,h:'△ 95'}];
   elevations.forEach(e=>{
     const el=document.createElement('div');
-    el.style.cssText='position:absolute;left:'+e.x+'%;top:'+e.y+'%;font-family:var(--font-fun);font-size:0.35rem;color:rgba(120,160,110,0.2);pointer-events:none;z-index:2;transform:translate(-50%,-50%)';
+    el.style.cssText='position:absolute;left:'+e.x+'%;top:'+e.y+'%;font-family:var(--font-fun);font-size:0.35rem;color:rgba(0,0,0,0.15);pointer-events:none;z-index:2;transform:translate(-50%,-50%)';
     el.textContent=e.h;
     mapCanvas.appendChild(el);
   });
