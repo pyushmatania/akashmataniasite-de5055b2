@@ -3382,7 +3382,7 @@ function sU(e){
   if(isRotating){isRotating=false;as=null;return;}
   if(!didMove&&(Date.now()-tapTime)<400){
     if(as.dataset.splash)doSplash(as,e);
-    if(as.dataset.contra)contraFire(as,e);
+    
     if(as.dataset.anim)triggerAnim(as,e);
     if(as.onclick)as.onclick(e);
   }
