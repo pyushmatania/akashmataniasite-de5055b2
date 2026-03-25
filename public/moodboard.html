@@ -3426,12 +3426,11 @@ function drawMap(){
     mapCanvas.style.left='0';
     mapCanvas.style.top='50px';
   } else {
-    const cx=vp.scrollLeft+vp.clientWidth/2;
-    const cy=vp.scrollTop+vp.clientHeight/2;
-    const viewR=700;
-    offsetX=Math.max(0,cx-viewR);
-    offsetY=Math.max(0,cy-viewR);
-    sc=Math.min(mw/(viewR*2),mh/(viewR*2));
+    // SMALL: show entire canvas so arrow moves, not background
+    offsetX=0;
+    offsetY=0;
+    const fullW=5500, fullH=4000;
+    sc=Math.min(mw/fullW, mh/fullH);
     canvasW=mw;canvasH=mh;
     mapCanvas.style.left='0';mapCanvas.style.top='0';
   }
