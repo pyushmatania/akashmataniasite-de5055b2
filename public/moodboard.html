@@ -1806,7 +1806,7 @@ body.map-expanded .scroll-counter{display:none!important}
       <button class="map-ctrl-btn" onclick="event.stopPropagation();mapZoom(1)" title="Zoom in">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="7" x2="12" y2="17"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
       </button>
-      <div class="map-zoom-level" id="mapZoomLevel">1×</div>
+      <div class="map-zoom-level" id="mapZoomLevel">0.5×</div>
       <button class="map-ctrl-btn" onclick="event.stopPropagation();mapZoom(-1)" title="Zoom out">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><line x1="7" y1="12" x2="17" y2="12"/></svg>
       </button>
@@ -3385,23 +3385,56 @@ const mapVP=document.getElementById('mapVP');
 const mmInner=document.getElementById('mmInner');
 const mapCount=document.getElementById('mapCount');
 let mmExp=false,navLine=null,mFilt='all';
-...
+let mapTransitioning=false;
+let mapZoomScale=0.5;
+
+function setMapZoomLabel(){
+  const zl=document.getElementById('mapZoomLevel');
+  if(zl)zl.textContent=mapZoomScale+'×';
+}
+
+function toggleMap(){
+  if(mapTransitioning)return;
+  mapTransitioning=true;
+
+  if(!mmExp){
+    mmExp=true;
+    mapZoomScale=0.5;
+    setMapZoomLabel();
+
+    mc.classList.remove('map-closing');
+    mc.classList.add('expanded','map-opening');
     document.body.classList.add('map-expanded');
-    // Move player inside canvas so it scrolls with map content
-    mapCanvas.appendChild(mapPlayer);
-    // Draw content immediately so it's visible during animation
-    setTimeout(()=>{drawMap();setTimeout(recenter,150)},50);
-...
-    document.body.classList.remove('map-expanded');
-    // Move player back to minimap root for proper small-map coordinates
-    mm.appendChild(mapPlayer);
+
+    if(mapPlayer.parentElement!==mapCanvas){
+      mapCanvas.appendChild(mapPlayer);
+    }
+
+    drawMap();
+    recenter();
+    updMap();
+
     setTimeout(()=>{
-      mc.classList.remove('map-closing');
-      mapCanvas.innerHTML='';
+      mc.classList.remove('map-opening');
       mapTransitioning=false;
-      drawMap();
-    },500);
+    },520);
+    return;
   }
+
+  mmExp=false;
+  document.body.classList.remove('map-expanded');
+  mc.classList.add('map-closing');
+
+  if(mapPlayer.parentElement!==mm){
+    mm.appendChild(mapPlayer);
+  }
+
+  setTimeout(()=>{
+    mc.classList.remove('map-closing','expanded','map-opening');
+    drawMap();
+    updMap();
+    mapTransitioning=false;
+  },500);
 }
 
 function addMapDecorations(cw,ch){
@@ -3643,6 +3676,7 @@ function addMapDecorations(cw,ch){
 function drawMap(){
   const prevLeft=parseFloat(mapCanvas.style.left)||0;
   const prevTop=parseFloat(mapCanvas.style.top)||0;
+  const playerWasInCanvas=mapPlayer.parentElement===mapCanvas;
   mapCanvas.innerHTML='';
   const mr=mmInner.getBoundingClientRect();
   const mw=mr.width||64,mh=mr.height||64;
@@ -3656,8 +3690,9 @@ function drawMap(){
   let sc,offsetX,offsetY,canvasW,canvasH;
   
   if(mmExp){
-    // Same zoom as the screenshot (2x screen width)
-    sc=Math.max(mw*5.5/contentW, 0.22);
+    // Expanded map starts at requested default 0.5× zoom
+    const baseScale=Math.max(mw*5.5/contentW,0.22);
+    sc=baseScale*mapZoomScale;
     canvasW=contentW*sc;
     canvasH=contentH*sc;
     offsetX=minL;
@@ -3698,7 +3733,13 @@ function drawMap(){
     // EXPANDED: add Snapchat-style decorations first, then sticker clones
     addMapDecorations(canvasW,canvasH);
     renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
+    if(playerWasInCanvas||mapPlayer.parentElement!==mapCanvas){
+      mapCanvas.appendChild(mapPlayer);
+    }
   } else {
+    if(mapPlayer.parentElement!==mm){
+      mm.appendChild(mapPlayer);
+    }
     // SMALL: lightweight colored boxes
     let count=0;
     stickerData.forEach(d=>{
@@ -3789,6 +3830,15 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
 
 // ===== WALK BITMOJI TO TARGET =====
 let walkingInProgress=false;
+
+function centerMoodboardOn(worldX,worldY,behavior){
+  const maxX=Math.max(0,cv.scrollWidth-vp.clientWidth);
+  const maxY=Math.max(0,cv.scrollHeight-vp.clientHeight);
+  const targetLeft=Math.max(0,Math.min(worldX-vp.clientWidth/2,maxX));
+  const targetTop=Math.max(0,Math.min(worldY-vp.clientHeight/2,maxY));
+  vp.scrollTo({left:targetLeft,top:targetTop,behavior:behavior||'smooth'});
+}
+
 function walkBitmojiTo(worldX,worldY,stickerRef){
   if(walkingInProgress||!mmExp)return;
   walkingInProgress=true;
@@ -3845,8 +3895,12 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
     walkingInProgress=false;
     toggleMap();
     setTimeout(()=>{
-      // Scroll to exact center of the target
-      vp.scrollTo({left:worldX-vp.clientWidth/2,top:worldY-vp.clientHeight/2,behavior:'smooth'});
+      // Center selected item in viewport after returning to moodboard
+      centerMoodboardOn(worldX,worldY,'smooth');
+      setTimeout(()=>{
+        centerMoodboardOn(worldX,worldY,'auto');
+        if(!mmExp){drawMap();updMap();}
+      },650);
       
       // Calculate footstep path on moodboard
       const vpCX=vp.scrollLeft+vp.clientWidth/2;
@@ -4098,7 +4152,6 @@ function recenter(){
   mmInner.scrollTo({left:px-mr.width/2,top:py-mr.height/2,behavior:'smooth'});
 }
 
-let mapZoomScale=1;
 function mapZoom(dir){
   if(!mmExp)return;
   const steps=[0.5,0.75,1,1.25,1.5,2];
