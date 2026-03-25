@@ -4583,24 +4583,64 @@ function addMapDecorations(cw,ch){
     wrap.appendChild(svg);
   })();
 
-  // === ANIMATED BOATS ===
-  const boatPositions=[
-    {x:3,y:40,s:20,delay:0},{x:90,y:25,s:18,delay:1.5},{x:5,y:85,s:22,delay:0.8},
-    {x:88,y:80,s:16,delay:2},{x:45,y:92,s:20,delay:1},{x:92,y:50,s:18,delay:0.5},
+  // === ANIMATED BOATS — sailboats, cargo ships, fishing boats ===
+  const sailboats=[
+    {x:3,y:40,s:22,delay:0},{x:90,y:25,s:20,delay:1.5},{x:5,y:85,s:24,delay:0.8},
+    {x:88,y:80,s:18,delay:2},{x:45,y:92,s:22,delay:1},{x:92,y:50,s:20,delay:0.5},
   ];
-  boatPositions.forEach(b=>{
+  sailboats.forEach(b=>{
     const wrap=addDiv('map-boat','left:'+b.x+'%;top:'+b.y+'%;width:'+b.s+'px;height:'+(b.s*0.7)+'px;animation-delay:'+b.delay+'s');
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
     svg.setAttribute('viewBox','0 0 24 16');
-    // Hull
     svg.appendChild(svgEl('path',{d:'M2 11 Q4 14 12 14 Q20 14 22 11 L20 11 Q18 13 12 13 Q6 13 4 11 Z',fill:'#8B4513'}));
-    // Sail
     svg.appendChild(svgEl('polygon',{points:'12,3 12,11 6,9',fill:'rgba(255,255,255,0.9)',stroke:'#ddd','stroke-width':'0.3'}));
     svg.appendChild(svgEl('polygon',{points:'12,4 12,10 17,8',fill:'rgba(240,240,255,0.7)',stroke:'#ddd','stroke-width':'0.3'}));
-    // Mast
     svg.appendChild(svgEl('line',{x1:'12',y1:'2',x2:'12',y2:'11',stroke:'#6B3410','stroke-width':'0.8'}));
-    // Flag
     svg.appendChild(svgEl('polygon',{points:'12,2 16,3 12,4',fill:'#FF5252'}));
+    wrap.appendChild(svg);
+  });
+
+  // Cargo ships — larger, boxy
+  const cargoShips=[
+    {x:1,y:55,s:30,delay:0.3},{x:93,y:70,s:28,delay:1.8},{x:50,y:96,s:32,delay:2.5},
+  ];
+  cargoShips.forEach(b=>{
+    const wrap=addDiv('map-boat','left:'+b.x+'%;top:'+b.y+'%;width:'+b.s+'px;height:'+(b.s*0.6)+'px;animation-delay:'+b.delay+'s;animation-duration:4s');
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 32 18');
+    // Hull
+    svg.appendChild(svgEl('path',{d:'M2 12 Q4 16 16 16 Q28 16 30 12 L28 12 Q26 14 16 14 Q6 14 4 12 Z',fill:'#5C6BC0'}));
+    // Deck
+    svg.appendChild(svgEl('rect',{x:'6',y:'8',width:'20',height:'4',rx:'1',fill:'#7986CB'}));
+    // Containers
+    const cColors=['#EF5350','#FFA726','#66BB6A','#42A5F5'];
+    for(let i=0;i<4;i++){
+      svg.appendChild(svgEl('rect',{x:''+(8+i*4.5),y:'5',width:'4',height:'3',rx:'0.3',fill:cColors[i]}));
+    }
+    // Cabin
+    svg.appendChild(svgEl('rect',{x:'22',y:'3',width:'5',height:'5',rx:'0.5',fill:'#E8E8E8',stroke:'#bbb','stroke-width':'0.3'}));
+    svg.appendChild(svgEl('rect',{x:'23',y:'4',width:'1.5',height:'1.5',rx:'0.2',fill:'rgba(255,255,200,0.7)'}));
+    // Smokestack
+    svg.appendChild(svgEl('rect',{x:'24',y:'1',width:'2',height:'2.5',rx:'0.3',fill:'#EF5350'}));
+    wrap.appendChild(svg);
+  });
+
+  // Fishing boats — tiny, cute
+  const fishingBoats=[
+    {x:7,y:92,s:16,delay:0.6},{x:95,y:38,s:14,delay:1.2},{x:2,y:20,s:15,delay:2.2},
+    {x:88,y:90,s:14,delay:0.9},
+  ];
+  fishingBoats.forEach(b=>{
+    const wrap=addDiv('map-boat','left:'+b.x+'%;top:'+b.y+'%;width:'+b.s+'px;height:'+(b.s*0.7)+'px;animation-delay:'+b.delay+'s;animation-duration:2.5s');
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 20 14');
+    // Hull
+    svg.appendChild(svgEl('path',{d:'M2 9 Q4 12 10 12 Q16 12 18 9 L16 9 Q14 11 10 11 Q6 11 4 9 Z',fill:'#F57C00'}));
+    // Cabin
+    svg.appendChild(svgEl('rect',{x:'7',y:'5',width:'6',height:'4',rx:'1',fill:'#FFF3E0',stroke:'#F57C00','stroke-width':'0.4'}));
+    // Fishing rod
+    svg.appendChild(svgEl('line',{x1:'14',y1:'3',x2:'18',y2:'1',stroke:'#6B4420','stroke-width':'0.5','stroke-linecap':'round'}));
+    svg.appendChild(svgEl('line',{x1:'18',y1:'1',x2:'18',y2:'7',stroke:'rgba(200,200,200,0.5)','stroke-width':'0.3','stroke-dasharray':'1 1'}));
     wrap.appendChild(svg);
   });
 
