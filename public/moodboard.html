@@ -3646,6 +3646,7 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
   }
 });
 vp.addEventListener('scroll',()=>{
+  if(mapTransitioning)return;
   updMap();
   if(!mmExp){clearTimeout(mapScrollTimer);mapScrollTimer=setTimeout(drawMap,250)}
 });
