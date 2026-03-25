@@ -658,15 +658,15 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 /* Map region borders */
 .map-region{
   position:absolute;pointer-events:none;z-index:2;
-  border:1.5px dashed rgba(0,0,0,0.08);border-radius:12px;
+  border:1px dashed rgba(0,0,0,0.06);border-radius:8px;
 }
 .map-region-label{
   position:absolute;top:6px;left:8px;
-  font-family:var(--font-fun);font-size:0.45rem;font-weight:600;
-  color:rgba(0,0,0,0.2);letter-spacing:0.06em;text-transform:uppercase;
+  font-family:var(--font-fun);font-size:0.4rem;font-weight:600;
+  color:rgba(100,100,100,0.2);letter-spacing:0.06em;text-transform:uppercase;
 }
-.minimap-container.expanded .map-region{border-width:2px;border-color:rgba(0,0,0,0.1)}
-.minimap-container.expanded .map-region-label{font-size:0.7rem;color:rgba(0,0,0,0.25)}
+.minimap-container.expanded .map-region{border-width:1.5px;border-color:rgba(0,0,0,0.06)}
+.minimap-container.expanded .map-region-label{font-size:0.6rem;color:rgba(100,100,100,0.25)}
 
 /* POI markers */
 .map-poi{
