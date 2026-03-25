@@ -3724,15 +3724,28 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     // Remove ::after hints
     clone.style.setProperty('--no-after','1');
     
-    // Click to navigate
+    // Click to navigate — bitmoji walks to target then map closes
     clone.addEventListener('click',ev=>{
       ev.stopPropagation();
-      toggleMap();
+      const sc=drawMap._sc||0.05;
+      const ox=drawMap._ox||0,oy=drawMap._oy||0;
+      const cT=parseInt(mapCanvas.style.top)||0;
+      const targetMX=(d.left-ox)*sc;
+      const targetMY=(d.top-oy)*sc+cT;
+      // Start walking animation
+      mapPlayer.classList.add('walking');
+      mapPlayer.style.left=targetMX+'px';
+      mapPlayer.style.top=targetMY+'px';
+      // After walk completes, close map and navigate
       setTimeout(()=>{
-        showNav(d.left,d.top);
-        vp.scrollTo({left:d.left-vp.clientWidth/2,top:d.top-vp.clientHeight/2,behavior:'smooth'});
-        setTimeout(()=>{if(d.ref&&d.ref.dataset&&d.ref.dataset.anim)triggerAnim(d.ref,null)},800);
-      },450);
+        mapPlayer.classList.remove('walking');
+        toggleMap();
+        setTimeout(()=>{
+          showNav(d.left,d.top);
+          vp.scrollTo({left:d.left-vp.clientWidth/2,top:d.top-vp.clientHeight/2,behavior:'smooth'});
+          setTimeout(()=>{if(d.ref&&d.ref.dataset&&d.ref.dataset.anim)triggerAnim(d.ref,null)},800);
+        },450);
+      },1300);
     });
     
     // Hover highlight
