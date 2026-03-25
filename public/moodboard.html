@@ -548,7 +548,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 @keyframes splashRing{0%{width:20px;height:20px;opacity:1;transform:translate(-50%,-50%) scale(.5)}100%{width:200px;height:200px;opacity:0;transform:translate(-50%,-50%) scale(1)}}
 .splash-drop{position:fixed;pointer-events:none;z-index:99998;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:linear-gradient(180deg,rgba(50,130,210,.8),rgba(30,90,170,.95));animation:splashDrop .7s ease-out forwards}
 @keyframes splashDrop{0%{opacity:1;transform:translate(0,0) scale(1)}60%{opacity:.8}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.3)}}
-.wet-spot{position:absolute;pointer-events:none;z-index:1;border-radius:50%;background:radial-gradient(ellipse,rgba(40,100,160,0.25) 0%,rgba(40,100,160,0.15) 40%,rgba(40,100,160,0.06) 65%,transparent 80%);animation:wetFade 6s ease-out forwards;backdrop-filter:blur(1px)}
+.wet-spot{position:absolute;pointer-events:none;z-index:1;border-radius:50%;background:radial-gradient(ellipse,rgba(40,100,160,0.25) 0%,rgba(40,100,160,0.15) 40%,rgba(40,100,160,0.06) 65%,transparent 80%);animation:wetFade 6s ease-out forwards}
 @keyframes wetFade{0%{opacity:0;transform:scale(0.2)}10%{opacity:1;transform:scale(1)}60%{opacity:0.9}85%{opacity:0.5}100%{opacity:0;transform:scale(1.15)}}
 .splash-wave{position:fixed;pointer-events:none;z-index:99997;border-radius:50%;border:2px solid rgba(100,180,255,.3);animation:splashWave 1.2s ease-out forwards}
 @keyframes splashWave{0%{width:40px;height:40px;opacity:.8;transform:translate(-50%,-50%) scale(.3)}100%{width:400px;height:400px;opacity:0;transform:translate(-50%,-50%) scale(1)}}
