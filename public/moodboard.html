@@ -5350,10 +5350,8 @@ function addMapDecorations(cw,ch){
     'M65 60 Q70 65 75 70 Q77 73 78 75',
   ];
   pathRoutes.forEach(d=>{
-    // Glow
-    pathsSvg.appendChild(svgEl('path',{d:d,fill:'none',stroke:'rgba(255,255,255,0.15)','stroke-width':'2.5','stroke-linecap':'round'}));
-    // Path
-    pathsSvg.appendChild(svgEl('path',{d:d,fill:'none',stroke:'rgba(255,255,255,0.7)','stroke-width':'0.8','stroke-dasharray':'2 1.5','stroke-linecap':'round'}));
+    // Path line only — no white glow
+    pathsSvg.appendChild(svgEl('path',{d:d,fill:'none',stroke:'rgba(180,160,120,0.4)','stroke-width':'0.8','stroke-dasharray':'2 1.5','stroke-linecap':'round'}));
   });
   mapCanvas.appendChild(pathsSvg);
 
