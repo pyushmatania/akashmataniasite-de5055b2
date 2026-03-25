@@ -3153,25 +3153,25 @@ function toggleMap(){
 }
 
 function addMapDecorations(cw,ch){
-  // === OCEAN — large blue water surrounding the map edges ===
+  // === OCEAN — deep SimCity blue water ===
   const oceans=[
-    {x:-5,y:-5,w:110,h:12,r:'0'},   // top ocean strip
-    {x:-5,y:90,w:110,h:15,r:'0'},    // bottom ocean strip
-    {x:-5,y:-5,w:10,h:110,r:'0'},    // left ocean
-    {x:92,y:-5,w:13,h:110,r:'0'},    // right ocean
+    {x:-5,y:-5,w:110,h:10,r:'0'},
+    {x:-5,y:92,w:110,h:13,r:'0'},
+    {x:-5,y:-5,w:8,h:110,r:'0'},
+    {x:93,y:-5,w:12,h:110,r:'0'},
   ];
   oceans.forEach(o=>{
     const el=document.createElement('div');el.className='map-water';
-    el.style.cssText='left:'+o.x+'%;top:'+o.y+'%;width:'+o.w+'%;height:'+o.h+'%;border-radius:'+o.r+';background:rgba(100,181,246,0.7);border:none;box-shadow:none;z-index:0';
+    el.style.cssText='left:'+o.x+'%;top:'+o.y+'%;width:'+o.w+'%;height:'+o.h+'%;border-radius:'+o.r+';background:linear-gradient(135deg,rgba(25,80,140,0.85),rgba(41,121,191,0.75));border:none;box-shadow:none;z-index:0';
     mapCanvas.appendChild(el);
   });
 
-  // === BEACHES — sandy edges between land and ocean ===
+  // === BEACHES — sandy coastline ===
   const beaches=[
-    {x:4,y:5,w:88,h:4,r:'0 0 50% 50%'},
-    {x:4,y:87,w:88,h:4,r:'50% 50% 0 0'},
-    {x:3,y:8,w:4,h:80,r:'0 50% 50% 0'},
-    {x:89,y:8,w:4,h:80,r:'50% 0 0 50%'},
+    {x:3,y:4,w:90,h:3,r:'0 0 40% 40%'},
+    {x:3,y:89,w:90,h:3.5,r:'40% 40% 0 0'},
+    {x:2,y:6,w:3,h:84,r:'0 40% 40% 0'},
+    {x:91,y:6,w:3,h:84,r:'40% 0 0 40%'},
   ];
   beaches.forEach(b=>{
     const el=document.createElement('div');el.className='map-beach';
@@ -3179,32 +3179,47 @@ function addMapDecorations(cw,ch){
     mapCanvas.appendChild(el);
   });
 
-  // === GREEN PARKS ===
+  // === SimCity ZONE GRIDS (dashed zone borders) ===
+  const zoneGrids=[
+    {x:10,y:10,w:20,h:18,color:'rgba(76,175,80,0.6)'},   // Residential
+    {x:40,y:18,w:22,h:16,color:'rgba(66,165,245,0.6)'},   // Commercial
+    {x:70,y:10,w:18,h:20,color:'rgba(255,193,7,0.6)'},    // Industrial
+    {x:10,y:40,w:18,h:22,color:'rgba(171,71,188,0.5)'},   // Entertainment
+    {x:50,y:42,w:24,h:18,color:'rgba(66,165,245,0.5)'},   // Commercial 2
+    {x:78,y:45,w:12,h:20,color:'rgba(255,193,7,0.5)'},    // Industrial 2
+    {x:25,y:70,w:22,h:14,color:'rgba(76,175,80,0.5)'},    // Residential 2
+    {x:60,y:72,w:20,h:14,color:'rgba(171,71,188,0.4)'},   // Entertainment 2
+  ];
+  zoneGrids.forEach(z=>{
+    const el=document.createElement('div');el.className='map-zone-grid';
+    el.style.cssText='left:'+z.x+'%;top:'+z.y+'%;width:'+z.w+'%;height:'+z.h+'%;border-color:'+z.color;
+    mapCanvas.appendChild(el);
+  });
+
+  // === GREEN PARKS with trees ===
   const parks=[
-    {x:8,y:20,w:14,h:10},{x:55,y:42,w:16,h:12},{x:75,y:65,w:10,h:15},
-    {x:30,y:68,w:18,h:8},{x:82,y:12,w:8,h:12},{x:18,y:78,w:10,h:7},
-    {x:42,y:15,w:8,h:6},{x:62,y:80,w:12,h:6},
+    {x:32,y:14,w:6,h:5},{x:62,y:35,w:5,h:8},{x:15,y:62,w:8,h:6},
+    {x:85,y:38,w:5,h:7},{x:48,y:62,w:10,h:6},{x:75,y:75,w:6,h:5},
+    {x:20,y:30,w:4,h:4},{x:55,y:85,w:7,h:4},
   ];
   parks.forEach(p=>{
     const el=document.createElement('div');el.className='map-park';
     el.style.cssText='left:'+p.x+'%;top:'+p.y+'%;width:'+p.w+'%;height:'+p.h+'%';
     mapCanvas.appendChild(el);
-    // Add tree dots
-    for(let t=0;t<Math.floor(Math.random()*5+3);t++){
+    for(let t=0;t<Math.floor(Math.random()*6+4);t++){
       const tree=document.createElement('div');tree.className='map-tree';
       const tx=p.x+Math.random()*p.w,ty=p.y+Math.random()*p.h;
-      const sz=5+Math.random()*6;
-      tree.style.cssText='left:'+tx+'%;top:'+ty+'%;width:'+sz+'px;height:'+sz+'px;background:rgba('+(60+Math.random()*40)+','+Math.floor(140+Math.random()*60)+','+Math.floor(60+Math.random()*30)+',0.5)';
+      const sz=4+Math.random()*5;
+      tree.style.cssText='left:'+tx+'%;top:'+ty+'%;width:'+sz+'px;height:'+sz+'px;background:rgba('+(40+Math.random()*30)+','+Math.floor(120+Math.random()*50)+','+Math.floor(40+Math.random()*30)+',0.65);border-radius:50%;box-shadow:0 1px 2px rgba(0,0,0,0.2)';
       mapCanvas.appendChild(tree);
     }
   });
 
-  // === WATER BODIES (lakes/rivers) ===
+  // === WATER BODIES (lakes) ===
   const waters=[
-    {x:22,y:40,w:12,h:7,r:'45% 55% 50% 50%'},
-    {x:68,y:68,w:8,h:10,r:'50% 45% 55% 50%'},
-    {x:45,y:12,w:6,h:5,r:'50%'},
-    {x:35,y:55,w:4,h:15,r:'40%'},  // river-like
+    {x:35,y:38,w:8,h:5,r:'45% 55% 50% 50%'},
+    {x:72,y:65,w:6,h:8,r:'50% 45% 55% 50%'},
+    {x:20,y:52,w:5,h:4,r:'50%'},
   ];
   waters.forEach(w=>{
     const el=document.createElement('div');el.className='map-water';
@@ -3212,26 +3227,35 @@ function addMapDecorations(cw,ch){
     mapCanvas.appendChild(el);
   });
 
-  // === HIGHWAYS (thick gray) ===
+  // === HIGHWAYS (SimCity avenues — wider, darker) ===
   const highways=[
-    {x:5,y:35,w:88,h:1.5,rot:1},
-    {x:40,y:5,w:1.5,h:88,rot:-2},
-    {x:20,y:60,w:55,h:1.2,rot:-4},
+    {x:4,y:33,w:90,h:1.8,rot:0},
+    {x:45,y:4,w:1.8,h:90,rot:0},
+    {x:15,y:62,w:65,h:1.4,rot:0},
   ];
   highways.forEach(r=>{
     const el=document.createElement('div');el.className='map-highway';
     el.style.cssText='left:'+r.x+'%;top:'+r.y+'%;width:'+r.w+'%;height:'+r.h+'%;transform:rotate('+r.rot+'deg)';
     mapCanvas.appendChild(el);
+    // Highway center line
+    const cl=document.createElement('div');
+    cl.style.cssText='position:absolute;pointer-events:none;z-index:3;left:'+(r.x)+'%;top:'+(r.y+r.h*0.35)+'%;width:'+r.w+'%;height:'+(r.h*0.15)+'%;background:rgba(255,235,59,0.4);transform:rotate('+r.rot+'deg)';
+    mapCanvas.appendChild(cl);
   });
 
-  // === ROADS (white, Snapchat-style) ===
+  // === ROADS (SimCity streets — clean grid) ===
   const roads=[
-    {x:10,y:25,w:40,h:0.8,rot:5},{x:50,y:50,w:35,h:0.8,rot:-3},
-    {x:15,y:70,w:50,h:0.7,rot:2},{x:65,y:15,w:25,h:0.8,rot:12},
-    {x:25,y:10,w:0.7,h:35,rot:-5},{x:60,y:30,w:0.7,h:40,rot:4},
-    {x:75,y:45,w:15,h:0.7,rot:8},{x:35,y:45,w:20,h:0.6,rot:-2},
-    {x:80,y:20,w:0.6,h:30,rot:3},{x:12,y:45,w:25,h:0.6,rot:6},
-    {x:48,y:65,w:30,h:0.7,rot:-1},{x:18,y:55,w:0.6,h:20,rot:-3},
+    // Horizontal streets
+    {x:8,y:20,w:30,h:0.6,rot:0},{x:42,y:20,w:25,h:0.6,rot:0},
+    {x:70,y:22,w:22,h:0.6,rot:0},{x:10,y:45,w:32,h:0.6,rot:0},
+    {x:48,y:50,w:30,h:0.6,rot:0},{x:8,y:75,w:40,h:0.6,rot:0},
+    {x:55,y:78,w:35,h:0.6,rot:0},{x:80,y:55,w:12,h:0.6,rot:0},
+    // Vertical streets
+    {x:18,y:8,w:0.6,h:25,rot:0},{x:30,y:6,w:0.6,h:28,rot:0},
+    {x:60,y:8,w:0.6,h:26,rot:0},{x:75,y:10,w:0.6,h:24,rot:0},
+    {x:18,y:40,w:0.6,h:22,rot:0},{x:30,y:38,w:0.6,h:40,rot:0},
+    {x:60,y:35,w:0.6,h:30,rot:0},{x:75,y:38,w:0.6,h:25,rot:0},
+    {x:85,y:30,w:0.6,h:35,rot:0},{x:50,y:68,w:0.6,h:22,rot:0},
   ];
   roads.forEach(r=>{
     const el=document.createElement('div');el.className='map-road';
@@ -3239,71 +3263,72 @@ function addMapDecorations(cw,ch){
     mapCanvas.appendChild(el);
   });
 
-  // === 3D BUILDING CLUSTERS ===
+  // === SimCity BUILDING CLUSTERS with zone-based colors ===
+  const bldTypes=['residential','commercial','industrial','landmark'];
   const buildingClusters=[
-    {x:45,y:25,count:12,label:'Work District',spread:5},    // WORK section
-    {x:15,y:45,count:10,label:'Arcade Zone',spread:4},       // GAME section
-    {x:75,y:18,count:8,label:'Creative Quarter',spread:4},
-    {x:58,y:50,count:10,label:'Meme Valley',spread:5},
-    {x:32,y:75,count:6,label:'Sticker Park',spread:3},
-    {x:78,y:55,count:7,label:'Launch Pad',spread:4},
-    {x:25,y:15,count:8,label:'Photo District',spread:4},
-    {x:68,y:78,count:5,label:'Chill Island',spread:3},
+    {x:15,y:14,count:14,spread:7,type:0,label:'Photo District'},
+    {x:50,y:22,count:16,spread:8,type:1,label:'Work District'},
+    {x:78,y:15,count:10,spread:6,type:2,label:'Creative Quarter'},
+    {x:15,y:48,count:12,spread:7,type:3,label:'Arcade Zone'},
+    {x:55,y:48,count:14,spread:8,type:1,label:'Meme Valley'},
+    {x:82,y:50,count:8,spread:5,type:2,label:'Launch Pad'},
+    {x:30,y:75,count:10,spread:7,type:0,label:'Sticker Park'},
+    {x:68,y:78,count:8,spread:5,type:3,label:'Chill Island'},
   ];
   buildingClusters.forEach(b=>{
     for(let i=0;i<b.count;i++){
       const el=document.createElement('div');
-      const tall=Math.random()>0.6;
-      el.className='map-building-3d'+(tall?' map-building-tall':'');
-      const bw=0.5+Math.random()*1.2, bh=0.3+Math.random()*0.9;
-      const ox=(Math.random()-0.5)*b.spread, oy=(Math.random()-0.5)*b.spread*0.7;
+      const tall=Math.random()>0.55;
+      const typeClass='map-bld-'+bldTypes[b.type];
+      el.className='map-building-3d '+typeClass+(tall?' map-building-tall':'');
+      const bw=0.6+Math.random()*1.4, bh=0.4+Math.random()*1;
+      const ox=(Math.random()-0.5)*b.spread, oy=(Math.random()-0.5)*b.spread*0.6;
       el.style.cssText='left:'+(b.x+ox)+'%;top:'+(b.y+oy)+'%;width:'+bw+'%;height:'+bh+'%';
       mapCanvas.appendChild(el);
     }
   });
 
-  // === AREA NAME LABELS (written ON the land like Snapchat) ===
+  // === AREA NAME LABELS — SimCity district names ===
   const areaNames=[
-    {x:15,y:12,t:'Photo District',size:1.1,rot:-3},
-    {x:48,y:23,t:'Work District',size:1.2,rot:2},
-    {x:80,y:14,t:'Creative Quarter',size:1,rot:-1},
-    {x:17,y:48,t:'Arcade Zone',size:1.1,rot:4},
-    {x:55,y:53,t:'Meme Valley',size:1.1,rot:-2},
-    {x:80,y:50,t:'Launch Pad',size:1,rot:1},
-    {x:30,y:78,t:'Sticker Park',size:1,rot:3},
-    {x:72,y:80,t:'Chill Island',size:1,rot:-1},
-    {x:25,y:42,t:'Lake Akash',size:0.8,rot:0,color:'rgba(30,100,180,0.5)'},
-    {x:48,y:10,t:'North Beach',size:0.8,rot:0},
-    {x:70,y:70,t:'Sunset Bay',size:0.8,rot:2,color:'rgba(30,100,180,0.5)'},
+    {x:15,y:10,t:'Photo District',size:0.9,rot:0},
+    {x:50,y:18,t:'Work District',size:1,rot:0},
+    {x:80,y:11,t:'Creative Quarter',size:0.85,rot:0},
+    {x:15,y:44,t:'Arcade Zone',size:0.9,rot:0},
+    {x:55,y:44,t:'Meme Valley',size:0.9,rot:0},
+    {x:82,y:46,t:'Launch Pad',size:0.85,rot:0},
+    {x:30,y:71,t:'Sticker Park',size:0.85,rot:0},
+    {x:68,y:74,t:'Chill Island',size:0.85,rot:0},
+    {x:36,y:40,t:'Lake Akash',size:0.7,rot:0,color:'rgba(150,200,255,0.8)'},
+    {x:50,y:7,t:'North Shore',size:0.7,rot:0},
   ];
   areaNames.forEach(z=>{
     const el=document.createElement('div');el.className='map-zone-marker';
     el.style.left=z.x+'%';el.style.top=z.y+'%';el.textContent=z.t;
     if(z.size)el.style.fontSize=(z.size)+'rem';
-    if(z.rot)el.style.transform='translate(-50%,-50%) rotate('+z.rot+'deg)';
+    el.style.transform='translate(-50%,-50%)';
     if(z.color)el.style.color=z.color;
     mapCanvas.appendChild(el);
   });
 
-  // === ROUTE/HIGHWAY NUMBER BADGES (like the "26" shield in Snapchat) ===
+  // === ROUTE BADGES — SimCity highway shields ===
   const routeBadges=[
-    {x:42,y:35,num:'A1'},{x:62,y:36,num:'26'},{x:30,y:60,num:'97'},
-    {x:75,y:45,num:'66'},{x:50,y:70,num:'M4'},
+    {x:25,y:33,num:'R1'},{x:65,y:33,num:'A2'},{x:45,y:62,num:'M3'},
+    {x:80,y:33,num:'I4'},{x:35,y:62,num:'R5'},
   ];
   routeBadges.forEach(rb=>{
     const el=document.createElement('div');el.className='map-section-badge';
-    el.style.cssText='left:'+rb.x+'%;top:'+rb.y+'%;background:rgba(255,213,79,0.9);color:#5D4037;font-size:0.5rem;padding:2px 7px;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,0.15)';
+    el.style.cssText='left:'+rb.x+'%;top:'+rb.y+'%';
     el.textContent=rb.num;
     mapCanvas.appendChild(el);
   });
 
-  // === POI MARKERS (like Snapchat location pins) ===
+  // === POI MARKERS ===
   const pois=[
-    {x:18,y:18,emoji:'📸',color:'#E1BEE7'},{x:50,y:28,emoji:'💼',color:'#90CAF9'},
-    {x:82,y:18,emoji:'🎨',color:'#B3E5FC'},{x:18,y:50,emoji:'🎮',color:'#C8E6C9'},
-    {x:60,y:58,emoji:'😂',color:'#FFCCBC'},{x:80,y:52,emoji:'🚀',color:'#FFE082'},
-    {x:30,y:80,emoji:'✨',color:'#F8BBD0'},{x:72,y:80,emoji:'🏖️',color:'#B2DFDB'},
-    {x:45,y:45,emoji:'☕',color:'#D7CCC8'},{x:35,y:30,emoji:'🏠',color:'#FFAB91'},
+    {x:15,y:18,emoji:'📸',color:'#81C784'},{x:50,y:26,emoji:'💼',color:'#64B5F6'},
+    {x:80,y:18,emoji:'🎨',color:'#FFD54F'},{x:15,y:52,emoji:'🎮',color:'#CE93D8'},
+    {x:58,y:55,emoji:'😂',color:'#64B5F6'},{x:82,y:54,emoji:'🚀',color:'#FFD54F'},
+    {x:30,y:78,emoji:'✨',color:'#81C784'},{x:70,y:82,emoji:'🏖️',color:'#CE93D8'},
+    {x:38,y:40,emoji:'⛵',color:'#64B5F6'},{x:50,y:50,emoji:'☕',color:'#FFD54F'},
   ];
   pois.forEach(p=>{
     const el=document.createElement('div');el.className='map-poi';
@@ -3316,7 +3341,7 @@ function addMapDecorations(cw,ch){
   const compass=document.createElement('div');
   compass.className='map-compass-rose';
   compass.style.cssText='right:3%;top:3%;width:'+Math.max(30,cw*0.025)+'px;height:'+Math.max(30,cw*0.025)+'px';
-  compass.innerHTML='<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="rgba(0,0,0,0.1)" stroke-width="0.5"/><circle cx="20" cy="20" r="12" stroke="rgba(0,0,0,0.06)" stroke-width="0.5"/><polygon points="20,3 22,16 18,16" fill="rgba(244,67,54,0.6)"/><polygon points="20,37 22,24 18,24" fill="rgba(0,0,0,0.15)"/><polygon points="3,20 16,18 16,22" fill="rgba(0,0,0,0.1)"/><polygon points="37,20 24,18 24,22" fill="rgba(0,0,0,0.1)"/><text x="20" y="10" text-anchor="middle" fill="rgba(244,67,54,0.6)" font-size="5" font-weight="900" font-family="sans-serif">N</text></svg>';
+  compass.innerHTML='<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/><circle cx="20" cy="20" r="12" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/><polygon points="20,3 22,16 18,16" fill="rgba(244,67,54,0.7)"/><polygon points="20,37 22,24 18,24" fill="rgba(255,255,255,0.2)"/><polygon points="3,20 16,18 16,22" fill="rgba(255,255,255,0.15)"/><polygon points="37,20 24,18 24,22" fill="rgba(255,255,255,0.15)"/><text x="20" y="10" text-anchor="middle" fill="rgba(244,67,54,0.7)" font-size="5" font-weight="900" font-family="sans-serif">N</text></svg>';
   mapCanvas.appendChild(compass);
 
   // === SCALE BAR ===
@@ -3324,16 +3349,11 @@ function addMapDecorations(cw,ch){
   sb.innerHTML='<div class="scale-line"></div>500px';
   mapCanvas.appendChild(sb);
 
-  // === SUBTLE AREA WATERMARK ===
-  const areaLabels=[
-    {x:50,y:50,size:Math.max(cw*0.008,8),text:'Akash\'s World'},
-  ];
-  areaLabels.forEach(a=>{
-    const el=document.createElement('div');el.className='map-area-label';
-    el.style.cssText='left:'+a.x+'%;top:'+a.y+'%;font-size:'+a.size+'px;transform:translate(-50%,-50%);color:rgba(0,0,0,0.04)';
-    el.textContent=a.text;
-    mapCanvas.appendChild(el);
-  });
+  // === SUBTLE CENTER WATERMARK ===
+  const wm=document.createElement('div');wm.className='map-area-label';
+  wm.style.cssText='left:50%;top:50%;font-size:'+Math.max(cw*0.008,8)+'px;transform:translate(-50%,-50%);color:rgba(255,255,255,0.06);font-family:var(--font-fun);font-weight:800;letter-spacing:0.2em;text-transform:uppercase;position:absolute;z-index:1;pointer-events:none';
+  wm.textContent="Akash's World";
+  mapCanvas.appendChild(wm);
 }
 
 function drawMap(){
