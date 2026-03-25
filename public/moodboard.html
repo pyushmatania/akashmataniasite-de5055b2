@@ -2699,6 +2699,28 @@ function recenter(){
   mmInner.scrollTo({left:px-mr.width/2,top:py-mr.height/2,behavior:'smooth'});
 }
 
+let mapZoomScale=1;
+function mapZoom(dir){
+  if(!mmExp)return;
+  const steps=[0.5,0.75,1,1.25,1.5,2];
+  let idx=steps.indexOf(mapZoomScale);
+  if(idx===-1)idx=2;
+  idx=Math.max(0,Math.min(steps.length-1,idx+dir));
+  mapZoomScale=steps[idx];
+  const zl=document.getElementById('mapZoomLevel');
+  if(zl)zl.textContent=mapZoomScale+'×';
+  // Apply zoom via CSS transform on mapCanvas
+  const cx=mmInner.scrollLeft+mmInner.clientWidth/2;
+  const cy=mmInner.scrollTop+mmInner.clientHeight/2;
+  mapCanvas.style.transform='scale('+mapZoomScale+')';
+  mapCanvas.style.transformOrigin='0 0';
+  // Adjust scroll to keep centered
+  const newCx=cx*mapZoomScale/((mapCanvas._prevZoom)||1);
+  const newCy=cy*mapZoomScale/((mapCanvas._prevZoom)||1);
+  mapCanvas._prevZoom=mapZoomScale;
+  mmInner.scrollTo({left:newCx-mmInner.clientWidth/2,top:newCy-mmInner.clientHeight/2});
+}
+
 function showNav(tx,ty){
   if(navLine)navLine.remove();
   const sx=vp.scrollLeft+vp.clientWidth/2,sy=vp.scrollTop+vp.clientHeight/2;
