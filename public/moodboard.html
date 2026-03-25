@@ -5478,11 +5478,7 @@ function addMapDecorations(cw,ch){
   lakeEl.textContent='Lake Akash';
   mapCanvas.appendChild(lakeEl);
 
-  // === SUBTLE CENTER WATERMARK ===
-  const wm=document.createElement('div');wm.className='map-area-label';
-  wm.style.cssText='left:50%;top:50%;font-size:'+Math.max(cw*0.008,8)+'px;transform:translate(-50%,-50%);color:rgba(255,255,255,0.04);font-family:var(--font-fun);font-weight:800;letter-spacing:0.2em;text-transform:uppercase;position:absolute;z-index:1;pointer-events:none';
-  wm.textContent="Akash Unplugged";
-  mapCanvas.appendChild(wm);
+  // Watermark removed for cleaner look
 }
 
 function drawMap(){
