@@ -3325,10 +3325,10 @@ vp.addEventListener('scroll',()=>{
   const bounds=getViewportPanBounds();
   const mx=bounds.maxX,my=bounds.maxY;
   document.getElementById('scrollCounter').textContent=Math.round(((vp.scrollLeft+vp.scrollTop)/(mx+my))*100);
-  // Update small minimap on scroll
+  // Update small minimap on scroll (throttled)
   if(!mmExp && typeof drawMap==='function'){
     if(!_mmScrollRAF){
-      _mmScrollRAF=requestAnimationFrame(()=>{_mmScrollRAF=null;drawMap();});
+      _mmScrollRAF=setTimeout(()=>{_mmScrollRAF=null;drawMap();},300);
     }
   }
 });
