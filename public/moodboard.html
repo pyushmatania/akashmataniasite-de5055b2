@@ -5430,21 +5430,7 @@ function addMapDecorations(cw,ch){
     mapCanvas.appendChild(wrap);
   });
 
-  // === GROUND-PAINTED ZONE LABELS (written on terrain) ===
-  const groundLabels=[
-    {x:14,y:12,t:'ORIGIN STORY',rot:-3,color:'rgba(40,80,30,0.12)',size:0.025},
-    {x:55,y:8,t:'THE WAR ROOM',rot:2,color:'rgba(120,30,30,0.12)',size:0.022},
-    {x:14,y:32,t:'LAUNCH PAD',rot:-1,color:'rgba(30,60,120,0.12)',size:0.022},
-    {x:20,y:55,t:'THE PLAYGROUND',rot:3,color:'rgba(160,80,0,0.1)',size:0.022},
-    {x:65,y:50,t:'MEME ALLEY',rot:-2,color:'rgba(100,30,120,0.1)',size:0.022},
-  ];
-  groundLabels.forEach(g=>{
-    const el=document.createElement('div');
-    const fs=Math.max(12,cw*g.size);
-    el.textContent=g.t;
-    el.style.cssText='position:absolute;left:'+g.x+'%;top:'+g.y+'%;transform:translate(-50%,-50%) rotate('+g.rot+'deg);font-family:"Arial Black",Impact,sans-serif;font-weight:900;font-size:'+fs+'px;color:'+g.color+';text-transform:uppercase;letter-spacing:0.35em;pointer-events:none;z-index:1;white-space:nowrap;text-shadow:0 2px 8px rgba(255,255,255,0.05);user-select:none';
-    mapCanvas.appendChild(el);
-  });
+  // Ground-painted zone labels removed (signposts with poles are the only labels now)
 
   // === POI MARKERS ===
   const pois=[
