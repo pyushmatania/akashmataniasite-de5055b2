@@ -2349,19 +2349,18 @@ function closeWorkPanel(){
   100% { transform:scale(1) rotate(0); }
 }
 
-/* Shuffle button */
-.shuffle-btn {
-  display:inline-flex;align-items:center;gap:8px;
-  padding:10px 20px;border-radius:99px;border:1.5px solid #e8e5df;
-  background:#fff;cursor:pointer;font-size:0.75rem;font-weight:700;
-  color:#7a756d;letter-spacing:0.04em;margin:16px 0 48px;
-  transition:transform 0.15s, border-color 0.2s, background 0.2s;
+/* Fun fact bubble */
+.sk-fact {
+  max-height:0;overflow:hidden;opacity:0;
+  transition:max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
+  font-size:0.78rem;color:#7a756d;line-height:1.6;
+  background:#faf9f7;border-radius:12px;padding:0 14px;
+  margin-top:0;font-style:italic;
 }
-.shuffle-btn:active { transform:scale(0.94);background:#faf9f7; }
-.shuffle-btn .shuffle-icon {
-  display:inline-block;transition:transform 0.4s ease;
+.skill-row.fact-open .sk-fact {
+  max-height:120px;opacity:1;padding:12px 14px;margin-top:10px;
 }
-.shuffle-btn.spinning .shuffle-icon { transform:rotate(360deg); }
+.skill-row { cursor:pointer; }
 </style>
 
 <div class="work-backdrop" id="workBackdrop" onclick="closeWorkPanel()"></div>
