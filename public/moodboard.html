@@ -1957,6 +1957,162 @@ const journalContent = {
 
 timeline: `
 <div class="timeline">
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v34.0 — Green Grid Theme for Big Map</div>
+    <div class="tl-date">Session 34 · March 25, 2026</div>
+    <div class="tl-desc">Applied the small minimap's dark green grid theme to the expanded big map for visual consistency. Updated roads, water, regions, and vignette to match.</div>
+    <ul class="tl-changes">
+      <li>Big map background: #3a5a2a with green grid lines</li>
+      <li>Roads: semi-transparent green, water: dark green tint</li>
+      <li>Region labels: green palette (#4CAF50 variants)</li>
+      <li>Enhanced vignette overlay for immersive feel</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v33.0 — Snapchat Theme + Radar Colors</div>
+    <div class="tl-date">Session 33 · March 25, 2026</div>
+    <div class="tl-desc">Big map restyled with Snapchat-inspired warm beige background, white roads, blue water. Radar sweep changed to alternating yellow-red. Bottom bars hidden in fullscreen map.</div>
+    <ul class="tl-changes">
+      <li>Snapchat palette: beige #E8E4D0, white roads, blue water</li>
+      <li>Radar: yellow-red conic-gradient (was green)</li>
+      <li>Bottom nav hidden during map fullscreen via body.map-expanded</li>
+      <li>Terrain patches and roads regenerated with warm colors</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v32.0 — Mood Map LIVE + Neon Glow + Cycle HUD</div>
+    <div class="tl-date">Session 32 · March 25, 2026</div>
+    <div class="tl-desc">Renamed to "Mood Map LIVE". Cleaned up waypoint lines to only show for active item. Added glassmorphic cycle counter HUD (1/5 with arrows). Neon glow on selected items. Procedural roads and terrain. Zone names shown on map itself.</div>
+    <ul class="tl-changes">
+      <li>Cycle Counter HUD: shows item count + nav arrows at top of map</li>
+      <li>Neon glow animation: pulsing radium/neon outline on active items</li>
+      <li>Realistic terrain: multi-stop green gradient, procedural roads</li>
+      <li>Zone markers with bold typography and shadows</li>
+      <li>Waypoint lines only for currently active filtered item</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v31.0 — Waypoint Markers + Minimap Polish</div>
+    <div class="tl-date">Session 31 · March 25, 2026</div>
+    <div class="tl-desc">Pulsing waypoint markers with distance display. Minimap size reduced, blur/attachment effects added. Radar sweep animation with rotating green line.</div>
+    <ul class="tl-changes">
+      <li>Waypoint system: pulsing markers + distance labels to selected items</li>
+      <li>Minimap: smaller size, frosted glass blur, attached feel</li>
+      <li>Radar sweep: rotating green line animation on minimap</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v30.0 — Zone Names + Filter Animation + Close Button</div>
+    <div class="tl-date">Session 30 · March 25, 2026</div>
+    <div class="tl-desc">Street/zone name display below minimap (GTA-style). Big map also shows zone names. Filter cycling shows active item with effects and animations. Enhanced close map button.</div>
+    <ul class="tl-changes">
+      <li>Zone name display below minimap like GTA area names</li>
+      <li>Big map zone name overlay</li>
+      <li>Active item highlight effects during filter cycling</li>
+      <li>Redesigned close map button with better visibility</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v29.0 — Minimap HUD Redesign</div>
+    <div class="tl-date">Session 29 · March 25, 2026</div>
+    <div class="tl-desc">Thickened borders, enhanced N/AM compass markers, added more map HUD details inspired by game interfaces.</div>
+    <ul class="tl-changes">
+      <li>Thicker HUD borders with multi-ring design</li>
+      <li>Enhanced compass markers (N, S, E, W) with better typography</li>
+      <li>AM/PM time indicator on HUD</li>
+      <li>Additional game-style HUD details</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v28.0 — Compass + Zoom + Filter Redesign</div>
+    <div class="tl-date">Session 28 · March 25, 2026</div>
+    <div class="tl-desc">Added compass, zoom in/out and recentre buttons. More filter buttons on map. Subtle design improvements and polish.</div>
+    <ul class="tl-changes">
+      <li>Compass widget on map</li>
+      <li>Zoom in/out controls with scale display</li>
+      <li>Recentre button to reset view</li>
+      <li>More filter categories + redesigned filter buttons</li>
+      <li>Subtle map design improvements</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v27.0 — Filter Bar + Map Polish</div>
+    <div class="tl-date">Session 27 · March 25, 2026</div>
+    <div class="tl-desc">Made filter bar subtle, integrated with map design. Fixed zoom buttons. Redesigned filter as legend buttons. Multi-click cycling: activate → navigate to item → cycle through items.</div>
+    <ul class="tl-changes">
+      <li>Subtle integrated filter bar design</li>
+      <li>Multi-click cycling: 1st=activate, 2nd=go to item, 3rd+=cycle</li>
+      <li>Total area display on map</li>
+      <li>Removed non-functional buttons</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v26.0 — Legend Filters + Map Cleanup</div>
+    <div class="tl-date">Session 26 · March 25, 2026</div>
+    <div class="tl-desc">Removed fog of war, explorer level, and info buttons. Replaced filter with legend-style filter buttons. Added total area display subtly on map.</div>
+    <ul class="tl-changes">
+      <li>Removed fog of war effect</li>
+      <li>Removed explored %, level badge, info buttons</li>
+      <li>Legend-style filter buttons replacing old filter</li>
+      <li>Total area text integrated into map</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v25.0 — Arrow Marker + Remove Bitmoji</div>
+    <div class="tl-date">Session 25 · March 25, 2026</div>
+    <div class="tl-desc">Reverted to arrow player marker, removed Bitmoji avatar and its bounding box.</div>
+    <ul class="tl-changes">
+      <li>Arrow marker restored (no box)</li>
+      <li>Bitmoji avatar removed</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v24.0 — Fog of War + Bitmoji Avatar</div>
+    <div class="tl-date">Session 24 · March 25, 2026</div>
+    <div class="tl-desc">Added fog of war effect dimming unexplored map areas. Bitmoji-style avatar as player marker. Removed Akash tag from fullscreen map. Added borders and game HUD elements.</div>
+    <ul class="tl-changes">
+      <li>Fog of war: dimmed unexplored areas, revealed on scroll</li>
+      <li>Bitmoji-style avatar player marker</li>
+      <li>Removed top-left logo from fullscreen map</li>
+      <li>Map borders and game HUD overlays</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v23.0 — Snapchat Map Theme</div>
+    <div class="tl-date">Session 23 · March 25, 2026</div>
+    <div class="tl-desc">Changed map theme to Snapchat-style with warm colors, terrain patches, roads, and water features. Map redesigned to look like a real map instead of a moodboard.</div>
+    <ul class="tl-changes">
+      <li>Snapchat-inspired warm color palette</li>
+      <li>Terrain patches, roads, water bodies</li>
+      <li>Map-like visual design instead of moodboard aesthetic</li>
+      <li>Game HUD elements for game-map feel</li>
+    </ul>
+  </div>
+
   <div class="tl-item">
     <div class="tl-dot"></div>
     <div class="tl-version">v22.0 — Polish: Zoom, Map HUD, Splash, Edge Fix</div>
@@ -2531,7 +2687,49 @@ prompts: `
   <div class="prompt-block"><div class="prompt-label">Prompt 13</div><div class="prompt-text">"Fix canvas edge gap. Create GTA-style map HUD showing current location + stickers. Tap map to enlarge, nav button shows route lines. Splash: water should leak from photo, drops near photo. Change splash sound."</div></div>
   <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v9.0: Fixed edge gap. GTA minimap with player dot, color-coded sticker dots, expand-on-tap, click-to-navigate with animated dashed route lines. Splash redesigned: drops originate from photo edges, water drips from bottom, wet shimmer overlay. 3-layer splash sound with sweep filter.</div></div>
   <div class="prompt-block"><div class="prompt-label">Prompt 14</div><div class="prompt-text">"Make map properly show real stickers not dots. Show head sticker for current location. Add more features, improve UI/UX. Zone labels, filters, tooltips."</div></div>
-  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v10.0: Full minimap redesign — real emoji icons per sticker, pixel-art avatar, 7 zone labels, filter buttons, hover tooltips, dark green bg with grid, compass, player ping, viewport rect, click-to-navigate with route lines., gradient frames, splash rings+droplets+wave+wet spots+sound, tap rewrite, 7000x5000 canvas.</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v10.0: Full minimap redesign — real emoji icons per sticker, pixel-art avatar, 7 zone labels, filter buttons, hover tooltips, dark green bg with grid, compass, player ping, viewport rect, click-to-navigate with route lines.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 15</div><div class="prompt-text">"Change the map theme to snapchat map theme now its not looking a map. Its looking like another mood board lol"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v23.0: Snapchat-style map with warm colors, terrain patches, roads, water features. Complete visual overhaul from moodboard aesthetic to real map feel with game HUD elements.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 16</div><div class="prompt-text">"Add Bitmoji-style avatar as the player marker on the map instead of the arrow. Remove the top left akash tag from full screen map view. Add borders and etc to make it look like a map. Add game hud elements to give feel of a game map"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v24.0: Bitmoji avatar marker, removed logo from fullscreen, added map borders and game HUD overlays (explored %, level badge, coordinates).</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 17</div><div class="prompt-text">"Add fog of war effect — areas you haven't scrolled to yet are dimmed on the map"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">Added fog of war with canvas overlay — unexplored areas dimmed, revealed progressively as user scrolls. Tracked explored chunks.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 18</div><div class="prompt-text">"Undo the bitmoji on map keep the arrow but remove the box around that arrow"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v25.0: Reverted to arrow marker without bounding box. Bitmoji removed.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 19</div><div class="prompt-text">"Remove the fog of war effect. Remove the explored, level and right side info buttons. Remove the filter button and replace that with legend option it can filter. Redesign that as filter buttons. Add total area written into the map subtly"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v26.0: Stripped fog of war, explorer stats, info buttons. Replaced filter with legend-style buttons. Added total area display subtly on map canvas.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 20</div><div class="prompt-text">"Add a compass, zoom in and out and recentre button and add more filters buttons on map. And add a bit more subtle detail and design improvements for map"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v28.0: Compass widget, zoom controls with scale display, recentre button, expanded filter categories, subtle design polish.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 21</div><div class="prompt-text">"The new bar on map make it subtle and integrate with the map design itself. Zoom buttons not working remove the last button. Redesign filter buttons. When clicking multiple times it should take to that place"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v27.0: Subtle integrated filter bar, fixed zoom, multi-click cycling (activate → navigate → cycle through items), removed broken buttons.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 22</div><div class="prompt-text">"Improve the small map hud design. Thicken the border and all those N and AM and add other details to make it look like a map hud" [with reference image]</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v29.0: Thickened HUD borders with multi-ring design, enhanced compass markers (N/S/E/W), AM/PM time indicator, game-style HUD details.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 23</div><div class="prompt-text">"Add a street name or zone name display below the minimap like GTA shows the current area name. Do it for big map too. On big map when selecting filters and cycle through navigation add something to show that particular item with effects. Enhance close map button"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v30.0: GTA-style zone name display below minimap and on big map. Active item highlight effects during filter cycling. Enhanced close map button.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 24</div><div class="prompt-text">"Add a pulsing waypoint marker system on the map that shows distance to selected items. Decrease the size of mini map HUD, add some blur or other effects — it looks floating, make it look attached"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v31.0: Pulsing waypoint markers with distance labels. Minimap downsized with frosted glass blur and attachment effects.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 25</div><div class="prompt-text">"Add a minimap radar sweep animation like a rotating green line for extra game HUD feel"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">Added rotating radar sweep animation (conic-gradient green line) on the minimap HUD.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 26</div><div class="prompt-text">"Lines are looking messy just show lines to the item being shown. Show count for ex photo 1/2. Bring buttons up. Rename to mood map live. Zone name should show on map. Make items glow neon/radium. Make map look real." [with reference images]</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v32.0: Mood Map LIVE. Cycle counter HUD with arrows, neon glow on active items, procedural terrain/roads, zone names on map, cleaned waypoint lines to active item only.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 27</div><div class="prompt-text">"Don't change small map theme. Change big map to Snapchat theme. Hide bottom bars on fullscreen. Change radar sweep to yellow and red alternating." [with reference image]</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v33.0: Big map Snapchat theme (beige #E8E4D0, white roads, blue water). Radar yellow-red. Bottom nav hidden in fullscreen.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 28</div><div class="prompt-text">"Add the small map green grid theme to the big map"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v34.0: Applied dark green grid theme (#3a5a2a) to expanded big map matching the minimap. Green-tinted roads, water, region labels, enhanced vignette.</div></div>
 </div>
 `,
 
@@ -2541,15 +2739,15 @@ stats: `
   <div class="stats-grid">
     <div class="stat-card"><div class="stat-num">6000</div><div class="stat-label">Canvas Width (px)</div></div>
     <div class="stat-card"><div class="stat-num">4500</div><div class="stat-label">Canvas Height (px)</div></div>
-    <div class="stat-card"><div class="stat-num">~200KB</div><div class="stat-label">Total File Size</div></div>
+    <div class="stat-card"><div class="stat-num">~300KB</div><div class="stat-label">Total File Size</div></div>
     <div class="stat-card"><div class="stat-num">80+</div><div class="stat-label">Draggable Stickers</div></div>
     <div class="stat-card"><div class="stat-num">15</div><div class="stat-label">Animations</div></div>
     <div class="stat-card"><div class="stat-num">11</div><div class="stat-label">Themes</div></div>
     <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">Interactive Toys</div></div>
     <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Hero Photos</div></div>
     <div class="stat-card"><div class="stat-num">16</div><div class="stat-label">Confetti Emojis</div></div>
-    <div class="stat-card"><div class="stat-num">26</div><div class="stat-label">Build Prompts</div></div>
-    <div class="stat-card"><div class="stat-num">22</div><div class="stat-label">Major Versions</div></div>
+    <div class="stat-card"><div class="stat-num">40</div><div class="stat-label">Build Prompts</div></div>
+    <div class="stat-card"><div class="stat-num">34</div><div class="stat-label">Major Versions</div></div>
     <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">Easter Egg 🥚</div></div>
   </div>
 </div>
