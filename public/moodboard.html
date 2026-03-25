@@ -2709,8 +2709,40 @@ function revealHiddenSkills(){
 </script>
 <script>
 const vp=document.getElementById('viewport'),cv=document.getElementById('canvas');
+const MOODBOARD_WORLD_WIDTH=10000;
+const MOODBOARD_WORLD_HEIGHT=7000;
+const MOODBOARD_ITEM_SAFE_MARGIN=90;
+
+function clampValue(v,min,max){
+  return Math.max(min,Math.min(max,v));
+}
+
+function clampStickerToMoodboard(sticker,left,top){
+  const w=sticker?.offsetWidth||120;
+  const h=sticker?.offsetHeight||80;
+  const minX=MOODBOARD_ITEM_SAFE_MARGIN;
+  const minY=MOODBOARD_ITEM_SAFE_MARGIN;
+  const maxX=Math.max(minX,MOODBOARD_WORLD_WIDTH-w-MOODBOARD_ITEM_SAFE_MARGIN);
+  const maxY=Math.max(minY,MOODBOARD_WORLD_HEIGHT-h-MOODBOARD_ITEM_SAFE_MARGIN);
+  return {
+    left:clampValue(left,minX,maxX),
+    top:clampValue(top,minY,maxY)
+  };
+}
+
+function normalizeAllStickerBounds(){
+  document.querySelectorAll('#canvas > .sticker').forEach(sticker=>{
+    const left=parseFloat(sticker.style.left)||0;
+    const top=parseFloat(sticker.style.top)||0;
+    const next=clampStickerToMoodboard(sticker,left,top);
+    sticker.style.left=next.left+'px';
+    sticker.style.top=next.top+'px';
+  });
+}
+
 // Center on the Akash hub zone
 const SCALE=0.5;
+normalizeAllStickerBounds();
 const akashCX=(3500)*SCALE, akashCY=(2500)*SCALE;
 vp.scrollLeft=Math.max(0,akashCX-vp.clientWidth/2);
 vp.scrollTop=Math.max(0,akashCY-vp.clientHeight/2);
@@ -2830,9 +2862,11 @@ function sM(e){
   if(Math.abs(cx-tapSX)>10||Math.abs(cy-tapSY)>10){
     didMove=true;as.classList.add('dragging');
     const cr=cv.getBoundingClientRect();
-    const scale=0.5;
-    as.style.left=Math.max(0,Math.min((cx-cr.left-sox)/scale,cv.offsetWidth-as.offsetWidth))+'px';
-    as.style.top=Math.max(0,Math.min((cy-cr.top-soy)/scale,cv.offsetHeight-as.offsetHeight))+'px';
+    const nextLeft=(cx-cr.left-sox)/SCALE;
+    const nextTop=(cy-cr.top-soy)/SCALE;
+    const clamped=clampStickerToMoodboard(as,nextLeft,nextTop);
+    as.style.left=clamped.left+'px';
+    as.style.top=clamped.top+'px';
     e.preventDefault();
   }
 }
@@ -2843,6 +2877,14 @@ document.addEventListener('touchend',sU);
 function sU(e){
   if(!as)return;
   as.classList.remove('dragging');
+  if(didMove){
+    const left=parseFloat(as.style.left)||0;
+    const top=parseFloat(as.style.top)||0;
+    const next=clampStickerToMoodboard(as,left,top);
+    as.style.left=next.left+'px';
+    as.style.top=next.top+'px';
+    if(typeof scanStickers==='function')scanStickers();
+  }
   if(isRotating){isRotating=false;as=null;return;}
   if(!didMove&&(Date.now()-tapTime)<400){
     if(as.dataset.splash)doSplash(as,e);
