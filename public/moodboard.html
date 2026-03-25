@@ -2018,7 +2018,8 @@ function scrollToZone(e,zone){
   e.preventDefault();e.stopPropagation();
   const target=zoneTargets[zone];
   if(!target)return;
-  const scaled={x:target.x*MOODBOARD_VIEW_SCALE,y:target.y*MOODBOARD_VIEW_SCALE};
+  const scale=0.85;
+  const scaled={x:target.x*scale,y:target.y*scale};
   const vp=document.getElementById('viewport');
   const maxX=Math.max(0,vp.scrollWidth-vp.clientWidth);
   const maxY=Math.max(0,vp.scrollHeight-vp.clientHeight);
