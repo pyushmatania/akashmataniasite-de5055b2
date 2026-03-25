@@ -2865,42 +2865,6 @@ vp.addEventListener('scroll',()=>{
 // Scan once on load, then draw
 setTimeout(()=>{try{scanStickers();drawMap()}catch(e){console.error('Init error:',e)}},600)
 
-// Map zoom
-let mapZoomLevel=1;
-function mapZoom(factor){
-  mapZoomLevel=Math.max(0.4,Math.min(3,mapZoomLevel*factor));
-  // Adjust the scale in drawMap
-  const oldSc=drawMap._sc;
-  drawMap._sc=oldSc*factor;
-  // Resize canvas
-  const cw=parseFloat(mapCanvas.style.width)*factor;
-  const ch=parseFloat(mapCanvas.style.height)*factor;
-  mapCanvas.style.width=cw+'px';
-  mapCanvas.style.height=ch+'px';
-  // Re-render
-  const ox=drawMap._ox,oy=drawMap._oy;
-  const items=mapCanvas.querySelectorAll('.sticker,.mi');
-  items.forEach(i=>i.remove());
-  renderVisibleClones(drawMap._sc,ox,oy,cw,ch);
-  updMap();
-  // Try to keep centered
-  const mr=mmInner.getBoundingClientRect();
-  mmInner.scrollLeft=mmInner.scrollLeft*factor+(mr.width*(factor-1)/2);
-  mmInner.scrollTop=mmInner.scrollTop*factor+(mr.height*(factor-1)/2);
-}
-
-// Compass overlay
-let compassVisible=false;
-function toggleCompass(){
-  compassVisible=!compassVisible;
-  let existing=document.getElementById('bigCompass');
-  if(existing){existing.remove();return}
-  const c=document.createElement('div');
-  c.id='bigCompass';
-  c.style.cssText='position:absolute;top:70px;left:14px;z-index:1001;width:60px;height:60px;opacity:0.5;pointer-events:none';
-  c.innerHTML='<svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(20,40,20,0.6)" stroke="rgba(100,160,100,0.3)" stroke-width="1"/><circle cx="30" cy="30" r="20" stroke="rgba(100,160,100,0.15)" stroke-width="0.5" fill="none"/><polygon points="30,5 33,25 27,25" fill="rgba(255,80,80,0.6)"/><polygon points="30,55 33,35 27,35" fill="rgba(100,160,100,0.2)"/><polygon points="5,30 25,27 25,33" fill="rgba(100,160,100,0.2)"/><polygon points="55,30 35,27 35,33" fill="rgba(100,160,100,0.2)"/><text x="30" y="15" text-anchor="middle" fill="rgba(255,120,120,0.6)" font-size="7" font-weight="900" font-family="sans-serif">N</text><text x="30" y="52" text-anchor="middle" fill="rgba(150,200,140,0.3)" font-size="6" font-family="sans-serif">S</text><text x="10" y="33" text-anchor="middle" fill="rgba(150,200,140,0.3)" font-size="6" font-family="sans-serif">W</text><text x="50" y="33" text-anchor="middle" fill="rgba(150,200,140,0.3)" font-size="6" font-family="sans-serif">E</text></svg>';
-  document.getElementById('mm').appendChild(c);
-}
 
 
 </script>
