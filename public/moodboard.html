@@ -2631,9 +2631,60 @@ interactive: `
     <strong>The fix (v3+):</strong> On mousedown/touchstart, we record the starting position and set totalDragDist = 0. On every mousemove/touchmove, we accumulate the absolute delta. If totalDragDist stays under 8px when the finger lifts, it's treated as a TAP → trigger animation + confetti. If it exceeds 8px, it's a DRAG → reposition the sticker. This solved the original issue where taps were being swallowed by the drag handler.
   </p>
 </div>
-`,
 
-themes: `
+<div class="inv-section">
+  <h3>🗺️ Map System — Small Map (Minimap HUD)</h3>
+  <table class="inv-table">
+    <tr><th>Feature</th><th>Details</th></tr>
+    <tr><td>Shape & Size</td><td>85×85px circle, fixed bottom-right, dark green (#3a5a2a) background</td></tr>
+    <tr><td>Border</td><td>3.5px solid dark border with grounding shadow beneath</td></tr>
+    <tr><td>Cardinal Markers</td><td>N/S/E/W letters on the rim (Arial Black, 0.4rem)</td></tr>
+    <tr><td>North Pip</td><td>Red diamond indicator at top of minimap</td></tr>
+    <tr><td>Radar Sweep</td><td>Bright green conic-gradient rotating every 3s. Green crosshair lines.</td></tr>
+    <tr><td>Zone Name</td><td>GTA-style current area name below minimap (e.g. "📸 Photo District")</td></tr>
+    <tr><td>Player Arrow</td><td>Gold arrow (#FFD54F) with glow filter, ping animation ring</td></tr>
+    <tr><td>Vignette</td><td>Inner box-shadow for depth (inset 18px + 5px rgba black)</td></tr>
+    <tr><td>Grid</td><td>Green grid lines on dark green background (small + large grid)</td></tr>
+    <tr><td>Sticker Dots</td><td>Color-coded mini rectangles showing sticker positions</td></tr>
+    <tr><td>Tap Action</td><td>Expands to fullscreen big map view</td></tr>
+  </table>
+</div>
+
+<div class="inv-section">
+  <h3>🌍 Map System — Big Map (Expanded View)</h3>
+  <table class="inv-table">
+    <tr><th>Feature</th><th>Details</th></tr>
+    <tr><td>Theme</td><td>Snapchat-style beige (#E8E4D0) with no grid lines</td></tr>
+    <tr><td>Ocean</td><td>Blue water borders on all 4 edges (rgba 100,181,246,0.7)</td></tr>
+    <tr><td>Beaches</td><td>Sandy beige strips between land and ocean edges</td></tr>
+    <tr><td>Parks</td><td>7+ green patches with procedural tree dots (varying sizes/shades)</td></tr>
+    <tr><td>Water Bodies</td><td>4 lakes/rivers with Snapchat blue, organic border-radius shapes</td></tr>
+    <tr><td>Roads</td><td>12 white roads (Snapchat style) + 3 gray highways</td></tr>
+    <tr><td>3D Buildings</td><td>8 building clusters with CSS shadow depth. Tall buildings get extra shadow.</td></tr>
+    <tr><td>Area Names</td><td>Written ON the land: Photo District, Work District, Creative Quarter, Arcade Zone, Meme Valley, Launch Pad, Sticker Park, Chill Island, Lake Akash, North Beach, Sunset Bay</td></tr>
+    <tr><td>Route Badges</td><td>Highway shields: A1, 26, 97, 66, M4 (yellow badges like road signs)</td></tr>
+    <tr><td>POI Markers</td><td>10 emoji pins (📸💼🎨🎮😂🚀✨🏖️☕🏠) with colored borders</td></tr>
+    <tr><td>Filters</td><td>4 filter chips: All, 📸 Photos, 😂 Memes, 🎮 Games</td></tr>
+    <tr><td>Cycle Navigation</td><td>Click filter multiple times → cycles through matching items with neon glow</td></tr>
+    <tr><td>Waypoints</td><td>Pulsing markers with distance labels, dashed line to active target</td></tr>
+    <tr><td>Neon Glow</td><td>Active item gets green neon outline animation (0 0 15px rgba green)</td></tr>
+    <tr><td>Cycle HUD</td><td>Counter showing "📸 Photos 1/5" with ‹ › navigation arrows</td></tr>
+    <tr><td>Zone Banner</td><td>Current zone name displayed at bottom of map view</td></tr>
+    <tr><td>Controls</td><td>Right panel: Compass widget, Zoom +/− with scale display</td></tr>
+    <tr><td>Coordinates</td><td>Live x/y coordinate display, updates on scroll</td></tr>
+    <tr><td>Sticker Clones</td><td>Virtualized rendering — only visible stickers are cloned for performance</td></tr>
+    <tr><td>Click-to-Navigate</td><td>Click any sticker clone → closes map, scrolls to original, triggers animation</td></tr>
+    <tr><td>Hidden Elements</td><td>Bottom nav, scroll counter, logo, settings all hidden in fullscreen</td></tr>
+  </table>
+</div>
+
+<div class="inv-section">
+  <h3>🔄 Map Evolution</h3>
+  <p style="font-size:0.8rem;color:var(--text2);line-height:1.7">
+    The map system evolved through 20+ iterations: started as simple colored dots (v9), then real emoji icons (v10), Snapchat warm theme (v23), Bitmoji avatar (v24, reverted v25), fog of war (v24, removed v26), GTA-style HUD with zone names (v29-30), waypoints and neon glow (v31-32), radar sweep (v32), yellow-red radar (v33), green grid theme (v34), and finally a complete Snapchat-style rebuild from scratch with 3D buildings, ocean borders, parks, area names on land, and route badges (v35).
+  </p>
+</div>
+`,
 <div class="inv-section">
   <h3>🎨 Theme Catalog (11 themes)</h3>
   <table class="inv-table">
