@@ -3177,7 +3177,8 @@ function drawMap(){
   }
   
   if(mmExp){
-    // EXPANDED: render real sticker clones (virtualized — only visible ones)
+    // EXPANDED: add Snapchat-style decorations first, then sticker clones
+    addMapDecorations(canvasW,canvasH);
     renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
   } else {
     // SMALL: lightweight colored boxes
@@ -3195,8 +3196,6 @@ function drawMap(){
       mapCanvas.appendChild(el);
     });
     if(mapCount)mapCount.textContent=count+' items';
-  // Add map decorations in expanded mode
-  if(mmExp){addMapDecorations(canvasW,canvasH);}
   }
   updMap();
 }
