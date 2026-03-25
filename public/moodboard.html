@@ -2867,6 +2867,53 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
   if(mapCount)mapCount.textContent=count+' items';
 }
 
+// Waypoint system
+function clearWaypoints(){
+  mapCanvas.querySelectorAll('.waypoint-marker,.waypoint-dist,.waypoint-line').forEach(e=>e.remove());
+}
+function addWaypoints(cat){
+  clearWaypoints();
+  if(cat==='all'||!drawMap._sc)return;
+  const sc=drawMap._sc||0.05;
+  const ox=drawMap._ox||0,oy=drawMap._oy||0;
+  const cT=parseInt(mapCanvas.style.top)||0;
+  // Player position in world coords
+  const playerWX=vp.scrollLeft+vp.clientWidth/2;
+  const playerWY=vp.scrollTop+vp.clientHeight/2;
+  const playerMX=(playerWX-ox)*sc;
+  const playerMY=(playerWY-oy)*sc+cT;
+  const matching=stickerData.filter(d=>d.cat===cat);
+  matching.forEach((d,i)=>{
+    const mx=(d.left-ox)*sc;
+    const my=(d.top-oy)*sc+cT;
+    // Distance in world px
+    const dist=Math.round(Math.sqrt(Math.pow(d.left-playerWX,2)+Math.pow(d.top-playerWY,2)));
+    const distLabel=dist>1000?(dist/1000).toFixed(1)+'k':dist+'';
+    // Waypoint pin
+    const wp=document.createElement('div');
+    wp.className='waypoint-marker';
+    wp.style.left=mx+'px';wp.style.top=my+'px';
+    wp.style.animationDelay=(i*0.3)+'s';
+    mapCanvas.appendChild(wp);
+    // Distance label
+    const dl=document.createElement('div');
+    dl.className='waypoint-dist';
+    dl.style.left=mx+'px';dl.style.top=(my+10)+'px';
+    dl.textContent=distLabel+'px';
+    mapCanvas.appendChild(dl);
+    // Dashed line from player to waypoint
+    const dx=mx-playerMX,dy=my-playerMY;
+    const len=Math.sqrt(dx*dx+dy*dy);
+    const angle=Math.atan2(dy,dx)*180/Math.PI;
+    const line=document.createElement('div');
+    line.className='waypoint-line';
+    line.style.left=playerMX+'px';line.style.top=playerMY+'px';
+    line.style.width=len+'px';
+    line.style.transform='rotate('+angle+'deg)';
+    mapCanvas.appendChild(line);
+  });
+}
+
 // Filter with cycle-through navigation
 let filtClickCount={};
 function filt(c,btn){
@@ -2887,19 +2934,16 @@ function filt(c,btn){
       mmInner.scrollTo({left:px-mmInner.clientWidth/2,top:py-mmInner.clientHeight/2,behavior:'smooth'});
       // Enhanced spotlight effect on target
       setTimeout(()=>{
-        // Remove previous highlights
-        mapCanvas.querySelectorAll('.cycle-target,.cycle-ripple').forEach(e=>e.remove());
+        mapCanvas.querySelectorAll('.cycle-target,.cycle-ripple').forEach(e=>{e.classList.remove('cycle-target');e.remove()});
         const items=mapCanvas.querySelectorAll('.sticker,.mi');
         items.forEach(el=>{
           const elL=parseFloat(el.style.left),elT=parseFloat(el.style.top);
           if(Math.abs(elL-px)<30 && Math.abs(elT-py)<30){
             el.classList.add('cycle-target');
-            // Add ripple effect
             const ripple=document.createElement('div');
             ripple.className='cycle-ripple';
             ripple.style.left=elL+'px';ripple.style.top=elT+'px';
             mapCanvas.appendChild(ripple);
-            // Second ripple delayed
             setTimeout(()=>{
               const r2=document.createElement('div');
               r2.className='cycle-ripple';
@@ -2913,6 +2957,8 @@ function filt(c,btn){
           }
         });
       },400);
+      // Update waypoints with new distances
+      addWaypoints(c);
       // Update zone banner
       const bigZone=document.getElementById('mapZoneBanner');
       if(bigZone){
@@ -2930,7 +2976,10 @@ function filt(c,btn){
   mFilt=c;
   filtClickCount[c]=0;
   document.querySelectorAll('.mc').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');drawMap();
+  btn.classList.add('active');
+  drawMap();
+  // Add waypoints after map redraws
+  setTimeout(()=>addWaypoints(c),100);
 }
 
 function recenter(){
