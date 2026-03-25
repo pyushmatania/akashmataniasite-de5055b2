@@ -23,7 +23,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .canvas-viewport::-webkit-scrollbar{width:6px;height:6px}
 .canvas-viewport::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.06);border-radius:3px}
 .canvas{
-  width:8500px;height:6000px;position:relative;background-color:#FAF8F5;
+  width:10000px;height:7000px;position:relative;background-color:#FAF8F5;
   background-image:
     radial-gradient(circle at 15% 20%,rgba(206,147,216,0.04) 0%,transparent 40%),
     radial-gradient(circle at 85% 60%,rgba(255,183,77,0.04) 0%,transparent 40%),
@@ -131,7 +131,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .bottom-nav a svg{width:22px;height:22px}
 .logo{position:fixed;top:16px;left:20px;z-index:1000;font-family:var(--font-serif);font-style:italic;font-size:1.15rem;color:var(--text);padding:4px 10px;background:var(--yellow-hl);border-radius:4px}
 
-@media(max-width:768px){.canvas{width:6000px;height:4500px}.scroll-counter{font-size:2.5rem;bottom:65px;right:12px}.swipe-hint{bottom:72px}.sticker[data-anim]::after{display:none}}
+@media(max-width:768px){.canvas{width:8000px;height:5500px}.scroll-counter{font-size:2.5rem;bottom:65px;right:12px}.swipe-hint{bottom:72px}.sticker[data-anim]::after{display:none}}
 
 /* ===== SETTINGS PANEL ===== */
 .settings-btn{
@@ -781,8 +781,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   text-shadow:0 1px 4px rgba(0,0,0,0.4);
 }
 .minimap-container.expanded .map-zone-marker{
-  font-size:0.75rem;color:rgba(255,255,255,0.75);font-weight:800;letter-spacing:0.2em;
-  text-shadow:0 1px 6px rgba(0,0,0,0.5),0 0 20px rgba(0,0,0,0.15);
+  font-size:1rem;color:rgba(255,255,255,0.85);font-weight:800;letter-spacing:0.25em;
+  text-shadow:0 2px 8px rgba(0,0,0,0.6),0 0 30px rgba(0,0,0,0.2);
 }
 
 /* 3D Building blocks — SimCity isometric style */
@@ -1453,6 +1453,68 @@ body.map-expanded .scroll-counter{display:none!important}
 <!-- Extra text quotes -->
 <div class="sticker sticker-text" data-anim="dance" style="left:500px;top:2200px;font-size:1.3rem;transform:rotate(2deg);color:var(--accent)">"ordering an experience,<br>not booking a room"</div>
 
+<!-- ===== THE HOBBY LOBBY 🎸 (top-right corner 7000-9500, 200-1800) ===== -->
+<div class="sticker" style="left:7500px;top:300px;font-family:var(--font-hand);font-size:2rem;color:rgba(233,30,99,0.22);transform:rotate(-3deg);pointer-events:none;user-select:none">🎸 the hobby lobby</div>
+
+<div class="sticker sticker-postit" data-anim="jelly" style="left:7200px;top:500px;transform:rotate(3deg);background:var(--pink)">Guitar practice log: Day 47<br>Still can't play Wonderwall 🎸</div>
+<div class="sticker sticker-postit" data-anim="wave" style="left:7800px;top:400px;transform:rotate(-2deg);background:var(--green)">Books to read:<br>• Atomic Habits ✅<br>• Zero to One ✅<br>• Sapiens 📖</div>
+<div class="sticker sticker-postit" data-anim="bounce" style="left:8400px;top:600px;transform:rotate(4deg);background:var(--yellow)">Photography gear wish list 📷<br>Sony A7IV pls 🥺</div>
+<div class="sticker sticker-postit" data-anim="pop" style="left:7500px;top:900px;transform:rotate(-3deg);background:var(--blue)">Weekend plans:<br>1. Cook something new 🍳<br>2. Touch grass 🌿<br>3. Actually rest (lol)</div>
+<div class="sticker sticker-meme" data-anim="wiggle" style="left:8100px;top:800px;transform:rotate(2deg)"><div class="meme-emoji">🏋️</div><div class="meme-text">Me: joins gym<br>Also me: watches gym videos on couch</div><div class="meme-sub">it's basically the same thing</div></div>
+<div class="sticker sticker-meme" data-anim="shake" style="left:7300px;top:1300px;transform:rotate(-4deg)"><div class="meme-emoji">📚</div><div class="meme-text">Buys 10 books<br>Reads 2 pages of each<br>Calls myself a reader</div><div class="meme-sub">intellectual vibes only</div></div>
+<div class="sticker sticker-badge" data-anim="tada" style="left:8500px;top:1100px;transform:rotate(3deg)">AMATEUR CHEF 🍳</div>
+<div class="sticker sticker-badge" data-anim="pop" style="left:7800px;top:1500px;transform:rotate(-2deg)">BOOKWORM IN TRAINING 📖</div>
+<div class="sticker sticker-emoji big" data-anim="heartbeat" style="left:8800px;top:400px">🎨</div>
+<div class="sticker sticker-emoji" data-anim="dance" style="left:9200px;top:700px">📷</div>
+<div class="sticker sticker-emoji big" data-anim="float" style="left:7600px;top:1700px">🎵</div>
+<div class="sticker sticker-emoji" data-anim="spin" style="left:8600px;top:1600px">🏃</div>
+<div class="sticker sticker-stamp" data-anim="tada" style="left:9000px;top:1200px;transform:rotate(8deg);color:#E91E63;border-color:#E91E63">HOBBY COLLECTOR ✓</div>
+<div class="sticker sticker-postit" data-anim="jelly" style="left:8900px;top:300px;transform:rotate(-5deg);background:var(--purple)">Tried painting once 🎨<br>Canvas looked like modern art<br>(not the good kind)</div>
+<div class="sticker sticker-postit" data-anim="wave" style="left:9300px;top:1000px;transform:rotate(3deg);background:var(--orange)">Music playlist: 847 songs<br>Still plays the same 12 🎧</div>
+
+<!-- ===== WANDERLUST WAY 🌍 (bottom-left 200-2800, 4800-6800) ===== -->
+<div class="sticker" style="left:800px;top:4800px;font-family:var(--font-hand);font-size:2rem;color:rgba(33,150,243,0.22);transform:rotate(2deg);pointer-events:none;user-select:none">🌍 wanderlust way</div>
+
+<div class="sticker sticker-postit" data-anim="bounce" style="left:400px;top:5000px;transform:rotate(-3deg);background:var(--blue)">Dream destinations:<br>• Tokyo 🗼<br>• Iceland 🧊<br>• New Zealand 🏔️</div>
+<div class="sticker sticker-postit" data-anim="jelly" style="left:1200px;top:5200px;transform:rotate(4deg);background:var(--green)">Best chai spots:<br>1. Odisha roadside ☕<br>2. Mumbai tapri 🫖<br>3. My kitchen at 2am</div>
+<div class="sticker sticker-postit" data-anim="wave" style="left:2000px;top:5000px;transform:rotate(-2deg);background:var(--yellow)">Travel hack:<br>Pack light, forget charger,<br>panic at airport 😅</div>
+<div class="sticker sticker-meme" data-anim="wiggle" style="left:600px;top:5600px;transform:rotate(3deg)"><div class="meme-emoji">✈️</div><div class="meme-text">Google Maps says 3 hours<br>Indian roads say "lol good luck"</div><div class="meme-sub">ETA is just a suggestion</div></div>
+<div class="sticker sticker-meme" data-anim="shake" style="left:1600px;top:5800px;transform:rotate(-3deg)"><div class="meme-emoji">🏖️</div><div class="meme-text">Goes to beach for peace<br>Opens laptop<br>"Just one email"</div><div class="meme-sub">workation™</div></div>
+<div class="sticker sticker-badge" data-anim="pop" style="left:2400px;top:5400px;transform:rotate(2deg)">ROAD TRIP ENTHUSIAST 🚗</div>
+<div class="sticker sticker-badge" data-anim="tada" style="left:400px;top:6200px;transform:rotate(-3deg)">CHAI CONNOISSEUR ☕</div>
+<div class="sticker sticker-emoji huge" data-anim="rocket" style="left:1800px;top:6400px;font-size:6rem">🗺️</div>
+<div class="sticker sticker-emoji big" data-anim="float" style="left:2600px;top:5800px">🌅</div>
+<div class="sticker sticker-emoji" data-anim="dance" style="left:500px;top:6600px">🏕️</div>
+<div class="sticker sticker-emoji big" data-anim="heartbeat" style="left:2200px;top:6200px">🌴</div>
+<div class="sticker sticker-stamp" data-anim="tada" style="left:1200px;top:6000px;transform:rotate(-12deg);color:#2196F3;border-color:#2196F3">WANDERER ✓</div>
+<div class="sticker sticker-postit" data-anim="pop" style="left:2500px;top:6500px;transform:rotate(5deg);background:var(--mint)">Bucket list:<br>Northern lights 🌌<br>Scuba diving 🤿<br>Mountain trek 🏔️</div>
+
+<!-- ===== THE RECHARGE ROOM 🧘 (bottom-right 5000-9500, 4500-6800) ===== -->
+<div class="sticker" style="left:6500px;top:4600px;font-family:var(--font-hand);font-size:2rem;color:rgba(156,39,176,0.22);transform:rotate(-2deg);pointer-events:none;user-select:none">🧘 the recharge room</div>
+
+<div class="sticker sticker-postit" data-anim="wave" style="left:5200px;top:4800px;transform:rotate(-3deg);background:var(--purple)">Self-care checklist:<br>✅ Sleep 8 hrs (lol jk)<br>✅ Drink water<br>⬜ Touch grass</div>
+<div class="sticker sticker-postit" data-anim="jelly" style="left:6200px;top:5000px;transform:rotate(4deg);background:var(--mint)">Morning routine goals:<br>5am → Meditate → Journal<br>Reality: 9am → Phone → Regret</div>
+<div class="sticker sticker-postit" data-anim="bounce" style="left:7200px;top:4900px;transform:rotate(-2deg);background:var(--green)">Things that recharge me:<br>🌊 Ocean sounds<br>☕ Hot chai<br>🐕 Mr. Puchu cuddles</div>
+<div class="sticker sticker-meme" data-anim="wiggle" style="left:5500px;top:5500px;transform:rotate(3deg)"><div class="meme-emoji">😴</div><div class="meme-text">"I'll sleep early tonight"<br>— me, every night at 11pm<br>*proceeds to doomscroll till 3am*</div><div class="meme-sub">self care is a myth</div></div>
+<div class="sticker sticker-meme" data-anim="shake" style="left:6800px;top:5600px;transform:rotate(-4deg)"><div class="meme-emoji">🧠</div><div class="meme-text">Brain: go to sleep<br>Also brain: remember that embarrassing thing from 2017?</div><div class="meme-sub">thanks brain very cool</div></div>
+<div class="sticker sticker-meme" data-anim="bounce" style="left:8000px;top:5200px;transform:rotate(2deg)"><div class="meme-emoji">🧘</div><div class="meme-text">Meditation app: clear your mind<br>My mind: did I push to main?</div><div class="meme-sub">inner peace loading...</div></div>
+<div class="sticker sticker-badge" data-anim="pop" style="left:7600px;top:5800px;transform:rotate(-2deg)">CERTIFIED OVERTHINKER 🧠</div>
+<div class="sticker sticker-badge" data-anim="tada" style="left:5800px;top:6200px;transform:rotate(3deg)">NAP CHAMPION 💤</div>
+<div class="sticker sticker-emoji huge" data-anim="float" style="left:8500px;top:5000px;font-size:6rem">🌙</div>
+<div class="sticker sticker-emoji big" data-anim="heartbeat" style="left:9000px;top:5500px">💆</div>
+<div class="sticker sticker-emoji" data-anim="wave" style="left:6000px;top:6500px">🫖</div>
+<div class="sticker sticker-emoji big" data-anim="dance" style="left:7800px;top:6400px">🌿</div>
+<div class="sticker sticker-stamp" data-anim="tada" style="left:8800px;top:6000px;transform:rotate(10deg);color:#9C27B0;border-color:#9C27B0">RECHARGING... ✓</div>
+<div class="sticker sticker-postit" data-anim="pop" style="left:9200px;top:5800px;transform:rotate(-4deg);background:var(--yellow)">Affirmation:<br>I am enough 💛<br>(even when CI fails)</div>
+<div class="sticker sticker-postit" data-anim="jelly" style="left:8400px;top:6300px;transform:rotate(3deg);background:var(--pink)">Comfort movies:<br>🎬 Interstellar<br>🎬 Good Will Hunting<br>🎬 3 Idiots</div>
+<div class="sticker sticker-emoji" data-anim="spin" style="left:9500px;top:6600px">✨</div>
+
+<!-- Corner anchor stickers to ensure full coverage -->
+<div class="sticker sticker-emoji" data-anim="float" style="left:9600px;top:200px">⭐</div>
+<div class="sticker sticker-emoji" data-anim="wave" style="left:9600px;top:6700px">🌊</div>
+<div class="sticker sticker-emoji" data-anim="dance" style="left:200px;top:6700px">🏝️</div>
+<div class="sticker sticker-emoji" data-anim="heartbeat" style="left:200px;top:200px">🌟</div>
+
 </div></div>
 
 
@@ -1501,6 +1563,7 @@ body.map-expanded .scroll-counter{display:none!important}
         <button class="mc" onclick="event.stopPropagation();filt('photo',this)"><div class="legend-dot" style="background:#81D4FA"></div>📸 Origin</button>
         <button class="mc" onclick="event.stopPropagation();filt('meme',this)"><div class="legend-dot" style="background:#CE93D8"></div>🎬 LOL-lywood</button>
         <button class="mc" onclick="event.stopPropagation();filt('interactive',this)"><div class="legend-dot" style="background:#FFD54F"></div>🎪 La La Land</button>
+        <button class="mc" onclick="event.stopPropagation();filt('emoji',this)"><div class="legend-dot" style="background:#E91E63"></div>🎸 Hobby</button>
       </div>
       <div class="bar-info">
         <span class="bar-count" id="mapCount">98 items</span>
@@ -3226,13 +3289,17 @@ function addMapDecorations(cw,ch){
 
   // === SimCity ZONE GRIDS (dashed zone borders) ===
   const zoneGrids=[
-    {x:5,y:5,w:35,h:30,color:'rgba(76,175,80,0.5)'},     // The Origin Story
-    {x:55,y:5,w:40,h:30,color:'rgba(66,165,245,0.5)'},    // The Hustle District
-    {x:5,y:32,w:35,h:20,color:'rgba(171,71,188,0.4)'},    // Cloud Nine
-    {x:5,y:55,w:35,h:35,color:'rgba(255,193,7,0.5)'},     // LOL-lywood
-    {x:60,y:32,w:35,h:20,color:'rgba(0,255,128,0.4)'},    // The Matrix Dojo
-    {x:55,y:55,w:40,h:35,color:'rgba(255,87,34,0.4)'},    // La La Land
-    {x:38,y:38,w:20,h:25,color:'rgba(201,169,110,0.3)'},  // Akash Unplugged center
+    {x:5,y:5,w:28,h:26,color:'rgba(76,175,80,0.5)'},     // The Origin Story
+    {x:40,y:5,w:30,h:26,color:'rgba(66,165,245,0.5)'},    // The Hustle District
+    {x:70,y:3,w:27,h:29,color:'rgba(233,30,99,0.4)'},     // The Hobby Lobby
+    {x:5,y:28,w:28,h:15,color:'rgba(171,71,188,0.4)'},    // Cloud Nine
+    {x:5,y:44,w:28,h:25,color:'rgba(255,193,7,0.5)'},     // LOL-lywood
+    {x:5,y:69,w:28,h:28,color:'rgba(33,150,243,0.4)'},    // Wanderlust Way
+    {x:48,y:28,w:22,h:15,color:'rgba(0,255,128,0.4)'},    // The Matrix Dojo
+    {x:40,y:44,w:30,h:20,color:'rgba(255,87,34,0.4)'},    // La La Land
+    {x:33,y:34,w:15,h:16,color:'rgba(201,169,110,0.3)'},  // Akash Unplugged center
+    {x:50,y:65,w:47,h:32,color:'rgba(156,39,176,0.4)'},   // The Recharge Room
+    {x:28,y:69,w:22,h:28,color:'rgba(121,85,72,0.35)'},   // The Backyard
   ];
   zoneGrids.forEach(z=>{
     const el=document.createElement('div');el.className='map-zone-grid';
@@ -3311,13 +3378,17 @@ function addMapDecorations(cw,ch){
   const bldTypes=['residential','commercial','industrial','landmark'];
   const buildingClusters=[
     {x:15,y:14,count:14,spread:7,type:0,label:'The Origin Story'},
-    {x:75,y:14,count:16,spread:8,type:1,label:'The Hustle District'},
+    {x:55,y:14,count:16,spread:8,type:1,label:'The Hustle District'},
+    {x:82,y:12,count:12,spread:7,type:0,label:'The Hobby Lobby'},
     {x:15,y:38,count:10,spread:6,type:3,label:'Cloud Nine'},
     {x:50,y:48,count:8,spread:5,type:3,label:'Akash Unplugged'},
-    {x:15,y:68,count:14,spread:8,type:1,label:'LOL-lywood'},
-    {x:80,y:38,count:10,spread:6,type:2,label:'The Matrix Dojo'},
-    {x:75,y:68,count:12,spread:7,type:0,label:'La La Land'},
+    {x:15,y:55,count:14,spread:8,type:1,label:'LOL-lywood'},
+    {x:15,y:78,count:12,spread:7,type:1,label:'Wanderlust Way'},
+    {x:60,y:38,count:10,spread:6,type:2,label:'The Matrix Dojo'},
+    {x:55,y:55,count:12,spread:7,type:0,label:'La La Land'},
     {x:50,y:28,count:6,spread:4,type:1,label:'The Crossroads'},
+    {x:75,y:78,count:14,spread:8,type:3,label:'The Recharge Room'},
+    {x:38,y:80,count:8,spread:5,type:0,label:'The Backyard'},
   ];
   buildingClusters.forEach(b=>{
     for(let i=0;i<b.count;i++){
@@ -3335,12 +3406,16 @@ function addMapDecorations(cw,ch){
   // === AREA NAME LABELS — SimCity district names ===
   const areaNames=[
     {x:15,y:12,t:'The Origin Story',size:0.9,rot:0},
-    {x:75,y:12,t:'The Hustle District',size:0.95,rot:0},
-    {x:15,y:38,t:'Cloud Nine',size:0.85,rot:0},
-    {x:50,y:48,t:'Akash Unplugged',size:1.1,rot:0},
-    {x:15,y:65,t:'LOL-lywood',size:0.95,rot:0},
-    {x:80,y:38,t:'The Matrix Dojo',size:0.85,rot:0},
-    {x:75,y:65,t:'La La Land',size:0.9,rot:0},
+    {x:55,y:12,t:'The Hustle District',size:0.95,rot:0},
+    {x:82,y:12,t:'The Hobby Lobby',size:0.9,rot:0},
+    {x:15,y:36,t:'Cloud Nine',size:0.85,rot:0},
+    {x:45,y:44,t:'Akash Unplugged',size:1.1,rot:0},
+    {x:15,y:55,t:'LOL-lywood',size:0.95,rot:0},
+    {x:15,y:78,t:'Wanderlust Way',size:0.9,rot:0},
+    {x:60,y:36,t:'The Matrix Dojo',size:0.85,rot:0},
+    {x:55,y:55,t:'La La Land',size:0.9,rot:0},
+    {x:75,y:78,t:'The Recharge Room',size:0.9,rot:0},
+    {x:38,y:80,t:'The Backyard',size:0.8,rot:0},
     {x:36,y:40,t:'Lake Akash',size:0.7,rot:0,color:'rgba(150,200,255,0.8)'},
     {x:50,y:7,t:'North Shore',size:0.7,rot:0},
   ];
@@ -3355,8 +3430,9 @@ function addMapDecorations(cw,ch){
 
   // === ROUTE BADGES — SimCity highway shields ===
   const routeBadges=[
-    {x:25,y:33,num:'OS'},{x:65,y:33,num:'HD'},{x:45,y:62,num:'AU'},
-    {x:80,y:33,num:'MD'},{x:25,y:65,num:'LL'},
+    {x:25,y:33,num:'OS'},{x:55,y:33,num:'HD'},{x:45,y:62,num:'AU'},
+    {x:60,y:33,num:'MD'},{x:25,y:55,num:'LL'},{x:82,y:15,num:'HL'},
+    {x:15,y:78,num:'WW'},{x:75,y:78,num:'RR'},{x:38,y:80,num:'BY'},
   ];
   routeBadges.forEach(rb=>{
     const el=document.createElement('div');el.className='map-section-badge';
@@ -3367,11 +3443,12 @@ function addMapDecorations(cw,ch){
 
   // === POI MARKERS ===
   const pois=[
-    {x:15,y:15,emoji:'📸',color:'#81C784'},{x:75,y:15,emoji:'💼',color:'#64B5F6'},
-    {x:15,y:38,emoji:'☁️',color:'#CE93D8'},{x:80,y:38,emoji:'🥋',color:'#FFD54F'},
-    {x:15,y:68,emoji:'🎬',color:'#FFD54F'},{x:75,y:68,emoji:'🎪',color:'#FF7043'},
-    {x:50,y:48,emoji:'⭐',color:'#FFD54F'},{x:38,y:40,emoji:'⛵',color:'#64B5F6'},
-    {x:50,y:15,emoji:'🛤️',color:'#81C784'},{x:50,y:75,emoji:'🌊',color:'#64B5F6'},
+    {x:15,y:15,emoji:'📸',color:'#81C784'},{x:55,y:15,emoji:'💼',color:'#64B5F6'},
+    {x:82,y:12,emoji:'🎸',color:'#E91E63'},{x:15,y:36,emoji:'☁️',color:'#CE93D8'},
+    {x:60,y:36,emoji:'🥋',color:'#FFD54F'},{x:15,y:55,emoji:'🎬',color:'#FFD54F'},
+    {x:55,y:55,emoji:'🎪',color:'#FF7043'},{x:45,y:44,emoji:'⭐',color:'#FFD54F'},
+    {x:38,y:40,emoji:'⛵',color:'#64B5F6'},{x:15,y:78,emoji:'🌍',color:'#2196F3'},
+    {x:75,y:78,emoji:'🧘',color:'#9C27B0'},{x:38,y:80,emoji:'🏡',color:'#795548'},
   ];
   pois.forEach(p=>{
     const el=document.createElement('div');el.className='map-poi';
@@ -3404,15 +3481,11 @@ function drawMap(){
   const mr=mmInner.getBoundingClientRect();
   const mw=mr.width||64,mh=mr.height||64;
   
-  let minL=Infinity,minT=Infinity,maxR=0,maxB=0;
-  stickerData.forEach(d=>{
-    minL=Math.min(minL,d.left);minT=Math.min(minT,d.top);
-    maxR=Math.max(maxR,d.left+d.w);maxB=Math.max(maxB,d.top+d.h);
-  });
-  const pad=150;
-  minL=Math.max(0,minL-pad);minT=Math.max(0,minT-pad);
-  maxR+=pad;maxB+=pad;
-  const contentW=maxR-minL,contentH=maxB-minT;
+  // Use full canvas dimensions to ensure entire map is covered
+  const isMobile=window.innerWidth<=768;
+  const fullW=isMobile?8000:10000, fullH=isMobile?5500:7000;
+  const minL=0, minT=0, maxR=fullW, maxB=fullH;
+  const contentW=fullW, contentH=fullH;
   
   let sc,offsetX,offsetY,canvasW,canvasH;
   
@@ -3480,8 +3553,8 @@ function drawMap(){
       const zy=((z.y1+z.y2)/2-offsetY)*sc;
       if(zx<-30||zx>canvasW+30||zy<-30||zy>canvasH+30)return;
       const lbl=document.createElement('div');
-      lbl.textContent=z.name.replace('The ','');
-      lbl.style.cssText='position:absolute;left:'+zx+'px;top:'+zy+'px;transform:translate(-50%,-50%);font-family:Arial Black,sans-serif;font-size:3.5px;font-weight:900;color:rgba(60,80,40,0.25);text-transform:uppercase;letter-spacing:0.5px;pointer-events:none;white-space:nowrap;';
+      lbl.textContent=z.icon+' '+z.name.replace('The ','');
+      lbl.style.cssText='position:absolute;left:'+zx+'px;top:'+zy+'px;transform:translate(-50%,-50%);font-family:Arial Black,sans-serif;font-size:4px;font-weight:900;color:rgba(40,60,30,0.4);text-transform:uppercase;letter-spacing:0.5px;pointer-events:none;white-space:nowrap;text-shadow:0 0.5px 1px rgba(255,255,255,0.15);';
       mapCanvas.appendChild(lbl);
     });
   }
@@ -3756,12 +3829,16 @@ function showNav(tx,ty){
 const mapZones=[
   {x1:0,y1:0,x2:2800,y2:1800,name:'The Origin Story',icon:'📸'},
   {x1:2800,y1:1800,x2:4200,y2:2800,name:'Akash Unplugged',icon:'⭐'},
-  {x1:4000,y1:0,x2:8500,y2:1800,name:'The Hustle District',icon:'💼'},
+  {x1:4000,y1:0,x2:7000,y2:1800,name:'The Hustle District',icon:'💼'},
+  {x1:7000,y1:0,x2:10000,y2:2000,name:'The Hobby Lobby',icon:'🎸'},
   {x1:0,y1:1800,x2:2800,y2:3000,name:'Cloud Nine',icon:'☁️'},
-  {x1:0,y1:3000,x2:2800,y2:6000,name:'LOL-lywood',icon:'🎬'},
-  {x1:4800,y1:1800,x2:8500,y2:3000,name:'The Matrix Dojo',icon:'🥋'},
-  {x1:4000,y1:3000,x2:8500,y2:6000,name:'La La Land',icon:'🎪'},
-  {x1:2800,y1:2800,x2:4200,y2:6000,name:'The Crossroads',icon:'🛤️'},
+  {x1:0,y1:3000,x2:2800,y2:4800,name:'LOL-lywood',icon:'🎬'},
+  {x1:0,y1:4800,x2:2800,y2:7000,name:'Wanderlust Way',icon:'🌍'},
+  {x1:4800,y1:1800,x2:7000,y2:3000,name:'The Matrix Dojo',icon:'🥋'},
+  {x1:4000,y1:3000,x2:7000,y2:4500,name:'La La Land',icon:'🎪'},
+  {x1:2800,y1:2800,x2:4200,y2:4800,name:'The Crossroads',icon:'🛤️'},
+  {x1:5000,y1:4500,x2:10000,y2:7000,name:'The Recharge Room',icon:'🧘'},
+  {x1:2800,y1:4800,x2:5000,y2:7000,name:'The Backyard',icon:'🏡'},
 ];
 function getZoneName(px,py){
   for(const z of mapZones){
