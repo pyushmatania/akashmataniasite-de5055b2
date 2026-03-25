@@ -1830,105 +1830,118 @@ body.map-expanded .scroll-counter{display:none!important}
 
 .about-backdrop {
   position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0);
-  pointer-events:none;transition:background 0.4s ease;
+  pointer-events:none;transition:background 0.5s ease;
 }
-.about-backdrop.open { background:rgba(0,0,0,0.4);pointer-events:all; }
+.about-backdrop.open { background:rgba(0,0,0,0.5);pointer-events:all; }
 
 .about-panel {
-  position:fixed;left:0;right:0;bottom:0;z-index:9999;
-  max-height:92vh;
-  background:#fafafa;
-  border-radius:20px 20px 0 0;
+  position:fixed;inset:0;z-index:9999;
+  background:#fff;
   transform:translateY(100%);
-  transition:transform 0.45s cubic-bezier(0.32,0.72,0,1);
+  transition:transform 0.5s cubic-bezier(0.32,0.72,0,1);
   overflow-y:auto;overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
-  box-shadow:0 -8px 40px rgba(0,0,0,0.15);
 }
 .about-panel.open { transform:translateY(0); }
 
-.about-panel .handle {
-  width:36px;height:5px;border-radius:3px;background:#ccc;
-  margin:10px auto 0;
+.about-panel .about-inner {
+  max-width:520px;margin:0 auto;
+  padding:60px 28px 120px;
 }
-.about-panel .about-inner { padding:8px 24px 100px; }
 .about-panel .about-back {
-  width:44px;height:44px;border-radius:50%;border:1px solid #ddd;
+  width:46px;height:46px;border-radius:50%;border:1.5px solid #e0e0e0;
   display:flex;align-items:center;justify-content:center;
-  background:transparent;cursor:pointer;margin:12px 0 20px;
-  transition:background 0.2s;
+  background:transparent;cursor:pointer;margin:0 0 48px;
+  transition:background 0.2s, border-color 0.2s;
 }
-.about-panel .about-back:active { background:#eee; }
+.about-panel .about-back:hover { border-color:#aaa; }
+.about-panel .about-back:active { background:#f5f5f5; }
+
 .about-panel h2 {
-  font-size:2.8rem;font-weight:800;color:#111;letter-spacing:-0.02em;
-  margin:0 0 28px;line-height:1.1;
+  font-family:'DM Sans',system-ui,sans-serif;
+  font-size:3.2rem;font-weight:800;color:#0a0a0a;letter-spacing:-0.03em;
+  margin:0 0 40px;line-height:1;
 }
 .about-panel .journey {
-  color:#999;font-size:1.05rem;margin-bottom:20px;
+  color:#b0b0b0;font-size:0.95rem;letter-spacing:0.08em;
+  text-transform:uppercase;margin-bottom:32px;font-weight:500;
 }
+.about-panel .journey span { margin:0 6px;color:#d0d0d0; }
 .about-panel .bio {
-  color:#777;font-size:1.05rem;line-height:1.7;margin-bottom:40px;
+  color:#666;font-size:1.05rem;line-height:1.8;margin-bottom:56px;
+  font-weight:400;
 }
 .about-panel .quote {
-  color:#111;font-size:1.45rem;font-weight:700;line-height:1.4;
-  margin-bottom:40px;
+  color:#0a0a0a;font-size:1.5rem;font-weight:700;line-height:1.45;
+  margin-bottom:56px;letter-spacing:-0.01em;
+  border-left:3px solid #0a0a0a;padding-left:24px;
 }
 .about-panel .philosophy {
-  color:#777;font-size:1.05rem;line-height:1.7;margin-bottom:40px;
-}
-.about-panel .photo-frame {
-  padding:6px;border-radius:16px;margin-bottom:40px;
-  background:linear-gradient(135deg, #3cd070, #f5c842, #e85050, #a855f7, #3b82f6);
-  box-shadow:0 8px 32px -8px rgba(168,85,247,0.35), 0 4px 16px -4px rgba(232,80,80,0.25);
-}
-.about-panel .photo-frame img {
-  width:100%;display:block;border-radius:11px;
-  aspect-ratio:4/3;object-fit:cover;object-position:top;
-}
-.about-panel .skill-tags { display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px; }
-.about-panel .skill-tag {
-  padding:10px 20px;border-radius:99px;font-size:0.8rem;
-  font-weight:700;letter-spacing:0.04em;color:#fff;
+  color:#888;font-size:1rem;line-height:1.8;margin-bottom:56px;
+  font-style:italic;
 }
 
-/* stagger animations */
+.about-panel .photo-frame {
+  padding:5px;border-radius:20px;margin-bottom:56px;
+  background:linear-gradient(135deg, #3cd070, #f5c842, #e85050, #a855f7, #3b82f6);
+  box-shadow:0 12px 40px -12px rgba(168,85,247,0.3);
+}
+.about-panel .photo-frame img {
+  width:100%;display:block;border-radius:16px;
+  aspect-ratio:4/3;object-fit:cover;object-position:top;
+}
+
+.about-panel .skill-tags {
+  display:flex;flex-wrap:wrap;gap:10px;
+}
+.about-panel .skill-tag {
+  padding:10px 22px;border-radius:99px;font-size:0.75rem;
+  font-weight:700;letter-spacing:0.06em;color:#fff;
+  transition:transform 0.2s ease;
+}
+.about-panel .skill-tag:active { transform:scale(0.94); }
+
 .about-panel .anim-item {
-  opacity:0;transform:translateY(18px);
-  transition:opacity 0.4s ease, transform 0.4s ease;
+  opacity:0;transform:translateY(24px);
+  transition:opacity 0.5s ease, transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
 }
 .about-panel.open .anim-item { opacity:1;transform:translateY(0); }
-.about-panel.open .anim-item:nth-child(1){transition-delay:0.08s}
-.about-panel.open .anim-item:nth-child(2){transition-delay:0.14s}
-.about-panel.open .anim-item:nth-child(3){transition-delay:0.20s}
-.about-panel.open .anim-item:nth-child(4){transition-delay:0.26s}
-.about-panel.open .anim-item:nth-child(5){transition-delay:0.32s}
-.about-panel.open .anim-item:nth-child(6){transition-delay:0.38s}
-.about-panel.open .anim-item:nth-child(7){transition-delay:0.44s}
-.about-panel.open .anim-item:nth-child(8){transition-delay:0.50s}
+.about-panel.open .anim-item:nth-child(1){transition-delay:0.1s}
+.about-panel.open .anim-item:nth-child(2){transition-delay:0.18s}
+.about-panel.open .anim-item:nth-child(3){transition-delay:0.26s}
+.about-panel.open .anim-item:nth-child(4){transition-delay:0.34s}
+.about-panel.open .anim-item:nth-child(5){transition-delay:0.42s}
+.about-panel.open .anim-item:nth-child(6){transition-delay:0.50s}
+.about-panel.open .anim-item:nth-child(7){transition-delay:0.58s}
+.about-panel.open .anim-item:nth-child(8){transition-delay:0.66s}
+
+.about-panel .divider {
+  width:40px;height:2px;background:#e5e5e5;margin:0 0 56px;border:none;
+}
 </style>
 
 <div class="about-backdrop" id="aboutBackdrop" onclick="closeAboutPanel()"></div>
 <div class="about-panel" id="aboutPanel">
-  <div class="handle"></div>
   <div class="about-inner">
     <button class="about-back anim-item" onclick="closeAboutPanel()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     </button>
     <h2 class="anim-item">My story</h2>
-    <p class="journey anim-item">Engineering → Product → Web3 → AI</p>
+    <p class="journey anim-item">Engineering <span>→</span> Product <span>→</span> Web3 <span>→</span> AI</p>
+    <hr class="divider anim-item" />
     <p class="bio anim-item">I started in computer science engineering, moved into product management across fintech, edtech, and Web3, and somewhere along the way fell in love with building products from 0 to 1. Now I sit at the intersection of product thinking and emerging technology — scaling platforms to 5,000+ users, achieving product-market fit, and driving teams to ship faster.</p>
     <p class="quote anim-item">I believe the best products happen when craft meets curiosity. I care about the details that most people won't notice but everyone will feel — the clarity of a user flow, the precision of a roadmap, the moment a feature earns its place.</p>
-    <p class="philosophy anim-item">I build with AI the way a photographer works with light — it's a medium, not a shortcut. The taste, the decisions, the product direction? That's still very human. That's still mine.</p>
+    <p class="philosophy anim-item">"I build with AI the way a photographer works with light — it's a medium, not a shortcut. The taste, the decisions, the product direction? That's still very human. That's still mine."</p>
     <div class="photo-frame anim-item">
       <img src="/images/akash-photo.jpeg" alt="Akash Matania" />
     </div>
     <div class="skill-tags anim-item">
-      <span class="skill-tag" style="background:#3cd070">PRODUCT STRATEGY</span>
-      <span class="skill-tag" style="background:#f5c842">USER RESEARCH</span>
+      <span class="skill-tag" style="background:#0a0a0a">PRODUCT STRATEGY</span>
+      <span class="skill-tag" style="background:#3cd070">USER RESEARCH</span>
       <span class="skill-tag" style="background:#e85050">WEB3 & FINTECH</span>
-      <span class="skill-tag" style="background:#f5c842">GROWTH & ANALYTICS</span>
-      <span class="skill-tag" style="background:#3cd070">TECHNICAL PRDs</span>
-      <span class="skill-tag" style="background:#e85050">AI-ASSISTED DEVELOPMENT</span>
+      <span class="skill-tag" style="background:#f5c842;color:#0a0a0a">GROWTH & ANALYTICS</span>
+      <span class="skill-tag" style="background:#0a0a0a">TECHNICAL PRDs</span>
+      <span class="skill-tag" style="background:#3b82f6">AI-ASSISTED DEVELOPMENT</span>
     </div>
   </div>
 </div>
@@ -1936,16 +1949,14 @@ body.map-expanded .scroll-counter{display:none!important}
 <script>
 function toggleAboutPanel(e){
   e.preventDefault();e.stopPropagation();
-  var panel=document.getElementById('aboutPanel');
-  var bd=document.getElementById('aboutBackdrop');
-  panel.classList.add('open');
-  bd.classList.add('open');
+  document.getElementById('aboutPanel').classList.add('open');
+  document.getElementById('aboutBackdrop').classList.add('open');
+  document.body.style.overflow='hidden';
 }
 function closeAboutPanel(){
-  var panel=document.getElementById('aboutPanel');
-  var bd=document.getElementById('aboutBackdrop');
-  panel.classList.remove('open');
-  bd.classList.remove('open');
+  document.getElementById('aboutPanel').classList.remove('open');
+  document.getElementById('aboutBackdrop').classList.remove('open');
+  document.body.style.overflow='';
 }
 </script>
 <script>
