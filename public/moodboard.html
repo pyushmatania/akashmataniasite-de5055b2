@@ -1118,6 +1118,43 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   animation:bitmoji-walk 0.6s ease-in-out infinite;
   transition:left 1.2s ease-in-out,top 1.2s ease-in-out;
 }
+/* Greeting wave animation */
+@keyframes bitmoji-wave{
+  0%{transform:translate(-50%,20px) scale(0.3);opacity:0}
+  15%{transform:translate(-50%,0) scale(1.05);opacity:1}
+  25%{transform:translate(-50%,0) scale(1) rotate(-10deg)}
+  35%{transform:translate(-50%,0) scale(1) rotate(12deg)}
+  45%{transform:translate(-50%,0) scale(1) rotate(-10deg)}
+  55%{transform:translate(-50%,0) scale(1) rotate(12deg)}
+  65%{transform:translate(-50%,0) scale(1) rotate(-6deg)}
+  75%{transform:translate(-50%,0) scale(1) rotate(0deg)}
+  90%{transform:translate(-50%,0) scale(1);opacity:1}
+  100%{transform:translate(-50%,-15px) scale(0.8);opacity:0}
+}
+@keyframes greet-bubble{
+  0%{transform:translateX(-50%) scale(0);opacity:0}
+  15%{transform:translateX(-50%) scale(1.1);opacity:1}
+  25%{transform:translateX(-50%) scale(1);opacity:1}
+  85%{transform:translateX(-50%) scale(1);opacity:1}
+  100%{transform:translateX(-50%) scale(0.5);opacity:0}
+}
+.bitmoji-greeting{
+  position:fixed;bottom:100px;left:50%;z-index:99999;
+  pointer-events:none;animation:bitmoji-wave 3s ease-in-out forwards;
+}
+.bitmoji-greeting img{width:100px;height:auto;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.25))}
+.greet-bubble{
+  position:absolute;top:-36px;left:50%;
+  background:#fff;border-radius:16px;padding:6px 14px;
+  font-family:var(--font-fun);font-weight:700;font-size:0.9rem;color:var(--text);
+  box-shadow:0 2px 12px rgba(0,0,0,0.12);white-space:nowrap;
+  animation:greet-bubble 3s ease-in-out forwards;
+  transform-origin:center bottom;
+}
+.greet-bubble::after{
+  content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);
+  width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid #fff;
+}
 
 /* Viewport rect */
 .map-vp-rect{
@@ -4107,8 +4144,16 @@ vp.addEventListener('scroll',()=>{
   if(!mmExp){clearTimeout(mapScrollTimer);mapScrollTimer=setTimeout(drawMap,250)}
 });
 
-// Scan once on load, then draw
-setTimeout(()=>{try{scanStickers();drawMap()}catch(e){console.error('Init error:',e)}},600)
+// Scan once on load, then draw + greeting
+setTimeout(()=>{
+  try{scanStickers();drawMap()}catch(e){console.error('Init error:',e)}
+  // Show bitmoji greeting
+  const greet=document.createElement('div');
+  greet.className='bitmoji-greeting';
+  greet.innerHTML='<div class="greet-bubble">Hey there! 👋</div><img src="images/bitmoji-full.png" alt="Akash waving"/>';
+  document.body.appendChild(greet);
+  setTimeout(()=>greet.remove(),3200);
+},600)
 
 
 
