@@ -2305,6 +2305,63 @@ function closeWorkPanel(){
 .work-panel.open .w-anim:nth-child(18){transition-delay:0.74s}
 .work-panel.open .w-anim:nth-child(19){transition-delay:0.78s}
 .work-panel.open .w-anim:nth-child(20){transition-delay:0.82s}
+/* Confetti */
+.confetti-piece {
+  position:fixed;z-index:99999;pointer-events:none;
+  width:8px;height:8px;border-radius:2px;
+  animation:confetti-fall 1s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+}
+@keyframes confetti-fall {
+  0% { opacity:1;transform:translateY(0) rotate(0deg) scale(1); }
+  100% { opacity:0;transform:translateY(120px) rotate(720deg) scale(0.3); }
+}
+
+/* Stat pill tap */
+.stat-pill { cursor:pointer; }
+.stat-pill.popped { animation:stat-pop 0.4s ease; }
+@keyframes stat-pop {
+  0% { transform:scale(1); }
+  30% { transform:scale(1.15); }
+  60% { transform:scale(0.95); }
+  100% { transform:scale(1); }
+}
+
+/* Skill shuffle */
+.skill-row.shuffling .sk-fill {
+  transition:width 0.6s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+.skill-row.shuffling {
+  animation:skill-shake 0.3s ease;
+}
+@keyframes skill-shake {
+  0%,100% { transform:translateX(0); }
+  25% { transform:translateX(-4px); }
+  75% { transform:translateX(4px); }
+}
+
+/* Tool chip bounce */
+.tool-chip.bounced { animation:chip-bounce 0.5s ease; }
+@keyframes chip-bounce {
+  0% { transform:scale(1); }
+  25% { transform:scale(0.85) rotate(-5deg); }
+  50% { transform:scale(1.12) rotate(3deg); }
+  75% { transform:scale(0.97) rotate(-1deg); }
+  100% { transform:scale(1) rotate(0); }
+}
+
+/* Shuffle button */
+.shuffle-btn {
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 20px;border-radius:99px;border:1.5px solid #e8e5df;
+  background:#fff;cursor:pointer;font-size:0.75rem;font-weight:700;
+  color:#7a756d;letter-spacing:0.04em;margin:16px 0 48px;
+  transition:transform 0.15s, border-color 0.2s, background 0.2s;
+}
+.shuffle-btn:active { transform:scale(0.94);background:#faf9f7; }
+.shuffle-btn .shuffle-icon {
+  display:inline-block;transition:transform 0.4s ease;
+}
+.shuffle-btn.spinning .shuffle-icon { transform:rotate(360deg); }
 </style>
 
 <div class="work-backdrop" id="workBackdrop" onclick="closeWorkPanel()"></div>
