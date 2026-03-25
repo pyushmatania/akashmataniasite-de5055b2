@@ -5317,7 +5317,7 @@ const catNames={photo:'Photos',meme:'Memes',interactive:'Interactive',badge:'Bad
 const catIcons={photo:'📸',meme:'😂',interactive:'🎮',badge:'🏷️',emoji:'✨',text:'💬',postit:'📝',stamp:'🔖',swatches:'🎨',fortune:'🔮',contra:'⚔️',other:'📦'};
 
 function navigateToFilteredItem(cat,idx){
-  const matching=stickerData.filter(d=>d.cat===cat);
+  const matching=stickerData.filter(d=>matchesFilter(d.cat,cat));
   if(!matching.length)return;
   const target=matching[idx%matching.length];
   const sc=drawMap._sc||0.05;
