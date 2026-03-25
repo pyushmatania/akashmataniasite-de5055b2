@@ -4311,6 +4311,8 @@ function updMap(){
     arrowY=cT+rawPy;
     mapPlayer.style.left=arrowX+'px';
     mapPlayer.style.top=arrowY+'px';
+    mapPlayer.style.opacity='1';
+    mapPlayer.style.visibility='visible';
     // Rotate arrow to face swipe direction
     const arrowSvg=mapPlayer.querySelector('.map-arrow-svg');
     if(arrowSvg&&typeof _lastScrollX!=='undefined'){
