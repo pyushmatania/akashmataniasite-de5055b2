@@ -4144,8 +4144,16 @@ vp.addEventListener('scroll',()=>{
   if(!mmExp){clearTimeout(mapScrollTimer);mapScrollTimer=setTimeout(drawMap,250)}
 });
 
-// Scan once on load, then draw
-setTimeout(()=>{try{scanStickers();drawMap()}catch(e){console.error('Init error:',e)}},600)
+// Scan once on load, then draw + greeting
+setTimeout(()=>{
+  try{scanStickers();drawMap()}catch(e){console.error('Init error:',e)}
+  // Show bitmoji greeting
+  const greet=document.createElement('div');
+  greet.className='bitmoji-greeting';
+  greet.innerHTML='<div class="greet-bubble">Hey there! 👋</div><img src="images/bitmoji-full.png" alt="Akash waving"/>';
+  document.body.appendChild(greet);
+  setTimeout(()=>greet.remove(),3200);
+},600)
 
 
 
