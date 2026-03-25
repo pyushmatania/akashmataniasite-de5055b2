@@ -3724,7 +3724,7 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     // Remove ::after hints
     clone.style.setProperty('--no-after','1');
     
-    // Click to navigate — bitmoji walks to target then map closes
+    // Click to navigate — bitmoji walks to target with footstep trail
     clone.addEventListener('click',ev=>{
       ev.stopPropagation();
       const sc=drawMap._sc||0.05;
@@ -3732,10 +3732,40 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
       const cT=parseInt(mapCanvas.style.top)||0;
       const targetMX=(d.left-ox)*sc;
       const targetMY=(d.top-oy)*sc+cT;
+      const startX=parseFloat(mapPlayer.style.left)||0;
+      const startY=parseFloat(mapPlayer.style.top)||0;
       // Start walking animation
       mapPlayer.classList.add('walking');
       mapPlayer.style.left=targetMX+'px';
       mapPlayer.style.top=targetMY+'px';
+      // Drop footstep particles along the path
+      const dx=targetMX-startX,dy=targetMY-startY;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      const steps=Math.min(Math.floor(dist/18),20);
+      const footprints=['👣','·','•'];
+      for(let i=1;i<=steps;i++){
+        setTimeout(()=>{
+          const t=i/steps;
+          const fx=startX+dx*t+((i%2===0?1:-1)*4);
+          const fy=startY+dy*t;
+          const fp=document.createElement('div');
+          fp.textContent=i%3===0?'👣':'';
+          fp.style.cssText='position:absolute;left:'+fx+'px;top:'+fy+'px;z-index:9998;pointer-events:none;font-size:'+(i%3===0?'10px':'6px')+';opacity:0.7;transform:translate(-50%,-50%) rotate('+Math.atan2(dy,dx)*(180/Math.PI)+'deg);transition:opacity 0.8s;';
+          if(i%3!==0){
+            fp.style.width='5px';fp.style.height='5px';fp.style.borderRadius='50%';
+            fp.style.background='rgba(139,119,80,0.5)';fp.style.boxShadow='0 0 4px rgba(139,119,80,0.3)';
+          }
+          mmInner.appendChild(fp);
+          // Dust puff
+          const dust=document.createElement('div');
+          dust.style.cssText='position:absolute;left:'+fx+'px;top:'+fy+'px;z-index:9997;pointer-events:none;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle,rgba(180,160,120,0.4),transparent);transform:translate(-50%,-50%) scale(0.5);transition:transform 0.5s,opacity 0.5s;';
+          mmInner.appendChild(dust);
+          requestAnimationFrame(()=>{dust.style.transform='translate(-50%,-50%) scale(2)';dust.style.opacity='0'});
+          // Fade out footprint
+          setTimeout(()=>{fp.style.opacity='0'},600);
+          setTimeout(()=>{fp.remove();dust.remove()},1400);
+        },i*(1200/steps));
+      }
       // After walk completes, close map and navigate
       setTimeout(()=>{
         mapPlayer.classList.remove('walking');
