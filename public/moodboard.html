@@ -1084,14 +1084,14 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 }
 .mi:hover .mi-tip{opacity:1}
 
-/* Player */
+/* Player — now direct child of .minimap, above radar/vignette */
 .map-player{
   position:absolute;z-index:9999;transform:translate(-50%,-50%);
   pointer-events:none;transition:left 0.2s,top 0.2s;
 }
 .map-arrow{object-fit:cover}
 .map-arrow-head{display:none}
-.map-arrow-svg{width:16px;height:16px;filter:drop-shadow(0 0 4px rgba(255,213,79,0.9)) drop-shadow(0 0 8px rgba(255,152,0,0.5)) drop-shadow(0 1px 2px rgba(0,0,0,0.5))}
+.map-arrow-svg{width:18px;height:18px;filter:drop-shadow(0 0 4px rgba(255,213,79,0.9)) drop-shadow(0 0 8px rgba(255,152,0,0.5)) drop-shadow(0 1px 2px rgba(0,0,0,0.5))}
 .map-arrow-full{width:52px;height:auto;border-radius:0;border:none;filter:drop-shadow(0 0 8px rgba(255,202,40,0.6)) drop-shadow(0 2px 6px rgba(0,0,0,0.4))}
 .minimap-container:not(.expanded) .map-arrow-full{display:none!important}
 .minimap-container:not(.expanded) .map-arrow-svg{display:block!important}
@@ -1124,6 +1124,76 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 @keyframes destPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:0.6}}
 @keyframes destSpin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
 @keyframes destRipple{0%{transform:translate(-50%,-50%) scale(0.8);opacity:0.8;left:50%;top:50%}100%{transform:translate(-50%,-50%) scale(2.5);opacity:0;left:50%;top:50%}}
+
+/* Bitmoji showing gesture on moodboard */
+@keyframes bitmojiArriveSlide{
+  0%{transform:translateX(-80px) scale(0.3);opacity:0}
+  40%{transform:translateX(8px) scale(1.05);opacity:1}
+  55%{transform:translateX(-3px) scale(1);opacity:1}
+  100%{transform:translateX(0) scale(1);opacity:1}
+}
+@keyframes bitmojiPresent{
+  0%,100%{transform:rotate(0deg)}
+  8%{transform:rotate(-5deg)}
+  16%{transform:rotate(5deg) translateY(-2px)}
+  24%{transform:rotate(-3deg)}
+  32%{transform:rotate(0deg)}
+}
+@keyframes bitmojiHandPoint{
+  0%{transform:rotate(0deg) translateX(0)}
+  15%{transform:rotate(-20deg) translateX(12px) translateY(-4px)}
+  30%{transform:rotate(-25deg) translateX(16px) translateY(-6px)}
+  50%{transform:rotate(-20deg) translateX(14px) translateY(-4px)}
+  70%{transform:rotate(-25deg) translateX(16px) translateY(-6px)}
+  85%{transform:rotate(-15deg) translateX(10px) translateY(-2px)}
+  100%{transform:rotate(0deg) translateX(0)}
+}
+@keyframes bitmojiSpeechBubble{
+  0%{transform:translateX(-50%) scale(0);opacity:0}
+  15%{transform:translateX(-50%) scale(1.1);opacity:1}
+  25%{transform:translateX(-50%) scale(1);opacity:1}
+  80%{transform:translateX(-50%) scale(1);opacity:1}
+  100%{transform:translateX(-50%) scale(0.5);opacity:0}
+}
+@keyframes bitmojiGlowRing{
+  0%{transform:translate(-50%,-50%) scale(0.5);opacity:0}
+  30%{transform:translate(-50%,-50%) scale(1);opacity:0.6}
+  100%{transform:translate(-50%,-50%) scale(2);opacity:0}
+}
+@keyframes bitmojiFadeOut{
+  0%{opacity:1;transform:translateX(0) scale(1)}
+  100%{opacity:0;transform:translateX(30px) scale(0.6) translateY(-15px)}
+}
+.moodboard-bitmoji-guide{
+  position:absolute;z-index:9998;pointer-events:none;
+  filter:drop-shadow(0 4px 16px rgba(0,0,0,0.2));
+}
+.moodboard-bitmoji-guide img{
+  width:90px;height:auto;
+  animation:bitmojiPresent 1.8s ease-in-out infinite;
+}
+.moodboard-bitmoji-guide .guide-hand{
+  position:absolute;right:-20px;top:15px;font-size:1.8rem;
+  animation:bitmojiHandPoint 1.5s ease-in-out infinite;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+.moodboard-bitmoji-guide .guide-speech{
+  position:absolute;top:-42px;left:50%;
+  background:#fff;border-radius:16px;padding:6px 14px;
+  font-family:var(--font-fun);font-weight:700;font-size:0.8rem;color:var(--text);
+  box-shadow:0 2px 12px rgba(0,0,0,0.12);white-space:nowrap;
+  animation:bitmojiSpeechBubble 3.5s ease-in-out forwards;
+  transform-origin:center bottom;
+}
+.moodboard-bitmoji-guide .guide-speech::after{
+  content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);
+  width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid #fff;
+}
+.moodboard-bitmoji-guide .arrive-glow{
+  position:absolute;top:50%;left:50%;width:80px;height:80px;
+  border-radius:50%;background:radial-gradient(circle,rgba(255,202,40,0.3),transparent 70%);
+  animation:bitmojiGlowRing 1s ease-out forwards;pointer-events:none;
+}
 /* Greeting wave animation */
 @keyframes bitmoji-wave{
   0%{transform:translate(-50%,20px) scale(0.3);opacity:0}
@@ -1650,13 +1720,13 @@ body.map-expanded .scroll-counter{display:none!important}
       <div class="map-canvas" id="mapCanvas">
         <div class="map-canvas-grid"></div>
       </div>
-      <div class="map-player" id="mapPlayer">
-        <div class="map-player-ping"></div>
-        <svg class="map-arrow-svg" width="16" height="16" viewBox="0 0 24 24"><defs><linearGradient id="arrowGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFE082"/><stop offset="100%" stop-color="#FFB300"/></linearGradient></defs><polygon points="12,1 22,22 12,16 2,22" fill="url(#arrowGrad)" stroke="#E65100" stroke-width="1.2" stroke-linejoin="round"/></svg>
-        <img class="map-arrow map-arrow-head" src="images/bitmoji-head.png" alt="You" />
-        <img class="map-arrow map-arrow-full" src="images/bitmoji-full.png" alt="You" />
-      </div>
       <div class="map-vp-rect" id="mapVP"></div>
+    </div>
+    <div class="map-player" id="mapPlayer">
+      <div class="map-player-ping"></div>
+      <svg class="map-arrow-svg" width="16" height="16" viewBox="0 0 24 24"><defs><linearGradient id="arrowGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFE082"/><stop offset="100%" stop-color="#FFB300"/></linearGradient></defs><polygon points="12,1 22,22 12,16 2,22" fill="url(#arrowGrad)" stroke="#E65100" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      <img class="map-arrow map-arrow-head" src="images/bitmoji-head.png" alt="You" />
+      <img class="map-arrow map-arrow-full" src="images/bitmoji-full.png" alt="You" />
     </div>
     <div class="map-hint"></div>
     <div class="minimap-radar"></div>
@@ -3843,32 +3913,63 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
     setTimeout(()=>{
       // Scroll to exact center of the target
       vp.scrollTo({left:worldX-vp.clientWidth/2,top:worldY-vp.clientHeight/2,behavior:'smooth'});
-      // Show footsteps on the moodboard canvas
+      
+      // Calculate footstep path on moodboard
       const vpCX=vp.scrollLeft+vp.clientWidth/2;
       const vpCY=vp.scrollTop+vp.clientHeight/2;
-      const mbSteps=8;
       const mbDx=worldX-vpCX,mbDy=worldY-vpCY;
+      
+      // Start point for bitmoji (off-screen left of target)
+      const startBX=worldX-120;
+      const startBY=worldY+30;
+      const mbSteps=10;
+      
+      // Footsteps leading to the target
       for(let j=1;j<=mbSteps;j++){
         setTimeout(()=>{
           const mt=j/mbSteps;
-          const mfx=vpCX+mbDx*mt+((j%2===0?1:-1)*12);
-          const mfy=vpCY+mbDy*mt;
+          const mfx=startBX+(worldX-40-startBX)*mt+((j%2===0?1:-1)*8);
+          const mfy=startBY+(worldY+10-startBY)*mt;
           const mfp=document.createElement('div');
           mfp.textContent=j%2===0?'👣':'';
-          mfp.style.cssText='position:absolute;left:'+mfx+'px;top:'+mfy+'px;z-index:9998;pointer-events:none;font-size:'+(j%2===0?'1.5rem':'0')+';opacity:0.6;transform:translate(-50%,-50%) rotate('+Math.atan2(mbDy,mbDx)*(180/Math.PI)+'deg);transition:opacity 1.2s;';
+          mfp.style.cssText='position:absolute;left:'+mfx+'px;top:'+mfy+'px;z-index:9998;pointer-events:none;font-size:'+(j%2===0?'1.2rem':'0')+';opacity:0.5;transform:translate(-50%,-50%);transition:opacity 1.2s;';
           if(j%2!==0){
-            mfp.style.width='8px';mfp.style.height='8px';mfp.style.borderRadius='50%';
-            mfp.style.background='rgba(139,119,80,0.35)';
+            mfp.style.width='6px';mfp.style.height='6px';mfp.style.borderRadius='50%';
+            mfp.style.background='rgba(139,119,80,0.3)';
           }
           cv.appendChild(mfp);
-          setTimeout(()=>{mfp.style.opacity='0'},1000);
-          setTimeout(()=>mfp.remove(),2200);
-        },j*180);
+          setTimeout(()=>{mfp.style.opacity='0'},1500);
+          setTimeout(()=>mfp.remove(),2800);
+        },j*120);
       }
-      // Trigger sticker animation if clicking on an item
-      if(stickerRef&&stickerRef.dataset&&stickerRef.dataset.anim){
-        setTimeout(()=>triggerAnim(stickerRef,null),800);
-      }
+      
+      // Show bitmoji guide at the target after footsteps finish
+      const guideDelay=mbSteps*120+200;
+      setTimeout(()=>{
+        // Pick a random speech bubble message
+        const speeches=['Check this out! ✨','Right here! 👀','Look at this! 🎯','This one\'s cool! 🔥','Over here! 👆','Ta-da! 🎉'];
+        const speech=speeches[Math.floor(Math.random()*speeches.length)];
+        
+        const guide=document.createElement('div');
+        guide.className='moodboard-bitmoji-guide';
+        guide.style.cssText='position:absolute;left:'+(worldX-70)+'px;top:'+(worldY-10)+'px;z-index:9998;animation:bitmojiArriveSlide 0.7s ease-out forwards;';
+        guide.innerHTML='<div class="arrive-glow"></div>'
+          +'<div class="guide-speech">'+speech+'</div>'
+          +'<img src="images/bitmoji-full.png" alt="Akash showing"/>'
+          +'<div class="guide-hand">👉</div>';
+        cv.appendChild(guide);
+        
+        // Trigger sticker animation
+        if(stickerRef&&stickerRef.dataset&&stickerRef.dataset.anim){
+          setTimeout(()=>triggerAnim(stickerRef,null),400);
+        }
+        
+        // Fade out bitmoji guide after 3.5s
+        setTimeout(()=>{
+          guide.style.animation='bitmojiFadeOut 0.6s ease-in forwards';
+          setTimeout(()=>guide.remove(),700);
+        },3500);
+      },guideDelay);
     },450);
   },WALK_DURATION+300);
 }
