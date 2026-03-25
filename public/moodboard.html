@@ -1567,9 +1567,16 @@ vp.addEventListener('mousedown',e=>{
 document.addEventListener('mousemove',e=>{if(!iD)return;e.preventDefault();vp.scrollLeft=slx-(e.clientX-dsx);vp.scrollTop=sly-(e.clientY-dsy)});
 document.addEventListener('mouseup',()=>{iD=false;vp.style.cursor='grab'});
 
-// ===== STICKER DRAG + TAP DETECTION =====
-// The key fix: track total drag distance. If < 8px, it's a TAP. If >= 8px, it's a DRAG.
+// ===== STICKER DRAG + TAP DETECTION + TWO-FINGER ROTATION =====
 let as=null,sox,soy,hz=100,tapSX=0,tapSY=0,tapTime=0,didMove=false;
+let isRotating=false, rotStartAngle=0, stickerBaseAngle=0;
+
+function getAngle(t1,t2){return Math.atan2(t2.clientY-t1.clientY,t2.clientX-t1.clientX)*180/Math.PI}
+function getCurrentRotation(el){
+  const st=el.style.transform||'';
+  const m=st.match(/rotate\(([-\d.]+)deg\)/);
+  return m?parseFloat(m[1]):0;
+}
 
 document.querySelectorAll('.sticker').forEach(s=>{
   s.addEventListener('mousedown',sD);
@@ -1578,9 +1585,17 @@ document.querySelectorAll('.sticker').forEach(s=>{
 
 function sD(e){
   e.stopPropagation();
+  // Two-finger rotation start
+  if(e.touches&&e.touches.length===2){
+    isRotating=true;didMove=true;
+    as=this;hz++;as.style.zIndex=hz;
+    rotStartAngle=getAngle(e.touches[0],e.touches[1]);
+    stickerBaseAngle=getCurrentRotation(as);
+    e.preventDefault();return;
+  }
   const cx=e.touches?e.touches[0].clientX:e.clientX;
   const cy=e.touches?e.touches[0].clientY:e.clientY;
-  tapSX=cx;tapSY=cy;tapTime=Date.now();didMove=false;
+  tapSX=cx;tapSY=cy;tapTime=Date.now();didMove=false;isRotating=false;
   as=this;hz++;as.style.zIndex=hz;
   const r=as.getBoundingClientRect();sox=cx-r.left;soy=cy-r.top;
   if(e.touches)e.preventDefault();
@@ -1591,14 +1606,23 @@ document.addEventListener('touchmove',sM,{passive:false});
 
 function sM(e){
   if(!as)return;
+  // Two-finger rotation
+  if(isRotating&&e.touches&&e.touches.length===2){
+    const curAngle=getAngle(e.touches[0],e.touches[1]);
+    const delta=curAngle-rotStartAngle;
+    as.style.transform='rotate('+(stickerBaseAngle+delta)+'deg)';
+    e.preventDefault();return;
+  }
+  if(isRotating)return;
   const cx=e.touches?e.touches[0].clientX:e.clientX;
   const cy=e.touches?e.touches[0].clientY:e.clientY;
   if(Math.abs(cx-tapSX)>10||Math.abs(cy-tapSY)>10){
     didMove=true;as.classList.add('dragging');
     const cr=cv.getBoundingClientRect();
-    as.style.left=Math.max(0,Math.min(cx-cr.left-sox,cv.offsetWidth-as.offsetWidth))+'px';
-    as.style.top=Math.max(0,Math.min(cy-cr.top-soy,cv.offsetHeight-as.offsetHeight))+'px';
-    as.style.transform='rotate(0deg)';e.preventDefault();
+    const scale=0.85;
+    as.style.left=Math.max(0,Math.min((cx-cr.left-sox)/scale,cv.offsetWidth-as.offsetWidth))+'px';
+    as.style.top=Math.max(0,Math.min((cy-cr.top-soy)/scale,cv.offsetHeight-as.offsetHeight))+'px';
+    e.preventDefault();
   }
 }
 
@@ -1608,6 +1632,7 @@ document.addEventListener('touchend',sU);
 function sU(e){
   if(!as)return;
   as.classList.remove('dragging');
+  if(isRotating){isRotating=false;as=null;return;}
   if(!didMove&&(Date.now()-tapTime)<400){
     if(as.dataset.splash)doSplash(as,e);
     if(as.dataset.contra)contraFire(as,e);
