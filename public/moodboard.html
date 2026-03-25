@@ -3614,7 +3614,7 @@ let mapScrollTimer=null;
 let mapCloneTimer=null;
 // Re-render visible clones when scrolling expanded map
 document.getElementById('mmInner').addEventListener('scroll',()=>{
-  // Update coordinates display
+  if(mapTransitioning)return;
   if(mmExp&&drawMap._sc){
     const ox=drawMap._ox||0,oy=drawMap._oy||0,sc=drawMap._sc;
     const cx=Math.round((mmInner.scrollLeft+mmInner.clientWidth/2)/sc+ox);
