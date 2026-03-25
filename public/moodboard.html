@@ -4336,14 +4336,15 @@ function updMap(){
     mapVP.style.width=(vpW*sc)+'px';
     mapVP.style.height=(vpH*sc)+'px';
   } else {
-    const cL=parseInt(mapCanvas.style.left)||0;
-    const cT=parseInt(mapCanvas.style.top)||0;
-    const px=cL+(sx+vpW/2-ox)*sc;
-    const py=cT+(sy+vpH/2-oy)*sc;
+    // EXPANDED: mapPlayer is inside mapCanvas, so position relative to canvas (no cL/cT offset)
+    const px=(sx+vpW/2-ox)*sc;
+    const py=(sy+vpH/2-oy)*sc;
     mapPlayer.style.left=px+'px';
     mapPlayer.style.top=py+'px';
     mapPlayer.style.opacity='1';
     mapPlayer.style.visibility='visible';
+    const cL=parseInt(mapCanvas.style.left)||0;
+    const cT=parseInt(mapCanvas.style.top)||0;
     mapVP.style.left=(cL+(sx-ox)*sc)+'px';
     mapVP.style.top=(cT+(sy-oy)*sc)+'px';
     mapVP.style.width=(vpW*sc)+'px';
