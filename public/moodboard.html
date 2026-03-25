@@ -1118,6 +1118,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   animation:bitmoji-walk 0.6s ease-in-out infinite;
   transition:left 2.5s ease-in-out,top 2.5s ease-in-out;
 }
+@keyframes destPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:0.6}}
+@keyframes destSpin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+@keyframes destRipple{0%{transform:translate(-50%,-50%) scale(0.8);opacity:0.8;left:50%;top:50%}100%{transform:translate(-50%,-50%) scale(2.5);opacity:0;left:50%;top:50%}}
 /* Greeting wave animation */
 @keyframes bitmoji-wave{
   0%{transform:translate(-50%,20px) scale(0.3);opacity:0}
@@ -3793,6 +3796,16 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
   mapPlayer.classList.add('walking');
   mapPlayer.style.left=targetMX+'px';
   mapPlayer.style.top=targetMY+'px';
+  // Destination target marker
+  const destMarker=document.createElement('div');
+  destMarker.style.cssText='position:absolute;left:'+targetMX+'px;top:'+targetMY+'px;z-index:9990;pointer-events:none;transform:translate(-50%,-50%);width:40px;height:40px;';
+  destMarker.innerHTML='<div style="position:absolute;inset:0;border:2.5px solid rgba(76,175,80,0.8);border-radius:50%;animation:destPulse 1s ease-in-out infinite"></div>'
+    +'<div style="position:absolute;inset:-8px;border:1.5px dashed rgba(76,175,80,0.4);border-radius:50%;animation:destSpin 4s linear infinite"></div>'
+    +'<div style="position:absolute;inset:12px;background:rgba(76,175,80,0.3);border-radius:50%;animation:destPulse 1s ease-in-out infinite 0.5s"></div>'
+    +'<div style="position:absolute;inset:-2px;border-radius:50%;border:1px solid rgba(76,175,80,0.2);animation:destRipple 1.5s ease-out infinite"></div>';
+  mmInner.appendChild(destMarker);
+  // Remove marker when walk ends
+  setTimeout(()=>{destMarker.style.transition='opacity 0.4s';destMarker.style.opacity='0';setTimeout(()=>destMarker.remove(),500)},WALK_DURATION);
   // Footstep trail on map
   const dx=targetMX-startX,dy=targetMY-startY;
   const dist=Math.sqrt(dx*dx+dy*dy);
