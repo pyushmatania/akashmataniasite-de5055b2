@@ -2687,7 +2687,49 @@ prompts: `
   <div class="prompt-block"><div class="prompt-label">Prompt 13</div><div class="prompt-text">"Fix canvas edge gap. Create GTA-style map HUD showing current location + stickers. Tap map to enlarge, nav button shows route lines. Splash: water should leak from photo, drops near photo. Change splash sound."</div></div>
   <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v9.0: Fixed edge gap. GTA minimap with player dot, color-coded sticker dots, expand-on-tap, click-to-navigate with animated dashed route lines. Splash redesigned: drops originate from photo edges, water drips from bottom, wet shimmer overlay. 3-layer splash sound with sweep filter.</div></div>
   <div class="prompt-block"><div class="prompt-label">Prompt 14</div><div class="prompt-text">"Make map properly show real stickers not dots. Show head sticker for current location. Add more features, improve UI/UX. Zone labels, filters, tooltips."</div></div>
-  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v10.0: Full minimap redesign — real emoji icons per sticker, pixel-art avatar, 7 zone labels, filter buttons, hover tooltips, dark green bg with grid, compass, player ping, viewport rect, click-to-navigate with route lines., gradient frames, splash rings+droplets+wave+wet spots+sound, tap rewrite, 7000x5000 canvas.</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v10.0: Full minimap redesign — real emoji icons per sticker, pixel-art avatar, 7 zone labels, filter buttons, hover tooltips, dark green bg with grid, compass, player ping, viewport rect, click-to-navigate with route lines.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 15</div><div class="prompt-text">"Change the map theme to snapchat map theme now its not looking a map. Its looking like another mood board lol"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v23.0: Snapchat-style map with warm colors, terrain patches, roads, water features. Complete visual overhaul from moodboard aesthetic to real map feel with game HUD elements.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 16</div><div class="prompt-text">"Add Bitmoji-style avatar as the player marker on the map instead of the arrow. Remove the top left akash tag from full screen map view. Add borders and etc to make it look like a map. Add game hud elements to give feel of a game map"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v24.0: Bitmoji avatar marker, removed logo from fullscreen, added map borders and game HUD overlays (explored %, level badge, coordinates).</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 17</div><div class="prompt-text">"Add fog of war effect — areas you haven't scrolled to yet are dimmed on the map"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">Added fog of war with canvas overlay — unexplored areas dimmed, revealed progressively as user scrolls. Tracked explored chunks.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 18</div><div class="prompt-text">"Undo the bitmoji on map keep the arrow but remove the box around that arrow"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v25.0: Reverted to arrow marker without bounding box. Bitmoji removed.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 19</div><div class="prompt-text">"Remove the fog of war effect. Remove the explored, level and right side info buttons. Remove the filter button and replace that with legend option it can filter. Redesign that as filter buttons. Add total area written into the map subtly"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v26.0: Stripped fog of war, explorer stats, info buttons. Replaced filter with legend-style buttons. Added total area display subtly on map canvas.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 20</div><div class="prompt-text">"Add a compass, zoom in and out and recentre button and add more filters buttons on map. And add a bit more subtle detail and design improvements for map"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v28.0: Compass widget, zoom controls with scale display, recentre button, expanded filter categories, subtle design polish.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 21</div><div class="prompt-text">"The new bar on map make it subtle and integrate with the map design itself. Zoom buttons not working remove the last button. Redesign filter buttons. When clicking multiple times it should take to that place"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v27.0: Subtle integrated filter bar, fixed zoom, multi-click cycling (activate → navigate → cycle through items), removed broken buttons.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 22</div><div class="prompt-text">"Improve the small map hud design. Thicken the border and all those N and AM and add other details to make it look like a map hud" [with reference image]</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v29.0: Thickened HUD borders with multi-ring design, enhanced compass markers (N/S/E/W), AM/PM time indicator, game-style HUD details.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 23</div><div class="prompt-text">"Add a street name or zone name display below the minimap like GTA shows the current area name. Do it for big map too. On big map when selecting filters and cycle through navigation add something to show that particular item with effects. Enhance close map button"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v30.0: GTA-style zone name display below minimap and on big map. Active item highlight effects during filter cycling. Enhanced close map button.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 24</div><div class="prompt-text">"Add a pulsing waypoint marker system on the map that shows distance to selected items. Decrease the size of mini map HUD, add some blur or other effects — it looks floating, make it look attached"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v31.0: Pulsing waypoint markers with distance labels. Minimap downsized with frosted glass blur and attachment effects.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 25</div><div class="prompt-text">"Add a minimap radar sweep animation like a rotating green line for extra game HUD feel"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">Added rotating radar sweep animation (conic-gradient green line) on the minimap HUD.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 26</div><div class="prompt-text">"Lines are looking messy just show lines to the item being shown. Show count for ex photo 1/2. Bring buttons up. Rename to mood map live. Zone name should show on map. Make items glow neon/radium. Make map look real." [with reference images]</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v32.0: Mood Map LIVE. Cycle counter HUD with arrows, neon glow on active items, procedural terrain/roads, zone names on map, cleaned waypoint lines to active item only.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 27</div><div class="prompt-text">"Don't change small map theme. Change big map to Snapchat theme. Hide bottom bars on fullscreen. Change radar sweep to yellow and red alternating." [with reference image]</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v33.0: Big map Snapchat theme (beige #E8E4D0, white roads, blue water). Radar yellow-red. Bottom nav hidden in fullscreen.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 28</div><div class="prompt-text">"Add the small map green grid theme to the big map"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v34.0: Applied dark green grid theme (#3a5a2a) to expanded big map matching the minimap. Green-tinted roads, water, region labels, enhanced vignette.</div></div>
 </div>
 `,
 
@@ -2697,15 +2739,15 @@ stats: `
   <div class="stats-grid">
     <div class="stat-card"><div class="stat-num">6000</div><div class="stat-label">Canvas Width (px)</div></div>
     <div class="stat-card"><div class="stat-num">4500</div><div class="stat-label">Canvas Height (px)</div></div>
-    <div class="stat-card"><div class="stat-num">~200KB</div><div class="stat-label">Total File Size</div></div>
+    <div class="stat-card"><div class="stat-num">~300KB</div><div class="stat-label">Total File Size</div></div>
     <div class="stat-card"><div class="stat-num">80+</div><div class="stat-label">Draggable Stickers</div></div>
     <div class="stat-card"><div class="stat-num">15</div><div class="stat-label">Animations</div></div>
     <div class="stat-card"><div class="stat-num">11</div><div class="stat-label">Themes</div></div>
     <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">Interactive Toys</div></div>
     <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Hero Photos</div></div>
     <div class="stat-card"><div class="stat-num">16</div><div class="stat-label">Confetti Emojis</div></div>
-    <div class="stat-card"><div class="stat-num">26</div><div class="stat-label">Build Prompts</div></div>
-    <div class="stat-card"><div class="stat-num">22</div><div class="stat-label">Major Versions</div></div>
+    <div class="stat-card"><div class="stat-num">40</div><div class="stat-label">Build Prompts</div></div>
+    <div class="stat-card"><div class="stat-num">34</div><div class="stat-label">Major Versions</div></div>
     <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">Easter Egg 🥚</div></div>
   </div>
 </div>
