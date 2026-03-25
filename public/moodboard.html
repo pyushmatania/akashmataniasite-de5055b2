@@ -3754,6 +3754,8 @@ function addMapDecorations(cw,ch){
 }
 
 function drawMap(){
+  const prevLeft=parseFloat(mapCanvas.style.left)||0;
+  const prevTop=parseFloat(mapCanvas.style.top)||0;
   mapCanvas.innerHTML='';
   const mr=mmInner.getBoundingClientRect();
   const mw=mr.width||64,mh=mr.height||64;
@@ -3776,16 +3778,15 @@ function drawMap(){
     mapCanvas.style.left='0';
     mapCanvas.style.top='50px';
   } else {
-    // SMALL MAP: zoomed view where arrow moves, bg pans when arrow nears edge
+    // SMALL MAP: keep previous panning offsets to avoid jump/desync on redraw
     const zoomFactor=5;
     sc=mw/(contentW/zoomFactor);
     canvasW=contentW*sc;
     canvasH=contentH*sc;
     offsetX=0;
     offsetY=0;
-    // Position will be set dynamically in updMap via bg-sync
-    mapCanvas.style.left='0px';
-    mapCanvas.style.top='0px';
+    mapCanvas.style.left=prevLeft+'px';
+    mapCanvas.style.top=prevTop+'px';
   }
   
   drawMap._sc=sc;drawMap._ox=offsetX;drawMap._oy=offsetY;
