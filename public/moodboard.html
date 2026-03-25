@@ -2305,6 +2305,63 @@ function closeWorkPanel(){
 .work-panel.open .w-anim:nth-child(18){transition-delay:0.74s}
 .work-panel.open .w-anim:nth-child(19){transition-delay:0.78s}
 .work-panel.open .w-anim:nth-child(20){transition-delay:0.82s}
+/* Confetti */
+.confetti-piece {
+  position:fixed;z-index:99999;pointer-events:none;
+  width:8px;height:8px;border-radius:2px;
+  animation:confetti-fall 1s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+}
+@keyframes confetti-fall {
+  0% { opacity:1;transform:translateY(0) rotate(0deg) scale(1); }
+  100% { opacity:0;transform:translateY(120px) rotate(720deg) scale(0.3); }
+}
+
+/* Stat pill tap */
+.stat-pill { cursor:pointer; }
+.stat-pill.popped { animation:stat-pop 0.4s ease; }
+@keyframes stat-pop {
+  0% { transform:scale(1); }
+  30% { transform:scale(1.15); }
+  60% { transform:scale(0.95); }
+  100% { transform:scale(1); }
+}
+
+/* Skill shuffle */
+.skill-row.shuffling .sk-fill {
+  transition:width 0.6s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+.skill-row.shuffling {
+  animation:skill-shake 0.3s ease;
+}
+@keyframes skill-shake {
+  0%,100% { transform:translateX(0); }
+  25% { transform:translateX(-4px); }
+  75% { transform:translateX(4px); }
+}
+
+/* Tool chip bounce */
+.tool-chip.bounced { animation:chip-bounce 0.5s ease; }
+@keyframes chip-bounce {
+  0% { transform:scale(1); }
+  25% { transform:scale(0.85) rotate(-5deg); }
+  50% { transform:scale(1.12) rotate(3deg); }
+  75% { transform:scale(0.97) rotate(-1deg); }
+  100% { transform:scale(1) rotate(0); }
+}
+
+/* Shuffle button */
+.shuffle-btn {
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 20px;border-radius:99px;border:1.5px solid #e8e5df;
+  background:#fff;cursor:pointer;font-size:0.75rem;font-weight:700;
+  color:#7a756d;letter-spacing:0.04em;margin:16px 0 48px;
+  transition:transform 0.15s, border-color 0.2s, background 0.2s;
+}
+.shuffle-btn:active { transform:scale(0.94);background:#faf9f7; }
+.shuffle-btn .shuffle-icon {
+  display:inline-block;transition:transform 0.4s ease;
+}
+.shuffle-btn.spinning .shuffle-icon { transform:rotate(360deg); }
 </style>
 
 <div class="work-backdrop" id="workBackdrop" onclick="closeWorkPanel()"></div>
@@ -2363,6 +2420,9 @@ function closeWorkPanel(){
         <div class="sk-tags"><span class="sk-tag">Cross-functional</span><span class="sk-tag">Sprints</span><span class="sk-tag">Agile</span></div>
       </div>
     </div>
+    <button class="shuffle-btn w-anim" onclick="shuffleSkills()">
+      <span class="shuffle-icon">🎲</span> Shuffle my skills
+    </button>
 
     <!-- Experience Timeline -->
     <p class="section-label w-anim">Journey</p>
@@ -2448,6 +2508,86 @@ function closeWorkPanel(){
 
   </div>
 </div>
+<script>
+(function(){
+  var confettiColors=['#a8d8b9','#f5deb3','#d4b8e8','#b8d4f0','#f0b8b8','#f5c842','#7bc49a'];
+
+  function burstConfetti(x,y,count){
+    for(var i=0;i<count;i++){
+      var el=document.createElement('div');
+      el.className='confetti-piece';
+      el.style.left=(x+Math.random()*60-30)+'px';
+      el.style.top=(y+Math.random()*20-10)+'px';
+      el.style.background=confettiColors[Math.floor(Math.random()*confettiColors.length)];
+      el.style.width=(5+Math.random()*6)+'px';
+      el.style.height=(5+Math.random()*6)+'px';
+      el.style.borderRadius=Math.random()>0.5?'50%':'2px';
+      var angle=(Math.random()-0.5)*120;
+      var dist=60+Math.random()*80;
+      el.style.setProperty('--tx',(Math.sin(angle*Math.PI/180)*dist)+'px');
+      el.style.setProperty('--ty',(-40-Math.random()*100)+'px');
+      el.style.animation='confetti-burst 0.8s cubic-bezier(0.25,0.46,0.45,0.94) forwards';
+      document.body.appendChild(el);
+      setTimeout(function(e){e.remove()}.bind(null,el),900);
+    }
+  }
+
+  // Add burst keyframes
+  var style=document.createElement('style');
+  style.textContent='@keyframes confetti-burst{0%{opacity:1;transform:translate(0,0) rotate(0deg) scale(1)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) rotate('+Math.random()*720+'deg) scale(0.2)}}';
+  document.head.appendChild(style);
+
+  // Stat pill tap → confetti + pop
+  document.querySelectorAll('.stat-pill').forEach(function(pill){
+    pill.addEventListener('click',function(e){
+      var r=pill.getBoundingClientRect();
+      burstConfetti(r.left+r.width/2, r.top+r.height/2, 18);
+      pill.classList.remove('popped');
+      void pill.offsetWidth;
+      pill.classList.add('popped');
+      setTimeout(function(){pill.classList.remove('popped')},500);
+    });
+  });
+
+  // Tool chip tap → bounce
+  document.querySelectorAll('.tool-chip').forEach(function(chip){
+    chip.addEventListener('click',function(){
+      chip.classList.remove('bounced');
+      void chip.offsetWidth;
+      chip.classList.add('bounced');
+      setTimeout(function(){chip.classList.remove('bounced')},600);
+    });
+  });
+})();
+
+// Shuffle skills
+function shuffleSkills(){
+  var btn=document.querySelector('.shuffle-btn');
+  btn.classList.add('spinning');
+  setTimeout(function(){btn.classList.remove('spinning')},500);
+
+  var rows=document.querySelectorAll('.skill-row');
+  var pcts=[];
+  rows.forEach(function(r){
+    var fill=r.querySelector('.sk-fill');
+    var cur=parseInt(fill.style.getPropertyValue('--pct'));
+    pcts.push(cur);
+  });
+  // Fisher-Yates
+  for(var i=pcts.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var t=pcts[i];pcts[i]=pcts[j];pcts[j]=t;
+  }
+  rows.forEach(function(r,i){
+    r.classList.add('shuffling');
+    var fill=r.querySelector('.sk-fill');
+    var pctEl=r.querySelector('.sk-pct');
+    fill.style.setProperty('--pct',pcts[i]+'%');
+    pctEl.textContent=pcts[i]+'%';
+    setTimeout(function(){r.classList.remove('shuffling')},700);
+  });
+}
+</script>
 <script>
 const vp=document.getElementById('viewport'),cv=document.getElementById('canvas');
 // Center on the Akash hero sticker (left:800, top:600, width:290, ~height:350)
