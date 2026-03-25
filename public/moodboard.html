@@ -548,97 +548,94 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-loading-text{font-family:var(--font-fun);font-size:0.55rem;color:rgba(0,0,0,0.3)}
 
 /* Enhanced bottom bar */
+/* Enhanced bottom bar — subtle & integrated */
 .map-bottom-bar{
   position:absolute;bottom:0;left:0;right:0;z-index:1000;
   display:none;flex-direction:column;
-  background:linear-gradient(0deg,rgba(255,255,255,0.97) 0%,rgba(255,255,255,0.92) 70%,rgba(255,255,255,0.5) 90%,transparent 100%);
-  padding:20px 14px max(14px,env(safe-area-inset-bottom,0px)+58px);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  background:linear-gradient(0deg,rgba(232,245,233,0.6) 0%,rgba(232,245,233,0.3) 60%,transparent 100%);
+  padding:10px 10px max(10px,env(safe-area-inset-bottom,0px)+54px);
 }
 .minimap-container.expanded .map-bottom-bar{display:flex}
 .map-bottom-bar .bar-filters{
-  display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;
+  display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin-bottom:4px;
 }
 .map-bottom-bar .bar-info{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:6px 12px;background:rgba(0,0,0,0.03);border-radius:10px;
+  display:flex;justify-content:center;align-items:center;gap:12px;
+  padding:3px 8px;
 }
-.bar-count{font-family:var(--font-fun);font-size:0.6rem;color:rgba(0,0,0,0.45);font-weight:500}
-.bar-coords{font-family:var(--font-fun);font-size:0.55rem;color:rgba(0,0,0,0.35);font-variant-numeric:tabular-nums;letter-spacing:0.02em}
+.bar-count{font-family:var(--font-fun);font-size:0.5rem;color:rgba(60,80,60,0.35);font-weight:500}
+.bar-coords{font-family:var(--font-fun);font-size:0.45rem;color:rgba(60,80,60,0.3);font-variant-numeric:tabular-nums;letter-spacing:0.02em}
 
-/* Filter chip redesign */
+/* Filter chips — map-integrated style */
 .mc{
-  padding:8px 18px;border-radius:24px;font-family:var(--font-fun);
-  font-size:0.7rem;font-weight:600;cursor:pointer;
-  border:1.5px solid rgba(0,0,0,0.06);
+  padding:4px 10px;border-radius:14px;font-family:var(--font-fun);
+  font-size:0.55rem;font-weight:600;cursor:pointer;
+  border:1px solid rgba(46,125,50,0.12);
   transition:all 0.2s cubic-bezier(0.25,1,0.5,1);
-  display:flex;align-items:center;gap:5px;
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  display:flex;align-items:center;gap:4px;
+  background:rgba(255,255,255,0.45);color:rgba(60,80,60,0.5);
 }
 .mc.active{
-  background:linear-gradient(135deg,#FFEB3B,#FFC107);color:#333;
-  border-color:rgba(255,193,7,0.4);
-  box-shadow:0 2px 12px rgba(255,193,7,0.3),0 0 0 1px rgba(255,193,7,0.15);
-  transform:scale(1.02);
+  background:rgba(102,187,106,0.25);color:rgba(27,94,32,0.85);
+  border-color:rgba(76,175,80,0.35);
+  box-shadow:0 1px 6px rgba(76,175,80,0.15);
 }
-.mc:not(.active){background:rgba(255,255,255,0.85);color:rgba(0,0,0,0.5);border-color:rgba(0,0,0,0.08)}
-.mc:hover:not(.active){background:rgba(255,255,255,0.95);transform:scale(1.02);color:rgba(0,0,0,0.7)}
-.mc:active{transform:scale(0.97)}
+.mc:not(.active):hover{background:rgba(255,255,255,0.65);color:rgba(60,80,60,0.7)}
+.mc:active{transform:scale(0.95)}
+.mc .legend-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .mc .chip-count{
-  background:rgba(255,255,255,0.1);border-radius:10px;padding:2px 7px;
-  font-size:0.5rem;font-weight:700;min-width:18px;text-align:center;
+  font-size:0.4rem;font-weight:700;opacity:0.6;min-width:12px;text-align:center;
 }
-.mc.active .chip-count{background:rgba(0,0,0,0.08)}
+.mc.active .chip-count{opacity:0.8}
 
 /* Coordinates display on map */
 .map-coord-display{
   position:absolute;top:54px;left:12px;z-index:1000;
-  display:none;font-family:var(--font-fun);font-size:0.55rem;
-  color:rgba(0,0,0,0.5);background:rgba(255,255,255,0.85);
-  padding:4px 10px;border-radius:8px;backdrop-filter:blur(6px);
-  border:1px solid rgba(0,0,0,0.06);box-shadow:0 1px 4px rgba(0,0,0,0.08);
+  display:none;font-family:var(--font-fun);font-size:0.5rem;
+  color:rgba(46,125,50,0.35);background:rgba(232,245,233,0.5);
+  padding:3px 8px;border-radius:6px;
+  border:1px solid rgba(46,125,50,0.08);
   font-variant-numeric:tabular-nums;
 }
 .minimap-container.expanded .map-coord-display{display:block}
 
 
-/* Zoom + Compass controls */
+/* Zoom + Compass controls — subtle map style */
 .map-controls-right{
-  position:absolute;right:14px;top:50%;transform:translateY(-50%);z-index:1000;
-  display:none;flex-direction:column;gap:6px;
-  background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border-radius:16px;padding:8px;border:1px solid rgba(0,0,0,0.06);
-  box-shadow:0 4px 20px rgba(0,0,0,0.08);
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);z-index:1000;
+  display:none;flex-direction:column;gap:4px;
+  background:rgba(232,245,233,0.45);
+  border-radius:12px;padding:6px;border:1px solid rgba(46,125,50,0.1);
 }
 .minimap-container.expanded .map-controls-right{display:flex}
 .map-ctrl-btn{
-  width:38px;height:38px;border-radius:10px;
-  background:transparent;border:1px solid rgba(0,0,0,0.04);
-  cursor:pointer;font-size:1rem;color:#555;
+  width:32px;height:32px;border-radius:8px;
+  background:rgba(255,255,255,0.4);border:1px solid rgba(46,125,50,0.08);
+  cursor:pointer;font-size:0.9rem;color:rgba(46,125,50,0.5);
   display:flex;align-items:center;justify-content:center;
   transition:all 0.2s;position:relative;
 }
-.map-ctrl-btn:hover{background:rgba(255,235,59,0.25);border-color:rgba(255,193,7,0.3)}
+.map-ctrl-btn:hover{background:rgba(102,187,106,0.2);color:rgba(27,94,32,0.7)}
 .map-ctrl-btn:active{transform:scale(0.9)}
-.map-ctrl-btn svg{width:18px;height:18px;stroke:#555}
-.map-ctrl-divider{width:24px;height:0;border-top:1px solid rgba(0,0,0,0.06);align-self:center;margin:2px auto}
+.map-ctrl-btn svg{width:16px;height:16px;stroke:rgba(46,125,50,0.5)}
+.map-ctrl-btn:hover svg{stroke:rgba(27,94,32,0.7)}
+.map-ctrl-divider{width:18px;height:0;border-top:1px solid rgba(46,125,50,0.08);align-self:center;margin:1px auto}
 
 /* Compass widget */
 .map-compass-widget{
-  width:46px;height:46px;border-radius:50%;
-  background:rgba(255,255,255,0.9);border:1.5px solid rgba(0,0,0,0.08);
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,0.5);border:1px solid rgba(46,125,50,0.1);
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all 0.2s;align-self:center;margin-bottom:4px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  cursor:pointer;transition:all 0.2s;align-self:center;margin-bottom:2px;
 }
-.map-compass-widget:hover{background:rgba(255,235,59,0.2);border-color:rgba(255,193,7,0.3)}
+.map-compass-widget:hover{background:rgba(102,187,106,0.2)}
 .map-compass-widget:active{transform:scale(0.9)}
-.map-compass-widget svg{width:28px;height:28px}
+.map-compass-widget svg{width:24px;height:24px}
 
 /* Zoom level indicator */
 .map-zoom-level{
-  font-family:var(--font-fun);font-size:0.5rem;color:rgba(0,0,0,0.35);
-  text-align:center;padding:2px 0;font-weight:600;
+  font-family:var(--font-fun);font-size:0.4rem;color:rgba(46,125,50,0.35);
+  text-align:center;padding:1px 0;font-weight:600;
 }
 
 /* Map item — simple colored rectangle */
@@ -1074,19 +1071,21 @@ body.map-expanded .logo,body.map-expanded .settings-btn{display:none!important}
     <div class="map-coord-display" id="mapCoords">0, 0</div>
     <div class="map-bottom-bar">
       <div class="bar-filters">
-        <button class="mc active" onclick="event.stopPropagation();filt('all',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#FFCA28,#66BB6A)"></div>All <span class="chip-count" id="ccAll">98</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('photo',this)"><div class="legend-dot" style="background:#B3E5FC"></div>📸 Photos <span class="chip-count" id="ccPhoto">2</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('meme',this)"><div class="legend-dot" style="background:#E1BEE7"></div>😂 Memes <span class="chip-count" id="ccMeme">14</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('interactive',this)"><div class="legend-dot" style="background:#FFCA28"></div>🎮 Games <span class="chip-count" id="ccInt">7</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('emoji',this)"><div class="legend-dot" style="background:#C8E6C9"></div>✨ Emojis <span class="chip-count" id="ccEmoji">20</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('badge',this)"><div class="legend-dot" style="background:#FFCCBC"></div>🏷️ Badges <span class="chip-count" id="ccBadge">—</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('text',this)"><div class="legend-dot" style="background:#FFF176"></div>💬 Text <span class="chip-count" id="ccText">—</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('postit',this)"><div class="legend-dot" style="background:#F8BBD0"></div>📝 Notes <span class="chip-count" id="ccPostit">—</span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('stamp',this)"><div class="legend-dot" style="background:#B2DFDB"></div>🔖 Stamps <span class="chip-count" id="ccStamp">—</span></button>
+        <button class="mc active" onclick="event.stopPropagation();filt('all',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#66BB6A,#43A047)"></div>All</button>
+        <button class="mc" onclick="event.stopPropagation();filt('photo',this)"><div class="legend-dot" style="background:#81D4FA"></div>📸</button>
+        <button class="mc" onclick="event.stopPropagation();filt('meme',this)"><div class="legend-dot" style="background:#CE93D8"></div>😂</button>
+        <button class="mc" onclick="event.stopPropagation();filt('interactive',this)"><div class="legend-dot" style="background:#FFD54F"></div>🎮</button>
+        <button class="mc" onclick="event.stopPropagation();filt('emoji',this)"><div class="legend-dot" style="background:#A5D6A7"></div>✨</button>
+        <button class="mc" onclick="event.stopPropagation();filt('badge',this)"><div class="legend-dot" style="background:#FFAB91"></div>🏷️</button>
+        <button class="mc" onclick="event.stopPropagation();filt('text',this)"><div class="legend-dot" style="background:#FFF59D"></div>💬</button>
+        <button class="mc" onclick="event.stopPropagation();filt('postit',this)"><div class="legend-dot" style="background:#F48FB1"></div>📝</button>
+        <button class="mc" onclick="event.stopPropagation();filt('stamp',this)"><div class="legend-dot" style="background:#80CBC4"></div>🔖</button>
+        <button class="mc" onclick="event.stopPropagation();filt('swatches',this)"><div class="legend-dot" style="background:#B39DDB"></div>🎨</button>
+        <button class="mc" onclick="event.stopPropagation();filt('fortune',this)"><div class="legend-dot" style="background:#FFE0B2"></div>🔮</button>
       </div>
       <div class="bar-info">
         <span class="bar-count" id="mapCount">98 items</span>
-        <span class="bar-coords" id="barCoords">Center</span>
+        <span class="bar-coords" id="barCoords">·</span>
       </div>
     </div>
     
@@ -1112,10 +1111,6 @@ body.map-expanded .logo,body.map-expanded .settings-btn{display:none!important}
       <div class="map-zoom-level" id="mapZoomLevel">1×</div>
       <button class="map-ctrl-btn" onclick="event.stopPropagation();mapZoom(-1)" title="Zoom out">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><line x1="7" y1="12" x2="17" y2="12"/></svg>
-      </button>
-      <div class="map-ctrl-divider"></div>
-      <button class="map-ctrl-btn" onclick="event.stopPropagation();recenter()" title="Recenter">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
       </button>
     </div>
     
@@ -2431,7 +2426,7 @@ function toggleMap(){
   mc.classList.toggle('expanded',mmExp);
   document.body.classList.toggle('map-expanded',mmExp);
   // Reset zoom on close
-  if(!mmExp){mapZoomScale=1;mapCanvas.style.transform='';mapCanvas._prevZoom=1;const zl=document.getElementById('mapZoomLevel');if(zl)zl.textContent='1×';}
+  if(!mmExp){mapZoomScale=1;mapCanvas.style.transform='';const zl=document.getElementById('mapZoomLevel');if(zl)zl.textContent='1×';filtClickCount={};}
   setTimeout(()=>{drawMap();if(mmExp)setTimeout(recenter,200)},mmExp?450:50);
 }
 
@@ -2719,8 +2714,43 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
   if(mapCount)mapCount.textContent=count+' items';
 }
 
+// Filter with cycle-through navigation
+let filtClickCount={};
 function filt(c,btn){
+  const wasActive=(mFilt===c);
+  if(wasActive && c!=='all'){
+    // Already on this filter — cycle to next item
+    if(!filtClickCount[c])filtClickCount[c]=0;
+    const matching=stickerData.filter(d=>d.cat===c);
+    if(matching.length>0){
+      const idx=filtClickCount[c]%matching.length;
+      const target=matching[idx];
+      filtClickCount[c]++;
+      const sc=drawMap._sc||0.05;
+      const ox=drawMap._ox||0,oy=drawMap._oy||0;
+      const cT=parseInt(mapCanvas.style.top)||0;
+      const px=(target.left-ox)*sc;
+      const py=(target.top-oy)*sc+cT;
+      mmInner.scrollTo({left:px-mmInner.clientWidth/2,top:py-mmInner.clientHeight/2,behavior:'smooth'});
+      // Flash highlight nearby items
+      setTimeout(()=>{
+        const items=mapCanvas.querySelectorAll('.sticker,.mi');
+        items.forEach(el=>{
+          const elL=parseFloat(el.style.left),elT=parseFloat(el.style.top);
+          if(Math.abs(elL-px)<30 && Math.abs(elT-py)<30){
+            el.style.outline='3px solid #66BB6A';el.style.outlineOffset='4px';
+            el.style.boxShadow='0 4px 20px rgba(102,187,106,0.5)';
+            setTimeout(()=>{el.style.outline='none';el.style.boxShadow='none'},1500);
+          }
+        });
+      },400);
+      const mc=document.getElementById('mapCount');
+      if(mc)mc.textContent=(idx+1)+'/'+matching.length;
+    }
+    return;
+  }
   mFilt=c;
+  filtClickCount[c]=0;
   document.querySelectorAll('.mc').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');drawMap();
 }
@@ -2743,19 +2773,27 @@ function mapZoom(dir){
   let idx=steps.indexOf(mapZoomScale);
   if(idx===-1)idx=2;
   idx=Math.max(0,Math.min(steps.length-1,idx+dir));
+  if(steps[idx]===mapZoomScale)return;
+  const oldZoom=mapZoomScale;
   mapZoomScale=steps[idx];
   const zl=document.getElementById('mapZoomLevel');
   if(zl)zl.textContent=mapZoomScale+'×';
-  // Apply zoom via CSS transform on mapCanvas
+  const factor=mapZoomScale/oldZoom;
   const cx=mmInner.scrollLeft+mmInner.clientWidth/2;
   const cy=mmInner.scrollTop+mmInner.clientHeight/2;
-  mapCanvas.style.transform='scale('+mapZoomScale+')';
-  mapCanvas.style.transformOrigin='0 0';
-  // Adjust scroll to keep centered
-  const newCx=cx*mapZoomScale/((mapCanvas._prevZoom)||1);
-  const newCy=cy*mapZoomScale/((mapCanvas._prevZoom)||1);
-  mapCanvas._prevZoom=mapZoomScale;
-  mmInner.scrollTo({left:newCx-mmInner.clientWidth/2,top:newCy-mmInner.clientHeight/2});
+  const cw=parseFloat(mapCanvas.style.width)*factor;
+  const ch=parseFloat(mapCanvas.style.height)*factor;
+  drawMap._sc=(drawMap._sc||0.05)*factor;
+  drawMap._cw=cw;drawMap._ch=ch;
+  mapCanvas.style.width=cw+'px';
+  mapCanvas.style.height=ch+'px';
+  mapCanvas.style.transform='none';
+  const ox=drawMap._ox,oy=drawMap._oy;
+  const items=mapCanvas.querySelectorAll('.sticker,.mi');
+  items.forEach(i=>i.remove());
+  renderVisibleClones(drawMap._sc,ox,oy,cw,ch);
+  updMap();
+  mmInner.scrollTo({left:cx*factor-mmInner.clientWidth/2,top:cy*factor-mmInner.clientHeight/2});
 }
 
 function showNav(tx,ty){
@@ -2827,42 +2865,6 @@ vp.addEventListener('scroll',()=>{
 // Scan once on load, then draw
 setTimeout(()=>{try{scanStickers();drawMap()}catch(e){console.error('Init error:',e)}},600)
 
-// Map zoom
-let mapZoomLevel=1;
-function mapZoom(factor){
-  mapZoomLevel=Math.max(0.4,Math.min(3,mapZoomLevel*factor));
-  // Adjust the scale in drawMap
-  const oldSc=drawMap._sc;
-  drawMap._sc=oldSc*factor;
-  // Resize canvas
-  const cw=parseFloat(mapCanvas.style.width)*factor;
-  const ch=parseFloat(mapCanvas.style.height)*factor;
-  mapCanvas.style.width=cw+'px';
-  mapCanvas.style.height=ch+'px';
-  // Re-render
-  const ox=drawMap._ox,oy=drawMap._oy;
-  const items=mapCanvas.querySelectorAll('.sticker,.mi');
-  items.forEach(i=>i.remove());
-  renderVisibleClones(drawMap._sc,ox,oy,cw,ch);
-  updMap();
-  // Try to keep centered
-  const mr=mmInner.getBoundingClientRect();
-  mmInner.scrollLeft=mmInner.scrollLeft*factor+(mr.width*(factor-1)/2);
-  mmInner.scrollTop=mmInner.scrollTop*factor+(mr.height*(factor-1)/2);
-}
-
-// Compass overlay
-let compassVisible=false;
-function toggleCompass(){
-  compassVisible=!compassVisible;
-  let existing=document.getElementById('bigCompass');
-  if(existing){existing.remove();return}
-  const c=document.createElement('div');
-  c.id='bigCompass';
-  c.style.cssText='position:absolute;top:70px;left:14px;z-index:1001;width:60px;height:60px;opacity:0.5;pointer-events:none';
-  c.innerHTML='<svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(20,40,20,0.6)" stroke="rgba(100,160,100,0.3)" stroke-width="1"/><circle cx="30" cy="30" r="20" stroke="rgba(100,160,100,0.15)" stroke-width="0.5" fill="none"/><polygon points="30,5 33,25 27,25" fill="rgba(255,80,80,0.6)"/><polygon points="30,55 33,35 27,35" fill="rgba(100,160,100,0.2)"/><polygon points="5,30 25,27 25,33" fill="rgba(100,160,100,0.2)"/><polygon points="55,30 35,27 35,33" fill="rgba(100,160,100,0.2)"/><text x="30" y="15" text-anchor="middle" fill="rgba(255,120,120,0.6)" font-size="7" font-weight="900" font-family="sans-serif">N</text><text x="30" y="52" text-anchor="middle" fill="rgba(150,200,140,0.3)" font-size="6" font-family="sans-serif">S</text><text x="10" y="33" text-anchor="middle" fill="rgba(150,200,140,0.3)" font-size="6" font-family="sans-serif">W</text><text x="50" y="33" text-anchor="middle" fill="rgba(150,200,140,0.3)" font-size="6" font-family="sans-serif">E</text></svg>';
-  document.getElementById('mm').appendChild(c);
-}
 
 
 </script>
