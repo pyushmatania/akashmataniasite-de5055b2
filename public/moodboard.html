@@ -3053,26 +3053,38 @@ function gCat(s){
 let mapTransitioning=false;
 function toggleMap(){
   if(mapTransitioning)return;
-  mmExp=!mmExp;
   mapTransitioning=true;
-  mc.classList.toggle('expanded',mmExp);
-  document.body.classList.toggle('map-expanded',mmExp);
+  
   if(!mmExp){
-    // Reset zoom and state immediately
+    // OPENING
+    mmExp=true;
+    mc.classList.add('map-opening');
+    mc.classList.add('expanded');
+    document.body.classList.add('map-expanded');
+    // Draw content immediately so it's visible during animation
+    setTimeout(()=>{drawMap();setTimeout(recenter,150)},50);
+    setTimeout(()=>{
+      mc.classList.remove('map-opening');
+      mapTransitioning=false;
+    },550);
+  } else {
+    // CLOSING
+    mmExp=false;
     mapZoomScale=1;mapCanvas.style.transform='';
     const zl=document.getElementById('mapZoomLevel');if(zl)zl.textContent='1×';
     filtClickCount={};
     const hud=document.getElementById('cycleHud');if(hud)hud.classList.remove('visible');
     clearWaypoints();
-    // Clear expanded content immediately to avoid stale renders
-    mapCanvas.innerHTML='';
-  }
-  if(mmExp){
-    // Opening: wait for transition to finish, then draw
-    setTimeout(()=>{mapTransitioning=false;drawMap();setTimeout(recenter,200)},450);
-  } else {
-    // Closing: wait for transition to fully complete so dimensions are correct
-    setTimeout(()=>{mapTransitioning=false;drawMap()},450);
+    // Play collapse animation
+    mc.classList.add('map-closing');
+    mc.classList.remove('expanded');
+    document.body.classList.remove('map-expanded');
+    setTimeout(()=>{
+      mc.classList.remove('map-closing');
+      mapCanvas.innerHTML='';
+      mapTransitioning=false;
+      drawMap();
+    },500);
   }
 }
 
