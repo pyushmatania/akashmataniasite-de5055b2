@@ -4268,6 +4268,7 @@ function getZoneName(px,py){
   return '🗺️ Akash Unplugged';
 }
 
+let _lastScrollX=0,_lastScrollY=0,_lastArrowAngle=0;
 function updMap(){
   if(!drawMap._sc)return;
   const sc=drawMap._sc;
