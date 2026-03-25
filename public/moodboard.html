@@ -16,8 +16,8 @@
 }
 html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);background:#FAF8F5;margin:0;padding:0}
 *{-webkit-tap-highlight-color:transparent}
-.canvas-viewport{width:100vw;height:100vh;overflow:auto;cursor:grab;position:relative;margin:0;padding:0;background:#FAF8F5}
-.canvas{transform:scale(0.5);transform-origin:0 0}
+.canvas-viewport{width:100vw;height:100vh;overflow:auto;cursor:grab;position:relative;margin:0;padding:0;background:#FAF8F5;overscroll-behavior:none}
+.canvas{transform:scale(0.5);transform-origin:0 0;overflow:hidden}
 .canvas-viewport::after{content:'';position:absolute;top:0;right:0;bottom:0;width:50px;background:#FAF8F5;z-index:0;pointer-events:none}
 .canvas-viewport:active{cursor:grabbing}
 .canvas-viewport::-webkit-scrollbar{width:6px;height:6px}
@@ -785,6 +785,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-canvas{
   position:absolute;top:0;left:0;
   transform-origin:0 0;
+  overflow:hidden;
 }
 .minimap-container.expanded .map-canvas{
   background:linear-gradient(180deg,#4a9bd9 0%,#5baae0 30%,#6dbde8 60%,#3d8cc7 100%) !important;
