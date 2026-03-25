@@ -55,6 +55,29 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
 .sticker:active{cursor:grabbing}
 .sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important}
+
+/* ===== ZONE VISUAL TINTS ===== */
+.zone-tint{position:absolute;pointer-events:none;z-index:1;border-radius:40px;opacity:0.06;transition:opacity 0.3s}
+.zone-tint-origin{background:radial-gradient(ellipse at center,#4CAF50,transparent 70%)}
+.zone-tint-warroom{background:radial-gradient(ellipse at center,#E53935,transparent 70%)}
+.zone-tint-launchpad{background:radial-gradient(ellipse at center,#42A5F5,transparent 70%)}
+.zone-tint-hub{background:radial-gradient(ellipse at center,#FFB300,transparent 70%)}
+.zone-tint-playground{background:radial-gradient(ellipse at center,#FF9800,transparent 70%)}
+.zone-tint-memealley{background:radial-gradient(ellipse at center,#AB47BC,transparent 70%)}
+.zone-divider{position:absolute;pointer-events:none;z-index:2}
+.zone-divider-h{height:2px;background:repeating-linear-gradient(90deg,transparent,transparent 12px,rgba(201,169,110,0.12) 12px,rgba(201,169,110,0.12) 24px)}
+.zone-divider-v{width:2px;background:repeating-linear-gradient(180deg,transparent,transparent 12px,rgba(201,169,110,0.12) 12px,rgba(201,169,110,0.12) 24px)}
+
+/* ===== PROJECT SHOWCASE CARDS ===== */
+.sticker-project{background:#fff;border-radius:18px;padding:20px;border:2px solid #f0ece6;width:240px;box-shadow:0 4px 24px rgba(0,0,0,0.08);transition:transform 0.2s,box-shadow 0.2s}
+.sticker-project:hover{transform:translateY(-4px) !important;box-shadow:0 8px 32px rgba(0,0,0,0.12) !important}
+.sticker-project .proj-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sticker-project .proj-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem}
+.sticker-project .proj-title{font-family:var(--font-fun);font-weight:700;font-size:0.85rem;color:var(--text)}
+.sticker-project .proj-tag{font-size:0.6rem;font-weight:600;letter-spacing:0.05em;color:var(--text3);text-transform:uppercase}
+.sticker-project .proj-desc{font-size:0.78rem;color:var(--text2);line-height:1.6;margin-bottom:14px}
+.sticker-project .proj-stats{display:flex;gap:8px;flex-wrap:wrap}
+.sticker-project .proj-stat{padding:4px 10px;border-radius:12px;font-size:0.6rem;font-weight:600;letter-spacing:0.03em}
 .sticker[data-anim]::after{content:'tap me!';position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-family:var(--font-hand);font-size:0.7rem;color:var(--text3);opacity:0;transition:opacity 0.2s;white-space:nowrap;pointer-events:none}
 .sticker[data-anim]:hover::after{opacity:0.6}
 
@@ -1435,6 +1458,19 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="canvas-viewport" id="viewport">
 <div class="canvas" id="canvas">
 
+<!-- ===== ZONE TINTS ===== -->
+<div class="zone-tint zone-tint-origin" style="left:0;top:0;width:2800px;height:1800px"></div>
+<div class="zone-tint zone-tint-warroom" style="left:4000px;top:0;width:3000px;height:1800px"></div>
+<div class="zone-tint zone-tint-launchpad" style="left:0;top:1800px;width:2800px;height:1700px"></div>
+<div class="zone-tint zone-tint-hub" style="left:2800px;top:1800px;width:1400px;height:1400px"></div>
+<div class="zone-tint zone-tint-playground" style="left:0;top:3500px;width:5000px;height:3500px"></div>
+<div class="zone-tint zone-tint-memealley" style="left:5000px;top:3500px;width:5000px;height:3500px"></div>
+<!-- Zone dividers -->
+<div class="zone-divider zone-divider-h" style="left:0;top:1800px;width:10000px"></div>
+<div class="zone-divider zone-divider-h" style="left:0;top:3500px;width:10000px"></div>
+<div class="zone-divider zone-divider-v" style="left:2800px;top:0;width:2px;height:3500px"></div>
+<div class="zone-divider zone-divider-v" style="left:5000px;top:3500px;width:2px;height:3500px"></div>
+
 <!-- ===== YOUR PHOTOS ===== -->
 
 <div class="sticker sticker-hero-photo" data-anim="jelly" data-splash="true" style="left:800px;top:600px;transform:rotate(-3deg);width:290px;background:linear-gradient(135deg,#64B5F6,#42A5F5,#1E88E5)">
@@ -1589,6 +1625,31 @@ body.map-expanded .scroll-counter{display:none!important}
   <svg viewBox="0 0 100 140"><path d="M50 10Q30 40 30 80L50 90L70 80Q70 40 50 10Z" fill="#E0E0E0" stroke="#BDBDBD" stroke-width="1"/><path d="M50 10Q35 45 35 70L50 78L65 70Q65 45 50 10Z" fill="#42A5F5"/><circle cx="50" cy="50" r="8" fill="#FFF"/><circle cx="50" cy="50" r="5" fill="#1565C0"/><path d="M30 80L20 100L35 85Z" fill="#FF7043"/><path d="M70 80L80 100L65 85Z" fill="#FF7043"/><path d="M40 90L50 130L60 90" fill="#FF5722"/><path d="M44 90L50 118L56 90" fill="#FFB74D"/></svg>
 </div>
 <div class="sticker sticker-progress" data-anim="jelly" style="left:600px;top:3000px;transform:rotate(3deg)" onclick="prog(this,event)"><div class="p-title">🎯 Circles progress</div><div class="p-bar"><div class="p-fill" style="width:12%;background:linear-gradient(90deg,#7B1FA2,#CE93D8)"></div></div><div class="p-label">12% — tap to progress</div></div>
+
+<!-- ===== PROJECT SHOWCASE CARDS ===== -->
+<div class="sticker sticker-project" data-anim="jelly" style="left:1800px;top:1900px;transform:rotate(-2deg)">
+  <div class="proj-header"><div class="proj-icon" style="background:linear-gradient(135deg,#7B1FA2,#CE93D8)">🎬</div><div><div class="proj-title">EnterCircles Labs</div><div class="proj-tag">FOUNDER · MEDIA FINTECH</div></div></div>
+  <div class="proj-desc">Pioneered retail-driven creator financing for Indian cinema. Validated PMF with 3 signed agreements worth ₹15Cr+ pipeline.</div>
+  <div class="proj-stats"><span class="proj-stat" style="background:#f3eff8;color:#7a6a9a">₹15Cr+ Pipeline</span><span class="proj-stat" style="background:#eef6f0;color:#5a8a6a">Team of 6</span><span class="proj-stat" style="background:#fdf5eb;color:#b07d3a">30% Velocity ↑</span></div>
+</div>
+
+<div class="sticker sticker-project" data-anim="bounce" style="left:400px;top:2100px;transform:rotate(2deg)">
+  <div class="proj-header"><div class="proj-icon" style="background:linear-gradient(135deg,#FF9800,#FFB74D)">🎓</div><div><div class="proj-title">Recess EdTech</div><div class="proj-tag">FOUNDER · EDTECH SAAS</div></div></div>
+  <div class="proj-desc">Built a coaching management SaaS. Reduced churn from 55% to below 10%. Scaled to 5,000+ paying users.</div>
+  <div class="proj-stats"><span class="proj-stat" style="background:#fdf5eb;color:#b07d3a">5K+ Users</span><span class="proj-stat" style="background:#faf0ef;color:#b06a6a">₹80L+ ARR</span><span class="proj-stat" style="background:#eef6f0;color:#5a8a6a">73% Faster Onboard</span></div>
+</div>
+
+<div class="sticker sticker-project" data-anim="wave" style="left:1200px;top:2800px;transform:rotate(-3deg)">
+  <div class="proj-header"><div class="proj-icon" style="background:linear-gradient(135deg,#00897B,#4DB6AC)">🐢</div><div><div class="proj-title">ARRIBADA</div><div class="proj-tag">CONSERVATION TECH</div></div></div>
+  <div class="proj-desc">Turtle nesting tracker for Olive Ridley conservation. Built with React, Supabase & bioluminescent deep-ocean design.</div>
+  <div class="proj-stats"><span class="proj-stat" style="background:#e0f2f1;color:#00695c">React + Supabase</span><span class="proj-stat" style="background:#eef3fa;color:#5a7faa">Real-time Tracking</span></div>
+</div>
+
+<div class="sticker sticker-project" data-anim="pop" style="left:2200px;top:2400px;transform:rotate(1deg)">
+  <div class="proj-header"><div class="proj-icon" style="background:linear-gradient(135deg,#5C6BC0,#7986CB)">🏡</div><div><div class="proj-title">Hushh Jeypore</div><div class="proj-tag">HOSPITALITY · HERITAGE</div></div></div>
+  <div class="proj-desc">Heritage homestay experience platform. "Order an experience, not a room." Minimal booking in 60 seconds.</div>
+  <div class="proj-stats"><span class="proj-stat" style="background:#e8eaf6;color:#3949ab">Heritage Stay</span><span class="proj-stat" style="background:#fdf5eb;color:#b07d3a">60s Booking</span></div>
+</div>
 <div class="sticker sticker-badge" data-anim="pop" style="left:2100px;top:2600px;transform:rotate(3deg)">TURTLE SAVER 🐢</div>
 <div class="sticker sticker-badge" data-anim="spin" style="left:400px;top:2800px;transform:rotate(-4deg)">VIBE CODER 💻</div>
 <div class="sticker sticker-badge" data-anim="flip" style="left:1800px;top:3200px;transform:rotate(3deg)">CHAI POWERED ☕</div>
@@ -1779,9 +1840,9 @@ body.map-expanded .scroll-counter{display:none!important}
 </div>
 
 <nav class="bottom-nav">
-  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Home</a>
+  <a href="#" onclick="scrollToZone(event,'hub')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Home</a>
   <a href="#" id="workBtn" onclick="toggleWorkPanel(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Work</a>
-  <a href="#" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>Play</a>
+  <a href="#" class="active" onclick="scrollToZone(event,'playground')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>Play</a>
   <a href="#" id="aboutBtn" onclick="toggleAboutPanel(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>About</a>
   <a href="#" id="contactBtn" onclick="toggleContactPanel(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg>Contact</a>
 </nav>
@@ -1943,6 +2004,37 @@ function closeWorkPanel(){
   document.getElementById('workBackdrop').classList.remove('open');
   document.body.style.overflow='';
 }
+
+// ===== ZONE NAVIGATION FROM BOTTOM NAV =====
+const zoneTargets={
+  hub:{x:3500,y:2500},
+  origin:{x:1400,y:900},
+  warroom:{x:5500,y:900},
+  launchpad:{x:1400,y:2600},
+  playground:{x:2400,y:5000},
+  memealley:{x:7000,y:5000}
+};
+function scrollToZone(e,zone){
+  e.preventDefault();e.stopPropagation();
+  const target=zoneTargets[zone];
+  if(!target)return;
+  const scale=0.85;
+  const scaled={x:target.x*scale,y:target.y*scale};
+  const vp=document.getElementById('viewport');
+  const maxX=Math.max(0,vp.scrollWidth-vp.clientWidth);
+  const maxY=Math.max(0,vp.scrollHeight-vp.clientHeight);
+  vp.scrollTo({
+    left:Math.max(0,Math.min(scaled.x-vp.clientWidth/2,maxX)),
+    top:Math.max(0,Math.min(scaled.y-vp.clientHeight/2,maxY)),
+    behavior:'smooth'
+  });
+  // Brief highlight flash
+  const flash=document.getElementById('bounceFlash');
+  flash.style.background='radial-gradient(circle at 50% 50%,rgba(201,169,110,0.15),transparent 60%)';
+  flash.style.opacity='1';
+  setTimeout(()=>{flash.style.opacity='0'},400);
+}
+const MOODBOARD_VIEW_SCALE_NAV=0.85;
 </script>
 
 <!-- ==================== CONTACT PANEL ==================== -->
@@ -4256,6 +4348,7 @@ function scanStickers(){
     else if(s.classList.contains('sticker-stamp'))cat='stamp';
     else if(s.classList.contains('sticker-swatches'))cat='swatches';
     else if(s.classList.contains('sticker-contra'))cat='contra';
+    else if(s.classList.contains('sticker-project'))cat='other';
     else if(s.classList.contains('zone-signpost'))cat='other';
     // Determine visual properties
     let bg='rgba(200,200,200,0.5)';
@@ -4315,6 +4408,8 @@ function scanStickers(){
       bg='transparent';radius='0';
     } else if(s.classList.contains('sticker-contra')){
       bg='#000';radius='8px';border='2px solid #FF1744';
+    } else if(s.classList.contains('sticker-project')){
+      bg='#fff';radius='18px';border='2px solid #f0ece6';
     } else {
       bg=cs.backgroundColor||'rgba(200,200,200,0.5)';
     }
@@ -4932,6 +5027,9 @@ function drawMap(){
       if(dx<-30||dx>canvasW+30||dy<-30||dy>canvasH+30)return;
       count++;
       const w=Math.max(4,d.w*sc),h=Math.max(3,d.h*sc);
+      // Category color for minimap border
+      const catColors={photo:'#64B5F6',meme:'#CE93D8',badge:'#FFD54F',interactive:'#FF7043',postit:'#81C784',stamp:'#EF5350',emoji:'transparent',contra:'#FF1744'};
+      const catBorder=catColors[d.cat]||'rgba(255,255,255,0.3)';
       
       // For items large enough, render a scaled-down clone of the actual sticker
       if(w>6 && h>5 && d.ref){
@@ -4948,6 +5046,8 @@ function drawMap(){
         clone.style.transition='none';
         clone.style.filter='none';
         clone.style.opacity='0.85';
+        if(catBorder!=='transparent')clone.style.outline='2px solid '+catBorder;
+        clone.style.outlineOffset='1px';
         clone.removeAttribute('data-anim');
         clone.removeAttribute('data-splash');
         clone.removeAttribute('data-contra');
@@ -4965,14 +5065,16 @@ function drawMap(){
       }
     });
     if(mapCount)mapCount.textContent=count+' items';
-    // Draw subtle zone names on small minimap
+    // Draw zone names on small minimap with zone-specific colors
+    const zoneColors={'Origin Story':'#4CAF50','The War Room':'#E53935','Launch Pad':'#42A5F5','Akash Unplugged':'#FFB300','The Playground':'#FF9800','Meme Alley':'#AB47BC'};
     mapZones.forEach(z=>{
       const zx=((z.x1+z.x2)/2-offsetX)*sc;
       const zy=((z.y1+z.y2)/2-offsetY)*sc;
       if(zx<-30||zx>canvasW+30||zy<-30||zy>canvasH+30)return;
+      const zc=zoneColors[z.name]||'rgba(40,60,30,0.5)';
       const lbl=document.createElement('div');
       lbl.textContent=z.icon+' '+z.name.replace('The ','');
-      lbl.style.cssText='position:absolute;left:'+zx+'px;top:'+zy+'px;transform:translate(-50%,-50%);font-family:Arial Black,sans-serif;font-size:4px;font-weight:900;color:rgba(40,60,30,0.4);text-transform:uppercase;letter-spacing:0.5px;pointer-events:none;white-space:nowrap;text-shadow:0 0.5px 1px rgba(255,255,255,0.15);';
+      lbl.style.cssText='position:absolute;left:'+zx+'px;top:'+zy+'px;transform:translate(-50%,-50%);font-family:Arial Black,sans-serif;font-size:5px;font-weight:900;color:'+zc+';text-transform:uppercase;letter-spacing:0.5px;pointer-events:none;white-space:nowrap;text-shadow:0 0.5px 1px rgba(0,0,0,0.3);opacity:0.7';
       mapCanvas.appendChild(lbl);
     });
   }
