@@ -4409,7 +4409,7 @@ vp.addEventListener('scroll',()=>{
   if(mapTransitioning)return;
   updMap();
   if(!mmExp){
-    clearTimeout(mapScrollTimer);mapScrollTimer=setTimeout(drawMap,250);
+    clearTimeout(mapScrollTimer);mapScrollTimer=setTimeout(drawMap,320);
     // Start lerp loop if not running
     if(!_mapLerpRAF)_mapLerpRAF=requestAnimationFrame(mapLerpLoop);
   }
