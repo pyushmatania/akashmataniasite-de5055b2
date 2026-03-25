@@ -116,6 +116,39 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker-counter .c-emoji{font-size:1.8rem}
 .sticker-counter .c-count{font-family:var(--font-fun);font-weight:700;font-size:1.4rem;color:var(--text);min-width:30px}
 .sticker-counter .c-label{font-size:0.7rem;color:var(--text3)}
+
+/* Bus-sign style zone signposts */
+.zone-signpost{
+  display:flex;flex-direction:column;align-items:center;
+  filter:drop-shadow(0 4px 12px rgba(0,0,0,0.15))!important;
+  z-index:5!important;
+}
+.zone-signpost:hover{filter:drop-shadow(0 4px 12px rgba(0,0,0,0.15))!important;z-index:5!important}
+.signpost-pole{
+  width:6px;height:60px;
+  background:linear-gradient(180deg,#9E9E9E,#757575);
+  border-radius:3px;
+  box-shadow:1px 0 0 rgba(255,255,255,0.3),-1px 0 0 rgba(0,0,0,0.1);
+}
+.signpost-board{
+  font-family:var(--font-fun);font-weight:700;font-size:0.85rem;
+  color:#fff;padding:8px 18px;border-radius:4px;
+  letter-spacing:0.08em;white-space:nowrap;
+  border:2px solid rgba(255,255,255,0.3);
+  box-shadow:0 2px 8px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.2);
+  position:relative;
+  text-shadow:0 1px 2px rgba(0,0,0,0.3);
+}
+.signpost-board::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:50%;
+  background:linear-gradient(180deg,rgba(255,255,255,0.15),transparent);
+  border-radius:2px 2px 0 0;pointer-events:none;
+}
+.signpost-board::after{
+  content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+  width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;
+  border-bottom:8px solid inherit;
+}
 .sticker-fortune{background:linear-gradient(135deg,#FFE0B2,#FFB74D);border-radius:16px;padding:18px 22px;max-width:220px;box-shadow:0 3px 12px rgba(0,0,0,0.08);cursor:pointer}
 .sticker-fortune .f-icon{font-size:2rem;margin-bottom:6px}
 .sticker-fortune .f-text{font-family:var(--font-hand);font-size:1rem;color:#5D4037;line-height:1.4}
@@ -526,27 +559,30 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 }
 .minimap-container.expanded .minimap-north-pip{display:none}
 
-/* Zone name display below minimap — GTA style */
+/* Zone name display below minimap — bus sign style */
 .minimap-zone-name{
-  position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);z-index:21;
-  font-family:'Arial Black',sans-serif;font-weight:900;font-size:0.38rem;
-  color:rgba(240,240,230,0.85);text-shadow:0 1px 3px rgba(0,0,0,0.8),0 0 8px rgba(0,0,0,0.4);
-  white-space:nowrap;letter-spacing:0.04em;text-transform:uppercase;
-  pointer-events:none;transition:opacity 0.3s;
+  position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);z-index:21;
+  font-family:var(--font-fun);font-weight:700;font-size:0.45rem;
+  color:#fff;background:#2E7D32;
+  padding:3px 10px;border-radius:3px;
+  border:1.5px solid rgba(255,255,255,0.3);
+  white-space:nowrap;letter-spacing:0.06em;text-transform:uppercase;
+  pointer-events:none;transition:all 0.3s;
+  box-shadow:0 2px 6px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.15);
+  text-shadow:0 1px 2px rgba(0,0,0,0.4);
 }
 .minimap-container.expanded .minimap-zone-name{display:none}
 
-/* Big map zone banner */
+/* Big map zone banner — bus sign style */
 .map-zone-banner{
   position:absolute;bottom:130px;left:50%;transform:translateX(-50%);z-index:1001;
-  display:none;font-family:var(--font-fun);font-weight:800;font-size:0.75rem;
-  color:#fff;background:rgba(0,0,0,0.55);
-  padding:5px 18px;border-radius:6px;
-  border:1px solid rgba(255,255,255,0.1);
-  white-space:nowrap;letter-spacing:0.06em;
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  transition:opacity 0.3s,transform 0.3s;
-  box-shadow:0 2px 12px rgba(0,0,0,0.2);
+  display:none;font-family:var(--font-fun);font-weight:800;font-size:0.85rem;
+  color:#fff;background:#2E7D32;
+  padding:8px 24px;border-radius:4px;
+  border:2px solid rgba(255,255,255,0.3);
+  white-space:nowrap;letter-spacing:0.08em;text-transform:uppercase;
+  box-shadow:0 4px 16px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.2);
+  text-shadow:0 1px 3px rgba(0,0,0,0.4);
 }
 .minimap-container.expanded .map-zone-banner{display:block}
 
@@ -1320,12 +1356,13 @@ body.map-expanded .scroll-counter{display:none!important}
 </div>
 
 <!-- ===== ZONE SIGNPOSTS ===== -->
-<div class="sticker" style="left:900px;top:350px;font-family:var(--font-hand);font-size:1.8rem;color:rgba(76,175,80,0.25);font-weight:700;letter-spacing:0.08em;transform:rotate(-4deg);pointer-events:none;user-select:none">📸 the origin story</div>
-<div class="sticker" style="left:4800px;top:350px;font-family:var(--font-hand);font-size:1.8rem;color:rgba(66,165,245,0.25);font-weight:700;letter-spacing:0.08em;transform:rotate(2deg);pointer-events:none;user-select:none">💼 the hustle district</div>
-<div class="sticker" style="left:600px;top:1850px;font-family:var(--font-hand);font-size:1.8rem;color:rgba(171,71,188,0.25);font-weight:700;letter-spacing:0.08em;transform:rotate(-2deg);pointer-events:none;user-select:none">☁️ cloud nine</div>
-<div class="sticker" style="left:5200px;top:1850px;font-family:var(--font-hand);font-size:1.8rem;color:rgba(0,200,100,0.25);font-weight:700;letter-spacing:0.08em;transform:rotate(3deg);pointer-events:none;user-select:none">🥋 the matrix dojo</div>
-<div class="sticker" style="left:700px;top:3050px;font-family:var(--font-hand);font-size:1.8rem;color:rgba(255,193,7,0.25);font-weight:700;letter-spacing:0.08em;transform:rotate(-3deg);pointer-events:none;user-select:none">🎬 lol-lywood</div>
-<div class="sticker" style="left:4800px;top:3050px;font-family:var(--font-hand);font-size:1.8rem;color:rgba(255,87,34,0.25);font-weight:700;letter-spacing:0.08em;transform:rotate(1deg);pointer-events:none;user-select:none">🎪 la la land</div>
+<!-- Bus-sign style zone signposts -->
+<div class="sticker zone-signpost" style="left:900px;top:350px;pointer-events:none;user-select:none"><div class="signpost-pole"></div><div class="signpost-board" style="background:#4CAF50">📸 THE ORIGIN STORY</div></div>
+<div class="sticker zone-signpost" style="left:4800px;top:350px;pointer-events:none;user-select:none"><div class="signpost-pole"></div><div class="signpost-board" style="background:#42A5F5">💼 THE HUSTLE DISTRICT</div></div>
+<div class="sticker zone-signpost" style="left:600px;top:1850px;pointer-events:none;user-select:none"><div class="signpost-pole"></div><div class="signpost-board" style="background:#AB47BC">☁️ CLOUD NINE</div></div>
+<div class="sticker zone-signpost" style="left:5200px;top:1850px;pointer-events:none;user-select:none"><div class="signpost-pole"></div><div class="signpost-board" style="background:#2E7D32">🥋 THE MATRIX DOJO</div></div>
+<div class="sticker zone-signpost" style="left:700px;top:3050px;pointer-events:none;user-select:none"><div class="signpost-pole"></div><div class="signpost-board" style="background:#F9A825">🎬 LOL-LYWOOD</div></div>
+<div class="sticker zone-signpost" style="left:4800px;top:3050px;pointer-events:none;user-select:none"><div class="signpost-pole"></div><div class="signpost-board" style="background:#E64A19">🎪 LA LA LAND</div></div>
 
 <!-- ===== BIG TITLE ===== -->
 <div class="sticker sticker-highlight" data-anim="tada" style="left:3200px;top:2300px;font-size:3.2rem;transform:rotate(-1deg)">Akash <span class="hl">Unplugged.</span></div>
@@ -1472,7 +1509,7 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-text" data-anim="dance" style="left:500px;top:2200px;font-size:1.3rem;transform:rotate(2deg);color:var(--accent)">"ordering an experience,<br>not booking a room"</div>
 
 <!-- ===== THE HOBBY LOBBY 🎸 (top-right corner 7000-9500, 200-1800) ===== -->
-<div class="sticker" style="left:7500px;top:300px;font-family:var(--font-hand);font-size:2rem;color:rgba(233,30,99,0.22);transform:rotate(-3deg);pointer-events:none;user-select:none">🎸 the hobby lobby</div>
+<div class="sticker zone-signpost" style="left:7500px;top:300px;pointer-events:none;user-select:none"><div class="signpost-pole"></div><div class="signpost-board" style="background:#E91E63">🎸 THE HOBBY LOBBY</div></div>
 
 <div class="sticker sticker-postit" data-anim="jelly" style="left:7200px;top:500px;transform:rotate(3deg);background:var(--pink)">Guitar practice log: Day 47<br>Still can't play Wonderwall 🎸</div>
 <div class="sticker sticker-postit" data-anim="wave" style="left:7800px;top:400px;transform:rotate(-2deg);background:var(--green)">Books to read:<br>• Atomic Habits ✅<br>• Zero to One ✅<br>• Sapiens 📖</div>
@@ -1491,7 +1528,7 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-postit" data-anim="wave" style="left:9100px;top:1000px;transform:rotate(3deg);background:var(--orange)">Music playlist: 847 songs<br>Still plays the same 12 🎧</div>
 
 <!-- ===== WANDERLUST WAY 🌍 (bottom-left 200-2800, 4800-6800) ===== -->
-<div class="sticker" style="left:800px;top:4800px;font-family:var(--font-hand);font-size:2rem;color:rgba(33,150,243,0.22);transform:rotate(2deg);pointer-events:none;user-select:none">🌍 wanderlust way</div>
+<div class="sticker zone-signpost" style="left:800px;top:4800px;pointer-events:none;user-select:none"><div class="signpost-pole"></div><div class="signpost-board" style="background:#1976D2">🌍 WANDERLUST WAY</div></div>
 
 <div class="sticker sticker-postit" data-anim="bounce" style="left:400px;top:5000px;transform:rotate(-3deg);background:var(--blue)">Dream destinations:<br>• Tokyo 🗼<br>• Iceland 🧊<br>• New Zealand 🏔️</div>
 <div class="sticker sticker-postit" data-anim="jelly" style="left:1200px;top:5200px;transform:rotate(4deg);background:var(--green)">Best chai spots:<br>1. Odisha roadside ☕<br>2. Mumbai tapri 🫖<br>3. My kitchen at 2am</div>
@@ -1508,7 +1545,7 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-postit" data-anim="pop" style="left:2500px;top:6200px;transform:rotate(5deg);background:var(--mint)">Bucket list:<br>Northern lights 🌌<br>Scuba diving 🤿<br>Mountain trek 🏔️</div>
 
 <!-- ===== THE RECHARGE ROOM 🧘 (bottom-right 5000-9500, 4500-6800) ===== -->
-<div class="sticker" style="left:6500px;top:4600px;font-family:var(--font-hand);font-size:2rem;color:rgba(156,39,176,0.22);transform:rotate(-2deg);pointer-events:none;user-select:none">🧘 the recharge room</div>
+<div class="sticker zone-signpost" style="left:6500px;top:4600px;pointer-events:none;user-select:none"><div class="signpost-pole"></div><div class="signpost-board" style="background:#7B1FA2">🧘 THE RECHARGE ROOM</div></div>
 
 <div class="sticker sticker-postit" data-anim="wave" style="left:5200px;top:4800px;transform:rotate(-3deg);background:var(--purple)">Self-care checklist:<br>✅ Sleep 8 hrs (lol jk)<br>✅ Drink water<br>⬜ Touch grass</div>
 <div class="sticker sticker-postit" data-anim="jelly" style="left:6200px;top:5000px;transform:rotate(4deg);background:var(--mint)">Morning routine goals:<br>5am → Meditate → Journal<br>Reality: 9am → Phone → Regret</div>
@@ -3558,14 +3595,14 @@ function drawMap(){
     mapCanvas.style.left='0';
     mapCanvas.style.top='50px';
   } else {
-    const cx=vp.scrollLeft+vp.clientWidth/2;
-    const cy=vp.scrollTop+vp.clientHeight/2;
-    const viewR=700;
-    offsetX=Math.max(0,cx-viewR);
-    offsetY=Math.max(0,cy-viewR);
-    sc=Math.min(mw/(viewR*2),mh/(viewR*2));
-    canvasW=mw;canvasH=mh;
-    mapCanvas.style.left='0';mapCanvas.style.top='0';
+    // SMALL MAP: show entire canvas so arrow actually moves
+    sc=Math.min(mw/contentW,mh/contentH);
+    canvasW=contentW*sc;
+    canvasH=contentH*sc;
+    offsetX=0;
+    offsetY=0;
+    mapCanvas.style.left=((mw-canvasW)/2)+'px';
+    mapCanvas.style.top=((mh-canvasH)/2)+'px';
   }
   
   drawMap._sc=sc;drawMap._ox=offsetX;drawMap._oy=offsetY;
