@@ -2477,9 +2477,9 @@ function gCat(s){
 }
 
 function toggleMap(){
-  
   mmExp=!mmExp;
   mc.classList.toggle('expanded',mmExp);
+  document.body.classList.toggle('map-expanded',mmExp);
   setTimeout(()=>{drawMap();if(mmExp)setTimeout(recenter,200)},mmExp?450:50);
 }
 
