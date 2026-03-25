@@ -1122,22 +1122,7 @@ body.map-expanded .logo,body.map-expanded .settings-btn{display:none!important}
       </div>
       <div class="map-player" id="mapPlayer">
         <div class="map-player-ping"></div>
-        <div class="map-bitmoji">
-          <svg class="map-arrow-mini" width="10" height="10" viewBox="0 0 24 24"><polygon points="12,2 22,22 12,17 2,22" fill="#FFD54F" stroke="#FF8F00" stroke-width="1.5"/></svg>
-          <div class="bitmoji-avatar">
-            <div class="bitmoji-body">
-              <div class="bitmoji-head">
-                <div class="bitmoji-hair"></div>
-                <div class="bitmoji-face">
-                  <div class="bitmoji-eyes"><span></span><span></span></div>
-                  <div class="bitmoji-mouth"></div>
-                </div>
-              </div>
-              <div class="bitmoji-torso"></div>
-            </div>
-          </div>
-          <div class="bitmoji-shadow"></div>
-        </div>
+        <svg class="map-arrow" width="18" height="18" viewBox="0 0 24 24"><defs><filter id="glow"><feGaussianBlur stdDeviation="2" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><polygon points="12,2 22,22 12,17 2,22" fill="#FFD54F" stroke="#FF8F00" stroke-width="1.5" filter="url(#glow)"/></svg>
       </div>
       <div class="map-vp-rect" id="mapVP"></div>
     </div>
