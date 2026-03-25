@@ -3855,7 +3855,7 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
           const mfy=vpCY+mbDy*mt;
           const mfp=document.createElement('div');
           mfp.textContent=j%2===0?'👣':'';
-          mfp.style.cssText='position:absolute;left:'+mfx+'px;top:'+mfy+'px;z-index:9998;pointer-events:none;font-size:'+(j%2===0?'1.5rem':'0'):';opacity:0.6;transform:translate(-50%,-50%) rotate('+Math.atan2(mbDy,mbDx)*(180/Math.PI)+'deg);transition:opacity 1.2s;';
+          mfp.style.cssText='position:absolute;left:'+mfx+'px;top:'+mfy+'px;z-index:9998;pointer-events:none;font-size:'+(j%2===0?'1.5rem':'0')+';opacity:0.6;transform:translate(-50%,-50%) rotate('+Math.atan2(mbDy,mbDx)*(180/Math.PI)+'deg);transition:opacity 1.2s;';
           if(j%2!==0){
             mfp.style.width='8px';mfp.style.height='8px';mfp.style.borderRadius='50%';
             mfp.style.background='rgba(139,119,80,0.35)';
