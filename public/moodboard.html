@@ -480,7 +480,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   transition:none;
   background:#3a5a2a;
 }
-.minimap-container.expanded .minimap{border-radius:0;border:none;box-shadow:none;background:#f0edd8}
+.minimap-container.expanded .minimap{border-radius:0;border:none;box-shadow:none;background:#6B9B37}
 
 /* Cardinal direction markers on minimap rim */
 .minimap-cardinal{
@@ -522,13 +522,13 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-zone-banner{
   position:absolute;bottom:130px;left:50%;transform:translateX(-50%);z-index:1001;
   display:none;font-family:var(--font-fun);font-weight:800;font-size:0.75rem;
-  color:rgba(100,80,50,0.8);background:rgba(255,255,255,0.65);
-  padding:5px 18px;border-radius:10px;
-  border:1px solid rgba(255,255,255,0.3);
-  white-space:nowrap;letter-spacing:0.04em;
+  color:#fff;background:rgba(0,0,0,0.55);
+  padding:5px 18px;border-radius:6px;
+  border:1px solid rgba(255,255,255,0.1);
+  white-space:nowrap;letter-spacing:0.06em;
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   transition:opacity 0.3s,transform 0.3s;
-  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+  box-shadow:0 2px 12px rgba(0,0,0,0.2);
 }
 .minimap-container.expanded .map-zone-banner{display:block}
 
@@ -662,13 +662,13 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .minimap-inner{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
 .minimap-container.expanded .minimap-inner{overflow:auto;-webkit-overflow-scrolling:touch}
 
-/* Map canvas — Snapchat map style */
+/* Map canvas — SimCity style */
 .map-canvas{
   position:absolute;top:0;left:0;
   transform-origin:0 0;
 }
 .minimap-container.expanded .map-canvas{
-  background:#f0edd8 !important;
+  background:#8BC34A !important;
 }
 .map-canvas-grid{
   position:absolute;inset:0;pointer-events:none;
@@ -682,12 +682,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 /* Map vignette overlay */
 .map-border-overlay{
   position:absolute;inset:0;pointer-events:none;z-index:999;
-  box-shadow:inset 0 0 40px rgba(0,0,0,0.08);
+  box-shadow:inset 0 0 60px rgba(0,0,0,0.12);
   display:none;
 }
 .minimap-container.expanded .map-border-overlay{display:block}
 
-/* Map region borders — invisible on Snapchat style */
+/* Map region borders */
 .map-region{
   position:absolute;pointer-events:none;z-index:2;
   border:none;border-radius:0;
@@ -700,31 +700,33 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .minimap-container.expanded .map-region{border:none}
 .minimap-container.expanded .map-region-label{display:none}
 
-/* POI markers */
+/* POI markers — SimCity icons */
 .map-poi{
-  position:absolute;z-index:5;pointer-events:none;
-  font-size:0.6rem;width:18px;height:18px;
+  position:absolute;z-index:8;pointer-events:none;
+  font-size:0.6rem;width:22px;height:22px;
   display:flex;align-items:center;justify-content:center;
-  background:#fff;border-radius:50%;border:2px solid;
-  box-shadow:0 1px 4px rgba(0,0,0,0.12);transform:translate(-50%,-50%);
+  background:#fff;border-radius:50%;border:2.5px solid;
+  box-shadow:0 2px 8px rgba(0,0,0,0.2);transform:translate(-50%,-50%);
 }
-.minimap-container.expanded .map-poi{width:28px;height:28px;font-size:0.85rem;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.minimap-container.expanded .map-poi{
+  width:32px;height:32px;font-size:1rem;
+  box-shadow:0 3px 12px rgba(0,0,0,0.25),0 0 0 2px rgba(255,255,255,0.8);
+}
 
 /* Hide hints on map clones */
 #mapCanvas .sticker::after{display:none!important}
 #mapCanvas .sticker[data-anim]::after{display:none!important}
 #mapCanvas .sticker:hover::after{display:none!important}
-/* Map topographic/decorative elements — Snapchat map style */
+
+/* Map terrain gradients — SimCity green land */
 #mapCanvas::before{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
   background:
-    radial-gradient(ellipse at 20% 30%, rgba(156,204,101,0.2) 0%, transparent 30%),
-    radial-gradient(ellipse at 70% 60%, rgba(174,213,129,0.25) 0%, transparent 25%),
-    radial-gradient(ellipse at 45% 80%, rgba(137,207,240,0.12) 0%, transparent 20%),
-    radial-gradient(ellipse at 85% 15%, rgba(255,245,157,0.1) 0%, transparent 20%),
-    radial-gradient(ellipse at 15% 70%, rgba(178,223,219,0.18) 0%, transparent 25%),
-    radial-gradient(ellipse at 55% 15%, rgba(197,225,165,0.18) 0%, transparent 22%),
-    radial-gradient(ellipse at 50% 50%, rgba(240,237,216,0.3) 0%, transparent 50%);
+    radial-gradient(ellipse at 25% 25%, rgba(139,195,74,0.35) 0%, transparent 35%),
+    radial-gradient(ellipse at 75% 30%, rgba(156,204,101,0.3) 0%, transparent 30%),
+    radial-gradient(ellipse at 50% 70%, rgba(124,179,66,0.25) 0%, transparent 35%),
+    radial-gradient(ellipse at 15% 75%, rgba(104,159,56,0.2) 0%, transparent 30%),
+    radial-gradient(ellipse at 85% 80%, rgba(139,195,74,0.28) 0%, transparent 25%);
 }
 #mapCanvas::after{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
@@ -735,119 +737,156 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 /* Topographic contour lines */
 .topo-line{
   position:absolute;pointer-events:none;z-index:1;
-  border:1px solid rgba(129,199,132,0.12);border-radius:50%;
+  border:1px solid rgba(76,175,80,0.1);border-radius:50%;
 }
 
-/* Water features on map — Snapchat blue */
+/* Water features — SimCity deep blue */
 .map-water{
   position:absolute;pointer-events:none;z-index:1;
-  background:rgba(135,206,235,0.55);border-radius:40%;
-  border:1px solid rgba(100,181,246,0.25);
-  box-shadow:inset 0 0 15px rgba(100,181,246,0.15);
+  background:rgba(41,121,191,0.6);border-radius:40%;
+  border:1px solid rgba(30,100,170,0.2);
+  box-shadow:inset 0 0 15px rgba(30,100,170,0.15);
 }
 .minimap-container.expanded .map-water{
-  background:rgba(137,207,240,0.75);
-  border-color:rgba(100,181,246,0.3);
-  box-shadow:inset 0 0 25px rgba(100,181,246,0.2),0 0 8px rgba(100,181,246,0.1);
+  background:linear-gradient(135deg,rgba(41,121,191,0.85),rgba(66,165,245,0.7));
+  border-color:rgba(25,80,140,0.3);
+  box-shadow:inset 0 0 30px rgba(25,80,140,0.25),0 0 12px rgba(41,121,191,0.15);
 }
 
-/* Road/path lines — Snapchat white/gray roads */
+/* Water shimmer animation */
+@keyframes waterShimmer{
+  0%,100%{opacity:0.6}
+  50%{opacity:0.85}
+}
+
+/* Road/path — SimCity gray streets */
 .map-road{
-  position:absolute;pointer-events:none;z-index:2;
-  background:rgba(255,255,255,0.85);border-radius:2px;
-  box-shadow:0 0.5px 1px rgba(0,0,0,0.06);
-  border:0.5px solid rgba(200,200,200,0.3);
+  position:absolute;pointer-events:none;z-index:3;
+  background:rgba(189,189,189,0.85);border-radius:1px;
+  box-shadow:0 0.5px 1px rgba(0,0,0,0.08);
+  border:none;
 }
 .minimap-container.expanded .map-road{
-  background:rgba(255,255,255,0.95);
-  box-shadow:0 0.5px 3px rgba(0,0,0,0.1);
-  border-color:rgba(210,210,210,0.5);
+  background:rgba(180,180,180,0.9);
+  box-shadow:0 0.5px 2px rgba(0,0,0,0.12),inset 0 0.5px 0 rgba(255,255,255,0.3);
 }
 
-/* Zone label markers on map — written on the land like Snapchat */
+/* Zone label markers — SimCity district names */
 .map-zone-marker{
-  position:absolute;z-index:6;pointer-events:none;
+  position:absolute;z-index:9;pointer-events:none;
   font-family:var(--font-fun);font-weight:600;font-size:0.5rem;
-  color:rgba(100,100,100,0.4);text-transform:uppercase;letter-spacing:0.08em;
+  color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;
   transform:translate(-50%,-50%);white-space:nowrap;
-  text-shadow:0 1px 3px rgba(255,255,255,0.8);
+  text-shadow:0 1px 4px rgba(0,0,0,0.4);
 }
 .minimap-container.expanded .map-zone-marker{
-  font-size:0.85rem;color:rgba(130,115,85,0.65);font-weight:800;letter-spacing:0.18em;
-  text-shadow:0 1px 2px rgba(255,255,255,0.4);
+  font-size:0.75rem;color:rgba(255,255,255,0.75);font-weight:800;letter-spacing:0.2em;
+  text-shadow:0 1px 6px rgba(0,0,0,0.5),0 0 20px rgba(0,0,0,0.15);
 }
 
-/* 3D Building blocks on Snapchat map */
+/* 3D Building blocks — SimCity isometric style */
 .map-building-3d{
-  position:absolute;pointer-events:none;z-index:3;
-  background:linear-gradient(145deg,#E2DDD0,#D8D3C5);
-  border-radius:2px;
-  box-shadow:2px 3px 0 #CAC5B5,-1px -1px 0 rgba(255,255,255,0.4);
-  border:0.5px solid rgba(0,0,0,0.06);
+  position:absolute;pointer-events:none;z-index:4;
+  border-radius:1px;
+}
+/* SimCity building color classes */
+.map-bld-residential{
+  background:linear-gradient(180deg,#81C784 0%,#66BB6A 100%);
+  box-shadow:1px 2px 0 #4CAF50,-0.5px -0.5px 0 rgba(255,255,255,0.2);
+  border:0.5px solid rgba(56,142,60,0.3);
+}
+.map-bld-commercial{
+  background:linear-gradient(180deg,#64B5F6 0%,#42A5F5 100%);
+  box-shadow:1px 2px 0 #1E88E5,-0.5px -0.5px 0 rgba(255,255,255,0.2);
+  border:0.5px solid rgba(21,101,192,0.3);
+}
+.map-bld-industrial{
+  background:linear-gradient(180deg,#FFD54F 0%,#FFC107 100%);
+  box-shadow:1px 2px 0 #FFA000,-0.5px -0.5px 0 rgba(255,255,255,0.3);
+  border:0.5px solid rgba(255,143,0,0.3);
+}
+.map-bld-landmark{
+  background:linear-gradient(180deg,#CE93D8 0%,#AB47BC 100%);
+  box-shadow:2px 3px 0 #7B1FA2,-0.5px -0.5px 0 rgba(255,255,255,0.3);
+  border:0.5px solid rgba(106,27,154,0.3);
 }
 .map-building-tall{
-  box-shadow:3px 5px 0 #B8B3A3,-1px -1px 0 rgba(255,255,255,0.5);
-  background:linear-gradient(145deg,#D8D3C5,#CCC7B8);
+  box-shadow:2px 4px 0 currentColor,-0.5px -0.5px 0 rgba(255,255,255,0.3);
 }
-/* Green park areas */
+
+/* Green park areas — SimCity green zones */
 .map-park{
-  position:absolute;pointer-events:none;z-index:1;
-  background:rgba(139,195,74,0.45);
-  border-radius:30% 40% 35% 45%;
+  position:absolute;pointer-events:none;z-index:2;
+  background:rgba(76,175,80,0.5);
+  border-radius:20% 30% 25% 35%;
 }
 .minimap-container.expanded .map-park{
-  background:rgba(156,204,101,0.55);
-  box-shadow:inset 0 0 12px rgba(104,159,56,0.15);
+  background:linear-gradient(135deg,rgba(102,187,106,0.6),rgba(76,175,80,0.5));
+  box-shadow:inset 0 0 15px rgba(56,142,60,0.2);
+  border:1px solid rgba(56,142,60,0.15);
 }
+
 /* Beach/sand areas */
 .map-beach{
   position:absolute;pointer-events:none;z-index:1;
-  background:rgba(255,230,186,0.65);
+  background:rgba(255,224,130,0.55);
   border-radius:40% 50% 45% 35%;
 }
-/* Highway/main road */
+
+/* Highway/main road — SimCity avenues */
 .map-highway{
   position:absolute;pointer-events:none;z-index:3;
-  background:rgba(158,158,158,0.6);
-  border-radius:2px;
-  box-shadow:0 0.5px 1px rgba(0,0,0,0.12);
+  background:rgba(117,117,117,0.75);
+  border-radius:1px;
+  box-shadow:0 0.5px 2px rgba(0,0,0,0.15);
 }
 .minimap-container.expanded .map-highway{
-  background:rgba(120,120,120,0.5);
+  background:rgba(97,97,97,0.7);
+  box-shadow:0 1px 3px rgba(0,0,0,0.2),inset 0 0.5px 0 rgba(255,255,255,0.15);
 }
-/* Section label badges — like district markers on Snapchat */
+
+/* Section label badges — SimCity zone markers */
 .map-section-badge{
-  position:absolute;z-index:7;pointer-events:none;
-  background:rgba(255,255,255,0.85);
-  padding:3px 10px;border-radius:12px;
-  font-family:var(--font-fun);font-size:0.55rem;font-weight:700;
-  color:#555;white-space:nowrap;
-  box-shadow:0 1px 4px rgba(0,0,0,0.1);
+  position:absolute;z-index:10;pointer-events:none;
+  background:rgba(0,0,0,0.65);
+  padding:3px 10px;border-radius:4px;
+  font-family:var(--font-fun);font-size:0.5rem;font-weight:700;
+  color:#fff;white-space:nowrap;letter-spacing:0.04em;
+  box-shadow:0 2px 6px rgba(0,0,0,0.25);
   transform:translate(-50%,-50%);
-  backdrop-filter:blur(4px);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
 }
+
 /* Tree dots for parks */
 .map-tree{
   position:absolute;pointer-events:none;z-index:2;
   width:8px;height:8px;border-radius:50%;
-  background:rgba(76,175,80,0.6);
-  box-shadow:0 1px 2px rgba(0,0,0,0.1);
+  background:rgba(56,142,60,0.7);
+  box-shadow:0 1px 2px rgba(0,0,0,0.15);
+}
+
+/* SimCity grid overlay for zoned areas */
+.map-zone-grid{
+  position:absolute;pointer-events:none;z-index:2;
+  border:1.5px dashed;border-radius:3px;
+  opacity:0.25;
 }
 
 /* Map compass rose */
 .map-compass-rose{
-  position:absolute;z-index:8;pointer-events:none;
+  position:absolute;z-index:11;pointer-events:none;
   opacity:0.15;
 }
-.minimap-container.expanded .map-compass-rose{opacity:0.3}
+.minimap-container.expanded .map-compass-rose{opacity:0.35}
 
 /* Map scale bar */
 .map-scale-bar{
-  position:absolute;bottom:8px;right:8px;z-index:8;
+  position:absolute;bottom:8px;right:8px;z-index:11;
   display:none;align-items:center;gap:4px;
-  font-family:var(--font-fun);font-size:0.4rem;color:rgba(0,0,0,0.35);
+  font-family:var(--font-fun);font-size:0.4rem;color:rgba(255,255,255,0.5);
 }
-.minimap-container.expanded .map-scale-bar{color:rgba(0,0,0,0.35);display:flex}
+.minimap-container.expanded .map-scale-bar{color:rgba(255,255,255,0.5);display:flex}
+.minimap-container.expanded .scale-line{border-color:rgba(255,255,255,0.3)}
 .scale-line{width:40px;height:0;border-top:1.5px solid rgba(0,0,0,0.2);border-left:1.5px solid rgba(0,0,0,0.2);border-right:1.5px solid rgba(0,0,0,0.2);height:4px}
 
 
@@ -858,7 +897,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-bottom-bar{
   position:absolute;bottom:0;left:0;right:0;z-index:1000;
   display:none;flex-direction:column;
-  background:linear-gradient(0deg,rgba(240,237,216,0.8) 0%,rgba(240,237,216,0.4) 60%,transparent 100%);
+  background:linear-gradient(0deg,rgba(50,80,30,0.85) 0%,rgba(50,80,30,0.4) 60%,transparent 100%);
   padding:10px 10px max(10px,env(safe-area-inset-bottom,0px)+54px);
 }
 .minimap-container.expanded .map-bottom-bar{display:flex}
@@ -871,7 +910,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .minimap-container.map-opening .minimap-zone-name{display:none}
 .minimap-container.map-opening .minimap-radar{display:none}
 .minimap-container.map-opening .minimap::after{display:none}
-.minimap-container.map-opening .minimap{background:#f0edd8}
+.minimap-container.map-opening .minimap{background:#6B9B37}
 /* During closing, keep small map styling */
 .minimap-container.map-closing .minimap-cardinal{display:none}
 .minimap-container.map-closing .minimap-north-pip{display:none}
@@ -880,7 +919,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .minimap-container.map-closing .minimap::after{display:none}
 .minimap-container.map-closing{inset:0;width:100vw;height:100vh;bottom:0;right:0}
 .minimap-container.map-closing::before{display:none}
-.minimap-container.map-closing .minimap{border-radius:0;border:none;box-shadow:none;background:#f0edd8}
+.minimap-container.map-closing .minimap{border-radius:0;border:none;box-shadow:none;background:#6B9B37}
 .map-bottom-bar .bar-filters{
   display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin-bottom:4px;
 }
@@ -888,25 +927,25 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   display:flex;justify-content:center;align-items:center;gap:12px;
   padding:3px 8px;
 }
-.bar-count{font-family:var(--font-fun);font-size:0.5rem;color:rgba(100,80,50,0.35);font-weight:500}
-.bar-coords{font-family:var(--font-fun);font-size:0.45rem;color:rgba(100,80,50,0.3);font-variant-numeric:tabular-nums;letter-spacing:0.02em}
+.bar-count{font-family:var(--font-fun);font-size:0.5rem;color:rgba(255,255,255,0.5);font-weight:500}
+.bar-coords{font-family:var(--font-fun);font-size:0.45rem;color:rgba(255,255,255,0.4);font-variant-numeric:tabular-nums;letter-spacing:0.02em}
 
-/* Filter chips — Snapchat-style pills */
+/* Filter chips — SimCity-style pills */
 .mc{
   padding:5px 12px;border-radius:20px;font-family:var(--font-fun);
   font-size:0.55rem;font-weight:600;cursor:pointer;
   border:none;
   transition:all 0.2s cubic-bezier(0.25,1,0.5,1);
   display:flex;align-items:center;gap:4px;
-  background:rgba(255,255,255,0.7);color:rgba(80,70,50,0.65);
+  background:rgba(0,0,0,0.4);color:rgba(255,255,255,0.7);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  box-shadow:0 1px 4px rgba(0,0,0,0.06);
+  box-shadow:0 1px 4px rgba(0,0,0,0.15);
 }
 .mc.active{
-  background:rgba(255,213,79,0.5);color:rgba(80,60,20,0.9);
-  box-shadow:0 2px 8px rgba(255,193,7,0.2);
+  background:rgba(76,175,80,0.7);color:#fff;
+  box-shadow:0 2px 8px rgba(76,175,80,0.3);
 }
-.mc:not(.active):hover{background:rgba(255,255,255,0.65);color:rgba(100,80,50,0.7)}
+.mc:not(.active):hover{background:rgba(0,0,0,0.5);color:rgba(255,255,255,0.85)}
 .mc:active{transform:scale(0.95)}
 .mc .legend-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .mc .chip-count{
@@ -918,49 +957,49 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-coord-display{
   position:absolute;top:54px;left:12px;z-index:1000;
   display:none;font-family:var(--font-fun);font-size:0.5rem;
-  color:rgba(100,80,50,0.4);background:rgba(255,255,255,0.5);
+  color:rgba(255,255,255,0.5);background:rgba(0,0,0,0.4);
   padding:3px 8px;border-radius:6px;
-  border:1px solid rgba(180,170,150,0.15);
+  border:1px solid rgba(255,255,255,0.08);
   font-variant-numeric:tabular-nums;
 }
 .minimap-container.expanded .map-coord-display{display:block}
 
 
-/* Zoom + Compass controls — subtle map style */
+/* Zoom + Compass controls — SimCity dark style */
 .map-controls-right{
   position:absolute;right:10px;top:50%;transform:translateY(-50%);z-index:1000;
   display:none;flex-direction:column;gap:4px;
-  background:rgba(255,255,255,0.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border-radius:12px;padding:6px;border:1px solid rgba(180,170,150,0.15);
+  background:rgba(0,0,0,0.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-radius:12px;padding:6px;border:1px solid rgba(255,255,255,0.08);
 }
 .minimap-container.expanded .map-controls-right{display:flex}
 .map-ctrl-btn{
   width:32px;height:32px;border-radius:8px;
-  background:rgba(255,255,255,0.4);border:1px solid rgba(180,170,150,0.15);
-  cursor:pointer;font-size:0.9rem;color:rgba(100,80,50,0.5);
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);
+  cursor:pointer;font-size:0.9rem;color:rgba(255,255,255,0.6);
   display:flex;align-items:center;justify-content:center;
   transition:all 0.2s;position:relative;
 }
-.map-ctrl-btn:hover{background:rgba(255,213,79,0.2);color:rgba(80,60,30,0.7)}
+.map-ctrl-btn:hover{background:rgba(76,175,80,0.3);color:#fff}
 .map-ctrl-btn:active{transform:scale(0.9)}
-.map-ctrl-btn svg{width:16px;height:16px;stroke:rgba(100,80,50,0.5)}
-.map-ctrl-btn:hover svg{stroke:rgba(80,60,30,0.7)}
-.map-ctrl-divider{width:18px;height:0;border-top:1px solid rgba(180,170,150,0.15);align-self:center;margin:1px auto}
+.map-ctrl-btn svg{width:16px;height:16px;stroke:rgba(255,255,255,0.6)}
+.map-ctrl-btn:hover svg{stroke:#fff}
+.map-ctrl-divider{width:18px;height:0;border-top:1px solid rgba(255,255,255,0.1);align-self:center;margin:1px auto}
 
 /* Compass widget */
 .map-compass-widget{
   width:38px;height:38px;border-radius:50%;
-  background:rgba(255,255,255,0.5);border:1px solid rgba(180,170,150,0.15);
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);
   display:flex;align-items:center;justify-content:center;
   cursor:pointer;transition:all 0.2s;align-self:center;margin-bottom:2px;
 }
-.map-compass-widget:hover{background:rgba(255,213,79,0.2)}
+.map-compass-widget:hover{background:rgba(76,175,80,0.3)}
 .map-compass-widget:active{transform:scale(0.9)}
 .map-compass-widget svg{width:24px;height:24px}
 
 /* Zoom level indicator */
 .map-zoom-level{
-  font-family:var(--font-fun);font-size:0.4rem;color:rgba(100,80,50,0.35);
+  font-family:var(--font-fun);font-size:0.4rem;color:rgba(255,255,255,0.4);
   text-align:center;padding:1px 0;font-weight:600;
 }
 
@@ -1016,12 +1055,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   position:absolute;top:0;left:0;right:0;z-index:1000;
   padding:max(env(safe-area-inset-top,8px),8px) 16px 8px;
   display:none;align-items:center;justify-content:space-between;
-  background:linear-gradient(180deg,rgba(240,237,216,0.97),rgba(240,237,216,0.85),transparent);
+  background:linear-gradient(180deg,rgba(50,80,30,0.95),rgba(50,80,30,0.8),transparent);
 }
 .map-header{display:none!important}
 .minimap-container.expanded .map-header{display:flex!important}
 .minimap-container.map-opening .map-header{display:flex!important}
-.map-title{font-family:var(--font-fun);font-weight:700;font-size:0.95rem;color:var(--text)}
+.map-title{font-family:var(--font-fun);font-weight:700;font-size:0.95rem;color:#fff}
 .map-close-btn{
   width:36px;height:36px;border-radius:50%;
   background:rgba(255,255,255,0.85);border:none;
@@ -3114,25 +3153,25 @@ function toggleMap(){
 }
 
 function addMapDecorations(cw,ch){
-  // === OCEAN — large blue water surrounding the map edges ===
+  // === OCEAN — deep SimCity blue water ===
   const oceans=[
-    {x:-5,y:-5,w:110,h:12,r:'0'},   // top ocean strip
-    {x:-5,y:90,w:110,h:15,r:'0'},    // bottom ocean strip
-    {x:-5,y:-5,w:10,h:110,r:'0'},    // left ocean
-    {x:92,y:-5,w:13,h:110,r:'0'},    // right ocean
+    {x:-5,y:-5,w:110,h:10,r:'0'},
+    {x:-5,y:92,w:110,h:13,r:'0'},
+    {x:-5,y:-5,w:8,h:110,r:'0'},
+    {x:93,y:-5,w:12,h:110,r:'0'},
   ];
   oceans.forEach(o=>{
     const el=document.createElement('div');el.className='map-water';
-    el.style.cssText='left:'+o.x+'%;top:'+o.y+'%;width:'+o.w+'%;height:'+o.h+'%;border-radius:'+o.r+';background:rgba(100,181,246,0.7);border:none;box-shadow:none;z-index:0';
+    el.style.cssText='left:'+o.x+'%;top:'+o.y+'%;width:'+o.w+'%;height:'+o.h+'%;border-radius:'+o.r+';background:linear-gradient(135deg,rgba(25,80,140,0.85),rgba(41,121,191,0.75));border:none;box-shadow:none;z-index:0';
     mapCanvas.appendChild(el);
   });
 
-  // === BEACHES — sandy edges between land and ocean ===
+  // === BEACHES — sandy coastline ===
   const beaches=[
-    {x:4,y:5,w:88,h:4,r:'0 0 50% 50%'},
-    {x:4,y:87,w:88,h:4,r:'50% 50% 0 0'},
-    {x:3,y:8,w:4,h:80,r:'0 50% 50% 0'},
-    {x:89,y:8,w:4,h:80,r:'50% 0 0 50%'},
+    {x:3,y:4,w:90,h:3,r:'0 0 40% 40%'},
+    {x:3,y:89,w:90,h:3.5,r:'40% 40% 0 0'},
+    {x:2,y:6,w:3,h:84,r:'0 40% 40% 0'},
+    {x:91,y:6,w:3,h:84,r:'40% 0 0 40%'},
   ];
   beaches.forEach(b=>{
     const el=document.createElement('div');el.className='map-beach';
@@ -3140,32 +3179,47 @@ function addMapDecorations(cw,ch){
     mapCanvas.appendChild(el);
   });
 
-  // === GREEN PARKS ===
+  // === SimCity ZONE GRIDS (dashed zone borders) ===
+  const zoneGrids=[
+    {x:10,y:10,w:20,h:18,color:'rgba(76,175,80,0.6)'},   // Residential
+    {x:40,y:18,w:22,h:16,color:'rgba(66,165,245,0.6)'},   // Commercial
+    {x:70,y:10,w:18,h:20,color:'rgba(255,193,7,0.6)'},    // Industrial
+    {x:10,y:40,w:18,h:22,color:'rgba(171,71,188,0.5)'},   // Entertainment
+    {x:50,y:42,w:24,h:18,color:'rgba(66,165,245,0.5)'},   // Commercial 2
+    {x:78,y:45,w:12,h:20,color:'rgba(255,193,7,0.5)'},    // Industrial 2
+    {x:25,y:70,w:22,h:14,color:'rgba(76,175,80,0.5)'},    // Residential 2
+    {x:60,y:72,w:20,h:14,color:'rgba(171,71,188,0.4)'},   // Entertainment 2
+  ];
+  zoneGrids.forEach(z=>{
+    const el=document.createElement('div');el.className='map-zone-grid';
+    el.style.cssText='left:'+z.x+'%;top:'+z.y+'%;width:'+z.w+'%;height:'+z.h+'%;border-color:'+z.color;
+    mapCanvas.appendChild(el);
+  });
+
+  // === GREEN PARKS with trees ===
   const parks=[
-    {x:8,y:20,w:14,h:10},{x:55,y:42,w:16,h:12},{x:75,y:65,w:10,h:15},
-    {x:30,y:68,w:18,h:8},{x:82,y:12,w:8,h:12},{x:18,y:78,w:10,h:7},
-    {x:42,y:15,w:8,h:6},{x:62,y:80,w:12,h:6},
+    {x:32,y:14,w:6,h:5},{x:62,y:35,w:5,h:8},{x:15,y:62,w:8,h:6},
+    {x:85,y:38,w:5,h:7},{x:48,y:62,w:10,h:6},{x:75,y:75,w:6,h:5},
+    {x:20,y:30,w:4,h:4},{x:55,y:85,w:7,h:4},
   ];
   parks.forEach(p=>{
     const el=document.createElement('div');el.className='map-park';
     el.style.cssText='left:'+p.x+'%;top:'+p.y+'%;width:'+p.w+'%;height:'+p.h+'%';
     mapCanvas.appendChild(el);
-    // Add tree dots
-    for(let t=0;t<Math.floor(Math.random()*5+3);t++){
+    for(let t=0;t<Math.floor(Math.random()*6+4);t++){
       const tree=document.createElement('div');tree.className='map-tree';
       const tx=p.x+Math.random()*p.w,ty=p.y+Math.random()*p.h;
-      const sz=5+Math.random()*6;
-      tree.style.cssText='left:'+tx+'%;top:'+ty+'%;width:'+sz+'px;height:'+sz+'px;background:rgba('+(60+Math.random()*40)+','+Math.floor(140+Math.random()*60)+','+Math.floor(60+Math.random()*30)+',0.5)';
+      const sz=4+Math.random()*5;
+      tree.style.cssText='left:'+tx+'%;top:'+ty+'%;width:'+sz+'px;height:'+sz+'px;background:rgba('+(40+Math.random()*30)+','+Math.floor(120+Math.random()*50)+','+Math.floor(40+Math.random()*30)+',0.65);border-radius:50%;box-shadow:0 1px 2px rgba(0,0,0,0.2)';
       mapCanvas.appendChild(tree);
     }
   });
 
-  // === WATER BODIES (lakes/rivers) ===
+  // === WATER BODIES (lakes) ===
   const waters=[
-    {x:22,y:40,w:12,h:7,r:'45% 55% 50% 50%'},
-    {x:68,y:68,w:8,h:10,r:'50% 45% 55% 50%'},
-    {x:45,y:12,w:6,h:5,r:'50%'},
-    {x:35,y:55,w:4,h:15,r:'40%'},  // river-like
+    {x:35,y:38,w:8,h:5,r:'45% 55% 50% 50%'},
+    {x:72,y:65,w:6,h:8,r:'50% 45% 55% 50%'},
+    {x:20,y:52,w:5,h:4,r:'50%'},
   ];
   waters.forEach(w=>{
     const el=document.createElement('div');el.className='map-water';
@@ -3173,26 +3227,35 @@ function addMapDecorations(cw,ch){
     mapCanvas.appendChild(el);
   });
 
-  // === HIGHWAYS (thick gray) ===
+  // === HIGHWAYS (SimCity avenues — wider, darker) ===
   const highways=[
-    {x:5,y:35,w:88,h:1.5,rot:1},
-    {x:40,y:5,w:1.5,h:88,rot:-2},
-    {x:20,y:60,w:55,h:1.2,rot:-4},
+    {x:4,y:33,w:90,h:1.8,rot:0},
+    {x:45,y:4,w:1.8,h:90,rot:0},
+    {x:15,y:62,w:65,h:1.4,rot:0},
   ];
   highways.forEach(r=>{
     const el=document.createElement('div');el.className='map-highway';
     el.style.cssText='left:'+r.x+'%;top:'+r.y+'%;width:'+r.w+'%;height:'+r.h+'%;transform:rotate('+r.rot+'deg)';
     mapCanvas.appendChild(el);
+    // Highway center line
+    const cl=document.createElement('div');
+    cl.style.cssText='position:absolute;pointer-events:none;z-index:3;left:'+(r.x)+'%;top:'+(r.y+r.h*0.35)+'%;width:'+r.w+'%;height:'+(r.h*0.15)+'%;background:rgba(255,235,59,0.4);transform:rotate('+r.rot+'deg)';
+    mapCanvas.appendChild(cl);
   });
 
-  // === ROADS (white, Snapchat-style) ===
+  // === ROADS (SimCity streets — clean grid) ===
   const roads=[
-    {x:10,y:25,w:40,h:0.8,rot:5},{x:50,y:50,w:35,h:0.8,rot:-3},
-    {x:15,y:70,w:50,h:0.7,rot:2},{x:65,y:15,w:25,h:0.8,rot:12},
-    {x:25,y:10,w:0.7,h:35,rot:-5},{x:60,y:30,w:0.7,h:40,rot:4},
-    {x:75,y:45,w:15,h:0.7,rot:8},{x:35,y:45,w:20,h:0.6,rot:-2},
-    {x:80,y:20,w:0.6,h:30,rot:3},{x:12,y:45,w:25,h:0.6,rot:6},
-    {x:48,y:65,w:30,h:0.7,rot:-1},{x:18,y:55,w:0.6,h:20,rot:-3},
+    // Horizontal streets
+    {x:8,y:20,w:30,h:0.6,rot:0},{x:42,y:20,w:25,h:0.6,rot:0},
+    {x:70,y:22,w:22,h:0.6,rot:0},{x:10,y:45,w:32,h:0.6,rot:0},
+    {x:48,y:50,w:30,h:0.6,rot:0},{x:8,y:75,w:40,h:0.6,rot:0},
+    {x:55,y:78,w:35,h:0.6,rot:0},{x:80,y:55,w:12,h:0.6,rot:0},
+    // Vertical streets
+    {x:18,y:8,w:0.6,h:25,rot:0},{x:30,y:6,w:0.6,h:28,rot:0},
+    {x:60,y:8,w:0.6,h:26,rot:0},{x:75,y:10,w:0.6,h:24,rot:0},
+    {x:18,y:40,w:0.6,h:22,rot:0},{x:30,y:38,w:0.6,h:40,rot:0},
+    {x:60,y:35,w:0.6,h:30,rot:0},{x:75,y:38,w:0.6,h:25,rot:0},
+    {x:85,y:30,w:0.6,h:35,rot:0},{x:50,y:68,w:0.6,h:22,rot:0},
   ];
   roads.forEach(r=>{
     const el=document.createElement('div');el.className='map-road';
@@ -3200,71 +3263,72 @@ function addMapDecorations(cw,ch){
     mapCanvas.appendChild(el);
   });
 
-  // === 3D BUILDING CLUSTERS ===
+  // === SimCity BUILDING CLUSTERS with zone-based colors ===
+  const bldTypes=['residential','commercial','industrial','landmark'];
   const buildingClusters=[
-    {x:45,y:25,count:12,label:'Work District',spread:5},    // WORK section
-    {x:15,y:45,count:10,label:'Arcade Zone',spread:4},       // GAME section
-    {x:75,y:18,count:8,label:'Creative Quarter',spread:4},
-    {x:58,y:50,count:10,label:'Meme Valley',spread:5},
-    {x:32,y:75,count:6,label:'Sticker Park',spread:3},
-    {x:78,y:55,count:7,label:'Launch Pad',spread:4},
-    {x:25,y:15,count:8,label:'Photo District',spread:4},
-    {x:68,y:78,count:5,label:'Chill Island',spread:3},
+    {x:15,y:14,count:14,spread:7,type:0,label:'Photo District'},
+    {x:50,y:22,count:16,spread:8,type:1,label:'Work District'},
+    {x:78,y:15,count:10,spread:6,type:2,label:'Creative Quarter'},
+    {x:15,y:48,count:12,spread:7,type:3,label:'Arcade Zone'},
+    {x:55,y:48,count:14,spread:8,type:1,label:'Meme Valley'},
+    {x:82,y:50,count:8,spread:5,type:2,label:'Launch Pad'},
+    {x:30,y:75,count:10,spread:7,type:0,label:'Sticker Park'},
+    {x:68,y:78,count:8,spread:5,type:3,label:'Chill Island'},
   ];
   buildingClusters.forEach(b=>{
     for(let i=0;i<b.count;i++){
       const el=document.createElement('div');
-      const tall=Math.random()>0.6;
-      el.className='map-building-3d'+(tall?' map-building-tall':'');
-      const bw=0.5+Math.random()*1.2, bh=0.3+Math.random()*0.9;
-      const ox=(Math.random()-0.5)*b.spread, oy=(Math.random()-0.5)*b.spread*0.7;
+      const tall=Math.random()>0.55;
+      const typeClass='map-bld-'+bldTypes[b.type];
+      el.className='map-building-3d '+typeClass+(tall?' map-building-tall':'');
+      const bw=0.6+Math.random()*1.4, bh=0.4+Math.random()*1;
+      const ox=(Math.random()-0.5)*b.spread, oy=(Math.random()-0.5)*b.spread*0.6;
       el.style.cssText='left:'+(b.x+ox)+'%;top:'+(b.y+oy)+'%;width:'+bw+'%;height:'+bh+'%';
       mapCanvas.appendChild(el);
     }
   });
 
-  // === AREA NAME LABELS (written ON the land like Snapchat) ===
+  // === AREA NAME LABELS — SimCity district names ===
   const areaNames=[
-    {x:15,y:12,t:'Photo District',size:1.1,rot:-3},
-    {x:48,y:23,t:'Work District',size:1.2,rot:2},
-    {x:80,y:14,t:'Creative Quarter',size:1,rot:-1},
-    {x:17,y:48,t:'Arcade Zone',size:1.1,rot:4},
-    {x:55,y:53,t:'Meme Valley',size:1.1,rot:-2},
-    {x:80,y:50,t:'Launch Pad',size:1,rot:1},
-    {x:30,y:78,t:'Sticker Park',size:1,rot:3},
-    {x:72,y:80,t:'Chill Island',size:1,rot:-1},
-    {x:25,y:42,t:'Lake Akash',size:0.8,rot:0,color:'rgba(30,100,180,0.5)'},
-    {x:48,y:10,t:'North Beach',size:0.8,rot:0},
-    {x:70,y:70,t:'Sunset Bay',size:0.8,rot:2,color:'rgba(30,100,180,0.5)'},
+    {x:15,y:10,t:'Photo District',size:0.9,rot:0},
+    {x:50,y:18,t:'Work District',size:1,rot:0},
+    {x:80,y:11,t:'Creative Quarter',size:0.85,rot:0},
+    {x:15,y:44,t:'Arcade Zone',size:0.9,rot:0},
+    {x:55,y:44,t:'Meme Valley',size:0.9,rot:0},
+    {x:82,y:46,t:'Launch Pad',size:0.85,rot:0},
+    {x:30,y:71,t:'Sticker Park',size:0.85,rot:0},
+    {x:68,y:74,t:'Chill Island',size:0.85,rot:0},
+    {x:36,y:40,t:'Lake Akash',size:0.7,rot:0,color:'rgba(150,200,255,0.8)'},
+    {x:50,y:7,t:'North Shore',size:0.7,rot:0},
   ];
   areaNames.forEach(z=>{
     const el=document.createElement('div');el.className='map-zone-marker';
     el.style.left=z.x+'%';el.style.top=z.y+'%';el.textContent=z.t;
     if(z.size)el.style.fontSize=(z.size)+'rem';
-    if(z.rot)el.style.transform='translate(-50%,-50%) rotate('+z.rot+'deg)';
+    el.style.transform='translate(-50%,-50%)';
     if(z.color)el.style.color=z.color;
     mapCanvas.appendChild(el);
   });
 
-  // === ROUTE/HIGHWAY NUMBER BADGES (like the "26" shield in Snapchat) ===
+  // === ROUTE BADGES — SimCity highway shields ===
   const routeBadges=[
-    {x:42,y:35,num:'A1'},{x:62,y:36,num:'26'},{x:30,y:60,num:'97'},
-    {x:75,y:45,num:'66'},{x:50,y:70,num:'M4'},
+    {x:25,y:33,num:'R1'},{x:65,y:33,num:'A2'},{x:45,y:62,num:'M3'},
+    {x:80,y:33,num:'I4'},{x:35,y:62,num:'R5'},
   ];
   routeBadges.forEach(rb=>{
     const el=document.createElement('div');el.className='map-section-badge';
-    el.style.cssText='left:'+rb.x+'%;top:'+rb.y+'%;background:rgba(255,213,79,0.9);color:#5D4037;font-size:0.5rem;padding:2px 7px;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,0.15)';
+    el.style.cssText='left:'+rb.x+'%;top:'+rb.y+'%';
     el.textContent=rb.num;
     mapCanvas.appendChild(el);
   });
 
-  // === POI MARKERS (like Snapchat location pins) ===
+  // === POI MARKERS ===
   const pois=[
-    {x:18,y:18,emoji:'📸',color:'#E1BEE7'},{x:50,y:28,emoji:'💼',color:'#90CAF9'},
-    {x:82,y:18,emoji:'🎨',color:'#B3E5FC'},{x:18,y:50,emoji:'🎮',color:'#C8E6C9'},
-    {x:60,y:58,emoji:'😂',color:'#FFCCBC'},{x:80,y:52,emoji:'🚀',color:'#FFE082'},
-    {x:30,y:80,emoji:'✨',color:'#F8BBD0'},{x:72,y:80,emoji:'🏖️',color:'#B2DFDB'},
-    {x:45,y:45,emoji:'☕',color:'#D7CCC8'},{x:35,y:30,emoji:'🏠',color:'#FFAB91'},
+    {x:15,y:18,emoji:'📸',color:'#81C784'},{x:50,y:26,emoji:'💼',color:'#64B5F6'},
+    {x:80,y:18,emoji:'🎨',color:'#FFD54F'},{x:15,y:52,emoji:'🎮',color:'#CE93D8'},
+    {x:58,y:55,emoji:'😂',color:'#64B5F6'},{x:82,y:54,emoji:'🚀',color:'#FFD54F'},
+    {x:30,y:78,emoji:'✨',color:'#81C784'},{x:70,y:82,emoji:'🏖️',color:'#CE93D8'},
+    {x:38,y:40,emoji:'⛵',color:'#64B5F6'},{x:50,y:50,emoji:'☕',color:'#FFD54F'},
   ];
   pois.forEach(p=>{
     const el=document.createElement('div');el.className='map-poi';
@@ -3277,7 +3341,7 @@ function addMapDecorations(cw,ch){
   const compass=document.createElement('div');
   compass.className='map-compass-rose';
   compass.style.cssText='right:3%;top:3%;width:'+Math.max(30,cw*0.025)+'px;height:'+Math.max(30,cw*0.025)+'px';
-  compass.innerHTML='<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="rgba(0,0,0,0.1)" stroke-width="0.5"/><circle cx="20" cy="20" r="12" stroke="rgba(0,0,0,0.06)" stroke-width="0.5"/><polygon points="20,3 22,16 18,16" fill="rgba(244,67,54,0.6)"/><polygon points="20,37 22,24 18,24" fill="rgba(0,0,0,0.15)"/><polygon points="3,20 16,18 16,22" fill="rgba(0,0,0,0.1)"/><polygon points="37,20 24,18 24,22" fill="rgba(0,0,0,0.1)"/><text x="20" y="10" text-anchor="middle" fill="rgba(244,67,54,0.6)" font-size="5" font-weight="900" font-family="sans-serif">N</text></svg>';
+  compass.innerHTML='<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/><circle cx="20" cy="20" r="12" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/><polygon points="20,3 22,16 18,16" fill="rgba(244,67,54,0.7)"/><polygon points="20,37 22,24 18,24" fill="rgba(255,255,255,0.2)"/><polygon points="3,20 16,18 16,22" fill="rgba(255,255,255,0.15)"/><polygon points="37,20 24,18 24,22" fill="rgba(255,255,255,0.15)"/><text x="20" y="10" text-anchor="middle" fill="rgba(244,67,54,0.7)" font-size="5" font-weight="900" font-family="sans-serif">N</text></svg>';
   mapCanvas.appendChild(compass);
 
   // === SCALE BAR ===
@@ -3285,16 +3349,11 @@ function addMapDecorations(cw,ch){
   sb.innerHTML='<div class="scale-line"></div>500px';
   mapCanvas.appendChild(sb);
 
-  // === SUBTLE AREA WATERMARK ===
-  const areaLabels=[
-    {x:50,y:50,size:Math.max(cw*0.008,8),text:'Akash\'s World'},
-  ];
-  areaLabels.forEach(a=>{
-    const el=document.createElement('div');el.className='map-area-label';
-    el.style.cssText='left:'+a.x+'%;top:'+a.y+'%;font-size:'+a.size+'px;transform:translate(-50%,-50%);color:rgba(0,0,0,0.04)';
-    el.textContent=a.text;
-    mapCanvas.appendChild(el);
-  });
+  // === SUBTLE CENTER WATERMARK ===
+  const wm=document.createElement('div');wm.className='map-area-label';
+  wm.style.cssText='left:50%;top:50%;font-size:'+Math.max(cw*0.008,8)+'px;transform:translate(-50%,-50%);color:rgba(255,255,255,0.06);font-family:var(--font-fun);font-weight:800;letter-spacing:0.2em;text-transform:uppercase;position:absolute;z-index:1;pointer-events:none';
+  wm.textContent="Akash's World";
+  mapCanvas.appendChild(wm);
 }
 
 function drawMap(){
@@ -3342,7 +3401,7 @@ function drawMap(){
   mapCanvas.style.position='absolute';
   mapCanvas.style.borderRadius=mmExp?'0':'inherit';
   if(mmExp){
-    mapCanvas.style.background='#f0edd8';
+    mapCanvas.style.background='#6B9B37';
     mapCanvas.style.backgroundImage='none';
     mapCanvas.style.backgroundSize='';
   } else {
