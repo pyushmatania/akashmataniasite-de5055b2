@@ -3237,43 +3237,50 @@ function layoutGroupInGrid(stickers,area){
   });
   const areaW=Math.max(1,area.x2-area.x1);
   const areaH=Math.max(1,area.y2-area.y1);
-  const cols=Math.max(1,Math.min(ordered.length,Math.ceil(Math.sqrt(ordered.length*(areaW/areaH)))));
+  // Use golden ratio-ish columns for natural feel
+  const aspect=areaW/areaH;
+  const cols=Math.max(2,Math.min(ordered.length,Math.round(Math.sqrt(ordered.length*aspect))));
   const rows=Math.max(1,Math.ceil(ordered.length/cols));
   const cellW=areaW/cols;
   const cellH=areaH/rows;
-  // Use seeded random so layout is consistent across reloads
   const rng=seededRandom(area.x1*7+area.y1*13+ordered.length*31);
+  // Padding inside each cell to prevent overlap
+  const padX=cellW*0.08;
+  const padY=cellH*0.08;
 
   ordered.forEach((sticker,index)=>{
     const col=index%cols;
     const row=Math.floor(index/cols);
     const w=sticker.offsetWidth||180;
     const h=sticker.offsetHeight||100;
-    // Base position centered in cell
-    let left=area.x1+col*cellW+Math.max(0,(cellW-w)/2);
-    let top=area.y1+row*cellH+Math.max(0,(cellH-h)/2);
-    // Add organic randomness — offset up to 30% of cell size
-    const offsetX=(rng()-0.5)*cellW*0.5;
-    const offsetY=(rng()-0.5)*cellH*0.4;
+    // Base position centered in cell with padding
+    let left=area.x1+col*cellW+padX+Math.max(0,(cellW-2*padX-w)/2);
+    let top=area.y1+row*cellH+padY+Math.max(0,(cellH-2*padY-h)/2);
+    // Organic scatter — larger offset range for messier feel
+    const offsetX=(rng()-0.5)*cellW*0.45;
+    const offsetY=(rng()-0.5)*cellH*0.35;
     left+=offsetX;
     top+=offsetY;
+    // Stagger odd rows slightly for diagonal flow
+    if(row%2===1) left+=cellW*0.15;
     const clamped=clampStickerToMoodboard(sticker,left,top);
     sticker.style.left=clamped.left+'px';
     sticker.style.top=clamped.top+'px';
-    // Add slight random rotation for organic feel
-    const rot=(rng()-0.5)*12; // -6 to +6 degrees
-    sticker.style.transform='rotate('+rot.toFixed(1)+'deg)';
+    // Varied rotation: some items more tilted than others
+    const rotBase=(rng()-0.5)*14; // -7 to +7 degrees
+    const rotExtra=(index%3===0)?(rng()-0.5)*6:0; // occasional extra tilt
+    sticker.style.transform='rotate('+(rotBase+rotExtra).toFixed(1)+'deg)';
   });
 }
 
 function placeZoneSignposts(signposts){
   const anchors={
-    origin:{left:1220,top:190},
-    warroom:{left:5400,top:190},
-    launchpad:{left:1220,top:1940},
-    hub:{left:3340,top:1940},
-    playground:{left:2080,top:3640},
-    memealley:{left:7060,top:3640}
+    origin:{left:1100,top:220},
+    warroom:{left:5200,top:220},
+    launchpad:{left:2600,top:2000},
+    hub:{left:3500,top:2600},
+    playground:{left:1200,top:3800},
+    memealley:{left:6400,top:3800}
   };
 
   signposts.forEach(sticker=>{
@@ -3301,16 +3308,16 @@ function autoArrangeMoodboardItems(){
   });
 
   placeZoneSignposts(groups.signpost);
-  // Origin/Personal — top-left (wider area for ~30 items)
-  layoutGroupInGrid(groups.personal,{x1:200,y1:250,x2:2600,y2:1700});
-  // Work — top-right (wider for ~30 items)
-  layoutGroupInGrid(groups.work,{x1:4000,y1:200,x2:9600,y2:1700});
-  // Portfolio — center band (wider for ~20 items)
-  layoutGroupInGrid(groups.portfolio,{x1:200,y1:1900,x2:4800,y2:3400});
-  // Hobby — bottom-left spread (large area for ~27 items)
-  layoutGroupInGrid(groups.hobby,{x1:200,y1:3600,x2:4800,y2:6600});
-  // Fun/Memes — bottom-right spread (large area for ~17+ items)
-  layoutGroupInGrid(groups.fun,{x1:5000,y1:3600,x2:9600,y2:6600});
+  // Origin/Personal — top-left, generous breathing room
+  layoutGroupInGrid(groups.personal,{x1:250,y1:300,x2:3200,y2:1800});
+  // Work — top-right, balanced width
+  layoutGroupInGrid(groups.work,{x1:4200,y1:300,x2:9200,y2:1800});
+  // Portfolio — center band, slightly wider
+  layoutGroupInGrid(groups.portfolio,{x1:300,y1:2100,x2:5200,y2:3500});
+  // Hobby — bottom-left, well-spaced for many items
+  layoutGroupInGrid(groups.hobby,{x1:300,y1:3900,x2:5000,y2:6500});
+  // Fun/Memes — bottom-right, balanced
+  layoutGroupInGrid(groups.fun,{x1:5200,y1:3900,x2:9200,y2:6500});
   normalizeAllStickerBounds();
 }
 
