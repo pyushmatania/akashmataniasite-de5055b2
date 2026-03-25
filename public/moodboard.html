@@ -1806,7 +1806,7 @@ body.map-expanded .scroll-counter{display:none!important}
       <button class="map-ctrl-btn" onclick="event.stopPropagation();mapZoom(1)" title="Zoom in">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="7" x2="12" y2="17"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
       </button>
-      <div class="map-zoom-level" id="mapZoomLevel">0.5×</div>
+      <div class="map-zoom-level" id="mapZoomLevel">0.75×</div>
       <button class="map-ctrl-btn" onclick="event.stopPropagation();mapZoom(-1)" title="Zoom out">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><line x1="7" y1="12" x2="17" y2="12"/></svg>
       </button>
@@ -3386,9 +3386,10 @@ const mmInner=document.getElementById('mmInner');
 const mapCount=document.getElementById('mapCount');
 let mmExp=false,navLine=null,mFilt='all';
 let mapTransitioning=false;
-let mapZoomScale=0.5;
+let mapZoomScale=0.75;
 let stickerData=[];
 const MOODBOARD_VIEW_SCALE=0.85;
+let smallMapPanX=0,smallMapPanY=0;
 
 function viewportToWorld(vx,vy){
   return {x:vx/MOODBOARD_VIEW_SCALE,y:vy/MOODBOARD_VIEW_SCALE};
@@ -3509,7 +3510,7 @@ function toggleMap(){
 
   if(!mmExp){
     mmExp=true;
-    mapZoomScale=0.5;
+    mapZoomScale=0.75;
     setMapZoomLabel();
 
     mc.classList.remove('map-closing');
@@ -3784,8 +3785,6 @@ function addMapDecorations(cw,ch){
 }
 
 function drawMap(){
-  const prevLeft=parseFloat(mapCanvas.style.left)||0;
-  const prevTop=parseFloat(mapCanvas.style.top)||0;
   const playerWasInCanvas=mapPlayer.parentElement===mapCanvas;
   mapCanvas.innerHTML='';
   const mr=mmInner.getBoundingClientRect();
@@ -3801,7 +3800,7 @@ function drawMap(){
   let sc,offsetX,offsetY,canvasW,canvasH;
   
   if(mmExp){
-    // Expanded map starts at requested default 0.5× zoom
+    // Expanded map starts at requested default 0.75× zoom
     const baseScale=Math.max(mw*5.5/contentW,0.22);
     sc=baseScale*mapZoomScale;
     canvasW=contentW*sc;
@@ -3811,15 +3810,15 @@ function drawMap(){
     mapCanvas.style.left='0';
     mapCanvas.style.top='50px';
   } else {
-    // SMALL MAP: keep previous panning offsets to avoid jump/desync on redraw
+    // SMALL MAP: restore only small-map pan offsets (never expanded-map top offset)
     const zoomFactor=5;
     sc=mw/(contentW/zoomFactor);
     canvasW=contentW*sc;
     canvasH=contentH*sc;
     offsetX=0;
     offsetY=0;
-    mapCanvas.style.left=prevLeft+'px';
-    mapCanvas.style.top=prevTop+'px';
+    mapCanvas.style.left=smallMapPanX+'px';
+    mapCanvas.style.top=smallMapPanY+'px';
   }
   
   drawMap._sc=sc;drawMap._ox=offsetX;drawMap._oy=offsetY;
@@ -3974,7 +3973,7 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
     +'<div style="position:absolute;inset:-8px;border:1.5px dashed rgba(76,175,80,0.4);border-radius:50%;animation:destSpin 4s linear infinite"></div>'
     +'<div style="position:absolute;inset:12px;background:rgba(76,175,80,0.3);border-radius:50%;animation:destPulse 1s ease-in-out infinite 0.5s"></div>'
     +'<div style="position:absolute;inset:-2px;border-radius:50%;border:1px solid rgba(76,175,80,0.2);animation:destRipple 1.5s ease-out infinite"></div>';
-  mmInner.appendChild(destMarker);
+  mapCanvas.appendChild(destMarker);
   // Remove marker when walk ends
   setTimeout(()=>{destMarker.style.transition='opacity 0.4s';destMarker.style.opacity='0';setTimeout(()=>destMarker.remove(),500)},WALK_DURATION);
   // Footstep trail on map
@@ -4350,8 +4349,8 @@ function updMap(){
     const rawPx=(centerWorld.x-ox)*sc;
     const rawPy=(centerWorld.y-oy)*sc;
     // Current canvas offset
-    let cL=parseFloat(mapCanvas.style.left)||0;
-    let cT=parseFloat(mapCanvas.style.top)||0;
+    let cL=smallMapPanX;
+    let cT=smallMapPanY;
     // Arrow position relative to minimap
     let arrowX=cL+rawPx;
     let arrowY=cT+rawPy;
@@ -4366,6 +4365,8 @@ function updMap(){
     }
     mapCanvas.style.left=cL+'px';
     mapCanvas.style.top=cT+'px';
+    smallMapPanX=cL;
+    smallMapPanY=cT;
     // Recalculate arrow position with new offset
     arrowX=cL+rawPx;
     arrowY=cT+rawPy;
