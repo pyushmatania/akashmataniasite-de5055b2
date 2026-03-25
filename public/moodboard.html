@@ -117,37 +117,49 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker-counter .c-count{font-family:var(--font-fun);font-weight:700;font-size:1.4rem;color:var(--text);min-width:30px}
 .sticker-counter .c-label{font-size:0.7rem;color:var(--text3)}
 
-/* Bus-sign style zone signposts */
+/* 3D Zone signpost boards — pole on top, board hanging below */
 .zone-signpost{
   display:flex;flex-direction:column;align-items:center;
-  filter:drop-shadow(0 4px 12px rgba(0,0,0,0.15))!important;
+  filter:drop-shadow(0 8px 20px rgba(0,0,0,0.2)) drop-shadow(0 2px 4px rgba(0,0,0,0.15))!important;
   z-index:5!important;
 }
-.zone-signpost:hover{filter:drop-shadow(0 4px 12px rgba(0,0,0,0.15))!important;z-index:5!important}
+.zone-signpost:hover{filter:drop-shadow(0 8px 20px rgba(0,0,0,0.2)) drop-shadow(0 2px 4px rgba(0,0,0,0.15))!important;z-index:5!important}
 .signpost-pole{
-  width:6px;height:60px;
-  background:linear-gradient(180deg,#9E9E9E,#757575);
+  width:7px;height:55px;
+  background:linear-gradient(90deg,#BDBDBD 0%,#9E9E9E 30%,#757575 60%,#616161 100%);
   border-radius:3px;
-  box-shadow:1px 0 0 rgba(255,255,255,0.3),-1px 0 0 rgba(0,0,0,0.1);
+  box-shadow:2px 0 0 rgba(255,255,255,0.2),-1px 0 0 rgba(0,0,0,0.15),0 4px 8px rgba(0,0,0,0.15);
+  position:relative;z-index:2;
+}
+.signpost-pole::before{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:13px;height:5px;background:linear-gradient(180deg,#BDBDBD,#9E9E9E);
+  border-radius:2px 2px 0 0;
+  box-shadow:0 -1px 3px rgba(0,0,0,0.15);
 }
 .signpost-board{
-  font-family:var(--font-fun);font-weight:700;font-size:0.85rem;
-  color:#fff;padding:8px 18px;border-radius:4px;
+  font-family:var(--font-fun);font-weight:800;font-size:0.9rem;
+  color:#fff;padding:10px 22px;border-radius:5px;
   letter-spacing:0.08em;white-space:nowrap;
-  border:2px solid rgba(255,255,255,0.3);
-  box-shadow:0 2px 8px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.2);
-  position:relative;
-  text-shadow:0 1px 2px rgba(0,0,0,0.3);
+  border:2.5px solid rgba(255,255,255,0.35);
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.25),
+    0 8px 25px rgba(0,0,0,0.15),
+    inset 0 2px 0 rgba(255,255,255,0.25),
+    inset 0 -2px 4px rgba(0,0,0,0.15);
+  position:relative;z-index:1;
+  text-shadow:0 1px 3px rgba(0,0,0,0.4);
+  margin-top:-2px;
 }
 .signpost-board::before{
   content:'';position:absolute;top:0;left:0;right:0;height:50%;
-  background:linear-gradient(180deg,rgba(255,255,255,0.15),transparent);
-  border-radius:2px 2px 0 0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,0.2),transparent);
+  border-radius:3px 3px 0 0;pointer-events:none;
 }
 .signpost-board::after{
-  content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);
-  width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;
-  border-bottom:8px solid inherit;
+  content:'';position:absolute;bottom:-6px;left:15%;right:15%;height:6px;
+  background:radial-gradient(ellipse,rgba(0,0,0,0.2) 0%,transparent 75%);
+  border-radius:50%;pointer-events:none;filter:blur(2px);
 }
 .sticker-fortune{background:linear-gradient(135deg,#FFE0B2,#FFB74D);border-radius:16px;padding:18px 22px;max-width:220px;box-shadow:0 3px 12px rgba(0,0,0,0.08);cursor:pointer}
 .sticker-fortune .f-icon{font-size:2rem;margin-bottom:6px}
@@ -1496,6 +1508,9 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker zone-signpost" style="left:5200px;top:1850px;pointer-events:none;user-select:none"><div class="signpost-pole"></div><div class="signpost-board" style="background:#2E7D32">🥋 THE MATRIX DOJO</div></div>
 <div class="sticker zone-signpost" style="left:700px;top:3050px;pointer-events:none;user-select:none"><div class="signpost-pole"></div><div class="signpost-board" style="background:#F9A825">🎬 LOL-LYWOOD</div></div>
 <div class="sticker zone-signpost" style="left:4800px;top:3050px;pointer-events:none;user-select:none"><div class="signpost-pole"></div><div class="signpost-board" style="background:#E64A19">🎪 LA LA LAND</div></div>
+<div class="sticker zone-signpost" style="left:3000px;top:2000px;pointer-events:none;user-select:none"><div class="signpost-pole"></div><div class="signpost-board" style="background:linear-gradient(135deg,#FFB300,#FF8F00)">⭐ AKASH UNPLUGGED</div></div>
+<div class="sticker zone-signpost" style="left:3200px;top:3000px;pointer-events:none;user-select:none"><div class="signpost-pole"></div><div class="signpost-board" style="background:#607D8B">🛤️ THE CROSSROADS</div></div>
+<div class="sticker zone-signpost" style="left:3200px;top:5000px;pointer-events:none;user-select:none"><div class="signpost-pole"></div><div class="signpost-board" style="background:#795548">🏡 THE BACKYARD</div></div>
 
 <!-- ===== BIG TITLE ===== -->
 <div class="sticker sticker-highlight" data-anim="tada" style="left:3200px;top:2300px;font-size:3.2rem;transform:rotate(-1deg)">Akash <span class="hl">Unplugged.</span></div>
@@ -3634,30 +3649,50 @@ function addMapDecorations(cw,ch){
     }
   });
 
-  // === AREA NAME LABELS — SimCity district names ===
+  // === AREA NAME LABELS — 3D Signpost boards matching moodboard ===
   const areaNames=[
-    {x:15,y:12,t:'The Origin Story',size:0.9,rot:0},
-    {x:55,y:12,t:'The Hustle District',size:0.95,rot:0},
-    {x:82,y:12,t:'The Hobby Lobby',size:0.9,rot:0},
-    {x:15,y:36,t:'Cloud Nine',size:0.85,rot:0},
-    {x:45,y:44,t:'Akash Unplugged',size:1.1,rot:0},
-    {x:15,y:55,t:'LOL-lywood',size:0.95,rot:0},
-    {x:15,y:78,t:'Wanderlust Way',size:0.9,rot:0},
-    {x:60,y:36,t:'The Matrix Dojo',size:0.85,rot:0},
-    {x:55,y:55,t:'La La Land',size:0.9,rot:0},
-    {x:75,y:78,t:'The Recharge Room',size:0.9,rot:0},
-    {x:38,y:80,t:'The Backyard',size:0.8,rot:0},
-    {x:36,y:40,t:'Lake Akash',size:0.7,rot:0,color:'rgba(150,200,255,0.8)'},
-    {x:50,y:7,t:'North Shore',size:0.7,rot:0},
+    {x:15,y:12,t:'The Origin Story',icon:'📸',bg:'#4CAF50'},
+    {x:55,y:12,t:'The Hustle District',icon:'💼',bg:'#42A5F5'},
+    {x:82,y:12,t:'The Hobby Lobby',icon:'🎸',bg:'#E91E63'},
+    {x:15,y:36,t:'Cloud Nine',icon:'☁️',bg:'#AB47BC'},
+    {x:45,y:44,t:'Akash Unplugged',icon:'⭐',bg:'linear-gradient(135deg,#FFB300,#FF8F00)'},
+    {x:15,y:55,t:'LOL-lywood',icon:'🎬',bg:'#F9A825'},
+    {x:15,y:78,t:'Wanderlust Way',icon:'🌍',bg:'#1976D2'},
+    {x:60,y:36,t:'The Matrix Dojo',icon:'🥋',bg:'#2E7D32'},
+    {x:55,y:55,t:'La La Land',icon:'🎪',bg:'#E64A19'},
+    {x:75,y:78,t:'The Recharge Room',icon:'🧘',bg:'#7B1FA2'},
+    {x:38,y:80,t:'The Backyard',icon:'🏡',bg:'#795548'},
+    {x:50,y:28,t:'The Crossroads',icon:'🛤️',bg:'#607D8B'},
   ];
   areaNames.forEach(z=>{
-    const el=document.createElement('div');el.className='map-zone-marker';
-    el.style.left=z.x+'%';el.style.top=z.y+'%';el.textContent=z.t;
-    if(z.size)el.style.fontSize=(z.size)+'rem';
-    el.style.transform='translate(-50%,-50%)';
-    if(z.color)el.style.color=z.color;
-    mapCanvas.appendChild(el);
+    const wrap=document.createElement('div');
+    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none;z-index:9;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.3));';
+    // Pole
+    const pole=document.createElement('div');
+    const poleH=Math.max(15,cw*0.012);
+    pole.style.cssText='width:'+Math.max(3,cw*0.002)+'px;height:'+poleH+'px;background:linear-gradient(90deg,#BDBDBD,#9E9E9E,#757575);border-radius:2px;box-shadow:1px 0 0 rgba(255,255,255,0.2),-1px 0 0 rgba(0,0,0,0.15);';
+    wrap.appendChild(pole);
+    // Board
+    const board=document.createElement('div');
+    const fontSize=Math.max(6,cw*0.005);
+    board.textContent=z.icon+' '+z.t.toUpperCase();
+    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:800;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(3,fontSize*0.5)+'px '+Math.max(6,fontSize*1.2)+'px;border-radius:3px;white-space:nowrap;letter-spacing:0.08em;background:'+z.bg+';border:1.5px solid rgba(255,255,255,0.35);box-shadow:0 3px 8px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.25),inset 0 -1px 3px rgba(0,0,0,0.15);text-shadow:0 1px 2px rgba(0,0,0,0.4);margin-top:-1px;position:relative;';
+    wrap.appendChild(board);
+    // Board shine
+    const shine=document.createElement('div');
+    shine.style.cssText='position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(180deg,rgba(255,255,255,0.2),transparent);border-radius:2px 2px 0 0;pointer-events:none;';
+    board.appendChild(shine);
+    // Ground shadow
+    const shadow=document.createElement('div');
+    shadow.style.cssText='width:60%;height:4px;background:radial-gradient(ellipse,rgba(0,0,0,0.15),transparent 70%);border-radius:50%;margin-top:2px;filter:blur(1px);';
+    wrap.appendChild(shadow);
+    mapCanvas.appendChild(wrap);
   });
+  // Lake Akash label (water label, no signpost)
+  const lakeEl=document.createElement('div');lakeEl.className='map-zone-marker';
+  lakeEl.style.cssText='left:36%;top:40%;font-size:'+Math.max(6,cw*0.004)+'px;transform:translate(-50%,-50%);color:rgba(150,200,255,0.8);';
+  lakeEl.textContent='Lake Akash';
+  mapCanvas.appendChild(lakeEl);
 
   // === ROUTE BADGES — SimCity highway shields ===
   const routeBadges=[
