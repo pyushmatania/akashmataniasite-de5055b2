@@ -181,22 +181,22 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 
 /* Stone/marble pillar */
 .signpost-pillar{
-  width:36px;flex-shrink:0;position:relative;z-index:3;
+  width:80px;flex-shrink:0;position:relative;z-index:3;
   display:flex;flex-direction:column;align-items:center;
 }
 /* Pillar shaft */
 .pillar-shaft{
-  width:26px;flex:1;min-height:140px;
+  width:50px;flex:1;min-height:320px;
   background:
     linear-gradient(90deg,
       #c4bfb6 0%,#d8d4cc 15%,#eae7e1 35%,#f5f2ed 50%,#eae7e1 65%,#d8d4cc 85%,#c4bfb6 100%);
-  border-radius:3px;
+  border-radius:4px;
   position:relative;
   box-shadow:
-    4px 0 0 rgba(0,0,0,0.1),
-    -2px 0 0 rgba(255,255,255,0.25),
-    0 8px 20px rgba(0,0,0,0.2),
-    0 16px 40px rgba(0,0,0,0.1);
+    6px 0 0 rgba(0,0,0,0.1),
+    -3px 0 0 rgba(255,255,255,0.25),
+    0 12px 30px rgba(0,0,0,0.2),
+    0 24px 60px rgba(0,0,0,0.1);
 }
 /* Pillar fluting — vertical grooves */
 .pillar-shaft::before{
@@ -215,81 +215,81 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 }
 /* Pillar capital — ornamental ball top */
 .pillar-cap{
-  width:42px;height:42px;
+  width:90px;height:90px;
   background:radial-gradient(ellipse at 35% 28%,#f8f6f2,#e0dbd4 40%,#c4bfb6 70%,#a8a298);
   border-radius:50%;
-  border:2px solid rgba(0,0,0,0.06);
+  border:3px solid rgba(0,0,0,0.06);
   box-shadow:
-    0 -4px 10px rgba(0,0,0,0.12),
-    0 6px 12px rgba(0,0,0,0.15),
-    inset 0 5px 8px rgba(255,255,255,0.5),
-    inset 0 -3px 6px rgba(0,0,0,0.12);
-  margin-bottom:-3px;
+    0 -6px 14px rgba(0,0,0,0.12),
+    0 10px 18px rgba(0,0,0,0.15),
+    inset 0 8px 12px rgba(255,255,255,0.5),
+    inset 0 -5px 10px rgba(0,0,0,0.12);
+  margin-bottom:-4px;
   position:relative;z-index:4;
 }
 /* Pillar base — wider stepped footing */
 .pillar-base{
-  width:40px;height:24px;
+  width:85px;height:45px;
   background:linear-gradient(180deg,#d4cfc8 0%,#bbb6ac 50%,#a8a298 100%);
-  border-radius:2px 2px 5px 5px;
-  border-top:2px solid rgba(255,255,255,0.35);
+  border-radius:3px 3px 8px 8px;
+  border-top:3px solid rgba(255,255,255,0.35);
   box-shadow:
-    0 6px 16px rgba(0,0,0,0.25),
-    0 12px 32px rgba(0,0,0,0.1),
-    inset 0 -2px 4px rgba(0,0,0,0.1);
-  margin-top:-2px;
+    0 8px 24px rgba(0,0,0,0.25),
+    0 18px 48px rgba(0,0,0,0.1),
+    inset 0 -3px 6px rgba(0,0,0,0.1);
+  margin-top:-3px;
   position:relative;
 }
 /* Base step detail */
 .pillar-base::after{
-  content:'';position:absolute;bottom:-6px;left:-4px;right:-4px;height:8px;
+  content:'';position:absolute;bottom:-10px;left:-6px;right:-6px;height:14px;
   background:linear-gradient(180deg,#b5b0a8,#9e9a92);
-  border-radius:2px 2px 6px 6px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+  border-radius:3px 3px 8px 8px;
+  box-shadow:0 6px 16px rgba(0,0,0,0.2);
 }
 
 /* ===== THE BOARD — colorful themed sign ===== */
 .signpost-board{
-  font-family:var(--font-fun);font-weight:900;font-size:2rem;
+  font-family:var(--font-fun);font-weight:900;font-size:4rem;
   color:#fff;
-  padding:24px 44px;
-  border-radius:10px;
+  padding:40px 80px;
+  border-radius:14px;
   letter-spacing:0.1em;white-space:nowrap;
   position:relative;z-index:5;
-  margin:0 -8px;
+  margin:0 -16px;
   align-self:flex-start;
-  margin-top:36px;
+  margin-top:60px;
   text-shadow:
-    0 3px 0 rgba(0,0,0,0.4),
+    0 4px 0 rgba(0,0,0,0.4),
     0 -1px 0 rgba(255,255,255,0.2),
-    0 0 24px rgba(0,0,0,0.1);
+    0 0 30px rgba(0,0,0,0.1);
   transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
   /* 3D thick board effect */
-  border:4px solid rgba(255,255,255,0.35);
-  border-bottom:8px solid rgba(0,0,0,0.3);
-  border-right:6px solid rgba(0,0,0,0.18);
+  border:6px solid rgba(255,255,255,0.35);
+  border-bottom:12px solid rgba(0,0,0,0.3);
+  border-right:9px solid rgba(0,0,0,0.18);
   box-shadow:
-    0 12px 36px rgba(0,0,0,0.4),
-    0 24px 64px rgba(0,0,0,0.15),
-    inset 0 3px 0 rgba(255,255,255,0.3),
-    inset 0 -8px 16px rgba(0,0,0,0.2),
-    inset 6px 0 12px rgba(0,0,0,0.06),
-    inset -6px 0 12px rgba(0,0,0,0.06);
+    0 16px 48px rgba(0,0,0,0.4),
+    0 32px 80px rgba(0,0,0,0.15),
+    inset 0 4px 0 rgba(255,255,255,0.3),
+    inset 0 -10px 20px rgba(0,0,0,0.2),
+    inset 8px 0 16px rgba(0,0,0,0.06),
+    inset -8px 0 16px rgba(0,0,0,0.06);
 }
 /* Board shine overlay */
 .signpost-board::before{
-  content:'';position:absolute;inset:0;border-radius:8px;pointer-events:none;
+  content:'';position:absolute;inset:0;border-radius:12px;pointer-events:none;
   background:
     linear-gradient(135deg,rgba(255,255,255,0.3) 0%,transparent 35%,transparent 65%,rgba(0,0,0,0.1) 100%);
 }
 
 /* Ground shadow — elliptical shadow under the whole signpost */
 .signpost-ground{
-  position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);
-  width:110%;height:18px;
-  background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,0.3) 0%,rgba(0,0,0,0.15) 40%,transparent 75%);
+  position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
+  width:110%;height:30px;
+  background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,0.35) 0%,rgba(0,0,0,0.15) 40%,transparent 75%);
   border-radius:50%;
-  filter:blur(4px);
+  filter:blur(6px);
   z-index:0;
 }
 .sticker-fortune{background:linear-gradient(135deg,#FFE0B2,#FFB74D);border-radius:16px;padding:18px 22px;max-width:220px;box-shadow:0 3px 12px rgba(0,0,0,0.08);cursor:pointer}
@@ -1967,49 +1967,49 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="meme-sub">Salary Roulette</div>
 </div>
 
-<!-- ===== ZONE SIGNPOSTS — 3D Theme-Park Arch Style ===== -->
-<div class="sticker zone-signpost" style="left:1050px;top:400px;pointer-events:none;user-select:none">
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
+<!-- ===== ZONE SIGNPOSTS — 3D Theme-Park Arch Style (3x bigger) ===== -->
+<div class="sticker zone-signpost" style="left:900px;top:200px;pointer-events:none;user-select:none">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)">
     📸 ORIGIN STORY
   </div>
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
 </div>
 
-<div class="sticker zone-signpost" style="left:5050px;top:400px;pointer-events:none;user-select:none">
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
+<div class="sticker zone-signpost" style="left:4900px;top:200px;pointer-events:none;user-select:none">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)">
     🎯 THE WAR ROOM
   </div>
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
 </div>
 
-<div class="sticker zone-signpost" style="left:1050px;top:2000px;pointer-events:none;user-select:none">
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
+<div class="sticker zone-signpost" style="left:900px;top:1900px;pointer-events:none;user-select:none">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)">
     🚀 LAUNCH PAD
   </div>
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
 </div>
 
-<div class="sticker zone-signpost" style="left:1800px;top:3600px;pointer-events:none;user-select:none">
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
+<div class="sticker zone-signpost" style="left:1600px;top:3500px;pointer-events:none;user-select:none">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#E65100,#FF9800,#EF6C00)">
     🎮 THE PLAYGROUND
   </div>
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
 </div>
 
-<div class="sticker zone-signpost" style="left:6600px;top:3600px;pointer-events:none;user-select:none">
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
+<div class="sticker zone-signpost" style="left:6400px;top:3500px;pointer-events:none;user-select:none">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)">
     😂 MEME ALLEY
   </div>
-  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft" style="min-height:150px"></div><div class="pillar-base"></div></div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
 </div>
   </div>
@@ -5390,7 +5390,7 @@ function addMapDecorations(cw,ch){
     wrap.appendChild(svg);
   });
 
-  // === AREA NAME SIGNPOSTS (theme-park arch style, bigger with glow) ===
+  // === AREA NAME SIGNPOSTS (theme-park arch style, 3x bigger with glow) ===
   const areaNames=[
     {x:14,y:22,t:'Origin Story',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)',glow:'rgba(76,175,80,0.5)'},
     {x:55,y:14,t:'The War Room',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)',glow:'rgba(229,57,53,0.5)'},
@@ -5401,50 +5401,36 @@ function addMapDecorations(cw,ch){
   areaNames.forEach(z=>{
     const wrap=document.createElement('div');
     wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%) perspective(400px) rotateX(5deg);display:flex;align-items:flex-end;z-index:9;pointer-events:none;gap:0';
-    const fontSize=Math.max(7,cw*0.006);
-    const pillarW=Math.max(4,cw*0.003);
-    const pillarH=Math.max(20,cw*0.018);
-    const capS=Math.max(7,pillarW*1.5);
-    const baseW=Math.max(6,pillarW*1.5);
+    const fontSize=Math.max(12,cw*0.016);
+    const pillarW=Math.max(8,cw*0.008);
+    const pillarH=Math.max(40,cw*0.045);
+    const capS=Math.max(14,pillarW*1.6);
+    const baseW=Math.max(12,pillarW*1.5);
     const mkPillar=()=>{
       const p=document.createElement('div');
       p.style.cssText='display:flex;flex-direction:column;align-items:center;flex-shrink:0';
       const cap=document.createElement('div');
-      cap.style.cssText='width:'+capS+'px;height:'+capS+'px;border-radius:50%;background:radial-gradient(ellipse at 35% 28%,#f8f6f2,#c4bfb6);border:1px solid rgba(0,0,0,0.08);margin-bottom:-1px;box-shadow:inset 0 2px 3px rgba(255,255,255,0.5),0 2px 4px rgba(0,0,0,0.15)';
+      cap.style.cssText='width:'+capS+'px;height:'+capS+'px;border-radius:50%;background:radial-gradient(ellipse at 35% 28%,#f8f6f2,#c4bfb6);border:1.5px solid rgba(0,0,0,0.08);margin-bottom:-2px;box-shadow:inset 0 3px 5px rgba(255,255,255,0.5),0 3px 6px rgba(0,0,0,0.2)';
       const shaft=document.createElement('div');
-      shaft.style.cssText='width:'+pillarW+'px;height:'+pillarH+'px;background:linear-gradient(90deg,#c4bfb6,#eae7e1 35%,#f5f2ed 50%,#eae7e1 65%,#c4bfb6);border-radius:1px;box-shadow:2px 0 0 rgba(0,0,0,0.06),0 4px 8px rgba(0,0,0,0.12)';
+      shaft.style.cssText='width:'+pillarW+'px;height:'+pillarH+'px;background:linear-gradient(90deg,#c4bfb6,#eae7e1 35%,#f5f2ed 50%,#eae7e1 65%,#c4bfb6);border-radius:2px;box-shadow:3px 0 0 rgba(0,0,0,0.08),0 6px 12px rgba(0,0,0,0.15)';
       const base=document.createElement('div');
-      base.style.cssText='width:'+baseW+'px;height:'+(pillarW*0.7)+'px;background:linear-gradient(180deg,#d4cfc8,#a8a298);border-radius:0 0 2px 2px;margin-top:-1px;box-shadow:0 3px 6px rgba(0,0,0,0.15)';
+      base.style.cssText='width:'+baseW+'px;height:'+(pillarW*0.8)+'px;background:linear-gradient(180deg,#d4cfc8,#a8a298);border-radius:0 0 3px 3px;margin-top:-1px;box-shadow:0 4px 10px rgba(0,0,0,0.2)';
       p.appendChild(cap);p.appendChild(shaft);p.appendChild(base);
       return p;
     };
     wrap.appendChild(mkPillar());
     const board=document.createElement('div');
     board.textContent=z.icon+' '+z.t.toUpperCase();
-    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(5,fontSize*0.6)+'px '+Math.max(10,fontSize*1.2)+'px;border-radius:'+Math.max(3,fontSize*0.3)+'px;white-space:nowrap;letter-spacing:0.1em;background:'+z.bg+';border:'+Math.max(1.5,fontSize*0.12)+'px solid rgba(255,255,255,0.4);border-bottom:'+Math.max(2,fontSize*0.2)+'px solid rgba(0,0,0,0.25);box-shadow:0 4px 20px '+z.glow+',0 8px 30px rgba(0,0,0,0.3),inset 0 2px 0 rgba(255,255,255,0.3),inset 0 -4px 8px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.35),0 0 12px rgba(255,255,255,0.2);margin:0 -1px;margin-top:'+(pillarH*0.25)+'px';
+    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(8,fontSize*0.55)+'px '+Math.max(16,fontSize*1.1)+'px;border-radius:'+Math.max(4,fontSize*0.25)+'px;white-space:nowrap;letter-spacing:0.1em;background:'+z.bg+';border:'+Math.max(2,fontSize*0.12)+'px solid rgba(255,255,255,0.4);border-bottom:'+Math.max(3,fontSize*0.18)+'px solid rgba(0,0,0,0.25);box-shadow:0 6px 28px '+z.glow+',0 10px 40px rgba(0,0,0,0.3),inset 0 3px 0 rgba(255,255,255,0.3),inset 0 -5px 10px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.35),0 0 14px rgba(255,255,255,0.2);margin:0 -2px;margin-top:'+(pillarH*0.2)+'px';
     wrap.appendChild(board);
     wrap.appendChild(mkPillar());
     const shadow=document.createElement('div');
-    shadow.style.cssText='position:absolute;bottom:-'+(capS*0.5)+'px;left:50%;transform:translateX(-50%);width:90%;height:'+(capS*0.5)+'px;background:radial-gradient(ellipse,rgba(0,0,0,0.25),transparent 70%);border-radius:50%;filter:blur(2px)';
+    shadow.style.cssText='position:absolute;bottom:-'+(capS*0.6)+'px;left:50%;transform:translateX(-50%);width:95%;height:'+(capS*0.6)+'px;background:radial-gradient(ellipse,rgba(0,0,0,0.3),transparent 70%);border-radius:50%;filter:blur(3px)';
     wrap.appendChild(shadow);
     mapCanvas.appendChild(wrap);
   });
 
-  // === GROUND-PAINTED ZONE LABELS (written on terrain) ===
-  const groundLabels=[
-    {x:14,y:12,t:'ORIGIN STORY',rot:-3,color:'rgba(40,80,30,0.12)',size:0.025},
-    {x:55,y:8,t:'THE WAR ROOM',rot:2,color:'rgba(120,30,30,0.12)',size:0.022},
-    {x:14,y:32,t:'LAUNCH PAD',rot:-1,color:'rgba(30,60,120,0.12)',size:0.022},
-    {x:20,y:55,t:'THE PLAYGROUND',rot:3,color:'rgba(160,80,0,0.1)',size:0.022},
-    {x:65,y:50,t:'MEME ALLEY',rot:-2,color:'rgba(100,30,120,0.1)',size:0.022},
-  ];
-  groundLabels.forEach(g=>{
-    const el=document.createElement('div');
-    const fs=Math.max(12,cw*g.size);
-    el.textContent=g.t;
-    el.style.cssText='position:absolute;left:'+g.x+'%;top:'+g.y+'%;transform:translate(-50%,-50%) rotate('+g.rot+'deg);font-family:"Arial Black",Impact,sans-serif;font-weight:900;font-size:'+fs+'px;color:'+g.color+';text-transform:uppercase;letter-spacing:0.35em;pointer-events:none;z-index:1;white-space:nowrap;text-shadow:0 2px 8px rgba(255,255,255,0.05);user-select:none';
-    mapCanvas.appendChild(el);
-  });
+  // Ground-painted zone labels removed (signposts with poles are the only labels now)
 
   // === POI MARKERS ===
   const pois=[
