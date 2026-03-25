@@ -4399,7 +4399,6 @@ function toggleMap(){
 }
 
 function addMapDecorations(cw,ch){
-  // Helper to create SVG element
   function svgEl(tag,attrs){
     const el=document.createElementNS('http://www.w3.org/2000/svg',tag);
     Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
@@ -4411,95 +4410,297 @@ function addMapDecorations(cw,ch){
   }
 
   // === OCEAN WAVES ===
-  for(let i=0;i<35;i++){
+  for(let i=0;i<50;i++){
     const x=Math.random()*100,y=Math.random()*100;
-    const w=8+Math.random()*20;
-    addDiv('map-wave','left:'+x+'%;top:'+y+'%;width:'+w+'px;animation-delay:'+(Math.random()*3)+'s;animation-duration:'+(2.5+Math.random()*2)+'s');
+    const w=6+Math.random()*18;
+    addDiv('map-wave','left:'+x+'%;top:'+y+'%;width:'+w+'px;animation-delay:'+(Math.random()*4)+'s;animation-duration:'+(2+Math.random()*2.5)+'s;opacity:'+(0.15+Math.random()*0.2));
   }
 
-  // === MAIN LAND MASSES — organic island shapes ===
+  // === WATER RIPPLES ===
+  for(let i=0;i<12;i++){
+    const x=Math.random()*100,y=Math.random()*100;
+    addDiv('map-ripple','left:'+x+'%;top:'+y+'%;animation-delay:'+(Math.random()*3)+'s');
+  }
+
+  // === MAIN LAND MASSES ===
   const lands=[
-    // Central main continent
     {x:8,y:10,w:80,h:75,bg:'linear-gradient(160deg,#7dc462 0%,#5db844 25%,#4da638 50%,#6bc452 75%,#8dd470 100%)',r:'42% 58% 45% 55% / 48% 52% 48% 52%'},
-    // Top-right peninsula
     {x:65,y:2,w:30,h:25,bg:'linear-gradient(135deg,#9dd882 0%,#6bc452 100%)',r:'55% 45% 50% 50% / 45% 55% 50% 50%'},
-    // Bottom-left island
     {x:2,y:72,w:22,h:22,bg:'linear-gradient(145deg,#e8c86a 0%,#d4a843 50%,#c89e3d 100%)',r:'50% 45% 55% 50% / 55% 50% 45% 55%'},
-    // Bottom-right island
     {x:72,y:75,w:24,h:20,bg:'linear-gradient(155deg,#deb85a 0%,#c8a342 100%)',r:'48% 52% 50% 50% / 52% 48% 50% 50%'},
-    // Small island top-left
     {x:2,y:5,w:15,h:18,bg:'linear-gradient(135deg,#8dd470 0%,#6bc452 100%)',r:'55% 45% 48% 52% / 50% 55% 45% 50%'},
-    // Snowy top area
     {x:55,y:0,w:42,h:12,bg:'linear-gradient(180deg,#f0f4f8 0%,#d5e3d0 60%,#9dd882 100%)',r:'0 0 48% 52%'},
   ];
   lands.forEach(l=>{
-    const el=addDiv('map-land','left:'+l.x+'%;top:'+l.y+'%;width:'+l.w+'%;height:'+l.h+'%;background:'+l.bg+';border-radius:'+l.r+';box-shadow:0 4px 20px rgba(0,0,0,0.15),inset 0 -8px 30px rgba(0,0,0,0.08),inset 0 4px 15px rgba(255,255,255,0.15);border:2px solid rgba(0,0,0,0.05)');
+    addDiv('map-land','left:'+l.x+'%;top:'+l.y+'%;width:'+l.w+'%;height:'+l.h+'%;background:'+l.bg+';border-radius:'+l.r+';box-shadow:0 6px 30px rgba(0,0,0,0.18),inset 0 -10px 40px rgba(0,0,0,0.1),inset 0 6px 20px rgba(255,255,255,0.2);border:2px solid rgba(0,0,0,0.04)');
   });
 
-  // === BEACHES around land edges ===
+  // === BEACHES ===
   const beaches=[
-    {x:6,y:78,w:84,h:6,r:'0 0 45% 55%',bg:'rgba(245,222,130,0.7)'},
-    {x:5,y:12,w:6,h:65,r:'55% 0 0 45%',bg:'rgba(245,222,130,0.6)'},
-    {x:83,y:15,w:6,h:60,r:'0 55% 45% 0',bg:'rgba(245,222,130,0.6)'},
-    {x:8,y:8,w:78,h:5,r:'45% 55% 0 0',bg:'rgba(245,222,130,0.5)'},
+    {x:6,y:78,w:84,h:6,r:'0 0 45% 55%',bg:'linear-gradient(180deg,rgba(245,222,130,0.8),rgba(235,200,100,0.5))'},
+    {x:5,y:12,w:6,h:65,r:'55% 0 0 45%',bg:'linear-gradient(90deg,rgba(245,222,130,0.7),rgba(235,200,100,0.3))'},
+    {x:83,y:15,w:6,h:60,r:'0 55% 45% 0',bg:'linear-gradient(-90deg,rgba(245,222,130,0.7),rgba(235,200,100,0.3))'},
+    {x:8,y:8,w:78,h:5,r:'45% 55% 0 0',bg:'linear-gradient(0deg,rgba(245,222,130,0.6),rgba(235,200,100,0.3))'},
   ];
   beaches.forEach(b=>{
     addDiv('map-beach','left:'+b.x+'%;top:'+b.y+'%;width:'+b.w+'%;height:'+b.h+'%;border-radius:'+b.r+';background:'+b.bg);
   });
 
-  // === MOUNTAINS — SVG illustrated peaks ===
-  const mountains=[
-    {x:15,y:18,s:50},{x:20,y:15,s:65},{x:25,y:20,s:45},
-    {x:58,y:12,s:55},{x:63,y:8,s:70},{x:68,y:14,s:50},
-    {x:78,y:5,s:60},{x:82,y:3,s:45},{x:75,y:8,s:40},
-    {x:42,y:45,s:48},{x:46,y:42,s:55},{x:50,y:48,s:42},
-    {x:35,y:55,s:40},{x:38,y:52,s:50},
-  ];
-  mountains.forEach(m=>{
-    const wrap=addDiv('map-mountain','left:'+m.x+'%;top:'+m.y+'%;width:'+m.s+'px;height:'+(m.s*0.8)+'px');
+  // === 3D ISOMETRIC BUILDINGS ===
+  function addIsometricBuilding(x,y,w,h,color,roofColor,windows){
+    const wrap=addDiv('map-building-iso','left:'+x+'%;top:'+y+'%;width:'+w+'px;height:'+h+'px');
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-    svg.setAttribute('viewBox','0 0 60 48');
-    const snowH=12+Math.random()*6;
-    // Mountain body
-    const path1=svgEl('path',{d:'M5 48 L30 4 L55 48 Z',fill:'#6b8c52',stroke:'#5a7a44','stroke-width':'1'});
-    // Snow cap
-    const path2=svgEl('path',{d:'M22 '+snowH+' L30 4 L38 '+snowH+' Q30 '+(snowH+3)+' 22 '+snowH+' Z',fill:'#f5f5f5',stroke:'#e0e0e0','stroke-width':'0.5'});
-    // Shadow side
-    const path3=svgEl('path',{d:'M30 4 L55 48 L30 48 Z',fill:'rgba(0,0,0,0.1)'});
-    svg.appendChild(path1);svg.appendChild(path3);svg.appendChild(path2);
+    svg.setAttribute('viewBox','0 0 40 50');
+    // Right face (darker)
+    svg.appendChild(svgEl('polygon',{points:'20,18 36,26 36,46 20,38',fill:color,opacity:'0.7'}));
+    // Left face
+    svg.appendChild(svgEl('polygon',{points:'20,18 4,26 4,46 20,38',fill:color,opacity:'0.9'}));
+    // Top face (roof)
+    svg.appendChild(svgEl('polygon',{points:'20,18 36,26 20,34 4,26',fill:roofColor}));
+    // Windows on left face
+    if(windows){
+      for(let wy=0;wy<3;wy++){
+        for(let wx=0;wx<2;wx++){
+          svg.appendChild(svgEl('rect',{x:''+(7+wx*6),y:''+(28+wy*4),width:'3',height:'2.5',rx:'0.3',fill:'rgba(255,255,200,0.7)'}));
+        }
+      }
+      // Windows on right face
+      for(let wy=0;wy<3;wy++){
+        for(let wx=0;wx<2;wx++){
+          svg.appendChild(svgEl('rect',{x:''+(23+wx*6),y:''+(28+wy*4),width:'3',height:'2.5',rx:'0.3',fill:'rgba(255,255,200,0.5)'}));
+        }
+      }
+    }
+    // Highlight edge
+    svg.appendChild(svgEl('line',{x1:'20',y1:'18',x2:'20',y2:'38',stroke:'rgba(255,255,255,0.3)','stroke-width':'0.5'}));
+    wrap.appendChild(svg);
+  }
+
+  // Scatter buildings across zones
+  const buildings=[
+    {x:16,y:26,w:28,h:35,c:'#e07850',r:'#c0583a',win:true},
+    {x:19,y:28,w:22,h:28,c:'#d4956a',r:'#b87848',win:true},
+    {x:22,y:24,w:32,h:40,c:'#5c9de8',r:'#4080c8',win:true},
+    {x:50,y:20,w:26,h:32,c:'#e8845c',r:'#c86040',win:true},
+    {x:53,y:22,w:20,h:25,c:'#c4956a',r:'#a87850',win:true},
+    {x:56,y:18,w:30,h:38,c:'#6ba8e0',r:'#4888c0',win:true},
+    {x:78,y:14,w:24,h:30,c:'#e85070',r:'#c03858',win:true},
+    {x:81,y:16,w:18,h:22,c:'#d06888',r:'#b05070',win:true},
+    {x:14,y:42,w:22,h:28,c:'#9c6fd0',r:'#7850b0',win:true},
+    {x:17,y:44,w:18,h:22,c:'#b488e0',r:'#9470c0',win:true},
+    {x:60,y:40,w:26,h:32,c:'#50a860',r:'#389048',win:true},
+    {x:63,y:42,w:20,h:25,c:'#68c080',r:'#50a068',win:true},
+    {x:16,y:60,w:24,h:30,c:'#e8c050',r:'#c8a038',win:true},
+    {x:52,y:60,w:22,h:28,c:'#e07040',r:'#c05830',win:true},
+    {x:55,y:62,w:18,h:22,c:'#f08858',r:'#d07040',win:true},
+    {x:76,y:70,w:20,h:25,c:'#8850b0',r:'#703898',win:true},
+    {x:33,y:72,w:22,h:28,c:'#8B6848',r:'#6B4830',win:true},
+    {x:46,y:30,w:20,h:25,c:'#78909C',r:'#607080',win:true},
+    {x:42,y:48,w:18,h:22,c:'#e8a050',r:'#c88838',win:true},
+    {x:68,y:52,w:20,h:25,c:'#50a878',r:'#389060',win:true},
+    {x:28,y:35,w:16,h:20,c:'#c89060',r:'#a87848',win:true},
+    {x:70,y:28,w:18,h:22,c:'#5890c8',r:'#4078a8',win:true},
+  ];
+  buildings.forEach(b=>addIsometricBuilding(b.x,b.y,b.w,b.h,b.c,b.r,b.win));
+
+  // === TALL TOWERS (special landmarks) ===
+  function addTower(x,y,w,h,color,topColor){
+    const wrap=addDiv('map-building-iso','left:'+x+'%;top:'+y+'%;width:'+w+'px;height:'+h+'px');
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 30 60');
+    // Tower body right
+    svg.appendChild(svgEl('polygon',{points:'15,8 25,14 25,54 15,48',fill:color,opacity:'0.7'}));
+    // Tower body left
+    svg.appendChild(svgEl('polygon',{points:'15,8 5,14 5,54 15,48',fill:color,opacity:'0.9'}));
+    // Top
+    svg.appendChild(svgEl('polygon',{points:'15,8 25,14 15,20 5,14',fill:topColor}));
+    // Spire
+    svg.appendChild(svgEl('polygon',{points:'15,0 17,8 13,8',fill:topColor}));
+    // Windows
+    for(let i=0;i<5;i++){
+      svg.appendChild(svgEl('rect',{x:'7',y:''+(16+i*6),width:'5',height:'3',rx:'0.5',fill:'rgba(255,255,200,0.6)'}));
+      svg.appendChild(svgEl('rect',{x:'17',y:''+(18+i*6),width:'5',height:'3',rx:'0.5',fill:'rgba(255,255,200,0.4)'}));
+    }
+    // Highlight
+    svg.appendChild(svgEl('line',{x1:'15',y1:'8',x2:'15',y2:'48',stroke:'rgba(255,255,255,0.4)','stroke-width':'0.5'}));
+    wrap.appendChild(svg);
+  }
+  addTower(48,38,20,40,'#4a9bd9','#3580b8');
+  addTower(24,22,16,32,'#e07850','#c05838');
+  addTower(72,18,18,36,'#e85070','#c83858');
+
+  // === ANIMATED FERRIS WHEEL ===
+  (function(){
+    const wrap=addDiv('map-ferris','left:54%;top:55%;width:60px;height:70px');
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 60 70');
+    // Support structure
+    svg.appendChild(svgEl('line',{x1:'22',y1:'30',x2:'30',y2:'65',stroke:'#8B6848','stroke-width':'2.5','stroke-linecap':'round'}));
+    svg.appendChild(svgEl('line',{x1:'38',y1:'30',x2:'30',y2:'65',stroke:'#8B6848','stroke-width':'2.5','stroke-linecap':'round'}));
+    svg.appendChild(svgEl('line',{x1:'22',y1:'65',x2:'38',y2:'65',stroke:'#8B6848','stroke-width':'2','stroke-linecap':'round'}));
+    // Rotating wheel group
+    const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('class','ferris-wheel-group');
+    // Outer ring
+    g.appendChild(svgEl('circle',{cx:'30',cy:'28',r:'18',fill:'none',stroke:'#FFD54F','stroke-width':'1.5'}));
+    g.appendChild(svgEl('circle',{cx:'30',cy:'28',r:'16',fill:'none',stroke:'#FFC107','stroke-width':'0.5'}));
+    // Spokes + gondolas
+    const gondolaColors=['#FF5252','#448AFF','#69F0AE','#FFD740','#FF4081','#40C4FF','#B388FF','#FFAB40'];
+    for(let i=0;i<8;i++){
+      const angle=(i/8)*Math.PI*2;
+      const ex=30+Math.cos(angle)*17;
+      const ey=28+Math.sin(angle)*17;
+      g.appendChild(svgEl('line',{x1:'30',y1:'28',x2:''+ex,y2:''+ey,stroke:'#FFC107','stroke-width':'0.6'}));
+      // Gondola
+      const gx=30+Math.cos(angle)*18;
+      const gy=28+Math.sin(angle)*18;
+      g.appendChild(svgEl('circle',{cx:''+gx,cy:''+gy,r:'2.5',fill:gondolaColors[i],stroke:'#fff','stroke-width':'0.5'}));
+    }
+    // Center hub
+    g.appendChild(svgEl('circle',{cx:'30',cy:'28',r:'2.5',fill:'#FFC107',stroke:'#FFD54F','stroke-width':'1'}));
+    svg.appendChild(g);
+    wrap.appendChild(svg);
+  })();
+
+  // === ANIMATED WINDMILL ===
+  (function(){
+    const wrap=addDiv('map-windmill','left:38%;top:52%;width:30px;height:40px');
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 30 40');
+    // Tower
+    svg.appendChild(svgEl('polygon',{points:'12,16 18,16 19,38 11,38',fill:'#e8d8c8',stroke:'#c8b8a8','stroke-width':'0.5'}));
+    svg.appendChild(svgEl('rect',{x:'13',y:'30',width:'4',height:'6',rx:'1',fill:'#8B6848'}));
+    // Rotating blades
+    const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('class','windmill-blades');
+    for(let i=0;i<4;i++){
+      const angle=i*90;
+      const blade=svgEl('rect',{x:'14',y:'4',width:'2',height:'10',rx:'1',fill:'rgba(255,255,255,0.9)',stroke:'#ddd','stroke-width':'0.3',transform:'rotate('+angle+' 15 12)'});
+      g.appendChild(blade);
+    }
+    g.appendChild(svgEl('circle',{cx:'15',cy:'12',r:'1.5',fill:'#8B6848'}));
+    svg.appendChild(g);
+    wrap.appendChild(svg);
+  })();
+
+  // === ANIMATED BOATS ===
+  const boatPositions=[
+    {x:3,y:40,s:20,delay:0},{x:90,y:25,s:18,delay:1.5},{x:5,y:85,s:22,delay:0.8},
+    {x:88,y:80,s:16,delay:2},{x:45,y:92,s:20,delay:1},{x:92,y:50,s:18,delay:0.5},
+  ];
+  boatPositions.forEach(b=>{
+    const wrap=addDiv('map-boat','left:'+b.x+'%;top:'+b.y+'%;width:'+b.s+'px;height:'+(b.s*0.7)+'px;animation-delay:'+b.delay+'s');
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 24 16');
+    // Hull
+    svg.appendChild(svgEl('path',{d:'M2 11 Q4 14 12 14 Q20 14 22 11 L20 11 Q18 13 12 13 Q6 13 4 11 Z',fill:'#8B4513'}));
+    // Sail
+    svg.appendChild(svgEl('polygon',{points:'12,3 12,11 6,9',fill:'rgba(255,255,255,0.9)',stroke:'#ddd','stroke-width':'0.3'}));
+    svg.appendChild(svgEl('polygon',{points:'12,4 12,10 17,8',fill:'rgba(240,240,255,0.7)',stroke:'#ddd','stroke-width':'0.3'}));
+    // Mast
+    svg.appendChild(svgEl('line',{x1:'12',y1:'2',x2:'12',y2:'11',stroke:'#6B3410','stroke-width':'0.8'}));
+    // Flag
+    svg.appendChild(svgEl('polygon',{points:'12,2 16,3 12,4',fill:'#FF5252'}));
     wrap.appendChild(svg);
   });
 
-  // === TREE CLUSTERS — illustrated forests ===
+  // === LIGHTHOUSE ===
+  (function(){
+    const wrap=addDiv('map-lighthouse','left:86%;top:68%;width:20px;height:36px');
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 20 36');
+    // Base
+    svg.appendChild(svgEl('rect',{x:'4',y:'28',width:'12',height:'8',rx:'1',fill:'#999'}));
+    // Tower
+    svg.appendChild(svgEl('polygon',{points:'6,10 14,10 13,28 7,28',fill:'#fff',stroke:'#ddd','stroke-width':'0.3'}));
+    // Red stripes
+    svg.appendChild(svgEl('rect',{x:'7',y:'14',width:'6',height:'3',fill:'#FF5252',rx:'0.3'}));
+    svg.appendChild(svgEl('rect',{x:'7',y:'21',width:'6',height:'3',fill:'#FF5252',rx:'0.3'}));
+    // Top
+    svg.appendChild(svgEl('rect',{x:'5',y:'8',width:'10',height:'3',rx:'1',fill:'#333'}));
+    svg.appendChild(svgEl('circle',{cx:'10',cy:'7',r:'3',fill:'#FFEB3B',opacity:'0.8'}));
+    // Beam
+    const beam=svgEl('ellipse',{cx:'10',cy:'7',rx:'12',ry:'3',fill:'rgba(255,235,59,0.15)','class':'lighthouse-beam'});
+    svg.appendChild(beam);
+    wrap.appendChild(svg);
+  })();
+
+  // === MOUNTAINS — detailed 3D peaks ===
+  const mountains=[
+    {x:15,y:18,s:55},{x:20,y:14,s:72},{x:25,y:19,s:50},
+    {x:58,y:11,s:60},{x:63,y:7,s:78},{x:68,y:13,s:55},
+    {x:78,y:4,s:68},{x:82,y:2,s:50},{x:75,y:7,s:45},
+    {x:42,y:44,s:52},{x:46,y:41,s:60},{x:50,y:47,s:46},
+    {x:35,y:54,s:44},{x:38,y:51,s:54},
+  ];
+  mountains.forEach(m=>{
+    const wrap=addDiv('map-mountain','left:'+m.x+'%;top:'+m.y+'%;width:'+m.s+'px;height:'+(m.s*0.85)+'px');
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 60 50');
+    const snowH=10+Math.random()*5;
+    // Back mountain (depth)
+    svg.appendChild(svgEl('path',{d:'M12 48 L32 8 L52 48 Z',fill:'#5a7a44',opacity:'0.4'}));
+    // Main mountain body
+    svg.appendChild(svgEl('path',{d:'M5 48 L30 4 L55 48 Z',fill:'url(#mtGrad'+m.x+')'}));
+    // Create gradient
+    const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
+    const grad=document.createElementNS('http://www.w3.org/2000/svg','linearGradient');
+    grad.setAttribute('id','mtGrad'+m.x);
+    grad.setAttribute('x1','0');grad.setAttribute('y1','0');grad.setAttribute('x2','1');grad.setAttribute('y2','1');
+    const s1=svgEl('stop',{offset:'0%','stop-color':'#7da858'});
+    const s2=svgEl('stop',{offset:'100%','stop-color':'#5a8438'});
+    grad.appendChild(s1);grad.appendChild(s2);
+    defs.appendChild(grad);svg.appendChild(defs);
+    // Shadow side
+    svg.appendChild(svgEl('path',{d:'M30 4 L55 48 L30 48 Z',fill:'rgba(0,0,0,0.12)'}));
+    // Snow cap with detail
+    svg.appendChild(svgEl('path',{d:'M22 '+snowH+' L30 4 L38 '+snowH+' Q33 '+(snowH+4)+' 30 '+(snowH+2)+' Q27 '+(snowH+4)+' 22 '+snowH+' Z',fill:'#f8f8ff',stroke:'rgba(200,210,220,0.4)','stroke-width':'0.3'}));
+    // Snow highlight
+    svg.appendChild(svgEl('path',{d:'M26 '+(snowH-2)+' L30 4 L31 '+(snowH-1)+' Z',fill:'rgba(255,255,255,0.4)'}));
+    wrap.appendChild(svg);
+  });
+
+  // === TREE CLUSTERS — lush forests ===
   const forests=[
-    {x:10,y:30,count:8,spread:6},{x:30,y:25,count:10,spread:8},
-    {x:50,y:20,count:6,spread:5},{x:70,y:20,count:8,spread:6},
-    {x:20,y:50,count:7,spread:5},{x:60,y:55,count:9,spread:7},
-    {x:40,y:35,count:5,spread:4},{x:75,y:40,count:6,spread:5},
-    {x:12,y:65,count:5,spread:4},{x:55,y:65,count:7,spread:6},
-    {x:85,y:55,count:5,spread:4},{x:30,y:70,count:6,spread:5},
+    {x:10,y:30,count:10,spread:6},{x:30,y:25,count:12,spread:8},
+    {x:50,y:20,count:8,spread:5},{x:70,y:20,count:10,spread:6},
+    {x:20,y:50,count:9,spread:5},{x:60,y:55,count:11,spread:7},
+    {x:40,y:35,count:7,spread:4},{x:75,y:40,count:8,spread:5},
+    {x:12,y:65,count:7,spread:4},{x:55,y:65,count:9,spread:6},
+    {x:85,y:55,count:6,spread:4},{x:30,y:70,count:8,spread:5},
   ];
   forests.forEach(f=>{
     for(let i=0;i<f.count;i++){
       const tx=f.x+(Math.random()-0.5)*f.spread;
       const ty=f.y+(Math.random()-0.5)*f.spread*0.7;
-      const s=12+Math.random()*14;
-      const shade=Math.floor(70+Math.random()*40);
+      const s=14+Math.random()*16;
+      const treeType=Math.random();
       const wrap=addDiv('map-tree-cluster','left:'+tx+'%;top:'+ty+'%;width:'+s+'px;height:'+s+'px');
       const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
       svg.setAttribute('viewBox','0 0 20 24');
-      // Trunk
-      svg.appendChild(svgEl('rect',{x:'8.5',y:'16',width:'3',height:'8',rx:'1',fill:'#8B6914'}));
-      // Foliage layers
-      const g='rgba('+shade+','+Math.floor(140+Math.random()*60)+','+Math.floor(40+Math.random()*30)+',0.9)';
-      svg.appendChild(svgEl('ellipse',{cx:'10',cy:'13',rx:'7',ry:'6',fill:g}));
-      svg.appendChild(svgEl('ellipse',{cx:'10',cy:'9',rx:'5.5',ry:'5',fill:'rgba('+(shade+10)+','+(150+Math.floor(Math.random()*40))+',50,0.85)'}));
-      svg.appendChild(svgEl('ellipse',{cx:'10',cy:'6',rx:'4',ry:'3.5',fill:'rgba('+(shade+20)+','+(160+Math.floor(Math.random()*30))+',55,0.8)'}));
+      if(treeType<0.6){
+        // Round deciduous tree
+        svg.appendChild(svgEl('rect',{x:'8.5',y:'16',width:'3',height:'8',rx:'1',fill:'#7B5B3A'}));
+        const g1=Math.floor(100+Math.random()*60);
+        const g2=Math.floor(150+Math.random()*50);
+        svg.appendChild(svgEl('circle',{cx:'10',cy:'12',r:'7',fill:'rgba('+g1+','+g2+',50,0.9)'}));
+        svg.appendChild(svgEl('circle',{cx:'8',cy:'10',r:'5',fill:'rgba('+(g1+15)+','+(g2+10)+',55,0.8)'}));
+        svg.appendChild(svgEl('circle',{cx:'12',cy:'9',r:'4.5',fill:'rgba('+(g1+25)+','+(g2+20)+',60,0.7)'}));
+        // Highlight
+        svg.appendChild(svgEl('circle',{cx:'8',cy:'8',r:'2.5',fill:'rgba(255,255,255,0.12)'}));
+      } else {
+        // Pine/conifer tree
+        svg.appendChild(svgEl('rect',{x:'9',y:'18',width:'2',height:'6',rx:'0.5',fill:'#6B4420'}));
+        const g=Math.floor(60+Math.random()*40);
+        svg.appendChild(svgEl('polygon',{points:'10,2 16,18 4,18',fill:'rgba('+g+','+(120+Math.floor(Math.random()*40))+',40,0.9)'}));
+        svg.appendChild(svgEl('polygon',{points:'10,5 14,14 6,14',fill:'rgba('+(g+10)+','+(130+Math.floor(Math.random()*30))+',45,0.85)'}));
+        svg.appendChild(svgEl('polygon',{points:'10,8 12,12 8,12',fill:'rgba('+(g+20)+','+(140+Math.floor(Math.random()*20))+',50,0.8)'}));
+      }
       wrap.appendChild(svg);
     }
   });
 
-  // === WINDING DASHED PATHS between zones ===
+  // === WINDING PATHS with glow ===
   const pathsSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
   pathsSvg.setAttribute('viewBox','0 0 100 100');
   pathsSvg.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4';
@@ -4517,38 +4718,49 @@ function addMapDecorations(cw,ch){
     'M65 60 Q70 65 75 70 Q77 73 78 75',
   ];
   pathRoutes.forEach(d=>{
-    const p=svgEl('path',{d:d,fill:'none',stroke:'rgba(255,255,255,0.7)','stroke-width':'0.8','stroke-dasharray':'2 1.5','stroke-linecap':'round'});
-    pathsSvg.appendChild(p);
+    // Glow
+    pathsSvg.appendChild(svgEl('path',{d:d,fill:'none',stroke:'rgba(255,255,255,0.15)','stroke-width':'2.5','stroke-linecap':'round'}));
+    // Path
+    pathsSvg.appendChild(svgEl('path',{d:d,fill:'none',stroke:'rgba(255,255,255,0.7)','stroke-width':'0.8','stroke-dasharray':'2 1.5','stroke-linecap':'round'}));
   });
   mapCanvas.appendChild(pathsSvg);
 
-  // === WATER BODIES (lakes/rivers) ===
+  // === WATER BODIES ===
   const waters=[
     {x:35,y:38,w:8,h:5,r:'45% 55% 50% 50%'},
     {x:72,y:58,w:5,h:7,r:'50% 45% 55% 50%'},
     {x:18,y:48,w:4,h:4,r:'50%'},
   ];
   waters.forEach(w=>{
-    addDiv('map-water','left:'+w.x+'%;top:'+w.y+'%;width:'+w.w+'%;height:'+w.h+'%;border-radius:'+w.r+';background:linear-gradient(135deg,rgba(58,140,199,0.85),rgba(100,181,246,0.8));box-shadow:inset 0 0 10px rgba(30,100,170,0.2),0 0 8px rgba(58,140,199,0.15);z-index:2');
+    addDiv('map-water','left:'+w.x+'%;top:'+w.y+'%;width:'+w.w+'%;height:'+w.h+'%;border-radius:'+w.r+';background:linear-gradient(135deg,rgba(58,140,199,0.85),rgba(100,181,246,0.8));box-shadow:inset 0 0 12px rgba(30,100,170,0.25),0 0 10px rgba(58,140,199,0.2);z-index:2');
   });
 
-  // === CLOUDS around edges ===
+  // === SPARKLE PARTICLES (around special areas) ===
+  for(let i=0;i<20;i++){
+    const x=10+Math.random()*80;
+    const y=10+Math.random()*75;
+    addDiv('map-sparkle','left:'+x+'%;top:'+y+'%;animation-delay:'+(Math.random()*3)+'s;animation-duration:'+(2+Math.random()*2)+'s;background:rgba(255,255,'+Math.floor(150+Math.random()*105)+',0.8)');
+  }
+
+  // === CLOUDS — more detailed ===
   const clouds=[
-    {x:-3,y:2,s:80,o:0.6},{x:88,y:0,s:90,o:0.5},{x:-5,y:88,s:100,o:0.55},
-    {x:85,y:85,s:85,o:0.5},{x:40,y:-3,s:70,o:0.4},{x:60,y:92,s:75,o:0.45},
-    {x:-4,y:45,s:60,o:0.35},{x:92,y:40,s:65,o:0.35},
-    {x:15,y:93,s:70,o:0.5},{x:75,y:-2,s:55,o:0.4},
+    {x:-3,y:2,s:90,o:0.65},{x:88,y:0,s:100,o:0.55},{x:-5,y:88,s:110,o:0.6},
+    {x:85,y:85,s:95,o:0.55},{x:40,y:-3,s:80,o:0.45},{x:60,y:92,s:85,o:0.5},
+    {x:-4,y:45,s:70,o:0.4},{x:92,y:40,s:75,o:0.4},
+    {x:15,y:93,s:80,o:0.55},{x:75,y:-2,s:65,o:0.45},
+    {x:25,y:-1,s:60,o:0.35},{x:95,y:65,s:55,o:0.3},
   ];
   clouds.forEach((c,i)=>{
-    const wrap=addDiv('map-cloud','left:'+c.x+'%;top:'+c.y+'%;width:'+c.s+'px;height:'+(c.s*0.5)+'px;opacity:'+c.o+';animation:cloudDrift '+(4+i%3)+'s ease-in-out '+(i*0.5)+'s infinite alternate');
+    const wrap=addDiv('map-cloud','left:'+c.x+'%;top:'+c.y+'%;width:'+c.s+'px;height:'+(c.s*0.5)+'px;opacity:'+c.o+';animation:cloudDrift '+(5+i%4)+'s ease-in-out '+(i*0.4)+'s infinite alternate');
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
     svg.setAttribute('viewBox','0 0 100 50');
-    const cloud=svgEl('path',{d:'M15 40 Q5 40 5 32 Q5 24 15 22 Q14 12 25 10 Q36 8 40 16 Q44 6 56 8 Q68 10 66 22 Q78 18 82 26 Q86 34 78 38 Q82 44 72 46 Q62 48 55 44 Q48 48 38 46 Q28 48 22 44 Z',fill:'white',stroke:'rgba(200,210,220,0.3)','stroke-width':'0.5'});
-    svg.appendChild(cloud);
+    svg.appendChild(svgEl('path',{d:'M15 40 Q5 40 5 32 Q5 24 15 22 Q14 12 25 10 Q36 8 40 16 Q44 6 56 8 Q68 10 66 22 Q78 18 82 26 Q86 34 78 38 Q82 44 72 46 Q62 48 55 44 Q48 48 38 46 Q28 48 22 44 Z',fill:'white',stroke:'rgba(200,210,220,0.2)','stroke-width':'0.5'}));
+    // Cloud highlight
+    svg.appendChild(svgEl('path',{d:'M20 35 Q10 35 10 30 Q10 25 18 24 Q17 16 28 14 Q36 12 38 18 Q42 10 50 12 Q58 14 56 22',fill:'rgba(255,255,255,0.4)',stroke:'none'}));
     wrap.appendChild(svg);
   });
 
-  // === AREA NAME SIGNPOSTS — game-style illustrated labels ===
+  // === AREA NAME SIGNPOSTS ===
   const areaNames=[
     {x:15,y:22,t:'The Origin Story',icon:'📸',bg:'#4CAF50'},
     {x:55,y:16,t:'The Hustle District',icon:'💼',bg:'#42A5F5'},
@@ -4567,25 +4779,22 @@ function addMapDecorations(cw,ch){
     const wrap=document.createElement('div');
     wrap.className='map-signpost';
     wrap.style.cssText='left:'+z.x+'%;top:'+z.y+'%';
-    // Pin/pole
     const pole=document.createElement('div');
-    const poleH=Math.max(12,cw*0.01);
+    const poleH=Math.max(14,cw*0.012);
     pole.style.cssText='width:'+Math.max(2,cw*0.0015)+'px;height:'+poleH+'px;background:linear-gradient(90deg,#BDBDBD,#9E9E9E,#757575);border-radius:2px';
     wrap.appendChild(pole);
-    // Board
     const board=document.createElement('div');
-    const fontSize=Math.max(5,cw*0.004);
+    const fontSize=Math.max(5,cw*0.0042);
     board.textContent=z.icon+' '+z.t.toUpperCase();
-    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:800;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(2,fontSize*0.4)+'px '+Math.max(5,fontSize)+'px;border-radius:4px;white-space:nowrap;letter-spacing:0.06em;background:'+z.bg+';border:1.5px solid rgba(255,255,255,0.3);box-shadow:0 2px 8px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.2);text-shadow:0 1px 2px rgba(0,0,0,0.3);margin-top:-1px';
+    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:800;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(3,fontSize*0.45)+'px '+Math.max(6,fontSize*1.1)+'px;border-radius:5px;white-space:nowrap;letter-spacing:0.06em;background:'+z.bg+';border:1.5px solid rgba(255,255,255,0.35);box-shadow:0 3px 12px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.25),inset 0 -1px 3px rgba(0,0,0,0.1);text-shadow:0 1px 2px rgba(0,0,0,0.35);margin-top:-1px';
     wrap.appendChild(board);
-    // Ground shadow
     const shadow=document.createElement('div');
-    shadow.style.cssText='width:50%;height:3px;background:radial-gradient(ellipse,rgba(0,0,0,0.12),transparent 70%);border-radius:50%;margin-top:1px;filter:blur(1px)';
+    shadow.style.cssText='width:60%;height:3px;background:radial-gradient(ellipse,rgba(0,0,0,0.15),transparent 70%);border-radius:50%;margin-top:1px;filter:blur(1px)';
     wrap.appendChild(shadow);
     mapCanvas.appendChild(wrap);
   });
 
-  // === POI MARKERS — game checkpoint pins ===
+  // === POI MARKERS ===
   const pois=[
     {x:15,y:24,emoji:'📸',color:'#81C784'},{x:55,y:18,emoji:'💼',color:'#64B5F6'},
     {x:82,y:10,emoji:'🎸',color:'#E91E63'},{x:13,y:42,emoji:'☁️',color:'#CE93D8'},
@@ -4601,33 +4810,11 @@ function addMapDecorations(cw,ch){
     mapCanvas.appendChild(el);
   });
 
-  // === Small illustrated buildings/houses scattered ===
-  const houses=[
-    {x:18,y:26,s:12},{x:22,y:28,s:10},{x:50,y:20,s:11},{x:53,y:22,s:9},
-    {x:78,y:15,s:10},{x:80,y:18,s:8},{x:16,y:44,s:11},{x:58,y:42,s:10},
-    {x:18,y:62,s:9},{x:52,y:62,s:10},{x:74,y:68,s:11},{x:32,y:74,s:9},
-    {x:42,y:48,s:8},{x:68,y:52,s:9},{x:28,y:35,s:8},{x:62,y:28,s:9},
-  ];
-  houses.forEach(h=>{
-    const wrap=addDiv('','position:absolute;pointer-events:none;z-index:3;left:'+h.x+'%;top:'+h.y+'%;width:'+h.s+'px;height:'+h.s+'px');
-    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-    svg.setAttribute('viewBox','0 0 16 16');
-    svg.style.cssText='filter:drop-shadow(0 1px 2px rgba(0,0,0,0.2))';
-    const colors=['#e8845c','#d47248','#c4956a','#b8845a','#e0a060'];
-    const roofColors=['#8B4513','#6B3410','#9B5523','#7B4020'];
-    const bc=colors[Math.floor(Math.random()*colors.length)];
-    const rc=roofColors[Math.floor(Math.random()*roofColors.length)];
-    svg.appendChild(svgEl('rect',{x:'3',y:'8',width:'10',height:'8',fill:bc,rx:'0.5'}));
-    svg.appendChild(svgEl('polygon',{points:'1 8.5, 8 2, 15 8.5',fill:rc}));
-    svg.appendChild(svgEl('rect',{x:'6',y:'10',width:'4',height:'6',fill:'rgba(255,255,200,0.6)',rx:'0.3'}));
-    wrap.appendChild(svg);
-  });
-
   // === COMPASS ROSE ===
   const compass=document.createElement('div');
   compass.className='map-compass-rose';
-  compass.style.cssText='right:3%;top:3%;width:'+Math.max(35,cw*0.028)+'px;height:'+Math.max(35,cw*0.028)+'px';
-  compass.innerHTML='<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/><circle cx="20" cy="20" r="12" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/><polygon points="20,3 22,16 18,16" fill="rgba(220,60,50,0.8)"/><polygon points="20,37 22,24 18,24" fill="rgba(255,255,255,0.3)"/><polygon points="3,20 16,18 16,22" fill="rgba(255,255,255,0.2)"/><polygon points="37,20 24,18 24,22" fill="rgba(255,255,255,0.2)"/><text x="20" y="10" text-anchor="middle" fill="rgba(220,60,50,0.85)" font-size="5" font-weight="900" font-family="sans-serif">N</text></svg>';
+  compass.style.cssText='right:3%;top:3%;width:'+Math.max(40,cw*0.032)+'px;height:'+Math.max(40,cw*0.032)+'px';
+  compass.innerHTML='<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/><circle cx="20" cy="20" r="12" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/><circle cx="20" cy="20" r="6" stroke="rgba(255,255,255,0.08)" stroke-width="0.3"/><polygon points="20,3 22,16 18,16" fill="rgba(220,60,50,0.85)"/><polygon points="20,37 22,24 18,24" fill="rgba(255,255,255,0.35)"/><polygon points="3,20 16,18 16,22" fill="rgba(255,255,255,0.25)"/><polygon points="37,20 24,18 24,22" fill="rgba(255,255,255,0.25)"/><text x="20" y="10" text-anchor="middle" fill="rgba(220,60,50,0.9)" font-size="5" font-weight="900" font-family="sans-serif">N</text><text x="20" y="37" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="3.5" font-weight="700" font-family="sans-serif">S</text><text x="35" y="21.5" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="3.5" font-weight="700" font-family="sans-serif">E</text><text x="5" y="21.5" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="3.5" font-weight="700" font-family="sans-serif">W</text></svg>';
   mapCanvas.appendChild(compass);
 
   // === SCALE BAR ===
@@ -4637,7 +4824,7 @@ function addMapDecorations(cw,ch){
 
   // Lake label
   const lakeEl=document.createElement('div');lakeEl.className='map-zone-marker';
-  lakeEl.style.cssText='left:36%;top:40%;font-size:'+Math.max(5,cw*0.003)+'px;transform:translate(-50%,-50%);color:rgba(180,220,255,0.7);font-style:italic';
+  lakeEl.style.cssText='left:36%;top:40%;font-size:'+Math.max(5,cw*0.003)+'px;transform:translate(-50%,-50%);color:rgba(180,220,255,0.8);font-style:italic';
   lakeEl.textContent='Lake Akash';
   mapCanvas.appendChild(lakeEl);
 
