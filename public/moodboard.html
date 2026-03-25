@@ -493,6 +493,37 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 }
 .minimap-container.expanded .map-zone-banner{display:block}
 
+/* Radar sweep overlay */
+@keyframes radarSweep{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(360deg)}
+}
+.minimap-radar{
+  position:absolute;inset:0;z-index:14;pointer-events:none;
+  border-radius:inherit;overflow:hidden;
+}
+.minimap-radar::before{
+  content:'';position:absolute;top:50%;left:50%;
+  width:100%;height:100%;
+  transform-origin:0 0;
+  background:conic-gradient(
+    from 0deg,
+    rgba(76,175,80,0) 0deg,
+    rgba(76,175,80,0) 340deg,
+    rgba(76,175,80,0.12) 355deg,
+    rgba(76,175,80,0.25) 360deg
+  );
+  animation:radarSweep 4s linear infinite;
+}
+/* Radar crosshair lines */
+.minimap-radar::after{
+  content:'';position:absolute;inset:0;
+  background:
+    linear-gradient(0deg, transparent 49.5%, rgba(76,175,80,0.08) 49.5%, rgba(76,175,80,0.08) 50.5%, transparent 50.5%),
+    linear-gradient(90deg, transparent 49.5%, rgba(76,175,80,0.08) 49.5%, rgba(76,175,80,0.08) 50.5%, transparent 50.5%);
+}
+.minimap-container.expanded .minimap-radar{display:none}
+
 /* Minimap inner vignette for small view */
 .minimap::after{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:15;
