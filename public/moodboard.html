@@ -2708,13 +2708,15 @@ function addMapDecorations(cw,ch){
     }
   });
 
-  // Terrain patches (green areas like parks)
+  // Terrain patches (green areas like parks — Snapchat style)
   const terrains=[
-    {x:8,y:20,w:15,h:12,c:'rgba(165,214,167,0.25)',r:'40%'},
-    {x:55,y:45,w:18,h:14,c:'rgba(200,230,201,0.3)',r:'45%'},
-    {x:75,y:65,w:12,h:18,c:'rgba(178,223,219,0.2)',r:'50%'},
-    {x:30,y:70,w:20,h:10,c:'rgba(165,214,167,0.2)',r:'35%'},
-    {x:85,y:10,w:10,h:15,c:'rgba(129,199,132,0.15)',r:'40%'},
+    {x:8,y:20,w:15,h:12,c:'rgba(139,195,74,0.3)',r:'40%'},
+    {x:55,y:45,w:18,h:14,c:'rgba(165,214,167,0.35)',r:'45%'},
+    {x:75,y:65,w:12,h:18,c:'rgba(129,199,132,0.25)',r:'50%'},
+    {x:30,y:70,w:20,h:10,c:'rgba(139,195,74,0.25)',r:'35%'},
+    {x:85,y:10,w:10,h:15,c:'rgba(165,214,167,0.2)',r:'40%'},
+    {x:42,y:32,w:10,h:8,c:'rgba(129,199,132,0.2)',r:'45%'},
+    {x:18,y:85,w:12,h:8,c:'rgba(165,214,167,0.25)',r:'50%'},
   ];
   terrains.forEach(t=>{
     const el=document.createElement('div');
