@@ -5246,7 +5246,7 @@ function addWaypoints(cat, activeIdx){
   const playerWY=centerWorld.y;
   const playerMX=(playerWX-ox)*sc;
   const playerMY=(playerWY-oy)*sc;
-  const matching=stickerData.filter(d=>d.cat===cat);
+  const matching=stickerData.filter(d=>matchesFilter(d.cat,cat));
   const hasActive=typeof activeIdx==='number'&&activeIdx>=0&&activeIdx<matching.length;
   
   matching.forEach((d,i)=>{
