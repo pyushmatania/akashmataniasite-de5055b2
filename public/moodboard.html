@@ -3115,7 +3115,7 @@ function identifyStickerGroup(sticker){
   const text=(sticker.textContent||'').toLowerCase();
   if(c.contains('zone-signpost'))return 'signpost';
   if(c.contains('sticker-hero-photo')||c.contains('sticker-photo-polaroid')||c.contains('sticker-photo-tilt')||c.contains('sticker-photo-circle')||c.contains('sticker-highlight')||c.contains('sticker-text')||c.contains('sticker-washi'))return 'personal';
-  if(c.contains('sticker-project')||c.contains('sticker-illustrated')||c.contains('sticker-contra'))return 'portfolio';
+  if(c.contains('sticker-project')||c.contains('sticker-illustrated'))return 'portfolio';
   if(c.contains('sticker-badge')||c.contains('sticker-stamp')||c.contains('sticker-swatches'))return 'work';
   if(c.contains('sticker-postit')){
     if(/product|strategy|fintech|web3|growth|analytics|roadmap|kpi|launch|sprint|founder|saas|edtech|prd|war room|ship|b2b|ai/i.test(text))return 'work';
