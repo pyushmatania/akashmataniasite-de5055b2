@@ -3577,9 +3577,9 @@ function toggleMap(){
 
   setTimeout(()=>{
     mc.classList.remove('map-closing','expanded','map-opening');
-    drawMap();
-    updMap();
     mapTransitioning=false;
+    // Delay drawMap slightly so viewport scroll position is settled
+    requestAnimationFrame(()=>{drawMap();updMap();});
   },500);
 }
 
