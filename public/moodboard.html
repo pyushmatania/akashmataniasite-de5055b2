@@ -3577,9 +3577,9 @@ function toggleMap(){
 
   setTimeout(()=>{
     mc.classList.remove('map-closing','expanded','map-opening');
-    drawMap();
-    updMap();
     mapTransitioning=false;
+    // Delay drawMap slightly so viewport scroll position is settled
+    requestAnimationFrame(()=>{drawMap();updMap();});
   },500);
 }
 
@@ -3886,19 +3886,45 @@ function drawMap(){
     if(mapPlayer.parentElement!==mm){
       mm.appendChild(mapPlayer);
     }
-    // SMALL: lightweight colored boxes
+    // SMALL: render mini sticker previews with actual content
     let count=0;
     stickerData.forEach(d=>{
       if(mFilt!=='all'&&d.cat!==mFilt)return;
       const dx=(d.left-offsetX)*sc, dy=(d.top-offsetY)*sc;
       if(dx<-30||dx>canvasW+30||dy<-30||dy>canvasH+30)return;
       count++;
-      const el=document.createElement('div');
-      el.className='mi';
       const w=Math.max(4,d.w*sc),h=Math.max(3,d.h*sc);
-      el.style.cssText='left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;background:'+d.bg+';border-radius:'+d.radius+';'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
-      if(d.emoji&&w>5){const l=document.createElement('div');l.className='mi-emoji-label';l.textContent=d.emoji;l.style.fontSize=Math.max(Math.min(w*0.55,20),4)+'px';el.appendChild(l)}
-      mapCanvas.appendChild(el);
+      
+      // For items large enough, render a scaled-down clone of the actual sticker
+      if(w>6 && h>5 && d.ref){
+        const clone=d.ref.cloneNode(true);
+        clone.style.position='absolute';
+        clone.style.left=dx+'px';
+        clone.style.top=dy+'px';
+        clone.style.transform='scale('+sc+')';
+        clone.style.transformOrigin='0 0';
+        clone.style.zIndex='4';
+        clone.style.pointerEvents='none';
+        clone.style.cursor='default';
+        clone.style.animation='none';
+        clone.style.transition='none';
+        clone.style.filter='none';
+        clone.style.opacity='0.85';
+        clone.removeAttribute('data-anim');
+        clone.removeAttribute('data-splash');
+        clone.removeAttribute('data-contra');
+        clone.removeAttribute('onclick');
+        clone.classList.remove('dragging');
+        clone.querySelectorAll('*').forEach(c=>{c.style.animation='none';c.style.transition='none'});
+        mapCanvas.appendChild(clone);
+      } else {
+        // Fallback: tiny colored dot for very small items
+        const el=document.createElement('div');
+        el.className='mi';
+        el.style.cssText='left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;background:'+d.bg+';border-radius:'+d.radius+';'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
+        if(d.emoji&&w>3){const l=document.createElement('div');l.className='mi-emoji-label';l.textContent=d.emoji;l.style.fontSize=Math.max(Math.min(w*0.55,20),3)+'px';el.appendChild(l)}
+        mapCanvas.appendChild(el);
+      }
     });
     if(mapCount)mapCount.textContent=count+' items';
     // Draw subtle zone names on small minimap
@@ -4060,10 +4086,17 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
     setTimeout(()=>{
       // Center selected item in viewport after returning to moodboard
       centerMoodboardOn(worldX,worldY,'smooth');
+      // Multiple resyncs to ensure small map catches the final scroll position
       setTimeout(()=>{
         centerMoodboardOn(worldX,worldY,'auto');
-        if(!mmExp){drawMap();updMap();}
+        if(!mmExp){ensureMapData(true);drawMap();updMap();}
       },650);
+      setTimeout(()=>{
+        if(!mmExp){drawMap();updMap();}
+      },1200);
+      setTimeout(()=>{
+        if(!mmExp){updMap();}
+      },1800);
       
       // Calculate footstep path on moodboard
       const vpCX=vp.scrollLeft+vp.clientWidth/2;
