@@ -5937,12 +5937,9 @@ function filt(c,btn){
   document.querySelectorAll('.mc').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   if(c==='all'){
-    const hud=document.getElementById('cycleHud');
-    if(hud)hud.classList.remove('visible');
     clearWaypoints();
   }
   drawMap();
-  if(c!=='all')setTimeout(()=>addWaypoints(c),100);
 }
 
 function recenter(){
