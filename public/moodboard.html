@@ -6266,7 +6266,8 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
   let count=0;
   stickerData.forEach(d=>{
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
-    const dx=(d.left-ox)*sc, dy=(d.top-oy)*sc;
+    const hS=drawMap._hStretch||1;
+    const dx=(d.left-ox)*sc*hS, dy=(d.top-oy)*sc;
     const baseScale=sc;
     const visibilityMinPx=window.innerWidth<600?16:12;
     const maxDim=Math.max(d.w,d.h,1);
