@@ -6801,9 +6801,10 @@ function updMap(){
     }
     const cL=parseFloat(mapCanvas.style.left)||0;
     const cT=parseFloat(mapCanvas.style.top)||0;
-    mapVP.style.left=(cL+(worldTopLeft.x-ox)*sc)+'px';
+    const hS=drawMap._hStretch||1;
+    mapVP.style.left=(cL+(worldTopLeft.x-ox)*sc*hS)+'px';
     mapVP.style.top=(cT+(worldTopLeft.y-oy)*sc)+'px';
-    mapVP.style.width=(worldVpW*sc)+'px';
+    mapVP.style.width=(worldVpW*sc*hS)+'px';
     mapVP.style.height=(worldVpH*sc)+'px';
   }
   
