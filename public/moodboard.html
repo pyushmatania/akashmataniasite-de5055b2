@@ -6253,18 +6253,36 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
   stickerData.forEach(d=>{
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
     const dx=(d.left-ox)*sc, dy=(d.top-oy)*sc;
-    const rawW=d.w*sc, rawH=d.h*sc;
+    const baseStickerScale=(typeof SCALE==='number'?SCALE:1);
+    const cloneScale=sc*baseStickerScale;
+    const rawW=d.w*cloneScale, rawH=d.h*cloneScale;
     // Only render if in visible viewport
     const iw=Math.max(rawW,8), ih=Math.max(rawH,6);
     if(dx+iw<visL||dx>visR||dy+ih<visT||dy>visB)return;
 
     count++;
-    // Render actual sticker clone for faithful appearance
+    // Render actual sticker clone for faithful appearance and sync
     let clone;
-    if(d.ref && rawW>4 && rawH>3){
+    if(d.ref){
       clone=d.ref.cloneNode(true);
-      clone.className='mi';
-      clone.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;transform:scale('+sc+');transform-origin:0 0;z-index:6;cursor:pointer;animation:none;transition:none;filter:none;';
+      clone.classList.add('mi','map-sticker-clone');
+      const rot=(d.ref.style.transform||'').match(/rotate\([^)]+\)/);
+      const transform=(rot?rot[0]+' ':'')+'scale('+cloneScale+')';
+      clone.style.position='absolute';
+      clone.style.left=dx+'px';
+      clone.style.top=dy+'px';
+      clone.style.width=d.w+'px';
+      clone.style.height=d.h+'px';
+      clone.style.maxWidth='none';
+      clone.style.maxHeight='none';
+      clone.style.transform=transform;
+      clone.style.transformOrigin='0 0';
+      clone.style.zIndex=d.ref.classList.contains('zone-signpost')?'5':'7';
+      clone.style.cursor='pointer';
+      clone.style.animation='none';
+      clone.style.transition='none';
+      clone.style.filter='none';
+      clone.style.pointerEvents='auto';
       clone.removeAttribute('data-anim');
       clone.removeAttribute('data-splash');
       clone.removeAttribute('data-contra');
@@ -6274,7 +6292,7 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     } else {
       clone=document.createElement('div');
       clone.className='mi';
-      clone.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+Math.max(iw,8)+'px;height:'+Math.max(ih,6)+'px;background:'+d.bg+';border-radius:'+d.radius+';z-index:6;cursor:pointer;'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
+      clone.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+Math.max(iw,8)+'px;height:'+Math.max(ih,6)+'px;background:'+d.bg+';border-radius:'+d.radius+';z-index:7;cursor:pointer;'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
       if(d.emoji){const l=document.createElement('span');l.textContent=d.emoji;l.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:'+Math.max(Math.min(Math.max(iw,8)*0.6,20),8)+'px;pointer-events:none';clone.appendChild(l)}
     }
     
