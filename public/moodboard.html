@@ -6569,35 +6569,27 @@ function addMapDecorations(cw, ch){
 }
 
 let _decsCW=-1,_decsCH=-1;
-function drawMap(){
+
+// Shared layout logic — sets canvas size, bg, decorations, stores draw params
+function drawMapLayout(){
   const playerWasInCanvas=mapPlayer.parentElement===mapCanvas;
   if(mmExp){
-    // Only clear sticker clones (.mi) — preserve decoration layer
     mapCanvas.querySelectorAll('.mi').forEach(el=>el.remove());
     if(playerWasInCanvas)mapPlayer.remove();
   } else {
     mapCanvas.innerHTML='';
-    _decsCW=-1;_decsCH=-1; // reset so decorations rebuild on next expand
+    _decsCW=-1;_decsCH=-1;
   }
   if(!stickerData.length)scanStickers();
   const mr=mmInner.getBoundingClientRect();
   const mw=mr.width||64,mh=mr.height||64;
-  
-   // Keep map extents locked to moodboard boundaries.
-   const contentW=Math.max(cv.scrollWidth||0,cv.offsetWidth||0,MOODBOARD_WORLD_WIDTH);
-   const contentH=Math.max(cv.scrollHeight||0,cv.offsetHeight||0,MOODBOARD_WORLD_HEIGHT);
-   const minL=0, minT=0;
-  
+  const contentW=Math.max(cv.scrollWidth||0,cv.offsetWidth||0,MOODBOARD_WORLD_WIDTH);
+  const contentH=Math.max(cv.scrollHeight||0,cv.offsetHeight||0,MOODBOARD_WORLD_HEIGHT);
+  const minL=0, minT=0;
   let sc,offsetX,offsetY,canvasW,canvasH;
-  
   if(mmExp){
-    // Expanded map — keep true coordinates and add larger horizontal travel area
-    const usableW=mw;
-    const usableH=mh;
-    const leftWorldPad=5500;
-    const rightWorldPad=3500;
-    const topWorldPad=5000;
-    const bottomWorldPad=2400;
+    const usableW=mw,usableH=mh;
+    const leftWorldPad=5500,rightWorldPad=3500,topWorldPad=5000,bottomWorldPad=2400;
     const mapContentW=contentW+leftWorldPad+rightWorldPad;
     const mapContentH=contentH+topWorldPad+bottomWorldPad;
     const fitScale=Math.max(0.02,Math.max(usableW/mapContentW,usableH/mapContentH));
@@ -6609,20 +6601,16 @@ function drawMap(){
     mapCanvas.style.left='0px';
     mapCanvas.style.top='0px';
   } else {
-    // SMALL MAP: restore only small-map pan offsets (never expanded-map top offset)
     const zoomFactor=5;
     sc=mw/(contentW/zoomFactor);
     canvasW=contentW*sc;
     canvasH=contentH*sc;
-    offsetX=0;
-    offsetY=0;
+    offsetX=0;offsetY=0;
     mapCanvas.style.left=smallMapPanX+'px';
     mapCanvas.style.top=smallMapPanY+'px';
   }
-  
   drawMap._sc=sc;drawMap._ox=offsetX;drawMap._oy=offsetY;
   drawMap._cw=canvasW;drawMap._ch=canvasH;
-  
   mapCanvas.style.width=canvasW+'px';
   mapCanvas.style.height=canvasH+'px';
   mapCanvas.style.position='absolute';
@@ -6636,9 +6624,7 @@ function drawMap(){
     mapCanvas.style.backgroundImage='linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px)';
     mapCanvas.style.backgroundSize='12px 12px, 12px 12px';
   }
-  
   if(mmExp){
-    // EXPANDED: rebuild decorations only when canvas dimensions change
     const rCW=Math.round(canvasW),rCH=Math.round(canvasH);
     if(rCW!==_decsCW||rCH!==_decsCH){
       const old=mapCanvas.querySelector('.map-dec-layer');
@@ -6646,7 +6632,6 @@ function drawMap(){
       addMapDecorations(canvasW,canvasH);
       _decsCW=rCW;_decsCH=rCH;
     }
-    renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
     if(playerWasInCanvas||mapPlayer.parentElement!==mapCanvas){
       mapCanvas.appendChild(mapPlayer);
     }
@@ -6654,6 +6639,17 @@ function drawMap(){
     if(mapPlayer.parentElement!==mm){
       mm.appendChild(mapPlayer);
     }
+  }
+  return {sc,offsetX,offsetY,canvasW,canvasH,playerWasInCanvas};
+}
+
+// Full drawMap — for small map and legacy calls
+function drawMap(){
+  const params=drawMapLayout();
+  const {sc,offsetX,offsetY,canvasW,canvasH}=params;
+  if(mmExp){
+    renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
+  } else {
     // SMALL: render mini sticker previews with actual content
     let count=0;
     stickerData.forEach(d=>{
