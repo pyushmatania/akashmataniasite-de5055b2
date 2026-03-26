@@ -6253,15 +6253,15 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
   stickerData.forEach(d=>{
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
     const dx=(d.left-ox)*sc, dy=(d.top-oy)*sc;
+    const rawW=d.w*sc, rawH=d.h*sc;
     // Only render if in visible viewport
-    const iw=Math.max(d.w*sc,8), ih=Math.max(d.h*sc,6);
+    const iw=Math.max(rawW,8), ih=Math.max(rawH,6);
     if(dx+iw<visL||dx>visR||dy+ih<visT||dy>visB)return;
-    
+
     count++;
     // Render actual sticker clone for faithful appearance
-    const iw=d.w*sc, ih=d.h*sc;
     let clone;
-    if(d.ref && iw>4 && ih>3){
+    if(d.ref && rawW>4 && rawH>3){
       clone=d.ref.cloneNode(true);
       clone.className='mi';
       clone.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;transform:scale('+sc+');transform-origin:0 0;z-index:6;cursor:pointer;animation:none;transition:none;filter:none;';
