@@ -6129,47 +6129,54 @@ function addMapDecorations(cw, ch){
     wrap.appendChild(svg);
   });
 
-  // === IMMERSIVE AREA SIGNPOSTS — tall poles, depth, ground shadows ===
-  const areaNames=[
-    {x:22,y:8,t:'Origin',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)',glow:'rgba(76,175,80,0.5)'},
-    {x:76,y:8,t:'Work',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)',glow:'rgba(229,57,53,0.5)'},
-    {x:22,y:48,t:'Portfolio',icon:'🚀',bg:'linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)',glow:'rgba(66,165,245,0.5)'},
-    {x:22,y:78,t:'Hobby',icon:'🎮',bg:'linear-gradient(135deg,#E65100,#FF9800,#EF6C00)',glow:'rgba(255,152,0,0.5)'},
-    {x:76,y:50,t:'Fun',icon:'😂',bg:'linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)',glow:'rgba(171,71,188,0.5)'},
+  // === NEON AREA SIGNPOSTS on big map ===
+  const neonSigns=[
+    {x:22,y:20,t:'ORIGIN',icon:'📸',color:'#4CAF50'},
+    {x:76,y:20,t:'WORK',icon:'🎯',color:'#E53935'},
+    {x:22,y:57,t:'PORTFOLIO',icon:'🚀',color:'#42A5F5'},
+    {x:22,y:86,t:'HOBBY',icon:'🎮',color:'#FF9800'},
+    {x:76,y:72,t:'FUN',icon:'😂',color:'#AB47BC'},
   ];
-  areaNames.forEach(z=>{
+  neonSigns.forEach(z=>{
     const wrap=document.createElement('div');
-    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;z-index:5;pointer-events:none;gap:0;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3))';
-    const signRow=document.createElement('div');
-    signRow.style.cssText='display:flex;align-items:stretch;gap:0';
-    const fontSize=Math.max(8,cw*0.009);
-    const pillarW=Math.max(4,cw*0.003);
-    const pillarH=Math.max(30,cw*0.025);
-    const capS=Math.max(6,pillarW*1.5);
-    const baseW=Math.max(7,pillarW*1.6);
-    const mkPillar=()=>{
-      const p=document.createElement('div');
-      p.style.cssText='display:flex;flex-direction:column;align-items:center;flex-shrink:0';
-      const cap=document.createElement('div');
-      cap.style.cssText='width:'+capS+'px;height:'+capS+'px;border-radius:50%;background:radial-gradient(ellipse at 35% 30%,#D4B55A,#A0822C 60%,#7A5C10);border:1px solid rgba(0,0,0,0.1);margin-bottom:-1px;box-shadow:inset 0 1px 2px rgba(255,255,255,0.3),0 1px 3px rgba(0,0,0,0.2)';
-      const shaft=document.createElement('div');
-      shaft.style.cssText='width:'+pillarW+'px;height:'+pillarH+'px;background:linear-gradient(90deg,#8B6914,#A0822C 25%,#C4A44A 50%,#A0822C 75%,#8B6914);border-radius:1px;box-shadow:1px 0 0 rgba(0,0,0,0.08),0 3px 6px rgba(0,0,0,0.15)';
-      const base=document.createElement('div');
-      base.style.cssText='width:'+baseW+'px;height:'+(pillarW*0.8)+'px;background:linear-gradient(180deg,#8B6914,#6B4E0C);border-radius:0 0 2px 2px;margin-top:-1px;box-shadow:0 2px 4px rgba(0,0,0,0.2)';
-      p.appendChild(cap);p.appendChild(shaft);p.appendChild(base);
-      return p;
-    };
-    signRow.appendChild(mkPillar());
+    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;z-index:8;pointer-events:none';
+    const fontSize=Math.max(9,cw*0.01);
+    // Neon board
     const board=document.createElement('div');
-    board.textContent=z.icon+' '+z.t.toUpperCase();
-    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:800;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(4,fontSize*0.5)+'px '+Math.max(10,fontSize*0.9)+'px;border-radius:'+Math.max(3,fontSize*0.25)+'px;white-space:nowrap;letter-spacing:0.08em;background:'+z.bg+';border:'+Math.max(1.5,fontSize*0.1)+'px solid rgba(255,255,255,0.35);border-bottom:'+Math.max(2,fontSize*0.14)+'px solid rgba(0,0,0,0.2);box-shadow:0 4px 16px '+z.glow+',inset 0 2px 0 rgba(255,255,255,0.25),inset 0 -3px 6px rgba(0,0,0,0.12);text-shadow:0 1px 0 rgba(0,0,0,0.3);margin:0 -2px;align-self:center';
-    signRow.appendChild(board);
-    signRow.appendChild(mkPillar());
-    wrap.appendChild(signRow);
-    const shadow=document.createElement('div');
-    shadow.style.cssText='position:absolute;bottom:-'+(capS*0.5)+'px;left:50%;transform:translateX(-50%);width:90%;height:'+(capS*0.8)+'px;background:radial-gradient(ellipse at 50% 40%,rgba(0,0,0,0.25) 0%,transparent 70%);border-radius:50%;filter:blur(3px)';
-    wrap.appendChild(shadow);
+    board.style.cssText='background:#1a1a2e;border:1.5px solid '+z.color+';border-radius:4px;padding:'+Math.max(3,fontSize*0.4)+'px '+Math.max(8,fontSize*0.8)+'px;text-align:center;box-shadow:0 0 8px '+z.color+'80,0 0 16px '+z.color+'40,inset 0 0 6px rgba(0,0,0,0.5),0 4px 12px rgba(0,0,0,0.4)';
+    const txt=document.createElement('div');
+    txt.textContent=z.icon+' '+z.t;
+    txt.style.cssText='font-family:Fredoka,Arial Black,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:'+z.color+';letter-spacing:0.1em;white-space:nowrap;text-shadow:0 0 4px '+z.color+',0 0 10px '+z.color+',0 0 20px '+z.color+'80';
+    board.appendChild(txt);
+    // Neon dots row
+    const dots=document.createElement('div');
+    dots.style.cssText='display:flex;gap:3px;justify-content:center;margin-bottom:2px';
+    for(let i=0;i<6;i++){
+      const d=document.createElement('div');
+      d.style.cssText='width:2.5px;height:2.5px;border-radius:50%;background:'+z.color+';box-shadow:0 0 3px '+z.color+';animation:bulbChase 1.5s ease-in-out '+(i*0.2)+'s infinite';
+      dots.appendChild(d);
+    }
+    // Poles
+    const poles=document.createElement('div');
+    poles.style.cssText='display:flex;gap:'+Math.max(12,fontSize*1.2)+'px;margin-top:-1px';
+    for(let i=0;i<2;i++){
+      const p=document.createElement('div');
+      p.style.cssText='width:2px;height:'+Math.max(16,cw*0.015)+'px;background:linear-gradient(90deg,#666,#bbb,#666);border-radius:1px;box-shadow:1px 0 2px rgba(0,0,0,0.15)';
+      poles.appendChild(p);
+    }
+    // Base
+    const base=document.createElement('div');
+    base.style.cssText='width:'+Math.max(14,fontSize*1.4)+'px;height:3px;background:linear-gradient(180deg,#888,#555);border-radius:1px;margin-top:-1px';
+    // Glow
+    const glow=document.createElement('div');
+    glow.style.cssText='width:'+Math.max(20,fontSize*2)+'px;height:5px;background:radial-gradient(ellipse,'+z.color+'40,transparent 70%);border-radius:50%;filter:blur(2px);margin-top:1px';
+    wrap.appendChild(dots);
+    wrap.appendChild(board);
+    wrap.appendChild(poles);
+    wrap.appendChild(base);
+    wrap.appendChild(glow);
     layer.appendChild(wrap);
+  });
   });
 
   // === GROUND-PAINTED ZONE NAMES (painted on the land) ===
