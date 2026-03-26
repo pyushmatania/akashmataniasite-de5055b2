@@ -5592,12 +5592,26 @@ function addMapDecorations(cw, ch){
   addDiv('map-terrain-edge','left:88%;top:15%;width:10%;height:35%;border-radius:40% 60% 50% 50%;background:linear-gradient(-90deg,#5a9e3e,#4e9035);z-index:0');
   addDiv('map-terrain-edge','left:15%;top:2%;width:40%;height:8%;border-radius:50% 50% 40% 60%;background:linear-gradient(180deg,#5a9e3e,#4e9035);z-index:0');
   addDiv('map-terrain-edge','left:20%;top:90%;width:50%;height:8%;border-radius:40% 60% 50% 50%;background:linear-gradient(0deg,#5a9e3e,#4e9035);z-index:0');
-  // Zone-colored tints on the terrain
-  addDiv('map-zone-tint','left:2%;top:3%;width:42%;height:37%;border-radius:30%;background:radial-gradient(ellipse,rgba(76,175,80,0.15),transparent 70%);z-index:0');
-  addDiv('map-zone-tint','left:55%;top:3%;width:43%;height:37%;border-radius:30%;background:radial-gradient(ellipse,rgba(229,57,53,0.1),transparent 70%);z-index:0');
-  addDiv('map-zone-tint','left:2%;top:44%;width:40%;height:26%;border-radius:30%;background:radial-gradient(ellipse,rgba(66,165,245,0.1),transparent 70%);z-index:0');
-  addDiv('map-zone-tint','left:2%;top:74%;width:45%;height:24%;border-radius:30%;background:radial-gradient(ellipse,rgba(255,152,0,0.12),transparent 70%);z-index:0');
-  addDiv('map-zone-tint','left:55%;top:46%;width:43%;height:52%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.1),transparent 70%);z-index:0');
+   // Zone-colored tints on the terrain — BOLDER with glow
+   addDiv('map-zone-tint','left:2%;top:3%;width:42%;height:37%;border-radius:30%;background:radial-gradient(ellipse,rgba(76,175,80,0.35),transparent 65%);z-index:0;filter:blur(2px)');
+   addDiv('map-zone-tint','left:55%;top:3%;width:43%;height:37%;border-radius:30%;background:radial-gradient(ellipse,rgba(229,57,53,0.28),transparent 65%);z-index:0;filter:blur(2px)');
+   addDiv('map-zone-tint','left:2%;top:44%;width:40%;height:26%;border-radius:30%;background:radial-gradient(ellipse,rgba(66,165,245,0.28),transparent 65%);z-index:0;filter:blur(2px)');
+   addDiv('map-zone-tint','left:2%;top:74%;width:45%;height:24%;border-radius:30%;background:radial-gradient(ellipse,rgba(255,152,0,0.32),transparent 65%);z-index:0;filter:blur(2px)');
+   addDiv('map-zone-tint','left:55%;top:46%;width:43%;height:52%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.28),transparent 65%);z-index:0;filter:blur(2px)');
+
+   // === ZONE BORDER LINES — colorful glowing outlines for each area ===
+   const zoneBorders=[
+     {x:2,y:3,w:42,h:37,color:'#4CAF50',label:'📸 Origin'},
+     {x:55,y:3,w:43,h:37,color:'#E53935',label:'🎯 Work'},
+     {x:2,y:44,w:40,h:26,color:'#42A5F5',label:'🚀 Portfolio'},
+     {x:2,y:74,w:45,h:24,color:'#FF9800',label:'🎮 Hobby'},
+     {x:55,y:46,w:43,h:52,color:'#AB47BC',label:'😂 Fun'}
+   ];
+   zoneBorders.forEach(zb=>{
+     addDiv('map-zone-border','left:'+zb.x+'%;top:'+zb.y+'%;width:'+zb.w+'%;height:'+zb.h+'%;border-radius:18px;border:2.5px solid '+zb.color+';box-shadow:0 0 14px '+zb.color+'80,inset 0 0 10px '+zb.color+'30;z-index:1;opacity:0.75');
+     const lbl=addDiv('map-zone-label','left:'+(zb.x+1)+'%;top:'+(zb.y+0.8)+'%;font-family:Arial Black,sans-serif;font-size:'+(!IS_MOBILE_MAP?'10px':'7px')+';font-weight:900;color:'+zb.color+';text-transform:uppercase;letter-spacing:1px;text-shadow:0 0 8px '+zb.color+'90,0 1px 3px rgba(0,0,0,0.4);z-index:2;white-space:nowrap;padding:2px 6px;background:rgba(0,0,0,0.25);border-radius:4px');
+     lbl.textContent=zb.label;
+   });
 
   // === BEACHES ===
   const beaches=[
