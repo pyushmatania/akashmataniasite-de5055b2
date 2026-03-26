@@ -12,13 +12,19 @@ Portfolio app for Akash Matania — Product Manager with 8+ years across fintech
 - sy() is identity function (no Y scaling needed for square canvas)
 - Page loads centered on intro card at (7000, 7000)
 
-## Map Zones (5 zones + hub at center)
-- **Origin Story** 📸 (0-5800, 0-5600) — Personal & About (top-left)
-- **The War Room** 🎯 (7700-14000, 0-5600) — Work & Professional (top-right)
-- **Launch Pad** 🚀 (0-5600, 6200-9800) — Portfolio & Creative (mid-left)
-- **Akash Unplugged** ⭐ (5200-8800, 5200-8800) — Hub/Intro center
-- **The Playground** 🎮 (0-6300, 10400-14000) — Hobbies & Interests (bottom-left)
-- **Meme Alley** 😂 (7700-14000, 6400-14000) — Fun & Memes (right side)
+## Map Zones (5 zones, no hub)
+- **Origin** 📸 (0-5800, 0-5600) — Personal & About (top-left)
+- **Work** 🎯 (7700-14000, 0-5600) — Work & Professional (top-right)
+- **Portfolio** 🚀 (0-5600, 6200-9800) — Portfolio & Creative (mid-left)
+- **Hobby** 🎮 (0-6300, 10400-14000) — Hobbies & Interests (bottom-left)
+- **Fun** 😂 (7700-14000, 6400-14000) — Fun & Memes (right side)
+- Hub/Akash Unplugged zone was REMOVED — intro card still at center but no dedicated zone
+
+## Signposts
+- Wooden two-pole design with brown wood gradient (#8B6914 to #C4A44A)
+- Small rounded wood knob caps, compact board with zone colors
+- Placed on both moodboard canvas AND big map
+- Ground-painted zone names on big map + dashed boundary lines between zones
 
 ## Intro Card (Center)
 - "Akash Matania" with Matania in gold gradient highlight
@@ -32,11 +38,6 @@ Portfolio app for Akash Matania — Product Manager with 8+ years across fintech
 ## Design
 - Clean, minimal style with colorful accents
 - Skill tags use green (#3cd070), yellow (#f5c842), red (#e85050)
-
-## Item Count (~251 total stickers)
-- 74 memes, 42 badges, 34 postits, 42 emojis, 15 projects, 13 stamps
-- 2 hero photos, 5 counters, 2 fortunes, 1 mood, 2 scratches, 1 progress
-- 3 texts, 1 highlight, 3 illustrated, 4 washi, 1 swatches, 6 zone signposts
 
 ## Key Info
 - Email: pyushmatania@gmail.com
