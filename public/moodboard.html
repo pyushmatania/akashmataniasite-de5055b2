@@ -5574,11 +5574,11 @@ function addMapDecorations(cw, ch){
   addDiv('map-terrain-edge','left:15%;top:2%;width:40%;height:8%;border-radius:50% 50% 40% 60%;background:linear-gradient(180deg,#5a9e3e,#4e9035);z-index:0');
   addDiv('map-terrain-edge','left:20%;top:90%;width:50%;height:8%;border-radius:40% 60% 50% 50%;background:linear-gradient(0deg,#5a9e3e,#4e9035);z-index:0');
   // Zone-colored tints on the terrain
-  addDiv('map-zone-tint','left:8%;top:8%;width:35%;height:32%;border-radius:30%;background:radial-gradient(ellipse,rgba(76,175,80,0.15),transparent 70%);z-index:0');
-  addDiv('map-zone-tint','left:50%;top:8%;width:40%;height:32%;border-radius:30%;background:radial-gradient(ellipse,rgba(229,57,53,0.1),transparent 70%);z-index:0');
-  addDiv('map-zone-tint','left:8%;top:35%;width:35%;height:28%;border-radius:30%;background:radial-gradient(ellipse,rgba(66,165,245,0.1),transparent 70%);z-index:0');
-  addDiv('map-zone-tint','left:8%;top:60%;width:35%;height:30%;border-radius:30%;background:radial-gradient(ellipse,rgba(255,152,0,0.12),transparent 70%);z-index:0');
-  addDiv('map-zone-tint','left:50%;top:45%;width:42%;height:45%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.1),transparent 70%);z-index:0');
+  addDiv('map-zone-tint','left:2%;top:3%;width:42%;height:37%;border-radius:30%;background:radial-gradient(ellipse,rgba(76,175,80,0.15),transparent 70%);z-index:0');
+  addDiv('map-zone-tint','left:55%;top:3%;width:43%;height:37%;border-radius:30%;background:radial-gradient(ellipse,rgba(229,57,53,0.1),transparent 70%);z-index:0');
+  addDiv('map-zone-tint','left:2%;top:44%;width:40%;height:26%;border-radius:30%;background:radial-gradient(ellipse,rgba(66,165,245,0.1),transparent 70%);z-index:0');
+  addDiv('map-zone-tint','left:2%;top:74%;width:45%;height:24%;border-radius:30%;background:radial-gradient(ellipse,rgba(255,152,0,0.12),transparent 70%);z-index:0');
+  addDiv('map-zone-tint','left:55%;top:46%;width:43%;height:52%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.1),transparent 70%);z-index:0');
 
   // === BEACHES ===
   const beaches=[
@@ -5990,11 +5990,11 @@ function addMapDecorations(cw, ch){
 
   // === IMMERSIVE AREA SIGNPOSTS — tall poles, depth, ground shadows ===
   const areaNames=[
-    {x:14,y:22,t:'Origin',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)',glow:'rgba(76,175,80,0.5)'},
-    {x:55,y:14,t:'Work',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)',glow:'rgba(229,57,53,0.5)'},
-    {x:14,y:38,t:'Portfolio',icon:'🚀',bg:'linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)',glow:'rgba(66,165,245,0.5)'},
-    {x:18,y:62,t:'Hobby',icon:'🎮',bg:'linear-gradient(135deg,#E65100,#FF9800,#EF6C00)',glow:'rgba(255,152,0,0.5)'},
-    {x:65,y:58,t:'Fun',icon:'😂',bg:'linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)',glow:'rgba(171,71,188,0.5)'},
+    {x:22,y:8,t:'Origin',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)',glow:'rgba(76,175,80,0.5)'},
+    {x:76,y:8,t:'Work',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)',glow:'rgba(229,57,53,0.5)'},
+    {x:22,y:48,t:'Portfolio',icon:'🚀',bg:'linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)',glow:'rgba(66,165,245,0.5)'},
+    {x:22,y:78,t:'Hobby',icon:'🎮',bg:'linear-gradient(135deg,#E65100,#FF9800,#EF6C00)',glow:'rgba(255,152,0,0.5)'},
+    {x:76,y:50,t:'Fun',icon:'😂',bg:'linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)',glow:'rgba(171,71,188,0.5)'},
   ];
   areaNames.forEach(z=>{
     const wrap=document.createElement('div');
@@ -6033,11 +6033,11 @@ function addMapDecorations(cw, ch){
 
   // === GROUND-PAINTED ZONE NAMES (painted on the land) ===
   const groundLabels=[
-    {x:20,y:28,t:'ORIGIN',color:'rgba(76,175,80,0.25)',size:0.04},
-    {x:60,y:20,t:'WORK',color:'rgba(229,57,53,0.25)',size:0.04},
-    {x:20,y:44,t:'PORTFOLIO',color:'rgba(66,165,245,0.25)',size:0.04},
-    {x:20,y:68,t:'HOBBY',color:'rgba(255,152,0,0.25)',size:0.04},
-    {x:65,y:64,t:'FUN',color:'rgba(171,71,188,0.25)',size:0.05},
+    {x:22,y:20,t:'ORIGIN',color:'rgba(76,175,80,0.25)',size:0.04},
+    {x:76,y:20,t:'WORK',color:'rgba(229,57,53,0.25)',size:0.04},
+    {x:22,y:57,t:'PORTFOLIO',color:'rgba(66,165,245,0.25)',size:0.04},
+    {x:22,y:86,t:'HOBBY',color:'rgba(255,152,0,0.25)',size:0.04},
+    {x:76,y:72,t:'FUN',color:'rgba(171,71,188,0.25)',size:0.05},
   ];
   groundLabels.forEach(g=>{
     const el=document.createElement('div');
@@ -6048,16 +6048,14 @@ function addMapDecorations(cw, ch){
 
   // === ZONE BOUNDARY DASHED LINES ===
   const zoneBorders=[
-    // Horizontal split: Origin/Work top | Portfolio/Hub/Fun middle
-    {x1:0,y1:40,x2:100,y2:40,color:'rgba(76,175,80,0.4)',color2:'rgba(229,57,53,0.4)'},
-    // Vertical split: left zones | right zones (top half)
-    {x1:42,y1:0,x2:42,y2:40,color:'rgba(76,175,80,0.35)',color2:'rgba(229,57,53,0.35)'},
-    // Horizontal: Portfolio/Hobby split
-    {x1:0,y1:56,x2:42,y2:56,color:'rgba(66,165,245,0.35)',color2:'rgba(255,152,0,0.35)'},
-    // Vertical: Hub/Fun split (bottom half)
-    {x1:42,y1:40,x2:42,y2:100,color:'rgba(255,152,0,0.3)',color2:'rgba(171,71,188,0.3)'},
-    // Horizontal: Hobby bottom 
-    {x1:0,y1:75,x2:42,y2:75,color:'rgba(255,152,0,0.3)',color2:'rgba(255,152,0,0.25)'},
+    // Horizontal split at y=40% (world y~5600) — Origin/Work top vs Portfolio/Hub/Fun below
+    {x1:0,y1:40,x2:100,y2:40,color:'rgba(76,175,80,0.4)'},
+    // Vertical split at x=44% (world x~6200) — left zones vs right zones (top half)
+    {x1:44,y1:0,x2:44,y2:40,color:'rgba(76,175,80,0.35)'},
+    // Horizontal split at y=70% (world y~9800) — Portfolio vs Hobby
+    {x1:0,y1:70,x2:45,y2:70,color:'rgba(66,165,245,0.35)'},
+    // Vertical split at x=45% (bottom half) — Hobby/Portfolio vs Fun
+    {x1:45,y1:40,x2:45,y2:100,color:'rgba(255,152,0,0.3)'},
   ];
   zoneBorders.forEach(b=>{
     const line=document.createElement('div');
@@ -6073,9 +6071,9 @@ function addMapDecorations(cw, ch){
 
   // === POI MARKERS ===
   const pois=[
-    {x:14,y:24,emoji:'📸',color:'#4CAF50'},{x:55,y:16,emoji:'🎯',color:'#E53935'},
-    {x:14,y:40,emoji:'🚀',color:'#42A5F5'},{x:48,y:30,emoji:'⭐',color:'#FFD54F'},
-    {x:20,y:60,emoji:'🎮',color:'#FF9800'},{x:65,y:56,emoji:'😂',color:'#AB47BC'},
+    {x:22,y:20,emoji:'📸',color:'#4CAF50'},{x:76,y:20,emoji:'🎯',color:'#E53935'},
+    {x:22,y:57,emoji:'🚀',color:'#42A5F5'},{x:50,y:50,emoji:'⭐',color:'#FFD54F'},
+    {x:22,y:86,emoji:'🎮',color:'#FF9800'},{x:76,y:72,emoji:'😂',color:'#AB47BC'},
   ];
   pois.forEach(p=>{
     const el=document.createElement('div');el.className='map-poi';
@@ -6705,11 +6703,11 @@ function showNav(tx,ty){
 
 // Zone definitions for name lookup
 const mapZones=[
-  {name:'Origin',icon:'📸',x1:200,y1:200,x2:5800,y2:5600},
-  {name:'Work',icon:'🎯',x1:7700,y1:200,x2:13800,y2:5600},
-  {name:'Portfolio',icon:'🚀',x1:200,y1:6200,x2:5600,y2:9800},
-  {name:'Hobby',icon:'🎮',x1:200,y1:10400,x2:6300,y2:13800},
-  {name:'Fun',icon:'😂',x1:7700,y1:6400,x2:13800,y2:13800}
+  {name:'Origin',icon:'📸',x1:400,y1:400,x2:5800,y2:5600},
+  {name:'Work',icon:'🎯',x1:7700,y1:400,x2:13600,y2:5600},
+  {name:'Portfolio',icon:'🚀',x1:400,y1:6200,x2:5600,y2:9800},
+  {name:'Hobby',icon:'🎮',x1:400,y1:10400,x2:6300,y2:13600},
+  {name:'Fun',icon:'😂',x1:7700,y1:6400,x2:13600,y2:13600}
 ];
 function getZoneName(px,py){
   for(const z of mapZones){
