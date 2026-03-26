@@ -5473,6 +5473,17 @@ function addMapDecorations(cw,ch){
     {x:68,y:52,w:20,h:25,c:'#50a878',r:'#389060',win:true},
     {x:28,y:35,w:16,h:20,c:'#c89060',r:'#a87848',win:true},
     {x:70,y:28,w:18,h:22,c:'#5890c8',r:'#4078a8',win:true},
+    // Extra buildings for expanded map
+    {x:88,y:30,w:24,h:30,c:'#d06050',r:'#b04838',win:true},
+    {x:10,y:75,w:20,h:26,c:'#5c9de8',r:'#4080c8',win:true},
+    {x:45,y:78,w:22,h:28,c:'#e8845c',r:'#c86040',win:true},
+    {x:72,y:62,w:18,h:22,c:'#9c6fd0',r:'#7850b0',win:true},
+    {x:30,y:82,w:24,h:30,c:'#50a860',r:'#389048',win:true},
+    {x:85,y:48,w:20,h:25,c:'#e8c050',r:'#c8a038',win:true},
+    {x:62,y:76,w:22,h:28,c:'#e85070',r:'#c03858',win:true},
+    {x:8,y:58,w:18,h:22,c:'#6ba8e0',r:'#4888c0',win:true},
+    {x:38,y:65,w:16,h:20,c:'#d4956a',r:'#b87848',win:true},
+    {x:92,y:58,w:20,h:25,c:'#c89060',r:'#a87848',win:true},
   ];
   buildings.forEach(b=>addIsometricBuilding(b.x,b.y,b.w,b.h,b.c,b.r,b.win));
 
@@ -5501,6 +5512,11 @@ function addMapDecorations(cw,ch){
   addTower(48,38,20,40,'#4a9bd9','#3580b8');
   addTower(24,22,16,32,'#e07850','#c05838');
   addTower(72,18,18,36,'#e85070','#c83858');
+  // Extra towers for expanded map
+  addTower(85,42,16,32,'#50a878','#389060');
+  addTower(15,72,18,36,'#9c6fd0','#7850b0');
+  addTower(60,75,14,28,'#e8c050','#c8a038');
+  addTower(38,82,16,32,'#5890c8','#4078a8');
 
   // === ANIMATED FERRIS WHEEL ===
   (function(){
@@ -5645,6 +5661,11 @@ function addMapDecorations(cw,ch){
     {x:78,y:4,s:68},{x:82,y:2,s:50},{x:75,y:7,s:45},
     {x:42,y:44,s:52},{x:46,y:41,s:60},{x:50,y:47,s:46},
     {x:35,y:54,s:44},{x:38,y:51,s:54},
+    // Extra mountains for expanded map
+    {x:88,y:15,s:58},{x:92,y:10,s:45},{x:8,y:72,s:50},
+    {x:12,y:76,s:62},{x:70,y:65,s:48},{x:85,y:60,s:55},
+    {x:28,y:80,s:42},{x:52,y:72,s:50},{x:90,y:45,s:40},
+    {x:5,y:55,s:45},{x:65,y:78,s:52},{x:45,y:85,s:46},
   ];
   mountains.forEach(m=>{
     const wrap=addDiv('map-mountain','left:'+m.x+'%;top:'+m.y+'%;width:'+m.s+'px;height:'+(m.s*0.85)+'px');
@@ -5681,6 +5702,14 @@ function addMapDecorations(cw,ch){
     {x:40,y:35,count:7,spread:4},{x:75,y:40,count:8,spread:5},
     {x:12,y:65,count:7,spread:4},{x:55,y:65,count:9,spread:6},
     {x:85,y:55,count:6,spread:4},{x:30,y:70,count:8,spread:5},
+    // Extra forests for expanded map
+    {x:90,y:25,count:8,spread:5},{x:8,y:80,count:10,spread:6},
+    {x:45,y:75,count:9,spread:5},{x:80,y:70,count:7,spread:4},
+    {x:25,y:85,count:8,spread:5},{x:65,y:80,count:10,spread:6},
+    {x:50,y:48,count:6,spread:4},{x:35,y:58,count:7,spread:5},
+    {x:88,y:42,count:5,spread:3},{x:6,y:42,count:6,spread:4},
+    {x:15,y:15,count:8,spread:5},{x:92,y:68,count:6,spread:4},
+    {x:72,y:82,count:7,spread:5},{x:42,y:88,count:6,spread:4},
   ];
   forests.forEach(f=>{
     for(let i=0;i<f.count;i++){
@@ -5729,6 +5758,15 @@ function addMapDecorations(cw,ch){
     'M16 58 Q20 65 25 70 Q28 72 30 70',
     'M30 70 Q40 72 50 68 Q60 65 65 60',
     'M65 60 Q70 65 75 70 Q77 73 78 75',
+    // Extra paths for expanded area
+    'M78 75 Q82 80 85 85 Q88 88 90 92',
+    'M30 70 Q28 78 25 82 Q20 88 18 92',
+    'M82 30 Q88 35 92 40 Q94 48 92 55',
+    'M16 58 Q12 65 10 72 Q8 78 6 85',
+    'M50 42 Q50 55 48 65 Q46 72 45 80',
+    'M88 18 Q92 22 95 28 Q96 35 94 40',
+    'M65 60 Q68 68 70 75 Q72 80 75 85',
+    'M12 20 Q8 15 6 10 Q5 6 4 4',
   ];
   pathRoutes.forEach(d=>{
     // Path line only — no white glow
@@ -5741,13 +5779,18 @@ function addMapDecorations(cw,ch){
     {x:35,y:38,w:8,h:5,r:'45% 55% 50% 50%'},
     {x:72,y:58,w:5,h:7,r:'50% 45% 55% 50%'},
     {x:18,y:48,w:4,h:4,r:'50%'},
+    // Extra water for expanded area
+    {x:82,y:72,w:6,h:4,r:'45% 55% 50% 45%'},
+    {x:10,y:82,w:5,h:5,r:'50%'},
+    {x:55,y:78,w:7,h:4,r:'48% 52% 50% 50%'},
+    {x:25,y:68,w:4,h:5,r:'50% 45% 55% 50%'},
   ];
   waters.forEach(w=>{
     addDiv('map-water','left:'+w.x+'%;top:'+w.y+'%;width:'+w.w+'%;height:'+w.h+'%;border-radius:'+w.r+';background:linear-gradient(135deg,rgba(58,140,199,0.85),rgba(100,181,246,0.8));box-shadow:inset 0 0 12px rgba(30,100,170,0.25),0 0 10px rgba(58,140,199,0.2);z-index:2');
   });
 
   // === SPARKLE PARTICLES (around special areas) ===
-  for(let i=0;i<20;i++){
+  for(let i=0;i<35;i++){
     const x=10+Math.random()*80;
     const y=10+Math.random()*75;
     addDiv('map-sparkle','left:'+x+'%;top:'+y+'%;animation-delay:'+(Math.random()*3)+'s;animation-duration:'+(2+Math.random()*2)+'s;background:rgba(255,255,'+Math.floor(150+Math.random()*105)+',0.8)');
