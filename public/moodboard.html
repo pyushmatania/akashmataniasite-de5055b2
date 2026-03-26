@@ -4028,6 +4028,7 @@ document.addEventListener('mouseup',()=>{iD=false;vp.style.cursor='grab';if(_dra
 
 // ===== STICKER DRAG + TAP DETECTION + TWO-FINGER ROTATION =====
 let as=null,sox,soy,hz=100,tapSX=0,tapSY=0,tapTime=0,didMove=false;
+let dragStartScrollLeft=0,dragStartScrollTop=0;
 let isRotating=false, rotStartAngle=0, stickerBaseAngle=0;
 let suppressStickerClickUntil=0;
 const DRAG_CLICK_GUARD_MS=900;
