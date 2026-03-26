@@ -5409,6 +5409,8 @@ function toggleMap(){
     mmExp=true;
     mapZoomScale=0.15;
     setMapZoomLabel();
+    // Force decoration rebuild on every open
+    _decsCW=-1;_decsCH=-1;
 
     mc.classList.remove('map-closing');
     mc.classList.add('expanded','map-opening');
