@@ -5825,7 +5825,7 @@ function scanStickers(){
     let emoji='';
     let border='';
     let radius='3px';
-    const cs=getComputedStyle(s);
+    // Avoid getComputedStyle — use known CSS values instead
     if(s.classList.contains('intro-card')){
       bg='linear-gradient(145deg,#fff,#f8f5ef)';radius='24px';border='2px solid rgba(201,169,110,0.2)';
     } else if(s.classList.contains('sticker-emoji')){
@@ -5833,7 +5833,7 @@ function scanStickers(){
       emoji=s.textContent.trim().substring(0,2);
       radius='0';
     } else if(s.classList.contains('sticker-postit')){
-      bg=cs.backgroundColor||'#FFF176';
+      bg=s.style.backgroundColor||'#FFF176';
       radius='3px';
     } else if(s.classList.contains('sticker-meme')){
       bg='#fff';
@@ -5856,7 +5856,7 @@ function scanStickers(){
       bg='#ddd';radius='50%';
     } else if(s.classList.contains('sticker-stamp')){
       bg='transparent';
-      border='3px solid '+(cs.color||'#999');
+      border='3px solid '+(s.style.color||s.style.borderColor||'#999');
       radius='6px';
     } else if(s.classList.contains('sticker-counter')){
       bg='#fff';radius='20px';border='2px solid #f0ece6';
@@ -5881,10 +5881,10 @@ function scanStickers(){
     } else if(s.classList.contains('sticker-project')){
       bg='#fff';radius='18px';border='2px solid #f0ece6';
     } else {
-      bg=cs.backgroundColor||'rgba(200,200,200,0.5)';
+      bg=s.style.backgroundColor||'rgba(200,200,200,0.5)';
     }
     stickerData.push({left,top,w,h,bg,emoji,cat,ref:s,border,radius});
-  });
+  }
 }
 
 function svgEl(tag,attrs){
