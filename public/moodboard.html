@@ -7458,6 +7458,204 @@ function meetingBingo(el,e){e.stopPropagation();playSfx('click');const word=bing
 const salaries=['Startup equity (worth TBD) 📊','Paid in experience 🎓','Paid in learnings 📚','Actual money (rare!) 💰','Paid in pizza on demo day 🍕','Stock options (cliff: ♾️)'];
 function salaryRoulette(el,e){e.stopPropagation();playSfx('spin');const r=el.querySelector('.meme-text');r.textContent='🎡 Spinning...';setTimeout(()=>{const pick=salaries[Math.floor(Math.random()*salaries.length)];r.textContent=pick;playSfx(pick.includes('money')?'kaching':'fail');spawnConfetti(e.clientX||0,e.clientY||0)},500)}
 
+// ===== SPIN WHEEL =====
+const wheelOptions=['AI App 🤖','SaaS 💼','Game 🎮','Web3 🌐','EdTech 🎓','FinTech 💰'];
+let wheelSpinning=false;
+function spinWheel(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();
+  if(wheelSpinning)return;
+  wheelSpinning=true;
+  playSfx('spin');
+  const svg=el.querySelector('.wheel-svg');
+  const result=el.querySelector('.wheel-result');
+  const deg=1800+Math.floor(Math.random()*1440);
+  svg.style.setProperty('--spin-deg',deg+'deg');
+  svg.classList.remove('spinning');
+  void svg.offsetWidth;
+  svg.classList.add('spinning');
+  result.textContent='🎡 Spinning...';
+  setTimeout(()=>{
+    const idx=Math.floor(Math.random()*wheelOptions.length);
+    result.textContent=wheelOptions[idx]+' — it is written!';
+    playSfx('win');
+    spawnConfetti(e.clientX||0,e.clientY||0);
+    wheelSpinning=false;
+    svg.classList.remove('spinning');
+    svg.style.transform='rotate('+(deg%360)+'deg)';
+  },3200);
+}
+
+// ===== QUIZ CARD =====
+function pickQuizOpt(optEl,e){
+  e.stopPropagation();e.preventDefault();
+  const card=optEl.closest('.sticker-quiz');
+  if(card.dataset.answered)return;
+  card.dataset.answered='1';
+  const correct=optEl.dataset.ans==='1';
+  const fb=card.querySelector('.quiz-feedback');
+  if(correct){
+    optEl.classList.add('correct');
+    fb.textContent='🎉 Correct! You know Akash well!';
+    playSfx('win');
+    spawnConfetti(e.clientX||0,e.clientY||0);
+  } else {
+    optEl.classList.add('wrong');
+    card.querySelector('.quiz-opt[data-ans="1"]').classList.add('correct');
+    fb.textContent='❌ Not quite — try the other quizzes!';
+    playSfx('fail');
+  }
+  setTimeout(()=>{
+    card.querySelectorAll('.quiz-opt').forEach(o=>{o.classList.remove('correct','wrong')});
+    fb.textContent='';
+    delete card.dataset.answered;
+  },3000);
+}
+
+// ===== SLOT MACHINE =====
+const slotSymbols=['🚀','💰','🔥','💎','⭐','🎯','🧠','🦄','📈','🎬'];
+const slotWins={'🚀🚀🚀':'UNICORN STATUS! 🦄','💰💰💰':'FUNDED! Series A! 💸','🔥🔥🔥':'VIRAL LAUNCH! 📈','💎💎💎':'DIAMOND HANDS! 💎','⭐⭐⭐':'PRODUCT HUNT #1! 🏆'};
+let slotsSpinning=false;
+function pullSlots(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();
+  if(slotsSpinning)return;
+  slotsSpinning=true;
+  playSfx('spin');
+  const reels=el.querySelectorAll('.slot-reel');
+  const result=el.querySelector('.slots-result');
+  result.textContent='🎰 Spinning...';
+  const picks=[];
+  reels.forEach((r,i)=>{
+    let count=0;
+    const interval=setInterval(()=>{
+      r.textContent=slotSymbols[Math.floor(Math.random()*slotSymbols.length)];
+      count++;
+      if(count>(10+i*5)){
+        clearInterval(interval);
+        const final=slotSymbols[Math.floor(Math.random()*slotSymbols.length)];
+        r.textContent=final;
+        picks.push(final);
+        if(picks.length===3){
+          const key=picks.join('');
+          if(slotWins[key]){
+            result.textContent=slotWins[key];
+            playSfx('bingo');
+            spawnConfetti(e.clientX||0,e.clientY||0);
+            setTimeout(()=>spawnConfetti(e.clientX||0,e.clientY||0),300);
+          } else if(picks[0]===picks[1]||picks[1]===picks[2]){
+            result.textContent='Close! 2/3 match 😅';
+            playSfx('click');
+          } else {
+            const msgs=['Pivot time! 🔄','Try again, founder! 💪','The market isn\'t ready 📊','Pre-seed vibes 🌱'];
+            result.textContent=msgs[Math.floor(Math.random()*msgs.length)];
+            playSfx('fail');
+          }
+          slotsSpinning=false;
+        }
+      }
+    },80);
+  });
+}
+
+// ===== MAGIC 8 BALL =====
+const eightBallAnswers=['Absolutely, ship it! 🚀','Ask your co-founder 🤷','The data says yes 📊','Pivot immediately 🔄','Not in this sprint 🏃','Mercury is in retrograde 🌙','Consult the roadmap 🗺️','Signs point to MVP 📱','Better ask the intern 😅','100% — trust the vision 💡','Debug first, decide later 🐛','Only if there\'s chai ☕'];
+function shake8Ball(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();
+  playSfx('pop');
+  const txt=el.querySelector('.ball-text');
+  txt.textContent='...';
+  el.style.transform='rotate(10deg)';
+  setTimeout(()=>{el.style.transform='rotate(-8deg)'},150);
+  setTimeout(()=>{
+    el.style.transform='';
+    txt.textContent=eightBallAnswers[Math.floor(Math.random()*eightBallAnswers.length)];
+    spawnConfetti(e.clientX||0,e.clientY||0);
+  },600);
+}
+
+// ===== TYPEWRITER =====
+const twThoughts=['Day 1: Started building. No clue what I\'m doing. Ship anyway.','Day 47: Users love it. Or hate it. Same feedback form.','Day 120: Pivoted for the 3rd time. This one feels right.','Day 200: First paying user! Celebrated with panipuri.','Day 365: The startup didn\'t die. That\'s the win.','Day 500: Team of 6 now. We argue about fonts daily.','Day 730: Revenue > costs. Is this... profit?','Day ∞: Still building. Always building. 🚀'];
+let twIdx=0;let twTyping=false;
+function typewriterNext(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();
+  if(twTyping)return;
+  twTyping=true;
+  playSfx('click');
+  const paper=el.querySelector('.tw-paper');
+  const text=twThoughts[twIdx%twThoughts.length];
+  twIdx++;
+  paper.textContent='';
+  let i=0;
+  const type=()=>{
+    if(i<text.length){
+      paper.textContent=text.slice(0,i+1);
+      i++;
+      setTimeout(type,30+Math.random()*40);
+    } else {
+      twTyping=false;
+      spawnConfetti(e.clientX||0,e.clientY||0);
+    }
+  };
+  type();
+}
+
+// ===== DICE ROLLER =====
+const diceFaces=['⚀','⚁','⚂','⚃','⚄','⚅'];
+const diceFates=['🚀 Funded! Your pitch deck was fire','📉 Market crashed. Pivot to AI.','🎯 Product-market fit achieved!','💀 Server went down on demo day','🦄 Unicorn valuation! $1B baby','🍕 Board meeting = pizza party','📊 KPIs are up 300%!','🐛 Critical bug found in prod','🎬 Your startup got a Netflix doc','☕ Nothing happened. Drink chai.'];
+function rollDice(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();
+  playSfx('spin');
+  const display=el.querySelector('.dice-display');
+  const result=el.querySelector('.dice-result');
+  display.style.transform='rotate(720deg) scale(1.3)';
+  let count=0;
+  const roll=setInterval(()=>{
+    display.textContent=diceFaces[Math.floor(Math.random()*6)];
+    count++;
+    if(count>12){
+      clearInterval(roll);
+      display.style.transform='';
+      display.textContent=diceFaces[Math.floor(Math.random()*6)];
+      result.textContent=diceFates[Math.floor(Math.random()*diceFates.length)];
+      playSfx('win');
+      spawnConfetti(e.clientX||0,e.clientY||0);
+    }
+  },100);
+}
+
+// ===== LOVE-O-METER =====
+const vibeResults=[
+  {pct:15,emoji:'😐',msg:'Needs more panipuri energy'},
+  {pct:35,emoji:'🙂',msg:'Warming up... keep scrolling'},
+  {pct:55,emoji:'😊',msg:'Good vibes detected!'},
+  {pct:75,emoji:'🤩',msg:'Major vibe alignment!'},
+  {pct:90,emoji:'💖',msg:'SOULMATE ENERGY! Hire Akash NOW'},
+  {pct:100,emoji:'🔥',msg:'OFF THE CHARTS! You ARE Akash'}
+];
+function loveMeter(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();
+  playSfx('pop');
+  const fill=el.querySelector('.lm-fill');
+  const emoji=el.querySelector('.lm-emoji');
+  const result=el.querySelector('.lm-result');
+  emoji.textContent='💫';
+  result.textContent='Calculating vibes...';
+  fill.style.width='0%';
+  let target=vibeResults[Math.floor(Math.random()*vibeResults.length)];
+  setTimeout(()=>{
+    fill.style.width=target.pct+'%';
+    emoji.textContent=target.emoji;
+    result.textContent=target.pct+'% — '+target.msg;
+    if(target.pct>=75){playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0)}
+    else playSfx('click');
+  },500);
+}
+
 // ===== BOARD ITEM STATS (for settings panel) =====
 function initBoardStats(){
   const stickers=document.querySelectorAll('#canvas > .sticker');
