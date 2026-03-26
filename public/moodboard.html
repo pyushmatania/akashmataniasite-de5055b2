@@ -3302,6 +3302,66 @@ const MOODBOARD_VIEW_HEIGHT=MOODBOARD_WORLD_HEIGHT*MOODBOARD_VIEW_SCALE;
 const sy=v=>v;
 const IS_LOW_POWER_DEVICE=(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent||''))||((typeof navigator.deviceMemory==='number')&&navigator.deviceMemory<=4);
 
+// ===== PERFORMANCE UTILITIES =====
+// Shared timer registry for cancellation on cleanup
+const _activeTimers=new Set();
+function safeTimeout(fn,ms){
+  const id=setTimeout(()=>{_activeTimers.delete(id);fn()},ms);
+  _activeTimers.add(id);
+  return id;
+}
+function cancelAllTimers(){_activeTimers.forEach(id=>clearTimeout(id));_activeTimers.clear()}
+
+// RAF-throttled function wrapper
+function rafThrottle(fn){
+  let id=null;
+  return function(...args){
+    if(id!==null)return;
+    id=requestAnimationFrame(()=>{id=null;fn.apply(this,args)});
+  };
+}
+
+// Debounce utility
+function debounce(fn,ms){
+  let t;return function(...a){clearTimeout(t);t=setTimeout(()=>fn.apply(this,a),ms)};
+}
+
+// Batch DOM append via DocumentFragment
+function batchAppend(parent,elements){
+  const frag=document.createDocumentFragment();
+  elements.forEach(el=>frag.appendChild(el));
+  parent.appendChild(frag);
+}
+
+// Confetti/splash cooldown to prevent rapid-fire DOM explosion
+let _lastSplashTime=0;
+const SPLASH_COOLDOWN=800;
+let _lastConfettiTime=0;
+const CONFETTI_COOLDOWN=200;
+
+// Cache for getBoundingClientRect during drag
+let _cachedCanvasRect=null;
+let _cachedCanvasRectTime=0;
+function getCachedCanvasRect(){
+  const now=performance.now();
+  if(!_cachedCanvasRect||now-_cachedCanvasRectTime>100){
+    _cachedCanvasRect=cv.getBoundingClientRect();
+    _cachedCanvasRectTime=now;
+  }
+  return _cachedCanvasRect;
+}
+
+// Walk animation timer tracking for cancellation
+let _walkFootstepTimers=[];
+function clearWalkTimers(){
+  _walkFootstepTimers.forEach(id=>clearTimeout(id));
+  _walkFootstepTimers=[];
+}
+
+// Shared AudioContext — reuse instead of creating new ones (prevents leaks)
+let _sharedAC_early=null;
+function getAC(){if(!_sharedAC_early||_sharedAC_early.state==='closed')_sharedAC_early=new(window.AudioContext||window.webkitAudioContext)();if(_sharedAC_early.state==='suspended')_sharedAC_early.resume();return _sharedAC_early}
+
 cv.style.width=MOODBOARD_WORLD_WIDTH+'px';
 cv.style.height=MOODBOARD_WORLD_HEIGHT+'px';
 document.documentElement.style.setProperty('--world-size',MOODBOARD_WORLD_WIDTH+'px');
