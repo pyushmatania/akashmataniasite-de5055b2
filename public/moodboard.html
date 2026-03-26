@@ -5867,8 +5867,8 @@ function drawMap(){
   let sc,offsetX,offsetY,canvasW,canvasH;
   
   if(mmExp){
-    // Expanded map — 200% bigger land space
-    const baseScale=Math.max(mw*8/contentW,0.28);
+    // Expanded map — doubled size
+    const baseScale=Math.max(mw*16/contentW,0.28);
     sc=baseScale*mapZoomScale;
     canvasW=contentW*sc;
     canvasH=contentH*sc;
