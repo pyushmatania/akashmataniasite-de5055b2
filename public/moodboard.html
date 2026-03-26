@@ -5366,11 +5366,17 @@ function toggleMap(){
     mmContainer.classList.add('map-opening');
     // Rebuild at full size
     ensureMapData(true);
-    mapZoomScale=2;
+    mapZoomScale=4;
     const zl=document.getElementById('mapZoomLevel');
     if(zl)zl.textContent=mapZoomScale+'×';
     drawMap();
     updMap();
+    // Scroll to center-left area where most stickers are
+    setTimeout(()=>{
+      const sc=drawMap._sc||0.1;
+      const targetX=4000*sc, targetY=5000*sc;
+      mmInner.scrollTo({left:targetX-mmInner.clientWidth/2,top:targetY-mmInner.clientHeight/2});
+    },100);
     // After animation, switch to expanded state
     setTimeout(()=>{
       mmContainer.classList.remove('map-opening');
