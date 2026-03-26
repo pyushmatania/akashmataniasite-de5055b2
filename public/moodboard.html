@@ -319,6 +319,25 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,0.4) 0%,transparent 70%);
   border-radius:50%;filter:blur(6px);z-index:0;
 }
+
+/* ===== NEON DECORATIVE ELEMENTS ===== */
+@keyframes neonArrowBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes neonStarSpin{0%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(1.15)}100%{transform:rotate(360deg) scale(1)}}
+@keyframes neonTubeGlow{0%,100%{opacity:0.7;filter:drop-shadow(0 0 6px var(--ntube,#fff))}50%{opacity:1;filter:drop-shadow(0 0 14px var(--ntube,#fff)) drop-shadow(0 0 30px var(--ntube,#fff))}}
+@keyframes neonDiamondFloat{0%,100%{transform:rotate(45deg) scale(1)}50%{transform:rotate(45deg) scale(1.2)}}
+@keyframes neonRingPulse{0%,100%{transform:scale(1);opacity:0.6}50%{transform:scale(1.15);opacity:1}}
+@keyframes neonZigzag{0%,100%{opacity:0.5}50%{opacity:1}}
+.neon-decor{position:absolute;pointer-events:none;z-index:8}
+.neon-decor-arrow{animation:neonArrowBounce 2s ease-in-out infinite}
+.neon-decor-arrow svg{filter:drop-shadow(0 0 8px var(--nd,#fff)) drop-shadow(0 0 20px var(--nd,#fff))}
+.neon-decor-star{animation:neonStarSpin 8s linear infinite}
+.neon-decor-star svg{filter:drop-shadow(0 0 10px var(--nd,#fff)) drop-shadow(0 0 25px var(--nd,#fff))}
+.neon-decor-tube{border-radius:20px;animation:neonTubeGlow 3s ease-in-out infinite}
+.neon-decor-diamond{animation:neonDiamondFloat 4s ease-in-out infinite}
+.neon-decor-diamond svg{filter:drop-shadow(0 0 8px var(--nd,#fff)) drop-shadow(0 0 18px var(--nd,#fff))}
+.neon-decor-ring{border:3px solid var(--nd,#fff);border-radius:50%;animation:neonRingPulse 3s ease-in-out infinite;box-shadow:0 0 8px var(--nd,#fff),0 0 20px var(--nd,#fff),inset 0 0 8px var(--nd,#fff)}
+.neon-decor-zigzag{animation:neonZigzag 2s ease-in-out infinite}
+.neon-decor-zigzag svg{filter:drop-shadow(0 0 6px var(--nd,#fff)) drop-shadow(0 0 15px var(--nd,#fff))}
 .sticker-fortune{background:linear-gradient(135deg,#FFE0B2,#FFB74D);border-radius:16px;padding:18px 22px;max-width:220px;box-shadow:0 3px 12px rgba(0,0,0,0.08);cursor:pointer}
 .sticker-fortune .f-icon{font-size:2rem;margin-bottom:6px}
 .sticker-fortune .f-text{font-family:var(--font-hand);font-size:1rem;color:#5D4037;line-height:1.4}
