@@ -6657,9 +6657,11 @@ function recenter(){
   const sc=drawMap._sc||0.05;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
   const mr=mmInner.getBoundingClientRect();
+  const cL=parseFloat(mapCanvas.style.left)||0;
   const cT=parseFloat(mapCanvas.style.top)||0;
   const centerWorld=getViewportCenterWorld();
-  const px=(centerWorld.x-ox)*sc;
+  const targetX=clampValue(centerWorld.x-1200,0,MOODBOARD_WORLD_WIDTH);
+  const px=(targetX-ox)*sc+cL;
   const py=(centerWorld.y-oy)*sc+cT;
   mmInner.scrollTo({left:px-mr.width/2,top:py-mr.height/2,behavior:'smooth'});
 }
