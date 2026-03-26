@@ -196,117 +196,128 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker-counter .c-count{font-family:var(--font-fun);font-weight:700;font-size:1.4rem;color:var(--text);min-width:30px}
 .sticker-counter .c-label{font-size:0.7rem;color:var(--text3)}
 
-/* ===== HOLLYWOOD MARQUEE SIGNPOST ===== */
-@keyframes bulbBlink{0%,100%{opacity:1;filter:brightness(1.2)}50%{opacity:0.4;filter:brightness(0.6)}}
-@keyframes bulbBlink2{0%,100%{opacity:0.4;filter:brightness(0.6)}50%{opacity:1;filter:brightness(1.2)}}
-@keyframes signGlow{0%,100%{text-shadow:0 0 8px rgba(255,255,255,0.6),0 0 20px currentColor,0 2px 0 rgba(0,0,0,0.4)}50%{text-shadow:0 0 14px rgba(255,255,255,0.9),0 0 35px currentColor,0 0 50px currentColor,0 2px 0 rgba(0,0,0,0.4)}}
-@keyframes spotlightPulse{0%,100%{opacity:0.5}50%{opacity:0.9}}
+/* ===== VEGAS NEON SIGNPOST ===== */
+@keyframes neonFlicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1;filter:brightness(1)}20%,24%,55%{opacity:0.6;filter:brightness(0.7)}}
+@keyframes neonPulse{0%,100%{filter:drop-shadow(0 0 8px var(--neon,#fff)) drop-shadow(0 0 20px var(--neon,#fff))}50%{filter:drop-shadow(0 0 14px var(--neon,#fff)) drop-shadow(0 0 35px var(--neon,#fff)) drop-shadow(0 0 50px var(--neon,#fff))}}
+@keyframes bulbChase{0%{opacity:1}25%{opacity:0.3}50%{opacity:1}75%{opacity:0.3}100%{opacity:1}}
+@keyframes spotlightSweep{0%,100%{opacity:0.3;transform:translateX(-50%) scaleX(0.8)}50%{opacity:0.7;transform:translateX(-50%) scaleX(1.2)}}
 .zone-signpost{
   display:flex;flex-direction:column;align-items:center;gap:0;
   z-index:100!important;position:absolute;cursor:default!important;
-  filter:drop-shadow(0 15px 30px rgba(0,0,0,0.4));
   transition:filter 0.3s,transform 0.3s;
 }
-.zone-signpost:hover{
-  filter:drop-shadow(0 20px 50px rgba(0,0,0,0.5));
-  transform:scale(1.04);
-}
-/* Spotlight beams from top */
-.signpost-spotlight{
-  position:absolute;top:-30px;width:200px;height:60px;
-  background:radial-gradient(ellipse at 50% 100%,rgba(255,255,200,0.25),transparent 70%);
-  animation:spotlightPulse 3s ease-in-out infinite;
+.zone-signpost:hover{transform:scale(1.03)}
+/* Neon glow aura behind whole sign */
+.neon-aura{
+  position:absolute;top:-40px;left:50%;transform:translateX(-50%);
+  width:350px;height:120px;
+  background:radial-gradient(ellipse at 50% 80%,var(--neon-glow,rgba(255,255,255,0.15)),transparent 65%);
   pointer-events:none;z-index:0;
+  animation:spotlightSweep 4s ease-in-out infinite;
 }
-/* The marquee board */
-.signpost-marquee{
+/* Main sign board - dark background like Vegas signs */
+.neon-board{
   position:relative;z-index:5;
-  font-family:var(--font-fun);font-weight:900;font-size:1.5rem;
-  color:#fff;padding:16px 36px;
-  border-radius:8px;letter-spacing:0.1em;white-space:nowrap;
-  border:4px solid rgba(255,255,255,0.5);
-  animation:signGlow 2.5s ease-in-out infinite;
+  background:#1a1a2e;
+  border:3px solid var(--neon,#fff);
+  border-radius:10px;
+  padding:22px 50px 22px 50px;
   box-shadow:
-    0 0 20px rgba(255,255,255,0.15),
-    0 8px 30px rgba(0,0,0,0.4),
-    inset 0 2px 0 rgba(255,255,255,0.3),
-    inset 0 -3px 8px rgba(0,0,0,0.2);
+    0 0 15px var(--neon,#fff),
+    0 0 30px var(--neon-dim,rgba(255,255,255,0.3)),
+    inset 0 0 15px rgba(0,0,0,0.5),
+    0 10px 40px rgba(0,0,0,0.5);
+  min-width:200px;text-align:center;
 }
-.signpost-marquee::before{
-  content:'';position:absolute;inset:0;border-radius:6px;pointer-events:none;
-  background:linear-gradient(180deg,rgba(255,255,255,0.2) 0%,transparent 40%,transparent 80%,rgba(0,0,0,0.1) 100%);
+/* Neon text */
+.neon-text{
+  font-family:var(--font-fun);font-weight:900;font-size:2rem;
+  color:var(--neon,#fff);letter-spacing:0.12em;white-space:nowrap;
+  text-shadow:
+    0 0 7px var(--neon,#fff),
+    0 0 20px var(--neon,#fff),
+    0 0 42px var(--neon,#fff),
+    0 0 80px var(--neon-dim,rgba(255,255,255,0.4));
+  animation:neonFlicker 4s ease-in-out infinite;
 }
-/* Bulb row container */
-.signpost-bulbs{
+.neon-icon{
+  font-size:2.2rem;display:block;margin-bottom:4px;
+  filter:drop-shadow(0 0 8px var(--neon,#fff));
+}
+/* Neon tube border lights — dots around the board */
+.neon-tube-row{
   position:absolute;z-index:6;pointer-events:none;
-  display:flex;gap:8px;
+  display:flex;gap:6px;
 }
-.signpost-bulbs.top{top:-6px;left:10px;right:10px;justify-content:space-around}
-.signpost-bulbs.bottom{bottom:-6px;left:10px;right:10px;justify-content:space-around}
-.signpost-bulbs.left-side{top:10px;bottom:10px;left:-6px;flex-direction:column;justify-content:space-around}
-.signpost-bulbs.right-side{top:10px;bottom:10px;right:-6px;flex-direction:column;justify-content:space-around}
-.bulb{
-  width:10px;height:10px;border-radius:50%;
-  background:radial-gradient(circle at 35% 35%,#fff,var(--bulb-color,#FFD700) 40%,var(--bulb-dark,#FFA000) 80%);
-  box-shadow:0 0 6px var(--bulb-color,#FFD700),0 0 12px var(--bulb-glow,rgba(255,215,0,0.5));
+.neon-tube-row.top{top:-5px;left:12px;right:12px;justify-content:space-around}
+.neon-tube-row.bottom{bottom:-5px;left:12px;right:12px;justify-content:space-around}
+.neon-tube-row.lft{top:12px;bottom:12px;left:-5px;flex-direction:column;justify-content:space-around}
+.neon-tube-row.rgt{top:12px;bottom:12px;right:-5px;flex-direction:column;justify-content:space-around}
+.neon-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--neon,#fff);
+  box-shadow:0 0 4px var(--neon,#fff),0 0 10px var(--neon,#fff),0 0 20px var(--neon-dim,rgba(255,255,255,0.3));
 }
-.bulb:nth-child(odd){animation:bulbBlink 1.2s ease-in-out infinite}
-.bulb:nth-child(even){animation:bulbBlink2 1.2s ease-in-out infinite}
-/* Walk of Fame star */
-@keyframes starShimmer{0%,100%{filter:drop-shadow(0 0 4px var(--star-color,#FFD700))}50%{filter:drop-shadow(0 0 12px var(--star-color,#FFD700)) drop-shadow(0 0 20px var(--star-glow,rgba(255,215,0,0.4)))}}
-.signpost-star{
-  position:absolute;bottom:-55px;left:50%;transform:translateX(-50%);
-  width:100px;height:100px;z-index:1;pointer-events:none;
-  animation:starShimmer 3s ease-in-out infinite;
+.neon-dot:nth-child(1){animation:bulbChase 1.5s ease-in-out 0s infinite}
+.neon-dot:nth-child(2){animation:bulbChase 1.5s ease-in-out 0.15s infinite}
+.neon-dot:nth-child(3){animation:bulbChase 1.5s ease-in-out 0.3s infinite}
+.neon-dot:nth-child(4){animation:bulbChase 1.5s ease-in-out 0.45s infinite}
+.neon-dot:nth-child(5){animation:bulbChase 1.5s ease-in-out 0.6s infinite}
+.neon-dot:nth-child(6){animation:bulbChase 1.5s ease-in-out 0.75s infinite}
+.neon-dot:nth-child(7){animation:bulbChase 1.5s ease-in-out 0.9s infinite}
+.neon-dot:nth-child(8){animation:bulbChase 1.5s ease-in-out 1.05s infinite}
+/* Decorative neon arrow under sign */
+.neon-arrow{
+  z-index:4;pointer-events:none;margin-top:-6px;
+  animation:neonPulse 2.5s ease-in-out infinite;
 }
-.signpost-star svg{width:100%;height:100%}
-/* Metal pole */
-.signpost-pole{
-  width:12px;height:220px;
-  background:linear-gradient(90deg,#888 0%,#ccc 30%,#fff 50%,#ccc 70%,#888 100%);
-  border-radius:3px;
-  box-shadow:2px 0 4px rgba(0,0,0,0.2),-2px 0 4px rgba(0,0,0,0.1);
-  position:relative;z-index:3;
+.neon-arrow svg{width:80px;height:35px}
+/* Metal support frame / crossbar */
+.neon-frame{
+  width:180px;height:8px;
+  background:linear-gradient(90deg,#555,#999,#bbb,#999,#555);
+  border-radius:2px;z-index:3;
+  box-shadow:0 2px 6px rgba(0,0,0,0.3);
+  margin-top:-2px;
 }
-/* Metal pole rivets */
-.signpost-pole::before{
-  content:'';position:absolute;top:30px;left:50%;transform:translateX(-50%);
-  width:6px;height:6px;border-radius:50%;
-  background:radial-gradient(circle at 35% 35%,#eee,#999);
-  box-shadow:0 40px 0 0 #bbb,0 80px 0 0 #bbb,0 120px 0 0 #bbb,0 160px 0 0 #bbb;
+/* Double metal poles */
+.neon-poles{
+  display:flex;gap:60px;z-index:3;margin-top:-2px;
 }
-/* Ornate pole cap */
-.signpost-pole-cap{
-  width:28px;height:28px;
-  background:radial-gradient(circle at 35% 30%,#FFD700,#FFA000 50%,#B8860B);
-  border-radius:50%;z-index:6;
-  border:2px solid rgba(255,255,255,0.4);
-  box-shadow:0 0 10px rgba(255,215,0,0.5),0 3px 8px rgba(0,0,0,0.3),inset 0 2px 4px rgba(255,255,255,0.5);
-  margin-bottom:-4px;
+.neon-pole{
+  width:8px;height:300px;
+  background:linear-gradient(90deg,#666 0%,#aaa 25%,#ddd 50%,#aaa 75%,#666 100%);
+  border-radius:2px;
+  box-shadow:2px 0 4px rgba(0,0,0,0.15),-1px 0 3px rgba(0,0,0,0.1);
+  position:relative;
 }
-/* Pole base — concrete/metal footing */
-.signpost-pole-base{
-  width:50px;height:18px;
-  background:linear-gradient(180deg,#999,#666);
-  border-radius:4px 4px 6px 6px;
-  margin-top:-2px;z-index:3;
+.neon-pole::after{
+  content:'';position:absolute;top:40px;left:50%;transform:translateX(-50%);
+  width:5px;height:5px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#eee,#888);
+  box-shadow:0 50px 0 0 #aaa,0 100px 0 0 #aaa,0 150px 0 0 #aaa,0 200px 0 0 #aaa;
+}
+/* Pole base plate */
+.neon-base{
+  width:120px;height:14px;
+  background:linear-gradient(180deg,#888,#555);
+  border-radius:3px 3px 5px 5px;z-index:3;
   box-shadow:0 4px 12px rgba(0,0,0,0.3);
-  border:1px solid rgba(255,255,255,0.15);
+  margin-top:-2px;
 }
-/* Ground glow from lights */
-.signpost-ground-glow{
+/* Ground neon reflection */
+.neon-ground-glow{
+  position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
+  width:250px;height:40px;
+  background:radial-gradient(ellipse at 50% 50%,var(--neon-glow,rgba(255,255,255,0.2)),transparent 70%);
+  border-radius:50%;filter:blur(8px);z-index:0;pointer-events:none;
+  animation:neonPulse 3s ease-in-out infinite;
+}
+.neon-ground-shadow{
   position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);
-  width:180px;height:30px;
-  background:radial-gradient(ellipse at 50% 50%,rgba(255,215,0,0.2),transparent 70%);
-  border-radius:50%;filter:blur(6px);z-index:0;pointer-events:none;
-  animation:spotlightPulse 3s ease-in-out infinite;
-}
-/* Ground shadow */
-.signpost-ground{
-  position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);
-  width:120px;height:20px;
-  background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,0.35) 0%,transparent 70%);
-  border-radius:50%;filter:blur(5px);z-index:0;
+  width:160px;height:24px;
+  background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,0.4) 0%,transparent 70%);
+  border-radius:50%;filter:blur(6px);z-index:0;
 }
 .sticker-fortune{background:linear-gradient(135deg,#FFE0B2,#FFB74D);border-radius:16px;padding:18px 22px;max-width:220px;box-shadow:0 3px 12px rgba(0,0,0,0.08);cursor:pointer}
 .sticker-fortune .f-icon{font-size:2rem;margin-bottom:6px}
@@ -2097,94 +2108,91 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="meme-sub">Salary Roulette</div>
 </div>
 
-<!-- ===== ZONE SIGNPOSTS ON MOODBOARD (Hollywood Marquee) ===== -->
-<div class="sticker zone-signpost" style="left:3100px;top:2800px;--bulb-color:#4CAF50;--bulb-dark:#2E7D32;--bulb-glow:rgba(76,175,80,0.5);--star-color:#4CAF50;--star-glow:rgba(76,175,80,0.4)">
-  <div class="signpost-spotlight"></div>
-  <div class="signpost-pole-cap"></div>
+<!-- ===== ZONE SIGNPOSTS — Vegas Neon Style ===== -->
+<div class="sticker zone-signpost" style="left:3100px;top:2600px;--neon:#4CAF50;--neon-dim:rgba(76,175,80,0.4);--neon-glow:rgba(76,175,80,0.25)">
+  <div class="neon-aura"></div>
   <div style="position:relative">
-    <div class="signpost-bulbs top"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-bulbs bottom"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-bulbs left-side"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-bulbs right-side"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-marquee" style="background:linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)">📸 ORIGIN</div>
+    <div class="neon-tube-row top"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-tube-row bottom"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-tube-row lft"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-tube-row rgt"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-board"><span class="neon-icon">📸</span><span class="neon-text">ORIGIN</span></div>
   </div>
-  <div class="signpost-pole"></div>
-  <div class="signpost-pole-base"></div>
-  <div class="signpost-star"><svg viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="none" stroke="#4CAF50" stroke-width="3"/><polygon points="50,18 57,37 78,37 62,49 68,70 50,57 32,70 38,49 22,37 43,37" fill="#4CAF5030"/><text x="50" y="56" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8" font-weight="900" fill="#4CAF50">ORIGIN</text></svg></div>
-  <div class="signpost-ground-glow" style="background:radial-gradient(ellipse at 50% 50%,rgba(76,175,80,0.25),transparent 70%)"></div>
-  <div class="signpost-ground"></div>
+  <div class="neon-arrow"><svg viewBox="0 0 80 35"><path d="M10,5 L40,30 L70,5" fill="none" stroke="#4CAF50" stroke-width="3" stroke-linecap="round"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></path></svg></div>
+  <div class="neon-frame"></div>
+  <div class="neon-poles"><div class="neon-pole"></div><div class="neon-pole"></div></div>
+  <div class="neon-base"></div>
+  <div class="neon-ground-glow"></div>
+  <div class="neon-ground-shadow"></div>
 </div>
 
-<div class="sticker zone-signpost" style="left:10650px;top:2800px;--bulb-color:#E53935;--bulb-dark:#B71C1C;--bulb-glow:rgba(229,57,53,0.5);--star-color:#E53935;--star-glow:rgba(229,57,53,0.4)">
-  <div class="signpost-spotlight"></div>
-  <div class="signpost-pole-cap"></div>
+<div class="sticker zone-signpost" style="left:10650px;top:2600px;--neon:#E53935;--neon-dim:rgba(229,57,53,0.4);--neon-glow:rgba(229,57,53,0.25)">
+  <div class="neon-aura"></div>
   <div style="position:relative">
-    <div class="signpost-bulbs top"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-bulbs bottom"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-bulbs left-side"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-bulbs right-side"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-marquee" style="background:linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)">🎯 WORK</div>
+    <div class="neon-tube-row top"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-tube-row bottom"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-tube-row lft"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-tube-row rgt"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-board"><span class="neon-icon">🎯</span><span class="neon-text">WORK</span></div>
   </div>
-  <div class="signpost-pole"></div>
-  <div class="signpost-pole-base"></div>
-  <div class="signpost-star"><svg viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="none" stroke="#E53935" stroke-width="3"/><polygon points="50,18 57,37 78,37 62,49 68,70 50,57 32,70 38,49 22,37 43,37" fill="#E5393530"/><text x="50" y="56" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8" font-weight="900" fill="#E53935">WORK</text></svg></div>
-  <div class="signpost-ground-glow" style="background:radial-gradient(ellipse at 50% 50%,rgba(229,57,53,0.25),transparent 70%)"></div>
-  <div class="signpost-ground"></div>
+  <div class="neon-arrow"><svg viewBox="0 0 80 35"><path d="M10,5 L40,30 L70,5" fill="none" stroke="#E53935" stroke-width="3" stroke-linecap="round"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></path></svg></div>
+  <div class="neon-frame"></div>
+  <div class="neon-poles"><div class="neon-pole"></div><div class="neon-pole"></div></div>
+  <div class="neon-base"></div>
+  <div class="neon-ground-glow"></div>
+  <div class="neon-ground-shadow"></div>
 </div>
 
-<div class="sticker zone-signpost" style="left:3000px;top:7800px;--bulb-color:#42A5F5;--bulb-dark:#1565C0;--bulb-glow:rgba(66,165,245,0.5);--star-color:#42A5F5;--star-glow:rgba(66,165,245,0.4)">
-  <div class="signpost-spotlight"></div>
-  <div class="signpost-pole-cap"></div>
+<div class="sticker zone-signpost" style="left:3000px;top:7600px;--neon:#42A5F5;--neon-dim:rgba(66,165,245,0.4);--neon-glow:rgba(66,165,245,0.25)">
+  <div class="neon-aura"></div>
   <div style="position:relative">
-    <div class="signpost-bulbs top"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-bulbs bottom"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-bulbs left-side"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-bulbs right-side"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-marquee" style="background:linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)">🚀 PORTFOLIO</div>
+    <div class="neon-tube-row top"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-tube-row bottom"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-tube-row lft"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-tube-row rgt"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-board"><span class="neon-icon">🚀</span><span class="neon-text">PORTFOLIO</span></div>
   </div>
-  <div class="signpost-pole"></div>
-  <div class="signpost-pole-base"></div>
-  <div class="signpost-star"><svg viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="none" stroke="#42A5F5" stroke-width="3"/><polygon points="50,18 57,37 78,37 62,49 68,70 50,57 32,70 38,49 22,37 43,37" fill="#42A5F530"/><text x="50" y="56" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="7" font-weight="900" fill="#42A5F5">PORTFOLIO</text></svg></div>
-  <div class="signpost-ground-glow" style="background:radial-gradient(ellipse at 50% 50%,rgba(66,165,245,0.25),transparent 70%)"></div>
-  <div class="signpost-ground"></div>
+  <div class="neon-arrow"><svg viewBox="0 0 80 35"><path d="M10,5 L40,30 L70,5" fill="none" stroke="#42A5F5" stroke-width="3" stroke-linecap="round"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></path></svg></div>
+  <div class="neon-frame"></div>
+  <div class="neon-poles"><div class="neon-pole"></div><div class="neon-pole"></div></div>
+  <div class="neon-base"></div>
+  <div class="neon-ground-glow"></div>
+  <div class="neon-ground-shadow"></div>
 </div>
 
-<div class="sticker zone-signpost" style="left:3350px;top:12000px;--bulb-color:#FF9800;--bulb-dark:#EF6C00;--bulb-glow:rgba(255,152,0,0.5);--star-color:#FF9800;--star-glow:rgba(255,152,0,0.4)">
-  <div class="signpost-spotlight"></div>
-  <div class="signpost-pole-cap"></div>
+<div class="sticker zone-signpost" style="left:3350px;top:11800px;--neon:#FF9800;--neon-dim:rgba(255,152,0,0.4);--neon-glow:rgba(255,152,0,0.25)">
+  <div class="neon-aura"></div>
   <div style="position:relative">
-    <div class="signpost-bulbs top"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-bulbs bottom"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-bulbs left-side"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-bulbs right-side"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-marquee" style="background:linear-gradient(135deg,#E65100,#FF9800,#EF6C00)">🎮 HOBBY</div>
+    <div class="neon-tube-row top"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-tube-row bottom"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-tube-row lft"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-tube-row rgt"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-board"><span class="neon-icon">🎮</span><span class="neon-text">HOBBY</span></div>
   </div>
-  <div class="signpost-pole"></div>
-  <div class="signpost-pole-base"></div>
-  <div class="signpost-star"><svg viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="none" stroke="#FF9800" stroke-width="3"/><polygon points="50,18 57,37 78,37 62,49 68,70 50,57 32,70 38,49 22,37 43,37" fill="#FF980030"/><text x="50" y="56" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8" font-weight="900" fill="#FF9800">HOBBY</text></svg></div>
-  <div class="signpost-ground-glow" style="background:radial-gradient(ellipse at 50% 50%,rgba(255,152,0,0.25),transparent 70%)"></div>
-  <div class="signpost-ground"></div>
+  <div class="neon-arrow"><svg viewBox="0 0 80 35"><path d="M10,5 L40,30 L70,5" fill="none" stroke="#FF9800" stroke-width="3" stroke-linecap="round"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></path></svg></div>
+  <div class="neon-frame"></div>
+  <div class="neon-poles"><div class="neon-pole"></div><div class="neon-pole"></div></div>
+  <div class="neon-base"></div>
+  <div class="neon-ground-glow"></div>
+  <div class="neon-ground-shadow"></div>
 </div>
 
-<div class="sticker zone-signpost" style="left:10650px;top:10000px;--bulb-color:#AB47BC;--bulb-dark:#6A1B9A;--bulb-glow:rgba(171,71,188,0.5);--star-color:#AB47BC;--star-glow:rgba(171,71,188,0.4)">
-  <div class="signpost-spotlight"></div>
-  <div class="signpost-pole-cap"></div>
+<div class="sticker zone-signpost" style="left:10650px;top:9800px;--neon:#AB47BC;--neon-dim:rgba(171,71,188,0.4);--neon-glow:rgba(171,71,188,0.25)">
+  <div class="neon-aura"></div>
   <div style="position:relative">
-    <div class="signpost-bulbs top"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-bulbs bottom"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-bulbs left-side"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-bulbs right-side"><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div></div>
-    <div class="signpost-marquee" style="background:linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)">😂 FUN</div>
+    <div class="neon-tube-row top"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-tube-row bottom"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-tube-row lft"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-tube-row rgt"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
+    <div class="neon-board"><span class="neon-icon">😂</span><span class="neon-text">FUN</span></div>
   </div>
-  <div class="signpost-pole"></div>
-  <div class="signpost-pole-base"></div>
-  <div class="signpost-star"><svg viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="none" stroke="#AB47BC" stroke-width="3"/><polygon points="50,18 57,37 78,37 62,49 68,70 50,57 32,70 38,49 22,37 43,37" fill="#AB47BC30"/><text x="50" y="56" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8" font-weight="900" fill="#AB47BC">FUN</text></svg></div>
-  <div class="signpost-ground-glow" style="background:radial-gradient(ellipse at 50% 50%,rgba(171,71,188,0.25),transparent 70%)"></div>
-  <div class="signpost-ground"></div>
+  <div class="neon-arrow"><svg viewBox="0 0 80 35"><path d="M10,5 L40,30 L70,5" fill="none" stroke="#AB47BC" stroke-width="3" stroke-linecap="round"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></path></svg></div>
+  <div class="neon-frame"></div>
+  <div class="neon-poles"><div class="neon-pole"></div><div class="neon-pole"></div></div>
+  <div class="neon-base"></div>
+  <div class="neon-ground-glow"></div>
+  <div class="neon-ground-shadow"></div>
 </div>
-
-
-<!-- ===== HUB: INTRO — CENTER OF CANVAS ===== -->
 <!-- ===== HUB: INTRO — CENTER OF CANVAS ===== -->
 <div class="sticker intro-card" data-type="photo" data-zone="hub" style="left:6770px;top:6550px">
   <div class="intro-photo-wrap">
@@ -5689,18 +5697,28 @@ function addMapDecorations(cw, ch){
    addDiv('map-zone-tint','left:2%;top:74%;width:45%;height:24%;border-radius:30%;background:radial-gradient(ellipse,rgba(255,152,0,0.32),transparent 65%);z-index:0;filter:blur(2px)');
    addDiv('map-zone-tint','left:55%;top:46%;width:43%;height:52%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.28),transparent 65%);z-index:0;filter:blur(2px)');
 
-   // === ZONE BORDER LINES — colorful glowing outlines for each area ===
-   const zoneBorders=[
-     {x:2,y:3,w:42,h:37,color:'#4CAF50',label:'📸 Origin'},
-     {x:55,y:3,w:43,h:37,color:'#E53935',label:'🎯 Work'},
-     {x:2,y:44,w:40,h:26,color:'#42A5F5',label:'🚀 Portfolio'},
-     {x:2,y:74,w:45,h:24,color:'#FF9800',label:'🎮 Hobby'},
-     {x:55,y:46,w:43,h:52,color:'#AB47BC',label:'😂 Fun'}
+   // === ZONE BORDER LINES — organic wavy dotted SVG paths ===
+   const zoneBorderPaths=[
+     {d:'M 2,40 C 10,38 20,43 30,39 C 40,35 50,42 60,40 C 70,38 80,43 90,39 C 95,37 98,40 100,40',color:'#4CAF50'},
+     {d:'M 44,0 C 42,8 46,16 43,24 C 40,32 46,36 44,40',color:'#4CAF50'},
+     {d:'M 0,70 C 8,68 16,73 24,69 C 32,65 40,72 45,70',color:'#42A5F5'},
+     {d:'M 45,40 C 43,48 47,56 44,64 C 41,72 46,80 44,88 C 42,94 46,98 45,100',color:'#FF9800'},
    ];
-   zoneBorders.forEach(zb=>{
-     addDiv('map-zone-border','left:'+zb.x+'%;top:'+zb.y+'%;width:'+zb.w+'%;height:'+zb.h+'%;border-radius:18px;border:2.5px solid '+zb.color+';box-shadow:0 0 14px '+zb.color+'80,inset 0 0 10px '+zb.color+'30;z-index:1;opacity:0.75');
-     const lbl=addDiv('map-zone-label','left:'+(zb.x+1)+'%;top:'+(zb.y+0.8)+'%;font-family:Arial Black,sans-serif;font-size:'+(!IS_MOBILE_MAP?'10px':'7px')+';font-weight:900;color:'+zb.color+';text-transform:uppercase;letter-spacing:1px;text-shadow:0 0 8px '+zb.color+'90,0 1px 3px rgba(0,0,0,0.4);z-index:2;white-space:nowrap;padding:2px 6px;background:rgba(0,0,0,0.25);border-radius:4px');
-     lbl.textContent=zb.label;
+   zoneBorderPaths.forEach(bp=>{
+     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+     svg.setAttribute('viewBox','0 0 100 100');
+     svg.setAttribute('preserveAspectRatio','none');
+     svg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:visible';
+     const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+     path.setAttribute('d',bp.d);
+     path.setAttribute('fill','none');
+     path.setAttribute('stroke',bp.color);
+     path.setAttribute('stroke-width','0.4');
+     path.setAttribute('stroke-dasharray','1.5 1');
+     path.setAttribute('stroke-linecap','round');
+     path.setAttribute('opacity','0.5');
+     svg.appendChild(path);
+     layer.appendChild(svg);
    });
 
   // === BEACHES ===
@@ -6111,47 +6129,54 @@ function addMapDecorations(cw, ch){
     wrap.appendChild(svg);
   });
 
-  // === IMMERSIVE AREA SIGNPOSTS — tall poles, depth, ground shadows ===
-  const areaNames=[
-    {x:22,y:8,t:'Origin',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)',glow:'rgba(76,175,80,0.5)'},
-    {x:76,y:8,t:'Work',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)',glow:'rgba(229,57,53,0.5)'},
-    {x:22,y:48,t:'Portfolio',icon:'🚀',bg:'linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)',glow:'rgba(66,165,245,0.5)'},
-    {x:22,y:78,t:'Hobby',icon:'🎮',bg:'linear-gradient(135deg,#E65100,#FF9800,#EF6C00)',glow:'rgba(255,152,0,0.5)'},
-    {x:76,y:50,t:'Fun',icon:'😂',bg:'linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)',glow:'rgba(171,71,188,0.5)'},
+  // === NEON AREA SIGNPOSTS on big map ===
+  const neonSigns=[
+    {x:22,y:20,t:'ORIGIN',icon:'📸',color:'#4CAF50'},
+    {x:76,y:20,t:'WORK',icon:'🎯',color:'#E53935'},
+    {x:22,y:57,t:'PORTFOLIO',icon:'🚀',color:'#42A5F5'},
+    {x:22,y:86,t:'HOBBY',icon:'🎮',color:'#FF9800'},
+    {x:76,y:72,t:'FUN',icon:'😂',color:'#AB47BC'},
   ];
-  areaNames.forEach(z=>{
+  neonSigns.forEach(z=>{
     const wrap=document.createElement('div');
-    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;z-index:5;pointer-events:none;gap:0;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3))';
-    const signRow=document.createElement('div');
-    signRow.style.cssText='display:flex;align-items:stretch;gap:0';
-    const fontSize=Math.max(8,cw*0.009);
-    const pillarW=Math.max(4,cw*0.003);
-    const pillarH=Math.max(30,cw*0.025);
-    const capS=Math.max(6,pillarW*1.5);
-    const baseW=Math.max(7,pillarW*1.6);
-    const mkPillar=()=>{
-      const p=document.createElement('div');
-      p.style.cssText='display:flex;flex-direction:column;align-items:center;flex-shrink:0';
-      const cap=document.createElement('div');
-      cap.style.cssText='width:'+capS+'px;height:'+capS+'px;border-radius:50%;background:radial-gradient(ellipse at 35% 30%,#D4B55A,#A0822C 60%,#7A5C10);border:1px solid rgba(0,0,0,0.1);margin-bottom:-1px;box-shadow:inset 0 1px 2px rgba(255,255,255,0.3),0 1px 3px rgba(0,0,0,0.2)';
-      const shaft=document.createElement('div');
-      shaft.style.cssText='width:'+pillarW+'px;height:'+pillarH+'px;background:linear-gradient(90deg,#8B6914,#A0822C 25%,#C4A44A 50%,#A0822C 75%,#8B6914);border-radius:1px;box-shadow:1px 0 0 rgba(0,0,0,0.08),0 3px 6px rgba(0,0,0,0.15)';
-      const base=document.createElement('div');
-      base.style.cssText='width:'+baseW+'px;height:'+(pillarW*0.8)+'px;background:linear-gradient(180deg,#8B6914,#6B4E0C);border-radius:0 0 2px 2px;margin-top:-1px;box-shadow:0 2px 4px rgba(0,0,0,0.2)';
-      p.appendChild(cap);p.appendChild(shaft);p.appendChild(base);
-      return p;
-    };
-    signRow.appendChild(mkPillar());
+    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;z-index:8;pointer-events:none';
+    const fontSize=Math.max(9,cw*0.01);
+    // Neon board
     const board=document.createElement('div');
-    board.textContent=z.icon+' '+z.t.toUpperCase();
-    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:800;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(4,fontSize*0.5)+'px '+Math.max(10,fontSize*0.9)+'px;border-radius:'+Math.max(3,fontSize*0.25)+'px;white-space:nowrap;letter-spacing:0.08em;background:'+z.bg+';border:'+Math.max(1.5,fontSize*0.1)+'px solid rgba(255,255,255,0.35);border-bottom:'+Math.max(2,fontSize*0.14)+'px solid rgba(0,0,0,0.2);box-shadow:0 4px 16px '+z.glow+',inset 0 2px 0 rgba(255,255,255,0.25),inset 0 -3px 6px rgba(0,0,0,0.12);text-shadow:0 1px 0 rgba(0,0,0,0.3);margin:0 -2px;align-self:center';
-    signRow.appendChild(board);
-    signRow.appendChild(mkPillar());
-    wrap.appendChild(signRow);
-    const shadow=document.createElement('div');
-    shadow.style.cssText='position:absolute;bottom:-'+(capS*0.5)+'px;left:50%;transform:translateX(-50%);width:90%;height:'+(capS*0.8)+'px;background:radial-gradient(ellipse at 50% 40%,rgba(0,0,0,0.25) 0%,transparent 70%);border-radius:50%;filter:blur(3px)';
-    wrap.appendChild(shadow);
+    board.style.cssText='background:#1a1a2e;border:1.5px solid '+z.color+';border-radius:4px;padding:'+Math.max(3,fontSize*0.4)+'px '+Math.max(8,fontSize*0.8)+'px;text-align:center;box-shadow:0 0 8px '+z.color+'80,0 0 16px '+z.color+'40,inset 0 0 6px rgba(0,0,0,0.5),0 4px 12px rgba(0,0,0,0.4)';
+    const txt=document.createElement('div');
+    txt.textContent=z.icon+' '+z.t;
+    txt.style.cssText='font-family:Fredoka,Arial Black,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:'+z.color+';letter-spacing:0.1em;white-space:nowrap;text-shadow:0 0 4px '+z.color+',0 0 10px '+z.color+',0 0 20px '+z.color+'80';
+    board.appendChild(txt);
+    // Neon dots row
+    const dots=document.createElement('div');
+    dots.style.cssText='display:flex;gap:3px;justify-content:center;margin-bottom:2px';
+    for(let i=0;i<6;i++){
+      const d=document.createElement('div');
+      d.style.cssText='width:2.5px;height:2.5px;border-radius:50%;background:'+z.color+';box-shadow:0 0 3px '+z.color+';animation:bulbChase 1.5s ease-in-out '+(i*0.2)+'s infinite';
+      dots.appendChild(d);
+    }
+    // Poles
+    const poles=document.createElement('div');
+    poles.style.cssText='display:flex;gap:'+Math.max(12,fontSize*1.2)+'px;margin-top:-1px';
+    for(let i=0;i<2;i++){
+      const p=document.createElement('div');
+      p.style.cssText='width:2px;height:'+Math.max(16,cw*0.015)+'px;background:linear-gradient(90deg,#666,#bbb,#666);border-radius:1px;box-shadow:1px 0 2px rgba(0,0,0,0.15)';
+      poles.appendChild(p);
+    }
+    // Base
+    const base=document.createElement('div');
+    base.style.cssText='width:'+Math.max(14,fontSize*1.4)+'px;height:3px;background:linear-gradient(180deg,#888,#555);border-radius:1px;margin-top:-1px';
+    // Glow
+    const glow=document.createElement('div');
+    glow.style.cssText='width:'+Math.max(20,fontSize*2)+'px;height:5px;background:radial-gradient(ellipse,'+z.color+'40,transparent 70%);border-radius:50%;filter:blur(2px);margin-top:1px';
+    wrap.appendChild(dots);
+    wrap.appendChild(board);
+    wrap.appendChild(poles);
+    wrap.appendChild(base);
+    wrap.appendChild(glow);
     layer.appendChild(wrap);
+  });
   });
 
   // === GROUND-PAINTED ZONE NAMES (painted on the land) ===
@@ -6169,28 +6194,33 @@ function addMapDecorations(cw, ch){
     layer.appendChild(el);
   });
 
-  // === ZONE BOUNDARY DASHED LINES ===
-  const zoneBoundaryLines=[
-    // Horizontal split at y=40% (world y~5600) — Origin/Work top vs Portfolio/Hub/Fun below
-    {x1:0,y1:40,x2:100,y2:40,color:'rgba(76,175,80,0.4)'},
-    // Vertical split at x=44% (world x~6200) — left zones vs right zones (top half)
-    {x1:44,y1:0,x2:44,y2:40,color:'rgba(76,175,80,0.35)'},
-    // Horizontal split at y=70% (world y~9800) — Portfolio vs Hobby
-    {x1:0,y1:70,x2:45,y2:70,color:'rgba(66,165,245,0.35)'},
-    // Vertical split at x=45% (bottom half) — Hobby/Portfolio vs Fun
-    {x1:45,y1:40,x2:45,y2:100,color:'rgba(255,152,0,0.3)'},
+  // === ZONE BOUNDARY — organic wavy dotted SVG paths ===
+  const wavySvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  wavySvg.setAttribute('viewBox','0 0 100 100');
+  wavySvg.setAttribute('preserveAspectRatio','none');
+  wavySvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:visible';
+  const wavyPaths=[
+    // Horizontal wavy: Origin/Work top vs lower zones
+    {d:'M 0,40 C 6,37 12,43 18,39 C 24,35 30,42 36,40 C 42,38 48,43 54,39 C 60,36 66,42 72,40 C 78,38 84,43 90,39 C 96,37 98,41 100,40',color:'#4CAF50',w:'0.35'},
+    // Vertical wavy: left vs right (top)
+    {d:'M 44,0 C 42,5 46,10 43,15 C 40,20 47,25 44,30 C 41,35 46,38 44,40',color:'#66BB6A',w:'0.35'},
+    // Horizontal wavy: Portfolio vs Hobby
+    {d:'M 0,70 C 5,68 10,73 15,69 C 20,66 25,72 30,70 C 35,68 40,73 45,70',color:'#42A5F5',w:'0.35'},
+    // Vertical wavy: left vs Fun (bottom)
+    {d:'M 45,40 C 43,46 47,52 44,58 C 41,64 47,70 44,76 C 41,82 47,88 44,94 C 42,97 46,99 45,100',color:'#FF9800',w:'0.35'},
   ];
-  zoneBoundaryLines.forEach(b=>{
-    const line=document.createElement('div');
-    const isH=(b.y1===b.y2);
-    const borderColor=b.color;
-    if(isH){
-      line.style.cssText='position:absolute;left:'+b.x1+'%;top:'+b.y1+'%;width:'+(b.x2-b.x1)+'%;height:0;border-top:2.5px dashed '+borderColor+';pointer-events:none;z-index:3';
-    } else {
-      line.style.cssText='position:absolute;left:'+b.x1+'%;top:'+b.y1+'%;width:0;height:'+(b.y2-b.y1)+'%;border-left:2.5px dashed '+borderColor+';pointer-events:none;z-index:3';
-    }
-    layer.appendChild(line);
+  wavyPaths.forEach(wp=>{
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',wp.d);
+    path.setAttribute('fill','none');
+    path.setAttribute('stroke',wp.color);
+    path.setAttribute('stroke-width',wp.w);
+    path.setAttribute('stroke-dasharray','1.2 0.8');
+    path.setAttribute('stroke-linecap','round');
+    path.setAttribute('opacity','0.55');
+    wavySvg.appendChild(path);
   });
+  layer.appendChild(wavySvg);
 
   // === POI MARKERS ===
   const pois=[
@@ -6374,31 +6404,32 @@ function drawMap(){
       const zy=((z.y1+z.y2)/2-offsetY)*sc;
       if(zx<-30||zx>canvasW+30||zy<-30||zy>canvasH+30)return;
       const zc=zoneColors[z.name]||'#4CAF50';
-      // Hollywood signpost on map
+      // Neon signpost on minimap
       const sign=document.createElement('div');
       sign.style.cssText='position:absolute;left:'+zx+'px;top:'+zy+'px;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none;z-index:9';
-      // Pole
-      const pole=document.createElement('div');
-      pole.style.cssText='width:3px;height:18px;background:linear-gradient(90deg,#888,#ddd,#888);border-radius:1px;margin-top:-1px';
-      // Board
+      // Neon board
       const board=document.createElement('div');
-      board.style.cssText='font-family:Arial Black,sans-serif;font-size:4.5px;font-weight:900;color:#fff;padding:2px 6px;border-radius:2px;white-space:nowrap;letter-spacing:0.3px;border:0.8px solid rgba(255,255,255,0.5);background:'+zc+';text-shadow:0 0 3px rgba(255,255,255,0.5),0 0 6px '+zc+';box-shadow:0 0 4px '+zc+'80,0 1px 3px rgba(0,0,0,0.4)';
+      board.style.cssText='font-family:Arial Black,sans-serif;font-size:4.5px;font-weight:900;color:'+zc+';padding:2px 5px;border-radius:2px;white-space:nowrap;letter-spacing:0.3px;border:0.6px solid '+zc+';background:#1a1a2e;text-shadow:0 0 3px '+zc+',0 0 6px '+zc+';box-shadow:0 0 4px '+zc+'60,0 1px 3px rgba(0,0,0,0.4)';
       board.textContent=z.icon+' '+z.name.toUpperCase();
-      // Bulb dots
-      const bulbs=document.createElement('div');
-      bulbs.style.cssText='display:flex;gap:2px;justify-content:center;margin-bottom:1px';
+      // Neon dots
+      const dots=document.createElement('div');
+      dots.style.cssText='display:flex;gap:1.5px;justify-content:center;margin-bottom:1px';
       for(let i=0;i<5;i++){
-        const b=document.createElement('div');
-        b.style.cssText='width:2px;height:2px;border-radius:50%;background:'+zc+';box-shadow:0 0 2px '+zc+';animation:bulbBlink '+(1+Math.random()*0.5)+'s ease-in-out infinite '+(i*0.2)+'s';
-        bulbs.appendChild(b);
+        const d=document.createElement('div');
+        d.style.cssText='width:1.5px;height:1.5px;border-radius:50%;background:'+zc+';box-shadow:0 0 2px '+zc;
+        dots.appendChild(d);
       }
-      // Base
-      const base=document.createElement('div');
-      base.style.cssText='width:10px;height:3px;background:linear-gradient(180deg,#999,#666);border-radius:1px;margin-top:-1px';
-      sign.appendChild(bulbs);
+      // Poles
+      const poles=document.createElement('div');
+      poles.style.cssText='display:flex;gap:8px;margin-top:-0.5px';
+      for(let i=0;i<2;i++){
+        const p=document.createElement('div');
+        p.style.cssText='width:1.5px;height:10px;background:linear-gradient(90deg,#666,#bbb,#666);border-radius:0.5px';
+        poles.appendChild(p);
+      }
+      sign.appendChild(dots);
       sign.appendChild(board);
-      sign.appendChild(pole);
-      sign.appendChild(base);
+      sign.appendChild(poles);
       mapCanvas.appendChild(sign);
     });
   }
