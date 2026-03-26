@@ -3643,12 +3643,6 @@ centerOnIntroCard();
 setTimeout(centerOnIntroCard,50);
 setTimeout(centerOnIntroCard,200);
 
-// SCROLL COUNTER
-vp.addEventListener('scroll',()=>{
-  const bounds=getViewportPanBounds();
-  const mx=bounds.maxX,my=bounds.maxY;
-  if(mx+my>0)document.getElementById('scrollCounter').textContent=Math.round(((vp.scrollLeft+vp.scrollTop)/(mx+my))*100);
-},{passive:true});
 
 // ===== BOUNDARY TOAST — sticker-style edge message =====
 const _boundaryMsgs={
