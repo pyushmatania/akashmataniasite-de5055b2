@@ -3956,8 +3956,11 @@ function centerOnIntroCard(){
   const introEl=document.querySelector('.intro-card');
   let cx=7000*SCALE, cy=7000*SCALE;
   if(introEl){
-    cx=(parseFloat(introEl.style.left)||6770)*SCALE + (introEl.offsetWidth||340)*SCALE/2;
-    cy=(parseFloat(introEl.style.top)||6550)*SCALE + (introEl.offsetHeight||400)*SCALE/2;
+    var iw=introEl.dataset.cw?parseFloat(introEl.dataset.cw):introEl.offsetWidth||340;
+    var ih=introEl.dataset.ch?parseFloat(introEl.dataset.ch):introEl.offsetHeight||400;
+    if(!introEl.dataset.cw){introEl.dataset.cw=iw;introEl.dataset.ch=ih;}
+    cx=(parseFloat(introEl.style.left)||6770)*SCALE + iw*SCALE/2;
+    cy=(parseFloat(introEl.style.top)||6550)*SCALE + ih*SCALE/2;
   }
   const targetLeft=Math.max(0,cx-vpW/2);
   const targetTop=Math.max(0,cy-vpH/2);
