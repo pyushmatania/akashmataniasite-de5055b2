@@ -5913,7 +5913,7 @@ function addMapDecorations(cw, ch){
     // Path line only — no white glow
     pathsSvg.appendChild(svgEl('path',{d:d,fill:'none',stroke:'rgba(180,160,120,0.4)','stroke-width':'0.8','stroke-dasharray':'2 1.5','stroke-linecap':'round'}));
   });
-  mapCanvas.appendChild(pathsSvg);
+  layer.appendChild(pathsSvg);
 
   // === WATER BODIES ===
   const waters=[
@@ -5995,7 +5995,7 @@ function addMapDecorations(cw, ch){
     const shadow=document.createElement('div');
     shadow.style.cssText='position:absolute;bottom:-'+(capS*0.5)+'px;left:50%;transform:translateX(-50%);width:90%;height:'+(capS*0.8)+'px;background:radial-gradient(ellipse at 50% 40%,rgba(0,0,0,0.25) 0%,transparent 70%);border-radius:50%;filter:blur(3px)';
     wrap.appendChild(shadow);
-    mapCanvas.appendChild(wrap);
+    layer.appendChild(wrap);
   });
 
   // === GROUND-PAINTED ZONE NAMES (painted on the land) ===
@@ -6010,7 +6010,7 @@ function addMapDecorations(cw, ch){
     const el=document.createElement('div');
     el.textContent=g.t;
     el.style.cssText='position:absolute;left:'+g.x+'%;top:'+g.y+'%;transform:translate(-50%,-50%) rotate(-8deg);font-family:Arial Black,Impact,sans-serif;font-size:'+Math.max(16,cw*g.size)+'px;font-weight:900;color:'+g.color+';letter-spacing:0.3em;text-transform:uppercase;pointer-events:none;z-index:1;white-space:nowrap;user-select:none';
-    mapCanvas.appendChild(el);
+    layer.appendChild(el);
   });
 
   // === ZONE BOUNDARY DASHED LINES ===
@@ -6034,7 +6034,7 @@ function addMapDecorations(cw, ch){
     } else {
       line.style.cssText='position:absolute;left:'+b.x1+'%;top:'+b.y1+'%;width:0;height:'+(b.y2-b.y1)+'%;border-left:2px dashed '+b.color+';pointer-events:none;z-index:3';
     }
-    mapCanvas.appendChild(line);
+    layer.appendChild(line);
   });
 
   // === POI MARKERS ===
@@ -6047,7 +6047,7 @@ function addMapDecorations(cw, ch){
     const el=document.createElement('div');el.className='map-poi';
     el.style.cssText='left:'+p.x+'%;top:'+p.y+'%;border-color:'+p.color;
     el.textContent=p.emoji;
-    mapCanvas.appendChild(el);
+    layer.appendChild(el);
   });
 
   // === COMPASS ROSE ===
@@ -6055,12 +6055,12 @@ function addMapDecorations(cw, ch){
   compass.className='map-compass-rose';
   compass.style.cssText='right:3%;top:3%;width:'+Math.max(40,cw*0.032)+'px;height:'+Math.max(40,cw*0.032)+'px';
   compass.innerHTML='<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/><circle cx="20" cy="20" r="12" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/><circle cx="20" cy="20" r="6" stroke="rgba(255,255,255,0.08)" stroke-width="0.3"/><polygon points="20,3 22,16 18,16" fill="rgba(220,60,50,0.85)"/><polygon points="20,37 22,24 18,24" fill="rgba(255,255,255,0.35)"/><polygon points="3,20 16,18 16,22" fill="rgba(255,255,255,0.25)"/><polygon points="37,20 24,18 24,22" fill="rgba(255,255,255,0.25)"/><text x="20" y="10" text-anchor="middle" fill="rgba(220,60,50,0.9)" font-size="5" font-weight="900" font-family="sans-serif">N</text><text x="20" y="37" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="3.5" font-weight="700" font-family="sans-serif">S</text><text x="35" y="21.5" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="3.5" font-weight="700" font-family="sans-serif">E</text><text x="5" y="21.5" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="3.5" font-weight="700" font-family="sans-serif">W</text></svg>';
-  mapCanvas.appendChild(compass);
+  layer.appendChild(compass);
 
   // === SCALE BAR ===
   const sb=document.createElement('div');sb.className='map-scale-bar';
   sb.innerHTML='<div class="scale-line"></div>500px';
-  mapCanvas.appendChild(sb);
+  layer.appendChild(sb);
 
   // Lake label
   const lakeEl=document.createElement('div');lakeEl.className='map-zone-marker';
