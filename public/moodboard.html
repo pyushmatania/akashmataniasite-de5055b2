@@ -5413,20 +5413,18 @@ function mapClientToWorld(clientX,clientY){
   const innerRect=mmInner.getBoundingClientRect();
   const cL=parseFloat(mapCanvas.style.left)||0;
   const cT=parseFloat(mapCanvas.style.top)||0;
-  const hS=drawMap._hStretch||1;
   const mapX=clientX-innerRect.left+mmInner.scrollLeft-cL;
   const mapY=clientY-innerRect.top+mmInner.scrollTop-cT;
   return {
-    x:clampValue(mapX/(sc*hS)+ox,0,MOODBOARD_WORLD_WIDTH),
+    x:clampValue(mapX/sc+ox,0,MOODBOARD_WORLD_WIDTH),
     y:clampValue(mapY/sc+oy,0,MOODBOARD_WORLD_HEIGHT)
   };
 }
 
 function mapWorldToCanvas(worldX,worldY){
   const sc=drawMap._sc||0.05;
-  const hS=drawMap._hStretch||1;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
-  return {x:(worldX-ox)*sc*hS,y:(worldY-oy)*sc};
+  return {x:(worldX-ox)*sc,y:(worldY-oy)*sc};
 }
 
 function positionMapOverlayAtWorld(el,worldX,worldY){
@@ -6128,21 +6126,18 @@ function drawMap(){
   let sc,offsetX,offsetY,canvasW,canvasH;
   
   if(mmExp){
-    // Expanded map — use wider horizontal area so left-side stickers are accessible
+    // Expanded map — keep true coordinates but add extra horizontal room (left-biased)
     const usableW=mw;
     const usableH=mh;
-    // Fit vertically, then stretch horizontally by 1.8x so content spreads out
-    const fitScaleV=Math.max(0.02,usableH/contentH);
-    const fitScaleH=Math.max(0.02,usableW/contentW);
-    const fitScale=Math.max(fitScaleV,fitScaleH);
+    const leftWorldPad=2600;
+    const rightWorldPad=900;
+    const mapContentW=contentW+leftWorldPad+rightWorldPad;
+    const fitScale=Math.max(0.02,Math.max(usableW/mapContentW,usableH/contentH));
     sc=fitScale*mapZoomScale;
-    // Widen canvas by 1.8x to give horizontal breathing room
-    const hStretch=1.8;
-    canvasW=contentW*sc*hStretch;
+    canvasW=mapContentW*sc;
     canvasH=contentH*sc;
-    offsetX=minL;
+    offsetX=minL-leftWorldPad;
     offsetY=minT;
-    drawMap._hStretch=hStretch;
     mapCanvas.style.left=((mw-canvasW)/2)+'px';
     mapCanvas.style.top=((mh-canvasH)/2)+'px';
   } else {
@@ -6268,8 +6263,7 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
   let count=0;
   stickerData.forEach(d=>{
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
-    const hS=drawMap._hStretch||1;
-    const dx=(d.left-ox)*sc*hS, dy=(d.top-oy)*sc;
+    const dx=(d.left-ox)*sc, dy=(d.top-oy)*sc;
     const baseScale=sc;
     const visibilityMinPx=window.innerWidth<600?16:12;
     const maxDim=Math.max(d.w,d.h,1);
@@ -6349,10 +6343,9 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
   walkingInProgress=true;
   const WALK_DURATION=2500;
   const sc=drawMap._sc||0.05;
-  const hS=drawMap._hStretch||1;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
   // mapPlayer is inside mapCanvas, no canvas offset needed
-  const targetMX=(worldX-ox)*sc*hS;
+  const targetMX=(worldX-ox)*sc;
   const targetMY=(worldY-oy)*sc;
   const startX=parseFloat(mapPlayer.style.left)||0;
   const startY=parseFloat(mapPlayer.style.top)||0;
@@ -6618,8 +6611,9 @@ function navigateToFilteredItem(cat,idx){
   const target=matching[idx%matching.length];
   const sc=drawMap._sc||0.05;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
+  const cL=parseFloat(mapCanvas.style.left)||0;
   const cT=parseFloat(mapCanvas.style.top)||0;
-  const px=(target.left-ox)*sc;
+  const px=(target.left-ox)*sc+cL;
   const py=(target.top-oy)*sc+cT;
   mmInner.scrollTo({left:px-mmInner.clientWidth/2,top:py-mmInner.clientHeight/2,behavior:'smooth'});
   // Make item itself glow directly — no HUD, no lines
@@ -6663,9 +6657,11 @@ function recenter(){
   const sc=drawMap._sc||0.05;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
   const mr=mmInner.getBoundingClientRect();
+  const cL=parseFloat(mapCanvas.style.left)||0;
   const cT=parseFloat(mapCanvas.style.top)||0;
   const centerWorld=getViewportCenterWorld();
-  const px=(centerWorld.x-ox)*sc;
+  const targetX=clampValue(centerWorld.x-1200,0,MOODBOARD_WORLD_WIDTH);
+  const px=(targetX-ox)*sc+cL;
   const py=(centerWorld.y-oy)*sc+cT;
   mmInner.scrollTo({left:px-mr.width/2,top:py-mr.height/2,behavior:'smooth'});
 }
@@ -6789,8 +6785,8 @@ function updMap(){
   } else {
     // EXPANDED: keep click-walk position during walking, otherwise follow viewport center
     if(!walkingInProgress){
-      const hS=drawMap._hStretch||1;
-      const px=(centerWorld.x-ox)*sc*hS;
+      const cL=parseFloat(mapCanvas.style.left)||0;
+      const px=cL+(centerWorld.x-ox)*sc;
       const py=(centerWorld.y-oy)*sc;
       mapPlayer.style.left=px+'px';
       mapPlayer.style.top=py+'px';
@@ -6802,10 +6798,9 @@ function updMap(){
     }
     const cL=parseFloat(mapCanvas.style.left)||0;
     const cT=parseFloat(mapCanvas.style.top)||0;
-    const hS=drawMap._hStretch||1;
-    mapVP.style.left=(cL+(worldTopLeft.x-ox)*sc*hS)+'px';
+    mapVP.style.left=(cL+(worldTopLeft.x-ox)*sc)+'px';
     mapVP.style.top=(cT+(worldTopLeft.y-oy)*sc)+'px';
-    mapVP.style.width=(worldVpW*sc*hS)+'px';
+    mapVP.style.width=(worldVpW*sc)+'px';
     mapVP.style.height=(worldVpH*sc)+'px';
   }
   
@@ -6821,9 +6816,9 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
   if(mapTransitioning)return;
   if(mmExp&&drawMap._sc){
     const ox=drawMap._ox||0,oy=drawMap._oy||0,sc=drawMap._sc;
+    const cL=parseFloat(mapCanvas.style.left)||0;
     const cT=parseFloat(mapCanvas.style.top)||0;
-    const hS=drawMap._hStretch||1;
-    const cx=clampValue(Math.round((mmInner.scrollLeft+mmInner.clientWidth/2)/(sc*hS)+ox),0,MOODBOARD_WORLD_WIDTH);
+    const cx=clampValue(Math.round((mmInner.scrollLeft-cL+mmInner.clientWidth/2)/sc+ox),0,MOODBOARD_WORLD_WIDTH);
     const cy=clampValue(Math.round((mmInner.scrollTop-cT+mmInner.clientHeight/2)/sc+oy),0,MOODBOARD_WORLD_HEIGHT);
     const coordEl=document.getElementById('mapCoords');
     const barCoords=document.getElementById('barCoords');
