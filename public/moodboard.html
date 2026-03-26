@@ -6751,23 +6751,9 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
     },250);
   }
 },{passive:true});
-let _updMapRAF=null;
-vp.addEventListener('scroll',()=>{
-  if(mapTransitioning)return;
-  if(!_updMapRAF){
-    _updMapRAF=requestAnimationFrame(()=>{
-      _updMapRAF=null;
-      updMap();
-      if(!mmExp&&!_bouncing){
-        clearTimeout(mapScrollTimer);mapScrollTimer=setTimeout(drawMap,320);
-      }
-    });
-  }
-},{passive:true});
+// Map scroll update is handled by the unified scroll handler above (near line 3587)
 
-// ===== SHARED AUDIO CONTEXT (reuse for performance) =====
-let _sharedAC=null;
-function getAC(){if(!_sharedAC||_sharedAC.state==='closed')_sharedAC=new(window.AudioContext||window.webkitAudioContext)();if(_sharedAC.state==='suspended')_sharedAC.resume();return _sharedAC}
+// getAC() already defined above in performance utilities section
 
 function playSfx(type){
   try{
