@@ -4073,7 +4073,12 @@ function sD(e){
   const cy=e.touches?e.touches[0].clientY:e.clientY;
   tapSX=cx;tapSY=cy;tapTime=Date.now();didMove=false;isRotating=false;
   as=this;hz++;as.style.zIndex=hz;
-  const r=as.getBoundingClientRect();sox=cx-r.left;soy=cy-r.top;
+  // Store offset in canvas-content coordinates (immune to scroll changes)
+  dragStartScrollLeft=vp.scrollLeft;dragStartScrollTop=vp.scrollTop;
+  const stickerLeft=parseFloat(as.style.left)||0;
+  const stickerTop=parseFloat(as.style.top)||0;
+  sox=cx/SCALE+vp.scrollLeft/SCALE-stickerLeft;
+  soy=cy/SCALE+vp.scrollTop/SCALE-stickerTop;
   if(e.touches)e.preventDefault();
 }
 
