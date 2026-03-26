@@ -329,6 +329,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 @keyframes neonZigzag{0%,100%{opacity:0.5}50%{opacity:1}}
 @keyframes miniNeonPulse{0%,100%{opacity:0.5;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
 .neon-decor{position:absolute;pointer-events:none;z-index:8}
+/* Performance: disable all animations on map clones via CSS instead of JS iteration */
+.map-clone-static,.map-clone-static *{animation:none!important;transition:none!important}
 .neon-decor-arrow{animation:neonArrowBounce 2s ease-in-out infinite}
 .neon-decor-arrow svg{filter:drop-shadow(0 0 8px var(--nd,#fff)) drop-shadow(0 0 20px var(--nd,#fff))}
 .neon-decor-star{animation:neonStarSpin 8s linear infinite}
