@@ -80,6 +80,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .stats-cats{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
 .stats-cat{font-family:var(--font-hand);font-size:0.65rem;color:var(--text3);background:rgba(0,0,0,0.035);border-radius:10px;padding:2px 7px;line-height:1.5}
 
+/* Kill animations/transitions on all descendants of map clones via CSS — avoids expensive JS iteration */
+.no-anim-children,.no-anim-children *{animation:none!important;transition:none!important}
 /* STICKER BASE */
 .sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1))}
 .sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
@@ -5704,20 +5706,34 @@ function toggleMap(){
     // --- EXPAND ---
     mmExp=true;
     mmContainer.classList.add('map-opening');
-    // Rebuild at full size
+    // Rebuild at full size — defer heavy work across frames to prevent crash
     ensureMapData(true);
     mapZoomScale=2;
     const zl=document.getElementById('mapZoomLevel');
     if(zl)zl.textContent=mapZoomScale+'×';
-    drawMap();
-    updMap();
-    // After animation, switch to expanded state
-    setTimeout(()=>{
-      mmContainer.classList.remove('map-opening');
-      mmContainer.classList.add('expanded');
-      mapTransitioning=false;
-      recenter();
-    },700);
+    // Phase 1: layout + decorations on next frame
+    requestAnimationFrame(()=>{
+      try{
+        drawMapLayout();
+        // Phase 2: render clones after decorations are painted
+        requestAnimationFrame(()=>{
+          try{
+            renderVisibleClones(drawMap._sc,drawMap._ox,drawMap._oy,drawMap._cw,drawMap._ch);
+            updMap();
+          }catch(e){console.error('Map clone render error:',e)}
+          // Phase 3: finalize after animation
+          setTimeout(()=>{
+            mmContainer.classList.remove('map-opening');
+            mmContainer.classList.add('expanded');
+            mapTransitioning=false;
+            recenter();
+          },500);
+        });
+      }catch(e){
+        console.error('Map layout error:',e);
+        mapTransitioning=false;
+      }
+    });
   } else {
     // --- COLLAPSE ---
     mmContainer.classList.remove('expanded');
@@ -6555,35 +6571,27 @@ function addMapDecorations(cw, ch){
 }
 
 let _decsCW=-1,_decsCH=-1;
-function drawMap(){
+
+// Shared layout logic — sets canvas size, bg, decorations, stores draw params
+function drawMapLayout(){
   const playerWasInCanvas=mapPlayer.parentElement===mapCanvas;
   if(mmExp){
-    // Only clear sticker clones (.mi) — preserve decoration layer
     mapCanvas.querySelectorAll('.mi').forEach(el=>el.remove());
     if(playerWasInCanvas)mapPlayer.remove();
   } else {
     mapCanvas.innerHTML='';
-    _decsCW=-1;_decsCH=-1; // reset so decorations rebuild on next expand
+    _decsCW=-1;_decsCH=-1;
   }
   if(!stickerData.length)scanStickers();
   const mr=mmInner.getBoundingClientRect();
   const mw=mr.width||64,mh=mr.height||64;
-  
-   // Keep map extents locked to moodboard boundaries.
-   const contentW=Math.max(cv.scrollWidth||0,cv.offsetWidth||0,MOODBOARD_WORLD_WIDTH);
-   const contentH=Math.max(cv.scrollHeight||0,cv.offsetHeight||0,MOODBOARD_WORLD_HEIGHT);
-   const minL=0, minT=0;
-  
+  const contentW=Math.max(cv.scrollWidth||0,cv.offsetWidth||0,MOODBOARD_WORLD_WIDTH);
+  const contentH=Math.max(cv.scrollHeight||0,cv.offsetHeight||0,MOODBOARD_WORLD_HEIGHT);
+  const minL=0, minT=0;
   let sc,offsetX,offsetY,canvasW,canvasH;
-  
   if(mmExp){
-    // Expanded map — keep true coordinates and add larger horizontal travel area
-    const usableW=mw;
-    const usableH=mh;
-    const leftWorldPad=5500;
-    const rightWorldPad=3500;
-    const topWorldPad=5000;
-    const bottomWorldPad=2400;
+    const usableW=mw,usableH=mh;
+    const leftWorldPad=5500,rightWorldPad=3500,topWorldPad=5000,bottomWorldPad=2400;
     const mapContentW=contentW+leftWorldPad+rightWorldPad;
     const mapContentH=contentH+topWorldPad+bottomWorldPad;
     const fitScale=Math.max(0.02,Math.max(usableW/mapContentW,usableH/mapContentH));
@@ -6595,20 +6603,16 @@ function drawMap(){
     mapCanvas.style.left='0px';
     mapCanvas.style.top='0px';
   } else {
-    // SMALL MAP: restore only small-map pan offsets (never expanded-map top offset)
     const zoomFactor=5;
     sc=mw/(contentW/zoomFactor);
     canvasW=contentW*sc;
     canvasH=contentH*sc;
-    offsetX=0;
-    offsetY=0;
+    offsetX=0;offsetY=0;
     mapCanvas.style.left=smallMapPanX+'px';
     mapCanvas.style.top=smallMapPanY+'px';
   }
-  
   drawMap._sc=sc;drawMap._ox=offsetX;drawMap._oy=offsetY;
   drawMap._cw=canvasW;drawMap._ch=canvasH;
-  
   mapCanvas.style.width=canvasW+'px';
   mapCanvas.style.height=canvasH+'px';
   mapCanvas.style.position='absolute';
@@ -6622,9 +6626,7 @@ function drawMap(){
     mapCanvas.style.backgroundImage='linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px)';
     mapCanvas.style.backgroundSize='12px 12px, 12px 12px';
   }
-  
   if(mmExp){
-    // EXPANDED: rebuild decorations only when canvas dimensions change
     const rCW=Math.round(canvasW),rCH=Math.round(canvasH);
     if(rCW!==_decsCW||rCH!==_decsCH){
       const old=mapCanvas.querySelector('.map-dec-layer');
@@ -6632,7 +6634,6 @@ function drawMap(){
       addMapDecorations(canvasW,canvasH);
       _decsCW=rCW;_decsCH=rCH;
     }
-    renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
     if(playerWasInCanvas||mapPlayer.parentElement!==mapCanvas){
       mapCanvas.appendChild(mapPlayer);
     }
@@ -6640,6 +6641,17 @@ function drawMap(){
     if(mapPlayer.parentElement!==mm){
       mm.appendChild(mapPlayer);
     }
+  }
+  return {sc,offsetX,offsetY,canvasW,canvasH,playerWasInCanvas};
+}
+
+// Full drawMap — for small map and legacy calls
+function drawMap(){
+  const params=drawMapLayout();
+  const {sc,offsetX,offsetY,canvasW,canvasH}=params;
+  if(mmExp){
+    renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
+  } else {
     // SMALL: render mini sticker previews with actual content
     let count=0;
     stickerData.forEach(d=>{
@@ -6674,7 +6686,7 @@ function drawMap(){
         clone.removeAttribute('data-contra');
         clone.removeAttribute('onclick');
         clone.classList.remove('dragging');
-        clone.querySelectorAll('*').forEach(c=>{c.style.animation='none';c.style.transition='none'});
+        clone.classList.add('no-anim-children');
         mapCanvas.appendChild(clone);
       } else {
         // Fallback: tiny colored dot for very small items
@@ -6771,23 +6783,28 @@ function drawMap(){
 }
 
 // Render real sticker clones for items visible in the map viewport
+let _cloneRafId=null;
 function renderVisibleClones(sc,ox,oy,cw,ch){
   if(!sc||!mapCanvas)return;
+  if(_cloneRafId){cancelAnimationFrame(_cloneRafId);_cloneRafId=null;}
+  // Clear existing clones
+  mapCanvas.querySelectorAll('.mi,.map-sticker-clone').forEach(el=>el.remove());
   const scrollL=mmInner.scrollLeft||0;
   const scrollT=mmInner.scrollTop||0;
   const vpW=mmInner.clientWidth||window.innerWidth;
   const vpH=mmInner.clientHeight||window.innerHeight;
-  // Visible region in map coords (with buffer)
   const buf=100;
   const visL=scrollL-buf, visT=scrollT-50-buf;
   const visR=scrollL+vpW+buf, visB=scrollT+vpH+buf;
+  const isMobile=window.innerWidth<600;
+  const visibilityMinPx=isMobile?16:12;
   
-  let count=0;
+  // Collect visible items first
+  const visibleItems=[];
   stickerData.forEach(d=>{
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
     const dx=(d.left-ox)*sc, dy=(d.top-oy)*sc;
     const baseScale=sc;
-    const visibilityMinPx=window.innerWidth<600?16:12;
     const maxDim=Math.max(d.w,d.h,1);
     const minVisibleScale=visibilityMinPx/maxDim;
     const cloneScale=Math.max(baseScale,minVisibleScale);
@@ -6795,56 +6812,62 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     const rawW=d.w*cloneScale, rawH=d.h*cloneScale;
     const renderX=dx-((rawW-baseW)/2);
     const renderY=dy-((rawH-baseH)/2);
-    // Only render if in visible viewport
     const iw=Math.max(rawW,8), ih=Math.max(rawH,6);
     if(renderX+iw<visL||renderX>visR||renderY+ih<visT||renderY>visB)return;
-
-    count++;
-    // Render actual sticker clone for faithful appearance and sync
-    let clone;
-    if(d.ref){
-      clone=d.ref.cloneNode(true);
-      clone.classList.add('mi','map-sticker-clone');
-      const rot=(d.ref.style.transform||'').match(/rotate\([^)]+\)/);
-      const transform=(rot?rot[0]+' ':'')+'scale('+cloneScale+')';
-      clone.style.position='absolute';
-      clone.style.left=renderX+'px';
-      clone.style.top=renderY+'px';
-      clone.style.width=d.w+'px';
-      clone.style.height=d.h+'px';
-      clone.style.maxWidth='none';
-      clone.style.maxHeight='none';
-      clone.style.transform=transform;
-      clone.style.transformOrigin='0 0';
-      clone.style.zIndex=d.ref.classList.contains('zone-signpost')?'5':'7';
-      clone.style.cursor='pointer';
-      clone.style.animation='none';
-      clone.style.transition='none';
-      clone.style.filter='none';
-      clone.style.pointerEvents='auto';
-      clone.removeAttribute('data-anim');
-      clone.removeAttribute('data-splash');
-      clone.removeAttribute('data-contra');
-      clone.removeAttribute('onclick');
-      clone.classList.remove('dragging');
-      clone.querySelectorAll('*').forEach(c=>{c.style.animation='none';c.style.transition='none'});
-    } else {
-      clone=document.createElement('div');
-      clone.className='mi';
-      clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+Math.max(iw,8)+'px;height:'+Math.max(ih,6)+'px;background:'+d.bg+';border-radius:'+d.radius+';z-index:7;cursor:pointer;'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
-      if(d.emoji){const l=document.createElement('span');l.textContent=d.emoji;l.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:'+Math.max(Math.min(Math.max(iw,8)*0.6,20),8)+'px;pointer-events:none';clone.appendChild(l)}
-    }
-    
-    // Click to navigate
-    clone.addEventListener('click',ev=>{
-      ev.stopPropagation();
-      const target=mapClientToWorld(ev.clientX,ev.clientY);
-      walkBitmojiTo(target.x,target.y,d.ref);
-    });
-    
-    mapCanvas.appendChild(clone);
+    visibleItems.push({d,renderX,renderY,cloneScale,iw,ih});
   });
-  if(mapCount)mapCount.textContent=count+' items';
+  
+  // Render in batches using rAF to avoid blocking
+  const BATCH_SIZE=20;
+  let idx=0;
+  const frag=document.createDocumentFragment();
+  
+  function renderBatch(){
+    const end=Math.min(idx+BATCH_SIZE,visibleItems.length);
+    for(;idx<end;idx++){
+      const{d,renderX,renderY,cloneScale,iw,ih}=visibleItems[idx];
+      let clone;
+      if(d.ref){
+        clone=d.ref.cloneNode(true);
+        clone.classList.add('mi','map-sticker-clone');
+        const rot=(d.ref.style.transform||'').match(/rotate\([^)]+\)/);
+        const transform=(rot?rot[0]+' ':'')+'scale('+cloneScale+')';
+        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+d.w+'px;height:'+d.h+'px;max-width:none;max-height:none;transform:'+transform+';transform-origin:0 0;z-index:'+(d.ref.classList.contains('zone-signpost')?'5':'7')+';cursor:pointer;animation:none;transition:none;filter:none;pointer-events:auto';
+        clone.removeAttribute('data-anim');
+        clone.removeAttribute('data-splash');
+        clone.removeAttribute('data-contra');
+        clone.removeAttribute('onclick');
+        clone.classList.remove('dragging');
+        // Disable animations on children — use CSS class instead of iterating all descendants
+        clone.classList.add('no-anim-children');
+      } else {
+        clone=document.createElement('div');
+        clone.className='mi';
+        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+Math.max(iw,8)+'px;height:'+Math.max(ih,6)+'px;background:'+d.bg+';border-radius:'+d.radius+';z-index:7;cursor:pointer;'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
+        if(d.emoji){const l=document.createElement('span');l.textContent=d.emoji;l.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:'+Math.max(Math.min(Math.max(iw,8)*0.6,20),8)+'px;pointer-events:none';clone.appendChild(l)}
+      }
+      clone.addEventListener('click',ev=>{
+        ev.stopPropagation();
+        const target=mapClientToWorld(ev.clientX,ev.clientY);
+        walkBitmojiTo(target.x,target.y,d.ref);
+      });
+      frag.appendChild(clone);
+    }
+    if(idx>=visibleItems.length){
+      mapCanvas.appendChild(frag);
+      if(mapCount)mapCount.textContent=visibleItems.length+' items';
+      _cloneRafId=null;
+    } else {
+      // Flush current batch to DOM and schedule next
+      mapCanvas.appendChild(frag);
+      _cloneRafId=requestAnimationFrame(renderBatch);
+    }
+  }
+  if(visibleItems.length>0){
+    _cloneRafId=requestAnimationFrame(renderBatch);
+  } else {
+    if(mapCount)mapCount.textContent='0 items';
+  }
 }
 
 // ===== WALK BITMOJI TO TARGET =====
