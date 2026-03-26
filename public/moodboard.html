@@ -5906,25 +5906,10 @@ function navigateToFilteredItem(cat,idx){
   const px=(target.left-ox)*sc;
   const py=(target.top-oy)*sc+cT;
   mmInner.scrollTo({left:px-mmInner.clientWidth/2,top:py-mmInner.clientHeight/2,behavior:'smooth'});
-  // Update HUD
-  const hud=document.getElementById('cycleHud');
-  if(hud){
-    hud.classList.add('visible');
-    document.getElementById('cycleIcon').textContent=catIcons[cat]||'📦';
-    document.getElementById('cycleLabel').textContent=catNames[cat]||cat;
-    document.getElementById('cycleNum').textContent=(idx%matching.length+1)+'/'+matching.length;
-  }
-  // Neon glow on target
+  // Make item itself glow directly — no HUD, no lines
   setTimeout(()=>{
     applyNeonGlow(target);
-    addWaypoints(cat,idx%matching.length);
   },400);
-  // Update zone banner
-  const bigZone=document.getElementById('mapZoneBanner');
-  if(bigZone){
-    const zn=getZoneName(target.left,target.top);
-    bigZone.textContent=zn;
-  }
 }
 
 // Filter with cycle-through navigation
