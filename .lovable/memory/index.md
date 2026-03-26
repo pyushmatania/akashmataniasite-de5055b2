@@ -20,11 +20,18 @@ Portfolio app for Akash Matania — Product Manager with 8+ years across fintech
 ## Map Filters (5 only, content-type based)
 - All, Photos, Memes, Interactive, Others
 - Uses `matchesFilter()` — mainCats=['photo','meme','interactive'], everything else is 'other'
+- Interactive category includes onclick-based stickers (games, generators)
 
 ## Map Signposts
 - Medium-sized with poles, NO descriptions below them
 - Interactive stickers get a "🎮 Tap me" badge (top-right corner)
 - Badge & emoji stickers are slightly tilted
+- Signposts have immersive 3D marble pillars, ground shadows, planted-in effect
+- Present on both moodboard canvas AND big map
+
+## Map Zoom
+- Big map zoom steps: [0.25, 0.35, 0.5, 0.75, 1, 1.25, 1.5, 2]
+- Default zoom: 0.25x (most zoomed out)
 
 ## Design
 - Clean, minimal style with colorful accents
@@ -33,12 +40,17 @@ Portfolio app for Akash Matania — Product Manager with 8+ years across fintech
 - Staggered fade-in animations on panels
 - Bottom nav has press-scale (0.88) on touch
 - Small minimap: blue theme with grid lines
-- Default map scale: 0.5x
+- Default map scale: 0.35x (moodboard viewport)
 
 ## Content Source
 - Resume: Akash_Matania_Product_Manager.pdf
 - Photo: public/images/akash-photo.jpeg
 - Skills: Product Strategy, User Research, Web3 & Fintech, Growth & Analytics, Technical PRDs, AI-Assisted Development
+
+## Item Count (245 total stickers)
+- 74 memes, 42 badges, 34 postits, 42 emojis, 15 projects, 13 stamps
+- 2 hero photos, 5 counters, 2 fortunes, 1 mood, 2 scratches, 1 progress
+- 3 texts, 1 highlight, 3 illustrated, 4 washi, 1 swatches, 6 zone signposts
 
 ## Key Info
 - Email: pyushmatania@gmail.com
