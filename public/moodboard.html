@@ -5356,7 +5356,7 @@ function toggleMap(){
     mmContainer.classList.add('map-opening');
     // Rebuild at full size
     ensureMapData(true);
-    mapZoomScale=1;
+    mapZoomScale=2;
     const zl=document.getElementById('mapZoomLevel');
     if(zl)zl.textContent=mapZoomScale+'×';
     drawMap();
