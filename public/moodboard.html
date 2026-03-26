@@ -5247,6 +5247,47 @@ let mapBootstrapped=false;
 let mapResizeTimer=null;
 let hasAutoArranged=false;
 
+/* ===== TOGGLE MAP (expand / collapse) ===== */
+function toggleMap(){
+  if(mapTransitioning)return;
+  mapTransitioning=true;
+
+  const mmContainer=document.getElementById('minimapContainer');
+  if(!mmExp){
+    // --- EXPAND ---
+    mmExp=true;
+    mmContainer.classList.add('map-opening');
+    // Rebuild at full size
+    ensureMapData(true);
+    mapZoomScale=0.5;
+    const zl=document.getElementById('mapZoomLevel');
+    if(zl)zl.textContent=mapZoomScale+'×';
+    drawMap();
+    updMap();
+    // After animation, switch to expanded state
+    setTimeout(()=>{
+      mmContainer.classList.remove('map-opening');
+      mmContainer.classList.add('expanded');
+      mapTransitioning=false;
+      recenter();
+    },700);
+  } else {
+    // --- COLLAPSE ---
+    mmContainer.classList.remove('expanded');
+    mmContainer.classList.add('map-closing');
+    setTimeout(()=>{
+      mmExp=false;
+      mmContainer.classList.remove('map-closing');
+      mapTransitioning=false;
+      mapZoomScale=0.5;
+      // Redraw as small minimap
+      ensureMapData(true);
+      drawMap();
+      updMap();
+    },550);
+  }
+}
+
 function viewportToWorld(vx,vy){
   return {x:vx/MOODBOARD_VIEW_SCALE,y:vy/MOODBOARD_VIEW_SCALE};
 }
