@@ -5697,6 +5697,10 @@ let mapResizeTimer=null;
 let hasAutoArranged=false;
 
 /* ===== TOGGLE MAP (expand / collapse) ===== */
+let _cachedDecLayer=null;
+let _cachedDecDims={w:-1,h:-1};
+let _mapOpenRafId=null;
+
 function toggleMap(){
   if(mapTransitioning)return;
   mapTransitioning=true;
@@ -5706,22 +5710,46 @@ function toggleMap(){
     // --- EXPAND ---
     mmExp=true;
     mmContainer.classList.add('map-opening');
-    // Rebuild at full size — defer heavy work across frames to prevent crash
-    ensureMapData(true);
     mapZoomScale=2;
     const zl=document.getElementById('mapZoomLevel');
     if(zl)zl.textContent=mapZoomScale+'×';
-    // Phase 1: layout + decorations on next frame
-    requestAnimationFrame(()=>{
+
+    // Scan stickers lazily — skip getComputedStyle if data already cached
+    if(!stickerData.length) scanStickers();
+
+    // Phase 1: Layout only (no decorations yet)
+    if(_mapOpenRafId){cancelAnimationFrame(_mapOpenRafId);_mapOpenRafId=null;}
+    _mapOpenRafId=requestAnimationFrame(()=>{
       try{
-        drawMapLayout();
-        // Phase 2: render clones after decorations are painted
-        requestAnimationFrame(()=>{
+        drawMapLayoutOnly();
+      }catch(e){console.error('Map layout error:',e);mapTransitioning=false;return;}
+
+      // Phase 2: Decorations — use cached layer or build async
+      _mapOpenRafId=requestAnimationFrame(()=>{
+        try{
+          const cw=drawMap._cw,ch=drawMap._ch;
+          const rCW=Math.round(cw),rCH=Math.round(ch);
+          if(_cachedDecLayer&&_cachedDecDims.w===rCW&&_cachedDecDims.h===rCH){
+            // Reuse cached decoration layer
+            const old=mapCanvas.querySelector('.map-dec-layer');
+            if(old)old.remove();
+            mapCanvas.appendChild(_cachedDecLayer);
+          } else {
+            const old=mapCanvas.querySelector('.map-dec-layer');
+            if(old)old.remove();
+            addMapDecorations(cw,ch);
+            _cachedDecLayer=mapCanvas.querySelector('.map-dec-layer');
+            _cachedDecDims={w:rCW,h:rCH};
+          }
+        }catch(e){console.error('Map decorations error:',e)}
+
+        // Phase 3: Clone stickers in batches
+        _mapOpenRafId=requestAnimationFrame(()=>{
           try{
             renderVisibleClones(drawMap._sc,drawMap._ox,drawMap._oy,drawMap._cw,drawMap._ch);
             updMap();
           }catch(e){console.error('Map clone render error:',e)}
-          // Phase 3: finalize after animation
+          // Phase 4: finalize after animation
           setTimeout(()=>{
             mmContainer.classList.remove('map-opening');
             mmContainer.classList.add('expanded');
@@ -5729,13 +5757,11 @@ function toggleMap(){
             recenter();
           },500);
         });
-      }catch(e){
-        console.error('Map layout error:',e);
-        mapTransitioning=false;
-      }
+      });
     });
   } else {
     // --- COLLAPSE ---
+    if(_mapOpenRafId){cancelAnimationFrame(_mapOpenRafId);_mapOpenRafId=null;}
     mmContainer.classList.remove('expanded');
     mmContainer.classList.add('map-closing');
     setTimeout(()=>{
@@ -5749,6 +5775,72 @@ function toggleMap(){
       updMap();
     },550);
   }
+}
+
+// Layout-only version of drawMapLayout — skips decorations
+function drawMapLayoutOnly(){
+  const playerWasInCanvas=mapPlayer.parentElement===mapCanvas;
+  if(mmExp){
+    mapCanvas.querySelectorAll('.mi,.map-sticker-clone').forEach(el=>el.remove());
+    if(playerWasInCanvas)mapPlayer.remove();
+  } else {
+    mapCanvas.innerHTML='';
+    _decsCW=-1;_decsCH=-1;
+  }
+  if(!stickerData.length)scanStickers();
+  const mr=mmInner.getBoundingClientRect();
+  const mw=mr.width||64,mh=mr.height||64;
+  const contentW=Math.max(cv.scrollWidth||0,cv.offsetWidth||0,MOODBOARD_WORLD_WIDTH);
+  const contentH=Math.max(cv.scrollHeight||0,cv.offsetHeight||0,MOODBOARD_WORLD_HEIGHT);
+  const minL=0, minT=0;
+  let sc,offsetX,offsetY,canvasW,canvasH;
+  if(mmExp){
+    const usableW=mw,usableH=mh;
+    const leftWorldPad=5500,rightWorldPad=3500,topWorldPad=5000,bottomWorldPad=2400;
+    const mapContentW=contentW+leftWorldPad+rightWorldPad;
+    const mapContentH=contentH+topWorldPad+bottomWorldPad;
+    const fitScale=Math.max(0.02,Math.max(usableW/mapContentW,usableH/mapContentH));
+    sc=fitScale*mapZoomScale;
+    canvasW=mapContentW*sc;
+    canvasH=mapContentH*sc;
+    offsetX=minL-leftWorldPad;
+    offsetY=minT-topWorldPad;
+    mapCanvas.style.left='0px';
+    mapCanvas.style.top='0px';
+  } else {
+    const zoomFactor=5;
+    sc=mw/(contentW/zoomFactor);
+    canvasW=contentW*sc;
+    canvasH=contentH*sc;
+    offsetX=0;offsetY=0;
+    mapCanvas.style.left=smallMapPanX+'px';
+    mapCanvas.style.top=smallMapPanY+'px';
+  }
+  drawMap._sc=sc;drawMap._ox=offsetX;drawMap._oy=offsetY;
+  drawMap._cw=canvasW;drawMap._ch=canvasH;
+  mapCanvas.style.width=canvasW+'px';
+  mapCanvas.style.height=canvasH+'px';
+  mapCanvas.style.position='absolute';
+  mapCanvas.style.borderRadius=mmExp?'0':'inherit';
+  if(mmExp){
+    mapCanvas.style.background='linear-gradient(180deg,#87CEEB 0%,#5baae0 8%,#4a9bd9 100%)';
+    mapCanvas.style.backgroundImage='none';
+    mapCanvas.style.backgroundSize='';
+  } else {
+    mapCanvas.style.background='linear-gradient(160deg,#6db8e4 0%,#5baae0 30%,#4a9bd9 60%,#3d8cc7 100%)';
+    mapCanvas.style.backgroundImage='linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px)';
+    mapCanvas.style.backgroundSize='12px 12px, 12px 12px';
+  }
+  if(mmExp){
+    if(playerWasInCanvas||mapPlayer.parentElement!==mapCanvas){
+      mapCanvas.appendChild(mapPlayer);
+    }
+  } else {
+    if(mapPlayer.parentElement!==mm){
+      mm.appendChild(mapPlayer);
+    }
+  }
+  return {sc,offsetX,offsetY,canvasW,canvasH,playerWasInCanvas};
 }
 
 function viewportToWorld(vx,vy){
