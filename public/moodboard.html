@@ -2105,6 +2105,102 @@ body.map-expanded .scroll-counter{display:none!important}
   <div><div class="c-count" data-count="0">0</div><div class="c-label">puris eaten today</div></div>
 </div>
 
+
+<!-- ===== NEW INTERACTIVE ELEMENTS ===== -->
+
+<!-- SPIN WHEEL — Work zone -->
+<div class="sticker sticker-wheel" data-anim="jelly" data-zone="work" onclick="spinWheel(this,event)" style="left:4200px;top:1400px;transform:rotate(-2deg)">
+  <div class="wheel-title">🎡 What Should Akash Build Next?</div>
+  <div class="wheel-container">
+    <div class="wheel-pointer">▼</div>
+    <svg class="wheel-svg" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="95" fill="#f5f5f5" stroke="#ddd" stroke-width="2"/>
+      <path d="M100,100 L100,5 A95,95 0 0,1 182,52 Z" fill="#FF7043"/>
+      <path d="M100,100 L182,52 A95,95 0 0,1 182,148 Z" fill="#42A5F5"/>
+      <path d="M100,100 L182,148 A95,95 0 0,1 100,195 Z" fill="#66BB6A"/>
+      <path d="M100,100 L100,195 A95,95 0 0,1 18,148 Z" fill="#FFB74D"/>
+      <path d="M100,100 L18,148 A95,95 0 0,1 18,52 Z" fill="#CE93D8"/>
+      <path d="M100,100 L18,52 A95,95 0 0,1 100,5 Z" fill="#EF5350"/>
+      <text x="130" y="42" font-size="8" fill="#fff" font-weight="bold" transform="rotate(30 130 42)">AI App</text>
+      <text x="165" y="105" font-size="8" fill="#fff" font-weight="bold" transform="rotate(90 165 105)">SaaS</text>
+      <text x="130" y="170" font-size="8" fill="#fff" font-weight="bold" transform="rotate(150 130 170)">Game</text>
+      <text x="68" y="170" font-size="8" fill="#fff" font-weight="bold" transform="rotate(210 68 170)">Web3</text>
+      <text x="32" y="105" font-size="8" fill="#fff" font-weight="bold" transform="rotate(270 32 105)">EdTech</text>
+      <text x="68" y="42" font-size="8" fill="#fff" font-weight="bold" transform="rotate(330 68 42)">FinTech</text>
+      <circle cx="100" cy="100" r="12" fill="#1a1a2e" stroke="#FFD700" stroke-width="2"/>
+      <text x="100" y="104" text-anchor="middle" font-size="10" fill="#FFD700">SPIN</text>
+    </svg>
+  </div>
+  <div class="wheel-result">Tap to spin! 🎯</div>
+  <div class="wheel-cta">destiny awaits...</div>
+</div>
+
+<!-- QUIZ CARD — Portfolio zone -->
+<div class="sticker sticker-quiz" data-anim="pop" data-zone="portfolio" onclick="quizAnswer(this,event)" style="left:2800px;top:3200px;transform:rotate(2deg)">
+  <div class="quiz-header">🧠 Akash Trivia</div>
+  <div class="quiz-q">What was Akash's first startup?</div>
+  <div class="quiz-opts">
+    <div class="quiz-opt" data-ans="0" onclick="pickQuizOpt(this,event)">A. Recess EdTech</div>
+    <div class="quiz-opt" data-ans="1" onclick="pickQuizOpt(this,event)">B. EnterCircles Labs</div>
+    <div class="quiz-opt" data-ans="0" onclick="pickQuizOpt(this,event)">C. Neural OS</div>
+    <div class="quiz-opt" data-ans="0" onclick="pickQuizOpt(this,event)">D. Hushh Jeypore</div>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
+<!-- SLOT MACHINE — Fun zone -->
+<div class="sticker sticker-slots" data-anim="shake" data-zone="fun" onclick="pullSlots(this,event)" style="left:5000px;top:5200px;transform:rotate(-1deg)">
+  <div class="slots-title">🎰 STARTUP SLOTS</div>
+  <div class="slots-display">
+    <div class="slot-reel">🚀</div>
+    <div class="slot-reel">💰</div>
+    <div class="slot-reel">🔥</div>
+  </div>
+  <div class="slots-result">Pull to play!</div>
+  <div class="slots-cta">match 3 to win big</div>
+</div>
+
+<!-- MAGIC 8 BALL — Hobby zone -->
+<div class="sticker sticker-8ball" data-anim="shake" data-zone="hobby" onclick="shake8Ball(this,event)" style="left:3600px;top:4800px">
+  <div class="ball-window"><div class="ball-text">Ask me anything</div></div>
+  <div class="ball-label">🎱 shake for wisdom</div>
+</div>
+
+<!-- TYPEWRITER — Origin zone -->
+<div class="sticker sticker-typewriter" data-anim="pop" data-zone="origin" onclick="typewriterNext(this,event)" style="left:3200px;top:1200px;transform:rotate(1deg)">
+  <div class="tw-header">⌨️ Founder's Log</div>
+  <div class="tw-paper"></div>
+  <div class="tw-cta">tap to type next thought →</div>
+</div>
+
+<!-- DICE ROLLER — Fun zone -->
+<div class="sticker sticker-dice" data-anim="shake" data-zone="fun" onclick="rollDice(this,event)" style="left:5600px;top:4200px;transform:rotate(3deg)">
+  <div class="dice-title">🎲 Startup Fate Dice</div>
+  <div class="dice-display">🎲</div>
+  <div class="dice-result">Roll your fate!</div>
+</div>
+
+<!-- LOVE-O-METER — Origin zone -->
+<div class="sticker sticker-lovemeter" data-anim="heartbeat" data-zone="origin" onclick="loveMeter(this,event)" style="left:1800px;top:1800px;transform:rotate(-2deg)">
+  <div class="lm-title">💖 Vibe Check</div>
+  <div class="lm-emoji">🤔</div>
+  <div class="lm-bar"><div class="lm-fill" style="width:0%"></div></div>
+  <div class="lm-result">Tap to check your vibe!</div>
+</div>
+
+<!-- PM POP QUIZ — Work zone -->
+<div class="sticker sticker-quiz" data-anim="bounce" data-zone="work" onclick="quizAnswer(this,event)" style="left:4800px;top:2600px;transform:rotate(-1deg)">
+  <div class="quiz-header">📊 PM Pop Quiz</div>
+  <div class="quiz-q">What metric did Recess EdTech improve churn to?</div>
+  <div class="quiz-opts">
+    <div class="quiz-opt" data-ans="0" onclick="pickQuizOpt(this,event)">A. Below 20%</div>
+    <div class="quiz-opt" data-ans="1" onclick="pickQuizOpt(this,event)">B. Below 10%</div>
+    <div class="quiz-opt" data-ans="0" onclick="pickQuizOpt(this,event)">C. Below 5%</div>
+    <div class="quiz-opt" data-ans="0" onclick="pickQuizOpt(this,event)">D. Below 30%</div>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
 <div class="sticker sticker-meme" data-anim="jelly" data-zone="fun" style="left:5200px;top:3800px">
   <div class="meme-emoji">💀</div>
   <div class="meme-text">PM: Can we add dark mode? Dev: Which part of 'freeze' was unclear?</div>
