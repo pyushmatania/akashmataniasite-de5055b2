@@ -6389,7 +6389,7 @@ function drawMap(){
       bulbs.style.cssText='display:flex;gap:2px;justify-content:center;margin-bottom:1px';
       for(let i=0;i<5;i++){
         const b=document.createElement('div');
-        b.style.cssText='width:2px;height:2px;border-radius:50%;background:#FFD700;box-shadow:0 0 2px #FFD700;animation:bulbBlink '+(1+Math.random()*0.5)+'s ease-in-out infinite '+(i*0.2)+'s';
+        b.style.cssText='width:2px;height:2px;border-radius:50%;background:'+zc+';box-shadow:0 0 2px '+zc+';animation:bulbBlink '+(1+Math.random()*0.5)+'s ease-in-out infinite '+(i*0.2)+'s';
         bulbs.appendChild(b);
       }
       // Base
