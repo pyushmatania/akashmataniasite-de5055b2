@@ -6874,12 +6874,36 @@ function bootstrapMap(forceRescan){
   }
 }
 
+function ensureIntroCluster(){
+  if(document.querySelector('.intro-card'))return;
+  const intro=document.createElement('div');
+  intro.className='sticker intro-card';
+  intro.dataset.type='photo';
+  intro.dataset.zone='hub';
+  intro.style.left='6770px';
+  intro.style.top='6550px';
+  intro.innerHTML='<div class="intro-name">Akash <span class="hl-name">Matania</span></div><div class="intro-tagline">Product Manager · Founder · Dreamer</div><div class="intro-cta">↕ scroll around to explore my world ✨</div>';
+  cv.appendChild(intro);
+  const seeds=[['✨',6420,6300],['🚀',7440,6350],['🎬',6480,7420],['💡',7420,7300],['🎧',6280,7150]];
+  seeds.forEach(([emoji,left,top])=>{
+    const el=document.createElement('div');
+    el.className='sticker sticker-emoji big';
+    el.dataset.zone='hub';
+    el.style.left=left+'px';
+    el.style.top=top+'px';
+    el.textContent=emoji;
+    cv.appendChild(el);
+  });
+}
+
 setTimeout(()=>{
+  ensureIntroCluster();
   bootstrapMap(true);
   // Re-center on intro card AFTER items are rearranged
   scrollToZone(null,'hub');
   requestAnimationFrame(()=>scrollToZone(null,'hub'));
   setTimeout(()=>{scrollToZone(null,'hub');centerOnIntroCard();},350);
+  setTimeout(()=>{scrollToZone(null,'hub');centerOnIntroCard();},900);
   // Show bitmoji greeting
   const greet=document.createElement('div');
   greet.className='bitmoji-greeting';
