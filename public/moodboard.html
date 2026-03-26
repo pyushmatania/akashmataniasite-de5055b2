@@ -6157,7 +6157,7 @@ function addMapDecorations(cw, ch){
   });
 
   // === ZONE BOUNDARY DASHED LINES ===
-  const zoneBorders=[
+  const zoneBoundaryLines=[
     // Horizontal split at y=40% (world y~5600) — Origin/Work top vs Portfolio/Hub/Fun below
     {x1:0,y1:40,x2:100,y2:40,color:'rgba(76,175,80,0.4)'},
     // Vertical split at x=44% (world x~6200) — left zones vs right zones (top half)
@@ -6167,7 +6167,7 @@ function addMapDecorations(cw, ch){
     // Vertical split at x=45% (bottom half) — Hobby/Portfolio vs Fun
     {x1:45,y1:40,x2:45,y2:100,color:'rgba(255,152,0,0.3)'},
   ];
-  zoneBorders.forEach(b=>{
+  zoneBoundaryLines.forEach(b=>{
     const line=document.createElement('div');
     const isH=(b.y1===b.y2);
     const borderColor=b.color;
