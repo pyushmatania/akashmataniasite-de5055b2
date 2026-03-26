@@ -3228,16 +3228,14 @@ function revealHiddenSkills(){
 </script>
 <script>
 const vp=document.getElementById('viewport'),cv=document.getElementById('canvas');
-const MOODBOARD_WORLD_WIDTH=15000;
+const MOODBOARD_WORLD_WIDTH=10000;
 const MOODBOARD_WORLD_HEIGHT=MOODBOARD_WORLD_WIDTH;
-const MOODBOARD_BASELINE_HEIGHT=10500;
-const WORLD_Y_SCALE=MOODBOARD_WORLD_HEIGHT/MOODBOARD_BASELINE_HEIGHT;
-const MOODBOARD_ITEM_SAFE_MARGIN=120;
+const MOODBOARD_ITEM_SAFE_MARGIN=80;
 const MOODBOARD_VIEW_SCALE=0.35;
 const SCALE=MOODBOARD_VIEW_SCALE;
 const MOODBOARD_VIEW_WIDTH=MOODBOARD_WORLD_WIDTH*MOODBOARD_VIEW_SCALE;
 const MOODBOARD_VIEW_HEIGHT=MOODBOARD_WORLD_HEIGHT*MOODBOARD_VIEW_SCALE;
-const sy=v=>Math.round(v*WORLD_Y_SCALE);
+const sy=v=>v;
 const IS_LOW_POWER_DEVICE=(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent||''))||((typeof navigator.deviceMemory==='number')&&navigator.deviceMemory<=4);
 
 cv.style.width=MOODBOARD_WORLD_WIDTH+'px';
