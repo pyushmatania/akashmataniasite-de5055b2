@@ -6230,7 +6230,7 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
     const dx=(d.left-ox)*sc, dy=(d.top-oy)*sc;
     // Only render if in visible viewport
-    const iw=d.w*sc, ih=d.h*sc;
+    const iw=Math.max(d.w*sc,8), ih=Math.max(d.h*sc,6);
     if(dx+iw<visL||dx>visR||dy+ih<visT||dy>visB)return;
     
     count++;
