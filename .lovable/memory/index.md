@@ -1,6 +1,3 @@
-# Memory: index.md
-Updated: now
-
 Portfolio app for Akash Matania — Product Manager with 8+ years across fintech, media, Web3, edtech.
 
 ## Architecture
@@ -10,17 +7,17 @@ Portfolio app for Akash Matania — Product Manager with 8+ years across fintech
 - All new sections should follow the same pattern: in-app overlays/panels, not separate routes
 
 ## Canvas Size
-- 7000×7000 square canvas
+- 21000×21000 square canvas (tripled from 7000)
 - Default view scale: 0.5x
 - sy() is identity function (no Y scaling needed for square canvas)
 
 ## Map Zones (5 zones + hub)
-- **Origin Story** 📸 (0-2400, 0-1500) — Personal & About
-- **The War Room** 🎯 (2800-7000, 0-1500) — Work & Professional
-- **Launch Pad** 🚀 (0-3600, 1600-2800) — Portfolio & Creative
-- **Akash Unplugged** ⭐ (2200-4000, 1400-3000) — Hub
-- **The Playground** 🎮 (0-3400, 3000-7000) — Hobbies & Interests
-- **Meme Alley** 😂 (3600-7000, 3000-7000) — Fun & Memes
+- **Origin Story** 📸 (0-7200, 0-4500) — Personal & About
+- **The War Room** 🎯 (8400-21000, 0-4500) — Work & Professional
+- **Launch Pad** 🚀 (0-10800, 4800-8400) — Portfolio & Creative
+- **Akash Unplugged** ⭐ (6600-12000, 4200-9000) — Hub
+- **The Playground** 🎮 (0-10200, 9000-21000) — Hobbies & Interests
+- **Meme Alley** 😂 (10800-21000, 9000-21000) — Fun & Memes
 
 ## Map Filters (5 only, content-type based)
 - All, Photos, Memes, Interactive, Others
@@ -30,8 +27,9 @@ Portfolio app for Akash Matania — Product Manager with 8+ years across fintech
 - Interactive stickers get a "🎮 Tap me" badge
 
 ## Map Zoom
-- Big map zoom steps: [0.25, 0.35, 0.5, 0.75, 1, 1.25, 1.5, 2]
-- Default zoom: 0.25x (most zoomed out)
+- Big map zoom steps: [0.15, 0.2, 0.25, 0.35, 0.5, 0.75, 1, 1.25, 1.5, 2]
+- Default zoom: 0.15x (most zoomed out)
+- Big map base scale doubled (mw*16)
 
 ## Design
 - Clean, minimal style with colorful accents
