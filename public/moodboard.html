@@ -5704,20 +5704,34 @@ function toggleMap(){
     // --- EXPAND ---
     mmExp=true;
     mmContainer.classList.add('map-opening');
-    // Rebuild at full size
+    // Rebuild at full size — defer heavy work across frames to prevent crash
     ensureMapData(true);
     mapZoomScale=2;
     const zl=document.getElementById('mapZoomLevel');
     if(zl)zl.textContent=mapZoomScale+'×';
-    drawMap();
-    updMap();
-    // After animation, switch to expanded state
-    setTimeout(()=>{
-      mmContainer.classList.remove('map-opening');
-      mmContainer.classList.add('expanded');
-      mapTransitioning=false;
-      recenter();
-    },700);
+    // Phase 1: layout + decorations on next frame
+    requestAnimationFrame(()=>{
+      try{
+        drawMapLayout();
+        // Phase 2: render clones after decorations are painted
+        requestAnimationFrame(()=>{
+          try{
+            renderVisibleClones(drawMap._sc,drawMap._ox,drawMap._oy,drawMap._cw,drawMap._ch);
+            updMap();
+          }catch(e){console.error('Map clone render error:',e)}
+          // Phase 3: finalize after animation
+          setTimeout(()=>{
+            mmContainer.classList.remove('map-opening');
+            mmContainer.classList.add('expanded');
+            mapTransitioning=false;
+            recenter();
+          },500);
+        });
+      }catch(e){
+        console.error('Map layout error:',e);
+        mapTransitioning=false;
+      }
+    });
   } else {
     // --- COLLAPSE ---
     mmContainer.classList.remove('expanded');
