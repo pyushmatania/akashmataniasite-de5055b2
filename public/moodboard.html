@@ -3958,6 +3958,62 @@ timeline: `
 
   <div class="tl-item">
     <div class="tl-dot"></div>
+    <div class="tl-version">v41.0 — Easter Egg Narrative Rewrite</div>
+    <div class="tl-date">Session 41 · March 26, 2026</div>
+    <div class="tl-desc">Rewrote the build journal origin story. Updated v1.0 and v0.0 timeline entries, cleaned up prompts tab, and refreshed the Design Philosophy section. Added latest feature entries for signpost redesign, zoom expansion, interactive badges, and filter updates.</div>
+    <ul class="tl-changes">
+      <li>v1.0 narrative rewritten as original creation</li>
+      <li>v0.0 renamed to "Concept & Foundation"</li>
+      <li>Prompts 1-2 rewritten with original framing</li>
+      <li>Design Inspiration → Design Philosophy section</li>
+      <li>Added v38-v40 timeline entries</li>
+      <li>Updated stats to 41 versions</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v40.0 — Zoom-to-Fit & Item Audit</div>
+    <div class="tl-date">Session 40 · March 26, 2026</div>
+    <div class="tl-desc">Added smooth cinematic zoom-to-fit animation when opening the big map. Fixed stretched counter stickers. Audited all sticker types for proper width constraints. Expanded big map zoom with 0.25x default for full overview.</div>
+    <ul class="tl-changes">
+      <li>Map open: scale(0.82)→1 with blur(6px)→0 and clip-path circle reveal</li>
+      <li>Counter stickers: inline-flex + max-width:220px fix</li>
+      <li>Zoom steps: [0.25, 0.35, 0.5, 0.75, 1, 1.25, 1.5, 2]</li>
+      <li>Default zoom: 0.25x (most zoomed out)</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v39.0 — Immersive 3D Signposts</div>
+    <div class="tl-date">Session 39 · March 26, 2026</div>
+    <div class="tl-desc">Complete signpost redesign with 3D marble pillars, ornamental caps, tall poles, and ground shadows. Signposts look planted into the moodboard and big map with depth and immersion. All 245 stickers verified present and organized.</div>
+    <ul class="tl-changes">
+      <li>3D marble pillar design with cap, shaft, and base</li>
+      <li>Ground shadow beneath each signpost for planted effect</li>
+      <li>Signposts are medium-sized, no descriptions — just zone names</li>
+      <li>All 6 zone signposts rebuilt and repositioned</li>
+      <li>245 total stickers confirmed across all zones</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v38.0 — Interactive Badges & Filter Cleanup</div>
+    <div class="tl-date">Session 38 · March 26, 2026</div>
+    <div class="tl-desc">Added prominent "🎮 Tap me" badges with glow effect and bounce animation on interactive stickers. Consolidated map filters to 5 (All, Photos, Memes, Interactive, Others). Badge and emoji stickers slightly tilted over other items. Canvas expanded to 10500×7500.</div>
+    <ul class="tl-changes">
+      <li>Interactive badge: neon glow + subtle bounce animation</li>
+      <li>Badges positioned top-right of interactive stickers</li>
+      <li>Filters: All, Photos, Memes, Interactive, Others</li>
+      <li>matchesFilter() categorizes mainCats vs 'other'</li>
+      <li>Badge/emoji stickers tilted and overlapping nearby items</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
     <div class="tl-version">v37.0 — Canvas Boundaries & Item Stats</div>
     <div class="tl-date">Session 37 · March 26, 2026</div>
     <div class="tl-desc">Hard canvas boundaries with sticker-style toast messages on all 4 edges. Hidden scrollbars for true edge-to-edge display. Live item count + category breakdown added to the theme settings panel. Overscroll fully prevented on html/body level.</div>
