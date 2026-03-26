@@ -5532,6 +5532,20 @@ function scanStickers(){
     }
     stickerData.push({left,top,w,h,bg,emoji,cat,ref:s,border,radius});
   });
+}
+
+function addMapDecorations(cw, ch){
+  const layer=document.createElement('div');
+  layer.className='map-dec-layer';
+  layer.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1';
+  function addDiv(cls,style){
+    const el=document.createElement('div');
+    el.className=cls;
+    el.style.cssText='position:absolute;pointer-events:none;'+style;
+    layer.appendChild(el);
+    return el;
+  }
+  const IS_MOBILE_MAP=window.innerWidth<600;
 
   // === BEACHES ===
   const beaches=[
