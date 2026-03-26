@@ -6208,14 +6208,13 @@ function addMapDecorations(cw, ch){
     const wrap=document.createElement('div');
     wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;z-index:8;pointer-events:none';
     const fontSize=Math.max(9,cw*0.01);
-    // Neon board
     const board=document.createElement('div');
     board.style.cssText='background:#1a1a2e;border:1.5px solid '+z.color+';border-radius:4px;padding:'+Math.max(3,fontSize*0.4)+'px '+Math.max(8,fontSize*0.8)+'px;text-align:center;box-shadow:0 0 8px '+z.color+'80,0 0 16px '+z.color+'40,inset 0 0 6px rgba(0,0,0,0.5),0 4px 12px rgba(0,0,0,0.4)';
     const txt=document.createElement('div');
     txt.textContent=z.icon+' '+z.t;
     txt.style.cssText='font-family:Fredoka,Arial Black,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:'+z.color+';letter-spacing:0.1em;white-space:nowrap;text-shadow:0 0 4px '+z.color+',0 0 10px '+z.color+',0 0 20px '+z.color+'80';
     board.appendChild(txt);
-    // Neon dots row
+
     const dots=document.createElement('div');
     dots.style.cssText='display:flex;gap:3px;justify-content:center;margin-bottom:2px';
     for(let i=0;i<6;i++){
@@ -6223,7 +6222,7 @@ function addMapDecorations(cw, ch){
       d.style.cssText='width:2.5px;height:2.5px;border-radius:50%;background:'+z.color+';box-shadow:0 0 3px '+z.color+';animation:bulbChase 1.5s ease-in-out '+(i*0.2)+'s infinite';
       dots.appendChild(d);
     }
-    // Poles
+
     const poles=document.createElement('div');
     poles.style.cssText='display:flex;gap:'+Math.max(12,fontSize*1.2)+'px;margin-top:-1px';
     for(let i=0;i<2;i++){
@@ -6231,12 +6230,12 @@ function addMapDecorations(cw, ch){
       p.style.cssText='width:2px;height:'+Math.max(16,cw*0.015)+'px;background:linear-gradient(90deg,#666,#bbb,#666);border-radius:1px;box-shadow:1px 0 2px rgba(0,0,0,0.15)';
       poles.appendChild(p);
     }
-    // Base
+
     const base=document.createElement('div');
     base.style.cssText='width:'+Math.max(14,fontSize*1.4)+'px;height:3px;background:linear-gradient(180deg,#888,#555);border-radius:1px;margin-top:-1px';
-    // Glow
     const glow=document.createElement('div');
     glow.style.cssText='width:'+Math.max(20,fontSize*2)+'px;height:5px;background:radial-gradient(ellipse,'+z.color+'40,transparent 70%);border-radius:50%;filter:blur(2px);margin-top:1px';
+
     wrap.appendChild(dots);
     wrap.appendChild(board);
     wrap.appendChild(poles);
@@ -6244,6 +6243,82 @@ function addMapDecorations(cw, ch){
     wrap.appendChild(glow);
     layer.appendChild(wrap);
   });
+
+  // === SCATTERED NEON DECOR on big map (arrows, stars, tube lights) ===
+  const neonDecor=[
+    {type:'arrow',x:50,y:18,color:'#FFD700',size:20,rot:0},
+    {type:'star',x:56,y:14,color:'#E53935',size:18},
+    {type:'tube',x:49,y:29,colorA:'#4CAF50',colorB:'#E53935',w:10,h:0.45,rot:0},
+
+    {type:'star',x:35,y:41,color:'#42A5F5',size:15},
+    {type:'arrow',x:12,y:42,color:'#42A5F5',size:16,rot:90},
+    {type:'tube',x:16,y:53,colorA:'#4CAF50',colorB:'#42A5F5',w:0.45,h:8.5,rot:0},
+
+    {type:'star',x:90,y:45,color:'#FF9800',size:16},
+    {type:'arrow',x:66,y:41,color:'#E53935',size:18,rot:180},
+    {type:'tube',x:86,y:58,colorA:'#E53935',colorB:'#AB47BC',w:0.45,h:11,rot:0},
+
+    {type:'zigzag',x:28,y:74,color:'#FF9800',size:24},
+    {type:'star',x:38,y:70,color:'#42A5F5',size:14},
+    {type:'tube',x:14,y:76,colorA:'#42A5F5',colorB:'#FF9800',w:9,h:0.45,rot:0},
+
+    {type:'star',x:61,y:60,color:'#FFD700',size:22},
+    {type:'ring',x:43,y:63,color:'#4CAF50',size:14},
+    {type:'ring',x:59,y:69,color:'#AB47BC',size:12},
+    {type:'diamond',x:55,y:66,color:'#E53935',size:14},
+
+    {type:'star',x:83,y:83,color:'#AB47BC',size:15},
+    {type:'zigzag',x:73,y:90,color:'#AB47BC',size:20},
+    {type:'arrow',x:9,y:88,color:'#FF9800',size:14,rot:-45},
+    {type:'tube',x:69,y:68,colorA:'#AB47BC',colorB:'#E53935',w:0.4,h:7.5,rot:0}
+  ];
+
+  neonDecor.forEach(n=>{
+    const el=document.createElement('div');
+    const rot=(typeof n.rot==='number')?' rotate('+n.rot+'deg)':'';
+    el.style.cssText='position:absolute;left:'+n.x+'%;top:'+n.y+'%;transform:translate(-50%,-50%)'+rot+';pointer-events:none;z-index:6';
+
+    if(n.type==='tube'){
+      el.style.width=n.w+'%';
+      el.style.height=n.h+'%';
+      el.style.borderRadius='999px';
+      el.style.background='linear-gradient(90deg,'+n.colorA+','+n.colorB+')';
+      el.style.boxShadow='0 0 8px '+n.colorA+',0 0 20px '+n.colorB;
+      el.style.animation='neonTubeGlow 2.8s ease-in-out infinite';
+    } else if(n.type==='ring'){
+      const ringSize=Math.max(10,n.size||12);
+      el.style.width=ringSize+'px';
+      el.style.height=ringSize+'px';
+      el.style.border='2px solid '+n.color;
+      el.style.borderRadius='50%';
+      el.style.boxShadow='0 0 6px '+n.color+', inset 0 0 5px '+n.color;
+      el.style.animation='neonRingPulse 2.6s ease-in-out infinite';
+    } else if(n.type==='diamond'){
+      const s=n.size||12;
+      el.style.width=s+'px';
+      el.style.height=s+'px';
+      el.style.border='2px solid '+n.color;
+      el.style.transform='translate(-50%,-50%) rotate(45deg)';
+      el.style.boxShadow='0 0 6px '+n.color+',0 0 12px '+n.color;
+      el.style.animation='neonDiamondFloat 3.2s ease-in-out infinite';
+    } else if(n.type==='zigzag'){
+      const s=n.size||20;
+      el.innerHTML='<svg width="'+s+'" height="'+Math.round(s*0.35)+'" viewBox="0 0 100 35" fill="none"><polyline points="4,28 20,6 36,28 52,6 68,28 84,6 96,28" stroke="'+n.color+'" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      el.style.filter='drop-shadow(0 0 6px '+n.color+')';
+      el.style.animation='neonZigzag 2.1s ease-in-out infinite';
+    } else if(n.type==='arrow'){
+      const s=n.size||16;
+      el.innerHTML='<svg width="'+s+'" height="'+Math.round(s*0.65)+'" viewBox="0 0 60 40" fill="none"><path d="M5 30 L30 5 L55 30" stroke="'+n.color+'" stroke-width="5" stroke-linecap="round"/><path d="M30 5 L30 38" stroke="'+n.color+'" stroke-width="4" stroke-linecap="round"/></svg>';
+      el.style.filter='drop-shadow(0 0 6px '+n.color+') drop-shadow(0 0 12px '+n.color+')';
+      el.style.animation='neonArrowBounce 2.4s ease-in-out infinite';
+    } else {
+      const s=n.size||16;
+      el.innerHTML='<svg width="'+s+'" height="'+s+'" viewBox="0 0 50 50" fill="none"><polygon points="25,2 31,18 49,18 35,28 40,46 25,35 10,46 15,28 1,18 19,18" stroke="'+n.color+'" stroke-width="3"/></svg>';
+      el.style.filter='drop-shadow(0 0 7px '+n.color+') drop-shadow(0 0 16px '+n.color+')';
+      el.style.animation='neonStarSpin 8s linear infinite';
+    }
+
+    layer.appendChild(el);
   });
 
   // === GROUND-PAINTED ZONE NAMES (painted on the land) ===
