@@ -16,13 +16,13 @@
   --font-sans:'DM Sans',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;
   --font-hand:'Caveat',cursive;--font-fun:'Fredoka',sans-serif;
 }
-html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);background:#FAF8F5;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);background:#FAF8F5;margin:0;padding:0;overscroll-behavior:none}
 *{-webkit-tap-highlight-color:transparent}
 .canvas-viewport{width:100vw;height:100vh;overflow:auto;cursor:grab;position:relative;margin:0;padding:0;background:#FAF8F5;overscroll-behavior:none;will-change:scroll-position}
 .canvas{transform:scale(0.5);transform-origin:0 0;overflow:hidden;contain:layout style}
 .canvas-viewport:active{cursor:grabbing}
-.canvas-viewport::-webkit-scrollbar{width:6px;height:6px}
-.canvas-viewport::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.06);border-radius:3px}
+.canvas-viewport::-webkit-scrollbar{display:none}
+.canvas-viewport{scrollbar-width:none;-ms-overflow-style:none}
 .canvas{
   width:10000px;height:7000px;position:relative;background-color:#FAF8F5;
   background-image:
@@ -50,6 +50,32 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .bounce-flash.right{background:linear-gradient(-90deg,rgba(201,169,110,0.3),transparent 30%)}
 .bounce-flash.top{background:linear-gradient(180deg,rgba(201,169,110,0.3),transparent 30%)}
 .bounce-flash.bottom{background:linear-gradient(0deg,rgba(201,169,110,0.3),transparent 30%)}
+
+/* BOUNDARY TOAST — sticker-style edge message */
+.boundary-toast{
+  position:fixed;z-index:99998;pointer-events:none;
+  font-family:var(--font-hand);font-size:0.83rem;color:#5C4A1E;
+  background:#FFF9C4;
+  padding:7px 14px 9px;border-radius:3px;
+  box-shadow:2px 3px 0 rgba(0,0,0,0.09),0 6px 20px rgba(0,0,0,0.1);
+  border-bottom:2px solid rgba(201,169,110,0.35);
+  opacity:0;transition:opacity 0.16s ease,transform 0.18s ease;
+  white-space:nowrap;
+}
+.boundary-toast.edge-left{left:14px;top:50%;transform:translateY(-50%) scale(0.85) rotate(-2deg)}
+.boundary-toast.edge-left.show{opacity:1;transform:translateY(-50%) scale(1) rotate(-1.5deg)}
+.boundary-toast.edge-right{right:14px;top:50%;transform:translateY(-50%) scale(0.85) rotate(2deg)}
+.boundary-toast.edge-right.show{opacity:1;transform:translateY(-50%) scale(1) rotate(1.5deg)}
+.boundary-toast.edge-top{top:14px;left:50%;transform:translateX(-50%) scale(0.85) rotate(-1deg)}
+.boundary-toast.edge-top.show{opacity:1;transform:translateX(-50%) scale(1) rotate(-0.8deg)}
+.boundary-toast.edge-bottom{bottom:14px;left:50%;transform:translateX(-50%) scale(0.85) rotate(1deg)}
+.boundary-toast.edge-bottom.show{opacity:1;transform:translateX(-50%) scale(1) rotate(0.8deg)}
+
+/* BOARD STATS — in settings panel */
+.board-stats{margin-top:14px;padding-top:12px;border-top:1px dashed rgba(201,169,110,0.3);text-align:center}
+.stats-total{font-family:var(--font-hand);font-size:0.72rem;color:var(--text3);margin-bottom:7px;letter-spacing:0.03em;opacity:0.85}
+.stats-cats{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.stats-cat{font-family:var(--font-hand);font-size:0.65rem;color:var(--text3);background:rgba(0,0,0,0.035);border-radius:10px;padding:2px 7px;line-height:1.5}
 
 /* STICKER BASE */
 .sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));contain:layout style paint;content-visibility:auto;contain-intrinsic-size:200px 120px}
@@ -1486,11 +1512,16 @@ body.map-expanded .scroll-counter{display:none!important}
       <div class="theme-label">Matrix ☢️</div>
     </div>
   </div>
+  <div class="board-stats" id="boardStats">
+    <div class="stats-total">— <span id="statsTotal">…</span> items on board —</div>
+    <div class="stats-cats" id="statsCats"></div>
+  </div>
 </div>
 
 <div class="scroll-counter" id="scrollCounter">0</div>
 <div class="swipe-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Swipe to explore · Tap stickers!</div>
 <div class="bounce-flash" id="bounceFlash"></div>
+<div class="boundary-toast" id="boundaryToast"></div>
 
 <div class="canvas-viewport" id="viewport">
 <div class="canvas" id="canvas">
@@ -3335,6 +3366,24 @@ vp.addEventListener('scroll',()=>{
   }
 },{passive:true});
 
+// ===== BOUNDARY TOAST — sticker-style edge message =====
+const _boundaryMsgs={
+  left:'← you\'ve reached the left edge!',
+  right:'you\'ve reached the right edge! →',
+  top:'☁️ top of the canvas — can\'t go higher!',
+  bottom:'🌊 bottom of the canvas — can\'t go lower!'
+};
+let _boundaryToastTimer=null;
+function showBoundaryToast(edge){
+  const t=document.getElementById('boundaryToast');
+  if(!t)return;
+  clearTimeout(_boundaryToastTimer);
+  t.textContent='🚧 '+_boundaryMsgs[edge];
+  t.className='boundary-toast edge-'+edge;
+  requestAnimationFrame(()=>t.classList.add('show'));
+  _boundaryToastTimer=setTimeout(()=>{t.classList.remove('show')},1800);
+}
+
 // ===== BOUNCE-BACK EDGE DETECTION =====
 const bounceFlash=document.getElementById('bounceFlash');
 let bounceTimeout=null;
@@ -3348,6 +3397,8 @@ function triggerBounce(edge){
   // Visual flash
   bounceFlash.className='bounce-flash '+edge;
   bounceFlash.style.opacity='1';
+  // Sticker-style boundary message
+  showBoundaryToast(edge);
   clearTimeout(bounceTimeout);
   bounceTimeout=setTimeout(()=>{bounceFlash.style.opacity='0';lastBounceEdge='';bounceTimeout=null},400);
   // Haptic-like vibration if available
@@ -6208,6 +6259,36 @@ function meetingBingo(el,e){e.stopPropagation();playSfx('click');const word=bing
 const salaries=['Startup equity (worth TBD) 📊','Paid in experience 🎓','Paid in learnings 📚','Actual money (rare!) 💰','Paid in pizza on demo day 🍕','Stock options (cliff: ♾️)'];
 function salaryRoulette(el,e){e.stopPropagation();playSfx('spin');const r=el.querySelector('.meme-text');r.textContent='🎡 Spinning...';setTimeout(()=>{const pick=salaries[Math.floor(Math.random()*salaries.length)];r.textContent=pick;playSfx(pick.includes('money')?'kaching':'fail');spawnConfetti(e.clientX||0,e.clientY||0)},500)}
 
+// ===== BOARD ITEM STATS (for settings panel) =====
+function initBoardStats(){
+  const stickers=document.querySelectorAll('#canvas > .sticker');
+  const total=stickers.length;
+  const catMap={
+    'sticker-emoji':'✨ emojis','sticker-badge':'🏷️ badges','sticker-postit':'📝 notes',
+    'sticker-meme':'😂 memes','sticker-project':'🚀 projects','sticker-stamp':'🔖 stamps',
+    'sticker-counter':'🔢 counters','sticker-text':'✍️ texts','sticker-illustrated':'🎨 cards',
+    'sticker-hero-photo':'📸 photos','sticker-fortune':'🔮 fortune','sticker-scratch':'🎰 scratch',
+    'sticker-mood':'🎭 mood','sticker-progress':'📊 progress','sticker-swatches':'🎨 swatches',
+    'sticker-washi':'🎀 washi','sticker-highlight':'🖊️ highlights'
+  };
+  const counts={};
+  stickers.forEach(s=>{
+    for(const [cls,name] of Object.entries(catMap)){
+      if(s.classList.contains(cls)){counts[name]=(counts[name]||0)+1;break;}
+    }
+  });
+  const totalEl=document.getElementById('statsTotal');
+  if(totalEl)totalEl.textContent=total;
+  const catsEl=document.getElementById('statsCats');
+  if(catsEl){
+    catsEl.innerHTML=Object.entries(counts)
+      .filter(([,v])=>v>0)
+      .sort(([,a],[,b])=>b-a)
+      .map(([name,count])=>`<span class="stats-cat">${count} ${name}</span>`)
+      .join('');
+  }
+}
+
 // Scan once on load, then draw + greeting
 function bootstrapMap(forceRescan){
   try{
@@ -6216,6 +6297,7 @@ function bootstrapMap(forceRescan){
     ensureMapData(forceRescan);
     drawMap();
     mapBootstrapped=true;
+    initBoardStats();
   }catch(e){
     console.error('Init error:',e)
   }
