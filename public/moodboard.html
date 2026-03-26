@@ -3361,8 +3361,9 @@ function autoArrangeMoodboardItems(){
 // Center on the Akash hub zone
 autoArrangeMoodboardItems();
 
-// Add interactive badges to interactive stickers
-document.querySelectorAll('.sticker-counter,.sticker-mood,.sticker-scratch,.sticker-progress,.sticker-fortune').forEach(s=>{
+// Add interactive badges to interactive stickers (including onclick-based ones)
+document.querySelectorAll('.sticker-counter,.sticker-mood,.sticker-scratch,.sticker-progress,.sticker-fortune,.sticker[onclick],.sticker-meme[onclick]').forEach(s=>{
+  if(s.querySelector('.interactive-badge'))return; // avoid duplicates
   s.style.position='relative';
   const badge=document.createElement('div');
   badge.className='interactive-badge';
