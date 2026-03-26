@@ -6871,10 +6871,10 @@ setTimeout(()=>{
   setTimeout(()=>greet.remove(),3200);
 },120)
 
-window.addEventListener('resize',()=>{
-  clearTimeout(mapResizeTimer);
-  mapResizeTimer=setTimeout(()=>{if(mapBootstrapped)bootstrapMap(false)},140);
-});
+window.addEventListener('resize',debounce(()=>{
+  if(mapBootstrapped)bootstrapMap(false);
+  _cachedCanvasRect=null; // invalidate cached rect on resize
+},200));
 
 
 
