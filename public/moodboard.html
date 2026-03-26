@@ -3552,22 +3552,22 @@ function positionBadgeBandages(){
 function placeZoneSignposts(signposts){
   const anchors={
     origin:{left:2000,top:400},
-    warroom:{left:9000,top:400},
-    launchpad:{left:2000,top:6500},
+    work:{left:9000,top:400},
+    portfolio:{left:2000,top:6500},
     hub:{left:6200,top:6000},
-    playground:{left:2000,top:10500},
-    memealley:{left:9500,top:7000}
+    hobby:{left:2000,top:10500},
+    fun:{left:9500,top:7000}
   };
 
   signposts.forEach(sticker=>{
     const label=(sticker.querySelector('.signpost-board')?.textContent||'').toLowerCase();
     let key='hub';
     if(label.includes('origin'))key='origin';
-    else if(label.includes('war'))key='warroom';
-    else if(label.includes('launch'))key='launchpad';
-    else if(label.includes('playground'))key='playground';
-    else if(label.includes('meme'))key='memealley';
-    else if(label.includes('unplugged')||label.includes('akash'))key='hub';
+    else if(label.includes('work'))key='work';
+    else if(label.includes('portfolio'))key='portfolio';
+    else if(label.includes('hobby'))key='hobby';
+    else if(label.includes('fun'))key='fun';
+    else if(label.includes('hub'))key='hub';
     const next=clampStickerToMoodboard(sticker,anchors[key].left,anchors[key].top);
     sticker.style.left=next.left+'px';
     sticker.style.top=next.top+'px';
