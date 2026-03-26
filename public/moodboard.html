@@ -5468,7 +5468,8 @@ function addMapDecorations(cw,ch){
   const IS_MOBILE_MAP = IS_LOW_POWER_DEVICE;
 
   // === OCEAN WAVES ===
-  for(let i=0;i<50;i++){
+  const waveCount=IS_MOBILE_MAP?15:50;
+  for(let i=0;i<waveCount;i++){
     const x=Math.random()*100,y=Math.random()*100;
     const w=6+Math.random()*18;
     addDiv('map-wave','left:'+x+'%;top:'+y+'%;width:'+w+'px;animation-delay:'+(Math.random()*4)+'s;animation-duration:'+(2+Math.random()*2.5)+'s;opacity:'+(0.15+Math.random()*0.2));
