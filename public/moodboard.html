@@ -3502,7 +3502,7 @@ function placeZoneSignposts(signposts){
 
   signposts.forEach(sticker=>{
     const label=(sticker.querySelector('.signpost-board')?.textContent||'').toLowerCase();
-    let key='hub';
+    let key='origin';
     if(label.includes('origin'))key='origin';
     else if(label.includes('work'))key='work';
     else if(label.includes('portfolio'))key='portfolio';
