@@ -6611,8 +6611,9 @@ function navigateToFilteredItem(cat,idx){
   const target=matching[idx%matching.length];
   const sc=drawMap._sc||0.05;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
+  const cL=parseFloat(mapCanvas.style.left)||0;
   const cT=parseFloat(mapCanvas.style.top)||0;
-  const px=(target.left-ox)*sc;
+  const px=(target.left-ox)*sc+cL;
   const py=(target.top-oy)*sc+cT;
   mmInner.scrollTo({left:px-mmInner.clientWidth/2,top:py-mmInner.clientHeight/2,behavior:'smooth'});
   // Make item itself glow directly — no HUD, no lines
