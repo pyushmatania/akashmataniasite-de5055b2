@@ -6291,9 +6291,11 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
   const dx=targetMX-startX,dy=targetMY-startY;
   const dist=Math.sqrt(dx*dx+dy*dy);
   const steps=Math.min(Math.max(Math.floor(dist/14),6),30);
-  for(let i=1;i<=steps;i++){
-    setTimeout(()=>{
-      const t=i/steps;
+  // Footstep trail — limited to 15 max, timers tracked for cancellation
+  const actualSteps=Math.min(steps,15);
+  for(let i=1;i<=actualSteps;i++){
+    _walkFootstepTimers.push(setTimeout(()=>{
+      const t=i/actualSteps;
       const fx=startX+dx*t+((i%2===0?1:-1)*4);
       const fy=startY+dy*t;
       const fp=document.createElement('div');
@@ -6308,9 +6310,9 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
       dust.style.cssText='position:absolute;left:'+fx+'px;top:'+fy+'px;z-index:9997;pointer-events:none;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,rgba(180,160,120,0.4),transparent);transform:translate(-50%,-50%) scale(0.5);transition:transform 0.6s,opacity 0.6s;';
       mmInner.appendChild(dust);
       requestAnimationFrame(()=>{dust.style.transform='translate(-50%,-50%) scale(2.5)';dust.style.opacity='0'});
-      setTimeout(()=>{fp.style.opacity='0'},800);
-      setTimeout(()=>{fp.remove();dust.remove()},1800);
-    },i*(WALK_DURATION/steps));
+      safeTimeout(()=>{fp.style.opacity='0'},800);
+      safeTimeout(()=>{fp.remove();dust.remove()},1800);
+    },i*(WALK_DURATION/actualSteps)));
   }
   // After walk completes, close map and navigate to exact item
   _walkTimer=setTimeout(()=>{
