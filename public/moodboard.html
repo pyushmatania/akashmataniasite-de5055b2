@@ -2387,6 +2387,7 @@ body.map-expanded .scroll-counter{display:none!important}
       </div>
       <div class="bar-info">
         <span class="bar-count" id="mapCount">98 items</span>
+        <span class="bar-counter-btn" id="mapCounterBtn" onclick="event.stopPropagation();cycleMapCountMode()" style="background:linear-gradient(135deg,#FF7043,#F4511E);color:#fff;font-size:8px;font-weight:700;padding:2px 7px;border-radius:10px;cursor:pointer;margin-left:4px;display:inline-block;min-width:20px;text-align:center;box-shadow:0 1px 4px rgba(244,81,30,0.4);border:none">🔢</span>
         <span class="bar-coords" id="barCoords">·</span>
       </div>
     </div>
@@ -6270,6 +6271,15 @@ function drawMap(){
     if(mapCount)mapCount.textContent=count+' items';
     // Draw zone names on small minimap with zone-specific colors
     const zoneColors={'Origin':'#4CAF50','Work':'#E53935','Portfolio':'#42A5F5','Hobby':'#FF9800','Fun':'#AB47BC'};
+     // Draw zone borders on small map
+     mapZones.forEach(z=>{
+       const zx1=(z.x1-offsetX)*sc, zy1=(z.y1-offsetY)*sc;
+       const zw=(z.x2-z.x1)*sc, zh=(z.y2-z.y1)*sc;
+       const zc=zoneColors[z.name]||'#4CAF50';
+       const border=document.createElement('div');
+       border.style.cssText='position:absolute;left:'+zx1+'px;top:'+zy1+'px;width:'+zw+'px;height:'+zh+'px;border:1px solid '+zc+';border-radius:3px;box-shadow:0 0 4px '+zc+'50;pointer-events:none;z-index:2;opacity:0.5';
+       mapCanvas.appendChild(border);
+     });
     mapZones.forEach(z=>{
       const zx=((z.x1+z.x2)/2-offsetX)*sc;
       const zy=((z.y1+z.y2)/2-offsetY)*sc;
