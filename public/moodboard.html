@@ -2597,7 +2597,7 @@ const zoneTargets={
   memealley:{x:10500,y:10000}
 };
 function scrollToZone(e,zone){
-  e.preventDefault();e.stopPropagation();
+  if(e){e.preventDefault();e.stopPropagation();}
   const target=zoneTargets[zone];
   if(!target)return;
   const scale=(typeof MOODBOARD_VIEW_SCALE==='number'?MOODBOARD_VIEW_SCALE:0.5);
