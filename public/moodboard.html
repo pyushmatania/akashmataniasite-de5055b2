@@ -6409,11 +6409,12 @@ function showNav(tx,ty){
 
 // Zone definitions for name lookup
 const mapZones=[
-const MOODBOARD_WORLD_WIDTH=13000;
-const MOODBOARD_WORLD_HEIGHT=MOODBOARD_WORLD_WIDTH;
-// Insert scroll-limiter wrapper so native scroll cannot exceed visual canvas bounds
-(function(){const w=document.createElement('div');w.id='cvWrap';w.style.cssText='position:relative;flex-shrink:0;overflow:hidden;';w.style.width=MOODBOARD_WORLD_WIDTH*0.5+'px';w.style.height=MOODBOARD_WORLD_HEIGHT*0.5+'px';cv.parentNode.insertBefore(w,cv);w.appendChild(cv);})();
-const MOODBOARD_ITEM_SAFE_MARGIN=80;
+  {name:'Origin Story',icon:'📸',x1:500,y1:500,x2:4000,y2:3500},
+  {name:'The War Room',icon:'🎯',x1:6500,y1:500,x2:12500,y2:3500},
+  {name:'Launch Pad',icon:'🚀',x1:500,y1:3500,x2:5500,y2:6500},
+  {name:'Akash Unplugged',icon:'⭐',x1:3500,y1:3000,x2:8500,y2:6500},
+  {name:'The Playground',icon:'🎮',x1:500,y1:6500,x2:5500,y2:12500},
+  {name:'Meme Alley',icon:'😂',x1:7000,y1:6500,x2:12500,y2:12500}
 ];
 function getZoneName(px,py){
   for(const z of mapZones){
