@@ -6117,17 +6117,17 @@ function drawMap(){
   let sc,offsetX,offsetY,canvasW,canvasH;
   
   if(mmExp){
-    // Expanded map — fit full world by default (with room for header/footer)
-    const usableW=Math.max(220,mw-12);
-    const usableH=Math.max(220,mh-120);
-    const fitScale=Math.max(0.02,Math.min(usableW/contentW,usableH/contentH));
+    // Expanded map — fill entire viewport edge to edge
+    const usableW=mw;
+    const usableH=mh;
+    const fitScale=Math.max(0.02,Math.max(usableW/contentW,usableH/contentH));
     sc=fitScale*mapZoomScale;
     canvasW=contentW*sc;
     canvasH=contentH*sc;
     offsetX=minL;
     offsetY=minT;
-    mapCanvas.style.left=Math.max(0,(mw-canvasW)/2)+'px';
-    mapCanvas.style.top='56px';
+    mapCanvas.style.left=((mw-canvasW)/2)+'px';
+    mapCanvas.style.top=((mh-canvasH)/2)+'px';
   } else {
     // SMALL MAP: restore only small-map pan offsets (never expanded-map top offset)
     const zoomFactor=5;
