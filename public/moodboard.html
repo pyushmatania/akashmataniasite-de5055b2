@@ -314,6 +314,18 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker-swatches .sw{width:40px;height:48px;border-radius:6px}
 .sticker-swatches .sw-label{font-size:0.5rem;text-align:center;color:var(--text3);margin-top:3px;font-weight:600}
 
+/* Interactive badge overlay */
+.interactive-badge{
+  position:absolute;top:-8px;right:-8px;z-index:60;
+  background:linear-gradient(135deg,#FF7043,#E64A19);color:#fff;
+  font-family:var(--font-fun);font-size:0.5rem;font-weight:700;
+  padding:3px 7px;border-radius:10px;white-space:nowrap;
+  box-shadow:0 2px 6px rgba(255,112,67,0.4);
+  letter-spacing:0.03em;pointer-events:none;
+  animation:badgePulse 2s ease-in-out infinite;
+}
+@keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
 /* UI ELEMENTS */
 .scroll-counter{position:fixed;bottom:70px;right:20px;z-index:997;font-size:3.5rem;font-weight:200;color:rgba(0,0,0,0.05);font-variant-numeric:tabular-nums;pointer-events:none}
 .swipe-hint{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:1000;background:#fff;border-radius:28px;padding:10px 24px;box-shadow:0 4px 20px rgba(0,0,0,0.08);display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--text2);font-weight:500;animation:fadeHint 5s forwards;pointer-events:none}
@@ -2216,13 +2228,8 @@ body.map-expanded .scroll-counter{display:none!important}
         <button class="mc active" onclick="event.stopPropagation();filt('all',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#66BB6A,#43A047)"></div>All</button>
         <button class="mc" onclick="event.stopPropagation();filt('photo',this)"><div class="legend-dot" style="background:#64B5F6"></div>📸 Photos</button>
         <button class="mc" onclick="event.stopPropagation();filt('meme',this)"><div class="legend-dot" style="background:#CE93D8"></div>😂 Memes</button>
-        <button class="mc" onclick="event.stopPropagation();filt('badge',this)"><div class="legend-dot" style="background:#FFD54F"></div>🏷️ Badges</button>
         <button class="mc" onclick="event.stopPropagation();filt('interactive',this)"><div class="legend-dot" style="background:#FF7043"></div>🎮 Interactive</button>
-        <button class="mc" onclick="event.stopPropagation();filt('emoji',this)"><div class="legend-dot" style="background:#FFEE58"></div>😊 Emoji</button>
-        <button class="mc" onclick="event.stopPropagation();filt('postit',this)"><div class="legend-dot" style="background:#FFF176"></div>📝 Post-its</button>
-        <button class="mc" onclick="event.stopPropagation();filt('stamp',this)"><div class="legend-dot" style="background:#EF9A9A"></div>🎖️ Stamps</button>
-        <button class="mc" onclick="event.stopPropagation();filt('text',this)"><div class="legend-dot" style="background:#B0BEC5"></div>✏️ Text</button>
-        <button class="mc" onclick="event.stopPropagation();filt('other',this)"><div class="legend-dot" style="background:#90A4AE"></div>📦 Other</button>
+        <button class="mc" onclick="event.stopPropagation();filt('other',this)"><div class="legend-dot" style="background:#90A4AE"></div>📦 Others</button>
       </div>
       <div class="bar-info">
         <span class="bar-count" id="mapCount">98 items</span>
@@ -3310,6 +3317,22 @@ function autoArrangeMoodboardItems(){
 
 // Center on the Akash hub zone
 autoArrangeMoodboardItems();
+
+// Add interactive badges to interactive stickers
+document.querySelectorAll('.sticker-counter,.sticker-mood,.sticker-scratch,.sticker-progress,.sticker-fortune').forEach(s=>{
+  s.style.position='relative';
+  const badge=document.createElement('div');
+  badge.className='interactive-badge';
+  badge.textContent='🎮 Tap me';
+  s.appendChild(badge);
+});
+
+// Tilt badge & icon stickers slightly over other items
+document.querySelectorAll('.sticker-badge,.sticker-emoji').forEach((s,i)=>{
+  const tilt=((i%2===0)?-8:8)+(Math.random()*4-2);
+  const cur=s.style.transform||'';
+  if(!cur.includes('rotate'))s.style.transform=cur+' rotate('+tilt.toFixed(1)+'deg)';
+});
 const akashCX=(3500)*SCALE, akashCY=(2500)*SCALE;
 const initialClamp=clampViewportPoint(akashCX-vp.clientWidth/2,akashCY-vp.clientHeight/2);
 vp.scrollLeft=initialClamp.left;
@@ -4828,13 +4851,12 @@ function scanStickers(){
     if(s.classList.contains('sticker-hero-photo')||s.classList.contains('sticker-photo-polaroid')||s.classList.contains('sticker-photo-tilt')||s.classList.contains('sticker-photo-circle'))cat='photo';
     else if(s.classList.contains('sticker-meme'))cat='meme';
     else if(s.classList.contains('sticker-counter')||s.classList.contains('sticker-mood')||s.classList.contains('sticker-scratch')||s.classList.contains('sticker-progress')||s.classList.contains('sticker-fortune'))cat='interactive';
-    else if(s.classList.contains('sticker-emoji'))cat='emoji';
-    else if(s.classList.contains('sticker-badge'))cat='badge';
-    else if(s.classList.contains('sticker-text'))cat='text';
-    else if(s.classList.contains('sticker-postit'))cat='postit';
-    else if(s.classList.contains('sticker-stamp'))cat='stamp';
-    else if(s.classList.contains('sticker-swatches'))cat='swatches';
-    else if(s.classList.contains('sticker-project'))cat='other';
+    else if(s.classList.contains('sticker-emoji'))cat='other';
+    else if(s.classList.contains('sticker-badge'))cat='other';
+    else if(s.classList.contains('sticker-text'))cat='other';
+    else if(s.classList.contains('sticker-postit'))cat='other';
+    else if(s.classList.contains('sticker-stamp'))cat='other';
+    else if(s.classList.contains('sticker-swatches'))cat='other';
     else if(s.classList.contains('sticker-project'))cat='other';
     else if(s.classList.contains('zone-signpost'))cat='other';
     // Determine visual properties
@@ -5365,11 +5387,11 @@ function addMapDecorations(cw,ch){
     wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%) perspective(400px) rotateX(5deg);display:flex;flex-direction:column;align-items:center;z-index:9;pointer-events:none;gap:0';
     const signRow=document.createElement('div');
     signRow.style.cssText='display:flex;align-items:flex-end;gap:0';
-    const fontSize=Math.max(12,cw*0.016);
-    const pillarW=Math.max(8,cw*0.008);
-    const pillarH=Math.max(40,cw*0.045);
-    const capS=Math.max(14,pillarW*1.6);
-    const baseW=Math.max(12,pillarW*1.5);
+    const fontSize=Math.max(9,cw*0.01);
+    const pillarW=Math.max(6,cw*0.005);
+    const pillarH=Math.max(28,cw*0.028);
+    const capS=Math.max(10,pillarW*1.5);
+    const baseW=Math.max(9,pillarW*1.4);
     const mkPillar=()=>{
       const p=document.createElement('div');
       p.style.cssText='display:flex;flex-direction:column;align-items:center;flex-shrink:0';
@@ -5389,12 +5411,6 @@ function addMapDecorations(cw,ch){
     signRow.appendChild(board);
     signRow.appendChild(mkPillar());
     wrap.appendChild(signRow);
-    // Description below signpost
-    const descSize=Math.max(8,fontSize*0.55);
-    const desc=document.createElement('div');
-    desc.textContent=z.desc;
-    desc.style.cssText='font-family:Fredoka,sans-serif;font-weight:500;font-size:'+descSize+'px;color:rgba(255,255,255,0.85);background:rgba(0,0,0,0.55);padding:'+Math.max(4,descSize*0.4)+'px '+Math.max(10,descSize*1.2)+'px;border-radius:'+Math.max(3,descSize*0.3)+'px;margin-top:'+Math.max(4,fontSize*0.3)+'px;white-space:normal;max-width:'+Math.max(180,fontSize*16)+'px;text-align:center;line-height:1.4;text-shadow:0 1px 2px rgba(0,0,0,0.4);letter-spacing:0.03em';
-    wrap.appendChild(desc);
     const shadow=document.createElement('div');
     shadow.style.cssText='position:absolute;bottom:-'+(capS*0.6)+'px;left:50%;transform:translateX(-50%);width:95%;height:'+(capS*0.6)+'px;background:radial-gradient(ellipse,rgba(0,0,0,0.3),transparent 70%);border-radius:50%;filter:blur(3px)';
     wrap.appendChild(shadow);
@@ -5910,7 +5926,7 @@ function navigateToFilteredItem(cat,idx){
 }
 
 // Filter with cycle-through navigation
-const mainCats=['photo','meme','badge','interactive','emoji','postit','stamp','text'];
+const mainCats=['photo','meme','interactive'];
 function matchesFilter(cat,filt){
   if(filt==='all')return true;
   if(filt==='other')return !mainCats.includes(cat);

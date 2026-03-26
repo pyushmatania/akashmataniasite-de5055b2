@@ -17,9 +17,14 @@ Portfolio app for Akash Matania — Product Manager with 8+ years across fintech
 - **The Playground** 🎮 (bottom-left 0-5000, 3500-7000) — Hobbies & Interests: music, travel, recharge
 - **Meme Alley** 😂 (bottom-right 5000-10000, 3500-7000) — Fun & Memes: memes, contra, fun interactive
 
-## Map Filters (content-type, NOT zone-based)
-- Photos, Memes, Badges, Interactive, Other
-- Uses `matchesFilter()` helper for 'other' catch-all
+## Map Filters (5 only, content-type based)
+- All, Photos, Memes, Interactive, Others
+- Uses `matchesFilter()` — mainCats=['photo','meme','interactive'], everything else is 'other'
+
+## Map Signposts
+- Medium-sized with poles, NO descriptions below them
+- Interactive stickers get a "🎮 Tap me" badge (top-right corner)
+- Badge & emoji stickers are slightly tilted
 
 ## Design
 - Clean, minimal style with colorful accents
@@ -28,6 +33,7 @@ Portfolio app for Akash Matania — Product Manager with 8+ years across fintech
 - Staggered fade-in animations on panels
 - Bottom nav has press-scale (0.88) on touch
 - Small minimap: blue theme with grid lines
+- Default map scale: 0.5x
 
 ## Content Source
 - Resume: Akash_Matania_Product_Manager.pdf
