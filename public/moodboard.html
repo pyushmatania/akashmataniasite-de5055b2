@@ -3698,31 +3698,53 @@ function triggerBounce(edge){
   else if(edge==='bottom') vp.scrollTo({top:Math.max(0,maxY-BOUNCE_STRENGTH),behavior:'smooth'});
 }
 
-// Check edges on scroll
-let edgeCheckRAF=null;
+// ===== UNIFIED SCROLL HANDLER (replaces 3 separate listeners) =====
+let _scrollRAF=null;
+const _scrollCounterEl=document.getElementById('scrollCounter');
 vp.addEventListener('scroll',()=>{
-  if(_bouncing||edgeCheckRAF)return;
-  edgeCheckRAF=requestAnimationFrame(()=>{
-    edgeCheckRAF=null;
-    if(_bouncing)return;
+  if(_scrollRAF)return;
+  _scrollRAF=requestAnimationFrame(()=>{
+    _scrollRAF=null;
+    // 1) Scroll counter update
     const bounds=getViewportPanBounds();
-    const maxX=bounds.maxX;
-    const maxY=bounds.maxY;
-    if(vp.scrollLeft<=EDGE_THRESHOLD && maxX>0) triggerBounce('left');
-    else if(vp.scrollLeft>=maxX-EDGE_THRESHOLD && maxX>0) triggerBounce('right');
-    else if(vp.scrollTop<=EDGE_THRESHOLD && maxY>0) triggerBounce('top');
-    else if(vp.scrollTop>=maxY-EDGE_THRESHOLD && maxY>0) triggerBounce('bottom');
+    const mx=bounds.maxX,my=bounds.maxY;
+    if(mx+my>0&&_scrollCounterEl)_scrollCounterEl.textContent=Math.round(((vp.scrollLeft+vp.scrollTop)/(mx+my))*100);
+    // 2) Edge bounce detection
+    if(!_bouncing){
+      if(vp.scrollLeft<=EDGE_THRESHOLD && mx>0) triggerBounce('left');
+      else if(vp.scrollLeft>=mx-EDGE_THRESHOLD && mx>0) triggerBounce('right');
+      else if(vp.scrollTop<=EDGE_THRESHOLD && my>0) triggerBounce('top');
+      else if(vp.scrollTop>=my-EDGE_THRESHOLD && my>0) triggerBounce('bottom');
+    }
+    // 3) Map update (was separate listener at bottom of file)
+    if(typeof updMap==='function'&&typeof mapTransitioning!=='undefined'&&!mapTransitioning){
+      updMap();
+      if(typeof mmExp!=='undefined'&&!mmExp&&!_bouncing){
+        clearTimeout(window._mapScrollTimer);window._mapScrollTimer=setTimeout(drawMap,320);
+      }
+    }
   });
 },{passive:true});
 
-// DRAG SCROLL (canvas background)
+// DRAG SCROLL (canvas background) — RAF-throttled
 let iD=false,dsx,dsy,slx,sly;
+let _dragPendingX=0,_dragPendingY=0,_dragRAF=null;
 vp.addEventListener('mousedown',e=>{
   if(e.target.closest('.sticker'))return;
   iD=true;dsx=e.clientX;dsy=e.clientY;slx=vp.scrollLeft;sly=vp.scrollTop;vp.style.cursor='grabbing';
 });
-document.addEventListener('mousemove',e=>{if(!iD)return;e.preventDefault();const next=clampViewportPoint(slx-(e.clientX-dsx),sly-(e.clientY-dsy));vp.scrollLeft=next.left;vp.scrollTop=next.top});
-document.addEventListener('mouseup',()=>{iD=false;vp.style.cursor='grab'});
+document.addEventListener('mousemove',e=>{
+  if(!iD)return;e.preventDefault();
+  _dragPendingX=e.clientX;_dragPendingY=e.clientY;
+  if(!_dragRAF){
+    _dragRAF=requestAnimationFrame(()=>{
+      _dragRAF=null;
+      const next=clampViewportPoint(slx-(_dragPendingX-dsx),sly-(_dragPendingY-dsy));
+      vp.scrollLeft=next.left;vp.scrollTop=next.top;
+    });
+  }
+});
+document.addEventListener('mouseup',()=>{iD=false;vp.style.cursor='grab';if(_dragRAF){cancelAnimationFrame(_dragRAF);_dragRAF=null}});
 
 // ===== STICKER DRAG + TAP DETECTION + TWO-FINGER ROTATION =====
 let as=null,sox,soy,hz=100,tapSX=0,tapSY=0,tapTime=0,didMove=false;
