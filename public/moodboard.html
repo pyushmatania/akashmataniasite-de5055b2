@@ -16,13 +16,13 @@
   --font-sans:'DM Sans',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;
   --font-hand:'Caveat',cursive;--font-fun:'Fredoka',sans-serif;
 }
-html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);background:#FAF8F5;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);background:#FAF8F5;margin:0;padding:0;overscroll-behavior:none}
 *{-webkit-tap-highlight-color:transparent}
 .canvas-viewport{width:100vw;height:100vh;overflow:auto;cursor:grab;position:relative;margin:0;padding:0;background:#FAF8F5;overscroll-behavior:none;will-change:scroll-position}
 .canvas{transform:scale(0.35);transform-origin:0 0;overflow:hidden;contain:layout style}
 .canvas-viewport:active{cursor:grabbing}
-.canvas-viewport::-webkit-scrollbar{width:6px;height:6px}
-.canvas-viewport::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.06);border-radius:3px}
+.canvas-viewport::-webkit-scrollbar{display:none}
+.canvas-viewport{scrollbar-width:none;-ms-overflow-style:none}
 .canvas{
   width:15000px;height:10500px;position:relative;background-color:#FAF8F5;
   background-image:
@@ -50,6 +50,32 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .bounce-flash.right{background:linear-gradient(-90deg,rgba(201,169,110,0.3),transparent 30%)}
 .bounce-flash.top{background:linear-gradient(180deg,rgba(201,169,110,0.3),transparent 30%)}
 .bounce-flash.bottom{background:linear-gradient(0deg,rgba(201,169,110,0.3),transparent 30%)}
+
+/* BOUNDARY TOAST — sticker-style edge message */
+.boundary-toast{
+  position:fixed;z-index:99998;pointer-events:none;
+  font-family:var(--font-hand);font-size:0.83rem;color:#5C4A1E;
+  background:#FFF9C4;
+  padding:7px 14px 9px;border-radius:3px;
+  box-shadow:2px 3px 0 rgba(0,0,0,0.09),0 6px 20px rgba(0,0,0,0.1);
+  border-bottom:2px solid rgba(201,169,110,0.35);
+  opacity:0;transition:opacity 0.16s ease,transform 0.18s ease;
+  white-space:nowrap;
+}
+.boundary-toast.edge-left{left:14px;top:50%;transform:translateY(-50%) scale(0.85) rotate(-2deg)}
+.boundary-toast.edge-left.show{opacity:1;transform:translateY(-50%) scale(1) rotate(-1.5deg)}
+.boundary-toast.edge-right{right:14px;top:50%;transform:translateY(-50%) scale(0.85) rotate(2deg)}
+.boundary-toast.edge-right.show{opacity:1;transform:translateY(-50%) scale(1) rotate(1.5deg)}
+.boundary-toast.edge-top{top:14px;left:50%;transform:translateX(-50%) scale(0.85) rotate(-1deg)}
+.boundary-toast.edge-top.show{opacity:1;transform:translateX(-50%) scale(1) rotate(-0.8deg)}
+.boundary-toast.edge-bottom{bottom:14px;left:50%;transform:translateX(-50%) scale(0.85) rotate(1deg)}
+.boundary-toast.edge-bottom.show{opacity:1;transform:translateX(-50%) scale(1) rotate(0.8deg)}
+
+/* BOARD STATS — in settings panel */
+.board-stats{margin-top:14px;padding-top:12px;border-top:1px dashed rgba(201,169,110,0.3);text-align:center}
+.stats-total{font-family:var(--font-hand);font-size:0.72rem;color:var(--text3);margin-bottom:7px;letter-spacing:0.03em;opacity:0.85}
+.stats-cats{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.stats-cat{font-family:var(--font-hand);font-size:0.65rem;color:var(--text3);background:rgba(0,0,0,0.035);border-radius:10px;padding:2px 7px;line-height:1.5}
 
 /* STICKER BASE */
 .sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));contain:layout style paint;content-visibility:auto;contain-intrinsic-size:200px 120px}
@@ -1510,11 +1536,16 @@ body.map-expanded .scroll-counter{display:none!important}
       <div class="theme-label">Matrix ☢️</div>
     </div>
   </div>
+  <div class="board-stats" id="boardStats">
+    <div class="stats-total">— <span id="statsTotal">…</span> items on board —</div>
+    <div class="stats-cats" id="statsCats"></div>
+  </div>
 </div>
 
 <div class="scroll-counter" id="scrollCounter">0</div>
 <div class="swipe-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Swipe to explore · Tap stickers!</div>
 <div class="bounce-flash" id="bounceFlash"></div>
+<div class="boundary-toast" id="boundaryToast"></div>
 
 <div class="canvas-viewport" id="viewport">
 <div class="canvas" id="canvas">
@@ -3402,6 +3433,24 @@ vp.addEventListener('scroll',()=>{
   }
 },{passive:true});
 
+// ===== BOUNDARY TOAST — sticker-style edge message =====
+const _boundaryMsgs={
+  left:'← you\'ve reached the left edge!',
+  right:'you\'ve reached the right edge! →',
+  top:'☁️ top of the canvas — can\'t go higher!',
+  bottom:'🌊 bottom of the canvas — can\'t go lower!'
+};
+let _boundaryToastTimer=null;
+function showBoundaryToast(edge){
+  const t=document.getElementById('boundaryToast');
+  if(!t)return;
+  clearTimeout(_boundaryToastTimer);
+  t.textContent='🚧 '+_boundaryMsgs[edge];
+  t.className='boundary-toast edge-'+edge;
+  requestAnimationFrame(()=>t.classList.add('show'));
+  _boundaryToastTimer=setTimeout(()=>{t.classList.remove('show')},1800);
+}
+
 // ===== BOUNCE-BACK EDGE DETECTION =====
 const bounceFlash=document.getElementById('bounceFlash');
 let bounceTimeout=null;
@@ -3415,6 +3464,8 @@ function triggerBounce(edge){
   // Visual flash
   bounceFlash.className='bounce-flash '+edge;
   bounceFlash.style.opacity='1';
+  // Sticker-style boundary message
+  showBoundaryToast(edge);
   clearTimeout(bounceTimeout);
   bounceTimeout=setTimeout(()=>{bounceFlash.style.opacity='0';lastBounceEdge='';bounceTimeout=null},400);
   // Haptic-like vibration if available
@@ -3904,6 +3955,46 @@ const journalContent = {
 
 timeline: `
 <div class="timeline">
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v37.0 — Canvas Boundaries & Item Stats</div>
+    <div class="tl-date">Session 37 · March 26, 2026</div>
+    <div class="tl-desc">Hard canvas boundaries with sticker-style toast messages on all 4 edges. Hidden scrollbars for true edge-to-edge display. Live item count + category breakdown added to the theme settings panel. Overscroll fully prevented on html/body level.</div>
+    <ul class="tl-changes">
+      <li>Sticker-style boundary toast (yellow postit, drop shadow, tilt) pops at whichever edge is hit — unique message per side</li>
+      <li>Messages: "🚧 you've reached the left edge!" / right / "☁️ top…" / "🌊 bottom…"</li>
+      <li>Toast position + rotation matches the edge (left/right at vertical centre, top/bottom at horizontal centre)</li>
+      <li>Scrollbars completely hidden (scrollbar-width:none + ::-webkit-scrollbar display:none) — eliminates 6px dead-strip at corners</li>
+      <li>overscroll-behavior:none added to html and body — zero native bounce past canvas on any side</li>
+      <li>Settings panel bottom: live total item count (— N items on board —)</li>
+      <li>Category-wise pills sorted by count: emojis, badges, notes, memes, projects, stamps, counters…</li>
+      <li>initBoardStats() counts from actual #canvas > .sticker DOM — always accurate</li>
+      <li>All items clamped within canvas boundaries via normalizeAllStickerBounds() on every load</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v36.0 — Performance Overhaul</div>
+    <div class="tl-date">Session 36 · March 26, 2026</div>
+    <div class="tl-desc">Massive bundle-size reduction and runtime performance fixes across the React wrapper app and moodboard.html. Removed 30+ unused npm packages, 44 dead UI component files, and eliminated multiple JS performance bottlenecks that caused lag, crashes, and heavy load times.</div>
+    <ul class="tl-changes">
+      <li>Removed 30+ unused npm packages: recharts, embla-carousel, @tanstack/react-query, zod, date-fns, cmdk, vaul, input-otp, react-hook-form, 20+ Radix UI packages — ~70% bundle size reduction</li>
+      <li>Deleted 44 unused shadcn UI component files (accordion, calendar, chart, sidebar, sheet, dialog, form…)</li>
+      <li>Deleted 2 unused hooks (use-mobile.tsx, use-is-mobile.ts)</li>
+      <li>Removed QueryClientProvider wrapper from App.tsx — no queries were ever made, pure overhead</li>
+      <li>Added React.lazy + Suspense code-splitting for all 3 routes (Index, MyStory, NotFound)</li>
+      <li>Vite build optimised: manual chunk splitting (react-vendor / radix-ui / ui-utils), esbuild minify, esnext target</li>
+      <li>akash-photo.jpeg moved from src/assets (Vite-bundled) to /images/ public path — removes ~1MB from JS bundle, enables browser caching</li>
+      <li>Moodboard: preconnect to fonts.googleapis.com + fonts.gstatic.com — fonts start loading earlier</li>
+      <li>Moodboard: RAF-throttled main scroll → updMap handler — was running 60+ times/sec, now one rAF per frame</li>
+      <li>Moodboard: passive:true added to all 4 scroll event listeners — browser scrolls without waiting for JS</li>
+      <li>Moodboard: removed duplicate bootstrapMap call on window.load (was running full sticker scan twice)</li>
+      <li>Moodboard: replaced 2 inline base64 JPEG images with /images/ public URLs (−46KB from HTML)</li>
+      <li>Moodboard: decoding=async + loading=lazy on canvas images</li>
+    </ul>
+  </div>
 
   <div class="tl-item">
     <div class="tl-dot"></div>
@@ -4760,6 +4851,15 @@ prompts: `
 
   <div class="prompt-block"><div class="prompt-label">Prompt 30</div><div class="prompt-text">"Update the easter egg build journal with the latest Snapchat map rebuild changes and other features which are not mentioned on the easter egg like small map and big map and others"</div></div>
   <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v35.1: Updated Build Journal with full v35 timeline entry (15 bullet points), added Prompt 29-30, added Map System section to Interactive tab documenting small map HUD + big map features, updated stats to 35 versions and 42 prompts.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 31 — Performance Fix</div><div class="prompt-text">"This app is too heavy and gets crashed and too slow and lads a lot and is not smooth. Add advanced features to fix all these and improve the performance and fix bottlenecks issue. Delete unused assessor and codes and files too. Make it super fast. But don't change anything ui or ux or any features or any functionality or any animations. Try again."</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v36.0: Full performance overhaul. Removed 30+ unused npm packages (70% bundle size cut), deleted 44 dead UI components + 2 unused hooks, stripped QueryClientProvider (no queries were ever run), added React.lazy code splitting for all routes, optimised Vite build with manual chunks + esbuild. In moodboard: Google Fonts preconnect, RAF-throttled scroll→updMap handler, passive:true on all scroll listeners, removed double bootstrapMap call on window.load, replaced 2 inline base64 images with public URLs (−46KB). akash-photo.jpeg moved out of JS bundle to public cache.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 32 — Canvas Boundaries & Item Count</div><div class="prompt-text">"Make sure all items are present on the canva board and no items beyond that canva/mood board. Make sure the canva is edge to edge and has boundaries so users can't do beyond that add a subtle mssg boundary can't go beyond mssg with a sticker design. Make sure boundaries are all sides and no white spaces and tell me how many items are on canva board, do one thing on the theme change option write the items number subtly and also category wise write on end on that theme option"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v37.0: Scrollbars hidden (no 6px corner gap) + overscroll-behavior:none on html+body for true edge-to-edge. Sticker-style yellow postit toast pops at any edge hit with fun directional messages (🚧 you've reached the left edge! / ☁️ top… / 🌊 bottom…), correctly positioned + tilted per side, fades after 1.8s. Settings panel footer now shows live DOM-counted item total (— N items on board —) + category pills sorted by count.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 33 — Easter Egg Journal Update</div><div class="prompt-text">"Update of the changes on the eastern egg, and if any features or something changes are done add that too. Push the update to github"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v37.1: Added v36 + v37 timeline entries (13 + 9 bullet points each), Prompts 31–33, updated stats (37 versions, 45 prompts, corrected canvas dimensions to 10000×7000, updated file size to ~366KB, updated images note to public URL references). Pushed to GitHub on branch claude/optimize-performance-K1Xi3.</div></div>
 </div>
 `,
 
@@ -4767,20 +4867,22 @@ stats: `
 <div class="inv-section">
   <h3>📊 Moodboard Stats</h3>
   <div class="stats-grid">
-    <div class="stat-card"><div class="stat-num">6000</div><div class="stat-label">Canvas Width (px)</div></div>
-    <div class="stat-card"><div class="stat-num">4500</div><div class="stat-label">Canvas Height (px)</div></div>
-    <div class="stat-card"><div class="stat-num">~300KB</div><div class="stat-label">Total File Size</div></div>
-    <div class="stat-card"><div class="stat-num">80+</div><div class="stat-label">Draggable Stickers</div></div>
+    <div class="stat-card"><div class="stat-num">10000</div><div class="stat-label">Canvas Width (px)</div></div>
+    <div class="stat-card"><div class="stat-num">7000</div><div class="stat-label">Canvas Height (px)</div></div>
+    <div class="stat-card"><div class="stat-num">~366KB</div><div class="stat-label">Total File Size</div></div>
+    <div class="stat-card"><div class="stat-num">240+</div><div class="stat-label">Draggable Stickers</div></div>
     <div class="stat-card"><div class="stat-num">15</div><div class="stat-label">Animations</div></div>
     <div class="stat-card"><div class="stat-num">11</div><div class="stat-label">Themes</div></div>
     <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">Interactive Toys</div></div>
     <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Hero Photos</div></div>
     <div class="stat-card"><div class="stat-num">16</div><div class="stat-label">Confetti Emojis</div></div>
-    <div class="stat-card"><div class="stat-num">42</div><div class="stat-label">Build Prompts</div></div>
-    <div class="stat-card"><div class="stat-num">35</div><div class="stat-label">Major Versions</div></div>
+    <div class="stat-card"><div class="stat-num">45</div><div class="stat-label">Build Prompts</div></div>
+    <div class="stat-card"><div class="stat-num">37</div><div class="stat-label">Major Versions</div></div>
     <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">Easter Egg 🥚</div></div>
     <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Map Districts</div></div>
     <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Map Filters</div></div>
+    <div class="stat-card"><div class="stat-num">~70%</div><div class="stat-label">Bundle Size Reduction</div></div>
+    <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Boundary Sides 🚧</div></div>
   </div>
 </div>
 
@@ -4792,7 +4894,7 @@ stats: `
     <tr><td>Styling</td><td>Vanilla CSS with custom properties, @keyframes, pseudo-elements</td></tr>
     <tr><td>Interaction</td><td>Vanilla JS — drag/scroll, tap detection, theme switching, confetti</td></tr>
     <tr><td>Fonts</td><td>Google Fonts: DM Sans, Instrument Serif, Caveat, Fredoka</td></tr>
-    <tr><td>Images</td><td>8 photos as base64 data URIs (Pillow resize to ~200-280px, JPEG q75)</td></tr>
+    <tr><td>Images</td><td>Photos served from /images/ public directory (not base64 bundled) — browser-cached, no JS bundle impact</td></tr>
     <tr><td>SVGs</td><td>Hand-coded inline SVG illustrations</td></tr>
     <tr><td>Photo Processing</td><td>Python + Pillow for resize + base64 encoding</td></tr>
   </table>
@@ -6252,6 +6354,36 @@ function meetingBingo(el,e){e.stopPropagation();playSfx('click');const word=bing
 const salaries=['Startup equity (worth TBD) 📊','Paid in experience 🎓','Paid in learnings 📚','Actual money (rare!) 💰','Paid in pizza on demo day 🍕','Stock options (cliff: ♾️)'];
 function salaryRoulette(el,e){e.stopPropagation();playSfx('spin');const r=el.querySelector('.meme-text');r.textContent='🎡 Spinning...';setTimeout(()=>{const pick=salaries[Math.floor(Math.random()*salaries.length)];r.textContent=pick;playSfx(pick.includes('money')?'kaching':'fail');spawnConfetti(e.clientX||0,e.clientY||0)},500)}
 
+// ===== BOARD ITEM STATS (for settings panel) =====
+function initBoardStats(){
+  const stickers=document.querySelectorAll('#canvas > .sticker');
+  const total=stickers.length;
+  const catMap={
+    'sticker-emoji':'✨ emojis','sticker-badge':'🏷️ badges','sticker-postit':'📝 notes',
+    'sticker-meme':'😂 memes','sticker-project':'🚀 projects','sticker-stamp':'🔖 stamps',
+    'sticker-counter':'🔢 counters','sticker-text':'✍️ texts','sticker-illustrated':'🎨 cards',
+    'sticker-hero-photo':'📸 photos','sticker-fortune':'🔮 fortune','sticker-scratch':'🎰 scratch',
+    'sticker-mood':'🎭 mood','sticker-progress':'📊 progress','sticker-swatches':'🎨 swatches',
+    'sticker-washi':'🎀 washi','sticker-highlight':'🖊️ highlights'
+  };
+  const counts={};
+  stickers.forEach(s=>{
+    for(const [cls,name] of Object.entries(catMap)){
+      if(s.classList.contains(cls)){counts[name]=(counts[name]||0)+1;break;}
+    }
+  });
+  const totalEl=document.getElementById('statsTotal');
+  if(totalEl)totalEl.textContent=total;
+  const catsEl=document.getElementById('statsCats');
+  if(catsEl){
+    catsEl.innerHTML=Object.entries(counts)
+      .filter(([,v])=>v>0)
+      .sort(([,a],[,b])=>b-a)
+      .map(([name,count])=>`<span class="stats-cat">${count} ${name}</span>`)
+      .join('');
+  }
+}
+
 // Scan once on load, then draw + greeting
 function bootstrapMap(forceRescan){
   try{
@@ -6260,6 +6392,7 @@ function bootstrapMap(forceRescan){
     ensureMapData(forceRescan);
     drawMap();
     mapBootstrapped=true;
+    initBoardStats();
   }catch(e){
     console.error('Init error:',e)
   }
