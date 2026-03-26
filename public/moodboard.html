@@ -6785,8 +6785,8 @@ function updMap(){
   } else {
     // EXPANDED: keep click-walk position during walking, otherwise follow viewport center
     if(!walkingInProgress){
-      const hS=drawMap._hStretch||1;
-      const px=(centerWorld.x-ox)*sc*hS;
+      const cL=parseFloat(mapCanvas.style.left)||0;
+      const px=cL+(centerWorld.x-ox)*sc;
       const py=(centerWorld.y-oy)*sc;
       mapPlayer.style.left=px+'px';
       mapPlayer.style.top=py+'px';
@@ -6798,10 +6798,9 @@ function updMap(){
     }
     const cL=parseFloat(mapCanvas.style.left)||0;
     const cT=parseFloat(mapCanvas.style.top)||0;
-    const hS=drawMap._hStretch||1;
-    mapVP.style.left=(cL+(worldTopLeft.x-ox)*sc*hS)+'px';
+    mapVP.style.left=(cL+(worldTopLeft.x-ox)*sc)+'px';
     mapVP.style.top=(cT+(worldTopLeft.y-oy)*sc)+'px';
-    mapVP.style.width=(worldVpW*sc*hS)+'px';
+    mapVP.style.width=(worldVpW*sc)+'px';
     mapVP.style.height=(worldVpH*sc)+'px';
   }
   
