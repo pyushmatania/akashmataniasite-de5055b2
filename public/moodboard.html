@@ -5423,8 +5423,9 @@ function mapClientToWorld(clientX,clientY){
 
 function mapWorldToCanvas(worldX,worldY){
   const sc=drawMap._sc||0.05;
+  const hS=drawMap._hStretch||1;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
-  return {x:(worldX-ox)*sc,y:(worldY-oy)*sc};
+  return {x:(worldX-ox)*sc*hS,y:(worldY-oy)*sc};
 }
 
 function positionMapOverlayAtWorld(el,worldX,worldY){
