@@ -6192,7 +6192,7 @@ function addMapDecorations(cw, ch){
     wrap.appendChild(svg);
   })();
 
-  // === MOUNTAINS — detailed 3D peaks ===
+  // === MOUNTAINS — simplified for performance ===
   const allMountains=[
     {x:15,y:18,s:55},{x:20,y:14,s:72},{x:25,y:19,s:50},
     {x:58,y:11,s:60},{x:63,y:7,s:78},{x:68,y:13,s:55},
@@ -6204,31 +6204,14 @@ function addMapDecorations(cw, ch){
     {x:28,y:80,s:42},{x:52,y:72,s:50},{x:90,y:45,s:40},
     {x:5,y:55,s:45},{x:65,y:78,s:52},{x:45,y:85,s:46},
   ];
-  const mountains=IS_MOBILE_MAP?allMountains.filter((_,i)=>i%2===0):allMountains;
+  const mountains=IS_MOBILE_MAP?allMountains.filter((_,i)=>i%3===0):allMountains.filter((_,i)=>i%2===0);
   mountains.forEach(m=>{
     const wrap=addDiv('map-mountain','left:'+m.x+'%;top:'+m.y+'%;width:'+m.s+'px;height:'+(m.s*0.85)+'px');
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
     svg.setAttribute('viewBox','0 0 60 50');
-    const snowH=10+Math.random()*5;
-    // Back mountain (depth)
-    svg.appendChild(svgEl('path',{d:'M12 48 L32 8 L52 48 Z',fill:'#5a7a44',opacity:'0.4'}));
-    // Main mountain body
-    svg.appendChild(svgEl('path',{d:'M5 48 L30 4 L55 48 Z',fill:'url(#mtGrad'+m.x+')'}));
-    // Create gradient
-    const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
-    const grad=document.createElementNS('http://www.w3.org/2000/svg','linearGradient');
-    grad.setAttribute('id','mtGrad'+m.x);
-    grad.setAttribute('x1','0');grad.setAttribute('y1','0');grad.setAttribute('x2','1');grad.setAttribute('y2','1');
-    const s1=svgEl('stop',{offset:'0%','stop-color':'#7da858'});
-    const s2=svgEl('stop',{offset:'100%','stop-color':'#5a8438'});
-    grad.appendChild(s1);grad.appendChild(s2);
-    defs.appendChild(grad);svg.appendChild(defs);
-    // Shadow side
+    svg.appendChild(svgEl('path',{d:'M5 48 L30 4 L55 48 Z',fill:'#6a9a48'}));
     svg.appendChild(svgEl('path',{d:'M30 4 L55 48 L30 48 Z',fill:'rgba(0,0,0,0.12)'}));
-    // Snow cap with detail
-    svg.appendChild(svgEl('path',{d:'M22 '+snowH+' L30 4 L38 '+snowH+' Q33 '+(snowH+4)+' 30 '+(snowH+2)+' Q27 '+(snowH+4)+' 22 '+snowH+' Z',fill:'#f8f8ff',stroke:'rgba(200,210,220,0.4)','stroke-width':'0.3'}));
-    // Snow highlight
-    svg.appendChild(svgEl('path',{d:'M26 '+(snowH-2)+' L30 4 L31 '+(snowH-1)+' Z',fill:'rgba(255,255,255,0.4)'}));
+    svg.appendChild(svgEl('path',{d:'M22 12 L30 4 L38 12 Q33 16 30 14 Q27 16 22 12 Z',fill:'#f8f8ff'}));
     wrap.appendChild(svg);
   });
 
