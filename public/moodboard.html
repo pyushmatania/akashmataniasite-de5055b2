@@ -5335,7 +5335,7 @@ const mmInner=document.getElementById('mmInner');
 const mapCount=document.getElementById('mapCount');
 let mmExp=false,navLine=null,mFilt='all';
 let mapTransitioning=false;
-let mapZoomScale=1;
+let mapZoomScale=2;
 let stickerData=[];
 let smallMapPanX=0,smallMapPanY=0;
 let activeDestinationMarker=null;
@@ -5356,7 +5356,7 @@ function toggleMap(){
     mmContainer.classList.add('map-opening');
     // Rebuild at full size
     ensureMapData(true);
-    mapZoomScale=1;
+    mapZoomScale=2;
     const zl=document.getElementById('mapZoomLevel');
     if(zl)zl.textContent=mapZoomScale+'×';
     drawMap();
@@ -5988,7 +5988,7 @@ function addMapDecorations(cw, ch){
   ];
   areaNames.forEach(z=>{
     const wrap=document.createElement('div');
-    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;z-index:9;pointer-events:none;gap:0;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3))';
+    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;z-index:5;pointer-events:none;gap:0;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3))';
     const signRow=document.createElement('div');
     signRow.style.cssText='display:flex;align-items:stretch;gap:0';
     const fontSize=Math.max(8,cw*0.009);
@@ -6039,23 +6039,24 @@ function addMapDecorations(cw, ch){
   // === ZONE BOUNDARY DASHED LINES ===
   const zoneBorders=[
     // Horizontal split: Origin/Work top | Portfolio/Hub/Fun middle
-    {x1:0,y1:40,x2:100,y2:40,color:'rgba(201,169,110,0.2)'},
-    // Vertical split: left zones | right zones
-    {x1:42,y1:0,x2:42,y2:40,color:'rgba(201,169,110,0.18)'},
+    {x1:0,y1:40,x2:100,y2:40,color:'rgba(76,175,80,0.4)',color2:'rgba(229,57,53,0.4)'},
+    // Vertical split: left zones | right zones (top half)
+    {x1:42,y1:0,x2:42,y2:40,color:'rgba(76,175,80,0.35)',color2:'rgba(229,57,53,0.35)'},
     // Horizontal: Portfolio/Hobby split
-    {x1:0,y1:56,x2:42,y2:56,color:'rgba(201,169,110,0.15)'},
-    // Vertical: Hub/Fun split
-    {x1:42,y1:40,x2:42,y2:100,color:'rgba(201,169,110,0.15)'},
+    {x1:0,y1:56,x2:42,y2:56,color:'rgba(66,165,245,0.35)',color2:'rgba(255,152,0,0.35)'},
+    // Vertical: Hub/Fun split (bottom half)
+    {x1:42,y1:40,x2:42,y2:100,color:'rgba(255,152,0,0.3)',color2:'rgba(171,71,188,0.3)'},
     // Horizontal: Hobby bottom 
-    {x1:0,y1:75,x2:42,y2:75,color:'rgba(201,169,110,0.12)'},
+    {x1:0,y1:75,x2:42,y2:75,color:'rgba(255,152,0,0.3)',color2:'rgba(255,152,0,0.25)'},
   ];
   zoneBorders.forEach(b=>{
     const line=document.createElement('div');
     const isH=(b.y1===b.y2);
+    const borderColor=b.color;
     if(isH){
-      line.style.cssText='position:absolute;left:'+b.x1+'%;top:'+b.y1+'%;width:'+(b.x2-b.x1)+'%;height:0;border-top:2px dashed '+b.color+';pointer-events:none;z-index:3';
+      line.style.cssText='position:absolute;left:'+b.x1+'%;top:'+b.y1+'%;width:'+(b.x2-b.x1)+'%;height:0;border-top:2.5px dashed '+borderColor+';pointer-events:none;z-index:3';
     } else {
-      line.style.cssText='position:absolute;left:'+b.x1+'%;top:'+b.y1+'%;width:0;height:'+(b.y2-b.y1)+'%;border-left:2px dashed '+b.color+';pointer-events:none;z-index:3';
+      line.style.cssText='position:absolute;left:'+b.x1+'%;top:'+b.y1+'%;width:0;height:'+(b.y2-b.y1)+'%;border-left:2.5px dashed '+borderColor+';pointer-events:none;z-index:3';
     }
     layer.appendChild(line);
   });
@@ -6257,11 +6258,25 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     if(dx+iw<visL||dx>visR||dy+ih<visT||dy>visB)return;
     
     count++;
-    // Create lightweight representation instead of heavy cloneNode
-    const clone=document.createElement('div');
-    clone.className='mi';
-    clone.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+iw+'px;height:'+ih+'px;background:'+d.bg+';border-radius:'+d.radius+';z-index:4;cursor:pointer;'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
-    if(d.emoji){const l=document.createElement('span');l.textContent=d.emoji;l.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:'+Math.max(Math.min(iw*0.6,20),8)+'px;pointer-events:none';clone.appendChild(l)}
+    // Render actual sticker clone for faithful appearance
+    const iw=d.w*sc, ih=d.h*sc;
+    let clone;
+    if(d.ref && iw>4 && ih>3){
+      clone=d.ref.cloneNode(true);
+      clone.className='mi';
+      clone.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;transform:scale('+sc+');transform-origin:0 0;z-index:6;cursor:pointer;animation:none;transition:none;filter:none;';
+      clone.removeAttribute('data-anim');
+      clone.removeAttribute('data-splash');
+      clone.removeAttribute('data-contra');
+      clone.removeAttribute('onclick');
+      clone.classList.remove('dragging');
+      clone.querySelectorAll('*').forEach(c=>{c.style.animation='none';c.style.transition='none'});
+    } else {
+      clone=document.createElement('div');
+      clone.className='mi';
+      clone.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+Math.max(iw,8)+'px;height:'+Math.max(ih,6)+'px;background:'+d.bg+';border-radius:'+d.radius+';z-index:6;cursor:pointer;'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
+      if(d.emoji){const l=document.createElement('span');l.textContent=d.emoji;l.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:'+Math.max(Math.min(Math.max(iw,8)*0.6,20),8)+'px;pointer-events:none';clone.appendChild(l)}
+    }
     
     // Click to navigate
     clone.addEventListener('click',ev=>{
@@ -6615,9 +6630,9 @@ function recenter(){
 
 function mapZoom(dir){
   if(!mmExp)return;
-  const steps=[0.7,0.85,1,1.15,1.3,1.5,1.75,2];
+  const steps=[0.5,0.7,0.85,1,1.3,1.6,2,2.5,3,3.5,4,5];
   let idx=steps.indexOf(mapZoomScale);
-  if(idx===-1)idx=2;
+  if(idx===-1){idx=steps.findIndex(s=>s>=mapZoomScale);if(idx===-1)idx=steps.length-1;}
   idx=Math.max(0,Math.min(steps.length-1,idx+dir));
   if(steps[idx]===mapZoomScale)return;
   const oldZoom=mapZoomScale;
