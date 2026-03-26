@@ -3891,6 +3891,46 @@ timeline: `
 
   <div class="tl-item">
     <div class="tl-dot"></div>
+    <div class="tl-version">v37.0 — Canvas Boundaries & Item Stats</div>
+    <div class="tl-date">Session 37 · March 26, 2026</div>
+    <div class="tl-desc">Hard canvas boundaries with sticker-style toast messages on all 4 edges. Hidden scrollbars for true edge-to-edge display. Live item count + category breakdown added to the theme settings panel. Overscroll fully prevented on html/body level.</div>
+    <ul class="tl-changes">
+      <li>Sticker-style boundary toast (yellow postit, drop shadow, tilt) pops at whichever edge is hit — unique message per side</li>
+      <li>Messages: "🚧 you've reached the left edge!" / right / "☁️ top…" / "🌊 bottom…"</li>
+      <li>Toast position + rotation matches the edge (left/right at vertical centre, top/bottom at horizontal centre)</li>
+      <li>Scrollbars completely hidden (scrollbar-width:none + ::-webkit-scrollbar display:none) — eliminates 6px dead-strip at corners</li>
+      <li>overscroll-behavior:none added to html and body — zero native bounce past canvas on any side</li>
+      <li>Settings panel bottom: live total item count (— N items on board —)</li>
+      <li>Category-wise pills sorted by count: emojis, badges, notes, memes, projects, stamps, counters…</li>
+      <li>initBoardStats() counts from actual #canvas > .sticker DOM — always accurate</li>
+      <li>All items clamped within canvas boundaries via normalizeAllStickerBounds() on every load</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v36.0 — Performance Overhaul</div>
+    <div class="tl-date">Session 36 · March 26, 2026</div>
+    <div class="tl-desc">Massive bundle-size reduction and runtime performance fixes across the React wrapper app and moodboard.html. Removed 30+ unused npm packages, 44 dead UI component files, and eliminated multiple JS performance bottlenecks that caused lag, crashes, and heavy load times.</div>
+    <ul class="tl-changes">
+      <li>Removed 30+ unused npm packages: recharts, embla-carousel, @tanstack/react-query, zod, date-fns, cmdk, vaul, input-otp, react-hook-form, 20+ Radix UI packages — ~70% bundle size reduction</li>
+      <li>Deleted 44 unused shadcn UI component files (accordion, calendar, chart, sidebar, sheet, dialog, form…)</li>
+      <li>Deleted 2 unused hooks (use-mobile.tsx, use-is-mobile.ts)</li>
+      <li>Removed QueryClientProvider wrapper from App.tsx — no queries were ever made, pure overhead</li>
+      <li>Added React.lazy + Suspense code-splitting for all 3 routes (Index, MyStory, NotFound)</li>
+      <li>Vite build optimised: manual chunk splitting (react-vendor / radix-ui / ui-utils), esbuild minify, esnext target</li>
+      <li>akash-photo.jpeg moved from src/assets (Vite-bundled) to /images/ public path — removes ~1MB from JS bundle, enables browser caching</li>
+      <li>Moodboard: preconnect to fonts.googleapis.com + fonts.gstatic.com — fonts start loading earlier</li>
+      <li>Moodboard: RAF-throttled main scroll → updMap handler — was running 60+ times/sec, now one rAF per frame</li>
+      <li>Moodboard: passive:true added to all 4 scroll event listeners — browser scrolls without waiting for JS</li>
+      <li>Moodboard: removed duplicate bootstrapMap call on window.load (was running full sticker scan twice)</li>
+      <li>Moodboard: replaced 2 inline base64 JPEG images with /images/ public URLs (−46KB from HTML)</li>
+      <li>Moodboard: decoding=async + loading=lazy on canvas images</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
     <div class="tl-version">v35.0 — Full Snapchat Map Rebuild</div>
     <div class="tl-date">Session 35 · March 25, 2026</div>
     <div class="tl-desc">Complete rebuild of the big map from scratch to look like Snapchat's Snap Map. Beige land, blue ocean borders, sandy beaches, green parks with tree dots, 3D buildings with shadow depth, area names written on the land, highway route badges, and only 3-4 filters. Radar sweep made brighter green and more visible. Small minimap left completely untouched.</div>
@@ -4744,6 +4784,15 @@ prompts: `
 
   <div class="prompt-block"><div class="prompt-label">Prompt 30</div><div class="prompt-text">"Update the easter egg build journal with the latest Snapchat map rebuild changes and other features which are not mentioned on the easter egg like small map and big map and others"</div></div>
   <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v35.1: Updated Build Journal with full v35 timeline entry (15 bullet points), added Prompt 29-30, added Map System section to Interactive tab documenting small map HUD + big map features, updated stats to 35 versions and 42 prompts.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 31 — Performance Fix</div><div class="prompt-text">"This app is too heavy and gets crashed and too slow and lads a lot and is not smooth. Add advanced features to fix all these and improve the performance and fix bottlenecks issue. Delete unused assessor and codes and files too. Make it super fast. But don't change anything ui or ux or any features or any functionality or any animations. Try again."</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v36.0: Full performance overhaul. Removed 30+ unused npm packages (70% bundle size cut), deleted 44 dead UI components + 2 unused hooks, stripped QueryClientProvider (no queries were ever run), added React.lazy code splitting for all routes, optimised Vite build with manual chunks + esbuild. In moodboard: Google Fonts preconnect, RAF-throttled scroll→updMap handler, passive:true on all scroll listeners, removed double bootstrapMap call on window.load, replaced 2 inline base64 images with public URLs (−46KB). akash-photo.jpeg moved out of JS bundle to public cache.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 32 — Canvas Boundaries & Item Count</div><div class="prompt-text">"Make sure all items are present on the canva board and no items beyond that canva/mood board. Make sure the canva is edge to edge and has boundaries so users can't do beyond that add a subtle mssg boundary can't go beyond mssg with a sticker design. Make sure boundaries are all sides and no white spaces and tell me how many items are on canva board, do one thing on the theme change option write the items number subtly and also category wise write on end on that theme option"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v37.0: Scrollbars hidden (no 6px corner gap) + overscroll-behavior:none on html+body for true edge-to-edge. Sticker-style yellow postit toast pops at any edge hit with fun directional messages (🚧 you've reached the left edge! / ☁️ top… / 🌊 bottom…), correctly positioned + tilted per side, fades after 1.8s. Settings panel footer now shows live DOM-counted item total (— N items on board —) + category pills sorted by count.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 33 — Easter Egg Journal Update</div><div class="prompt-text">"Update of the changes on the eastern egg, and if any features or something changes are done add that too. Push the update to github"</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v37.1: Added v36 + v37 timeline entries (13 + 9 bullet points each), Prompts 31–33, updated stats (37 versions, 45 prompts, corrected canvas dimensions to 10000×7000, updated file size to ~366KB, updated images note to public URL references). Pushed to GitHub on branch claude/optimize-performance-K1Xi3.</div></div>
 </div>
 `,
 
@@ -4751,20 +4800,22 @@ stats: `
 <div class="inv-section">
   <h3>📊 Moodboard Stats</h3>
   <div class="stats-grid">
-    <div class="stat-card"><div class="stat-num">6000</div><div class="stat-label">Canvas Width (px)</div></div>
-    <div class="stat-card"><div class="stat-num">4500</div><div class="stat-label">Canvas Height (px)</div></div>
-    <div class="stat-card"><div class="stat-num">~300KB</div><div class="stat-label">Total File Size</div></div>
-    <div class="stat-card"><div class="stat-num">80+</div><div class="stat-label">Draggable Stickers</div></div>
+    <div class="stat-card"><div class="stat-num">10000</div><div class="stat-label">Canvas Width (px)</div></div>
+    <div class="stat-card"><div class="stat-num">7000</div><div class="stat-label">Canvas Height (px)</div></div>
+    <div class="stat-card"><div class="stat-num">~366KB</div><div class="stat-label">Total File Size</div></div>
+    <div class="stat-card"><div class="stat-num">240+</div><div class="stat-label">Draggable Stickers</div></div>
     <div class="stat-card"><div class="stat-num">15</div><div class="stat-label">Animations</div></div>
     <div class="stat-card"><div class="stat-num">11</div><div class="stat-label">Themes</div></div>
     <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">Interactive Toys</div></div>
     <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Hero Photos</div></div>
     <div class="stat-card"><div class="stat-num">16</div><div class="stat-label">Confetti Emojis</div></div>
-    <div class="stat-card"><div class="stat-num">42</div><div class="stat-label">Build Prompts</div></div>
-    <div class="stat-card"><div class="stat-num">35</div><div class="stat-label">Major Versions</div></div>
+    <div class="stat-card"><div class="stat-num">45</div><div class="stat-label">Build Prompts</div></div>
+    <div class="stat-card"><div class="stat-num">37</div><div class="stat-label">Major Versions</div></div>
     <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">Easter Egg 🥚</div></div>
     <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Map Districts</div></div>
     <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Map Filters</div></div>
+    <div class="stat-card"><div class="stat-num">~70%</div><div class="stat-label">Bundle Size Reduction</div></div>
+    <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Boundary Sides 🚧</div></div>
   </div>
 </div>
 
@@ -4776,7 +4827,7 @@ stats: `
     <tr><td>Styling</td><td>Vanilla CSS with custom properties, @keyframes, pseudo-elements</td></tr>
     <tr><td>Interaction</td><td>Vanilla JS — drag/scroll, tap detection, theme switching, confetti</td></tr>
     <tr><td>Fonts</td><td>Google Fonts: DM Sans, Instrument Serif, Caveat, Fredoka</td></tr>
-    <tr><td>Images</td><td>8 photos as base64 data URIs (Pillow resize to ~200-280px, JPEG q75)</td></tr>
+    <tr><td>Images</td><td>Photos served from /images/ public directory (not base64 bundled) — browser-cached, no JS bundle impact</td></tr>
     <tr><td>SVGs</td><td>Hand-coded inline SVG illustrations</td></tr>
     <tr><td>Photo Processing</td><td>Python + Pillow for resize + base64 encoding</td></tr>
   </table>
