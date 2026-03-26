@@ -3773,12 +3773,13 @@ function sD(e){
   if(e.touches)e.preventDefault();
 }
 
-document.addEventListener('mousemove',sM);
-document.addEventListener('touchmove',sM,{passive:false});
+let _stickerMoveRAF=null;
+let _smPendingE=null;
+document.addEventListener('mousemove',e=>{if(!as)return;_smPendingE=e;_schedStickerMove(e)});
+document.addEventListener('touchmove',e=>{if(!as)return;_smPendingE=e;_schedStickerMove(e)},{passive:false});
 
-function sM(e){
-  if(!as)return;
-  // Two-finger rotation
+function _schedStickerMove(e){
+  // Two-finger rotation runs immediately (low frequency)
   if(isRotating&&e.touches&&e.touches.length===2){
     const curAngle=getAngle(e.touches[0],e.touches[1]);
     const delta=curAngle-rotStartAngle;
@@ -3786,18 +3787,24 @@ function sM(e){
     e.preventDefault();return;
   }
   if(isRotating)return;
-  const cx=e.touches?e.touches[0].clientX:e.clientX;
-  const cy=e.touches?e.touches[0].clientY:e.clientY;
-  if(Math.abs(cx-tapSX)>10||Math.abs(cy-tapSY)>10){
-    didMove=true;as.classList.add('dragging');
-    const cr=cv.getBoundingClientRect();
-    const nextLeft=(cx-cr.left-sox)/SCALE;
-    const nextTop=(cy-cr.top-soy)/SCALE;
-    const clamped=clampStickerToMoodboard(as,nextLeft,nextTop);
-    as.style.left=clamped.left+'px';
-    as.style.top=clamped.top+'px';
-    e.preventDefault();
-  }
+  if(e.cancelable)e.preventDefault();
+  if(_stickerMoveRAF)return;
+  _stickerMoveRAF=requestAnimationFrame(()=>{
+    _stickerMoveRAF=null;
+    if(!as||!_smPendingE)return;
+    const ev=_smPendingE;
+    const cx=ev.touches?ev.touches[0].clientX:ev.clientX;
+    const cy=ev.touches?ev.touches[0].clientY:ev.clientY;
+    if(Math.abs(cx-tapSX)>10||Math.abs(cy-tapSY)>10){
+      didMove=true;as.classList.add('dragging');
+      const cr=getCachedCanvasRect();
+      const nextLeft=(cx-cr.left-sox)/SCALE;
+      const nextTop=(cy-cr.top-soy)/SCALE;
+      const clamped=clampStickerToMoodboard(as,nextLeft,nextTop);
+      as.style.left=clamped.left+'px';
+      as.style.top=clamped.top+'px';
+    }
+  });
 }
 
 document.addEventListener('mouseup',sU);
@@ -3805,6 +3812,9 @@ document.addEventListener('touchend',sU);
 
 function sU(e){
   if(!as)return;
+  _cachedCanvasRect=null;
+  if(_stickerMoveRAF){cancelAnimationFrame(_stickerMoveRAF);_stickerMoveRAF=null}
+  _smPendingE=null;
   as.classList.remove('dragging');
   if(didMove){
     const left=parseFloat(as.style.left)||0;
@@ -3817,7 +3827,7 @@ function sU(e){
   if(isRotating){isRotating=false;as=null;return;}
   if(!didMove&&(Date.now()-tapTime)<400){
     if(as.dataset.splash)doSplash(as,e);
-    
+
     if(as.dataset.anim)triggerAnim(as,e);
     if(as.onclick)as.onclick(e);
   }
