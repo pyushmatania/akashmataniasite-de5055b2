@@ -4972,6 +4972,95 @@ stats: `
 </div>
 `
 
+credits: `
+<div class="inv-section">
+  <h3>🏆 Behind the Scenes</h3>
+  <p style="font-size:0.82rem;color:var(--text2);line-height:1.8;margin-bottom:20px">
+    What would it take to build this from scratch with a traditional dev team? Here's the math.
+  </p>
+
+  <div class="stats-grid" style="grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px">
+    <div class="stat-card" style="background:linear-gradient(135deg,#f5f2ed,#e8e4df)">
+      <div class="stat-num" style="font-size:1.6rem">~3–4</div>
+      <div class="stat-label">Senior Devs Needed</div>
+    </div>
+    <div class="stat-card" style="background:linear-gradient(135deg,#f5f2ed,#e8e4df)">
+      <div class="stat-num" style="font-size:1.6rem">~6–8</div>
+      <div class="stat-label">Weeks (Traditional)</div>
+    </div>
+    <div class="stat-card" style="background:linear-gradient(135deg,#f5f2ed,#e8e4df)">
+      <div class="stat-num" style="font-size:1.6rem">~720–960</div>
+      <div class="stat-label">Dev Hours Equivalent</div>
+    </div>
+    <div class="stat-card" style="background:linear-gradient(135deg,#f5f2ed,#e8e4df)">
+      <div class="stat-num" style="font-size:1.6rem">$54K–$96K</div>
+      <div class="stat-label">Agency Cost (USD)</div>
+    </div>
+  </div>
+
+  <h3>📐 The Breakdown</h3>
+  <table class="inv-table" style="margin-bottom:24px">
+    <tr><th>Component</th><th>Senior Dev Estimate</th><th>Why</th></tr>
+    <tr><td>Infinite Canvas + Drag System</td><td>~2 weeks</td><td>Custom scroll physics, touch/mouse drag, momentum, boundary clamping — no library does this out of the box</td></tr>
+    <tr><td>245+ Draggable Stickers</td><td>~1.5 weeks</td><td>15 sticker types, each with unique styling, layout, positioning, mobile-safe drag — hand-placed across 6 zones</td></tr>
+    <tr><td>15 CSS Animations + Confetti</td><td>~3 days</td><td>Custom keyframes, tap-vs-drag detection (the tricky part), particle physics for confetti burst</td></tr>
+    <tr><td>7 Interactive Toys</td><td>~1 week</td><td>Counters, scratch card, fortune cookie, mood slider, progress tracker — each with unique state + UI</td></tr>
+    <tr><td>11 Background Themes</td><td>~1 week</td><td>CSS pseudo-element overlays, dark mode detection, sticker filter adjustment per theme</td></tr>
+    <tr><td>GTA Minimap HUD</td><td>~1.5 weeks</td><td>Circular viewport, radar sweep, compass, zone detection, player tracking, click-to-navigate with route lines</td></tr>
+    <tr><td>Snapchat Big Map</td><td>~2 weeks</td><td>Full rebuild: ocean, beaches, parks with tree dots, 3D buildings, roads, area names, POI markers, virtualized sticker clones, zoom system</td></tr>
+    <tr><td>Signpost System</td><td>~2 days</td><td>3D marble pillars, ground shadows, planted-in effect — pure CSS illusion</td></tr>
+    <tr><td>Pool Splash Effect</td><td>~3 days</td><td>Rings + 40 droplets + waves + wet spots + synthesized multi-layer sound — all from scratch, no library</td></tr>
+    <tr><td>Contra Soldier Game</td><td>~3 days</td><td>Pixel-art SVG, bullet physics, muzzle flash, explosion + respawn system, gunshot sound synthesis</td></tr>
+    <tr><td>This Easter Egg Journal</td><td>~3 days</td><td>6-tab panel, full version history, sticker inventory, prompt log, stats — all maintained manually</td></tr>
+    <tr><td>Performance Optimization</td><td>~3 days</td><td>RAF throttling, passive listeners, code splitting, 70% bundle reduction, lazy loading</td></tr>
+  </table>
+</div>
+
+<div class="inv-section">
+  <h3>🧮 By the Numbers</h3>
+  <div class="stats-grid" style="grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px">
+    <div class="stat-card"><div class="stat-num" style="font-size:1.1rem">7,200+</div><div class="stat-label">Lines of Code</div></div>
+    <div class="stat-card"><div class="stat-num" style="font-size:1.1rem">~380KB</div><div class="stat-label">Total HTML Size</div></div>
+    <div class="stat-card"><div class="stat-num" style="font-size:1.1rem">0</div><div class="stat-label">NPM Dependencies</div></div>
+    <div class="stat-card"><div class="stat-num" style="font-size:1.1rem">70+</div><div class="stat-label">CSS @keyframes</div></div>
+    <div class="stat-card"><div class="stat-num" style="font-size:1.1rem">95+</div><div class="stat-label">JS Functions</div></div>
+    <div class="stat-card"><div class="stat-num" style="font-size:1.1rem">252</div><div class="stat-label">DOM Stickers</div></div>
+    <div class="stat-card"><div class="stat-num" style="font-size:1.1rem">41</div><div class="stat-label">Major Versions</div></div>
+    <div class="stat-card"><div class="stat-num" style="font-size:1.1rem">48</div><div class="stat-label">Build Iterations</div></div>
+    <div class="stat-card"><div class="stat-num" style="font-size:1.1rem">1</div><div class="stat-label">HTML File</div></div>
+  </div>
+</div>
+
+<div class="inv-section">
+  <h3>🤯 Fun Facts</h3>
+  <table class="inv-table">
+    <tr><th>Fact</th><th>Detail</th></tr>
+    <tr><td>🎯 Zero frameworks</td><td>The entire moodboard is a single HTML file — vanilla CSS + vanilla JS. No React, no Tailwind, no build tools.</td></tr>
+    <tr><td>🔊 Sounds from math</td><td>Every sound effect (splash, gunshot, bubbles) is synthesized in real-time using the Web Audio API — no audio files loaded.</td></tr>
+    <tr><td>🗺️ 20+ map iterations</td><td>The map system was rebuilt from colored dots → emoji icons → real clones → Snapchat theme → GTA HUD → full 3D map with ocean and buildings.</td></tr>
+    <tr><td>🎮 Pixel art in code</td><td>The Contra soldier is a hand-coded SVG — every pixel of the headband, tank top, gun, and boots drawn with coordinates.</td></tr>
+    <tr><td>🌊 40 water drops</td><td>The pool splash creates 40 individual droplets, 5 ripple rings, 3 waves, 12 wet spots, and screen drip effects — all animated independently.</td></tr>
+    <tr><td>🧠 Tap vs Drag</td><td>The hardest bug: distinguishing a tap from a drag on mobile. Solution: accumulate total finger movement — under 8px = tap, over = drag. Took 3 iterations.</td></tr>
+    <tr><td>📏 70M virtual pixels</td><td>The canvas is 10,000 × 7,000px = 70 million virtual pixels of explorable space. That's ~18x a Full HD screen.</td></tr>
+    <tr><td>🥚 You found it</td><td>Less than 1% of visitors will ever triple-tap the logo. You're part of the club now.</td></tr>
+  </table>
+</div>
+
+<div class="inv-section">
+  <h3>👨‍💻 Built By</h3>
+  <div style="background:linear-gradient(135deg,#f5f2ed,#FAF8F5);border-radius:16px;padding:20px;text-align:center">
+    <div style="font-size:2rem;margin-bottom:8px">🚀</div>
+    <div style="font-family:var(--font-fun);font-weight:700;font-size:1.1rem;color:var(--text);margin-bottom:4px">Akash Matania</div>
+    <div style="font-size:0.75rem;color:var(--text3);margin-bottom:12px">Product Manager × Builder × Vibe Coder</div>
+    <div style="font-size:0.72rem;color:var(--text3);line-height:1.8">
+      Designed, directed, and shipped every pixel of this moodboard.<br>
+      From concept to canvas — product thinking meets craft meets curiosity.<br>
+      <span style="color:var(--accent);font-weight:600">Built with AI as a medium, not a shortcut.</span>
+    </div>
+  </div>
+</div>
+`
+
 };
 
 
@@ -6496,6 +6585,7 @@ window.addEventListener('resize',()=>{
     <div class="journal-tab" onclick="showTab('themes',this)">🎨 Themes</div>
     <div class="journal-tab" onclick="showTab('prompts',this)">💬 Prompts</div>
     <div class="journal-tab" onclick="showTab('stats',this)">📊 Stats</div>
+    <div class="journal-tab" onclick="showTab('credits',this)">🏆 Credits</div>
   </div>
   <div class="journal-body" id="journalBody">
     <!-- Content injected by JS -->
