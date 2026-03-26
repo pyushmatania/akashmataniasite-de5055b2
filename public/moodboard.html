@@ -6052,10 +6052,11 @@ function addMapDecorations(cw, ch){
   zoneBorders.forEach(b=>{
     const line=document.createElement('div');
     const isH=(b.y1===b.y2);
+    const borderColor=b.color;
     if(isH){
-      line.style.cssText='position:absolute;left:'+b.x1+'%;top:'+b.y1+'%;width:'+(b.x2-b.x1)+'%;height:0;border-top:2px dashed '+b.color+';pointer-events:none;z-index:3';
+      line.style.cssText='position:absolute;left:'+b.x1+'%;top:'+b.y1+'%;width:'+(b.x2-b.x1)+'%;height:0;border-top:2.5px dashed '+borderColor+';pointer-events:none;z-index:3';
     } else {
-      line.style.cssText='position:absolute;left:'+b.x1+'%;top:'+b.y1+'%;width:0;height:'+(b.y2-b.y1)+'%;border-left:2px dashed '+b.color+';pointer-events:none;z-index:3';
+      line.style.cssText='position:absolute;left:'+b.x1+'%;top:'+b.y1+'%;width:0;height:'+(b.y2-b.y1)+'%;border-left:2.5px dashed '+borderColor+';pointer-events:none;z-index:3';
     }
     layer.appendChild(line);
   });
