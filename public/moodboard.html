@@ -6152,6 +6152,7 @@ function drawMap(){
     const rightWorldPad=2600;
     const topWorldPad=3600;
     const bottomWorldPad=1200;
+    // Increased padding to ensure no stickers are cut off in any direction
     const mapContentW=contentW+leftWorldPad+rightWorldPad;
     const mapContentH=contentH+topWorldPad+bottomWorldPad;
     const fitScale=Math.max(0.02,Math.max(usableW/mapContentW,usableH/mapContentH));
