@@ -6349,9 +6349,10 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
   walkingInProgress=true;
   const WALK_DURATION=2500;
   const sc=drawMap._sc||0.05;
+  const hS=drawMap._hStretch||1;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
   // mapPlayer is inside mapCanvas, no canvas offset needed
-  const targetMX=(worldX-ox)*sc;
+  const targetMX=(worldX-ox)*sc*hS;
   const targetMY=(worldY-oy)*sc;
   const startX=parseFloat(mapPlayer.style.left)||0;
   const startY=parseFloat(mapPlayer.style.top)||0;
