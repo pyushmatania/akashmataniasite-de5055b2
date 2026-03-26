@@ -5418,45 +5418,47 @@ function addMapDecorations(cw,ch){
     wrap.appendChild(svg);
   });
 
-  // === AREA NAME SIGNPOSTS (theme-park arch style, 3x bigger with glow) ===
+  // === IMMERSIVE AREA SIGNPOSTS — tall poles, depth, ground shadows ===
   const areaNames=[
     {x:14,y:22,t:'Origin Story',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)',glow:'rgba(76,175,80,0.5)'},
     {x:55,y:14,t:'The War Room',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)',glow:'rgba(229,57,53,0.5)'},
     {x:14,y:38,t:'Launch Pad',icon:'🚀',bg:'linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)',glow:'rgba(66,165,245,0.5)'},
+    {x:35,y:30,t:'Akash Unplugged',icon:'⭐',bg:'linear-gradient(135deg,#E65100,#FFB300,#FF8F00)',glow:'rgba(255,179,0,0.5)'},
     {x:18,y:62,t:'The Playground',icon:'🎮',bg:'linear-gradient(135deg,#E65100,#FF9800,#EF6C00)',glow:'rgba(255,152,0,0.5)'},
     {x:65,y:58,t:'Meme Alley',icon:'😂',bg:'linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)',glow:'rgba(171,71,188,0.5)'},
   ];
   areaNames.forEach(z=>{
     const wrap=document.createElement('div');
-    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%) perspective(400px) rotateX(5deg);display:flex;flex-direction:column;align-items:center;z-index:9;pointer-events:none;gap:0';
+    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-100%) perspective(600px) rotateX(4deg);display:flex;flex-direction:column;align-items:center;z-index:9;pointer-events:none;gap:0';
     const signRow=document.createElement('div');
     signRow.style.cssText='display:flex;align-items:flex-end;gap:0';
-    const fontSize=Math.max(9,cw*0.01);
-    const pillarW=Math.max(6,cw*0.005);
-    const pillarH=Math.max(28,cw*0.028);
-    const capS=Math.max(10,pillarW*1.5);
-    const baseW=Math.max(9,pillarW*1.4);
+    const fontSize=Math.max(10,cw*0.012);
+    const pillarW=Math.max(8,cw*0.006);
+    const pillarH=Math.max(50,cw*0.04);
+    const capS=Math.max(12,pillarW*1.6);
+    const baseW=Math.max(12,pillarW*1.5);
     const mkPillar=()=>{
       const p=document.createElement('div');
       p.style.cssText='display:flex;flex-direction:column;align-items:center;flex-shrink:0';
       const cap=document.createElement('div');
-      cap.style.cssText='width:'+capS+'px;height:'+capS+'px;border-radius:50%;background:radial-gradient(ellipse at 35% 28%,#f8f6f2,#c4bfb6);border:1.5px solid rgba(0,0,0,0.08);margin-bottom:-2px;box-shadow:inset 0 3px 5px rgba(255,255,255,0.5),0 3px 6px rgba(0,0,0,0.2)';
+      cap.style.cssText='width:'+capS+'px;height:'+capS+'px;border-radius:50%;background:radial-gradient(ellipse at 32% 25%,#f5f3ef,#c0bab2);border:1.5px solid rgba(0,0,0,0.06);margin-bottom:-2px;box-shadow:inset 0 3px 5px rgba(255,255,255,0.45),0 3px 8px rgba(0,0,0,0.22)';
       const shaft=document.createElement('div');
-      shaft.style.cssText='width:'+pillarW+'px;height:'+pillarH+'px;background:linear-gradient(90deg,#c4bfb6,#eae7e1 35%,#f5f2ed 50%,#eae7e1 65%,#c4bfb6);border-radius:2px;box-shadow:3px 0 0 rgba(0,0,0,0.08),0 6px 12px rgba(0,0,0,0.15)';
+      shaft.style.cssText='width:'+pillarW+'px;height:'+pillarH+'px;background:linear-gradient(90deg,#b0aa9e,#ddd8d0 30%,#eae6df 50%,#ddd8d0 70%,#b0aa9e);border-radius:2px;box-shadow:3px 0 0 rgba(0,0,0,0.06),0 8px 18px rgba(0,0,0,0.18)';
       const base=document.createElement('div');
-      base.style.cssText='width:'+baseW+'px;height:'+(pillarW*0.8)+'px;background:linear-gradient(180deg,#d4cfc8,#a8a298);border-radius:0 0 3px 3px;margin-top:-1px;box-shadow:0 4px 10px rgba(0,0,0,0.2)';
+      base.style.cssText='width:'+baseW+'px;height:'+(pillarW*0.9)+'px;background:linear-gradient(180deg,#d0cbc4,#a5a098);border-radius:0 0 3px 3px;margin-top:-1px;box-shadow:0 4px 12px rgba(0,0,0,0.22)';
       p.appendChild(cap);p.appendChild(shaft);p.appendChild(base);
       return p;
     };
     signRow.appendChild(mkPillar());
     const board=document.createElement('div');
     board.textContent=z.icon+' '+z.t.toUpperCase();
-    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(8,fontSize*0.55)+'px '+Math.max(16,fontSize*1.1)+'px;border-radius:'+Math.max(4,fontSize*0.25)+'px;white-space:nowrap;letter-spacing:0.1em;background:'+z.bg+';border:'+Math.max(2,fontSize*0.12)+'px solid rgba(255,255,255,0.4);border-bottom:'+Math.max(3,fontSize*0.18)+'px solid rgba(0,0,0,0.25);box-shadow:0 6px 28px '+z.glow+',0 10px 40px rgba(0,0,0,0.3),inset 0 3px 0 rgba(255,255,255,0.3),inset 0 -5px 10px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.35),0 0 14px rgba(255,255,255,0.2);margin:0 -2px;margin-top:'+(pillarH*0.2)+'px';
+    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(8,fontSize*0.6)+'px '+Math.max(16,fontSize*1.2)+'px;border-radius:'+Math.max(5,fontSize*0.3)+'px;white-space:nowrap;letter-spacing:0.1em;background:'+z.bg+';border:'+Math.max(2,fontSize*0.12)+'px solid rgba(255,255,255,0.4);border-bottom:'+Math.max(3,fontSize*0.18)+'px solid rgba(0,0,0,0.25);box-shadow:0 8px 32px '+z.glow+',0 12px 48px rgba(0,0,0,0.35),inset 0 3px 0 rgba(255,255,255,0.3),inset 0 -6px 12px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.35),0 0 14px rgba(255,255,255,0.2);margin:0 -3px;margin-top:'+(pillarH*0.15)+'px';
     signRow.appendChild(board);
     signRow.appendChild(mkPillar());
     wrap.appendChild(signRow);
+    // Ground shadow — immersive planted effect
     const shadow=document.createElement('div');
-    shadow.style.cssText='position:absolute;bottom:-'+(capS*0.6)+'px;left:50%;transform:translateX(-50%);width:95%;height:'+(capS*0.6)+'px;background:radial-gradient(ellipse,rgba(0,0,0,0.3),transparent 70%);border-radius:50%;filter:blur(3px)';
+    shadow.style.cssText='position:absolute;bottom:-'+(capS*0.8)+'px;left:50%;transform:translateX(-50%);width:110%;height:'+(capS*1)+'px;background:radial-gradient(ellipse at 50% 40%,rgba(0,0,0,0.38) 0%,rgba(0,0,0,0.15) 40%,transparent 70%);border-radius:50%;filter:blur(5px)';
     wrap.appendChild(shadow);
     mapCanvas.appendChild(wrap);
   });
