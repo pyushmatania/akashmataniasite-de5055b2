@@ -86,7 +86,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1))}
 .sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
 .sticker:active{cursor:grabbing}
-.sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important}
+.sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important;will-change:transform}
+/* Pause all animations inside off-screen stickers — applied by IntersectionObserver */
+.sticker.paused-offscreen,.sticker.paused-offscreen *{animation-play-state:paused!important}
 
 /* ===== ZONE VISUAL TINTS ===== */
 .zone-tint{position:absolute;pointer-events:none;z-index:1;border-radius:40px;opacity:0.06;transition:opacity 0.3s}
@@ -2295,7 +2297,7 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="neon-tube-row bottom"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
     <div class="neon-tube-row lft"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
     <div class="neon-tube-row rgt"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-board"><span class="neon-icon">📸</span><span class="neon-text">ORIGIN</span></div>
+    <div class="neon-board"><span class="neon-text">ORIGIN</span></div>
   </div>
   <div class="neon-arrow"><svg viewBox="0 0 80 35"><path d="M10,5 L40,30 L70,5" fill="none" stroke="#4CAF50" stroke-width="3" stroke-linecap="round"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></path></svg></div>
   <div class="neon-frame"></div>
@@ -2312,7 +2314,7 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="neon-tube-row bottom"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
     <div class="neon-tube-row lft"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
     <div class="neon-tube-row rgt"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-board"><span class="neon-icon">🎯</span><span class="neon-text">WORK</span></div>
+    <div class="neon-board"><span class="neon-text">WORK</span></div>
   </div>
   <div class="neon-arrow"><svg viewBox="0 0 80 35"><path d="M10,5 L40,30 L70,5" fill="none" stroke="#E53935" stroke-width="3" stroke-linecap="round"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></path></svg></div>
   <div class="neon-frame"></div>
@@ -2329,7 +2331,7 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="neon-tube-row bottom"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
     <div class="neon-tube-row lft"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
     <div class="neon-tube-row rgt"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-board"><span class="neon-icon">🚀</span><span class="neon-text">PORTFOLIO</span></div>
+    <div class="neon-board"><span class="neon-text">PORTFOLIO</span></div>
   </div>
   <div class="neon-arrow"><svg viewBox="0 0 80 35"><path d="M10,5 L40,30 L70,5" fill="none" stroke="#42A5F5" stroke-width="3" stroke-linecap="round"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></path></svg></div>
   <div class="neon-frame"></div>
@@ -2346,7 +2348,7 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="neon-tube-row bottom"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
     <div class="neon-tube-row lft"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
     <div class="neon-tube-row rgt"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-board"><span class="neon-icon">🎮</span><span class="neon-text">HOBBY</span></div>
+    <div class="neon-board"><span class="neon-text">HOBBY</span></div>
   </div>
   <div class="neon-arrow"><svg viewBox="0 0 80 35"><path d="M10,5 L40,30 L70,5" fill="none" stroke="#FF9800" stroke-width="3" stroke-linecap="round"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></path></svg></div>
   <div class="neon-frame"></div>
@@ -2363,7 +2365,7 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="neon-tube-row bottom"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
     <div class="neon-tube-row lft"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
     <div class="neon-tube-row rgt"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-board"><span class="neon-icon">😂</span><span class="neon-text">FUN</span></div>
+    <div class="neon-board"><span class="neon-text">FUN</span></div>
   </div>
   <div class="neon-arrow"><svg viewBox="0 0 80 35"><path d="M10,5 L40,30 L70,5" fill="none" stroke="#AB47BC" stroke-width="3" stroke-linecap="round"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></path></svg></div>
   <div class="neon-frame"></div>
@@ -2373,52 +2375,6 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="neon-ground-shadow"></div>
 </div>
 
-<!-- ===== NEON DECORATIVE ELEMENTS — scattered between zones ===== -->
-
-<!-- Between Origin (green) and Work (red) — top area -->
-<div class="neon-decor neon-decor-arrow" style="left:6200px;top:1800px;--nd:#4CAF50"><svg width="60" height="40" viewBox="0 0 60 40"><path d="M5 30 L30 5 L55 30" stroke="#4CAF50" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M30 5 L30 38" stroke="#4CAF50" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div>
-<div class="neon-decor neon-decor-star" style="left:6800px;top:1200px;--nd:#E53935"><svg width="50" height="50" viewBox="0 0 50 50"><polygon points="25,2 31,18 49,18 35,28 40,46 25,35 10,46 15,28 1,18 19,18" fill="none" stroke="#E53935" stroke-width="2.5"/></svg></div>
-<div class="neon-decor neon-decor-tube" style="left:6500px;top:2800px;width:120px;height:6px;background:linear-gradient(90deg,#4CAF50,#E53935);--ntube:#FFB300"></div>
-<div class="neon-decor neon-decor-ring" style="left:7200px;top:800px;width:40px;height:40px;--nd:#FFD700"></div>
-
-<!-- Between Origin (green) and Portfolio (blue) — left side -->
-<div class="neon-decor neon-decor-arrow" style="left:2200px;top:5900px;--nd:#42A5F5;transform:rotate(90deg)"><svg width="50" height="35" viewBox="0 0 50 35"><path d="M5 25 L25 5 L45 25" stroke="#42A5F5" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
-<div class="neon-decor neon-decor-star" style="left:4800px;top:5600px;--nd:#4CAF50"><svg width="35" height="35" viewBox="0 0 50 50"><polygon points="25,2 31,18 49,18 35,28 40,46 25,35 10,46 15,28 1,18 19,18" fill="none" stroke="#4CAF50" stroke-width="2.5"/></svg></div>
-<div class="neon-decor neon-decor-tube" style="left:1500px;top:6000px;width:6px;height:100px;background:linear-gradient(180deg,#4CAF50,#42A5F5);--ntube:#42A5F5" ></div>
-<div class="neon-decor neon-decor-diamond" style="left:5200px;top:5500px;--nd:#AB47BC"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="5" y="5" width="20" height="20" fill="none" stroke="#AB47BC" stroke-width="2.5" transform="rotate(45 15 15)"/></svg></div>
-
-<!-- Between Work (red) and Fun/Memes (purple) — right side -->
-<div class="neon-decor neon-decor-tube" style="left:13200px;top:5800px;width:6px;height:130px;background:linear-gradient(180deg,#E53935,#AB47BC);--ntube:#E53935"></div>
-<div class="neon-decor neon-decor-star" style="left:12500px;top:6200px;--nd:#FF9800"><svg width="45" height="45" viewBox="0 0 50 50"><polygon points="25,2 31,18 49,18 35,28 40,46 25,35 10,46 15,28 1,18 19,18" fill="none" stroke="#FF9800" stroke-width="2.5"/></svg></div>
-<div class="neon-decor neon-decor-arrow" style="left:8500px;top:5800px;--nd:#E53935;transform:rotate(180deg)"><svg width="55" height="35" viewBox="0 0 55 35"><path d="M5 25 L27 5 L50 25" stroke="#E53935" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
-<div class="neon-decor neon-decor-ring" style="left:9200px;top:6100px;width:35px;height:35px;--nd:#AB47BC"></div>
-
-<!-- Between Portfolio (blue) and Hobby (orange) — mid-left -->
-<div class="neon-decor neon-decor-zigzag" style="left:2800px;top:10000px;--nd:#FF9800"><svg width="100" height="30" viewBox="0 0 100 30"><polyline points="5,25 20,5 35,25 50,5 65,25 80,5 95,25" stroke="#FF9800" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div>
-<div class="neon-decor neon-decor-star" style="left:4500px;top:9900px;--nd:#42A5F5"><svg width="40" height="40" viewBox="0 0 50 50"><polygon points="25,2 31,18 49,18 35,28 40,46 25,35 10,46 15,28 1,18 19,18" fill="none" stroke="#42A5F5" stroke-width="2.5"/></svg></div>
-<div class="neon-decor neon-decor-tube" style="left:800px;top:10200px;width:150px;height:6px;background:linear-gradient(90deg,#42A5F5,#FF9800);--ntube:#FF9800"></div>
-
-<!-- Center area — around hub -->
-<div class="neon-decor neon-decor-star" style="left:5900px;top:7200px;--nd:#FFD700"><svg width="55" height="55" viewBox="0 0 50 50"><polygon points="25,2 31,18 49,18 35,28 40,46 25,35 10,46 15,28 1,18 19,18" fill="none" stroke="#FFD700" stroke-width="2"/></svg></div>
-<div class="neon-decor neon-decor-arrow" style="left:8200px;top:7000px;--nd:#AB47BC"><svg width="50" height="35" viewBox="0 0 50 35"><path d="M5 30 L25 5 L45 30" stroke="#AB47BC" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div>
-<div class="neon-decor neon-decor-ring" style="left:6100px;top:8200px;width:45px;height:45px;--nd:#4CAF50"></div>
-<div class="neon-decor neon-decor-diamond" style="left:8100px;top:8000px;--nd:#E53935"><svg width="35" height="35" viewBox="0 0 35 35"><rect x="5" y="5" width="25" height="25" fill="none" stroke="#E53935" stroke-width="2.5" transform="rotate(45 17.5 17.5)"/></svg></div>
-
-<!-- Scattered in Hobby (orange) zone -->
-<div class="neon-decor neon-decor-tube" style="left:5500px;top:12000px;width:100px;height:6px;background:#FF9800;--ntube:#FF9800"></div>
-<div class="neon-decor neon-decor-arrow" style="left:1200px;top:12500px;--nd:#FF9800;transform:rotate(-45deg)"><svg width="45" height="30" viewBox="0 0 45 30"><path d="M5 22 L22 5 L40 22" stroke="#FF9800" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div>
-
-<!-- Scattered in Fun/Memes (purple) zone -->
-<div class="neon-decor neon-decor-star" style="left:11000px;top:11500px;--nd:#AB47BC"><svg width="40" height="40" viewBox="0 0 50 50"><polygon points="25,2 31,18 49,18 35,28 40,46 25,35 10,46 15,28 1,18 19,18" fill="none" stroke="#AB47BC" stroke-width="2.5"/></svg></div>
-<div class="neon-decor neon-decor-zigzag" style="left:9500px;top:13000px;--nd:#AB47BC"><svg width="80" height="25" viewBox="0 0 80 25"><polyline points="5,20 17,5 30,20 42,5 55,20 67,5 78,20" stroke="#AB47BC" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></div>
-<div class="neon-decor neon-decor-ring" style="left:12800px;top:12000px;width:30px;height:30px;--nd:#FF9800"></div>
-<div class="neon-decor neon-decor-tube" style="left:10000px;top:8500px;width:6px;height:90px;background:linear-gradient(180deg,#AB47BC,#E53935);--ntube:#AB47BC"></div>
-
-<!-- Extra neon tubes connecting zones visually -->
-<div class="neon-decor neon-decor-tube" style="left:6400px;top:4200px;width:200px;height:5px;background:linear-gradient(90deg,transparent,#FFD700,transparent);--ntube:#FFD700"></div>
-<div class="neon-decor neon-decor-tube" style="left:6900px;top:9500px;width:5px;height:150px;background:linear-gradient(180deg,transparent,#FFD700,transparent);--ntube:#FFD700"></div>
-<div class="neon-decor neon-decor-diamond" style="left:400px;top:8500px;--nd:#42A5F5"><svg width="25" height="25" viewBox="0 0 25 25"><rect x="4" y="4" width="17" height="17" fill="none" stroke="#42A5F5" stroke-width="2" transform="rotate(45 12.5 12.5)"/></svg></div>
-<div class="neon-decor neon-decor-star" style="left:13500px;top:3500px;--nd:#E53935"><svg width="30" height="30" viewBox="0 0 50 50"><polygon points="25,2 31,18 49,18 35,28 40,46 25,35 10,46 15,28 1,18 19,18" fill="none" stroke="#E53935" stroke-width="2.5"/></svg></div>
 
 <!-- ===== HUB: INTRO — CENTER OF CANVAS ===== -->
 <div class="sticker intro-card" data-type="photo" data-zone="hub" style="left:6770px;top:6550px">
@@ -4292,6 +4248,7 @@ function triggerAnim(el, e){
   const a=el.dataset.anim;
   allAnims.forEach(c=>el.classList.remove('anim-'+c));
   void el.offsetWidth; // reflow to restart animation
+  el.style.willChange='transform'; // promote to GPU layer during animation
   el.classList.add('anim-'+a);
   
   // Get click position for confetti
@@ -4306,7 +4263,7 @@ function triggerAnim(el, e){
   el.style.outline='3px solid rgba(201,169,110,0.4)';
   setTimeout(()=>{el.style.outline='none'},300);
   
-  setTimeout(()=>el.classList.remove('anim-'+a),1200);
+  setTimeout(()=>{el.classList.remove('anim-'+a);el.style.willChange='';},1200); // release GPU layer after animation
 }
 
 // CONFETTI BURST — batched & cooldown-protected
@@ -6833,44 +6790,6 @@ function drawMap(){
       zoneFrag.appendChild(sign);
     });
     mapCanvas.appendChild(zoneFrag);
-
-    // === MINI NEON DECOR on small minimap (simplified tiny dots/lines) ===
-    const miniNeonAll=[
-      {x:50,y:18,type:'dot',color:'#FFD700'},
-      {x:56,y:14,type:'dot',color:'#E53935'},
-      {x:35,y:41,type:'dot',color:'#42A5F5'},
-      {x:12,y:42,type:'dot',color:'#42A5F5'},
-      {x:90,y:45,type:'dot',color:'#FF9800'},
-      {x:66,y:41,type:'dot',color:'#E53935'},
-      {x:28,y:74,type:'line',color:'#FF9800',w:6,h:0.6},
-      {x:38,y:70,type:'dot',color:'#42A5F5'},
-      {x:61,y:60,type:'dot',color:'#FFD700'},
-      {x:43,y:63,type:'ring',color:'#4CAF50'},
-      {x:59,y:69,type:'ring',color:'#AB47BC'},
-      {x:83,y:83,type:'dot',color:'#AB47BC'},
-      {x:73,y:90,type:'line',color:'#AB47BC',w:5,h:0.5},
-      {x:9,y:88,type:'dot',color:'#FF9800'},
-      {x:49,y:29,type:'line',color:'#4CAF50',w:5,h:0.5},
-      {x:16,y:53,type:'line',color:'#42A5F5',w:0.5,h:4},
-      {x:86,y:58,type:'line',color:'#E53935',w:0.5,h:5},
-    ];
-    // On mobile reduce animated neon elements to spare GPU — every other one
-    const miniNeon=IS_MOBILE_MAP?miniNeonAll.filter((_,i)=>i%2===0):miniNeonAll;
-    const cW=canvasW,cH=canvasH;
-    miniNeon.forEach((n,idx)=>{
-      const el=document.createElement('div');
-      const px=n.x/100*cW, py=n.y/100*cH;
-      const delay=(idx*0.3%2.5).toFixed(1);
-      if(n.type==='dot'){
-        el.style.cssText='position:absolute;left:'+px+'px;top:'+py+'px;width:3px;height:3px;border-radius:50%;background:'+n.color+';box-shadow:0 0 3px '+n.color+',0 0 6px '+n.color+';pointer-events:none;z-index:5;animation:miniNeonPulse 2s ease-in-out '+delay+'s infinite';
-      } else if(n.type==='ring'){
-        el.style.cssText='position:absolute;left:'+px+'px;top:'+py+'px;width:4px;height:4px;border-radius:50%;border:0.8px solid '+n.color+';box-shadow:0 0 3px '+n.color+',inset 0 0 2px '+n.color+';pointer-events:none;z-index:5;animation:miniNeonPulse 2.4s ease-in-out '+delay+'s infinite';
-      } else {
-        const w=n.w/100*cW, h=n.h/100*cH;
-        el.style.cssText='position:absolute;left:'+px+'px;top:'+py+'px;width:'+Math.max(2,w)+'px;height:'+Math.max(1,h)+'px;border-radius:2px;background:'+n.color+';box-shadow:0 0 3px '+n.color+';pointer-events:none;z-index:5;animation:miniNeonPulse 2.8s ease-in-out '+delay+'s infinite';
-      }
-      mapCanvas.appendChild(el);
-    });
   }
   updMap();
 }
@@ -7840,6 +7759,21 @@ function ensureIntroCluster(){
     cv.appendChild(el);
   });
 }
+
+// ===== INTERSECTION OBSERVER: pause animations on off-screen stickers =====
+// Runs once after DOM is ready. Observes all stickers against the scroll viewport.
+// Off-screen stickers get class 'paused-offscreen' → CSS kills all their animations.
+// rootMargin:400px keeps a 400px lookahead so entering stickers resume before being seen.
+(function(){
+  if(!window.IntersectionObserver)return;
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>e.target.classList.toggle('paused-offscreen',!e.isIntersecting));
+  },{root:vp,rootMargin:'400px',threshold:0});
+  // Observe after a short delay to let DOM settle
+  setTimeout(()=>{
+    document.querySelectorAll('#canvas > .sticker').forEach(s=>obs.observe(s));
+  },500);
+})();
 
 setTimeout(()=>{
   ensureIntroCluster();
