@@ -167,131 +167,133 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker-counter .c-count{font-family:var(--font-fun);font-weight:700;font-size:1.4rem;color:var(--text);min-width:30px}
 .sticker-counter .c-label{font-size:0.7rem;color:var(--text3)}
 
-/* ===== 3D THEME-PARK ARCH SIGNPOST ===== */
+/* ===== 3D IMMERSIVE SIGNPOST ===== */
 .zone-signpost{
   display:flex;align-items:flex-end;gap:0;
   z-index:100!important;
   transform-style:preserve-3d;
-  perspective:900px;
+  perspective:1200px;
   position:absolute;
-  /* Standing on ground — slight bottom-up perspective */
-  transform:perspective(900px) rotateX(6deg);
+  /* Planted-in-ground perspective */
+  transform:perspective(1200px) rotateX(4deg);
+  filter:drop-shadow(0 30px 40px rgba(0,0,0,0.35));
+  cursor:default!important;
 }
 .zone-signpost:hover{
-  transform:perspective(900px) rotateX(4deg) scale(1.02);
+  transform:perspective(1200px) rotateX(2deg) scale(1.03);
+  filter:drop-shadow(0 35px 50px rgba(0,0,0,0.4));
 }
 
 /* Stone/marble pillar */
 .signpost-pillar{
-  width:80px;flex-shrink:0;position:relative;z-index:3;
+  width:60px;flex-shrink:0;position:relative;z-index:3;
   display:flex;flex-direction:column;align-items:center;
 }
-/* Pillar shaft */
+/* Pillar shaft — tall with marble texture */
 .pillar-shaft{
-  width:50px;flex:1;min-height:320px;
+  width:36px;flex:1;min-height:280px;
   background:
     linear-gradient(90deg,
-      #c4bfb6 0%,#d8d4cc 15%,#eae7e1 35%,#f5f2ed 50%,#eae7e1 65%,#d8d4cc 85%,#c4bfb6 100%);
-  border-radius:4px;
+      #b0aa9e 0%,#c8c3ba 12%,#ddd8d0 30%,#eae6df 50%,#ddd8d0 70%,#c8c3ba 88%,#b0aa9e 100%);
+  border-radius:3px;
   position:relative;
   box-shadow:
-    6px 0 0 rgba(0,0,0,0.1),
-    -3px 0 0 rgba(255,255,255,0.25),
-    0 12px 30px rgba(0,0,0,0.2),
-    0 24px 60px rgba(0,0,0,0.1);
+    4px 0 0 rgba(0,0,0,0.08),
+    -2px 0 0 rgba(255,255,255,0.2),
+    0 10px 30px rgba(0,0,0,0.25),
+    0 25px 60px rgba(0,0,0,0.12);
 }
 /* Pillar fluting — vertical grooves */
 .pillar-shaft::before{
-  content:'';position:absolute;inset:4px 2px;border-radius:2px;pointer-events:none;
+  content:'';position:absolute;inset:6px 3px;border-radius:2px;pointer-events:none;
   background:repeating-linear-gradient(90deg,
-    transparent 0px,rgba(0,0,0,0.04) 1px,transparent 2px,
-    rgba(0,0,0,0.03) 3px,transparent 4px,
-    rgba(255,255,255,0.08) 5px,transparent 6px,
-    rgba(0,0,0,0.02) 7px,transparent 8px);
+    transparent 0px,rgba(0,0,0,0.03) 1px,transparent 2px,
+    rgba(0,0,0,0.02) 3px,transparent 4px,
+    rgba(255,255,255,0.06) 5px,transparent 6px);
 }
 /* Pillar highlight edge */
 .pillar-shaft::after{
-  content:'';position:absolute;top:0;left:0;width:40%;height:100%;border-radius:3px 0 0 3px;
-  background:linear-gradient(90deg,rgba(255,255,255,0.15),transparent);
+  content:'';position:absolute;top:0;left:0;width:35%;height:100%;border-radius:3px 0 0 3px;
+  background:linear-gradient(90deg,rgba(255,255,255,0.12),transparent);
   pointer-events:none;
 }
 /* Pillar capital — ornamental ball top */
 .pillar-cap{
-  width:90px;height:90px;
-  background:radial-gradient(ellipse at 35% 28%,#f8f6f2,#e0dbd4 40%,#c4bfb6 70%,#a8a298);
+  width:68px;height:68px;
+  background:radial-gradient(ellipse at 32% 25%,#f5f3ef,#ddd8d0 35%,#c0bab2 65%,#a8a298);
   border-radius:50%;
-  border:3px solid rgba(0,0,0,0.06);
+  border:2.5px solid rgba(0,0,0,0.06);
   box-shadow:
-    0 -6px 14px rgba(0,0,0,0.12),
-    0 10px 18px rgba(0,0,0,0.15),
-    inset 0 8px 12px rgba(255,255,255,0.5),
-    inset 0 -5px 10px rgba(0,0,0,0.12);
-  margin-bottom:-4px;
+    0 -4px 12px rgba(0,0,0,0.1),
+    0 8px 16px rgba(0,0,0,0.18),
+    inset 0 6px 10px rgba(255,255,255,0.45),
+    inset 0 -4px 8px rgba(0,0,0,0.1);
+  margin-bottom:-3px;
   position:relative;z-index:4;
 }
 /* Pillar base — wider stepped footing */
 .pillar-base{
-  width:85px;height:45px;
-  background:linear-gradient(180deg,#d4cfc8 0%,#bbb6ac 50%,#a8a298 100%);
-  border-radius:3px 3px 8px 8px;
-  border-top:3px solid rgba(255,255,255,0.35);
+  width:70px;height:36px;
+  background:linear-gradient(180deg,#d0cbc4 0%,#b8b3a9 50%,#a5a098 100%);
+  border-radius:2px 2px 6px 6px;
+  border-top:2.5px solid rgba(255,255,255,0.3);
   box-shadow:
-    0 8px 24px rgba(0,0,0,0.25),
-    0 18px 48px rgba(0,0,0,0.1),
-    inset 0 -3px 6px rgba(0,0,0,0.1);
-  margin-top:-3px;
+    0 6px 20px rgba(0,0,0,0.28),
+    0 16px 40px rgba(0,0,0,0.12),
+    inset 0 -2px 5px rgba(0,0,0,0.08);
+  margin-top:-2px;
   position:relative;
 }
 /* Base step detail */
 .pillar-base::after{
-  content:'';position:absolute;bottom:-10px;left:-6px;right:-6px;height:14px;
-  background:linear-gradient(180deg,#b5b0a8,#9e9a92);
-  border-radius:3px 3px 8px 8px;
-  box-shadow:0 6px 16px rgba(0,0,0,0.2);
+  content:'';position:absolute;bottom:-8px;left:-5px;right:-5px;height:12px;
+  background:linear-gradient(180deg,#b0aba3,#9a958e);
+  border-radius:2px 2px 6px 6px;
+  box-shadow:0 5px 14px rgba(0,0,0,0.22);
 }
 
 /* ===== THE BOARD — colorful themed sign ===== */
 .signpost-board{
-  font-family:var(--font-fun);font-weight:900;font-size:4rem;
+  font-family:var(--font-fun);font-weight:900;font-size:3.2rem;
   color:#fff;
-  padding:40px 80px;
-  border-radius:14px;
+  padding:32px 64px;
+  border-radius:12px;
   letter-spacing:0.1em;white-space:nowrap;
   position:relative;z-index:5;
-  margin:0 -16px;
+  margin:0 -12px;
   align-self:flex-start;
-  margin-top:60px;
+  margin-top:50px;
   text-shadow:
-    0 4px 0 rgba(0,0,0,0.4),
-    0 -1px 0 rgba(255,255,255,0.2),
-    0 0 30px rgba(0,0,0,0.1);
+    0 3px 0 rgba(0,0,0,0.4),
+    0 -1px 0 rgba(255,255,255,0.15),
+    0 0 24px rgba(0,0,0,0.1);
   transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
   /* 3D thick board effect */
-  border:6px solid rgba(255,255,255,0.35);
-  border-bottom:12px solid rgba(0,0,0,0.3);
-  border-right:9px solid rgba(0,0,0,0.18);
+  border:5px solid rgba(255,255,255,0.35);
+  border-bottom:10px solid rgba(0,0,0,0.3);
+  border-right:7px solid rgba(0,0,0,0.18);
   box-shadow:
-    0 16px 48px rgba(0,0,0,0.4),
-    0 32px 80px rgba(0,0,0,0.15),
-    inset 0 4px 0 rgba(255,255,255,0.3),
-    inset 0 -10px 20px rgba(0,0,0,0.2),
-    inset 8px 0 16px rgba(0,0,0,0.06),
-    inset -8px 0 16px rgba(0,0,0,0.06);
+    0 14px 42px rgba(0,0,0,0.4),
+    0 28px 70px rgba(0,0,0,0.15),
+    inset 0 3px 0 rgba(255,255,255,0.3),
+    inset 0 -8px 16px rgba(0,0,0,0.2),
+    inset 6px 0 12px rgba(0,0,0,0.06),
+    inset -6px 0 12px rgba(0,0,0,0.06);
 }
 /* Board shine overlay */
 .signpost-board::before{
-  content:'';position:absolute;inset:0;border-radius:12px;pointer-events:none;
+  content:'';position:absolute;inset:0;border-radius:10px;pointer-events:none;
   background:
-    linear-gradient(135deg,rgba(255,255,255,0.3) 0%,transparent 35%,transparent 65%,rgba(0,0,0,0.1) 100%);
+    linear-gradient(135deg,rgba(255,255,255,0.28) 0%,transparent 35%,transparent 65%,rgba(0,0,0,0.1) 100%);
 }
 
-/* Ground shadow — elliptical shadow under the whole signpost */
+/* Ground shadow — elliptical shadow planted on the surface */
 .signpost-ground{
-  position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
-  width:110%;height:30px;
-  background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,0.35) 0%,rgba(0,0,0,0.15) 40%,transparent 75%);
+  position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);
+  width:120%;height:40px;
+  background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.18) 35%,transparent 70%);
   border-radius:50%;
-  filter:blur(6px);
+  filter:blur(8px);
   z-index:0;
 }
 .sticker-fortune{background:linear-gradient(135deg,#FFE0B2,#FFB74D);border-radius:16px;padding:18px 22px;max-width:220px;box-shadow:0 3px 12px rgba(0,0,0,0.08);cursor:pointer}
@@ -1991,7 +1993,43 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="meme-sub">Salary Roulette</div>
 </div>
 
-<!-- Zone signposts removed from moodboard canvas (only shown on big map) -->
+<!-- ===== ZONE SIGNPOSTS ON MOODBOARD ===== -->
+<div class="sticker zone-signpost" style="left:1650px;top:330px">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
+  <div class="signpost-board" style="background:linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)">📸 ORIGIN STORY</div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
+  <div class="signpost-ground"></div>
+</div>
+<div class="sticker zone-signpost" style="left:7800px;top:330px">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
+  <div class="signpost-board" style="background:linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)">🎯 THE WAR ROOM</div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
+  <div class="signpost-ground"></div>
+</div>
+<div class="sticker zone-signpost" style="left:3900px;top:3000px">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
+  <div class="signpost-board" style="background:linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)">🚀 LAUNCH PAD</div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
+  <div class="signpost-ground"></div>
+</div>
+<div class="sticker zone-signpost" style="left:5250px;top:3900px">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
+  <div class="signpost-board" style="background:linear-gradient(135deg,#E65100,#FFB300,#FF8F00)">⭐ AKASH UNPLUGGED</div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
+  <div class="signpost-ground"></div>
+</div>
+<div class="sticker zone-signpost" style="left:1800px;top:5700px">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
+  <div class="signpost-board" style="background:linear-gradient(135deg,#E65100,#FF9800,#EF6C00)">🎮 THE PLAYGROUND</div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
+  <div class="signpost-ground"></div>
+</div>
+<div class="sticker zone-signpost" style="left:9600px;top:5700px">
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
+  <div class="signpost-board" style="background:linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)">😂 MEME ALLEY</div>
+  <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
+  <div class="signpost-ground"></div>
+</div>
   </div>
 </div>
 
@@ -3323,8 +3361,9 @@ function autoArrangeMoodboardItems(){
 // Center on the Akash hub zone
 autoArrangeMoodboardItems();
 
-// Add interactive badges to interactive stickers
-document.querySelectorAll('.sticker-counter,.sticker-mood,.sticker-scratch,.sticker-progress,.sticker-fortune').forEach(s=>{
+// Add interactive badges to interactive stickers (including onclick-based ones)
+document.querySelectorAll('.sticker-counter,.sticker-mood,.sticker-scratch,.sticker-progress,.sticker-fortune,.sticker[onclick],.sticker-meme[onclick]').forEach(s=>{
+  if(s.querySelector('.interactive-badge'))return; // avoid duplicates
   s.style.position='relative';
   const badge=document.createElement('div');
   badge.className='interactive-badge';
@@ -4854,8 +4893,8 @@ function scanStickers(){
     // Determine category
     let cat='other';
     if(s.classList.contains('sticker-hero-photo')||s.classList.contains('sticker-photo-polaroid')||s.classList.contains('sticker-photo-tilt')||s.classList.contains('sticker-photo-circle'))cat='photo';
+    else if(s.classList.contains('sticker-counter')||s.classList.contains('sticker-mood')||s.classList.contains('sticker-scratch')||s.classList.contains('sticker-progress')||s.classList.contains('sticker-fortune')||s.getAttribute('onclick'))cat='interactive';
     else if(s.classList.contains('sticker-meme'))cat='meme';
-    else if(s.classList.contains('sticker-counter')||s.classList.contains('sticker-mood')||s.classList.contains('sticker-scratch')||s.classList.contains('sticker-progress')||s.classList.contains('sticker-fortune'))cat='interactive';
     else if(s.classList.contains('sticker-emoji'))cat='other';
     else if(s.classList.contains('sticker-badge'))cat='other';
     else if(s.classList.contains('sticker-text'))cat='other';
@@ -4940,7 +4979,7 @@ function toggleMap(){
 
   if(!mmExp){
     mmExp=true;
-    mapZoomScale=0.5;
+    mapZoomScale=0.25;
     setMapZoomLabel();
 
     mc.classList.remove('map-closing');
@@ -5379,45 +5418,47 @@ function addMapDecorations(cw,ch){
     wrap.appendChild(svg);
   });
 
-  // === AREA NAME SIGNPOSTS (theme-park arch style, 3x bigger with glow) ===
+  // === IMMERSIVE AREA SIGNPOSTS — tall poles, depth, ground shadows ===
   const areaNames=[
     {x:14,y:22,t:'Origin Story',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)',glow:'rgba(76,175,80,0.5)'},
     {x:55,y:14,t:'The War Room',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)',glow:'rgba(229,57,53,0.5)'},
     {x:14,y:38,t:'Launch Pad',icon:'🚀',bg:'linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)',glow:'rgba(66,165,245,0.5)'},
+    {x:35,y:30,t:'Akash Unplugged',icon:'⭐',bg:'linear-gradient(135deg,#E65100,#FFB300,#FF8F00)',glow:'rgba(255,179,0,0.5)'},
     {x:18,y:62,t:'The Playground',icon:'🎮',bg:'linear-gradient(135deg,#E65100,#FF9800,#EF6C00)',glow:'rgba(255,152,0,0.5)'},
     {x:65,y:58,t:'Meme Alley',icon:'😂',bg:'linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)',glow:'rgba(171,71,188,0.5)'},
   ];
   areaNames.forEach(z=>{
     const wrap=document.createElement('div');
-    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%) perspective(400px) rotateX(5deg);display:flex;flex-direction:column;align-items:center;z-index:9;pointer-events:none;gap:0';
+    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-100%) perspective(600px) rotateX(4deg);display:flex;flex-direction:column;align-items:center;z-index:9;pointer-events:none;gap:0';
     const signRow=document.createElement('div');
     signRow.style.cssText='display:flex;align-items:flex-end;gap:0';
-    const fontSize=Math.max(9,cw*0.01);
-    const pillarW=Math.max(6,cw*0.005);
-    const pillarH=Math.max(28,cw*0.028);
-    const capS=Math.max(10,pillarW*1.5);
-    const baseW=Math.max(9,pillarW*1.4);
+    const fontSize=Math.max(10,cw*0.012);
+    const pillarW=Math.max(8,cw*0.006);
+    const pillarH=Math.max(50,cw*0.04);
+    const capS=Math.max(12,pillarW*1.6);
+    const baseW=Math.max(12,pillarW*1.5);
     const mkPillar=()=>{
       const p=document.createElement('div');
       p.style.cssText='display:flex;flex-direction:column;align-items:center;flex-shrink:0';
       const cap=document.createElement('div');
-      cap.style.cssText='width:'+capS+'px;height:'+capS+'px;border-radius:50%;background:radial-gradient(ellipse at 35% 28%,#f8f6f2,#c4bfb6);border:1.5px solid rgba(0,0,0,0.08);margin-bottom:-2px;box-shadow:inset 0 3px 5px rgba(255,255,255,0.5),0 3px 6px rgba(0,0,0,0.2)';
+      cap.style.cssText='width:'+capS+'px;height:'+capS+'px;border-radius:50%;background:radial-gradient(ellipse at 32% 25%,#f5f3ef,#c0bab2);border:1.5px solid rgba(0,0,0,0.06);margin-bottom:-2px;box-shadow:inset 0 3px 5px rgba(255,255,255,0.45),0 3px 8px rgba(0,0,0,0.22)';
       const shaft=document.createElement('div');
-      shaft.style.cssText='width:'+pillarW+'px;height:'+pillarH+'px;background:linear-gradient(90deg,#c4bfb6,#eae7e1 35%,#f5f2ed 50%,#eae7e1 65%,#c4bfb6);border-radius:2px;box-shadow:3px 0 0 rgba(0,0,0,0.08),0 6px 12px rgba(0,0,0,0.15)';
+      shaft.style.cssText='width:'+pillarW+'px;height:'+pillarH+'px;background:linear-gradient(90deg,#b0aa9e,#ddd8d0 30%,#eae6df 50%,#ddd8d0 70%,#b0aa9e);border-radius:2px;box-shadow:3px 0 0 rgba(0,0,0,0.06),0 8px 18px rgba(0,0,0,0.18)';
       const base=document.createElement('div');
-      base.style.cssText='width:'+baseW+'px;height:'+(pillarW*0.8)+'px;background:linear-gradient(180deg,#d4cfc8,#a8a298);border-radius:0 0 3px 3px;margin-top:-1px;box-shadow:0 4px 10px rgba(0,0,0,0.2)';
+      base.style.cssText='width:'+baseW+'px;height:'+(pillarW*0.9)+'px;background:linear-gradient(180deg,#d0cbc4,#a5a098);border-radius:0 0 3px 3px;margin-top:-1px;box-shadow:0 4px 12px rgba(0,0,0,0.22)';
       p.appendChild(cap);p.appendChild(shaft);p.appendChild(base);
       return p;
     };
     signRow.appendChild(mkPillar());
     const board=document.createElement('div');
     board.textContent=z.icon+' '+z.t.toUpperCase();
-    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(8,fontSize*0.55)+'px '+Math.max(16,fontSize*1.1)+'px;border-radius:'+Math.max(4,fontSize*0.25)+'px;white-space:nowrap;letter-spacing:0.1em;background:'+z.bg+';border:'+Math.max(2,fontSize*0.12)+'px solid rgba(255,255,255,0.4);border-bottom:'+Math.max(3,fontSize*0.18)+'px solid rgba(0,0,0,0.25);box-shadow:0 6px 28px '+z.glow+',0 10px 40px rgba(0,0,0,0.3),inset 0 3px 0 rgba(255,255,255,0.3),inset 0 -5px 10px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.35),0 0 14px rgba(255,255,255,0.2);margin:0 -2px;margin-top:'+(pillarH*0.2)+'px';
+    board.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:#fff;padding:'+Math.max(8,fontSize*0.6)+'px '+Math.max(16,fontSize*1.2)+'px;border-radius:'+Math.max(5,fontSize*0.3)+'px;white-space:nowrap;letter-spacing:0.1em;background:'+z.bg+';border:'+Math.max(2,fontSize*0.12)+'px solid rgba(255,255,255,0.4);border-bottom:'+Math.max(3,fontSize*0.18)+'px solid rgba(0,0,0,0.25);box-shadow:0 8px 32px '+z.glow+',0 12px 48px rgba(0,0,0,0.35),inset 0 3px 0 rgba(255,255,255,0.3),inset 0 -6px 12px rgba(0,0,0,0.15);text-shadow:0 2px 0 rgba(0,0,0,0.35),0 0 14px rgba(255,255,255,0.2);margin:0 -3px;margin-top:'+(pillarH*0.15)+'px';
     signRow.appendChild(board);
     signRow.appendChild(mkPillar());
     wrap.appendChild(signRow);
+    // Ground shadow — immersive planted effect
     const shadow=document.createElement('div');
-    shadow.style.cssText='position:absolute;bottom:-'+(capS*0.6)+'px;left:50%;transform:translateX(-50%);width:95%;height:'+(capS*0.6)+'px;background:radial-gradient(ellipse,rgba(0,0,0,0.3),transparent 70%);border-radius:50%;filter:blur(3px)';
+    shadow.style.cssText='position:absolute;bottom:-'+(capS*0.8)+'px;left:50%;transform:translateX(-50%);width:110%;height:'+(capS*1)+'px;background:radial-gradient(ellipse at 50% 40%,rgba(0,0,0,0.38) 0%,rgba(0,0,0,0.15) 40%,transparent 70%);border-radius:50%;filter:blur(5px)';
     wrap.appendChild(shadow);
     mapCanvas.appendChild(wrap);
   });
@@ -5959,7 +6000,7 @@ function recenter(){
 
 function mapZoom(dir){
   if(!mmExp)return;
-  const steps=[0.5,0.75,1,1.25,1.5,2];
+  const steps=[0.25,0.35,0.5,0.75,1,1.25,1.5,2];
   let idx=steps.indexOf(mapZoomScale);
   if(idx===-1)idx=2;
   idx=Math.max(0,Math.min(steps.length-1,idx+dir));
