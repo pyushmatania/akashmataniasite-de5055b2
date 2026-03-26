@@ -4057,11 +4057,31 @@ document.addEventListener('click',e=>{
 
 // Event delegation for sticker drag — handles dynamically added stickers too
 cv.addEventListener('mousedown',e=>{const s=e.target.closest('.sticker');if(s)sD.call(s,e)});
-cv.addEventListener('touchstart',e=>{const s=e.target.closest('.sticker');if(s)sD.call(s,e)},{passive:false});
+cv.addEventListener('touchstart',e=>{
+  const s=e.target.closest('.sticker');
+  if(s)sD.call(s,e);
+  // If sticker already grabbed & second finger added anywhere → start rotation
+  else if(as&&e.touches&&e.touches.length>=2&&!isRotating){
+    isRotating=true;didMove=true;
+    rotStartAngle=getAngle(e.touches[0],e.touches[1]);
+    stickerBaseAngle=getCurrentRotation(as);
+    e.preventDefault();
+  }
+},{passive:false});
+
+// Also listen on document for second finger added anywhere
+document.addEventListener('touchstart',e=>{
+  if(as&&!isRotating&&e.touches&&e.touches.length>=2){
+    isRotating=true;didMove=true;
+    rotStartAngle=getAngle(e.touches[0],e.touches[1]);
+    stickerBaseAngle=getCurrentRotation(as);
+    e.preventDefault();
+  }
+},{passive:false});
 
 function sD(e){
   e.stopPropagation();
-  // Two-finger rotation start
+  // Two-finger rotation start (both on sticker)
   if(e.touches&&e.touches.length===2){
     isRotating=true;didMove=true;
     as=this;hz++;as.style.zIndex=hz;
@@ -4088,12 +4108,29 @@ document.addEventListener('mousemove',e=>{if(!as)return;_smPendingE=e;_schedStic
 document.addEventListener('touchmove',e=>{if(!as)return;_smPendingE=e;_schedStickerMove(e)},{passive:false});
 
 function _schedStickerMove(e){
-  // Two-finger rotation runs immediately (low frequency)
-  if(isRotating&&e.touches&&e.touches.length===2){
+  // Two-finger rotation — works anywhere on screen
+  if(as&&e.touches&&e.touches.length>=2){
+    if(!isRotating){
+      // Transition into rotation mode mid-drag
+      isRotating=true;didMove=true;
+      rotStartAngle=getAngle(e.touches[0],e.touches[1]);
+      stickerBaseAngle=getCurrentRotation(as);
+    }
     const curAngle=getAngle(e.touches[0],e.touches[1]);
     const delta=curAngle-rotStartAngle;
     as.style.transform='rotate('+(stickerBaseAngle+delta)+'deg)';
     e.preventDefault();return;
+  }
+  // If was rotating and now back to 1 finger, resume drag
+  if(isRotating&&e.touches&&e.touches.length===1){
+    isRotating=false;
+    const cx=e.touches[0].clientX;
+    const cy=e.touches[0].clientY;
+    const stickerLeft=parseFloat(as.style.left)||0;
+    const stickerTop=parseFloat(as.style.top)||0;
+    sox=cx/SCALE+vp.scrollLeft/SCALE-stickerLeft;
+    soy=cy/SCALE+vp.scrollTop/SCALE-stickerTop;
+    return;
   }
   if(isRotating)return;
   if(e.cancelable)e.preventDefault();
@@ -4122,6 +4159,18 @@ document.addEventListener('touchend',sU);
 
 function sU(e){
   if(!as)return;
+  // If still have fingers down, don't end yet (rotation → drag transition)
+  if(e.touches&&e.touches.length>=1&&isRotating){
+    // Switching from rotation back to drag
+    isRotating=false;
+    const cx=e.touches[0].clientX;
+    const cy=e.touches[0].clientY;
+    const stickerLeft=parseFloat(as.style.left)||0;
+    const stickerTop=parseFloat(as.style.top)||0;
+    sox=cx/SCALE+vp.scrollLeft/SCALE-stickerLeft;
+    soy=cy/SCALE+vp.scrollTop/SCALE-stickerTop;
+    return;
+  }
   _cachedCanvasRect=null;
   if(_stickerMoveRAF){cancelAnimationFrame(_stickerMoveRAF);_stickerMoveRAF=null}
   _smPendingE=null;
