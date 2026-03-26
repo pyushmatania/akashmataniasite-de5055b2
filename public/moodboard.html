@@ -3745,6 +3745,7 @@ document.addEventListener('mouseup',()=>{iD=false;vp.style.cursor='grab';if(_dra
 // ===== STICKER DRAG + TAP DETECTION + TWO-FINGER ROTATION =====
 let as=null,sox,soy,hz=100,tapSX=0,tapSY=0,tapTime=0,didMove=false;
 let isRotating=false, rotStartAngle=0, stickerBaseAngle=0;
+let suppressStickerClickUntil=0;
 
 function getAngle(t1,t2){return Math.atan2(t2.clientY-t1.clientY,t2.clientX-t1.clientX)*180/Math.PI}
 function getCurrentRotation(el){
@@ -3752,6 +3753,14 @@ function getCurrentRotation(el){
   const m=st.match(/rotate\(([-\d.]+)deg\)/);
   return m?parseFloat(m[1]):0;
 }
+
+// Prevent accidental click handlers right after drag (stops interactive cards from "disappearing")
+document.addEventListener('click',e=>{
+  if(performance.now()<suppressStickerClickUntil&&e.target.closest('.sticker')){
+    e.preventDefault();
+    e.stopPropagation();
+  }
+},true);
 
 // Event delegation for sticker drag — handles dynamically added stickers too
 cv.addEventListener('mousedown',e=>{const s=e.target.closest('.sticker');if(s)sD.call(s,e)});
@@ -3797,7 +3806,8 @@ function _schedStickerMove(e){
     const ev=_smPendingE;
     const cx=ev.touches?ev.touches[0].clientX:ev.clientX;
     const cy=ev.touches?ev.touches[0].clientY:ev.clientY;
-    if(Math.abs(cx-tapSX)>10||Math.abs(cy-tapSY)>10){
+    const moveThreshold=ev.touches?6:8;
+    if(Math.abs(cx-tapSX)>moveThreshold||Math.abs(cy-tapSY)>moveThreshold){
       didMove=true;as.classList.add('dragging');
       const cr=getCachedCanvasRect();
       const nextLeft=(cx-cr.left-sox)/SCALE;
@@ -3824,12 +3834,12 @@ function sU(e){
     const next=clampStickerToMoodboard(as,left,top);
     as.style.left=next.left+'px';
     as.style.top=next.top+'px';
+    suppressStickerClickUntil=performance.now()+420;
     if(typeof scanStickers==='function')scanStickers();
   }
   if(isRotating){isRotating=false;as=null;return;}
   if(!didMove&&(Date.now()-tapTime)<400){
     if(as.dataset.splash)doSplash(as,e);
-
     if(as.dataset.anim)triggerAnim(as,e);
     if(as.onclick)as.onclick(e);
   }
