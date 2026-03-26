@@ -23,6 +23,8 @@ export default defineConfig(({ mode }) => ({
     target: "esnext",
     minify: "esbuild",
     cssMinify: true,
+    cssCodeSplit: false,
+    assetsInlineLimit: 10000,
     rollupOptions: {
       output: {
         manualChunks: {
