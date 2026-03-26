@@ -3391,6 +3391,7 @@ let lastBounceEdge='';
 const BOUNCE_STRENGTH=80; // pixels to push back
 const EDGE_THRESHOLD=5; // pixels from edge to trigger
 
+let _bouncing=false,_bounceEndTimer=null;
 function triggerBounce(edge){
   if(lastBounceEdge===edge && bounceTimeout) return;
   lastBounceEdge=edge;
@@ -3403,7 +3404,11 @@ function triggerBounce(edge){
   bounceTimeout=setTimeout(()=>{bounceFlash.style.opacity='0';lastBounceEdge='';bounceTimeout=null},400);
   // Haptic-like vibration if available
   try{if(navigator.vibrate)navigator.vibrate(30)}catch(e){}
-  // Bounce back with smooth scroll
+  // Bounce back with smooth scroll — guard against re-entry during animation
+  if(_bouncing)return;
+  _bouncing=true;
+  clearTimeout(_bounceEndTimer);
+  _bounceEndTimer=setTimeout(()=>{_bouncing=false},600);
   const bounds=getViewportPanBounds();
   const maxX=bounds.maxX;
   const maxY=bounds.maxY;
@@ -3416,9 +3421,10 @@ function triggerBounce(edge){
 // Check edges on scroll
 let edgeCheckRAF=null;
 vp.addEventListener('scroll',()=>{
-  if(edgeCheckRAF)return;
+  if(_bouncing||edgeCheckRAF)return;
   edgeCheckRAF=requestAnimationFrame(()=>{
     edgeCheckRAF=null;
+    if(_bouncing)return;
     const bounds=getViewportPanBounds();
     const maxX=bounds.maxX;
     const maxY=bounds.maxY;
@@ -5056,6 +5062,11 @@ function toggleMap(){
 }
 
 function addMapDecorations(cw,ch){
+  // Wrap all decoration elements in a single layer for cheap removal
+  const _decLayer=document.createElement('div');
+  _decLayer.className='map-dec-layer';
+  _decLayer.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:1;';
+  mapCanvas.appendChild(_decLayer);
   function svgEl(tag,attrs){
     const el=document.createElementNS('http://www.w3.org/2000/svg',tag);
     Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
@@ -5063,7 +5074,7 @@ function addMapDecorations(cw,ch){
   }
   function addDiv(cls,css){
     const el=document.createElement('div');el.className=cls;el.style.cssText=css;
-    mapCanvas.appendChild(el);return el;
+    _decLayer.appendChild(el);return el;
   }
 
   // === OCEAN WAVES ===
@@ -5539,9 +5550,17 @@ function addMapDecorations(cw,ch){
   // Watermark removed for cleaner look
 }
 
+let _decsCW=-1,_decsCH=-1;
 function drawMap(){
   const playerWasInCanvas=mapPlayer.parentElement===mapCanvas;
-  mapCanvas.innerHTML='';
+  if(mmExp){
+    // Only clear sticker clones (.mi) — preserve decoration layer
+    mapCanvas.querySelectorAll('.mi').forEach(el=>el.remove());
+    if(playerWasInCanvas)mapPlayer.remove();
+  } else {
+    mapCanvas.innerHTML='';
+    _decsCW=-1;_decsCH=-1; // reset so decorations rebuild on next expand
+  }
   if(!stickerData.length)scanStickers();
   const mr=mmInner.getBoundingClientRect();
   const mw=mr.width||64,mh=mr.height||64;
@@ -5593,8 +5612,14 @@ function drawMap(){
   }
   
   if(mmExp){
-    // EXPANDED: add Snapchat-style decorations first, then sticker clones
-    addMapDecorations(canvasW,canvasH);
+    // EXPANDED: rebuild decorations only when canvas dimensions change
+    const rCW=Math.round(canvasW),rCH=Math.round(canvasH);
+    if(rCW!==_decsCW||rCH!==_decsCH){
+      const old=mapCanvas.querySelector('.map-dec-layer');
+      if(old)old.remove();
+      addMapDecorations(canvasW,canvasH);
+      _decsCW=rCW;_decsCH=rCH;
+    }
     renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
     if(playerWasInCanvas||mapPlayer.parentElement!==mapCanvas){
       mapCanvas.appendChild(mapPlayer);
@@ -5705,7 +5730,7 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
 }
 
 // ===== WALK BITMOJI TO TARGET =====
-let walkingInProgress=false;
+let walkingInProgress=false,_walkTimer=null;
 
 function centerMoodboardOn(worldX,worldY,behavior){
   const scaled=worldToViewport(worldX,worldY);
@@ -5717,6 +5742,7 @@ function centerMoodboardOn(worldX,worldY,behavior){
 
 function walkBitmojiTo(worldX,worldY,stickerRef){
   if(walkingInProgress||!mmExp)return;
+  clearTimeout(_walkTimer);
   walkingInProgress=true;
   const WALK_DURATION=2500;
   const sc=drawMap._sc||0.05;
@@ -5781,7 +5807,7 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
     },i*(WALK_DURATION/steps));
   }
   // After walk completes, close map and navigate to exact item
-  setTimeout(()=>{
+  _walkTimer=setTimeout(()=>{
     mapPlayer.classList.remove('walking');
     walkingInProgress=false;
     toggleMap();
@@ -6244,7 +6270,7 @@ vp.addEventListener('scroll',()=>{
     _updMapRAF=requestAnimationFrame(()=>{
       _updMapRAF=null;
       updMap();
-      if(!mmExp){
+      if(!mmExp&&!_bouncing){
         clearTimeout(mapScrollTimer);mapScrollTimer=setTimeout(drawMap,320);
       }
     });
