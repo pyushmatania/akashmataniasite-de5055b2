@@ -3751,10 +3751,9 @@ function getCurrentRotation(el){
   return m?parseFloat(m[1]):0;
 }
 
-document.querySelectorAll('.sticker').forEach(s=>{
-  s.addEventListener('mousedown',sD);
-  s.addEventListener('touchstart',sD,{passive:false});
-});
+// Event delegation for sticker drag — handles dynamically added stickers too
+cv.addEventListener('mousedown',e=>{const s=e.target.closest('.sticker');if(s)sD.call(s,e)});
+cv.addEventListener('touchstart',e=>{const s=e.target.closest('.sticker');if(s)sD.call(s,e)},{passive:false});
 
 function sD(e){
   e.stopPropagation();
