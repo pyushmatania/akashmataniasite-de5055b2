@@ -5793,12 +5793,13 @@ function ensureMapData(force){
 function scanStickers(){
   stickerData=[];
   const stickers=document.querySelectorAll('#canvas > .sticker');
-  stickers.forEach(s=>{
-    const r=s.getBoundingClientRect();
+  const len=stickers.length;
+  for(let i=0;i<len;i++){
+    const s=stickers[i];
     const left=parseInt(s.style.left)||0;
     const top=parseInt(s.style.top)||0;
-    const w=s.offsetWidth||r.width||60;
-    const h=s.offsetHeight||r.height||40;
+    const w=s.offsetWidth||60;
+    const h=s.offsetHeight||40;
     // Determine category — use data-type if set, else auto-detect from class
     let cat=s.dataset.type||'';
     if(!cat){
