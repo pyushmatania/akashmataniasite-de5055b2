@@ -19,4 +19,23 @@ export default defineConfig(({ mode }) => ({
     },
     dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
   },
+  build: {
+    target: "esnext",
+    minify: "esbuild",
+    cssMinify: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "react-vendor": ["react", "react-dom", "react-router-dom"],
+          "radix-ui": ["@radix-ui/react-toast", "@radix-ui/react-tooltip"],
+          "ui-utils": ["clsx", "tailwind-merge", "class-variance-authority"],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 500,
+    reportCompressedSize: false,
+  },
+  optimizeDeps: {
+    include: ["react", "react-dom", "react-router-dom"],
+  },
 }));
