@@ -6128,7 +6128,7 @@ function drawMap(){
     });
     if(mapCount)mapCount.textContent=count+' items';
     // Draw zone names on small minimap with zone-specific colors
-    const zoneColors={'Origin':'#4CAF50','Work':'#E53935','Portfolio':'#42A5F5','Hub':'#FFB300','Hobby':'#FF9800','Fun':'#AB47BC'};
+    const zoneColors={'Origin':'#4CAF50','Work':'#E53935','Portfolio':'#42A5F5','Hobby':'#FF9800','Fun':'#AB47BC'};
     mapZones.forEach(z=>{
       const zx=((z.x1+z.x2)/2-offsetX)*sc;
       const zy=((z.y1+z.y2)/2-offsetY)*sc;
