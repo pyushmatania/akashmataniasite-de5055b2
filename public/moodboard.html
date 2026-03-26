@@ -6094,15 +6094,17 @@ function drawMap(){
   let sc,offsetX,offsetY,canvasW,canvasH;
   
   if(mmExp){
-    // Expanded map — doubled size
-    const baseScale=Math.max(mw*12/contentW,0.32);
-    sc=baseScale*mapZoomScale;
+    // Expanded map — fit full world by default (with room for header/footer)
+    const usableW=Math.max(220,mw-12);
+    const usableH=Math.max(220,mh-120);
+    const fitScale=Math.max(0.02,Math.min(usableW/contentW,usableH/contentH));
+    sc=fitScale*mapZoomScale;
     canvasW=contentW*sc;
     canvasH=contentH*sc;
     offsetX=minL;
     offsetY=minT;
-    mapCanvas.style.left='0';
-    mapCanvas.style.top='50px';
+    mapCanvas.style.left=Math.max(0,(mw-canvasW)/2)+'px';
+    mapCanvas.style.top='56px';
   } else {
     // SMALL MAP: restore only small-map pan offsets (never expanded-map top offset)
     const zoomFactor=5;
