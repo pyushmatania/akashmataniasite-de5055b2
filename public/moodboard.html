@@ -247,11 +247,19 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .signpost-bulbs.right-side{top:10px;bottom:10px;right:-6px;flex-direction:column;justify-content:space-around}
 .bulb{
   width:10px;height:10px;border-radius:50%;
-  background:radial-gradient(circle at 35% 35%,#fff,#FFD700 40%,#FFA000 80%);
-  box-shadow:0 0 6px #FFD700,0 0 12px rgba(255,215,0,0.5);
+  background:radial-gradient(circle at 35% 35%,#fff,var(--bulb-color,#FFD700) 40%,var(--bulb-dark,#FFA000) 80%);
+  box-shadow:0 0 6px var(--bulb-color,#FFD700),0 0 12px var(--bulb-glow,rgba(255,215,0,0.5));
 }
 .bulb:nth-child(odd){animation:bulbBlink 1.2s ease-in-out infinite}
 .bulb:nth-child(even){animation:bulbBlink2 1.2s ease-in-out infinite}
+/* Walk of Fame star */
+@keyframes starShimmer{0%,100%{filter:drop-shadow(0 0 4px var(--star-color,#FFD700))}50%{filter:drop-shadow(0 0 12px var(--star-color,#FFD700)) drop-shadow(0 0 20px var(--star-glow,rgba(255,215,0,0.4)))}}
+.signpost-star{
+  position:absolute;bottom:-55px;left:50%;transform:translateX(-50%);
+  width:100px;height:100px;z-index:1;pointer-events:none;
+  animation:starShimmer 3s ease-in-out infinite;
+}
+.signpost-star svg{width:100%;height:100%}
 /* Metal pole */
 .signpost-pole{
   width:12px;height:220px;
