@@ -5476,7 +5476,8 @@ function addMapDecorations(cw,ch){
   }
 
   // === WATER RIPPLES ===
-  for(let i=0;i<12;i++){
+  const rippleCount=IS_MOBILE_MAP?5:12;
+  for(let i=0;i<rippleCount;i++){
     const x=Math.random()*100,y=Math.random()*100;
     addDiv('map-ripple','left:'+x+'%;top:'+y+'%;animation-delay:'+(Math.random()*3)+'s');
   }
