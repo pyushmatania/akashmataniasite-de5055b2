@@ -5360,11 +5360,11 @@ function addMapDecorations(cw,ch){
     wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%) perspective(400px) rotateX(5deg);display:flex;flex-direction:column;align-items:center;z-index:9;pointer-events:none;gap:0';
     const signRow=document.createElement('div');
     signRow.style.cssText='display:flex;align-items:flex-end;gap:0';
-    const fontSize=Math.max(12,cw*0.016);
-    const pillarW=Math.max(8,cw*0.008);
-    const pillarH=Math.max(40,cw*0.045);
-    const capS=Math.max(14,pillarW*1.6);
-    const baseW=Math.max(12,pillarW*1.5);
+    const fontSize=Math.max(9,cw*0.01);
+    const pillarW=Math.max(6,cw*0.005);
+    const pillarH=Math.max(28,cw*0.028);
+    const capS=Math.max(10,pillarW*1.5);
+    const baseW=Math.max(9,pillarW*1.4);
     const mkPillar=()=>{
       const p=document.createElement('div');
       p.style.cssText='display:flex;flex-direction:column;align-items:center;flex-shrink:0';
