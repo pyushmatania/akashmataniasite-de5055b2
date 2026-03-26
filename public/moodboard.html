@@ -397,22 +397,27 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 }
 .intro-card{animation:introFloat 4s ease-in-out infinite}
 
-/* Interactive badge overlay */
+/* Interactive badge overlay — game controller style */
 .interactive-badge{
-  position:absolute;top:-10px;right:-10px;z-index:60;
-  background:linear-gradient(135deg,#FF7043,#FF5722,#E64A19);color:#fff;
-  font-family:var(--font-fun);font-size:0.55rem;font-weight:700;
-  padding:4px 9px;border-radius:12px;white-space:nowrap;
-  box-shadow:0 0 8px rgba(255,87,34,0.6),0 0 16px rgba(255,112,67,0.3),0 2px 8px rgba(0,0,0,0.2);
-  letter-spacing:0.04em;pointer-events:none;
-  animation:badgeBounceGlow 2s ease-in-out infinite;
-  text-shadow:0 1px 2px rgba(0,0,0,0.3);
+  position:absolute;top:-14px;right:-14px;z-index:60;
+  background:linear-gradient(145deg,#7C4DFF,#651FFF,#6200EA);color:#fff;
+  font-family:var(--font-fun);font-size:0.5rem;font-weight:800;
+  padding:5px 10px 5px 8px;border-radius:14px;white-space:nowrap;
+  box-shadow:0 0 0 2px rgba(124,77,255,0.3),0 0 12px rgba(124,77,255,0.5),0 0 24px rgba(101,31,255,0.25),0 3px 10px rgba(0,0,0,0.25);
+  letter-spacing:0.06em;pointer-events:none;
+  animation:badgePulseGlow 2.5s ease-in-out infinite;
+  text-shadow:0 1px 3px rgba(0,0,0,0.4);
+  text-transform:uppercase;
+  border:1.5px solid rgba(255,255,255,0.25);
 }
-@keyframes badgeBounceGlow{
-  0%,100%{transform:translateY(0) scale(1);box-shadow:0 0 8px rgba(255,87,34,0.6),0 0 16px rgba(255,112,67,0.3),0 2px 8px rgba(0,0,0,0.2)}
-  30%{transform:translateY(-4px) scale(1.08);box-shadow:0 0 14px rgba(255,87,34,0.8),0 0 28px rgba(255,112,67,0.45),0 4px 12px rgba(0,0,0,0.15)}
-  50%{transform:translateY(1px) scale(0.97)}
-  70%{transform:translateY(-2px) scale(1.03);box-shadow:0 0 10px rgba(255,87,34,0.7),0 0 20px rgba(255,112,67,0.35),0 3px 10px rgba(0,0,0,0.18)}
+.interactive-badge::before{
+  content:'';position:absolute;inset:0;border-radius:14px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.2) 0%,transparent 50%);
+  pointer-events:none;
+}
+@keyframes badgePulseGlow{
+  0%,100%{transform:translateY(0) scale(1);box-shadow:0 0 0 2px rgba(124,77,255,0.3),0 0 12px rgba(124,77,255,0.5),0 0 24px rgba(101,31,255,0.25),0 3px 10px rgba(0,0,0,0.25)}
+  50%{transform:translateY(-3px) scale(1.06);box-shadow:0 0 0 3px rgba(124,77,255,0.5),0 0 18px rgba(124,77,255,0.7),0 0 36px rgba(101,31,255,0.35),0 6px 16px rgba(0,0,0,0.2)}
 }
 
 /* UI ELEMENTS */
@@ -1636,12 +1641,12 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <!-- ===== YOUR PHOTOS ===== -->
 
-<div class="sticker sticker-hero-photo" data-anim="jelly" data-splash="true" style="left:800px;top:600px;transform:rotate(-3deg);width:290px;background:linear-gradient(135deg,#64B5F6,#42A5F5,#1E88E5)">
+<div class="sticker sticker-hero-photo" data-anim="jelly" data-splash="true" data-zone="origin" style="left:800px;top:600px;transform:rotate(-3deg);width:290px;background:linear-gradient(135deg,#64B5F6,#42A5F5,#1E88E5)">
   <div class="corner-deco tl" style="border-color:#FFF"></div><div class="corner-deco tr" style="border-color:#FFF"></div>
   <div class="corner-deco bl" style="border-color:#FFF"></div><div class="corner-deco br" style="border-color:#FFF"></div>
   <div class="hero-frame"><img src="/images/akash-photo.jpeg" decoding="async" loading="lazy"><div class="hero-name-tag"><div class="hnt-emoji">🏊‍♂️</div><div><div class="hnt-name">Akash</div><div class="hnt-sub">tap for splash! 💦</div></div></div></div>
 </div>
-<div class="sticker sticker-hero-photo" data-anim="tada" style="left:2400px;top:500px;transform:rotate(3deg);width:252px;background:linear-gradient(135deg,#FFD54F,#FFC107,#FF8F00)">
+<div class="sticker sticker-hero-photo" data-anim="tada" data-zone="origin" style="left:2400px;top:500px;transform:rotate(3deg);width:252px;background:linear-gradient(135deg,#FFD54F,#FFC107,#FF8F00)">
   <div class="corner-deco tl" style="border-color:#FFF"></div><div class="corner-deco tr" style="border-color:#FFF"></div>
   <div class="corner-deco bl" style="border-color:#FFF"></div><div class="corner-deco br" style="border-color:#FFF"></div>
   <div class="hero-frame"><img src="/images/akash-photo.jpeg" decoding="async" loading="lazy"><div class="hero-name-tag"><div class="hnt-emoji">🖤</div><div><div class="hnt-name">Akash</div><div class="hnt-sub">main character energy ✨</div></div></div></div>
@@ -2096,37 +2101,37 @@ body.map-expanded .scroll-counter{display:none!important}
 </div>
 
 <!-- ===== ZONE SIGNPOSTS ON MOODBOARD ===== -->
-<div class="sticker zone-signpost" style="left:1650px;top:330px">
+<div class="sticker zone-signpost" data-zone="portfolio" style="left:1650px;top:330px">
   <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)">📸 ORIGIN STORY</div>
   <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
 </div>
-<div class="sticker zone-signpost" style="left:7800px;top:330px">
+<div class="sticker zone-signpost" data-zone="portfolio" style="left:7800px;top:330px">
   <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)">🎯 THE WAR ROOM</div>
   <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
 </div>
-<div class="sticker zone-signpost" style="left:3900px;top:3000px">
+<div class="sticker zone-signpost" data-zone="work" style="left:3900px;top:3000px">
   <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)">🚀 LAUNCH PAD</div>
   <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
 </div>
-<div class="sticker zone-signpost" style="left:5250px;top:3900px">
+<div class="sticker zone-signpost" data-zone="portfolio" style="left:5250px;top:3900px">
   <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#E65100,#FFB300,#FF8F00)">⭐ AKASH UNPLUGGED</div>
   <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
 </div>
-<div class="sticker zone-signpost" style="left:1800px;top:5700px">
+<div class="sticker zone-signpost" data-zone="portfolio" style="left:1800px;top:5700px">
   <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#E65100,#FF9800,#EF6C00)">🎮 THE PLAYGROUND</div>
   <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
 </div>
-<div class="sticker zone-signpost" style="left:9600px;top:5700px">
+<div class="sticker zone-signpost" data-zone="hobby" style="left:9600px;top:5700px">
   <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-board" style="background:linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)">😂 MEME ALLEY</div>
   <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
@@ -2151,64 +2156,64 @@ body.map-expanded .scroll-counter{display:none!important}
 </div>
 
 <!-- Surrounding intro stickers -->
-<div class="sticker sticker-emoji huge" data-anim="heartbeat" style="left:6400px;top:6300px">✨</div>
-<div class="sticker sticker-emoji big" data-anim="float" style="left:7500px;top:6400px">🚀</div>
-<div class="sticker sticker-emoji" data-anim="dance" style="left:6500px;top:7400px">🎬</div>
-<div class="sticker sticker-emoji" data-anim="spin" style="left:7400px;top:7300px">💡</div>
-<div class="sticker sticker-badge" data-anim="tada" style="left:6200px;top:7000px;border-color:var(--accent);color:var(--accent)">8+ YEARS SHIPPING 🚢</div>
-<div class="sticker sticker-badge" data-anim="pop" style="left:7400px;top:6900px;border-color:#4CAF50;color:#4CAF50">FOUNDER × 3 🔥</div>
-<div class="sticker sticker-postit" data-anim="wiggle" style="left:6100px;top:6700px;background:var(--yellow);transform:rotate(-5deg)">welcome to my<br>digital playground 🎮</div>
-<div class="sticker sticker-postit" data-anim="float" style="left:7500px;top:7100px;background:var(--mint);transform:rotate(4deg)">scroll any direction<br>to discover more →</div>
-<div class="sticker sticker-washi" style="left:6300px;top:6100px;transform:rotate(-8deg);background:repeating-linear-gradient(-45deg,rgba(255,183,77,0.2),rgba(255,183,77,0.2) 4px,rgba(255,183,77,0.1) 4px,rgba(255,183,77,0.1) 8px)"></div>
-<div class="sticker sticker-washi" style="left:7600px;top:7400px;transform:rotate(8deg);background:repeating-linear-gradient(45deg,rgba(76,175,80,0.15),rgba(76,175,80,0.15) 5px,rgba(76,175,80,0.08) 5px,rgba(76,175,80,0.08) 10px);width:180px"></div>
+<div class="sticker sticker-emoji huge" data-anim="heartbeat" data-zone="hub" style="left:6400px;top:6300px">✨</div>
+<div class="sticker sticker-emoji big" data-anim="float" data-zone="hub" style="left:7500px;top:6400px">🚀</div>
+<div class="sticker sticker-emoji" data-anim="dance" data-zone="hub" style="left:6500px;top:7400px">🎬</div>
+<div class="sticker sticker-emoji" data-anim="spin" data-zone="hub" style="left:7400px;top:7300px">💡</div>
+<div class="sticker sticker-badge" data-anim="tada" data-zone="hub" style="left:6200px;top:7000px;border-color:var(--accent);color:var(--accent)">8+ YEARS SHIPPING 🚢</div>
+<div class="sticker sticker-badge" data-anim="pop" data-zone="hub" style="left:7400px;top:6900px;border-color:#4CAF50;color:#4CAF50">FOUNDER × 3 🔥</div>
+<div class="sticker sticker-postit" data-anim="wiggle" data-zone="hub" style="left:6100px;top:6700px;background:var(--yellow);transform:rotate(-5deg)">welcome to my<br>digital playground 🎮</div>
+<div class="sticker sticker-postit" data-anim="float" data-zone="hub" style="left:7500px;top:7100px;background:var(--mint);transform:rotate(4deg)">scroll any direction<br>to discover more →</div>
+<div class="sticker sticker-washi" data-zone="hub" style="left:6300px;top:6100px;transform:rotate(-8deg);background:repeating-linear-gradient(-45deg,rgba(255,183,77,0.2),rgba(255,183,77,0.2) 4px,rgba(255,183,77,0.1) 4px,rgba(255,183,77,0.1) 8px)"></div>
+<div class="sticker sticker-washi" data-zone="hub" style="left:7600px;top:7400px;transform:rotate(8deg);background:repeating-linear-gradient(45deg,rgba(76,175,80,0.15),rgba(76,175,80,0.15) 5px,rgba(76,175,80,0.08) 5px,rgba(76,175,80,0.08) 10px);width:180px"></div>
 
 <!-- ===== ORIGIN STORY 📸 (top-left 400-2400, 400-1600) — Personal & About ===== -->
-<div class="sticker sticker-postit" data-anim="shake" style="left:1600px;top:1200px;transform:rotate(-3deg);background:var(--green)">Jeypore boy, Bengaluru dreams 🌆</div>
-<div class="sticker sticker-postit" data-anim="bounce" style="left:700px;top:1100px;transform:rotate(4deg);background:var(--orange)">Mr. Puchu is the real CEO 🐕</div>
-<div class="sticker sticker-postit" data-anim="pop" style="left:1400px;top:1500px;transform:rotate(2deg);background:var(--pink)">retro-futuristic cinematic vibes only 🎥</div>
-<div class="sticker sticker-text" data-anim="float" style="left:1000px;top:1400px;font-size:1.2rem;transform:rotate(-2deg)">"building things that matter, one ship at a time"</div>
-<div class="sticker sticker-text" data-anim="wave" style="left:600px;top:1300px;font-size:1rem;transform:rotate(1deg)">retro-futuristic.<br>cinematic.<br>unapologetic.</div>
-<div class="sticker sticker-badge" data-anim="bounce" style="left:2000px;top:600px;transform:rotate(3deg)">JEYPORE ROOTS 🏠</div>
-<div class="sticker sticker-badge" data-anim="wave" style="left:800px;top:1550px;transform:rotate(-2deg)">MR PUCHU'S DAD 🐕</div>
-<div class="sticker sticker-badge" data-anim="dance" style="left:1200px;top:800px;transform:rotate(2deg)">ODISHA PRIDE 🌅</div>
-<div class="sticker sticker-emoji" data-anim="heartbeat" style="left:600px;top:500px">🌟</div>
-<div class="sticker sticker-emoji" data-anim="heartbeat" style="left:600px;top:600px">🎵</div>
-<div class="sticker sticker-emoji" data-anim="flip" style="left:1000px;top:1100px;transform:rotate(11deg)">🫶</div>
-<div class="sticker sticker-emoji big" data-anim="tada" style="left:2300px;top:1300px">🖤</div>
-<div class="sticker sticker-emoji" data-anim="dance" style="left:2200px;top:550px">🌅</div>
-<div class="sticker sticker-washi" style="left:650px;top:750px;transform:rotate(12deg);background:repeating-linear-gradient(45deg,rgba(206,147,216,0.2),rgba(206,147,216,0.2) 4px,rgba(206,147,216,0.1) 4px,rgba(206,147,216,0.1) 8px)"></div>
-<div class="sticker sticker-text" data-anim="dance" style="left:700px;top:1600px;font-size:1.3rem;transform:rotate(2deg);color:var(--accent)">"ordering an experience,<br>not booking a room"</div>
-<div class="sticker sticker-postit" data-anim="float" style="left:1400px;top:900px;transform:rotate(3deg);background:var(--blue)">trust the process 🌱</div>
-<div class="sticker sticker-postit" data-anim="bounce" style="left:2400px;top:1000px;transform:rotate(2deg);background:var(--mint)">Vedic astrology says: Mercury is retrograde. Don't deploy. 🪐</div>
+<div class="sticker sticker-postit" data-anim="shake" data-zone="origin" style="left:1600px;top:1200px;transform:rotate(-3deg);background:var(--green)">Jeypore boy, Bengaluru dreams 🌆</div>
+<div class="sticker sticker-postit" data-anim="bounce" data-zone="origin" style="left:700px;top:1100px;transform:rotate(4deg);background:var(--orange)">Mr. Puchu is the real CEO 🐕</div>
+<div class="sticker sticker-postit" data-anim="pop" data-zone="origin" style="left:1400px;top:1500px;transform:rotate(2deg);background:var(--pink)">retro-futuristic cinematic vibes only 🎥</div>
+<div class="sticker sticker-text" data-anim="float" data-zone="origin" style="left:1000px;top:1400px;font-size:1.2rem;transform:rotate(-2deg)">"building things that matter, one ship at a time"</div>
+<div class="sticker sticker-text" data-anim="wave" data-zone="origin" style="left:600px;top:1300px;font-size:1rem;transform:rotate(1deg)">retro-futuristic.<br>cinematic.<br>unapologetic.</div>
+<div class="sticker sticker-badge" data-anim="bounce" data-zone="origin" style="left:2000px;top:600px;transform:rotate(3deg)">JEYPORE ROOTS 🏠</div>
+<div class="sticker sticker-badge" data-anim="wave" data-zone="origin" style="left:800px;top:1550px;transform:rotate(-2deg)">MR PUCHU'S DAD 🐕</div>
+<div class="sticker sticker-badge" data-anim="dance" data-zone="origin" style="left:1200px;top:800px;transform:rotate(2deg)">ODISHA PRIDE 🌅</div>
+<div class="sticker sticker-emoji" data-anim="heartbeat" data-zone="origin" style="left:600px;top:500px">🌟</div>
+<div class="sticker sticker-emoji" data-anim="heartbeat" data-zone="origin" style="left:600px;top:600px">🎵</div>
+<div class="sticker sticker-emoji" data-anim="flip" data-zone="origin" style="left:1000px;top:1100px;transform:rotate(11deg)">🫶</div>
+<div class="sticker sticker-emoji big" data-anim="tada" data-zone="origin" style="left:2300px;top:1300px">🖤</div>
+<div class="sticker sticker-emoji" data-anim="dance" data-zone="origin" style="left:2200px;top:550px">🌅</div>
+<div class="sticker sticker-washi" data-zone="origin" style="left:650px;top:750px;transform:rotate(12deg);background:repeating-linear-gradient(45deg,rgba(206,147,216,0.2),rgba(206,147,216,0.2) 4px,rgba(206,147,216,0.1) 4px,rgba(206,147,216,0.1) 8px)"></div>
+<div class="sticker sticker-text" data-anim="dance" data-zone="origin" style="left:700px;top:1600px;font-size:1.3rem;transform:rotate(2deg);color:var(--accent)">"ordering an experience,<br>not booking a room"</div>
+<div class="sticker sticker-postit" data-anim="float" data-zone="origin" style="left:1400px;top:900px;transform:rotate(3deg);background:var(--blue)">trust the process 🌱</div>
+<div class="sticker sticker-postit" data-anim="bounce" data-zone="origin" style="left:2400px;top:1000px;transform:rotate(2deg);background:var(--mint)">Vedic astrology says: Mercury is retrograde. Don't deploy. 🪐</div>
 
 <!-- ===== THE WAR ROOM 🎯 (top-right 4000-7000, 200-1700) — Work & Professional ===== -->
-<div class="sticker sticker-postit" data-anim="wiggle" style="left:4400px;top:800px;transform:rotate(2deg);background:var(--yellow)">ship it. iterate later. SHIP IT. 🚀</div>
-<div class="sticker sticker-postit" data-anim="wave" style="left:5000px;top:600px;transform:rotate(-5deg);background:var(--mint)">8+ years Growth PM 📈</div>
-<div class="sticker sticker-postit" data-anim="flip" style="left:4800px;top:1200px;transform:rotate(-1deg);background:var(--yellow)">AI won't replace PMs.<br>PMs using AI will. 🤖</div>
-<div class="sticker sticker-postit" data-anim="jelly" style="left:5500px;top:800px;transform:rotate(4deg);background:var(--yellow)">SYNAPSES FIRING 🧠⚡</div>
-<div class="sticker sticker-postit" data-anim="wave" style="left:5200px;top:1400px;transform:rotate(-3deg);background:var(--pink)">the best portfolio is the one that ships 🚀</div>
-<div class="sticker sticker-badge" data-anim="pop" style="left:4600px;top:500px;transform:rotate(-3deg)">FOUNDER MODE 🔥</div>
-<div class="sticker sticker-badge" data-anim="tada" style="left:5200px;top:400px;transform:rotate(2deg)">GROWTH PM 📈</div>
-<div class="sticker sticker-badge" data-anim="jelly" style="left:5600px;top:500px;transform:rotate(-1deg)">WEB3 NATIVE 🌐</div>
-<div class="sticker sticker-badge" data-anim="shake" style="left:4400px;top:1400px;transform:rotate(1deg)">SHIP IT 🚢</div>
-<div class="sticker sticker-badge" data-anim="rubberband" style="left:5800px;top:600px;transform:rotate(-3deg)">CIRCLES CEO 🎬</div>
-<div class="sticker sticker-badge" data-anim="wiggle" style="left:6200px;top:800px;transform:rotate(-2deg)">NEURAL OS DREAMER 🧠</div>
-<div class="sticker sticker-badge" data-anim="tada" style="left:5400px;top:1600px;transform:rotate(-2deg)">BLOCKCHAIN BRAINED ⛓️</div>
-<div class="sticker sticker-badge" data-anim="wiggle" style="left:5000px;top:1600px;transform:rotate(-1deg)">PROMPT WHISPERER 🪄</div>
-<div class="sticker sticker-stamp" data-anim="pop" style="left:4800px;top:1000px;transform:rotate(-15deg);color:#C9A96E;border-color:#C9A96E">SHIPPED</div>
-<div class="sticker sticker-stamp" data-anim="tada" style="left:5400px;top:1000px;transform:rotate(10deg);color:#4CAF50;border-color:#4CAF50">DPIIT REGISTERED ✓</div>
-<div class="sticker sticker-stamp" data-anim="shake" style="left:6000px;top:700px;transform:rotate(-20deg);color:#E53935;border-color:#E53935">MVP READY</div>
-<div class="sticker sticker-stamp" data-anim="spin" style="left:6200px;top:1200px;transform:rotate(8deg);color:#7B1FA2;border-color:#7B1FA2">LAUNCHED 🚀</div>
-<div class="sticker sticker-stamp" data-anim="tada" style="left:6500px;top:500px;transform:rotate(15deg);color:#FF6F00;border-color:#FF6F00">STARTUP ODISHA ✓</div>
-<div class="sticker sticker-stamp" data-anim="pop" style="left:6800px;top:900px;transform:rotate(-10deg);color:#1565C0;border-color:#1565C0">BUILDER</div>
-<div class="sticker sticker-emoji" data-anim="pop" style="left:6300px;top:550px;transform:rotate(15deg)">🚀</div>
-<div class="sticker sticker-emoji big" data-anim="bounce" style="left:5200px;top:1100px;transform:rotate(12deg)">🎨</div>
-<div class="sticker sticker-emoji big" data-anim="dance" style="left:5000px;top:1200px">🫡</div>
-<div class="sticker sticker-emoji huge" data-anim="tada" style="left:4600px;top:550px;font-size:6rem">🎬</div>
-<div class="sticker sticker-illustrated" data-anim="dance" style="left:4400px;top:1200px;transform:rotate(-3deg);width:180px">
+<div class="sticker sticker-postit" data-anim="wiggle" data-zone="work" style="left:4400px;top:800px;transform:rotate(2deg);background:var(--yellow)">ship it. iterate later. SHIP IT. 🚀</div>
+<div class="sticker sticker-postit" data-anim="wave" data-zone="work" style="left:5000px;top:600px;transform:rotate(-5deg);background:var(--mint)">8+ years Growth PM 📈</div>
+<div class="sticker sticker-postit" data-anim="flip" data-zone="work" style="left:4800px;top:1200px;transform:rotate(-1deg);background:var(--yellow)">AI won't replace PMs.<br>PMs using AI will. 🤖</div>
+<div class="sticker sticker-postit" data-anim="jelly" data-zone="work" style="left:5500px;top:800px;transform:rotate(4deg);background:var(--yellow)">SYNAPSES FIRING 🧠⚡</div>
+<div class="sticker sticker-postit" data-anim="wave" data-zone="work" style="left:5200px;top:1400px;transform:rotate(-3deg);background:var(--pink)">the best portfolio is the one that ships 🚀</div>
+<div class="sticker sticker-badge" data-anim="pop" data-zone="work" style="left:4600px;top:500px;transform:rotate(-3deg)">FOUNDER MODE 🔥</div>
+<div class="sticker sticker-badge" data-anim="tada" data-zone="work" style="left:5200px;top:400px;transform:rotate(2deg)">GROWTH PM 📈</div>
+<div class="sticker sticker-badge" data-anim="jelly" data-zone="work" style="left:5600px;top:500px;transform:rotate(-1deg)">WEB3 NATIVE 🌐</div>
+<div class="sticker sticker-badge" data-anim="shake" data-zone="work" style="left:4400px;top:1400px;transform:rotate(1deg)">SHIP IT 🚢</div>
+<div class="sticker sticker-badge" data-anim="rubberband" data-zone="work" style="left:5800px;top:600px;transform:rotate(-3deg)">CIRCLES CEO 🎬</div>
+<div class="sticker sticker-badge" data-anim="wiggle" data-zone="work" style="left:6200px;top:800px;transform:rotate(-2deg)">NEURAL OS DREAMER 🧠</div>
+<div class="sticker sticker-badge" data-anim="tada" data-zone="work" style="left:5400px;top:1600px;transform:rotate(-2deg)">BLOCKCHAIN BRAINED ⛓️</div>
+<div class="sticker sticker-badge" data-anim="wiggle" data-zone="work" style="left:5000px;top:1600px;transform:rotate(-1deg)">PROMPT WHISPERER 🪄</div>
+<div class="sticker sticker-stamp" data-anim="pop" data-zone="work" style="left:4800px;top:1000px;transform:rotate(-15deg);color:#C9A96E;border-color:#C9A96E">SHIPPED</div>
+<div class="sticker sticker-stamp" data-anim="tada" data-zone="work" style="left:5400px;top:1000px;transform:rotate(10deg);color:#4CAF50;border-color:#4CAF50">DPIIT REGISTERED ✓</div>
+<div class="sticker sticker-stamp" data-anim="shake" data-zone="work" style="left:6000px;top:700px;transform:rotate(-20deg);color:#E53935;border-color:#E53935">MVP READY</div>
+<div class="sticker sticker-stamp" data-anim="spin" data-zone="work" style="left:6200px;top:1200px;transform:rotate(8deg);color:#7B1FA2;border-color:#7B1FA2">LAUNCHED 🚀</div>
+<div class="sticker sticker-stamp" data-anim="tada" data-zone="work" style="left:6500px;top:500px;transform:rotate(15deg);color:#FF6F00;border-color:#FF6F00">STARTUP ODISHA ✓</div>
+<div class="sticker sticker-stamp" data-anim="pop" data-zone="work" style="left:6800px;top:900px;transform:rotate(-10deg);color:#1565C0;border-color:#1565C0">BUILDER</div>
+<div class="sticker sticker-emoji" data-anim="pop" data-zone="work" style="left:6300px;top:550px;transform:rotate(15deg)">🚀</div>
+<div class="sticker sticker-emoji big" data-anim="bounce" data-zone="work" style="left:5200px;top:1100px;transform:rotate(12deg)">🎨</div>
+<div class="sticker sticker-emoji big" data-anim="dance" data-zone="work" style="left:5000px;top:1200px">🫡</div>
+<div class="sticker sticker-emoji huge" data-anim="tada" data-zone="work" style="left:4600px;top:550px;font-size:6rem">🎬</div>
+<div class="sticker sticker-illustrated" data-anim="dance" data-zone="work" style="left:4400px;top:1200px;transform:rotate(-3deg);width:180px">
   <svg viewBox="0 0 160 140"><rect x="30" y="40" width="100" height="70" rx="6" fill="#E8E0F0"/><rect x="35" y="45" width="90" height="50" rx="3" fill="#F5F0FF"/><rect x="42" y="52" width="30" height="4" rx="2" fill="#CE93D8"/><rect x="42" y="60" width="50" height="3" rx="1.5" fill="#E1BEE7"/><rect x="42" y="67" width="40" height="3" rx="1.5" fill="#E1BEE7"/><rect x="42" y="74" width="20" height="6" rx="3" fill="#AB47BC"/><rect x="55" y="110" width="50" height="6" rx="2" fill="#D1C4E9"/><rect x="5" y="80" width="22" height="28" rx="4" fill="#8D6E63"/><rect x="8" y="84" width="16" height="6" rx="3" fill="#D7CCC8"/><path d="M12 72Q14 65 12 58" stroke="#BCAAA4" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M18 70Q20 62 18 55" stroke="#BCAAA4" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M60 30Q60 10 80 10Q100 10 100 30" stroke="#7B1FA2" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="60" cy="33" r="6" fill="#7B1FA2"/><circle cx="100" cy="33" r="6" fill="#7B1FA2"/></svg>
 </div>
-<div class="sticker sticker-swatches" data-anim="wave" style="left:6400px;top:1400px;transform:rotate(3deg)">
+<div class="sticker sticker-swatches" data-anim="wave" data-zone="work" style="left:6400px;top:1400px;transform:rotate(3deg)">
   <div><div class="sw" style="background:#C9A96E"></div><div class="sw-label">#C9A96E</div></div>
   <div><div class="sw" style="background:#1A1A1A"></div><div class="sw-label">#1A1A1A</div></div>
   <div><div class="sw" style="background:#FAF8F5"></div><div class="sw-label">#FAF8F5</div></div>
@@ -2216,139 +2221,139 @@ body.map-expanded .scroll-counter{display:none!important}
 </div>
 
 <!-- ===== LAUNCH PAD 🚀 (center-left 200-2600, 1800-3400) — Portfolio & Creative ===== -->
-<div class="sticker sticker-postit" data-anim="jelly" style="left:700px;top:2300px;transform:rotate(-2deg);background:var(--purple)">Neural OS: the dream that won't quit ✨</div>
-<div class="sticker sticker-postit" data-anim="dance" style="left:700px;top:2700px;transform:rotate(3deg);background:var(--green)">Hushh Jeypore: book an experience in 60 seconds 🏡</div>
-<div class="sticker sticker-meme" data-anim="rubberband" style="left:1400px;top:2600px;transform:rotate(3deg)"><div class="meme-emoji">🐢</div><div class="meme-text">ARRIBADA: saving turtles with React & Supabase</div><div class="meme-sub">bioluminescent deep-ocean vibes 🌊</div></div>
-<div class="sticker sticker-meme" data-anim="dizzy" style="left:2000px;top:2800px;transform:rotate(-1deg)"><div class="meme-emoji">🎬</div><div class="meme-text">Circles: putting retail money into movies via blockchain</div><div class="meme-sub">Web3 meets Bollywood 🍿</div></div>
-<div class="sticker sticker-illustrated" data-anim="wiggle" style="left:1500px;top:2200px;transform:rotate(3deg);width:150px">
+<div class="sticker sticker-postit" data-anim="jelly" data-zone="portfolio" style="left:700px;top:2300px;transform:rotate(-2deg);background:var(--purple)">Neural OS: the dream that won't quit ✨</div>
+<div class="sticker sticker-postit" data-anim="dance" data-zone="portfolio" style="left:700px;top:2700px;transform:rotate(3deg);background:var(--green)">Hushh Jeypore: book an experience in 60 seconds 🏡</div>
+<div class="sticker sticker-meme" data-anim="rubberband" data-zone="portfolio" style="left:1400px;top:2600px;transform:rotate(3deg)"><div class="meme-emoji">🐢</div><div class="meme-text">ARRIBADA: saving turtles with React & Supabase</div><div class="meme-sub">bioluminescent deep-ocean vibes 🌊</div></div>
+<div class="sticker sticker-meme" data-anim="dizzy" data-zone="portfolio" style="left:2000px;top:2800px;transform:rotate(-1deg)"><div class="meme-emoji">🎬</div><div class="meme-text">Circles: putting retail money into movies via blockchain</div><div class="meme-sub">Web3 meets Bollywood 🍿</div></div>
+<div class="sticker sticker-illustrated" data-anim="wiggle" data-zone="portfolio" style="left:1500px;top:2200px;transform:rotate(3deg);width:150px">
   <svg viewBox="0 0 140 140"><path d="M45 90L55 130L95 130L105 90Z" fill="#E65100"/><rect x="40" y="85" width="70" height="10" rx="3" fill="#BF360C"/><path d="M75 85Q60 60 45 50" stroke="#4CAF50" stroke-width="3" fill="none"/><ellipse cx="42" cy="48" rx="14" ry="10" fill="#66BB6A" transform="rotate(-20 42 48)"/><path d="M75 85Q90 55 100 45" stroke="#4CAF50" stroke-width="3" fill="none"/><ellipse cx="103" cy="42" rx="14" ry="10" fill="#81C784" transform="rotate(15 103 42)"/><path d="M75 85Q75 50 75 35" stroke="#4CAF50" stroke-width="3" fill="none"/><ellipse cx="75" cy="32" rx="12" ry="10" fill="#A5D6A7"/><circle cx="42" cy="38" r="5" fill="#FF7043"/><circle cx="75" cy="24" r="5" fill="#FFB74D"/><circle cx="105" cy="34" r="5" fill="#FF7043"/></svg>
 </div>
-<div class="sticker sticker-illustrated" data-anim="rocket" style="left:2200px;top:2000px;transform:rotate(5deg);width:120px">
+<div class="sticker sticker-illustrated" data-anim="rocket" data-zone="portfolio" style="left:2200px;top:2000px;transform:rotate(5deg);width:120px">
   <svg viewBox="0 0 100 140"><path d="M50 10Q30 40 30 80L50 90L70 80Q70 40 50 10Z" fill="#E0E0E0" stroke="#BDBDBD" stroke-width="1"/><path d="M50 10Q35 45 35 70L50 78L65 70Q65 45 50 10Z" fill="#42A5F5"/><circle cx="50" cy="50" r="8" fill="#FFF"/><circle cx="50" cy="50" r="5" fill="#1565C0"/><path d="M30 80L20 100L35 85Z" fill="#FF7043"/><path d="M70 80L80 100L65 85Z" fill="#FF7043"/><path d="M40 90L50 130L60 90" fill="#FF5722"/><path d="M44 90L50 118L56 90" fill="#FFB74D"/></svg>
 </div>
-<div class="sticker sticker-progress" data-anim="jelly" style="left:700px;top:3100px;transform:rotate(3deg)" onclick="prog(this,event)"><div class="p-title">🎯 Circles progress</div><div class="p-bar"><div class="p-fill" style="width:12%;background:linear-gradient(90deg,#7B1FA2,#CE93D8)"></div></div><div class="p-label">12% — tap to progress</div></div>
+<div class="sticker sticker-progress" data-anim="jelly" data-zone="portfolio" style="left:700px;top:3100px;transform:rotate(3deg)" onclick="prog(this,event)"><div class="p-title">🎯 Circles progress</div><div class="p-bar"><div class="p-fill" style="width:12%;background:linear-gradient(90deg,#7B1FA2,#CE93D8)"></div></div><div class="p-label">12% — tap to progress</div></div>
 
 <!-- ===== PROJECT SHOWCASE CARDS ===== -->
-<div class="sticker sticker-project" data-anim="jelly" style="left:1800px;top:1900px;transform:rotate(-2deg)">
+<div class="sticker sticker-project" data-anim="jelly" data-zone="portfolio" style="left:1800px;top:1900px;transform:rotate(-2deg)">
   <div class="proj-header"><div class="proj-icon" style="background:linear-gradient(135deg,#7B1FA2,#CE93D8)">🎬</div><div><div class="proj-title">EnterCircles Labs</div><div class="proj-tag">FOUNDER · MEDIA FINTECH</div></div></div>
   <div class="proj-desc">Pioneered retail-driven creator financing for Indian cinema. Validated PMF with 3 signed agreements worth ₹15Cr+ pipeline.</div>
   <div class="proj-stats"><span class="proj-stat" style="background:#f3eff8;color:#7a6a9a">₹15Cr+ Pipeline</span><span class="proj-stat" style="background:#eef6f0;color:#5a8a6a">Team of 6</span><span class="proj-stat" style="background:#fdf5eb;color:#b07d3a">30% Velocity ↑</span></div>
 </div>
 
-<div class="sticker sticker-project" data-anim="bounce" style="left:600px;top:2400px;transform:rotate(2deg)">
+<div class="sticker sticker-project" data-anim="bounce" data-zone="portfolio" style="left:600px;top:2400px;transform:rotate(2deg)">
   <div class="proj-header"><div class="proj-icon" style="background:linear-gradient(135deg,#FF9800,#FFB74D)">🎓</div><div><div class="proj-title">Recess EdTech</div><div class="proj-tag">FOUNDER · EDTECH SAAS</div></div></div>
   <div class="proj-desc">Built a coaching management SaaS. Reduced churn from 55% to below 10%. Scaled to 5,000+ paying users.</div>
   <div class="proj-stats"><span class="proj-stat" style="background:#fdf5eb;color:#b07d3a">5K+ Users</span><span class="proj-stat" style="background:#faf0ef;color:#b06a6a">₹80L+ ARR</span><span class="proj-stat" style="background:#eef6f0;color:#5a8a6a">73% Faster Onboard</span></div>
 </div>
 
-<div class="sticker sticker-project" data-anim="wave" style="left:1200px;top:2800px;transform:rotate(-3deg)">
+<div class="sticker sticker-project" data-anim="wave" data-zone="portfolio" style="left:1200px;top:2800px;transform:rotate(-3deg)">
   <div class="proj-header"><div class="proj-icon" style="background:linear-gradient(135deg,#00897B,#4DB6AC)">🐢</div><div><div class="proj-title">ARRIBADA</div><div class="proj-tag">CONSERVATION TECH</div></div></div>
   <div class="proj-desc">Turtle nesting tracker for Olive Ridley conservation. Built with React, Supabase & bioluminescent deep-ocean design.</div>
   <div class="proj-stats"><span class="proj-stat" style="background:#e0f2f1;color:#00695c">React + Supabase</span><span class="proj-stat" style="background:#eef3fa;color:#5a7faa">Real-time Tracking</span></div>
 </div>
 
-<div class="sticker sticker-project" data-anim="pop" style="left:2200px;top:2400px;transform:rotate(1deg)">
+<div class="sticker sticker-project" data-anim="pop" data-zone="portfolio" style="left:2200px;top:2400px;transform:rotate(1deg)">
   <div class="proj-header"><div class="proj-icon" style="background:linear-gradient(135deg,#5C6BC0,#7986CB)">🏡</div><div><div class="proj-title">Hushh Jeypore</div><div class="proj-tag">HOSPITALITY · HERITAGE</div></div></div>
   <div class="proj-desc">Heritage homestay experience platform. "Order an experience, not a room." Minimal booking in 60 seconds.</div>
   <div class="proj-stats"><span class="proj-stat" style="background:#e8eaf6;color:#3949ab">Heritage Stay</span><span class="proj-stat" style="background:#fdf5eb;color:#b07d3a">60s Booking</span></div>
 </div>
-<div class="sticker sticker-badge" data-anim="pop" style="left:2100px;top:2600px;transform:rotate(3deg)">TURTLE SAVER 🐢</div>
-<div class="sticker sticker-badge" data-anim="spin" style="left:600px;top:2900px;transform:rotate(-4deg)">VIBE CODER 💻</div>
-<div class="sticker sticker-badge" data-anim="flip" style="left:1800px;top:3200px;transform:rotate(3deg)">CHAI POWERED ☕</div>
-<div class="sticker sticker-emoji" data-anim="spin" style="left:600px;top:2200px">✨</div>
-<div class="sticker sticker-emoji" data-anim="heartbeat" style="left:1600px;top:2200px;transform:rotate(8deg)">💫</div>
-<div class="sticker sticker-emoji" data-anim="jelly" style="left:700px;top:2800px">🌿</div>
-<div class="sticker sticker-emoji big" data-anim="float" style="left:1200px;top:1900px;transform:rotate(9deg)">🪄</div>
-<div class="sticker sticker-emoji" data-anim="dance" style="left:2400px;top:2500px">💡</div>
-<div class="sticker sticker-emoji" data-anim="shake" style="left:2500px;top:3000px">🐢</div>
-<div class="sticker sticker-washi" style="left:2800px;top:2500px;transform:rotate(-12deg);background:repeating-linear-gradient(-45deg,rgba(233,30,99,0.12),rgba(233,30,99,0.12) 5px,rgba(233,30,99,0.06) 5px,rgba(233,30,99,0.06) 10px);width:200px"></div>
+<div class="sticker sticker-badge" data-anim="pop" data-zone="portfolio" style="left:2100px;top:2600px;transform:rotate(3deg)">TURTLE SAVER 🐢</div>
+<div class="sticker sticker-badge" data-anim="spin" data-zone="portfolio" style="left:600px;top:2900px;transform:rotate(-4deg)">VIBE CODER 💻</div>
+<div class="sticker sticker-badge" data-anim="flip" data-zone="portfolio" style="left:1800px;top:3200px;transform:rotate(3deg)">CHAI POWERED ☕</div>
+<div class="sticker sticker-emoji" data-anim="spin" data-zone="portfolio" style="left:600px;top:2200px">✨</div>
+<div class="sticker sticker-emoji" data-anim="heartbeat" data-zone="portfolio" style="left:1600px;top:2200px;transform:rotate(8deg)">💫</div>
+<div class="sticker sticker-emoji" data-anim="jelly" data-zone="portfolio" style="left:700px;top:2800px">🌿</div>
+<div class="sticker sticker-emoji big" data-anim="float" data-zone="portfolio" style="left:1200px;top:1900px;transform:rotate(9deg)">🪄</div>
+<div class="sticker sticker-emoji" data-anim="dance" data-zone="portfolio" style="left:2400px;top:2500px">💡</div>
+<div class="sticker sticker-emoji" data-anim="shake" data-zone="portfolio" style="left:2500px;top:3000px">🐢</div>
+<div class="sticker sticker-washi" data-zone="portfolio" style="left:2800px;top:2500px;transform:rotate(-12deg);background:repeating-linear-gradient(-45deg,rgba(233,30,99,0.12),rgba(233,30,99,0.12) 5px,rgba(233,30,99,0.06) 5px,rgba(233,30,99,0.06) 10px);width:200px"></div>
 
 <!-- ===== THE PLAYGROUND 🎮 (bottom-left 200-4800, 3600-6800) — Hobbies & Interests ===== -->
-<div class="sticker sticker-postit" data-anim="jelly" style="left:700px;top:4000px;transform:rotate(3deg);background:var(--pink)">Guitar practice log: Day 47<br>Still can't play Wonderwall 🎸</div>
-<div class="sticker sticker-postit" data-anim="wave" style="left:1600px;top:3700px;transform:rotate(-2deg);background:var(--green)">Books to read:<br>• Atomic Habits ✅<br>• Zero to One ✅<br>• Sapiens 📖</div>
-<div class="sticker sticker-postit" data-anim="bounce" style="left:2600px;top:3800px;transform:rotate(4deg);background:var(--yellow)">Photography gear wish list 📷<br>Sony A7IV pls 🥺</div>
-<div class="sticker sticker-postit" data-anim="pop" style="left:1200px;top:4200px;transform:rotate(-3deg);background:var(--blue)">Weekend plans:<br>1. Cook something new 🍳<br>2. Touch grass 🌿<br>3. Actually rest (lol)</div>
-<div class="sticker sticker-postit" data-anim="bounce" style="left:600px;top:4800px;transform:rotate(-3deg);background:var(--blue)">Dream destinations:<br>• Tokyo 🗼<br>• Iceland 🧊<br>• New Zealand 🏔️</div>
-<div class="sticker sticker-postit" data-anim="jelly" style="left:1200px;top:4800px;transform:rotate(4deg);background:var(--green)">Best chai spots:<br>1. Odisha roadside ☕<br>2. Mumbai tapri 🫖<br>3. My kitchen at 2am</div>
-<div class="sticker sticker-postit" data-anim="wave" style="left:2400px;top:4600px;transform:rotate(-2deg);background:var(--yellow)">Travel hack:<br>Pack light, forget charger,<br>panic at airport 😅</div>
-<div class="sticker sticker-postit" data-anim="pop" style="left:3600px;top:3800px;transform:rotate(5deg);background:var(--mint)">Bucket list:<br>Northern lights 🌌<br>Scuba diving 🤿<br>Mountain trek 🏔️</div>
-<div class="sticker sticker-postit" data-anim="jelly" style="left:3400px;top:4400px;transform:rotate(-5deg);background:var(--purple)">Tried painting once 🎨<br>Canvas looked like modern art<br>(not the good kind)</div>
-<div class="sticker sticker-postit" data-anim="wave" style="left:4200px;top:4000px;transform:rotate(3deg);background:var(--orange)">Music playlist: 847 songs<br>Still plays the same 12 🎧</div>
-<div class="sticker sticker-postit" data-anim="wave" style="left:900px;top:5200px;transform:rotate(-3deg);background:var(--purple)">Self-care checklist:<br>✅ Sleep 8 hrs (lol jk)<br>✅ Drink water<br>⬜ Touch grass</div>
-<div class="sticker sticker-postit" data-anim="jelly" style="left:2000px;top:5000px;transform:rotate(4deg);background:var(--mint)">Morning routine goals:<br>5am → Meditate → Journal<br>Reality: 9am → Phone → Regret</div>
-<div class="sticker sticker-postit" data-anim="bounce" style="left:3200px;top:5200px;transform:rotate(-2deg);background:var(--green)">Things that recharge me:<br>🌊 Ocean sounds<br>☕ Hot chai<br>🐕 Mr. Puchu cuddles</div>
-<div class="sticker sticker-postit" data-anim="pop" style="left:4000px;top:5400px;transform:rotate(-4deg);background:var(--yellow)">Affirmation:<br>I am enough 💛<br>(even when CI fails)</div>
-<div class="sticker sticker-postit" data-anim="jelly" style="left:700px;top:5800px;transform:rotate(3deg);background:var(--pink)">Comfort movies:<br>🎬 Interstellar<br>🎬 Good Will Hunting<br>🎬 3 Idiots</div>
-<div class="sticker sticker-counter" data-anim="heartbeat" style="left:3600px;top:4800px;transform:rotate(-2deg)" onclick="incr(this,event)"><div class="c-emoji">☕</div><div><div class="c-count" data-count="0">0</div><div class="c-label">chai consumed today</div></div></div>
-<div class="sticker sticker-mood" style="left:2200px;top:5600px;transform:rotate(-2deg)"><div class="m-face" id="moodFace">😐</div><div class="m-label" id="moodLabel">meh</div><input type="range" min="0" max="4" value="2" oninput="mood(this)"></div>
-<div class="sticker sticker-fortune" data-anim="wiggle" style="left:4400px;top:5000px;transform:rotate(-3deg)" onclick="fortune(this,event)"><div class="f-icon">🥠</div><div class="f-text">Click for wisdom...</div><div class="f-label">tap to crack open</div></div>
-<div class="sticker sticker-badge" data-anim="tada" style="left:2800px;top:3700px;transform:rotate(3deg)">AMATEUR CHEF 🍳</div>
-<div class="sticker sticker-badge" data-anim="pop" style="left:4000px;top:4200px;transform:rotate(-2deg)">BOOKWORM IN TRAINING 📖</div>
-<div class="sticker sticker-badge" data-anim="pop" style="left:1800px;top:5400px;transform:rotate(2deg)">ROAD TRIP ENTHUSIAST 🚗</div>
-<div class="sticker sticker-badge" data-anim="tada" style="left:600px;top:6200px;transform:rotate(-3deg)">CHAI CONNOISSEUR ☕</div>
-<div class="sticker sticker-badge" data-anim="pop" style="left:3200px;top:5800px;transform:rotate(-2deg)">CERTIFIED OVERTHINKER 🧠</div>
-<div class="sticker sticker-badge" data-anim="tada" style="left:1000px;top:6200px;transform:rotate(3deg)">NAP CHAMPION 💤</div>
-<div class="sticker sticker-stamp" data-anim="tada" style="left:4200px;top:4600px;transform:rotate(8deg);color:#E91E63;border-color:#E91E63">HOBBY COLLECTOR ✓</div>
-<div class="sticker sticker-stamp" data-anim="tada" style="left:1200px;top:5600px;transform:rotate(-12deg);color:#2196F3;border-color:#2196F3">WANDERER ✓</div>
-<div class="sticker sticker-stamp" data-anim="tada" style="left:4200px;top:5800px;transform:rotate(10deg);color:#9C27B0;border-color:#9C27B0">RECHARGING... ✓</div>
-<div class="sticker sticker-emoji big" data-anim="heartbeat" style="left:3000px;top:4000px">🎨</div>
-<div class="sticker sticker-emoji" data-anim="dance" style="left:4400px;top:3900px">📷</div>
-<div class="sticker sticker-emoji big" data-anim="float" style="left:800px;top:4400px">🎵</div>
-<div class="sticker sticker-emoji" data-anim="spin" style="left:3800px;top:5000px">🏃</div>
-<div class="sticker sticker-emoji huge" data-anim="rocket" style="left:1800px;top:5800px;font-size:6rem">🗺️</div>
-<div class="sticker sticker-emoji big" data-anim="float" style="left:4400px;top:5600px">🌅</div>
-<div class="sticker sticker-emoji" data-anim="dance" style="left:700px;top:5400px">🏕️</div>
-<div class="sticker sticker-emoji big" data-anim="heartbeat" style="left:2800px;top:6200px">🌴</div>
-<div class="sticker sticker-emoji huge" data-anim="float" style="left:3800px;top:5600px;font-size:6rem">🌙</div>
-<div class="sticker sticker-emoji big" data-anim="heartbeat" style="left:4600px;top:5200px">💆</div>
-<div class="sticker sticker-emoji" data-anim="wave" style="left:2600px;top:6200px">🫖</div>
-<div class="sticker sticker-emoji big" data-anim="dance" style="left:1400px;top:6000px">🌿</div>
-<div class="sticker sticker-emoji" data-anim="spin" style="left:4000px;top:6000px">✨</div>
-<div class="sticker sticker-emoji" data-anim="dance" style="left:600px;top:6000px">🏝️</div>
-<div class="sticker sticker-emoji big" data-anim="rubberband" style="left:2400px;top:4200px">🎧</div>
-<div class="sticker sticker-emoji huge" data-anim="spin" style="left:1200px;top:4600px;font-size:6rem">🧃</div>
+<div class="sticker sticker-postit" data-anim="jelly" data-zone="hobby" style="left:700px;top:4000px;transform:rotate(3deg);background:var(--pink)">Guitar practice log: Day 47<br>Still can't play Wonderwall 🎸</div>
+<div class="sticker sticker-postit" data-anim="wave" data-zone="hobby" style="left:1600px;top:3700px;transform:rotate(-2deg);background:var(--green)">Books to read:<br>• Atomic Habits ✅<br>• Zero to One ✅<br>• Sapiens 📖</div>
+<div class="sticker sticker-postit" data-anim="bounce" data-zone="hobby" style="left:2600px;top:3800px;transform:rotate(4deg);background:var(--yellow)">Photography gear wish list 📷<br>Sony A7IV pls 🥺</div>
+<div class="sticker sticker-postit" data-anim="pop" data-zone="hobby" style="left:1200px;top:4200px;transform:rotate(-3deg);background:var(--blue)">Weekend plans:<br>1. Cook something new 🍳<br>2. Touch grass 🌿<br>3. Actually rest (lol)</div>
+<div class="sticker sticker-postit" data-anim="bounce" data-zone="hobby" style="left:600px;top:4800px;transform:rotate(-3deg);background:var(--blue)">Dream destinations:<br>• Tokyo 🗼<br>• Iceland 🧊<br>• New Zealand 🏔️</div>
+<div class="sticker sticker-postit" data-anim="jelly" data-zone="hobby" style="left:1200px;top:4800px;transform:rotate(4deg);background:var(--green)">Best chai spots:<br>1. Odisha roadside ☕<br>2. Mumbai tapri 🫖<br>3. My kitchen at 2am</div>
+<div class="sticker sticker-postit" data-anim="wave" data-zone="hobby" style="left:2400px;top:4600px;transform:rotate(-2deg);background:var(--yellow)">Travel hack:<br>Pack light, forget charger,<br>panic at airport 😅</div>
+<div class="sticker sticker-postit" data-anim="pop" data-zone="hobby" style="left:3600px;top:3800px;transform:rotate(5deg);background:var(--mint)">Bucket list:<br>Northern lights 🌌<br>Scuba diving 🤿<br>Mountain trek 🏔️</div>
+<div class="sticker sticker-postit" data-anim="jelly" data-zone="hobby" style="left:3400px;top:4400px;transform:rotate(-5deg);background:var(--purple)">Tried painting once 🎨<br>Canvas looked like modern art<br>(not the good kind)</div>
+<div class="sticker sticker-postit" data-anim="wave" data-zone="hobby" style="left:4200px;top:4000px;transform:rotate(3deg);background:var(--orange)">Music playlist: 847 songs<br>Still plays the same 12 🎧</div>
+<div class="sticker sticker-postit" data-anim="wave" data-zone="hobby" style="left:900px;top:5200px;transform:rotate(-3deg);background:var(--purple)">Self-care checklist:<br>✅ Sleep 8 hrs (lol jk)<br>✅ Drink water<br>⬜ Touch grass</div>
+<div class="sticker sticker-postit" data-anim="jelly" data-zone="hobby" style="left:2000px;top:5000px;transform:rotate(4deg);background:var(--mint)">Morning routine goals:<br>5am → Meditate → Journal<br>Reality: 9am → Phone → Regret</div>
+<div class="sticker sticker-postit" data-anim="bounce" data-zone="hobby" style="left:3200px;top:5200px;transform:rotate(-2deg);background:var(--green)">Things that recharge me:<br>🌊 Ocean sounds<br>☕ Hot chai<br>🐕 Mr. Puchu cuddles</div>
+<div class="sticker sticker-postit" data-anim="pop" data-zone="hobby" style="left:4000px;top:5400px;transform:rotate(-4deg);background:var(--yellow)">Affirmation:<br>I am enough 💛<br>(even when CI fails)</div>
+<div class="sticker sticker-postit" data-anim="jelly" data-zone="hobby" style="left:700px;top:5800px;transform:rotate(3deg);background:var(--pink)">Comfort movies:<br>🎬 Interstellar<br>🎬 Good Will Hunting<br>🎬 3 Idiots</div>
+<div class="sticker sticker-counter" data-anim="heartbeat" data-zone="hobby" style="left:3600px;top:4800px;transform:rotate(-2deg)" onclick="incr(this,event)"><div class="c-emoji">☕</div><div><div class="c-count" data-count="0">0</div><div class="c-label">chai consumed today</div></div></div>
+<div class="sticker sticker-mood" data-zone="hobby" style="left:2200px;top:5600px;transform:rotate(-2deg)"><div class="m-face" id="moodFace">😐</div><div class="m-label" id="moodLabel">meh</div><input type="range" min="0" max="4" value="2" oninput="mood(this)"></div>
+<div class="sticker sticker-fortune" data-anim="wiggle" data-zone="hobby" style="left:4400px;top:5000px;transform:rotate(-3deg)" onclick="fortune(this,event)"><div class="f-icon">🥠</div><div class="f-text">Click for wisdom...</div><div class="f-label">tap to crack open</div></div>
+<div class="sticker sticker-badge" data-anim="tada" data-zone="hobby" style="left:2800px;top:3700px;transform:rotate(3deg)">AMATEUR CHEF 🍳</div>
+<div class="sticker sticker-badge" data-anim="pop" data-zone="hobby" style="left:4000px;top:4200px;transform:rotate(-2deg)">BOOKWORM IN TRAINING 📖</div>
+<div class="sticker sticker-badge" data-anim="pop" data-zone="hobby" style="left:1800px;top:5400px;transform:rotate(2deg)">ROAD TRIP ENTHUSIAST 🚗</div>
+<div class="sticker sticker-badge" data-anim="tada" data-zone="hobby" style="left:600px;top:6200px;transform:rotate(-3deg)">CHAI CONNOISSEUR ☕</div>
+<div class="sticker sticker-badge" data-anim="pop" data-zone="hobby" style="left:3200px;top:5800px;transform:rotate(-2deg)">CERTIFIED OVERTHINKER 🧠</div>
+<div class="sticker sticker-badge" data-anim="tada" data-zone="hobby" style="left:1000px;top:6200px;transform:rotate(3deg)">NAP CHAMPION 💤</div>
+<div class="sticker sticker-stamp" data-anim="tada" data-zone="hobby" style="left:4200px;top:4600px;transform:rotate(8deg);color:#E91E63;border-color:#E91E63">HOBBY COLLECTOR ✓</div>
+<div class="sticker sticker-stamp" data-anim="tada" data-zone="hobby" style="left:1200px;top:5600px;transform:rotate(-12deg);color:#2196F3;border-color:#2196F3">WANDERER ✓</div>
+<div class="sticker sticker-stamp" data-anim="tada" data-zone="hobby" style="left:4200px;top:5800px;transform:rotate(10deg);color:#9C27B0;border-color:#9C27B0">RECHARGING... ✓</div>
+<div class="sticker sticker-emoji big" data-anim="heartbeat" data-zone="hobby" style="left:3000px;top:4000px">🎨</div>
+<div class="sticker sticker-emoji" data-anim="dance" data-zone="hobby" style="left:4400px;top:3900px">📷</div>
+<div class="sticker sticker-emoji big" data-anim="float" data-zone="hobby" style="left:800px;top:4400px">🎵</div>
+<div class="sticker sticker-emoji" data-anim="spin" data-zone="hobby" style="left:3800px;top:5000px">🏃</div>
+<div class="sticker sticker-emoji huge" data-anim="rocket" data-zone="hobby" style="left:1800px;top:5800px;font-size:6rem">🗺️</div>
+<div class="sticker sticker-emoji big" data-anim="float" data-zone="hobby" style="left:4400px;top:5600px">🌅</div>
+<div class="sticker sticker-emoji" data-anim="dance" data-zone="hobby" style="left:700px;top:5400px">🏕️</div>
+<div class="sticker sticker-emoji big" data-anim="heartbeat" data-zone="hobby" style="left:2800px;top:6200px">🌴</div>
+<div class="sticker sticker-emoji huge" data-anim="float" data-zone="hobby" style="left:3800px;top:5600px;font-size:6rem">🌙</div>
+<div class="sticker sticker-emoji big" data-anim="heartbeat" data-zone="hobby" style="left:4600px;top:5200px">💆</div>
+<div class="sticker sticker-emoji" data-anim="wave" data-zone="hobby" style="left:2600px;top:6200px">🫖</div>
+<div class="sticker sticker-emoji big" data-anim="dance" data-zone="hobby" style="left:1400px;top:6000px">🌿</div>
+<div class="sticker sticker-emoji" data-anim="spin" data-zone="hobby" style="left:4000px;top:6000px">✨</div>
+<div class="sticker sticker-emoji" data-anim="dance" data-zone="hobby" style="left:600px;top:6000px">🏝️</div>
+<div class="sticker sticker-emoji big" data-anim="rubberband" data-zone="hobby" style="left:2400px;top:4200px">🎧</div>
+<div class="sticker sticker-emoji huge" data-anim="spin" data-zone="hobby" style="left:1200px;top:4600px;font-size:6rem">🧃</div>
 
 <!-- ===== MEME ALLEY 😂 (right side 5000-9500, 3600-6800) — Fun & Memes ===== -->
 
 
-<div class="sticker sticker-meme" data-anim="wiggle" style="left:5200px;top:3800px;transform:rotate(3deg)"><div class="meme-emoji">🤖</div><div class="meme-text">"Let me just ask Claude real quick"</div><div class="meme-sub">— me, every 5 minutes</div></div>
-<div class="sticker sticker-meme" data-anim="shake" style="left:6400px;top:4200px;transform:rotate(-4deg)"><div class="meme-emoji">📊</div><div class="meme-text">PM: "one more feature?"<br>Backlog: 📈📈📈</div><div class="meme-sub">story of my life</div></div>
-<div class="sticker sticker-meme" data-anim="jelly" style="left:5600px;top:4400px;transform:rotate(2deg)"><div class="meme-emoji">🎨</div><div class="meme-text">"Can you make the logo bigger?"</div><div class="meme-sub">— every client ever</div></div>
-<div class="sticker sticker-meme" data-anim="pop" style="left:7600px;top:3800px;transform:rotate(-2deg)"><div class="meme-emoji">💀</div><div class="meme-text">"It works on my machine"</div><div class="meme-sub">famous last words</div></div>
-<div class="sticker sticker-meme" data-anim="dance" style="left:8200px;top:4200px;transform:rotate(5deg)"><div class="meme-emoji">🧠</div><div class="meme-text">AI prompt engineering = talking to your computer very politely</div><div class="meme-sub">— shower thoughts</div></div>
-<div class="sticker sticker-meme" data-anim="flip" style="left:5400px;top:5000px;transform:rotate(-3deg)"><div class="meme-emoji">📋</div><div class="meme-text">Sprint planning:<br>"It's a 2-pointer"<br>*takes 2 weeks*</div><div class="meme-sub">— every scrum team</div></div>
-<div class="sticker sticker-meme" data-anim="bounce" style="left:6800px;top:4800px;transform:rotate(4deg)"><div class="meme-emoji">🔥</div><div class="meme-text">Deadline: Tomorrow<br>Me: redesigning the UI</div><div class="meme-sub">procrastination: designer level</div></div>
-<div class="sticker sticker-meme" data-anim="tada" style="left:8000px;top:4600px;transform:rotate(-1deg)"><div class="meme-emoji">🤝</div><div class="meme-text">"Let's circle back"</div><div class="meme-sub">= could've been an email</div></div>
-<div class="sticker sticker-meme" data-anim="wiggle" style="left:5800px;top:5400px;transform:rotate(1deg)"><div class="meme-emoji">🦆</div><div class="meme-text">Rubber duck debugging: explain bug to duck → fix it mid-sentence</div><div class="meme-sub">the duck knows all</div></div>
-<div class="sticker sticker-meme" data-anim="spin" style="left:7200px;top:5200px;transform:rotate(-4deg)"><div class="meme-emoji">🤯</div><div class="meme-text">git push --force<br>on main<br>on a Friday</div><div class="meme-sub">choose chaos</div></div>
-<div class="sticker sticker-meme" data-anim="shake" style="left:8400px;top:5000px;transform:rotate(2deg)"><div class="meme-emoji">🫠</div><div class="meme-text">Founder life: CEO, CTO, CFO, intern... all the same person</div><div class="meme-sub">EnterCircles daily mood</div></div>
-<div class="sticker sticker-meme" data-anim="heartbeat" style="left:6000px;top:5800px;transform:rotate(-2deg)"><div class="meme-emoji">⚡</div><div class="meme-text">"We're AI-first now"<br>*uses AI to write emails*</div><div class="meme-sub">digital transformation™</div></div>
-<div class="sticker sticker-meme" data-anim="tada" style="left:5200px;top:5600px;transform:rotate(-3deg)"><div class="meme-emoji">🎭</div><div class="meme-text">Web3 pitch day:<br>"So it's like Netflix but on the blockchain"</div><div class="meme-sub">— Circles elevator pitch attempt #47</div></div>
-<div class="sticker sticker-meme" data-anim="dizzy" style="left:7800px;top:5400px;transform:rotate(2deg)"><div class="meme-emoji">🫣</div><div class="meme-text">Checking production after a Friday deploy</div><div class="meme-sub">everything is fine. everything is fine.</div></div>
-<div class="sticker sticker-meme" data-anim="wiggle" style="left:6400px;top:5600px;transform:rotate(-4deg)"><div class="meme-emoji">🧘</div><div class="meme-text">Me: "I need work-life balance"<br>Also me: *codes at 3 AM*</div><div class="meme-sub">founder life™</div></div>
-<div class="sticker sticker-meme" data-anim="bounce" style="left:8600px;top:5600px;transform:rotate(3deg)"><div class="meme-emoji">🐕</div><div class="meme-text">Mr. Puchu watching me have a mental breakdown over CSS</div><div class="meme-sub">he does not care. at all.</div></div>
-<div class="sticker sticker-meme" data-anim="shake" style="left:5400px;top:6200px;transform:rotate(-2deg)"><div class="meme-emoji">🌊</div><div class="meme-text">Olive Ridley turtles seeing the ARRIBADA app</div><div class="meme-sub">"finally someone tracks us in style"</div></div>
-<div class="sticker sticker-meme" data-anim="wiggle" style="left:7400px;top:5800px;transform:rotate(2deg)"><div class="meme-emoji">🏋️</div><div class="meme-text">Me: joins gym<br>Also me: watches gym videos on couch</div><div class="meme-sub">it's basically the same thing</div></div>
-<div class="sticker sticker-meme" data-anim="shake" style="left:8200px;top:5800px;transform:rotate(-4deg)"><div class="meme-emoji">📚</div><div class="meme-text">Buys 10 books<br>Reads 2 pages of each<br>Calls myself a reader</div><div class="meme-sub">intellectual vibes only</div></div>
-<div class="sticker sticker-meme" data-anim="wiggle" style="left:6600px;top:6200px;transform:rotate(3deg)"><div class="meme-emoji">✈️</div><div class="meme-text">Google Maps says 3 hours<br>Indian roads say "lol good luck"</div><div class="meme-sub">ETA is just a suggestion</div></div>
-<div class="sticker sticker-meme" data-anim="shake" style="left:7800px;top:6200px;transform:rotate(-3deg)"><div class="meme-emoji">🏖️</div><div class="meme-text">Goes to beach for peace<br>Opens laptop<br>"Just one email"</div><div class="meme-sub">workation™</div></div>
-<div class="sticker sticker-meme" data-anim="wiggle" style="left:8400px;top:5200px;transform:rotate(3deg)"><div class="meme-emoji">😴</div><div class="meme-text">"I'll sleep early tonight"<br>— me, every night at 11pm<br>*proceeds to doomscroll till 3am*</div><div class="meme-sub">self care is a myth</div></div>
-<div class="sticker sticker-meme" data-anim="shake" style="left:8400px;top:4200px;transform:rotate(-4deg)"><div class="meme-emoji">🧠</div><div class="meme-text">Brain: go to sleep<br>Also brain: remember that embarrassing thing from 2017?</div><div class="meme-sub">thanks brain very cool</div></div>
-<div class="sticker sticker-meme" data-anim="bounce" style="left:8200px;top:4800px;transform:rotate(2deg)"><div class="meme-emoji">🧘</div><div class="meme-text">Meditation app: clear your mind<br>My mind: did I push to main?</div><div class="meme-sub">inner peace loading...</div></div>
-<div class="sticker sticker-scratch" data-anim="flip" style="left:6000px;top:4000px;transform:rotate(2deg)"><div class="scratch-cover" onclick="scratch(this,event)">🎰 SCRATCH ME</div><div class="scratch-reveal"></div></div>
-<div class="sticker sticker-counter" data-anim="pop" style="left:8400px;top:3800px;transform:rotate(3deg)" onclick="incr(this,event)"><div class="c-emoji">🐛</div><div><div class="c-count" data-count="0">0</div><div class="c-label">bugs "fixed"</div></div></div>
-<div class="sticker sticker-counter" data-anim="shake" style="left:7000px;top:6000px;transform:rotate(-1deg)" onclick="incr(this,event)"><div class="c-emoji">😴</div><div><div class="c-count" data-count="0">0</div><div class="c-label">meetings survived</div></div></div>
-<div class="sticker sticker-emoji huge" data-anim="dizzy" style="left:5800px;top:3800px;font-size:6rem">🦄</div>
-<div class="sticker sticker-emoji big" data-anim="bounce" style="left:8600px;top:4400px">😎</div>
-<div class="sticker sticker-emoji huge" data-anim="tada" style="left:6800px;top:3800px;font-size:6rem">🪩</div>
-<div class="sticker sticker-emoji" data-anim="wiggle" style="left:5200px;top:6000px">🌶️</div>
-<div class="sticker sticker-emoji huge" data-anim="jelly" style="left:7600px;top:6200px;font-size:6rem">🤘</div>
-<div class="sticker sticker-emoji big" data-anim="spin" style="left:8200px;top:6000px">🏄</div>
-<div class="sticker sticker-emoji big" data-anim="heartbeat" style="left:8400px;top:5000px">💎</div>
-<div class="sticker sticker-emoji" data-anim="float" style="left:6200px;top:6400px">🎪</div>
-<div class="sticker sticker-emoji" data-anim="wiggle" style="left:5600px;top:4600px">☕</div>
-<div class="sticker sticker-emoji" data-anim="float" style="left:8400px;top:600px">⭐</div>
-<div class="sticker sticker-emoji" data-anim="wave" style="left:8200px;top:6000px">🌊</div>
+<div class="sticker sticker-meme" data-anim="wiggle" data-zone="fun" style="left:5200px;top:3800px;transform:rotate(3deg)"><div class="meme-emoji">🤖</div><div class="meme-text">"Let me just ask Claude real quick"</div><div class="meme-sub">— me, every 5 minutes</div></div>
+<div class="sticker sticker-meme" data-anim="shake" data-zone="fun" style="left:6400px;top:4200px;transform:rotate(-4deg)"><div class="meme-emoji">📊</div><div class="meme-text">PM: "one more feature?"<br>Backlog: 📈📈📈</div><div class="meme-sub">story of my life</div></div>
+<div class="sticker sticker-meme" data-anim="jelly" data-zone="fun" style="left:5600px;top:4400px;transform:rotate(2deg)"><div class="meme-emoji">🎨</div><div class="meme-text">"Can you make the logo bigger?"</div><div class="meme-sub">— every client ever</div></div>
+<div class="sticker sticker-meme" data-anim="pop" data-zone="fun" style="left:7600px;top:3800px;transform:rotate(-2deg)"><div class="meme-emoji">💀</div><div class="meme-text">"It works on my machine"</div><div class="meme-sub">famous last words</div></div>
+<div class="sticker sticker-meme" data-anim="dance" data-zone="fun" style="left:8200px;top:4200px;transform:rotate(5deg)"><div class="meme-emoji">🧠</div><div class="meme-text">AI prompt engineering = talking to your computer very politely</div><div class="meme-sub">— shower thoughts</div></div>
+<div class="sticker sticker-meme" data-anim="flip" data-zone="fun" style="left:5400px;top:5000px;transform:rotate(-3deg)"><div class="meme-emoji">📋</div><div class="meme-text">Sprint planning:<br>"It's a 2-pointer"<br>*takes 2 weeks*</div><div class="meme-sub">— every scrum team</div></div>
+<div class="sticker sticker-meme" data-anim="bounce" data-zone="fun" style="left:6800px;top:4800px;transform:rotate(4deg)"><div class="meme-emoji">🔥</div><div class="meme-text">Deadline: Tomorrow<br>Me: redesigning the UI</div><div class="meme-sub">procrastination: designer level</div></div>
+<div class="sticker sticker-meme" data-anim="tada" data-zone="fun" style="left:8000px;top:4600px;transform:rotate(-1deg)"><div class="meme-emoji">🤝</div><div class="meme-text">"Let's circle back"</div><div class="meme-sub">= could've been an email</div></div>
+<div class="sticker sticker-meme" data-anim="wiggle" data-zone="fun" style="left:5800px;top:5400px;transform:rotate(1deg)"><div class="meme-emoji">🦆</div><div class="meme-text">Rubber duck debugging: explain bug to duck → fix it mid-sentence</div><div class="meme-sub">the duck knows all</div></div>
+<div class="sticker sticker-meme" data-anim="spin" data-zone="fun" style="left:7200px;top:5200px;transform:rotate(-4deg)"><div class="meme-emoji">🤯</div><div class="meme-text">git push --force<br>on main<br>on a Friday</div><div class="meme-sub">choose chaos</div></div>
+<div class="sticker sticker-meme" data-anim="shake" data-zone="fun" style="left:8400px;top:5000px;transform:rotate(2deg)"><div class="meme-emoji">🫠</div><div class="meme-text">Founder life: CEO, CTO, CFO, intern... all the same person</div><div class="meme-sub">EnterCircles daily mood</div></div>
+<div class="sticker sticker-meme" data-anim="heartbeat" data-zone="fun" style="left:6000px;top:5800px;transform:rotate(-2deg)"><div class="meme-emoji">⚡</div><div class="meme-text">"We're AI-first now"<br>*uses AI to write emails*</div><div class="meme-sub">digital transformation™</div></div>
+<div class="sticker sticker-meme" data-anim="tada" data-zone="fun" style="left:5200px;top:5600px;transform:rotate(-3deg)"><div class="meme-emoji">🎭</div><div class="meme-text">Web3 pitch day:<br>"So it's like Netflix but on the blockchain"</div><div class="meme-sub">— Circles elevator pitch attempt #47</div></div>
+<div class="sticker sticker-meme" data-anim="dizzy" data-zone="fun" style="left:7800px;top:5400px;transform:rotate(2deg)"><div class="meme-emoji">🫣</div><div class="meme-text">Checking production after a Friday deploy</div><div class="meme-sub">everything is fine. everything is fine.</div></div>
+<div class="sticker sticker-meme" data-anim="wiggle" data-zone="fun" style="left:6400px;top:5600px;transform:rotate(-4deg)"><div class="meme-emoji">🧘</div><div class="meme-text">Me: "I need work-life balance"<br>Also me: *codes at 3 AM*</div><div class="meme-sub">founder life™</div></div>
+<div class="sticker sticker-meme" data-anim="bounce" data-zone="fun" style="left:8600px;top:5600px;transform:rotate(3deg)"><div class="meme-emoji">🐕</div><div class="meme-text">Mr. Puchu watching me have a mental breakdown over CSS</div><div class="meme-sub">he does not care. at all.</div></div>
+<div class="sticker sticker-meme" data-anim="shake" data-zone="fun" style="left:5400px;top:6200px;transform:rotate(-2deg)"><div class="meme-emoji">🌊</div><div class="meme-text">Olive Ridley turtles seeing the ARRIBADA app</div><div class="meme-sub">"finally someone tracks us in style"</div></div>
+<div class="sticker sticker-meme" data-anim="wiggle" data-zone="fun" style="left:7400px;top:5800px;transform:rotate(2deg)"><div class="meme-emoji">🏋️</div><div class="meme-text">Me: joins gym<br>Also me: watches gym videos on couch</div><div class="meme-sub">it's basically the same thing</div></div>
+<div class="sticker sticker-meme" data-anim="shake" data-zone="fun" style="left:8200px;top:5800px;transform:rotate(-4deg)"><div class="meme-emoji">📚</div><div class="meme-text">Buys 10 books<br>Reads 2 pages of each<br>Calls myself a reader</div><div class="meme-sub">intellectual vibes only</div></div>
+<div class="sticker sticker-meme" data-anim="wiggle" data-zone="fun" style="left:6600px;top:6200px;transform:rotate(3deg)"><div class="meme-emoji">✈️</div><div class="meme-text">Google Maps says 3 hours<br>Indian roads say "lol good luck"</div><div class="meme-sub">ETA is just a suggestion</div></div>
+<div class="sticker sticker-meme" data-anim="shake" data-zone="fun" style="left:7800px;top:6200px;transform:rotate(-3deg)"><div class="meme-emoji">🏖️</div><div class="meme-text">Goes to beach for peace<br>Opens laptop<br>"Just one email"</div><div class="meme-sub">workation™</div></div>
+<div class="sticker sticker-meme" data-anim="wiggle" data-zone="fun" style="left:8400px;top:5200px;transform:rotate(3deg)"><div class="meme-emoji">😴</div><div class="meme-text">"I'll sleep early tonight"<br>— me, every night at 11pm<br>*proceeds to doomscroll till 3am*</div><div class="meme-sub">self care is a myth</div></div>
+<div class="sticker sticker-meme" data-anim="shake" data-zone="fun" style="left:8400px;top:4200px;transform:rotate(-4deg)"><div class="meme-emoji">🧠</div><div class="meme-text">Brain: go to sleep<br>Also brain: remember that embarrassing thing from 2017?</div><div class="meme-sub">thanks brain very cool</div></div>
+<div class="sticker sticker-meme" data-anim="bounce" data-zone="fun" style="left:8200px;top:4800px;transform:rotate(2deg)"><div class="meme-emoji">🧘</div><div class="meme-text">Meditation app: clear your mind<br>My mind: did I push to main?</div><div class="meme-sub">inner peace loading...</div></div>
+<div class="sticker sticker-scratch" data-anim="flip" data-zone="fun" style="left:6000px;top:4000px;transform:rotate(2deg)"><div class="scratch-cover" onclick="scratch(this,event)">🎰 SCRATCH ME</div><div class="scratch-reveal"></div></div>
+<div class="sticker sticker-counter" data-anim="pop" data-zone="fun" style="left:8400px;top:3800px;transform:rotate(3deg)" onclick="incr(this,event)"><div class="c-emoji">🐛</div><div><div class="c-count" data-count="0">0</div><div class="c-label">bugs "fixed"</div></div></div>
+<div class="sticker sticker-counter" data-anim="shake" data-zone="fun" style="left:7000px;top:6000px;transform:rotate(-1deg)" onclick="incr(this,event)"><div class="c-emoji">😴</div><div><div class="c-count" data-count="0">0</div><div class="c-label">meetings survived</div></div></div>
+<div class="sticker sticker-emoji huge" data-anim="dizzy" data-zone="fun" style="left:5800px;top:3800px;font-size:6rem">🦄</div>
+<div class="sticker sticker-emoji big" data-anim="bounce" data-zone="fun" style="left:8600px;top:4400px">😎</div>
+<div class="sticker sticker-emoji huge" data-anim="tada" data-zone="fun" style="left:6800px;top:3800px;font-size:6rem">🪩</div>
+<div class="sticker sticker-emoji" data-anim="wiggle" data-zone="fun" style="left:5200px;top:6000px">🌶️</div>
+<div class="sticker sticker-emoji huge" data-anim="jelly" data-zone="fun" style="left:7600px;top:6200px;font-size:6rem">🤘</div>
+<div class="sticker sticker-emoji big" data-anim="spin" data-zone="fun" style="left:8200px;top:6000px">🏄</div>
+<div class="sticker sticker-emoji big" data-anim="heartbeat" data-zone="fun" style="left:8400px;top:5000px">💎</div>
+<div class="sticker sticker-emoji" data-anim="float" data-zone="fun" style="left:6200px;top:6400px">🎪</div>
+<div class="sticker sticker-emoji" data-anim="wiggle" data-zone="fun" style="left:5600px;top:4600px">☕</div>
+<div class="sticker sticker-emoji" data-anim="float" data-zone="fun" style="left:8400px;top:600px">⭐</div>
+<div class="sticker sticker-emoji" data-anim="wave" data-zone="fun" style="left:8200px;top:6000px">🌊</div>
 
 </div></div>
 
@@ -3569,7 +3574,7 @@ document.querySelectorAll('.sticker-counter,.sticker-mood,.sticker-scratch,.stic
   s.style.position='relative';
   const badge=document.createElement('div');
   badge.className='interactive-badge';
-  badge.textContent='🎮 Tap me';
+  badge.textContent='🎮 PLAY';
   s.appendChild(badge);
 });
 
@@ -5465,21 +5470,19 @@ function addMapDecorations(cw,ch){
     _decLayer.appendChild(el);return el;
   }
 
-  if(IS_LOW_POWER_DEVICE){
-    addDiv('map-land','left:6%;top:8%;width:88%;height:84%;background:linear-gradient(160deg,#7dc462 0%,#4da638 100%);border-radius:30% 40% 35% 45% / 40% 35% 45% 35%;box-shadow:0 6px 20px rgba(0,0,0,0.16)');
-    addDiv('map-beach','left:8%;top:76%;width:80%;height:8%;border-radius:40% 40% 50% 50%;background:linear-gradient(180deg,rgba(245,222,130,0.7),rgba(235,200,100,0.35))');
-    return;
-  }
+  const IS_MOBILE_MAP = IS_LOW_POWER_DEVICE;
 
   // === OCEAN WAVES ===
-  for(let i=0;i<50;i++){
+  const waveCount=IS_MOBILE_MAP?15:50;
+  for(let i=0;i<waveCount;i++){
     const x=Math.random()*100,y=Math.random()*100;
     const w=6+Math.random()*18;
     addDiv('map-wave','left:'+x+'%;top:'+y+'%;width:'+w+'px;animation-delay:'+(Math.random()*4)+'s;animation-duration:'+(2+Math.random()*2.5)+'s;opacity:'+(0.15+Math.random()*0.2));
   }
 
   // === WATER RIPPLES ===
-  for(let i=0;i<12;i++){
+  const rippleCount=IS_MOBILE_MAP?5:12;
+  for(let i=0;i<rippleCount;i++){
     const x=Math.random()*100,y=Math.random()*100;
     addDiv('map-ripple','left:'+x+'%;top:'+y+'%;animation-delay:'+(Math.random()*3)+'s');
   }
@@ -5538,7 +5541,7 @@ function addMapDecorations(cw,ch){
   }
 
   // Scatter buildings across zones
-  const buildings=[
+  const allBuildings=[
     {x:16,y:26,w:28,h:35,c:'#e07850',r:'#c0583a',win:true},
     {x:19,y:28,w:22,h:28,c:'#d4956a',r:'#b87848',win:true},
     {x:22,y:24,w:32,h:40,c:'#5c9de8',r:'#4080c8',win:true},
@@ -5561,7 +5564,6 @@ function addMapDecorations(cw,ch){
     {x:68,y:52,w:20,h:25,c:'#50a878',r:'#389060',win:true},
     {x:28,y:35,w:16,h:20,c:'#c89060',r:'#a87848',win:true},
     {x:70,y:28,w:18,h:22,c:'#5890c8',r:'#4078a8',win:true},
-    // Extra buildings for expanded map
     {x:88,y:30,w:24,h:30,c:'#d06050',r:'#b04838',win:true},
     {x:10,y:75,w:20,h:26,c:'#5c9de8',r:'#4080c8',win:true},
     {x:45,y:78,w:22,h:28,c:'#e8845c',r:'#c86040',win:true},
@@ -5573,6 +5575,7 @@ function addMapDecorations(cw,ch){
     {x:38,y:65,w:16,h:20,c:'#d4956a',r:'#b87848',win:true},
     {x:92,y:58,w:20,h:25,c:'#c89060',r:'#a87848',win:true},
   ];
+  const buildings=IS_MOBILE_MAP?allBuildings.filter((_,i)=>i%2===0):allBuildings;
   buildings.forEach(b=>addIsometricBuilding(b.x,b.y,b.w,b.h,b.c,b.r,b.win));
 
   // === TALL TOWERS (special landmarks) ===
@@ -5600,11 +5603,12 @@ function addMapDecorations(cw,ch){
   addTower(48,38,20,40,'#4a9bd9','#3580b8');
   addTower(24,22,16,32,'#e07850','#c05838');
   addTower(72,18,18,36,'#e85070','#c83858');
-  // Extra towers for expanded map
-  addTower(85,42,16,32,'#50a878','#389060');
-  addTower(15,72,18,36,'#9c6fd0','#7850b0');
-  addTower(60,75,14,28,'#e8c050','#c8a038');
-  addTower(38,82,16,32,'#5890c8','#4078a8');
+  if(!IS_MOBILE_MAP){
+    addTower(85,42,16,32,'#50a878','#389060');
+    addTower(15,72,18,36,'#9c6fd0','#7850b0');
+    addTower(60,75,14,28,'#e8c050','#c8a038');
+    addTower(38,82,16,32,'#5890c8','#4078a8');
+  }
 
   // === ANIMATED FERRIS WHEEL ===
   (function(){
@@ -5661,10 +5665,11 @@ function addMapDecorations(cw,ch){
   })();
 
   // === ANIMATED BOATS — sailboats, cargo ships, fishing boats ===
-  const sailboats=[
+  const allSailboats=[
     {x:3,y:40,s:22,delay:0},{x:90,y:25,s:20,delay:1.5},{x:5,y:85,s:24,delay:0.8},
     {x:88,y:80,s:18,delay:2},{x:45,y:92,s:22,delay:1},{x:92,y:50,s:20,delay:0.5},
   ];
+  const sailboats=IS_MOBILE_MAP?allSailboats.slice(0,3):allSailboats;
   sailboats.forEach(b=>{
     const wrap=addDiv('map-boat','left:'+b.x+'%;top:'+b.y+'%;width:'+b.s+'px;height:'+(b.s*0.7)+'px;animation-delay:'+b.delay+'s');
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
@@ -5743,18 +5748,18 @@ function addMapDecorations(cw,ch){
   })();
 
   // === MOUNTAINS — detailed 3D peaks ===
-  const mountains=[
+  const allMountains=[
     {x:15,y:18,s:55},{x:20,y:14,s:72},{x:25,y:19,s:50},
     {x:58,y:11,s:60},{x:63,y:7,s:78},{x:68,y:13,s:55},
     {x:78,y:4,s:68},{x:82,y:2,s:50},{x:75,y:7,s:45},
     {x:42,y:44,s:52},{x:46,y:41,s:60},{x:50,y:47,s:46},
     {x:35,y:54,s:44},{x:38,y:51,s:54},
-    // Extra mountains for expanded map
     {x:88,y:15,s:58},{x:92,y:10,s:45},{x:8,y:72,s:50},
     {x:12,y:76,s:62},{x:70,y:65,s:48},{x:85,y:60,s:55},
     {x:28,y:80,s:42},{x:52,y:72,s:50},{x:90,y:45,s:40},
     {x:5,y:55,s:45},{x:65,y:78,s:52},{x:45,y:85,s:46},
   ];
+  const mountains=IS_MOBILE_MAP?allMountains.filter((_,i)=>i%2===0):allMountains;
   mountains.forEach(m=>{
     const wrap=addDiv('map-mountain','left:'+m.x+'%;top:'+m.y+'%;width:'+m.s+'px;height:'+(m.s*0.85)+'px');
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
