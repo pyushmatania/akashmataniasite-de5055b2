@@ -3836,86 +3836,95 @@ function sU(e){
 
 
 function doSplash(el,e){
+  // Cooldown guard to prevent DOM explosion from rapid taps
+  const now=performance.now();
+  if(now-_lastSplashTime<SPLASH_COOLDOWN)return;
+  _lastSplashTime=now;
+
   let cx,cy;
   if(e&&e.changedTouches){cx=e.changedTouches[0].clientX;cy=e.changedTouches[0].clientY;}
   else if(e){cx=e.clientX;cy=e.clientY;}
   else{const r=el.getBoundingClientRect();cx=r.left+r.width/2;cy=r.top+r.height/2;}
   const elRect=el.getBoundingClientRect();
   const photoCX=elRect.left+elRect.width/2, photoCY=elRect.top+elRect.height/2;
-  // 5 rings FROM the photo center
-  for(let i=0;i<5;i++){const r=document.createElement('div');r.className='splash-ring';r.style.left=photoCX+'px';r.style.top=photoCY+'px';r.style.animationDelay=(i*.12)+'s';r.style.borderWidth=(3-i*.4)+'px';document.body.appendChild(r);setTimeout(()=>r.remove(),1500);}
-  // 40 drops FROM the photo edges (close to photo!)
-  for(let i=0;i<40;i++){const d=document.createElement('div');d.className='splash-drop';const a=Math.random()*Math.PI*2;
+
+  // Batch body-level elements via DocumentFragment
+  const bodyEls=[];
+
+  // 3 rings (reduced from 5)
+  for(let i=0;i<3;i++){const r=document.createElement('div');r.className='splash-ring';r.style.left=photoCX+'px';r.style.top=photoCY+'px';r.style.animationDelay=(i*.15)+'s';r.style.borderWidth=(3-i*.5)+'px';bodyEls.push(r);safeTimeout(()=>r.remove(),1500);}
+  // 15 drops (reduced from 40)
+  for(let i=0;i<15;i++){const d=document.createElement('div');d.className='splash-drop';const a=Math.random()*Math.PI*2;
     const startX=photoCX+Math.cos(a)*(elRect.width/2*0.6);
     const startY=photoCY+Math.sin(a)*(elRect.height/2*0.6);
     const dist=30+Math.random()*120;
-    d.style.left=startX+'px';d.style.top=startY+'px';
+    d.style.cssText='left:'+startX+'px;top:'+startY+'px;width:'+(3+Math.random()*10)+'px;height:'+(5+Math.random()*14)+'px;animation-duration:'+(.3+Math.random()*.5)+'s;animation-delay:'+(Math.random()*.2)+'s';
     d.style.setProperty('--dx',(Math.cos(a)*dist)+'px');
     d.style.setProperty('--dy',(Math.sin(a)*dist-20)+'px');
-    d.style.width=(3+Math.random()*10)+'px';d.style.height=(5+Math.random()*14)+'px';
-    d.style.animationDuration=(.3+Math.random()*.5)+'s';d.style.animationDelay=(Math.random()*.2)+'s';
-    document.body.appendChild(d);setTimeout(()=>d.remove(),1200);}
-  // Water leaking from bottom of photo
-  for(let i=0;i<6;i++){const drip=document.createElement('div');
-    drip.style.cssText='position:fixed;pointer-events:none;z-index:99997;width:'+(3+Math.random()*5)+'px;height:0;background:linear-gradient(180deg,rgba(40,100,180,0.6),rgba(40,100,180,0.25),transparent);border-radius:0 0 4px 4px;transition:height 1.2s ease-in,opacity 1.5s ease 1s;opacity:1';
-    drip.style.left=(elRect.left+10+Math.random()*(elRect.width-20))+'px';
-    drip.style.top=(elRect.bottom-5)+'px';
-    document.body.appendChild(drip);
-    setTimeout(()=>{drip.style.height=(40+Math.random()*100)+'px'},30);
-    setTimeout(()=>{drip.style.opacity='0'},1500);
-    setTimeout(()=>drip.remove(),3000);}
-  // 3 waves from photo
-  for(let i=0;i<3;i++){const w=document.createElement('div');w.className='splash-wave';w.style.left=photoCX+'px';w.style.top=photoCY+'px';w.style.animationDelay=(i*.2)+'s';document.body.appendChild(w);setTimeout(()=>w.remove(),2000);}
-  // Wet spots NEAR the photo on canvas — darker + more intense
+    bodyEls.push(d);safeTimeout(()=>d.remove(),1200);}
+  // 3 drips from bottom (reduced from 6)
+  for(let i=0;i<3;i++){const drip=document.createElement('div');
+    drip.style.cssText='position:fixed;pointer-events:none;z-index:99997;width:'+(3+Math.random()*5)+'px;height:0;background:linear-gradient(180deg,rgba(40,100,180,0.6),rgba(40,100,180,0.25),transparent);border-radius:0 0 4px 4px;transition:height 1.2s ease-in,opacity 1.5s ease 1s;opacity:1;left:'+(elRect.left+10+Math.random()*(elRect.width-20))+'px;top:'+(elRect.bottom-5)+'px';
+    bodyEls.push(drip);
+    safeTimeout(()=>{drip.style.height=(40+Math.random()*100)+'px'},30);
+    safeTimeout(()=>{drip.style.opacity='0'},1500);
+    safeTimeout(()=>drip.remove(),3000);}
+  // 2 waves (reduced from 3)
+  for(let i=0;i<2;i++){const w=document.createElement('div');w.className='splash-wave';w.style.left=photoCX+'px';w.style.top=photoCY+'px';w.style.animationDelay=(i*.25)+'s';bodyEls.push(w);safeTimeout(()=>w.remove(),2000);}
+
+  // Batch append all body-level elements
+  batchAppend(document.body,bodyEls);
+
+  // Canvas-level elements batched
   const cr=cv.getBoundingClientRect();
-  for(let i=0;i<15;i++){const ws=document.createElement('div');ws.className='wet-spot';const a=Math.random()*Math.PI*2;
+  const canvasEls=[];
+  // 6 wet spots (reduced from 15)
+  for(let i=0;i<6;i++){const ws=document.createElement('div');ws.className='wet-spot';const a=Math.random()*Math.PI*2;
     const dist=elRect.width/2+10+Math.random()*180;
     ws.style.left=(photoCX-cr.left+Math.cos(a)*dist)+'px';
     ws.style.top=(photoCY-cr.top+Math.sin(a)*dist)+'px';
     const sz=35+Math.random()*110;ws.style.width=sz+'px';ws.style.height=sz*.65+'px';
-    ws.style.animationDelay=(Math.random()*.4)+'s';cv.appendChild(ws);setTimeout(()=>ws.remove(),7000);}
-  // Extra dark puddle right under photo
+    ws.style.animationDelay=(Math.random()*.4)+'s';canvasEls.push(ws);safeTimeout(()=>ws.remove(),7000);}
   const puddle=document.createElement('div');puddle.className='wet-spot';
   puddle.style.left=(photoCX-cr.left-elRect.width/2)+'px';
   puddle.style.top=(photoCY-cr.top+elRect.height/2)+'px';
   puddle.style.width=(elRect.width*1.2)+'px';puddle.style.height='40px';
-  puddle.style.borderRadius='50%';cv.appendChild(puddle);setTimeout(()=>puddle.remove(),7000);
-  // Drips from screen top
-  for(let i=0;i<6;i++){const drip=document.createElement('div');
-    drip.style.cssText='position:fixed;pointer-events:none;z-index:99997;width:'+(2+Math.random()*4)+'px;height:0;background:linear-gradient(180deg,rgba(50,120,180,0.4),rgba(50,120,180,0.12),transparent);border-radius:0 0 3px 3px;transition:height 1.5s ease-in,opacity 1s ease 1s;opacity:1';
-    drip.style.left=(Math.random()*window.innerWidth)+'px';drip.style.top='0';
-    document.body.appendChild(drip);
-    setTimeout(()=>{drip.style.height=(60+Math.random()*150)+'px'},50);
-    setTimeout(()=>{drip.style.opacity='0'},1500);setTimeout(()=>drip.remove(),3000);}
-  // Photo itself gets a wet shimmer overlay
-  const shimmer=document.createElement('div');
-  shimmer.style.cssText='position:absolute;inset:0;border-radius:16px;background:linear-gradient(135deg,rgba(100,180,255,0.15),transparent 40%,rgba(100,180,255,0.1) 60%,transparent);pointer-events:none;z-index:10;transition:opacity 2s';
-  el.querySelector('.hero-frame').appendChild(shimmer);
-  setTimeout(()=>{shimmer.style.opacity='0'},500);setTimeout(()=>shimmer.remove(),2500);
-  // SOUND — subtle water drop
-  try{const ac=new(window.AudioContext||window.webkitAudioContext)();
-    // Single clean water drop
-    const o=ac.createOscillator();
-    o.type='sine';
-    o.frequency.setValueAtTime(1200,ac.currentTime);
-    o.frequency.exponentialRampToValueAtTime(300,ac.currentTime+0.15);
-    const g=ac.createGain();
-    g.gain.setValueAtTime(0.25,ac.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.3);
-    o.connect(g);g.connect(ac.destination);
-    o.start();o.stop(ac.currentTime+0.3);
-    // Tiny bubble
-    setTimeout(()=>{
+  puddle.style.borderRadius='50%';canvasEls.push(puddle);safeTimeout(()=>puddle.remove(),7000);
+  batchAppend(cv,canvasEls);
+
+  // 3 drips from top (reduced from 6)
+  const topDrips=[];
+  for(let i=0;i<3;i++){const drip=document.createElement('div');
+    drip.style.cssText='position:fixed;pointer-events:none;z-index:99997;width:'+(2+Math.random()*4)+'px;height:0;background:linear-gradient(180deg,rgba(50,120,180,0.4),rgba(50,120,180,0.12),transparent);border-radius:0 0 3px 3px;transition:height 1.5s ease-in,opacity 1s ease 1s;opacity:1;left:'+(Math.random()*window.innerWidth)+'px;top:0';
+    topDrips.push(drip);
+    safeTimeout(()=>{drip.style.height=(60+Math.random()*150)+'px'},50);
+    safeTimeout(()=>{drip.style.opacity='0'},1500);safeTimeout(()=>drip.remove(),3000);}
+  batchAppend(document.body,topDrips);
+
+  // Photo shimmer
+  const heroFrame=el.querySelector('.hero-frame');
+  if(heroFrame){
+    const shimmer=document.createElement('div');
+    shimmer.style.cssText='position:absolute;inset:0;border-radius:16px;background:linear-gradient(135deg,rgba(100,180,255,0.15),transparent 40%,rgba(100,180,255,0.1) 60%,transparent);pointer-events:none;z-index:10;transition:opacity 2s';
+    heroFrame.appendChild(shimmer);
+    safeTimeout(()=>{shimmer.style.opacity='0'},500);safeTimeout(()=>shimmer.remove(),2500);
+  }
+  // SOUND — reuse shared AudioContext
+  try{
+    const ac=getAC(),t=ac.currentTime;
+    const o=ac.createOscillator();o.type='sine';
+    o.frequency.setValueAtTime(1200,t);o.frequency.exponentialRampToValueAtTime(300,t+0.15);
+    const g=ac.createGain();g.gain.setValueAtTime(0.25,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.3);
+    o.connect(g);g.connect(ac.destination);o.start();o.stop(t+0.3);
+    safeTimeout(()=>{
       const o2=ac.createOscillator();o2.type='sine';
-      o2.frequency.setValueAtTime(800,ac.currentTime);
-      o2.frequency.exponentialRampToValueAtTime(400,ac.currentTime+0.1);
-      const g2=ac.createGain();g2.gain.setValueAtTime(0.1,ac.currentTime);
-      g2.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.15);
+      o2.frequency.setValueAtTime(800,ac.currentTime);o2.frequency.exponentialRampToValueAtTime(400,ac.currentTime+0.1);
+      const g2=ac.createGain();g2.gain.setValueAtTime(0.1,ac.currentTime);g2.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.15);
       o2.connect(g2);g2.connect(ac.destination);o2.start();o2.stop(ac.currentTime+0.15);
     },100);
   }catch(ex){}
   // Blue flash
-  const tn=document.createElement('div');tn.style.cssText='position:fixed;inset:0;background:rgba(50,120,200,.15);pointer-events:none;z-index:99996;transition:opacity 1s';document.body.appendChild(tn);setTimeout(()=>{tn.style.opacity='0'},200);setTimeout(()=>tn.remove(),1300);
+  const tn=document.createElement('div');tn.style.cssText='position:fixed;inset:0;background:rgba(50,120,200,.15);pointer-events:none;z-index:99996;transition:opacity 1s';document.body.appendChild(tn);safeTimeout(()=>{tn.style.opacity='0'},200);safeTimeout(()=>tn.remove(),1300);
 }
 
 
