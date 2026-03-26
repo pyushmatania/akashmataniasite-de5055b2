@@ -7,29 +7,27 @@ Portfolio app for Akash Matania — Product Manager with 8+ years across fintech
 - All new sections should follow the same pattern: in-app overlays/panels, not separate routes
 
 ## Canvas Size
-- 21000×21000 square canvas (tripled from 7000)
+- 14000×14000 square canvas
 - Default view scale: 0.5x
 - sy() is identity function (no Y scaling needed for square canvas)
+- Page loads centered on intro card at (7000, 7000)
 
-## Map Zones (5 zones + hub)
-- **Origin Story** 📸 (0-7200, 0-4500) — Personal & About
-- **The War Room** 🎯 (8400-21000, 0-4500) — Work & Professional
-- **Launch Pad** 🚀 (0-10800, 4800-8400) — Portfolio & Creative
-- **Akash Unplugged** ⭐ (6600-12000, 4200-9000) — Hub
-- **The Playground** 🎮 (0-10200, 9000-21000) — Hobbies & Interests
-- **Meme Alley** 😂 (10800-21000, 9000-21000) — Fun & Memes
+## Map Zones (5 zones + hub at center)
+- **Origin Story** 📸 (0-5800, 0-5600) — Personal & About (top-left)
+- **The War Room** 🎯 (7700-14000, 0-5600) — Work & Professional (top-right)
+- **Launch Pad** 🚀 (0-5600, 6200-9800) — Portfolio & Creative (mid-left)
+- **Akash Unplugged** ⭐ (5200-8800, 5200-8800) — Hub/Intro center
+- **The Playground** 🎮 (0-6300, 10400-14000) — Hobbies & Interests (bottom-left)
+- **Meme Alley** 😂 (7700-14000, 6400-14000) — Fun & Memes (right side)
+
+## Intro Card (Center)
+- "Akash Matania" with Matania in gold gradient highlight
+- Subtitle: Product Manager · Dreamer · Founder
+- Photo, role chips, location, scroll CTA
+- Floating animation, surrounded by decorative stickers
 
 ## Map Filters (5 only, content-type based)
 - All, Photos, Memes, Interactive, Others
-
-## Map Signposts
-- 3D marble pillars, ground shadows, planted-in effect
-- Interactive stickers get a "🎮 Tap me" badge
-
-## Map Zoom
-- Big map zoom steps: [0.15, 0.2, 0.25, 0.35, 0.5, 0.75, 1, 1.25, 1.5, 2]
-- Default zoom: 0.15x (most zoomed out)
-- Big map base scale doubled (mw*16)
 
 ## Design
 - Clean, minimal style with colorful accents

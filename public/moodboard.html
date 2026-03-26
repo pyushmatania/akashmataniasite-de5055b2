@@ -343,6 +343,60 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker-swatches .sw{width:40px;height:48px;border-radius:6px}
 .sticker-swatches .sw-label{font-size:0.5rem;text-align:center;color:var(--text3);margin-top:3px;font-weight:600}
 
+/* ===== HERO INTRO CARD ===== */
+.intro-card{
+  position:absolute;z-index:80;
+  background:linear-gradient(145deg,#fff 0%,#fdfcfa 50%,#f8f5ef 100%);
+  border-radius:28px;padding:48px 44px 40px;
+  width:460px;
+  border:3px solid rgba(201,169,110,0.25);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.12),
+    0 8px 24px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+  text-align:center;
+}
+.intro-card .intro-photo{
+  width:140px;height:140px;border-radius:50%;object-fit:cover;
+  border:5px solid #fff;
+  box-shadow:0 0 0 3px var(--accent),0 8px 30px rgba(0,0,0,0.15);
+  margin:0 auto 20px;display:block;
+}
+.intro-card .intro-name{
+  font-family:var(--font-fun);font-size:2.8rem;font-weight:800;
+  color:var(--text);line-height:1.1;margin-bottom:4px;
+}
+.intro-card .intro-name .hl-name{
+  background:linear-gradient(135deg,#FFD54F,#FFB300);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.intro-card .intro-tagline{
+  font-family:var(--font-hand);font-size:1.15rem;
+  color:var(--text2);margin-bottom:18px;line-height:1.5;
+}
+.intro-card .intro-roles{
+  display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;
+}
+.intro-card .intro-role{
+  background:linear-gradient(135deg,rgba(201,169,110,0.12),rgba(201,169,110,0.06));
+  border:1.5px solid rgba(201,169,110,0.25);border-radius:20px;
+  padding:6px 16px;font-family:var(--font-fun);font-size:0.72rem;
+  font-weight:600;color:var(--text2);letter-spacing:0.04em;
+}
+.intro-card .intro-location{
+  font-size:0.78rem;color:var(--text3);margin-top:8px;
+}
+.intro-card .intro-cta{
+  margin-top:16px;font-family:var(--font-hand);font-size:0.95rem;
+  color:var(--accent);opacity:0.7;
+}
+@keyframes introFloat{
+  0%,100%{transform:translateY(0) rotate(-0.5deg)}
+  50%{transform:translateY(-8px) rotate(0.5deg)}
+}
+.intro-card{animation:introFloat 4s ease-in-out infinite}
+
 /* Interactive badge overlay */
 .interactive-badge{
   position:absolute;top:-10px;right:-10px;z-index:60;
@@ -1568,17 +1622,17 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="canvas" id="canvas">
 
 <!-- ===== ZONE TINTS ===== -->
-<div class="zone-tint zone-tint-origin" style="left:0;top:0;width:4420px;height:2860px"></div>
-<div class="zone-tint zone-tint-warroom" style="left:5200px;top:0;width:7800px;height:2860px"></div>
-<div class="zone-tint zone-tint-launchpad" style="left:0;top:2990px;width:6760px;height:2210px"></div>
-<div class="zone-tint zone-tint-hub" style="left:4160px;top:2600px;width:3250px;height:2990px"></div>
-<div class="zone-tint zone-tint-playground" style="left:0;top:5590px;width:6370px;height:7410px"></div>
-<div class="zone-tint zone-tint-memealley" style="left:6760px;top:5590px;width:6240px;height:7410px"></div>
+<div class="zone-tint zone-tint-origin" style="left:0;top:0;width:6000px;height:5800px"></div>
+<div class="zone-tint zone-tint-warroom" style="left:7500px;top:0;width:6500px;height:5800px"></div>
+<div class="zone-tint zone-tint-launchpad" style="left:0;top:6200px;width:5800px;height:3600px"></div>
+<div class="zone-tint zone-tint-hub" style="left:5200px;top:5200px;width:3600px;height:3600px"></div>
+<div class="zone-tint zone-tint-playground" style="left:0;top:10200px;width:6500px;height:3800px"></div>
+<div class="zone-tint zone-tint-memealley" style="left:7500px;top:6200px;width:6500px;height:7800px"></div>
 <!-- Zone dividers -->
-<div class="zone-divider zone-divider-h" style="left:0;top:2860px;width:14000px"></div>
-<div class="zone-divider zone-divider-h" style="left:0;top:5590px;width:14000px"></div>
-<div class="zone-divider zone-divider-v" style="left:4420px;top:0;width:2px;height:5590px"></div>
-<div class="zone-divider zone-divider-v" style="left:6500px;top:5590px;width:2px;height:7410px"></div>
+<div class="zone-divider zone-divider-h" style="left:0;top:5800px;width:14000px"></div>
+<div class="zone-divider zone-divider-h" style="left:0;top:10200px;width:14000px"></div>
+<div class="zone-divider zone-divider-v" style="left:6000px;top:0;width:2px;height:5800px"></div>
+<div class="zone-divider zone-divider-v" style="left:6500px;top:10200px;width:2px;height:3800px"></div>
 
 <!-- ===== YOUR PHOTOS ===== -->
 
@@ -2081,11 +2135,32 @@ body.map-expanded .scroll-counter{display:none!important}
   </div>
 </div>
 
-<!-- ===== HUB: AKASH UNPLUGGED (center 2800-4200, 1800-3200) ===== -->
-<div class="sticker sticker-highlight" data-anim="tada" style="left:3200px;top:2300px;font-size:3.2rem;transform:rotate(-1deg)">Akash <span class="hl">Unplugged.</span></div>
-<div class="sticker" data-anim="wave" style="left:3230px;top:2390px;font-size:0.75rem;letter-spacing:0.15em;color:var(--text3);font-weight:600">FOUNDER · GROWTH PM · BUILDER · DREAMER</div>
-<div class="sticker sticker-washi" style="left:3000px;top:2100px;transform:rotate(-8deg);background:repeating-linear-gradient(-45deg,rgba(255,183,77,0.2),rgba(255,183,77,0.2) 4px,rgba(255,183,77,0.1) 4px,rgba(255,183,77,0.1) 8px)"></div>
-<div class="sticker sticker-washi" style="left:3600px;top:2600px;transform:rotate(8deg);background:repeating-linear-gradient(45deg,rgba(76,175,80,0.15),rgba(76,175,80,0.15) 5px,rgba(76,175,80,0.08) 5px,rgba(76,175,80,0.08) 10px);width:180px"></div>
+<!-- ===== HUB: INTRO — CENTER OF CANVAS ===== -->
+<div class="intro-card" style="left:6770px;top:6550px">
+  <img class="intro-photo" src="/images/akash-photo.jpeg" alt="Akash Matania" decoding="async" loading="eager">
+  <div class="intro-name">Akash <span class="hl-name">Matania</span></div>
+  <div class="intro-tagline">Product Manager · Dreamer · Founder</div>
+  <div class="intro-roles">
+    <span class="intro-role">🚀 0→1 Builder</span>
+    <span class="intro-role">📈 Growth PM</span>
+    <span class="intro-role">🌐 Web3</span>
+    <span class="intro-role">🧠 AI Native</span>
+  </div>
+  <div class="intro-location">📍 Bengaluru, India · from Jeypore, Odisha</div>
+  <div class="intro-cta">↕ scroll around to explore my world ✨</div>
+</div>
+
+<!-- Surrounding intro stickers -->
+<div class="sticker sticker-emoji huge" data-anim="heartbeat" style="left:6400px;top:6300px">✨</div>
+<div class="sticker sticker-emoji big" data-anim="float" style="left:7500px;top:6400px">🚀</div>
+<div class="sticker sticker-emoji" data-anim="dance" style="left:6500px;top:7400px">🎬</div>
+<div class="sticker sticker-emoji" data-anim="spin" style="left:7400px;top:7300px">💡</div>
+<div class="sticker sticker-badge" data-anim="tada" style="left:6200px;top:7000px;border-color:var(--accent);color:var(--accent)">8+ YEARS SHIPPING 🚢</div>
+<div class="sticker sticker-badge" data-anim="pop" style="left:7400px;top:6900px;border-color:#4CAF50;color:#4CAF50">FOUNDER × 3 🔥</div>
+<div class="sticker sticker-postit" data-anim="wiggle" style="left:6100px;top:6700px;background:var(--yellow);transform:rotate(-5deg)">welcome to my<br>digital playground 🎮</div>
+<div class="sticker sticker-postit" data-anim="float" style="left:7500px;top:7100px;background:var(--mint);transform:rotate(4deg)">scroll any direction<br>to discover more →</div>
+<div class="sticker sticker-washi" style="left:6300px;top:6100px;transform:rotate(-8deg);background:repeating-linear-gradient(-45deg,rgba(255,183,77,0.2),rgba(255,183,77,0.2) 4px,rgba(255,183,77,0.1) 4px,rgba(255,183,77,0.1) 8px)"></div>
+<div class="sticker sticker-washi" style="left:7600px;top:7400px;transform:rotate(8deg);background:repeating-linear-gradient(45deg,rgba(76,175,80,0.15),rgba(76,175,80,0.15) 5px,rgba(76,175,80,0.08) 5px,rgba(76,175,80,0.08) 10px);width:180px"></div>
 
 <!-- ===== ORIGIN STORY 📸 (top-left 400-2400, 400-1600) — Personal & About ===== -->
 <div class="sticker sticker-postit" data-anim="shake" style="left:1600px;top:1200px;transform:rotate(-3deg);background:var(--green)">Jeypore boy, Bengaluru dreams 🌆</div>
@@ -2525,12 +2600,12 @@ function closeWorkPanel(){
 
 // ===== ZONE NAVIGATION FROM BOTTOM NAV =====
 const zoneTargets={
-  hub:{x:5000,y:4500},
-  origin:{x:2700,y:1500},
-  warroom:{x:9500,y:1500},
-  launchpad:{x:3900,y:4300},
-  playground:{x:3500,y:9500},
-  memealley:{x:10500,y:9500}
+  hub:{x:7000,y:7000},
+  origin:{x:3000,y:2800},
+  warroom:{x:10500,y:2800},
+  launchpad:{x:3000,y:7500},
+  playground:{x:3000,y:12000},
+  memealley:{x:10500,y:10000}
 };
 function scrollToZone(e,zone){
   e.preventDefault();e.stopPropagation();
@@ -3429,12 +3504,12 @@ function positionBadgeBandages(){
 
 function placeZoneSignposts(signposts){
   const anchors={
-    origin:{left:1200,top:150},
-    warroom:{left:5700,top:150},
-    launchpad:{left:2300,top:2200},
-    hub:{left:3600,top:2900},
-    playground:{left:1200,top:4200},
-    memealley:{left:6600,top:4200}
+    origin:{left:2000,top:400},
+    warroom:{left:9000,top:400},
+    launchpad:{left:2000,top:6500},
+    hub:{left:6200,top:6000},
+    playground:{left:2000,top:10500},
+    memealley:{left:9500,top:7000}
   };
 
   signposts.forEach(sticker=>{
@@ -3462,11 +3537,11 @@ function autoArrangeMoodboardItems(){
   });
 
   placeZoneSignposts(groups.signpost);
-  layoutGroupInGrid(groups.personal,{x1:260,y1:390,x2:5200,y2:2860});
-  layoutGroupInGrid(groups.work,{x1:5500,y1:390,x2:13500,y2:2860});
-  layoutGroupInGrid(groups.portfolio,{x1:390,y1:3100,x2:7500,y2:5590});
-  layoutGroupInGrid(groups.hobby,{x1:390,y1:5900,x2:7000,y2:13500});
-  layoutGroupInGrid(groups.fun,{x1:7200,y1:5900,x2:13500,y2:13500});
+  layoutGroupInGrid(groups.personal,{x1:300,y1:400,x2:5800,y2:5600});
+  layoutGroupInGrid(groups.work,{x1:7700,y1:400,x2:13700,y2:5600});
+  layoutGroupInGrid(groups.portfolio,{x1:300,y1:6200,x2:5600,y2:9800});
+  layoutGroupInGrid(groups.hobby,{x1:300,y1:10400,x2:6300,y2:13700});
+  layoutGroupInGrid(groups.fun,{x1:7700,y1:6400,x2:13700,y2:13700});
   positionBadgeBandages();
   normalizeAllStickerBounds();
 }
@@ -3501,7 +3576,7 @@ document.querySelectorAll('.sticker-emoji').forEach((s,i)=>{
   const cur=s.style.transform||'';
   if(!cur.includes('rotate'))s.style.transform=cur+' rotate('+tilt.toFixed(1)+'deg)';
 });
-const akashCX=(4550)*SCALE, akashCY=sy(3250)*SCALE;
+const akashCX=(7000)*SCALE, akashCY=sy(7000)*SCALE;
 const initialClamp=clampViewportPoint(akashCX-vp.clientWidth/2,akashCY-vp.clientHeight/2);
 vp.scrollLeft=initialClamp.left;
 vp.scrollTop=initialClamp.top;
@@ -6452,12 +6527,12 @@ function showNav(tx,ty){
 
 // Zone definitions for name lookup
 const mapZones=[
-  {name:'Origin Story',icon:'📸',x1:200,y1:200,x2:5200,y2:2860},
-  {name:'The War Room',icon:'🎯',x1:5500,y1:200,x2:13800,y2:2860},
-  {name:'Launch Pad',icon:'🚀',x1:200,y1:3100,x2:7500,y2:5590},
-  {name:'Akash Unplugged',icon:'⭐',x1:3500,y1:3000,x2:10000,y2:6000},
-  {name:'The Playground',icon:'🎮',x1:200,y1:5900,x2:7000,y2:13800},
-  {name:'Meme Alley',icon:'😂',x1:7200,y1:5900,x2:13800,y2:13800}
+  {name:'Origin Story',icon:'📸',x1:200,y1:200,x2:5800,y2:5600},
+  {name:'The War Room',icon:'🎯',x1:7700,y1:200,x2:13800,y2:5600},
+  {name:'Launch Pad',icon:'🚀',x1:200,y1:6200,x2:5600,y2:9800},
+  {name:'Akash Unplugged',icon:'⭐',x1:5200,y1:5200,x2:8800,y2:8800},
+  {name:'The Playground',icon:'🎮',x1:200,y1:10400,x2:6300,y2:13800},
+  {name:'Meme Alley',icon:'😂',x1:7700,y1:6400,x2:13800,y2:13800}
 ];
 function getZoneName(px,py){
   for(const z of mapZones){
