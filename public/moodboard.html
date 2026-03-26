@@ -6812,8 +6812,8 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
   if(mmExp&&drawMap._sc){
     const ox=drawMap._ox||0,oy=drawMap._oy||0,sc=drawMap._sc;
     const cT=parseFloat(mapCanvas.style.top)||0;
-    const cx=Math.round((mmInner.scrollLeft+mmInner.clientWidth/2)/sc+ox);
-    const cy=Math.round((mmInner.scrollTop-cT+mmInner.clientHeight/2)/sc+oy);
+    const cx=clampValue(Math.round((mmInner.scrollLeft+mmInner.clientWidth/2)/sc+ox),0,MOODBOARD_WORLD_WIDTH);
+    const cy=clampValue(Math.round((mmInner.scrollTop-cT+mmInner.clientHeight/2)/sc+oy),0,MOODBOARD_WORLD_HEIGHT);
     const coordEl=document.getElementById('mapCoords');
     const barCoords=document.getElementById('barCoords');
     if(coordEl)coordEl.textContent='x: '+cx+' · y: '+cy;
