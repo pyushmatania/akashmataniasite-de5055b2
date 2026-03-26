@@ -6026,7 +6026,7 @@ function addMapDecorations(cw, ch){
     {x:38,y:65,w:16,h:20,c:'#d4956a',r:'#b87848',win:true},
     {x:92,y:58,w:20,h:25,c:'#c89060',r:'#a87848',win:true},
   ];
-  const buildings=IS_MOBILE_MAP?allBuildings.filter((_,i)=>i%2===0):allBuildings;
+  const buildings=IS_MOBILE_MAP?allBuildings.filter((_,i)=>i%3===0):allBuildings.filter((_,i)=>i%2===0);
   buildings.forEach(b=>addIsometricBuilding(b.x,b.y,b.w,b.h,b.c,b.r,b.win));
 
   // === TALL TOWERS (special landmarks) ===
