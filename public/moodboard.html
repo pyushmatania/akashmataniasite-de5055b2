@@ -6048,16 +6048,14 @@ function addMapDecorations(cw, ch){
 
   // === ZONE BOUNDARY DASHED LINES ===
   const zoneBorders=[
-    // Horizontal split: Origin/Work top | Portfolio/Hub/Fun middle
-    {x1:0,y1:40,x2:100,y2:40,color:'rgba(76,175,80,0.4)',color2:'rgba(229,57,53,0.4)'},
-    // Vertical split: left zones | right zones (top half)
-    {x1:42,y1:0,x2:42,y2:40,color:'rgba(76,175,80,0.35)',color2:'rgba(229,57,53,0.35)'},
-    // Horizontal: Portfolio/Hobby split
-    {x1:0,y1:56,x2:42,y2:56,color:'rgba(66,165,245,0.35)',color2:'rgba(255,152,0,0.35)'},
-    // Vertical: Hub/Fun split (bottom half)
-    {x1:42,y1:40,x2:42,y2:100,color:'rgba(255,152,0,0.3)',color2:'rgba(171,71,188,0.3)'},
-    // Horizontal: Hobby bottom 
-    {x1:0,y1:75,x2:42,y2:75,color:'rgba(255,152,0,0.3)',color2:'rgba(255,152,0,0.25)'},
+    // Horizontal split at y=40% (world y~5600) — Origin/Work top vs Portfolio/Hub/Fun below
+    {x1:0,y1:40,x2:100,y2:40,color:'rgba(76,175,80,0.4)'},
+    // Vertical split at x=44% (world x~6200) — left zones vs right zones (top half)
+    {x1:44,y1:0,x2:44,y2:40,color:'rgba(76,175,80,0.35)'},
+    // Horizontal split at y=70% (world y~9800) — Portfolio vs Hobby
+    {x1:0,y1:70,x2:45,y2:70,color:'rgba(66,165,245,0.35)'},
+    // Vertical split at x=45% (bottom half) — Hobby/Portfolio vs Fun
+    {x1:45,y1:40,x2:45,y2:100,color:'rgba(255,152,0,0.3)'},
   ];
   zoneBorders.forEach(b=>{
     const line=document.createElement('div');
