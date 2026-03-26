@@ -2096,7 +2096,7 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <!-- ===== HUB: INTRO — CENTER OF CANVAS ===== -->
 <!-- ===== HUB: INTRO — CENTER OF CANVAS ===== -->
-<div class="intro-card" style="left:6770px;top:6550px">
+<div class="sticker intro-card" data-type="photo" data-zone="hub" style="left:6770px;top:6550px">
   <div class="intro-photo-wrap">
     <img class="intro-photo" src="/images/akash-photo.jpeg" alt="Akash Matania" decoding="async" loading="eager">
     <div class="photo-caption">yup, this is me 😎</div>
@@ -2381,6 +2381,7 @@ body.map-expanded .scroll-counter{display:none!important}
         <button class="mc" onclick="event.stopPropagation();filt('photo',this)"><div class="legend-dot" style="background:#64B5F6"></div>📸 Photos</button>
         <button class="mc" onclick="event.stopPropagation();filt('meme',this)"><div class="legend-dot" style="background:#CE93D8"></div>😂 Memes</button>
         <button class="mc" onclick="event.stopPropagation();filt('interactive',this)"><div class="legend-dot" style="background:#FF7043"></div>🎮 Interactive</button>
+        <button class="mc" onclick="event.stopPropagation();filt('badge',this)"><div class="legend-dot" style="background:#FFB300"></div>🏅 Badges</button>
         <button class="mc" onclick="event.stopPropagation();filt('other',this)"><div class="legend-dot" style="background:#90A4AE"></div>📦 Others</button>
       </div>
       <div class="bar-info">
@@ -5302,26 +5303,35 @@ function scanStickers(){
     const top=parseInt(s.style.top)||0;
     const w=s.offsetWidth||r.width||60;
     const h=s.offsetHeight||r.height||40;
-    // Determine category
-    let cat='other';
-    if(s.classList.contains('sticker-hero-photo')||s.classList.contains('sticker-photo-polaroid')||s.classList.contains('sticker-photo-tilt')||s.classList.contains('sticker-photo-circle'))cat='photo';
-    else if(s.classList.contains('sticker-counter')||s.classList.contains('sticker-mood')||s.classList.contains('sticker-scratch')||s.classList.contains('sticker-progress')||s.classList.contains('sticker-fortune')||s.getAttribute('onclick'))cat='interactive';
-    else if(s.classList.contains('sticker-meme'))cat='meme';
-    else if(s.classList.contains('sticker-emoji'))cat='other';
-    else if(s.classList.contains('sticker-badge'))cat='other';
-    else if(s.classList.contains('sticker-text'))cat='other';
-    else if(s.classList.contains('sticker-postit'))cat='other';
-    else if(s.classList.contains('sticker-stamp'))cat='other';
-    else if(s.classList.contains('sticker-swatches'))cat='other';
-    else if(s.classList.contains('sticker-project'))cat='other';
-    else if(s.classList.contains('zone-signpost'))cat='other';
+    // Determine category — use data-type if set, else auto-detect from class
+    let cat=s.dataset.type||'';
+    if(!cat){
+      if(s.classList.contains('intro-card')||s.classList.contains('sticker-hero-photo')||s.classList.contains('sticker-photo-polaroid')||s.classList.contains('sticker-photo-tilt')||s.classList.contains('sticker-photo-circle'))cat='photo';
+      else if(s.classList.contains('sticker-counter')||s.classList.contains('sticker-mood')||s.classList.contains('sticker-scratch')||s.classList.contains('sticker-progress')||s.classList.contains('sticker-fortune')||s.getAttribute('onclick'))cat='interactive';
+      else if(s.classList.contains('sticker-meme'))cat='meme';
+      else if(s.classList.contains('sticker-badge'))cat='badge';
+      else if(s.classList.contains('sticker-stamp'))cat='badge';
+      else if(s.classList.contains('sticker-postit'))cat='postit';
+      else if(s.classList.contains('sticker-emoji'))cat='emoji';
+      else if(s.classList.contains('sticker-text'))cat='text';
+      else if(s.classList.contains('sticker-washi'))cat='other';
+      else if(s.classList.contains('sticker-swatches'))cat='other';
+      else if(s.classList.contains('sticker-project'))cat='interactive';
+      else if(s.classList.contains('sticker-illustrated'))cat='other';
+      else if(s.classList.contains('zone-signpost'))cat='other';
+      else cat='other';
+    }
+    // Write back for consistency
+    s.dataset.type=cat;
     // Determine visual properties
     let bg='rgba(200,200,200,0.5)';
     let emoji='';
     let border='';
     let radius='3px';
     const cs=getComputedStyle(s);
-    if(s.classList.contains('sticker-emoji')){
+    if(s.classList.contains('intro-card')){
+      bg='linear-gradient(145deg,#fff,#f8f5ef)';radius='24px';border='2px solid rgba(201,169,110,0.2)';
+    } else if(s.classList.contains('sticker-emoji')){
       bg='transparent';
       emoji=s.textContent.trim().substring(0,2);
       radius='0';
@@ -5377,105 +5387,6 @@ function scanStickers(){
       bg=cs.backgroundColor||'rgba(200,200,200,0.5)';
     }
     stickerData.push({left,top,w,h,bg,emoji,cat,ref:s,border,radius});
-  });
-}
-
-function setMapZoomLabel(){
-  const zl=document.getElementById('mapZoomLevel');
-  if(zl)zl.textContent=mapZoomScale+'×';
-}
-
-function toggleMap(){
-  if(mapTransitioning)return;
-  mapTransitioning=true;
-
-  if(!mmExp){
-    mmExp=true;
-    mapZoomScale=0.15;
-    setMapZoomLabel();
-    // Force decoration rebuild on every open
-    _decsCW=-1;_decsCH=-1;
-
-    mc.classList.remove('map-closing');
-    mc.classList.add('expanded','map-opening');
-    document.body.classList.add('map-expanded');
-
-    if(mapPlayer.parentElement!==mapCanvas){
-      mapCanvas.appendChild(mapPlayer);
-    }
-
-    ensureMapData(false);
-    drawMap();
-    recenter();
-    updMap();
-
-    setTimeout(()=>{
-      mc.classList.remove('map-opening');
-      mapTransitioning=false;
-    },680);
-    return;
-  }
-
-  mmExp=false;
-  document.body.classList.remove('map-expanded');
-  mc.classList.add('map-closing');
-  clearActiveDestinationMarker();
-
-  if(mapPlayer.parentElement!==mm){
-    mm.appendChild(mapPlayer);
-  }
-
-  setTimeout(()=>{
-    mc.classList.remove('map-closing','expanded','map-opening');
-    mapTransitioning=false;
-    // Delay drawMap slightly so viewport scroll position is settled
-    requestAnimationFrame(()=>{drawMap();updMap();});
-  },500);
-}
-
-function addMapDecorations(cw,ch){
-  // Wrap all decoration elements in a single layer for cheap removal
-  const _decLayer=document.createElement('div');
-  _decLayer.className='map-dec-layer';
-  _decLayer.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:1;';
-  mapCanvas.appendChild(_decLayer);
-  function svgEl(tag,attrs){
-    const el=document.createElementNS('http://www.w3.org/2000/svg',tag);
-    Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
-    return el;
-  }
-  function addDiv(cls,css){
-    const el=document.createElement('div');el.className=cls;el.style.cssText=css;
-    _decLayer.appendChild(el);return el;
-  }
-
-  const IS_MOBILE_MAP = IS_LOW_POWER_DEVICE;
-
-  // === OCEAN WAVES ===
-  const waveCount=IS_MOBILE_MAP?15:50;
-  for(let i=0;i<waveCount;i++){
-    const x=Math.random()*100,y=Math.random()*100;
-    const w=6+Math.random()*18;
-    addDiv('map-wave','left:'+x+'%;top:'+y+'%;width:'+w+'px;animation-delay:'+(Math.random()*4)+'s;animation-duration:'+(2+Math.random()*2.5)+'s;opacity:'+(0.15+Math.random()*0.2));
-  }
-
-  // === WATER RIPPLES ===
-  const rippleCount=IS_MOBILE_MAP?5:12;
-  for(let i=0;i<rippleCount;i++){
-    const x=Math.random()*100,y=Math.random()*100;
-    addDiv('map-ripple','left:'+x+'%;top:'+y+'%;animation-delay:'+(Math.random()*3)+'s');
-  }
-
-  // === MAIN LAND MASSES (bigger to cover all items) ===
-  const lands=[
-    {x:1,y:1,w:98,h:96,bg:'linear-gradient(160deg,#7dc462 0%,#5db844 25%,#4da638 50%,#6bc452 75%,#8dd470 100%)',r:'38% 52% 42% 48% / 42% 48% 52% 45%'},
-    {x:0,y:0,w:20,h:15,bg:'linear-gradient(135deg,#9dd882 0%,#6bc452 100%)',r:'0 0 55% 0 / 0 0 50% 0'},
-    {x:82,y:0,w:18,h:20,bg:'linear-gradient(135deg,#9dd882 0%,#6bc452 100%)',r:'0 0 0 55% / 0 0 0 50%'},
-    {x:0,y:80,w:18,h:20,bg:'linear-gradient(145deg,#e8c86a 0%,#d4a843 50%,#c89e3d 100%)',r:'0 55% 0 0 / 0 50% 0 0'},
-    {x:78,y:82,w:22,h:18,bg:'linear-gradient(155deg,#deb85a 0%,#c8a342 100%)',r:'55% 0 0 0 / 50% 0 0 0'},
-  ];
-  lands.forEach(l=>{
-    addDiv('map-land','left:'+l.x+'%;top:'+l.y+'%;width:'+l.w+'%;height:'+l.h+'%;background:'+l.bg+';border-radius:'+l.r+';box-shadow:0 6px 30px rgba(0,0,0,0.18),inset 0 -10px 40px rgba(0,0,0,0.1),inset 0 6px 20px rgba(255,255,255,0.15);border:2px solid rgba(0,0,0,0.04)');
   });
 
   // === BEACHES ===
@@ -6475,7 +6386,7 @@ function navigateToFilteredItem(cat,idx){
 }
 
 // Filter with cycle-through navigation
-const mainCats=['photo','meme','interactive'];
+const mainCats=['photo','meme','interactive','badge'];
 function matchesFilter(cat,filt){
   if(filt==='all')return true;
   if(filt==='other')return !mainCats.includes(cat);
