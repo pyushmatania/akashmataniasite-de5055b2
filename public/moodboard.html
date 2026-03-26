@@ -6584,18 +6584,18 @@ function showNav(tx,ty){
 
 // Zone definitions for name lookup
 const mapZones=[
-  {name:'Origin Story',icon:'📸',x1:200,y1:200,x2:5800,y2:5600},
-  {name:'The War Room',icon:'🎯',x1:7700,y1:200,x2:13800,y2:5600},
-  {name:'Launch Pad',icon:'🚀',x1:200,y1:6200,x2:5600,y2:9800},
-  {name:'Akash Unplugged',icon:'⭐',x1:5200,y1:5200,x2:8800,y2:8800},
-  {name:'The Playground',icon:'🎮',x1:200,y1:10400,x2:6300,y2:13800},
-  {name:'Meme Alley',icon:'😂',x1:7700,y1:6400,x2:13800,y2:13800}
+  {name:'Origin',icon:'📸',x1:200,y1:200,x2:5800,y2:5600},
+  {name:'Work',icon:'🎯',x1:7700,y1:200,x2:13800,y2:5600},
+  {name:'Portfolio',icon:'🚀',x1:200,y1:6200,x2:5600,y2:9800},
+  {name:'Hub',icon:'⭐',x1:5200,y1:5200,x2:8800,y2:8800},
+  {name:'Hobby',icon:'🎮',x1:200,y1:10400,x2:6300,y2:13800},
+  {name:'Fun',icon:'😂',x1:7700,y1:6400,x2:13800,y2:13800}
 ];
 function getZoneName(px,py){
   for(const z of mapZones){
     if(px>=z.x1&&px<=z.x2&&py>=z.y1&&py<=z.y2)return z.icon+' '+z.name;
   }
-  return '🗺️ Akash Unplugged';
+  return '⭐ Hub';
 }
 
 function clampSmallMapPan(rawPx,rawPy,mw,mh,cw,ch){
