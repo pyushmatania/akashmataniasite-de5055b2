@@ -5774,6 +5774,11 @@ function addMapDecorations(cw,ch){
     {x:35,y:38,w:8,h:5,r:'45% 55% 50% 50%'},
     {x:72,y:58,w:5,h:7,r:'50% 45% 55% 50%'},
     {x:18,y:48,w:4,h:4,r:'50%'},
+    // Extra water for expanded area
+    {x:82,y:72,w:6,h:4,r:'45% 55% 50% 45%'},
+    {x:10,y:82,w:5,h:5,r:'50%'},
+    {x:55,y:78,w:7,h:4,r:'48% 52% 50% 50%'},
+    {x:25,y:68,w:4,h:5,r:'50% 45% 55% 50%'},
   ];
   waters.forEach(w=>{
     addDiv('map-water','left:'+w.x+'%;top:'+w.y+'%;width:'+w.w+'%;height:'+w.h+'%;border-radius:'+w.r+';background:linear-gradient(135deg,rgba(58,140,199,0.85),rgba(100,181,246,0.8));box-shadow:inset 0 0 12px rgba(30,100,170,0.25),0 0 10px rgba(58,140,199,0.2);z-index:2');
