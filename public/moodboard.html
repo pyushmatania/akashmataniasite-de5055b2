@@ -3585,8 +3585,10 @@ function centerOnIntroCard(){
   const akashCX=7000*SCALE, akashCY=sy(7000)*SCALE;
   const targetLeft=Math.max(0,akashCX-vpW/2);
   const targetTop=Math.max(0,akashCY-vpH/2);
+  console.log('CENTER DEBUG: vpW='+vpW+' vpH='+vpH+' akashCX='+akashCX+' akashCY='+akashCY+' targetL='+targetLeft+' targetT='+targetTop+' scrollW='+vp.scrollWidth+' scrollH='+vp.scrollHeight+' maxScroll='+(vp.scrollWidth-vpW));
   vp.scrollLeft=targetLeft;
   vp.scrollTop=targetTop;
+  console.log('CENTER AFTER: scrollLeft='+vp.scrollLeft+' scrollTop='+vp.scrollTop);
 }
 // Center immediately
 centerOnIntroCard();
