@@ -86,7 +86,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1))}
 .sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
 .sticker:active{cursor:grabbing}
-.sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important}
+.sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important;will-change:transform}
+/* Pause all animations inside off-screen stickers — applied by IntersectionObserver */
+.sticker.paused-offscreen,.sticker.paused-offscreen *{animation-play-state:paused!important}
 
 /* ===== ZONE VISUAL TINTS ===== */
 .zone-tint{position:absolute;pointer-events:none;z-index:1;border-radius:40px;opacity:0.06;transition:opacity 0.3s}
@@ -4246,6 +4248,7 @@ function triggerAnim(el, e){
   const a=el.dataset.anim;
   allAnims.forEach(c=>el.classList.remove('anim-'+c));
   void el.offsetWidth; // reflow to restart animation
+  el.style.willChange='transform'; // promote to GPU layer during animation
   el.classList.add('anim-'+a);
   
   // Get click position for confetti
@@ -4260,7 +4263,7 @@ function triggerAnim(el, e){
   el.style.outline='3px solid rgba(201,169,110,0.4)';
   setTimeout(()=>{el.style.outline='none'},300);
   
-  setTimeout(()=>el.classList.remove('anim-'+a),1200);
+  setTimeout(()=>{el.classList.remove('anim-'+a);el.style.willChange='';},1200); // release GPU layer after animation
 }
 
 // CONFETTI BURST — batched & cooldown-protected
@@ -6787,44 +6790,6 @@ function drawMap(){
       zoneFrag.appendChild(sign);
     });
     mapCanvas.appendChild(zoneFrag);
-
-    // === MINI NEON DECOR on small minimap (simplified tiny dots/lines) ===
-    const miniNeonAll=[
-      {x:50,y:18,type:'dot',color:'#FFD700'},
-      {x:56,y:14,type:'dot',color:'#E53935'},
-      {x:35,y:41,type:'dot',color:'#42A5F5'},
-      {x:12,y:42,type:'dot',color:'#42A5F5'},
-      {x:90,y:45,type:'dot',color:'#FF9800'},
-      {x:66,y:41,type:'dot',color:'#E53935'},
-      {x:28,y:74,type:'line',color:'#FF9800',w:6,h:0.6},
-      {x:38,y:70,type:'dot',color:'#42A5F5'},
-      {x:61,y:60,type:'dot',color:'#FFD700'},
-      {x:43,y:63,type:'ring',color:'#4CAF50'},
-      {x:59,y:69,type:'ring',color:'#AB47BC'},
-      {x:83,y:83,type:'dot',color:'#AB47BC'},
-      {x:73,y:90,type:'line',color:'#AB47BC',w:5,h:0.5},
-      {x:9,y:88,type:'dot',color:'#FF9800'},
-      {x:49,y:29,type:'line',color:'#4CAF50',w:5,h:0.5},
-      {x:16,y:53,type:'line',color:'#42A5F5',w:0.5,h:4},
-      {x:86,y:58,type:'line',color:'#E53935',w:0.5,h:5},
-    ];
-    // On mobile reduce animated neon elements to spare GPU — every other one
-    const miniNeon=IS_MOBILE_MAP?miniNeonAll.filter((_,i)=>i%2===0):miniNeonAll;
-    const cW=canvasW,cH=canvasH;
-    miniNeon.forEach((n,idx)=>{
-      const el=document.createElement('div');
-      const px=n.x/100*cW, py=n.y/100*cH;
-      const delay=(idx*0.3%2.5).toFixed(1);
-      if(n.type==='dot'){
-        el.style.cssText='position:absolute;left:'+px+'px;top:'+py+'px;width:3px;height:3px;border-radius:50%;background:'+n.color+';box-shadow:0 0 3px '+n.color+',0 0 6px '+n.color+';pointer-events:none;z-index:5;animation:miniNeonPulse 2s ease-in-out '+delay+'s infinite';
-      } else if(n.type==='ring'){
-        el.style.cssText='position:absolute;left:'+px+'px;top:'+py+'px;width:4px;height:4px;border-radius:50%;border:0.8px solid '+n.color+';box-shadow:0 0 3px '+n.color+',inset 0 0 2px '+n.color+';pointer-events:none;z-index:5;animation:miniNeonPulse 2.4s ease-in-out '+delay+'s infinite';
-      } else {
-        const w=n.w/100*cW, h=n.h/100*cH;
-        el.style.cssText='position:absolute;left:'+px+'px;top:'+py+'px;width:'+Math.max(2,w)+'px;height:'+Math.max(1,h)+'px;border-radius:2px;background:'+n.color+';box-shadow:0 0 3px '+n.color+';pointer-events:none;z-index:5;animation:miniNeonPulse 2.8s ease-in-out '+delay+'s infinite';
-      }
-      mapCanvas.appendChild(el);
-    });
   }
   updMap();
 }
@@ -7794,6 +7759,21 @@ function ensureIntroCluster(){
     cv.appendChild(el);
   });
 }
+
+// ===== INTERSECTION OBSERVER: pause animations on off-screen stickers =====
+// Runs once after DOM is ready. Observes all stickers against the scroll viewport.
+// Off-screen stickers get class 'paused-offscreen' → CSS kills all their animations.
+// rootMargin:400px keeps a 400px lookahead so entering stickers resume before being seen.
+(function(){
+  if(!window.IntersectionObserver)return;
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>e.target.classList.toggle('paused-offscreen',!e.isIntersecting));
+  },{root:vp,rootMargin:'400px',threshold:0});
+  // Observe after a short delay to let DOM settle
+  setTimeout(()=>{
+    document.querySelectorAll('#canvas > .sticker').forEach(s=>obs.observe(s));
+  },500);
+})();
 
 setTimeout(()=>{
   ensureIntroCluster();
