@@ -9,25 +9,25 @@ Portfolio app for Akash Matania — Product Manager with 8+ years across fintech
 - About section is an in-app slide-up panel (not a separate page)
 - All new sections should follow the same pattern: in-app overlays/panels, not separate routes
 
+## Canvas Size
+- 7000×7000 square canvas
+- Default view scale: 0.5x
+- sy() is identity function (no Y scaling needed for square canvas)
+
 ## Map Zones (5 zones + hub)
-- **Origin Story** 📸 (top-left 0-2800, 0-1800) — Personal & About: photos, bio, education
-- **The War Room** 🎯 (top-right 4000-7000, 0-1800) — Work & Professional: skills, companies, stamps
-- **Launch Pad** 🚀 (center-left 0-2800, 1800-3500) — Portfolio & Creative: projects, illustrations
-- **Akash Unplugged** ⭐ (center 2800-4200, 1800-3200) — Hub: name, bitmoji
-- **The Playground** 🎮 (bottom-left 0-5000, 3500-7000) — Hobbies & Interests: music, travel, recharge
-- **Meme Alley** 😂 (bottom-right 5000-10000, 3500-7000) — Fun & Memes: memes, contra, fun interactive
+- **Origin Story** 📸 (0-2400, 0-1500) — Personal & About
+- **The War Room** 🎯 (2800-7000, 0-1500) — Work & Professional
+- **Launch Pad** 🚀 (0-3600, 1600-2800) — Portfolio & Creative
+- **Akash Unplugged** ⭐ (2200-4000, 1400-3000) — Hub
+- **The Playground** 🎮 (0-3400, 3000-7000) — Hobbies & Interests
+- **Meme Alley** 😂 (3600-7000, 3000-7000) — Fun & Memes
 
 ## Map Filters (5 only, content-type based)
 - All, Photos, Memes, Interactive, Others
-- Uses `matchesFilter()` — mainCats=['photo','meme','interactive'], everything else is 'other'
-- Interactive category includes onclick-based stickers (games, generators)
 
 ## Map Signposts
-- Medium-sized with poles, NO descriptions below them
-- Interactive stickers get a "🎮 Tap me" badge (top-right corner)
-- Badge & emoji stickers are slightly tilted
-- Signposts have immersive 3D marble pillars, ground shadows, planted-in effect
-- Present on both moodboard canvas AND big map
+- 3D marble pillars, ground shadows, planted-in effect
+- Interactive stickers get a "🎮 Tap me" badge
 
 ## Map Zoom
 - Big map zoom steps: [0.25, 0.35, 0.5, 0.75, 1, 1.25, 1.5, 2]
@@ -36,18 +36,8 @@ Portfolio app for Akash Matania — Product Manager with 8+ years across fintech
 ## Design
 - Clean, minimal style with colorful accents
 - Skill tags use green (#3cd070), yellow (#f5c842), red (#e85050)
-- Photo frame: rainbow gradient border with shadow
-- Staggered fade-in animations on panels
-- Bottom nav has press-scale (0.88) on touch
-- Small minimap: blue theme with grid lines
-- Default map scale: 0.35x (moodboard viewport)
 
-## Content Source
-- Resume: Akash_Matania_Product_Manager.pdf
-- Photo: public/images/akash-photo.jpeg
-- Skills: Product Strategy, User Research, Web3 & Fintech, Growth & Analytics, Technical PRDs, AI-Assisted Development
-
-## Item Count (245 total stickers)
+## Item Count (~251 total stickers)
 - 74 memes, 42 badges, 34 postits, 42 emojis, 15 projects, 13 stamps
 - 2 hero photos, 5 counters, 2 fortunes, 1 mood, 2 scratches, 1 progress
 - 3 texts, 1 highlight, 3 illustrated, 4 washi, 1 swatches, 6 zone signposts
@@ -55,6 +45,5 @@ Portfolio app for Akash Matania — Product Manager with 8+ years across fintech
 ## Key Info
 - Email: pyushmatania@gmail.com
 - Location: Bengaluru, India
-- LinkedIn, GitHub, Portfolio links
 - B.Tech CS from OUTR (CET) Bhubaneswar
 - Companies: EnterCircles Labs (Founder), Freelance Web3, Recess EdTech (Founder), Freelance SaaS
