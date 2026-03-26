@@ -3302,6 +3302,66 @@ const MOODBOARD_VIEW_HEIGHT=MOODBOARD_WORLD_HEIGHT*MOODBOARD_VIEW_SCALE;
 const sy=v=>v;
 const IS_LOW_POWER_DEVICE=(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent||''))||((typeof navigator.deviceMemory==='number')&&navigator.deviceMemory<=4);
 
+// ===== PERFORMANCE UTILITIES =====
+// Shared timer registry for cancellation on cleanup
+const _activeTimers=new Set();
+function safeTimeout(fn,ms){
+  const id=setTimeout(()=>{_activeTimers.delete(id);fn()},ms);
+  _activeTimers.add(id);
+  return id;
+}
+function cancelAllTimers(){_activeTimers.forEach(id=>clearTimeout(id));_activeTimers.clear()}
+
+// RAF-throttled function wrapper
+function rafThrottle(fn){
+  let id=null;
+  return function(...args){
+    if(id!==null)return;
+    id=requestAnimationFrame(()=>{id=null;fn.apply(this,args)});
+  };
+}
+
+// Debounce utility
+function debounce(fn,ms){
+  let t;return function(...a){clearTimeout(t);t=setTimeout(()=>fn.apply(this,a),ms)};
+}
+
+// Batch DOM append via DocumentFragment
+function batchAppend(parent,elements){
+  const frag=document.createDocumentFragment();
+  elements.forEach(el=>frag.appendChild(el));
+  parent.appendChild(frag);
+}
+
+// Confetti/splash cooldown to prevent rapid-fire DOM explosion
+let _lastSplashTime=0;
+const SPLASH_COOLDOWN=800;
+let _lastConfettiTime=0;
+const CONFETTI_COOLDOWN=200;
+
+// Cache for getBoundingClientRect during drag
+let _cachedCanvasRect=null;
+let _cachedCanvasRectTime=0;
+function getCachedCanvasRect(){
+  const now=performance.now();
+  if(!_cachedCanvasRect||now-_cachedCanvasRectTime>100){
+    _cachedCanvasRect=cv.getBoundingClientRect();
+    _cachedCanvasRectTime=now;
+  }
+  return _cachedCanvasRect;
+}
+
+// Walk animation timer tracking for cancellation
+let _walkFootstepTimers=[];
+function clearWalkTimers(){
+  _walkFootstepTimers.forEach(id=>clearTimeout(id));
+  _walkFootstepTimers=[];
+}
+
+// Shared AudioContext — reuse instead of creating new ones (prevents leaks)
+let _sharedAC_early=null;
+function getAC(){if(!_sharedAC_early||_sharedAC_early.state==='closed')_sharedAC_early=new(window.AudioContext||window.webkitAudioContext)();if(_sharedAC_early.state==='suspended')_sharedAC_early.resume();return _sharedAC_early}
+
 cv.style.width=MOODBOARD_WORLD_WIDTH+'px';
 cv.style.height=MOODBOARD_WORLD_HEIGHT+'px';
 document.documentElement.style.setProperty('--world-size',MOODBOARD_WORLD_WIDTH+'px');
@@ -3583,12 +3643,6 @@ centerOnIntroCard();
 setTimeout(centerOnIntroCard,50);
 setTimeout(centerOnIntroCard,200);
 
-// SCROLL COUNTER
-vp.addEventListener('scroll',()=>{
-  const bounds=getViewportPanBounds();
-  const mx=bounds.maxX,my=bounds.maxY;
-  if(mx+my>0)document.getElementById('scrollCounter').textContent=Math.round(((vp.scrollLeft+vp.scrollTop)/(mx+my))*100);
-},{passive:true});
 
 // ===== BOUNDARY TOAST — sticker-style edge message =====
 const _boundaryMsgs={
@@ -3612,23 +3666,19 @@ function showBoundaryToast(edge){
 const bounceFlash=document.getElementById('bounceFlash');
 let bounceTimeout=null;
 let lastBounceEdge='';
-const BOUNCE_STRENGTH=80; // pixels to push back
-const EDGE_THRESHOLD=5; // pixels from edge to trigger
+const BOUNCE_STRENGTH=80;
+const EDGE_THRESHOLD=5;
 
 let _bouncing=false,_bounceEndTimer=null;
 function triggerBounce(edge){
   if(lastBounceEdge===edge && bounceTimeout) return;
   lastBounceEdge=edge;
-  // Visual flash
   bounceFlash.className='bounce-flash '+edge;
   bounceFlash.style.opacity='1';
-  // Sticker-style boundary message
   showBoundaryToast(edge);
   clearTimeout(bounceTimeout);
   bounceTimeout=setTimeout(()=>{bounceFlash.style.opacity='0';lastBounceEdge='';bounceTimeout=null},400);
-  // Haptic-like vibration if available
   try{if(navigator.vibrate)navigator.vibrate(30)}catch(e){}
-  // Bounce back with smooth scroll — guard against re-entry during animation
   if(_bouncing)return;
   _bouncing=true;
   clearTimeout(_bounceEndTimer);
@@ -3642,31 +3692,53 @@ function triggerBounce(edge){
   else if(edge==='bottom') vp.scrollTo({top:Math.max(0,maxY-BOUNCE_STRENGTH),behavior:'smooth'});
 }
 
-// Check edges on scroll
-let edgeCheckRAF=null;
+// ===== UNIFIED SCROLL HANDLER (replaces 3 separate listeners) =====
+let _scrollRAF=null;
+const _scrollCounterEl=document.getElementById('scrollCounter');
 vp.addEventListener('scroll',()=>{
-  if(_bouncing||edgeCheckRAF)return;
-  edgeCheckRAF=requestAnimationFrame(()=>{
-    edgeCheckRAF=null;
-    if(_bouncing)return;
+  if(_scrollRAF)return;
+  _scrollRAF=requestAnimationFrame(()=>{
+    _scrollRAF=null;
+    // 1) Scroll counter update
     const bounds=getViewportPanBounds();
-    const maxX=bounds.maxX;
-    const maxY=bounds.maxY;
-    if(vp.scrollLeft<=EDGE_THRESHOLD && maxX>0) triggerBounce('left');
-    else if(vp.scrollLeft>=maxX-EDGE_THRESHOLD && maxX>0) triggerBounce('right');
-    else if(vp.scrollTop<=EDGE_THRESHOLD && maxY>0) triggerBounce('top');
-    else if(vp.scrollTop>=maxY-EDGE_THRESHOLD && maxY>0) triggerBounce('bottom');
+    const mx=bounds.maxX,my=bounds.maxY;
+    if(mx+my>0&&_scrollCounterEl)_scrollCounterEl.textContent=Math.round(((vp.scrollLeft+vp.scrollTop)/(mx+my))*100);
+    // 2) Edge bounce detection
+    if(!_bouncing){
+      if(vp.scrollLeft<=EDGE_THRESHOLD && mx>0) triggerBounce('left');
+      else if(vp.scrollLeft>=mx-EDGE_THRESHOLD && mx>0) triggerBounce('right');
+      else if(vp.scrollTop<=EDGE_THRESHOLD && my>0) triggerBounce('top');
+      else if(vp.scrollTop>=my-EDGE_THRESHOLD && my>0) triggerBounce('bottom');
+    }
+    // 3) Map update (was separate listener at bottom of file)
+    if(typeof updMap==='function'&&typeof mapTransitioning!=='undefined'&&!mapTransitioning){
+      updMap();
+      if(typeof mmExp!=='undefined'&&!mmExp&&!_bouncing){
+        clearTimeout(window._mapScrollTimer);window._mapScrollTimer=setTimeout(drawMap,320);
+      }
+    }
   });
 },{passive:true});
 
-// DRAG SCROLL (canvas background)
+// DRAG SCROLL (canvas background) — RAF-throttled
 let iD=false,dsx,dsy,slx,sly;
+let _dragPendingX=0,_dragPendingY=0,_dragRAF=null;
 vp.addEventListener('mousedown',e=>{
   if(e.target.closest('.sticker'))return;
   iD=true;dsx=e.clientX;dsy=e.clientY;slx=vp.scrollLeft;sly=vp.scrollTop;vp.style.cursor='grabbing';
 });
-document.addEventListener('mousemove',e=>{if(!iD)return;e.preventDefault();const next=clampViewportPoint(slx-(e.clientX-dsx),sly-(e.clientY-dsy));vp.scrollLeft=next.left;vp.scrollTop=next.top});
-document.addEventListener('mouseup',()=>{iD=false;vp.style.cursor='grab'});
+document.addEventListener('mousemove',e=>{
+  if(!iD)return;e.preventDefault();
+  _dragPendingX=e.clientX;_dragPendingY=e.clientY;
+  if(!_dragRAF){
+    _dragRAF=requestAnimationFrame(()=>{
+      _dragRAF=null;
+      const next=clampViewportPoint(slx-(_dragPendingX-dsx),sly-(_dragPendingY-dsy));
+      vp.scrollLeft=next.left;vp.scrollTop=next.top;
+    });
+  }
+});
+document.addEventListener('mouseup',()=>{iD=false;vp.style.cursor='grab';if(_dragRAF){cancelAnimationFrame(_dragRAF);_dragRAF=null}});
 
 // ===== STICKER DRAG + TAP DETECTION + TWO-FINGER ROTATION =====
 let as=null,sox,soy,hz=100,tapSX=0,tapSY=0,tapTime=0,didMove=false;
@@ -3679,10 +3751,9 @@ function getCurrentRotation(el){
   return m?parseFloat(m[1]):0;
 }
 
-document.querySelectorAll('.sticker').forEach(s=>{
-  s.addEventListener('mousedown',sD);
-  s.addEventListener('touchstart',sD,{passive:false});
-});
+// Event delegation for sticker drag — handles dynamically added stickers too
+cv.addEventListener('mousedown',e=>{const s=e.target.closest('.sticker');if(s)sD.call(s,e)});
+cv.addEventListener('touchstart',e=>{const s=e.target.closest('.sticker');if(s)sD.call(s,e)},{passive:false});
 
 function sD(e){
   e.stopPropagation();
@@ -3702,12 +3773,13 @@ function sD(e){
   if(e.touches)e.preventDefault();
 }
 
-document.addEventListener('mousemove',sM);
-document.addEventListener('touchmove',sM,{passive:false});
+let _stickerMoveRAF=null;
+let _smPendingE=null;
+document.addEventListener('mousemove',e=>{if(!as)return;_smPendingE=e;_schedStickerMove(e)});
+document.addEventListener('touchmove',e=>{if(!as)return;_smPendingE=e;_schedStickerMove(e)},{passive:false});
 
-function sM(e){
-  if(!as)return;
-  // Two-finger rotation
+function _schedStickerMove(e){
+  // Two-finger rotation runs immediately (low frequency)
   if(isRotating&&e.touches&&e.touches.length===2){
     const curAngle=getAngle(e.touches[0],e.touches[1]);
     const delta=curAngle-rotStartAngle;
@@ -3715,18 +3787,24 @@ function sM(e){
     e.preventDefault();return;
   }
   if(isRotating)return;
-  const cx=e.touches?e.touches[0].clientX:e.clientX;
-  const cy=e.touches?e.touches[0].clientY:e.clientY;
-  if(Math.abs(cx-tapSX)>10||Math.abs(cy-tapSY)>10){
-    didMove=true;as.classList.add('dragging');
-    const cr=cv.getBoundingClientRect();
-    const nextLeft=(cx-cr.left-sox)/SCALE;
-    const nextTop=(cy-cr.top-soy)/SCALE;
-    const clamped=clampStickerToMoodboard(as,nextLeft,nextTop);
-    as.style.left=clamped.left+'px';
-    as.style.top=clamped.top+'px';
-    e.preventDefault();
-  }
+  if(e.cancelable)e.preventDefault();
+  if(_stickerMoveRAF)return;
+  _stickerMoveRAF=requestAnimationFrame(()=>{
+    _stickerMoveRAF=null;
+    if(!as||!_smPendingE)return;
+    const ev=_smPendingE;
+    const cx=ev.touches?ev.touches[0].clientX:ev.clientX;
+    const cy=ev.touches?ev.touches[0].clientY:ev.clientY;
+    if(Math.abs(cx-tapSX)>10||Math.abs(cy-tapSY)>10){
+      didMove=true;as.classList.add('dragging');
+      const cr=getCachedCanvasRect();
+      const nextLeft=(cx-cr.left-sox)/SCALE;
+      const nextTop=(cy-cr.top-soy)/SCALE;
+      const clamped=clampStickerToMoodboard(as,nextLeft,nextTop);
+      as.style.left=clamped.left+'px';
+      as.style.top=clamped.top+'px';
+    }
+  });
 }
 
 document.addEventListener('mouseup',sU);
@@ -3734,6 +3812,9 @@ document.addEventListener('touchend',sU);
 
 function sU(e){
   if(!as)return;
+  _cachedCanvasRect=null;
+  if(_stickerMoveRAF){cancelAnimationFrame(_stickerMoveRAF);_stickerMoveRAF=null}
+  _smPendingE=null;
   as.classList.remove('dragging');
   if(didMove){
     const left=parseFloat(as.style.left)||0;
@@ -3746,7 +3827,7 @@ function sU(e){
   if(isRotating){isRotating=false;as=null;return;}
   if(!didMove&&(Date.now()-tapTime)<400){
     if(as.dataset.splash)doSplash(as,e);
-    
+
     if(as.dataset.anim)triggerAnim(as,e);
     if(as.onclick)as.onclick(e);
   }
@@ -3755,86 +3836,95 @@ function sU(e){
 
 
 function doSplash(el,e){
+  // Cooldown guard to prevent DOM explosion from rapid taps
+  const now=performance.now();
+  if(now-_lastSplashTime<SPLASH_COOLDOWN)return;
+  _lastSplashTime=now;
+
   let cx,cy;
   if(e&&e.changedTouches){cx=e.changedTouches[0].clientX;cy=e.changedTouches[0].clientY;}
   else if(e){cx=e.clientX;cy=e.clientY;}
   else{const r=el.getBoundingClientRect();cx=r.left+r.width/2;cy=r.top+r.height/2;}
   const elRect=el.getBoundingClientRect();
   const photoCX=elRect.left+elRect.width/2, photoCY=elRect.top+elRect.height/2;
-  // 5 rings FROM the photo center
-  for(let i=0;i<5;i++){const r=document.createElement('div');r.className='splash-ring';r.style.left=photoCX+'px';r.style.top=photoCY+'px';r.style.animationDelay=(i*.12)+'s';r.style.borderWidth=(3-i*.4)+'px';document.body.appendChild(r);setTimeout(()=>r.remove(),1500);}
-  // 40 drops FROM the photo edges (close to photo!)
-  for(let i=0;i<40;i++){const d=document.createElement('div');d.className='splash-drop';const a=Math.random()*Math.PI*2;
+
+  // Batch body-level elements via DocumentFragment
+  const bodyEls=[];
+
+  // 3 rings (reduced from 5)
+  for(let i=0;i<3;i++){const r=document.createElement('div');r.className='splash-ring';r.style.left=photoCX+'px';r.style.top=photoCY+'px';r.style.animationDelay=(i*.15)+'s';r.style.borderWidth=(3-i*.5)+'px';bodyEls.push(r);safeTimeout(()=>r.remove(),1500);}
+  // 15 drops (reduced from 40)
+  for(let i=0;i<15;i++){const d=document.createElement('div');d.className='splash-drop';const a=Math.random()*Math.PI*2;
     const startX=photoCX+Math.cos(a)*(elRect.width/2*0.6);
     const startY=photoCY+Math.sin(a)*(elRect.height/2*0.6);
     const dist=30+Math.random()*120;
-    d.style.left=startX+'px';d.style.top=startY+'px';
+    d.style.cssText='left:'+startX+'px;top:'+startY+'px;width:'+(3+Math.random()*10)+'px;height:'+(5+Math.random()*14)+'px;animation-duration:'+(.3+Math.random()*.5)+'s;animation-delay:'+(Math.random()*.2)+'s';
     d.style.setProperty('--dx',(Math.cos(a)*dist)+'px');
     d.style.setProperty('--dy',(Math.sin(a)*dist-20)+'px');
-    d.style.width=(3+Math.random()*10)+'px';d.style.height=(5+Math.random()*14)+'px';
-    d.style.animationDuration=(.3+Math.random()*.5)+'s';d.style.animationDelay=(Math.random()*.2)+'s';
-    document.body.appendChild(d);setTimeout(()=>d.remove(),1200);}
-  // Water leaking from bottom of photo
-  for(let i=0;i<6;i++){const drip=document.createElement('div');
-    drip.style.cssText='position:fixed;pointer-events:none;z-index:99997;width:'+(3+Math.random()*5)+'px;height:0;background:linear-gradient(180deg,rgba(40,100,180,0.6),rgba(40,100,180,0.25),transparent);border-radius:0 0 4px 4px;transition:height 1.2s ease-in,opacity 1.5s ease 1s;opacity:1';
-    drip.style.left=(elRect.left+10+Math.random()*(elRect.width-20))+'px';
-    drip.style.top=(elRect.bottom-5)+'px';
-    document.body.appendChild(drip);
-    setTimeout(()=>{drip.style.height=(40+Math.random()*100)+'px'},30);
-    setTimeout(()=>{drip.style.opacity='0'},1500);
-    setTimeout(()=>drip.remove(),3000);}
-  // 3 waves from photo
-  for(let i=0;i<3;i++){const w=document.createElement('div');w.className='splash-wave';w.style.left=photoCX+'px';w.style.top=photoCY+'px';w.style.animationDelay=(i*.2)+'s';document.body.appendChild(w);setTimeout(()=>w.remove(),2000);}
-  // Wet spots NEAR the photo on canvas — darker + more intense
+    bodyEls.push(d);safeTimeout(()=>d.remove(),1200);}
+  // 3 drips from bottom (reduced from 6)
+  for(let i=0;i<3;i++){const drip=document.createElement('div');
+    drip.style.cssText='position:fixed;pointer-events:none;z-index:99997;width:'+(3+Math.random()*5)+'px;height:0;background:linear-gradient(180deg,rgba(40,100,180,0.6),rgba(40,100,180,0.25),transparent);border-radius:0 0 4px 4px;transition:height 1.2s ease-in,opacity 1.5s ease 1s;opacity:1;left:'+(elRect.left+10+Math.random()*(elRect.width-20))+'px;top:'+(elRect.bottom-5)+'px';
+    bodyEls.push(drip);
+    safeTimeout(()=>{drip.style.height=(40+Math.random()*100)+'px'},30);
+    safeTimeout(()=>{drip.style.opacity='0'},1500);
+    safeTimeout(()=>drip.remove(),3000);}
+  // 2 waves (reduced from 3)
+  for(let i=0;i<2;i++){const w=document.createElement('div');w.className='splash-wave';w.style.left=photoCX+'px';w.style.top=photoCY+'px';w.style.animationDelay=(i*.25)+'s';bodyEls.push(w);safeTimeout(()=>w.remove(),2000);}
+
+  // Batch append all body-level elements
+  batchAppend(document.body,bodyEls);
+
+  // Canvas-level elements batched
   const cr=cv.getBoundingClientRect();
-  for(let i=0;i<15;i++){const ws=document.createElement('div');ws.className='wet-spot';const a=Math.random()*Math.PI*2;
+  const canvasEls=[];
+  // 6 wet spots (reduced from 15)
+  for(let i=0;i<6;i++){const ws=document.createElement('div');ws.className='wet-spot';const a=Math.random()*Math.PI*2;
     const dist=elRect.width/2+10+Math.random()*180;
     ws.style.left=(photoCX-cr.left+Math.cos(a)*dist)+'px';
     ws.style.top=(photoCY-cr.top+Math.sin(a)*dist)+'px';
     const sz=35+Math.random()*110;ws.style.width=sz+'px';ws.style.height=sz*.65+'px';
-    ws.style.animationDelay=(Math.random()*.4)+'s';cv.appendChild(ws);setTimeout(()=>ws.remove(),7000);}
-  // Extra dark puddle right under photo
+    ws.style.animationDelay=(Math.random()*.4)+'s';canvasEls.push(ws);safeTimeout(()=>ws.remove(),7000);}
   const puddle=document.createElement('div');puddle.className='wet-spot';
   puddle.style.left=(photoCX-cr.left-elRect.width/2)+'px';
   puddle.style.top=(photoCY-cr.top+elRect.height/2)+'px';
   puddle.style.width=(elRect.width*1.2)+'px';puddle.style.height='40px';
-  puddle.style.borderRadius='50%';cv.appendChild(puddle);setTimeout(()=>puddle.remove(),7000);
-  // Drips from screen top
-  for(let i=0;i<6;i++){const drip=document.createElement('div');
-    drip.style.cssText='position:fixed;pointer-events:none;z-index:99997;width:'+(2+Math.random()*4)+'px;height:0;background:linear-gradient(180deg,rgba(50,120,180,0.4),rgba(50,120,180,0.12),transparent);border-radius:0 0 3px 3px;transition:height 1.5s ease-in,opacity 1s ease 1s;opacity:1';
-    drip.style.left=(Math.random()*window.innerWidth)+'px';drip.style.top='0';
-    document.body.appendChild(drip);
-    setTimeout(()=>{drip.style.height=(60+Math.random()*150)+'px'},50);
-    setTimeout(()=>{drip.style.opacity='0'},1500);setTimeout(()=>drip.remove(),3000);}
-  // Photo itself gets a wet shimmer overlay
-  const shimmer=document.createElement('div');
-  shimmer.style.cssText='position:absolute;inset:0;border-radius:16px;background:linear-gradient(135deg,rgba(100,180,255,0.15),transparent 40%,rgba(100,180,255,0.1) 60%,transparent);pointer-events:none;z-index:10;transition:opacity 2s';
-  el.querySelector('.hero-frame').appendChild(shimmer);
-  setTimeout(()=>{shimmer.style.opacity='0'},500);setTimeout(()=>shimmer.remove(),2500);
-  // SOUND — subtle water drop
-  try{const ac=new(window.AudioContext||window.webkitAudioContext)();
-    // Single clean water drop
-    const o=ac.createOscillator();
-    o.type='sine';
-    o.frequency.setValueAtTime(1200,ac.currentTime);
-    o.frequency.exponentialRampToValueAtTime(300,ac.currentTime+0.15);
-    const g=ac.createGain();
-    g.gain.setValueAtTime(0.25,ac.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.3);
-    o.connect(g);g.connect(ac.destination);
-    o.start();o.stop(ac.currentTime+0.3);
-    // Tiny bubble
-    setTimeout(()=>{
+  puddle.style.borderRadius='50%';canvasEls.push(puddle);safeTimeout(()=>puddle.remove(),7000);
+  batchAppend(cv,canvasEls);
+
+  // 3 drips from top (reduced from 6)
+  const topDrips=[];
+  for(let i=0;i<3;i++){const drip=document.createElement('div');
+    drip.style.cssText='position:fixed;pointer-events:none;z-index:99997;width:'+(2+Math.random()*4)+'px;height:0;background:linear-gradient(180deg,rgba(50,120,180,0.4),rgba(50,120,180,0.12),transparent);border-radius:0 0 3px 3px;transition:height 1.5s ease-in,opacity 1s ease 1s;opacity:1;left:'+(Math.random()*window.innerWidth)+'px;top:0';
+    topDrips.push(drip);
+    safeTimeout(()=>{drip.style.height=(60+Math.random()*150)+'px'},50);
+    safeTimeout(()=>{drip.style.opacity='0'},1500);safeTimeout(()=>drip.remove(),3000);}
+  batchAppend(document.body,topDrips);
+
+  // Photo shimmer
+  const heroFrame=el.querySelector('.hero-frame');
+  if(heroFrame){
+    const shimmer=document.createElement('div');
+    shimmer.style.cssText='position:absolute;inset:0;border-radius:16px;background:linear-gradient(135deg,rgba(100,180,255,0.15),transparent 40%,rgba(100,180,255,0.1) 60%,transparent);pointer-events:none;z-index:10;transition:opacity 2s';
+    heroFrame.appendChild(shimmer);
+    safeTimeout(()=>{shimmer.style.opacity='0'},500);safeTimeout(()=>shimmer.remove(),2500);
+  }
+  // SOUND — reuse shared AudioContext
+  try{
+    const ac=getAC(),t=ac.currentTime;
+    const o=ac.createOscillator();o.type='sine';
+    o.frequency.setValueAtTime(1200,t);o.frequency.exponentialRampToValueAtTime(300,t+0.15);
+    const g=ac.createGain();g.gain.setValueAtTime(0.25,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.3);
+    o.connect(g);g.connect(ac.destination);o.start();o.stop(t+0.3);
+    safeTimeout(()=>{
       const o2=ac.createOscillator();o2.type='sine';
-      o2.frequency.setValueAtTime(800,ac.currentTime);
-      o2.frequency.exponentialRampToValueAtTime(400,ac.currentTime+0.1);
-      const g2=ac.createGain();g2.gain.setValueAtTime(0.1,ac.currentTime);
-      g2.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.15);
+      o2.frequency.setValueAtTime(800,ac.currentTime);o2.frequency.exponentialRampToValueAtTime(400,ac.currentTime+0.1);
+      const g2=ac.createGain();g2.gain.setValueAtTime(0.1,ac.currentTime);g2.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.15);
       o2.connect(g2);g2.connect(ac.destination);o2.start();o2.stop(ac.currentTime+0.15);
     },100);
   }catch(ex){}
   // Blue flash
-  const tn=document.createElement('div');tn.style.cssText='position:fixed;inset:0;background:rgba(50,120,200,.15);pointer-events:none;z-index:99996;transition:opacity 1s';document.body.appendChild(tn);setTimeout(()=>{tn.style.opacity='0'},200);setTimeout(()=>tn.remove(),1300);
+  const tn=document.createElement('div');tn.style.cssText='position:fixed;inset:0;background:rgba(50,120,200,.15);pointer-events:none;z-index:99996;transition:opacity 1s';document.body.appendChild(tn);safeTimeout(()=>{tn.style.opacity='0'},200);safeTimeout(()=>tn.remove(),1300);
 }
 
 
@@ -3864,22 +3954,27 @@ function triggerAnim(el, e){
   setTimeout(()=>el.classList.remove('anim-'+a),1200);
 }
 
-// CONFETTI BURST
+// CONFETTI BURST — batched & cooldown-protected
 function spawnConfetti(x,y){
-  for(let i=0;i<12;i++){
+  const now=performance.now();
+  if(now-_lastConfettiTime<CONFETTI_COOLDOWN)return;
+  _lastConfettiTime=now;
+  const els=[];
+  for(let i=0;i<8;i++){
     const c=document.createElement('div');
     c.className='confetti';
     c.textContent=confC[Math.floor(Math.random()*confC.length)];
     const angle=Math.random()*Math.PI*2;
     const dist=40+Math.random()*60;
-    c.style.left=(x)+'px';
-    c.style.top=(y)+'px';
+    c.style.left=x+'px';
+    c.style.top=y+'px';
     c.style.fontSize=(0.6+Math.random()*0.8)+'rem';
     c.style.setProperty('--dx',(Math.cos(angle)*dist)+'px');
     c.style.setProperty('--dy',(Math.sin(angle)*dist-60)+'px');
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),1500);
+    els.push(c);
+    safeTimeout(()=>c.remove(),1500);
   }
+  batchAppend(document.body,els);
 }
 
 // INTERACTIVE ELEMENTS
@@ -6153,6 +6248,7 @@ function centerMoodboardOn(worldX,worldY,behavior){
 function walkBitmojiTo(worldX,worldY,stickerRef){
   if(walkingInProgress||!mmExp)return;
   clearTimeout(_walkTimer);
+  clearWalkTimers();
   walkingInProgress=true;
   const WALK_DURATION=2500;
   const sc=drawMap._sc||0.05;
@@ -6195,9 +6291,11 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
   const dx=targetMX-startX,dy=targetMY-startY;
   const dist=Math.sqrt(dx*dx+dy*dy);
   const steps=Math.min(Math.max(Math.floor(dist/14),6),30);
-  for(let i=1;i<=steps;i++){
-    setTimeout(()=>{
-      const t=i/steps;
+  // Footstep trail — limited to 15 max, timers tracked for cancellation
+  const actualSteps=Math.min(steps,15);
+  for(let i=1;i<=actualSteps;i++){
+    _walkFootstepTimers.push(setTimeout(()=>{
+      const t=i/actualSteps;
       const fx=startX+dx*t+((i%2===0?1:-1)*4);
       const fy=startY+dy*t;
       const fp=document.createElement('div');
@@ -6212,9 +6310,9 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
       dust.style.cssText='position:absolute;left:'+fx+'px;top:'+fy+'px;z-index:9997;pointer-events:none;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,rgba(180,160,120,0.4),transparent);transform:translate(-50%,-50%) scale(0.5);transition:transform 0.6s,opacity 0.6s;';
       mmInner.appendChild(dust);
       requestAnimationFrame(()=>{dust.style.transform='translate(-50%,-50%) scale(2.5)';dust.style.opacity='0'});
-      setTimeout(()=>{fp.style.opacity='0'},800);
-      setTimeout(()=>{fp.remove();dust.remove()},1800);
-    },i*(WALK_DURATION/steps));
+      safeTimeout(()=>{fp.style.opacity='0'},800);
+      safeTimeout(()=>{fp.remove();dust.remove()},1800);
+    },i*(WALK_DURATION/actualSteps)));
   }
   // After walk completes, close map and navigate to exact item
   _walkTimer=setTimeout(()=>{
@@ -6246,9 +6344,9 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
       const startBY=worldY+30;
       const mbSteps=10;
       
-      // Footsteps leading to the target
+      // Footsteps leading to the target — tracked for cancellation
       for(let j=1;j<=mbSteps;j++){
-        setTimeout(()=>{
+        _walkFootstepTimers.push(setTimeout(()=>{
           const mt=j/mbSteps;
           const mfx=startBX+(worldX-40-startBX)*mt+((j%2===0?1:-1)*8);
           const mfy=startBY+(worldY+10-startBY)*mt;
@@ -6260,9 +6358,9 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
             mfp.style.background='rgba(139,119,80,0.3)';
           }
           cv.appendChild(mfp);
-          setTimeout(()=>{mfp.style.opacity='0'},1500);
-          setTimeout(()=>mfp.remove(),2800);
-        },j*120);
+          safeTimeout(()=>{mfp.style.opacity='0'},1500);
+          safeTimeout(()=>mfp.remove(),2800);
+        },j*120));
       }
       
       // Show bitmoji guide at the target after footsteps finish
@@ -6617,7 +6715,7 @@ function updMap(){
   if(mmZone)mmZone.textContent=zoneName;
 }
 
-let mapScrollTimer=null;
+let mapCloneTimer=null;
 let mapCloneTimer=null;
 // Re-render visible clones when scrolling expanded map
 document.getElementById('mmInner').addEventListener('scroll',()=>{
@@ -6653,23 +6751,9 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
     },250);
   }
 },{passive:true});
-let _updMapRAF=null;
-vp.addEventListener('scroll',()=>{
-  if(mapTransitioning)return;
-  if(!_updMapRAF){
-    _updMapRAF=requestAnimationFrame(()=>{
-      _updMapRAF=null;
-      updMap();
-      if(!mmExp&&!_bouncing){
-        clearTimeout(mapScrollTimer);mapScrollTimer=setTimeout(drawMap,320);
-      }
-    });
-  }
-},{passive:true});
+// Map scroll update is handled by the unified scroll handler above (near line 3587)
 
-// ===== SHARED AUDIO CONTEXT (reuse for performance) =====
-let _sharedAC=null;
-function getAC(){if(!_sharedAC||_sharedAC.state==='closed')_sharedAC=new(window.AudioContext||window.webkitAudioContext)();if(_sharedAC.state==='suspended')_sharedAC.resume();return _sharedAC}
+// getAC() already defined above in performance utilities section
 
 function playSfx(type){
   try{
@@ -6722,7 +6806,7 @@ const startupSoundList=Object.keys(startupSoundMap);
 function startupSound(el,e){e.stopPropagation();const pick=startupSoundList[Math.floor(Math.random()*startupSoundList.length)];playSfx(startupSoundMap[pick]);el.querySelector('.meme-text').textContent=pick;spawnConfetti(e.clientX||0,e.clientY||0)}
 const bingoWords=['Synergy','You\'re on mute','Can you see my screen?','Let\'s take this offline','Per the last email','Action items','Bandwidth','Circle back','Deep dive'];
 let bingoMarked=[];
-function meetingBingo(el,e){e.stopPropagation();playSfx('click');const word=bingoWords[Math.floor(Math.random()*bingoWords.length)];if(!bingoMarked.includes(word))bingoMarked.push(word);el.querySelector('.meme-text').textContent='✅ '+word+' ('+bingoMarked.length+'/9)';if(bingoMarked.length>=5){el.querySelector('.meme-sub').textContent='🎉 BINGO! You win!';playSfx('bingo');for(let i=0;i<20;i++)setTimeout(()=>spawnConfetti(e.clientX||0,e.clientY||0),i*50);bingoMarked=[]}else{spawnConfetti(e.clientX||0,e.clientY||0)}}
+function meetingBingo(el,e){e.stopPropagation();playSfx('click');const word=bingoWords[Math.floor(Math.random()*bingoWords.length)];if(!bingoMarked.includes(word))bingoMarked.push(word);el.querySelector('.meme-text').textContent='✅ '+word+' ('+bingoMarked.length+'/9)';if(bingoMarked.length>=5){el.querySelector('.meme-sub').textContent='🎉 BINGO! You win!';playSfx('bingo');spawnConfetti(e.clientX||0,e.clientY||0);safeTimeout(()=>spawnConfetti(e.clientX||0,e.clientY||0),300);safeTimeout(()=>spawnConfetti(e.clientX||0,e.clientY||0),600);bingoMarked=[]}else{spawnConfetti(e.clientX||0,e.clientY||0)}}
 const salaries=['Startup equity (worth TBD) 📊','Paid in experience 🎓','Paid in learnings 📚','Actual money (rare!) 💰','Paid in pizza on demo day 🍕','Stock options (cliff: ♾️)'];
 function salaryRoulette(el,e){e.stopPropagation();playSfx('spin');const r=el.querySelector('.meme-text');r.textContent='🎡 Spinning...';setTimeout(()=>{const pick=salaries[Math.floor(Math.random()*salaries.length)];r.textContent=pick;playSfx(pick.includes('money')?'kaching':'fail');spawnConfetti(e.clientX||0,e.clientY||0)},500)}
 
@@ -6787,10 +6871,10 @@ setTimeout(()=>{
   setTimeout(()=>greet.remove(),3200);
 },120)
 
-window.addEventListener('resize',()=>{
-  clearTimeout(mapResizeTimer);
-  mapResizeTimer=setTimeout(()=>{if(mapBootstrapped)bootstrapMap(false)},140);
-});
+window.addEventListener('resize',debounce(()=>{
+  if(mapBootstrapped)bootstrapMap(false);
+  _cachedCanvasRect=null; // invalidate cached rect on resize
+},200));
 
 
 
