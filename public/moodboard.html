@@ -354,6 +354,65 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker-progress .p-bar{height:12px;background:#f0ece6;border-radius:6px;overflow:hidden;margin-bottom:6px}
 .sticker-progress .p-fill{height:100%;border-radius:6px;transition:width 0.5s ease}
 .sticker-progress .p-label{font-size:0.65rem;color:var(--text3)}
+
+/* ===== SPIN WHEEL ===== */
+@keyframes wheelSpin{0%{transform:rotate(0deg)}100%{transform:rotate(var(--spin-deg,1800deg))}}
+.sticker-wheel{background:#fff;border-radius:18px;padding:20px;border:2px solid #f0ece6;width:220px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.08);cursor:pointer}
+.sticker-wheel .wheel-title{font-family:var(--font-fun);font-weight:700;font-size:0.9rem;margin-bottom:10px;color:var(--text)}
+.sticker-wheel .wheel-container{position:relative;width:160px;height:160px;margin:0 auto 10px}
+.sticker-wheel .wheel-svg{width:100%;height:100%;transition:none}
+.sticker-wheel .wheel-svg.spinning{animation:wheelSpin 3s cubic-bezier(0.17,0.67,0.12,0.99) forwards}
+.sticker-wheel .wheel-pointer{position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:1.5rem;z-index:5;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))}
+.sticker-wheel .wheel-result{font-family:var(--font-hand);font-size:1.1rem;color:var(--text);min-height:1.5em;transition:all 0.3s}
+.sticker-wheel .wheel-cta{font-size:0.65rem;color:var(--text3);margin-top:4px}
+
+/* ===== QUIZ CARD ===== */
+.sticker-quiz{background:linear-gradient(135deg,#E8EAF6,#C5CAE9);border-radius:16px;padding:18px 20px;width:230px;box-shadow:0 4px 18px rgba(63,81,181,0.15);cursor:pointer}
+.sticker-quiz .quiz-header{font-family:var(--font-fun);font-weight:700;font-size:0.85rem;color:#283593;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.sticker-quiz .quiz-q{font-family:var(--font-hand);font-size:1rem;color:#1A237E;line-height:1.4;margin-bottom:12px}
+.sticker-quiz .quiz-opts{display:flex;flex-direction:column;gap:6px}
+.sticker-quiz .quiz-opt{background:rgba(255,255,255,0.7);border:1.5px solid rgba(63,81,181,0.2);border-radius:8px;padding:8px 12px;font-family:var(--font-sans);font-size:0.75rem;color:#283593;cursor:pointer;transition:all 0.2s}
+.sticker-quiz .quiz-opt:hover{background:rgba(63,81,181,0.15);border-color:#3F51B5}
+.sticker-quiz .quiz-opt.correct{background:#C8E6C9!important;border-color:#4CAF50!important;color:#2E7D32!important}
+.sticker-quiz .quiz-opt.wrong{background:#FFCDD2!important;border-color:#E53935!important;color:#C62828!important}
+.sticker-quiz .quiz-feedback{font-family:var(--font-hand);font-size:0.85rem;margin-top:8px;min-height:1.2em;color:#283593}
+
+/* ===== SLOT MACHINE ===== */
+.sticker-slots{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:16px;padding:18px 20px;width:200px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.2);border:2px solid #FFD700;cursor:pointer}
+.sticker-slots .slots-title{font-family:var(--font-fun);font-weight:700;font-size:0.85rem;color:#FFD700;margin-bottom:10px;text-shadow:0 0 8px rgba(255,215,0,0.4)}
+.sticker-slots .slots-display{display:flex;gap:6px;justify-content:center;margin-bottom:10px}
+.sticker-slots .slot-reel{width:50px;height:55px;background:#0d0d1a;border-radius:8px;border:1.5px solid #FFD70060;display:flex;align-items:center;justify-content:center;font-size:1.8rem;transition:all 0.1s;overflow:hidden}
+.sticker-slots .slots-result{font-family:var(--font-hand);font-size:0.9rem;color:#FFD700;min-height:1.3em}
+.sticker-slots .slots-cta{font-size:0.6rem;color:#FFD70080;margin-top:4px}
+
+/* ===== MAGIC 8 BALL ===== */
+.sticker-8ball{width:160px;height:160px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#444,#1a1a1a 60%,#000);box-shadow:0 8px 30px rgba(0,0,0,0.3),inset 0 -4px 10px rgba(255,255,255,0.05);cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
+.sticker-8ball .ball-window{width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#1565C0,#0D47A1 70%);border:3px solid #1a1a1a;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 2px 8px rgba(0,0,0,0.4)}
+.sticker-8ball .ball-text{font-family:var(--font-fun);font-size:0.55rem;color:#fff;text-align:center;padding:4px;line-height:1.2;text-shadow:0 0 6px rgba(100,181,246,0.6)}
+.sticker-8ball .ball-label{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-family:var(--font-hand);font-size:0.75rem;color:var(--text3);white-space:nowrap}
+
+/* ===== TYPEWRITER ===== */
+.sticker-typewriter{background:#fff;border-radius:14px;padding:16px 20px;width:230px;border:2px solid #f0ece6;box-shadow:0 3px 14px rgba(0,0,0,0.06);cursor:pointer}
+.sticker-typewriter .tw-header{font-family:var(--font-fun);font-weight:700;font-size:0.8rem;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.sticker-typewriter .tw-paper{background:#FFFDE7;border:1px solid #F9E4A0;border-radius:6px;padding:12px;font-family:'Courier New',monospace;font-size:0.75rem;color:#333;line-height:1.5;min-height:60px;position:relative}
+.sticker-typewriter .tw-paper::after{content:'▊';animation:twBlink 0.8s step-end infinite;color:#333}
+@keyframes twBlink{0%,100%{opacity:1}50%{opacity:0}}
+.sticker-typewriter .tw-cta{font-size:0.6rem;color:var(--text3);margin-top:6px;text-align:right}
+
+/* ===== DICE ROLLER ===== */
+.sticker-dice{background:linear-gradient(135deg,#FFF3E0,#FFE0B2);border-radius:16px;padding:18px 20px;width:180px;text-align:center;box-shadow:0 4px 16px rgba(255,152,0,0.15);cursor:pointer;border:2px solid #FFB74D40}
+.sticker-dice .dice-display{font-size:3rem;margin:6px 0;transition:transform 0.3s}
+.sticker-dice .dice-title{font-family:var(--font-fun);font-weight:700;font-size:0.85rem;color:#E65100}
+.sticker-dice .dice-result{font-family:var(--font-hand);font-size:0.9rem;color:#BF360C;min-height:1.3em;margin-top:4px}
+
+/* ===== LOVE-O-METER ===== */
+.sticker-lovemeter{background:linear-gradient(135deg,#FCE4EC,#F8BBD0);border-radius:16px;padding:18px 20px;width:200px;text-align:center;box-shadow:0 4px 16px rgba(233,30,99,0.12);cursor:pointer;border:2px solid #F48FB140}
+.sticker-lovemeter .lm-title{font-family:var(--font-fun);font-weight:700;font-size:0.85rem;color:#AD1457;margin-bottom:6px}
+.sticker-lovemeter .lm-bar{height:16px;background:#fff;border-radius:8px;overflow:hidden;margin:8px 0;border:1px solid #F48FB1}
+.sticker-lovemeter .lm-fill{height:100%;border-radius:8px;transition:width 0.6s ease;background:linear-gradient(90deg,#E91E63,#FF5252,#FF1744)}
+.sticker-lovemeter .lm-emoji{font-size:2rem;margin:4px 0}
+.sticker-lovemeter .lm-result{font-family:var(--font-hand);font-size:0.9rem;color:#AD1457;min-height:1.3em}
+
 .sticker-washi{height:30px;width:160px;opacity:0.5}
 .sticker-swatches{display:flex;gap:4px;background:#fff;padding:8px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.06)}
 .sticker-swatches .sw{width:40px;height:48px;border-radius:6px}
@@ -2046,6 +2105,102 @@ body.map-expanded .scroll-counter{display:none!important}
   <div><div class="c-count" data-count="0">0</div><div class="c-label">puris eaten today</div></div>
 </div>
 
+
+<!-- ===== NEW INTERACTIVE ELEMENTS ===== -->
+
+<!-- SPIN WHEEL — Work zone -->
+<div class="sticker sticker-wheel" data-anim="jelly" data-zone="work" onclick="spinWheel(this,event)" style="left:4200px;top:1400px;transform:rotate(-2deg)">
+  <div class="wheel-title">🎡 What Should Akash Build Next?</div>
+  <div class="wheel-container">
+    <div class="wheel-pointer">▼</div>
+    <svg class="wheel-svg" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="95" fill="#f5f5f5" stroke="#ddd" stroke-width="2"/>
+      <path d="M100,100 L100,5 A95,95 0 0,1 182,52 Z" fill="#FF7043"/>
+      <path d="M100,100 L182,52 A95,95 0 0,1 182,148 Z" fill="#42A5F5"/>
+      <path d="M100,100 L182,148 A95,95 0 0,1 100,195 Z" fill="#66BB6A"/>
+      <path d="M100,100 L100,195 A95,95 0 0,1 18,148 Z" fill="#FFB74D"/>
+      <path d="M100,100 L18,148 A95,95 0 0,1 18,52 Z" fill="#CE93D8"/>
+      <path d="M100,100 L18,52 A95,95 0 0,1 100,5 Z" fill="#EF5350"/>
+      <text x="130" y="42" font-size="8" fill="#fff" font-weight="bold" transform="rotate(30 130 42)">AI App</text>
+      <text x="165" y="105" font-size="8" fill="#fff" font-weight="bold" transform="rotate(90 165 105)">SaaS</text>
+      <text x="130" y="170" font-size="8" fill="#fff" font-weight="bold" transform="rotate(150 130 170)">Game</text>
+      <text x="68" y="170" font-size="8" fill="#fff" font-weight="bold" transform="rotate(210 68 170)">Web3</text>
+      <text x="32" y="105" font-size="8" fill="#fff" font-weight="bold" transform="rotate(270 32 105)">EdTech</text>
+      <text x="68" y="42" font-size="8" fill="#fff" font-weight="bold" transform="rotate(330 68 42)">FinTech</text>
+      <circle cx="100" cy="100" r="12" fill="#1a1a2e" stroke="#FFD700" stroke-width="2"/>
+      <text x="100" y="104" text-anchor="middle" font-size="10" fill="#FFD700">SPIN</text>
+    </svg>
+  </div>
+  <div class="wheel-result">Tap to spin! 🎯</div>
+  <div class="wheel-cta">destiny awaits...</div>
+</div>
+
+<!-- QUIZ CARD — Portfolio zone -->
+<div class="sticker sticker-quiz" data-anim="pop" data-zone="portfolio" onclick="quizAnswer(this,event)" style="left:2800px;top:3200px;transform:rotate(2deg)">
+  <div class="quiz-header">🧠 Akash Trivia</div>
+  <div class="quiz-q">What was Akash's first startup?</div>
+  <div class="quiz-opts">
+    <div class="quiz-opt" data-ans="0" onclick="pickQuizOpt(this,event)">A. Recess EdTech</div>
+    <div class="quiz-opt" data-ans="1" onclick="pickQuizOpt(this,event)">B. EnterCircles Labs</div>
+    <div class="quiz-opt" data-ans="0" onclick="pickQuizOpt(this,event)">C. Neural OS</div>
+    <div class="quiz-opt" data-ans="0" onclick="pickQuizOpt(this,event)">D. Hushh Jeypore</div>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
+<!-- SLOT MACHINE — Fun zone -->
+<div class="sticker sticker-slots" data-anim="shake" data-zone="fun" onclick="pullSlots(this,event)" style="left:5000px;top:5200px;transform:rotate(-1deg)">
+  <div class="slots-title">🎰 STARTUP SLOTS</div>
+  <div class="slots-display">
+    <div class="slot-reel">🚀</div>
+    <div class="slot-reel">💰</div>
+    <div class="slot-reel">🔥</div>
+  </div>
+  <div class="slots-result">Pull to play!</div>
+  <div class="slots-cta">match 3 to win big</div>
+</div>
+
+<!-- MAGIC 8 BALL — Hobby zone -->
+<div class="sticker sticker-8ball" data-anim="shake" data-zone="hobby" onclick="shake8Ball(this,event)" style="left:3600px;top:4800px">
+  <div class="ball-window"><div class="ball-text">Ask me anything</div></div>
+  <div class="ball-label">🎱 shake for wisdom</div>
+</div>
+
+<!-- TYPEWRITER — Origin zone -->
+<div class="sticker sticker-typewriter" data-anim="pop" data-zone="origin" onclick="typewriterNext(this,event)" style="left:3200px;top:1200px;transform:rotate(1deg)">
+  <div class="tw-header">⌨️ Founder's Log</div>
+  <div class="tw-paper"></div>
+  <div class="tw-cta">tap to type next thought →</div>
+</div>
+
+<!-- DICE ROLLER — Fun zone -->
+<div class="sticker sticker-dice" data-anim="shake" data-zone="fun" onclick="rollDice(this,event)" style="left:5600px;top:4200px;transform:rotate(3deg)">
+  <div class="dice-title">🎲 Startup Fate Dice</div>
+  <div class="dice-display">🎲</div>
+  <div class="dice-result">Roll your fate!</div>
+</div>
+
+<!-- LOVE-O-METER — Origin zone -->
+<div class="sticker sticker-lovemeter" data-anim="heartbeat" data-zone="origin" onclick="loveMeter(this,event)" style="left:1800px;top:1800px;transform:rotate(-2deg)">
+  <div class="lm-title">💖 Vibe Check</div>
+  <div class="lm-emoji">🤔</div>
+  <div class="lm-bar"><div class="lm-fill" style="width:0%"></div></div>
+  <div class="lm-result">Tap to check your vibe!</div>
+</div>
+
+<!-- PM POP QUIZ — Work zone -->
+<div class="sticker sticker-quiz" data-anim="bounce" data-zone="work" onclick="quizAnswer(this,event)" style="left:4800px;top:2600px;transform:rotate(-1deg)">
+  <div class="quiz-header">📊 PM Pop Quiz</div>
+  <div class="quiz-q">What metric did Recess EdTech improve churn to?</div>
+  <div class="quiz-opts">
+    <div class="quiz-opt" data-ans="0" onclick="pickQuizOpt(this,event)">A. Below 20%</div>
+    <div class="quiz-opt" data-ans="1" onclick="pickQuizOpt(this,event)">B. Below 10%</div>
+    <div class="quiz-opt" data-ans="0" onclick="pickQuizOpt(this,event)">C. Below 5%</div>
+    <div class="quiz-opt" data-ans="0" onclick="pickQuizOpt(this,event)">D. Below 30%</div>
+  </div>
+  <div class="quiz-feedback"></div>
+</div>
+
 <div class="sticker sticker-meme" data-anim="jelly" data-zone="fun" style="left:5200px;top:3800px">
   <div class="meme-emoji">💀</div>
   <div class="meme-text">PM: Can we add dark mode? Dev: Which part of 'freeze' was unclear?</div>
@@ -3605,7 +3760,7 @@ function identifyStickerGroup(sticker){
     if(/meme|fun|lol|haha|travel|music|gaming|play|recharge|hobby|weekend/i.test(text))return 'fun';
     return 'portfolio';
   }
-  if(c.contains('sticker-meme')||c.contains('sticker-emoji')||c.contains('sticker-counter')||c.contains('sticker-mood')||c.contains('sticker-fortune')||c.contains('sticker-progress')||c.contains('sticker-scratch'))return 'fun';
+  if(c.contains('sticker-meme')||c.contains('sticker-emoji')||c.contains('sticker-counter')||c.contains('sticker-mood')||c.contains('sticker-fortune')||c.contains('sticker-progress')||c.contains('sticker-scratch')||c.contains('sticker-wheel')||c.contains('sticker-quiz')||c.contains('sticker-slots')||c.contains('sticker-8ball')||c.contains('sticker-typewriter')||c.contains('sticker-dice')||c.contains('sticker-lovemeter'))return 'fun';
   return 'fun';
 }
 
@@ -7302,6 +7457,204 @@ let bingoMarked=[];
 function meetingBingo(el,e){e.stopPropagation();playSfx('click');const word=bingoWords[Math.floor(Math.random()*bingoWords.length)];if(!bingoMarked.includes(word))bingoMarked.push(word);el.querySelector('.meme-text').textContent='✅ '+word+' ('+bingoMarked.length+'/9)';if(bingoMarked.length>=5){el.querySelector('.meme-sub').textContent='🎉 BINGO! You win!';playSfx('bingo');spawnConfetti(e.clientX||0,e.clientY||0);safeTimeout(()=>spawnConfetti(e.clientX||0,e.clientY||0),300);safeTimeout(()=>spawnConfetti(e.clientX||0,e.clientY||0),600);bingoMarked=[]}else{spawnConfetti(e.clientX||0,e.clientY||0)}}
 const salaries=['Startup equity (worth TBD) 📊','Paid in experience 🎓','Paid in learnings 📚','Actual money (rare!) 💰','Paid in pizza on demo day 🍕','Stock options (cliff: ♾️)'];
 function salaryRoulette(el,e){e.stopPropagation();playSfx('spin');const r=el.querySelector('.meme-text');r.textContent='🎡 Spinning...';setTimeout(()=>{const pick=salaries[Math.floor(Math.random()*salaries.length)];r.textContent=pick;playSfx(pick.includes('money')?'kaching':'fail');spawnConfetti(e.clientX||0,e.clientY||0)},500)}
+
+// ===== SPIN WHEEL =====
+const wheelOptions=['AI App 🤖','SaaS 💼','Game 🎮','Web3 🌐','EdTech 🎓','FinTech 💰'];
+let wheelSpinning=false;
+function spinWheel(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();
+  if(wheelSpinning)return;
+  wheelSpinning=true;
+  playSfx('spin');
+  const svg=el.querySelector('.wheel-svg');
+  const result=el.querySelector('.wheel-result');
+  const deg=1800+Math.floor(Math.random()*1440);
+  svg.style.setProperty('--spin-deg',deg+'deg');
+  svg.classList.remove('spinning');
+  void svg.offsetWidth;
+  svg.classList.add('spinning');
+  result.textContent='🎡 Spinning...';
+  setTimeout(()=>{
+    const idx=Math.floor(Math.random()*wheelOptions.length);
+    result.textContent=wheelOptions[idx]+' — it is written!';
+    playSfx('win');
+    spawnConfetti(e.clientX||0,e.clientY||0);
+    wheelSpinning=false;
+    svg.classList.remove('spinning');
+    svg.style.transform='rotate('+(deg%360)+'deg)';
+  },3200);
+}
+
+// ===== QUIZ CARD =====
+function pickQuizOpt(optEl,e){
+  e.stopPropagation();e.preventDefault();
+  const card=optEl.closest('.sticker-quiz');
+  if(card.dataset.answered)return;
+  card.dataset.answered='1';
+  const correct=optEl.dataset.ans==='1';
+  const fb=card.querySelector('.quiz-feedback');
+  if(correct){
+    optEl.classList.add('correct');
+    fb.textContent='🎉 Correct! You know Akash well!';
+    playSfx('win');
+    spawnConfetti(e.clientX||0,e.clientY||0);
+  } else {
+    optEl.classList.add('wrong');
+    card.querySelector('.quiz-opt[data-ans="1"]').classList.add('correct');
+    fb.textContent='❌ Not quite — try the other quizzes!';
+    playSfx('fail');
+  }
+  setTimeout(()=>{
+    card.querySelectorAll('.quiz-opt').forEach(o=>{o.classList.remove('correct','wrong')});
+    fb.textContent='';
+    delete card.dataset.answered;
+  },3000);
+}
+
+// ===== SLOT MACHINE =====
+const slotSymbols=['🚀','💰','🔥','💎','⭐','🎯','🧠','🦄','📈','🎬'];
+const slotWins={'🚀🚀🚀':'UNICORN STATUS! 🦄','💰💰💰':'FUNDED! Series A! 💸','🔥🔥🔥':'VIRAL LAUNCH! 📈','💎💎💎':'DIAMOND HANDS! 💎','⭐⭐⭐':'PRODUCT HUNT #1! 🏆'};
+let slotsSpinning=false;
+function pullSlots(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();
+  if(slotsSpinning)return;
+  slotsSpinning=true;
+  playSfx('spin');
+  const reels=el.querySelectorAll('.slot-reel');
+  const result=el.querySelector('.slots-result');
+  result.textContent='🎰 Spinning...';
+  const picks=[];
+  reels.forEach((r,i)=>{
+    let count=0;
+    const interval=setInterval(()=>{
+      r.textContent=slotSymbols[Math.floor(Math.random()*slotSymbols.length)];
+      count++;
+      if(count>(10+i*5)){
+        clearInterval(interval);
+        const final=slotSymbols[Math.floor(Math.random()*slotSymbols.length)];
+        r.textContent=final;
+        picks.push(final);
+        if(picks.length===3){
+          const key=picks.join('');
+          if(slotWins[key]){
+            result.textContent=slotWins[key];
+            playSfx('bingo');
+            spawnConfetti(e.clientX||0,e.clientY||0);
+            setTimeout(()=>spawnConfetti(e.clientX||0,e.clientY||0),300);
+          } else if(picks[0]===picks[1]||picks[1]===picks[2]){
+            result.textContent='Close! 2/3 match 😅';
+            playSfx('click');
+          } else {
+            const msgs=['Pivot time! 🔄','Try again, founder! 💪','The market isn\'t ready 📊','Pre-seed vibes 🌱'];
+            result.textContent=msgs[Math.floor(Math.random()*msgs.length)];
+            playSfx('fail');
+          }
+          slotsSpinning=false;
+        }
+      }
+    },80);
+  });
+}
+
+// ===== MAGIC 8 BALL =====
+const eightBallAnswers=['Absolutely, ship it! 🚀','Ask your co-founder 🤷','The data says yes 📊','Pivot immediately 🔄','Not in this sprint 🏃','Mercury is in retrograde 🌙','Consult the roadmap 🗺️','Signs point to MVP 📱','Better ask the intern 😅','100% — trust the vision 💡','Debug first, decide later 🐛','Only if there\'s chai ☕'];
+function shake8Ball(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();
+  playSfx('pop');
+  const txt=el.querySelector('.ball-text');
+  txt.textContent='...';
+  el.style.transform='rotate(10deg)';
+  setTimeout(()=>{el.style.transform='rotate(-8deg)'},150);
+  setTimeout(()=>{
+    el.style.transform='';
+    txt.textContent=eightBallAnswers[Math.floor(Math.random()*eightBallAnswers.length)];
+    spawnConfetti(e.clientX||0,e.clientY||0);
+  },600);
+}
+
+// ===== TYPEWRITER =====
+const twThoughts=['Day 1: Started building. No clue what I\'m doing. Ship anyway.','Day 47: Users love it. Or hate it. Same feedback form.','Day 120: Pivoted for the 3rd time. This one feels right.','Day 200: First paying user! Celebrated with panipuri.','Day 365: The startup didn\'t die. That\'s the win.','Day 500: Team of 6 now. We argue about fonts daily.','Day 730: Revenue > costs. Is this... profit?','Day ∞: Still building. Always building. 🚀'];
+let twIdx=0;let twTyping=false;
+function typewriterNext(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();
+  if(twTyping)return;
+  twTyping=true;
+  playSfx('click');
+  const paper=el.querySelector('.tw-paper');
+  const text=twThoughts[twIdx%twThoughts.length];
+  twIdx++;
+  paper.textContent='';
+  let i=0;
+  const type=()=>{
+    if(i<text.length){
+      paper.textContent=text.slice(0,i+1);
+      i++;
+      setTimeout(type,30+Math.random()*40);
+    } else {
+      twTyping=false;
+      spawnConfetti(e.clientX||0,e.clientY||0);
+    }
+  };
+  type();
+}
+
+// ===== DICE ROLLER =====
+const diceFaces=['⚀','⚁','⚂','⚃','⚄','⚅'];
+const diceFates=['🚀 Funded! Your pitch deck was fire','📉 Market crashed. Pivot to AI.','🎯 Product-market fit achieved!','💀 Server went down on demo day','🦄 Unicorn valuation! $1B baby','🍕 Board meeting = pizza party','📊 KPIs are up 300%!','🐛 Critical bug found in prod','🎬 Your startup got a Netflix doc','☕ Nothing happened. Drink chai.'];
+function rollDice(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();
+  playSfx('spin');
+  const display=el.querySelector('.dice-display');
+  const result=el.querySelector('.dice-result');
+  display.style.transform='rotate(720deg) scale(1.3)';
+  let count=0;
+  const roll=setInterval(()=>{
+    display.textContent=diceFaces[Math.floor(Math.random()*6)];
+    count++;
+    if(count>12){
+      clearInterval(roll);
+      display.style.transform='';
+      display.textContent=diceFaces[Math.floor(Math.random()*6)];
+      result.textContent=diceFates[Math.floor(Math.random()*diceFates.length)];
+      playSfx('win');
+      spawnConfetti(e.clientX||0,e.clientY||0);
+    }
+  },100);
+}
+
+// ===== LOVE-O-METER =====
+const vibeResults=[
+  {pct:15,emoji:'😐',msg:'Needs more panipuri energy'},
+  {pct:35,emoji:'🙂',msg:'Warming up... keep scrolling'},
+  {pct:55,emoji:'😊',msg:'Good vibes detected!'},
+  {pct:75,emoji:'🤩',msg:'Major vibe alignment!'},
+  {pct:90,emoji:'💖',msg:'SOULMATE ENERGY! Hire Akash NOW'},
+  {pct:100,emoji:'🔥',msg:'OFF THE CHARTS! You ARE Akash'}
+];
+function loveMeter(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();
+  playSfx('pop');
+  const fill=el.querySelector('.lm-fill');
+  const emoji=el.querySelector('.lm-emoji');
+  const result=el.querySelector('.lm-result');
+  emoji.textContent='💫';
+  result.textContent='Calculating vibes...';
+  fill.style.width='0%';
+  let target=vibeResults[Math.floor(Math.random()*vibeResults.length)];
+  setTimeout(()=>{
+    fill.style.width=target.pct+'%';
+    emoji.textContent=target.emoji;
+    result.textContent=target.pct+'% — '+target.msg;
+    if(target.pct>=75){playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0)}
+    else playSfx('click');
+  },500);
+}
 
 // ===== BOARD ITEM STATS (for settings panel) =====
 function initBoardStats(){
