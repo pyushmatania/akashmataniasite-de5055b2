@@ -167,131 +167,133 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker-counter .c-count{font-family:var(--font-fun);font-weight:700;font-size:1.4rem;color:var(--text);min-width:30px}
 .sticker-counter .c-label{font-size:0.7rem;color:var(--text3)}
 
-/* ===== 3D THEME-PARK ARCH SIGNPOST ===== */
+/* ===== 3D IMMERSIVE SIGNPOST ===== */
 .zone-signpost{
   display:flex;align-items:flex-end;gap:0;
   z-index:100!important;
   transform-style:preserve-3d;
-  perspective:900px;
+  perspective:1200px;
   position:absolute;
-  /* Standing on ground — slight bottom-up perspective */
-  transform:perspective(900px) rotateX(6deg);
+  /* Planted-in-ground perspective */
+  transform:perspective(1200px) rotateX(4deg);
+  filter:drop-shadow(0 30px 40px rgba(0,0,0,0.35));
+  cursor:default!important;
 }
 .zone-signpost:hover{
-  transform:perspective(900px) rotateX(4deg) scale(1.02);
+  transform:perspective(1200px) rotateX(2deg) scale(1.03);
+  filter:drop-shadow(0 35px 50px rgba(0,0,0,0.4));
 }
 
 /* Stone/marble pillar */
 .signpost-pillar{
-  width:80px;flex-shrink:0;position:relative;z-index:3;
+  width:60px;flex-shrink:0;position:relative;z-index:3;
   display:flex;flex-direction:column;align-items:center;
 }
-/* Pillar shaft */
+/* Pillar shaft — tall with marble texture */
 .pillar-shaft{
-  width:50px;flex:1;min-height:320px;
+  width:36px;flex:1;min-height:280px;
   background:
     linear-gradient(90deg,
-      #c4bfb6 0%,#d8d4cc 15%,#eae7e1 35%,#f5f2ed 50%,#eae7e1 65%,#d8d4cc 85%,#c4bfb6 100%);
-  border-radius:4px;
+      #b0aa9e 0%,#c8c3ba 12%,#ddd8d0 30%,#eae6df 50%,#ddd8d0 70%,#c8c3ba 88%,#b0aa9e 100%);
+  border-radius:3px;
   position:relative;
   box-shadow:
-    6px 0 0 rgba(0,0,0,0.1),
-    -3px 0 0 rgba(255,255,255,0.25),
-    0 12px 30px rgba(0,0,0,0.2),
-    0 24px 60px rgba(0,0,0,0.1);
+    4px 0 0 rgba(0,0,0,0.08),
+    -2px 0 0 rgba(255,255,255,0.2),
+    0 10px 30px rgba(0,0,0,0.25),
+    0 25px 60px rgba(0,0,0,0.12);
 }
 /* Pillar fluting — vertical grooves */
 .pillar-shaft::before{
-  content:'';position:absolute;inset:4px 2px;border-radius:2px;pointer-events:none;
+  content:'';position:absolute;inset:6px 3px;border-radius:2px;pointer-events:none;
   background:repeating-linear-gradient(90deg,
-    transparent 0px,rgba(0,0,0,0.04) 1px,transparent 2px,
-    rgba(0,0,0,0.03) 3px,transparent 4px,
-    rgba(255,255,255,0.08) 5px,transparent 6px,
-    rgba(0,0,0,0.02) 7px,transparent 8px);
+    transparent 0px,rgba(0,0,0,0.03) 1px,transparent 2px,
+    rgba(0,0,0,0.02) 3px,transparent 4px,
+    rgba(255,255,255,0.06) 5px,transparent 6px);
 }
 /* Pillar highlight edge */
 .pillar-shaft::after{
-  content:'';position:absolute;top:0;left:0;width:40%;height:100%;border-radius:3px 0 0 3px;
-  background:linear-gradient(90deg,rgba(255,255,255,0.15),transparent);
+  content:'';position:absolute;top:0;left:0;width:35%;height:100%;border-radius:3px 0 0 3px;
+  background:linear-gradient(90deg,rgba(255,255,255,0.12),transparent);
   pointer-events:none;
 }
 /* Pillar capital — ornamental ball top */
 .pillar-cap{
-  width:90px;height:90px;
-  background:radial-gradient(ellipse at 35% 28%,#f8f6f2,#e0dbd4 40%,#c4bfb6 70%,#a8a298);
+  width:68px;height:68px;
+  background:radial-gradient(ellipse at 32% 25%,#f5f3ef,#ddd8d0 35%,#c0bab2 65%,#a8a298);
   border-radius:50%;
-  border:3px solid rgba(0,0,0,0.06);
+  border:2.5px solid rgba(0,0,0,0.06);
   box-shadow:
-    0 -6px 14px rgba(0,0,0,0.12),
-    0 10px 18px rgba(0,0,0,0.15),
-    inset 0 8px 12px rgba(255,255,255,0.5),
-    inset 0 -5px 10px rgba(0,0,0,0.12);
-  margin-bottom:-4px;
+    0 -4px 12px rgba(0,0,0,0.1),
+    0 8px 16px rgba(0,0,0,0.18),
+    inset 0 6px 10px rgba(255,255,255,0.45),
+    inset 0 -4px 8px rgba(0,0,0,0.1);
+  margin-bottom:-3px;
   position:relative;z-index:4;
 }
 /* Pillar base — wider stepped footing */
 .pillar-base{
-  width:85px;height:45px;
-  background:linear-gradient(180deg,#d4cfc8 0%,#bbb6ac 50%,#a8a298 100%);
-  border-radius:3px 3px 8px 8px;
-  border-top:3px solid rgba(255,255,255,0.35);
+  width:70px;height:36px;
+  background:linear-gradient(180deg,#d0cbc4 0%,#b8b3a9 50%,#a5a098 100%);
+  border-radius:2px 2px 6px 6px;
+  border-top:2.5px solid rgba(255,255,255,0.3);
   box-shadow:
-    0 8px 24px rgba(0,0,0,0.25),
-    0 18px 48px rgba(0,0,0,0.1),
-    inset 0 -3px 6px rgba(0,0,0,0.1);
-  margin-top:-3px;
+    0 6px 20px rgba(0,0,0,0.28),
+    0 16px 40px rgba(0,0,0,0.12),
+    inset 0 -2px 5px rgba(0,0,0,0.08);
+  margin-top:-2px;
   position:relative;
 }
 /* Base step detail */
 .pillar-base::after{
-  content:'';position:absolute;bottom:-10px;left:-6px;right:-6px;height:14px;
-  background:linear-gradient(180deg,#b5b0a8,#9e9a92);
-  border-radius:3px 3px 8px 8px;
-  box-shadow:0 6px 16px rgba(0,0,0,0.2);
+  content:'';position:absolute;bottom:-8px;left:-5px;right:-5px;height:12px;
+  background:linear-gradient(180deg,#b0ab a3,#9a958e);
+  border-radius:2px 2px 6px 6px;
+  box-shadow:0 5px 14px rgba(0,0,0,0.22);
 }
 
 /* ===== THE BOARD — colorful themed sign ===== */
 .signpost-board{
-  font-family:var(--font-fun);font-weight:900;font-size:4rem;
+  font-family:var(--font-fun);font-weight:900;font-size:3.2rem;
   color:#fff;
-  padding:40px 80px;
-  border-radius:14px;
+  padding:32px 64px;
+  border-radius:12px;
   letter-spacing:0.1em;white-space:nowrap;
   position:relative;z-index:5;
-  margin:0 -16px;
+  margin:0 -12px;
   align-self:flex-start;
-  margin-top:60px;
+  margin-top:50px;
   text-shadow:
-    0 4px 0 rgba(0,0,0,0.4),
-    0 -1px 0 rgba(255,255,255,0.2),
-    0 0 30px rgba(0,0,0,0.1);
+    0 3px 0 rgba(0,0,0,0.4),
+    0 -1px 0 rgba(255,255,255,0.15),
+    0 0 24px rgba(0,0,0,0.1);
   transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
   /* 3D thick board effect */
-  border:6px solid rgba(255,255,255,0.35);
-  border-bottom:12px solid rgba(0,0,0,0.3);
-  border-right:9px solid rgba(0,0,0,0.18);
+  border:5px solid rgba(255,255,255,0.35);
+  border-bottom:10px solid rgba(0,0,0,0.3);
+  border-right:7px solid rgba(0,0,0,0.18);
   box-shadow:
-    0 16px 48px rgba(0,0,0,0.4),
-    0 32px 80px rgba(0,0,0,0.15),
-    inset 0 4px 0 rgba(255,255,255,0.3),
-    inset 0 -10px 20px rgba(0,0,0,0.2),
-    inset 8px 0 16px rgba(0,0,0,0.06),
-    inset -8px 0 16px rgba(0,0,0,0.06);
+    0 14px 42px rgba(0,0,0,0.4),
+    0 28px 70px rgba(0,0,0,0.15),
+    inset 0 3px 0 rgba(255,255,255,0.3),
+    inset 0 -8px 16px rgba(0,0,0,0.2),
+    inset 6px 0 12px rgba(0,0,0,0.06),
+    inset -6px 0 12px rgba(0,0,0,0.06);
 }
 /* Board shine overlay */
 .signpost-board::before{
-  content:'';position:absolute;inset:0;border-radius:12px;pointer-events:none;
+  content:'';position:absolute;inset:0;border-radius:10px;pointer-events:none;
   background:
-    linear-gradient(135deg,rgba(255,255,255,0.3) 0%,transparent 35%,transparent 65%,rgba(0,0,0,0.1) 100%);
+    linear-gradient(135deg,rgba(255,255,255,0.28) 0%,transparent 35%,transparent 65%,rgba(0,0,0,0.1) 100%);
 }
 
-/* Ground shadow — elliptical shadow under the whole signpost */
+/* Ground shadow — elliptical shadow planted on the surface */
 .signpost-ground{
-  position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
-  width:110%;height:30px;
-  background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,0.35) 0%,rgba(0,0,0,0.15) 40%,transparent 75%);
+  position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);
+  width:120%;height:40px;
+  background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.18) 35%,transparent 70%);
   border-radius:50%;
-  filter:blur(6px);
+  filter:blur(8px);
   z-index:0;
 }
 .sticker-fortune{background:linear-gradient(135deg,#FFE0B2,#FFB74D);border-radius:16px;padding:18px 22px;max-width:220px;box-shadow:0 3px 12px rgba(0,0,0,0.08);cursor:pointer}
