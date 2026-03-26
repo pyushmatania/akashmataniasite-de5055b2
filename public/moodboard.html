@@ -6394,13 +6394,12 @@ function showNav(tx,ty){
 
 // Zone definitions for name lookup
 const mapZones=[
-  {x1:0,y1:0,x2:4200,y2:sy(2700),name:'Origin Story',icon:'📸'},
-  {x1:4200,y1:sy(2700),x2:6300,y2:sy(4800),name:'Akash Unplugged',icon:'⭐'},
-  {x1:6000,y1:0,x2:10500,y2:sy(2700),name:'The War Room',icon:'🎯'},
-  {x1:0,y1:sy(2700),x2:4200,y2:sy(5250),name:'Launch Pad',icon:'🚀'},
-  {x1:0,y1:sy(5250),x2:7500,y2:MOODBOARD_WORLD_HEIGHT,name:'The Playground',icon:'🎮'},
-  {x1:7500,y1:sy(5250),x2:15000,y2:MOODBOARD_WORLD_HEIGHT,name:'Meme Alley',icon:'😂'},
-  {x1:10500,y1:0,x2:15000,y2:sy(5250),name:'The War Room',icon:'🎯'},
+  {x1:0,y1:0,x2:3200,y2:1900,name:'Origin Story',icon:'📸'},
+  {x1:3200,y1:1900,x2:5200,y2:3700,name:'Akash Unplugged',icon:'⭐'},
+  {x1:4200,y1:0,x2:9200,y2:1900,name:'The War Room',icon:'🎯'},
+  {x1:0,y1:2200,x2:5200,y2:3700,name:'Launch Pad',icon:'🚀'},
+  {x1:0,y1:4100,x2:5000,y2:MOODBOARD_WORLD_HEIGHT,name:'The Playground',icon:'🎮'},
+  {x1:5200,y1:4100,x2:MOODBOARD_WORLD_WIDTH,y2:MOODBOARD_WORLD_HEIGHT,name:'Meme Alley',icon:'😂'},
 ];
 function getZoneName(px,py){
   for(const z of mapZones){
