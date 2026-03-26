@@ -3679,16 +3679,12 @@ let _bouncing=false,_bounceEndTimer=null;
 function triggerBounce(edge){
   if(lastBounceEdge===edge && bounceTimeout) return;
   lastBounceEdge=edge;
-  // Visual flash
   bounceFlash.className='bounce-flash '+edge;
   bounceFlash.style.opacity='1';
-  // Sticker-style boundary message
   showBoundaryToast(edge);
   clearTimeout(bounceTimeout);
   bounceTimeout=setTimeout(()=>{bounceFlash.style.opacity='0';lastBounceEdge='';bounceTimeout=null},400);
-  // Haptic-like vibration if available
   try{if(navigator.vibrate)navigator.vibrate(30)}catch(e){}
-  // Bounce back with smooth scroll — guard against re-entry during animation
   if(_bouncing)return;
   _bouncing=true;
   clearTimeout(_bounceEndTimer);
