@@ -4028,6 +4028,7 @@ document.addEventListener('mouseup',()=>{iD=false;vp.style.cursor='grab';if(_dra
 
 // ===== STICKER DRAG + TAP DETECTION + TWO-FINGER ROTATION =====
 let as=null,sox,soy,hz=100,tapSX=0,tapSY=0,tapTime=0,didMove=false;
+let dragStartScrollLeft=0,dragStartScrollTop=0;
 let isRotating=false, rotStartAngle=0, stickerBaseAngle=0;
 let suppressStickerClickUntil=0;
 const DRAG_CLICK_GUARD_MS=900;
@@ -4072,7 +4073,12 @@ function sD(e){
   const cy=e.touches?e.touches[0].clientY:e.clientY;
   tapSX=cx;tapSY=cy;tapTime=Date.now();didMove=false;isRotating=false;
   as=this;hz++;as.style.zIndex=hz;
-  const r=as.getBoundingClientRect();sox=cx-r.left;soy=cy-r.top;
+  // Store offset in canvas-content coordinates (immune to scroll changes)
+  dragStartScrollLeft=vp.scrollLeft;dragStartScrollTop=vp.scrollTop;
+  const stickerLeft=parseFloat(as.style.left)||0;
+  const stickerTop=parseFloat(as.style.top)||0;
+  sox=cx/SCALE+vp.scrollLeft/SCALE-stickerLeft;
+  soy=cy/SCALE+vp.scrollTop/SCALE-stickerTop;
   if(e.touches)e.preventDefault();
 }
 
@@ -4101,9 +4107,9 @@ function _schedStickerMove(e){
     const moveThreshold=ev.touches?4:5;
     if(Math.abs(cx-tapSX)>moveThreshold||Math.abs(cy-tapSY)>moveThreshold){
       didMove=true;as.classList.add('dragging');as.classList.remove('paused-offscreen');
-      const cr=getCachedCanvasRect();
-      const nextLeft=(cx-cr.left-sox)/SCALE;
-      const nextTop=(cy-cr.top-soy)/SCALE;
+      // Use scroll-aware coordinates — immune to viewport scroll shifts
+      const nextLeft=cx/SCALE+vp.scrollLeft/SCALE-sox;
+      const nextTop=cy/SCALE+vp.scrollTop/SCALE-soy;
       const clamped=clampStickerToMoodboard(as,nextLeft,nextTop);
       as.style.left=clamped.left+'px';
       as.style.top=clamped.top+'px';
