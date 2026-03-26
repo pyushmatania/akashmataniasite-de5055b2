@@ -6723,23 +6723,26 @@ function drawMap(){
 }
 
 // Render real sticker clones for items visible in the map viewport
+const MAX_MAP_CLONES=60;
 function renderVisibleClones(sc,ox,oy,cw,ch){
   if(!sc||!mapCanvas)return;
   const scrollL=mmInner.scrollLeft||0;
   const scrollT=mmInner.scrollTop||0;
   const vpW=mmInner.clientWidth||window.innerWidth;
   const vpH=mmInner.clientHeight||window.innerHeight;
-  // Visible region in map coords (with buffer)
   const buf=100;
   const visL=scrollL-buf, visT=scrollT-50-buf;
   const visR=scrollL+vpW+buf, visB=scrollT+vpH+buf;
   
   let count=0;
-  stickerData.forEach(d=>{
-    if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
+  const frag=document.createDocumentFragment();
+  const visibilityMinPx=window.innerWidth<600?16:12;
+  for(let i=0;i<stickerData.length;i++){
+    if(count>=MAX_MAP_CLONES)break;
+    const d=stickerData[i];
+    if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))continue;
     const dx=(d.left-ox)*sc, dy=(d.top-oy)*sc;
     const baseScale=sc;
-    const visibilityMinPx=window.innerWidth<600?16:12;
     const maxDim=Math.max(d.w,d.h,1);
     const minVisibleScale=visibilityMinPx/maxDim;
     const cloneScale=Math.max(baseScale,minVisibleScale);
@@ -6747,39 +6750,24 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     const rawW=d.w*cloneScale, rawH=d.h*cloneScale;
     const renderX=dx-((rawW-baseW)/2);
     const renderY=dy-((rawH-baseH)/2);
-    // Only render if in visible viewport
     const iw=Math.max(rawW,8), ih=Math.max(rawH,6);
-    if(renderX+iw<visL||renderX>visR||renderY+ih<visT||renderY>visB)return;
+    if(renderX+iw<visL||renderX>visR||renderY+ih<visT||renderY>visB)continue;
 
     count++;
-    // Render actual sticker clone for faithful appearance and sync
     let clone;
     if(d.ref){
       clone=d.ref.cloneNode(true);
       clone.classList.add('mi','map-sticker-clone');
       const rot=(d.ref.style.transform||'').match(/rotate\([^)]+\)/);
       const transform=(rot?rot[0]+' ':'')+'scale('+cloneScale+')';
-      clone.style.position='absolute';
-      clone.style.left=renderX+'px';
-      clone.style.top=renderY+'px';
-      clone.style.width=d.w+'px';
-      clone.style.height=d.h+'px';
-      clone.style.maxWidth='none';
-      clone.style.maxHeight='none';
-      clone.style.transform=transform;
-      clone.style.transformOrigin='0 0';
-      clone.style.zIndex=d.ref.classList.contains('zone-signpost')?'5':'7';
-      clone.style.cursor='pointer';
-      clone.style.animation='none';
-      clone.style.transition='none';
-      clone.style.filter='none';
-      clone.style.pointerEvents='auto';
+      clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+d.w+'px;height:'+d.h+'px;max-width:none;max-height:none;transform:'+transform+';transform-origin:0 0;z-index:'+(d.ref.classList.contains('zone-signpost')?'5':'7')+';cursor:pointer;animation:none;transition:none;filter:none;pointer-events:auto';
       clone.removeAttribute('data-anim');
       clone.removeAttribute('data-splash');
       clone.removeAttribute('data-contra');
       clone.removeAttribute('onclick');
       clone.classList.remove('dragging');
-      clone.querySelectorAll('*').forEach(c=>{c.style.animation='none';c.style.transition='none'});
+      // Batch-disable animations via CSS class instead of per-element iteration
+      clone.classList.add('map-clone-static');
     } else {
       clone=document.createElement('div');
       clone.className='mi';
@@ -6787,15 +6775,15 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
       if(d.emoji){const l=document.createElement('span');l.textContent=d.emoji;l.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:'+Math.max(Math.min(Math.max(iw,8)*0.6,20),8)+'px;pointer-events:none';clone.appendChild(l)}
     }
     
-    // Click to navigate
     clone.addEventListener('click',ev=>{
       ev.stopPropagation();
       const target=mapClientToWorld(ev.clientX,ev.clientY);
       walkBitmojiTo(target.x,target.y,d.ref);
     });
     
-    mapCanvas.appendChild(clone);
-  });
+    frag.appendChild(clone);
+  }
+  mapCanvas.appendChild(frag);
   if(mapCount)mapCount.textContent=count+' items';
 }
 
