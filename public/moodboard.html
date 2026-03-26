@@ -6344,9 +6344,9 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
       const startBY=worldY+30;
       const mbSteps=10;
       
-      // Footsteps leading to the target
+      // Footsteps leading to the target — tracked for cancellation
       for(let j=1;j<=mbSteps;j++){
-        setTimeout(()=>{
+        _walkFootstepTimers.push(setTimeout(()=>{
           const mt=j/mbSteps;
           const mfx=startBX+(worldX-40-startBX)*mt+((j%2===0?1:-1)*8);
           const mfy=startBY+(worldY+10-startBY)*mt;
@@ -6358,9 +6358,9 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
             mfp.style.background='rgba(139,119,80,0.3)';
           }
           cv.appendChild(mfp);
-          setTimeout(()=>{mfp.style.opacity='0'},1500);
-          setTimeout(()=>mfp.remove(),2800);
-        },j*120);
+          safeTimeout(()=>{mfp.style.opacity='0'},1500);
+          safeTimeout(()=>mfp.remove(),2800);
+        },j*120));
       }
       
       // Show bitmoji guide at the target after footsteps finish
