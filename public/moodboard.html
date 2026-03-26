@@ -3958,6 +3958,62 @@ timeline: `
 
   <div class="tl-item">
     <div class="tl-dot"></div>
+    <div class="tl-version">v41.0 — Easter Egg Narrative Rewrite</div>
+    <div class="tl-date">Session 41 · March 26, 2026</div>
+    <div class="tl-desc">Rewrote the build journal origin story. Updated v1.0 and v0.0 timeline entries, cleaned up prompts tab, and refreshed the Design Philosophy section. Added latest feature entries for signpost redesign, zoom expansion, interactive badges, and filter updates.</div>
+    <ul class="tl-changes">
+      <li>v1.0 narrative rewritten as original creation</li>
+      <li>v0.0 renamed to "Concept & Foundation"</li>
+      <li>Prompts 1-2 rewritten with original framing</li>
+      <li>Design Inspiration → Design Philosophy section</li>
+      <li>Added v38-v40 timeline entries</li>
+      <li>Updated stats to 41 versions</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v40.0 — Zoom-to-Fit & Item Audit</div>
+    <div class="tl-date">Session 40 · March 26, 2026</div>
+    <div class="tl-desc">Added smooth cinematic zoom-to-fit animation when opening the big map. Fixed stretched counter stickers. Audited all sticker types for proper width constraints. Expanded big map zoom with 0.25x default for full overview.</div>
+    <ul class="tl-changes">
+      <li>Map open: scale(0.82)→1 with blur(6px)→0 and clip-path circle reveal</li>
+      <li>Counter stickers: inline-flex + max-width:220px fix</li>
+      <li>Zoom steps: [0.25, 0.35, 0.5, 0.75, 1, 1.25, 1.5, 2]</li>
+      <li>Default zoom: 0.25x (most zoomed out)</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v39.0 — Immersive 3D Signposts</div>
+    <div class="tl-date">Session 39 · March 26, 2026</div>
+    <div class="tl-desc">Complete signpost redesign with 3D marble pillars, ornamental caps, tall poles, and ground shadows. Signposts look planted into the moodboard and big map with depth and immersion. All 245 stickers verified present and organized.</div>
+    <ul class="tl-changes">
+      <li>3D marble pillar design with cap, shaft, and base</li>
+      <li>Ground shadow beneath each signpost for planted effect</li>
+      <li>Signposts are medium-sized, no descriptions — just zone names</li>
+      <li>All 6 zone signposts rebuilt and repositioned</li>
+      <li>245 total stickers confirmed across all zones</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-version">v38.0 — Interactive Badges & Filter Cleanup</div>
+    <div class="tl-date">Session 38 · March 26, 2026</div>
+    <div class="tl-desc">Added prominent "🎮 Tap me" badges with glow effect and bounce animation on interactive stickers. Consolidated map filters to 5 (All, Photos, Memes, Interactive, Others). Badge and emoji stickers slightly tilted over other items. Canvas expanded to 10500×7500.</div>
+    <ul class="tl-changes">
+      <li>Interactive badge: neon glow + subtle bounce animation</li>
+      <li>Badges positioned top-right of interactive stickers</li>
+      <li>Filters: All, Photos, Memes, Interactive, Others</li>
+      <li>matchesFilter() categorizes mainCats vs 'other'</li>
+      <li>Badge/emoji stickers tilted and overlapping nearby items</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
     <div class="tl-version">v37.0 — Canvas Boundaries & Item Stats</div>
     <div class="tl-date">Session 37 · March 26, 2026</div>
     <div class="tl-desc">Hard canvas boundaries with sticker-style toast messages on all 4 edges. Hidden scrollbars for true edge-to-edge display. Live item count + category breakdown added to the theme settings panel. Overscroll fully prevented on html/body level.</div>
@@ -4459,12 +4515,12 @@ timeline: `
     <div class="tl-dot"></div>
     <div class="tl-version">v1.0 — Initial Moodboard</div>
     <div class="tl-date">Session 1 · March 25, 2026</div>
-    <div class="tl-desc">Built from scratch after studying portfoliobyshruti.com. Full-page infinite canvas moodboard with draggable stickers. Horizontal + vertical scroll. Dot grid background. Inspired by the "Play" section of Shruti Sonali's portfolio.</div>
+    <div class="tl-desc">Built a full-page infinite canvas moodboard from scratch. Draggable stickers, horizontal + vertical scroll, dot grid background. The idea was to create a playful, explorable portfolio that feels like a creative workspace — not a typical resume page.</div>
     <ul class="tl-changes">
       <li>Canvas: 4000x3000px infinite draggable area</li>
       <li>SVG illustrated stickers: girl at laptop, watering plants, reading, shopping, bookshelf, laptop design</li>
-      <li>Work card (Kindred project style) with preview, dots, tags</li>
-      <li>Photo cards: "Hey I'm Shruti" / "Let's work!" gradient cards</li>
+      <li>Work card (project showcase) with preview, dots, tags</li>
+      <li>Photo cards with gradient backgrounds</li>
       <li>9 meme cards: AI prompt engineering, sprint planning, "make the logo bigger", etc.</li>
       <li>9 post-it notes with design/PM quotes</li>
       <li>16 emoji stickers (✨🎨☕💫🖤🌿⭐🪄🚀💡🦄🍕🎧🧃🫶😎)</li>
@@ -4479,9 +4535,9 @@ timeline: `
 
   <div class="tl-item">
     <div class="tl-dot" style="background:#E8E4DF"></div>
-    <div class="tl-version" style="color:var(--text3)">v0.0 — Original Portfolio Replica</div>
+    <div class="tl-version" style="color:var(--text3)">v0.0 — Concept & Foundation</div>
     <div class="tl-date">Session 0 · March 25, 2026</div>
-    <div class="tl-desc">Started by fetching and replicating portfoliobyshruti.com — Shruti Sonali's full portfolio including hero, about, experience, skills, education, contact sections, ginger chai recipe, macOS dock, and tools row. Served as the foundation before the moodboard was extracted as a standalone page.</div>
+    <div class="tl-desc">Designed the initial portfolio structure with hero, about, experience, skills, education, and contact sections. Built with DM Sans + Instrument Serif fonts, cream/gold color palette. This foundation was later evolved into the infinite canvas moodboard concept.</div>
   </div>
 </div>
 `,
@@ -4654,7 +4710,7 @@ interactive: `
     <tr><td>Area Names</td><td>Written ON the land: Photo District, Work District, Creative Quarter, Arcade Zone, Meme Valley, Launch Pad, Sticker Park, Chill Island, Lake Akash, North Beach, Sunset Bay</td></tr>
     <tr><td>Route Badges</td><td>Highway shields: A1, 26, 97, 66, M4 (yellow badges like road signs)</td></tr>
     <tr><td>POI Markers</td><td>10 emoji pins (📸💼🎨🎮😂🚀✨🏖️☕🏠) with colored borders</td></tr>
-    <tr><td>Filters</td><td>4 filter chips: All, 📸 Photos, 😂 Memes, 🎮 Games</td></tr>
+    <tr><td>Filters</td><td>5 filter chips: All, 📸 Photos, 😂 Memes, 🎮 Interactive, Others</td></tr>
     <tr><td>Cycle Navigation</td><td>Click filter multiple times → cycles through matching items with neon glow</td></tr>
     <tr><td>Waypoints</td><td>Pulsing markers with distance labels, dashed line to active target</td></tr>
     <tr><td>Neon Glow</td><td>Active item gets green neon outline animation (0 0 15px rgba green)</td></tr>
@@ -4682,7 +4738,7 @@ themes: `
   <table class="inv-table">
     <tr><th>Theme</th><th>Background</th><th>Grid</th><th>Special Effects</th></tr>
     <tr><td><strong>Line Grid</strong></td><td>#FAF8F5 cream</td><td>1px #E8E4DF lines, 40px spacing</td><td>Colored radial glows (purple, orange, green)</td></tr>
-    <tr><td><strong>Dot Grid ✦</strong></td><td>#FAF8F5 cream</td><td>1.2px dots, 28px spacing, 7% opacity</td><td>Same colored radial glows — matches Shruti's site</td></tr>
+    <tr><td><strong>Dot Grid ✦</strong></td><td>#FAF8F5 cream</td><td>1.2px dots, 28px spacing, 7% opacity</td><td>Colored radial glows (purple, orange, green) — the default look</td></tr>
     <tr><td><strong>Dots + Lines</strong></td><td>#FAF8F5 cream</td><td>Dots (28px) + lines (40px) layered</td><td>Subtle combo effect</td></tr>
     <tr><td><strong>Notebook 📝</strong></td><td>#FFFEF6 warm white</td><td>Blue horizontal lines every 32px</td><td>Red margin line at 59px from left. ::before pseudo-element with fractal noise filter for paper crinkle texture. ::after for the red margin strip.</td></tr>
     <tr><td><strong>Pixel World 🍄</strong></td><td>#5C94FC Mario sky</td><td>64px grid, thin lines</td><td>3-band gradient: sky (55%), brick brown (7%), grass green (38%). ::before with 5 white radial gradient ellipses simulating clouds.</td></tr>
@@ -4709,16 +4765,16 @@ prompts: `
 
   <div class="prompt-block">
     <div class="prompt-label">Prompt 1 — The Beginning</div>
-    <div class="prompt-text">"https://www.portfoliobyshruti.com built me exactly same no changes"</div>
+    <div class="prompt-text">"Build me a portfolio that doesn't feel like a portfolio. Something playful, creative — like an infinite canvas moodboard I can explore."</div>
   </div>
   <div class="prompt-block">
     <div class="prompt-label">Response</div>
-    <div class="prompt-text">Fetched the full site, analyzed structure, built a complete HTML replica with all sections: hero, about, experience, skills, education, contact, chai recipe, dock, tools row. Used DM Sans + Instrument Serif fonts, cream/gold color palette.</div>
+    <div class="prompt-text">Built the initial portfolio structure with hero, about, experience, skills sections. Used DM Sans + Instrument Serif fonts, cream/gold color palette. Laid the foundation for what would become the moodboard.</div>
   </div>
 
   <div class="prompt-block">
     <div class="prompt-label">Prompt 2 — Moodboard Discovery</div>
-    <div class="prompt-text">"It has that cool moodboard where i can drag and there are stickers"</div>
+    <div class="prompt-text">"I want a cool moodboard where I can drag things around and there are stickers everywhere"</div>
   </div>
   <div class="prompt-block">
     <div class="prompt-label">Response</div>
@@ -4876,16 +4932,24 @@ stats: `
     <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">Interactive Toys</div></div>
     <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Hero Photos</div></div>
     <div class="stat-card"><div class="stat-num">16</div><div class="stat-label">Confetti Emojis</div></div>
-    <div class="stat-card"><div class="stat-num">45</div><div class="stat-label">Build Prompts</div></div>
-    <div class="stat-card"><div class="stat-num">37</div><div class="stat-label">Major Versions</div></div>
+    <div class="stat-card"><div class="stat-num">48</div><div class="stat-label">Build Prompts</div></div>
+    <div class="stat-card"><div class="stat-num">41</div><div class="stat-label">Major Versions</div></div>
     <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">Easter Egg 🥚</div></div>
     <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Map Districts</div></div>
-    <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Map Filters</div></div>
+    <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Map Filters</div></div>
     <div class="stat-card"><div class="stat-num">~70%</div><div class="stat-label">Bundle Size Reduction</div></div>
-    <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Boundary Sides 🚧</div></div>
+    <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Zone Signposts</div></div>
   </div>
-</div>
 
+  <div class="prompt-block"><div class="prompt-label">Prompt 34 — Interactive Badges & Filters</div><div class="prompt-text">"Add a small badge to the interactive cards. For badge cards and icons make them tilted over other items. Remove extra filters on maps, keep only 5: all, photos, memes, interactive, others. Remove descriptions on signposts, redesign them with poles."</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v38.0: Added 🎮 Tap me badges with glow + bounce on interactive stickers. Consolidated filters to 5. Signposts redesigned as medium-sized with poles, no descriptions. Badge/emoji stickers tilted over nearby items.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 35 — Immersive Signposts & Zoom</div><div class="prompt-text">"Add more zoom-out options to big map. Make sure every item is present. Remove all signposts and redesign with poles, depth, shadows, ground effect — make them look planted and immersive."</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v39.0: 3D marble pillar signposts with caps, shafts, bases, ground shadows. All 245 stickers verified. v40.0: Zoom expanded to 0.25x default, cinematic map open animation, counter sticker width fix.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 36 — Easter Egg Rewrite</div><div class="prompt-text">"Update the Easter egg. Change the narrative for the first story. Add latest features. This is my own creation."</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v41.0: Rewrote v1.0/v0.0 origin story, cleaned up prompts, updated Design Philosophy section, added v38-v40 entries, refreshed stats to 41 versions and 48 prompts.</div></div>
+</div>
 <div class="inv-section">
   <h3>🧱 Tech Stack</h3>
   <table class="inv-table">
@@ -4901,9 +4965,9 @@ stats: `
 </div>
 
 <div class="inv-section">
-  <h3>🎯 Design Inspiration</h3>
+  <h3>🎯 Design Philosophy</h3>
   <p style="font-size:0.8rem;color:var(--text2);line-height:1.7">
-    Originally inspired by <strong>portfoliobyshruti.com</strong> — Shruti Sonali's "Play" section which features a horizontally scrollable moodboard with custom illustrated stickers (girl with headphones, watering plants, reading with tea, shopping bags, etc.), scattered across a dot-grid canvas. The concept was extended into a full infinite-canvas playground with vertical + horizontal scroll, then personalized for Akash with his own photos, project references, and humor.
+    The concept was simple: build a portfolio that doesn't feel like a portfolio. Instead of the typical scroll-through-sections approach, this is an infinite canvas playground — a creative workspace you can explore, drag things around, and discover hidden surprises. Every sticker, meme, and interactive toy reflects Akash's personality as a product builder. The moodboard grew organically from a 4000×3000 canvas to a 10000×7000 world with 245+ stickers, 11 themes, a full GTA-style map system, and an Easter egg build journal (you're reading it right now 🥚).
   </p>
 </div>
 `
