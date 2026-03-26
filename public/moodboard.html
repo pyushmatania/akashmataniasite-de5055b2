@@ -6248,6 +6248,7 @@ function centerMoodboardOn(worldX,worldY,behavior){
 function walkBitmojiTo(worldX,worldY,stickerRef){
   if(walkingInProgress||!mmExp)return;
   clearTimeout(_walkTimer);
+  clearWalkTimers();
   walkingInProgress=true;
   const WALK_DURATION=2500;
   const sc=drawMap._sc||0.05;
