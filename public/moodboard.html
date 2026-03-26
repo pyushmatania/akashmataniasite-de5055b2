@@ -6781,23 +6781,28 @@ function drawMap(){
 }
 
 // Render real sticker clones for items visible in the map viewport
+let _cloneRafId=null;
 function renderVisibleClones(sc,ox,oy,cw,ch){
   if(!sc||!mapCanvas)return;
+  if(_cloneRafId){cancelAnimationFrame(_cloneRafId);_cloneRafId=null;}
+  // Clear existing clones
+  mapCanvas.querySelectorAll('.mi,.map-sticker-clone').forEach(el=>el.remove());
   const scrollL=mmInner.scrollLeft||0;
   const scrollT=mmInner.scrollTop||0;
   const vpW=mmInner.clientWidth||window.innerWidth;
   const vpH=mmInner.clientHeight||window.innerHeight;
-  // Visible region in map coords (with buffer)
   const buf=100;
   const visL=scrollL-buf, visT=scrollT-50-buf;
   const visR=scrollL+vpW+buf, visB=scrollT+vpH+buf;
+  const isMobile=window.innerWidth<600;
+  const visibilityMinPx=isMobile?16:12;
   
-  let count=0;
+  // Collect visible items first
+  const visibleItems=[];
   stickerData.forEach(d=>{
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
     const dx=(d.left-ox)*sc, dy=(d.top-oy)*sc;
     const baseScale=sc;
-    const visibilityMinPx=window.innerWidth<600?16:12;
     const maxDim=Math.max(d.w,d.h,1);
     const minVisibleScale=visibilityMinPx/maxDim;
     const cloneScale=Math.max(baseScale,minVisibleScale);
@@ -6805,56 +6810,62 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     const rawW=d.w*cloneScale, rawH=d.h*cloneScale;
     const renderX=dx-((rawW-baseW)/2);
     const renderY=dy-((rawH-baseH)/2);
-    // Only render if in visible viewport
     const iw=Math.max(rawW,8), ih=Math.max(rawH,6);
     if(renderX+iw<visL||renderX>visR||renderY+ih<visT||renderY>visB)return;
-
-    count++;
-    // Render actual sticker clone for faithful appearance and sync
-    let clone;
-    if(d.ref){
-      clone=d.ref.cloneNode(true);
-      clone.classList.add('mi','map-sticker-clone');
-      const rot=(d.ref.style.transform||'').match(/rotate\([^)]+\)/);
-      const transform=(rot?rot[0]+' ':'')+'scale('+cloneScale+')';
-      clone.style.position='absolute';
-      clone.style.left=renderX+'px';
-      clone.style.top=renderY+'px';
-      clone.style.width=d.w+'px';
-      clone.style.height=d.h+'px';
-      clone.style.maxWidth='none';
-      clone.style.maxHeight='none';
-      clone.style.transform=transform;
-      clone.style.transformOrigin='0 0';
-      clone.style.zIndex=d.ref.classList.contains('zone-signpost')?'5':'7';
-      clone.style.cursor='pointer';
-      clone.style.animation='none';
-      clone.style.transition='none';
-      clone.style.filter='none';
-      clone.style.pointerEvents='auto';
-      clone.removeAttribute('data-anim');
-      clone.removeAttribute('data-splash');
-      clone.removeAttribute('data-contra');
-      clone.removeAttribute('onclick');
-      clone.classList.remove('dragging');
-      clone.querySelectorAll('*').forEach(c=>{c.style.animation='none';c.style.transition='none'});
-    } else {
-      clone=document.createElement('div');
-      clone.className='mi';
-      clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+Math.max(iw,8)+'px;height:'+Math.max(ih,6)+'px;background:'+d.bg+';border-radius:'+d.radius+';z-index:7;cursor:pointer;'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
-      if(d.emoji){const l=document.createElement('span');l.textContent=d.emoji;l.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:'+Math.max(Math.min(Math.max(iw,8)*0.6,20),8)+'px;pointer-events:none';clone.appendChild(l)}
-    }
-    
-    // Click to navigate
-    clone.addEventListener('click',ev=>{
-      ev.stopPropagation();
-      const target=mapClientToWorld(ev.clientX,ev.clientY);
-      walkBitmojiTo(target.x,target.y,d.ref);
-    });
-    
-    mapCanvas.appendChild(clone);
+    visibleItems.push({d,renderX,renderY,cloneScale,iw,ih});
   });
-  if(mapCount)mapCount.textContent=count+' items';
+  
+  // Render in batches using rAF to avoid blocking
+  const BATCH_SIZE=20;
+  let idx=0;
+  const frag=document.createDocumentFragment();
+  
+  function renderBatch(){
+    const end=Math.min(idx+BATCH_SIZE,visibleItems.length);
+    for(;idx<end;idx++){
+      const{d,renderX,renderY,cloneScale,iw,ih}=visibleItems[idx];
+      let clone;
+      if(d.ref){
+        clone=d.ref.cloneNode(true);
+        clone.classList.add('mi','map-sticker-clone');
+        const rot=(d.ref.style.transform||'').match(/rotate\([^)]+\)/);
+        const transform=(rot?rot[0]+' ':'')+'scale('+cloneScale+')';
+        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+d.w+'px;height:'+d.h+'px;max-width:none;max-height:none;transform:'+transform+';transform-origin:0 0;z-index:'+(d.ref.classList.contains('zone-signpost')?'5':'7')+';cursor:pointer;animation:none;transition:none;filter:none;pointer-events:auto';
+        clone.removeAttribute('data-anim');
+        clone.removeAttribute('data-splash');
+        clone.removeAttribute('data-contra');
+        clone.removeAttribute('onclick');
+        clone.classList.remove('dragging');
+        // Disable animations on children — use CSS class instead of iterating all descendants
+        clone.classList.add('no-anim-children');
+      } else {
+        clone=document.createElement('div');
+        clone.className='mi';
+        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+Math.max(iw,8)+'px;height:'+Math.max(ih,6)+'px;background:'+d.bg+';border-radius:'+d.radius+';z-index:7;cursor:pointer;'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
+        if(d.emoji){const l=document.createElement('span');l.textContent=d.emoji;l.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:'+Math.max(Math.min(Math.max(iw,8)*0.6,20),8)+'px;pointer-events:none';clone.appendChild(l)}
+      }
+      clone.addEventListener('click',ev=>{
+        ev.stopPropagation();
+        const target=mapClientToWorld(ev.clientX,ev.clientY);
+        walkBitmojiTo(target.x,target.y,d.ref);
+      });
+      frag.appendChild(clone);
+    }
+    if(idx>=visibleItems.length){
+      mapCanvas.appendChild(frag);
+      if(mapCount)mapCount.textContent=visibleItems.length+' items';
+      _cloneRafId=null;
+    } else {
+      // Flush current batch to DOM and schedule next
+      mapCanvas.appendChild(frag);
+      _cloneRafId=requestAnimationFrame(renderBatch);
+    }
+  }
+  if(visibleItems.length>0){
+    _cloneRafId=requestAnimationFrame(renderBatch);
+  } else {
+    if(mapCount)mapCount.textContent='0 items';
+  }
 }
 
 // ===== WALK BITMOJI TO TARGET =====
