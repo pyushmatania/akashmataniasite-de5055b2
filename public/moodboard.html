@@ -4892,8 +4892,8 @@ function scanStickers(){
     // Determine category
     let cat='other';
     if(s.classList.contains('sticker-hero-photo')||s.classList.contains('sticker-photo-polaroid')||s.classList.contains('sticker-photo-tilt')||s.classList.contains('sticker-photo-circle'))cat='photo';
+    else if(s.classList.contains('sticker-counter')||s.classList.contains('sticker-mood')||s.classList.contains('sticker-scratch')||s.classList.contains('sticker-progress')||s.classList.contains('sticker-fortune')||s.getAttribute('onclick'))cat='interactive';
     else if(s.classList.contains('sticker-meme'))cat='meme';
-    else if(s.classList.contains('sticker-counter')||s.classList.contains('sticker-mood')||s.classList.contains('sticker-scratch')||s.classList.contains('sticker-progress')||s.classList.contains('sticker-fortune'))cat='interactive';
     else if(s.classList.contains('sticker-emoji'))cat='other';
     else if(s.classList.contains('sticker-badge'))cat='other';
     else if(s.classList.contains('sticker-text'))cat='other';
