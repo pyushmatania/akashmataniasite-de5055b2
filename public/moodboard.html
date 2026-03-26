@@ -2540,7 +2540,7 @@ function scrollToZone(e,zone){
   const scaled={x:target.x*scale,y:target.y*scale};
   const vp=document.getElementById('viewport');
   const worldW=(typeof MOODBOARD_WORLD_WIDTH==='number'?MOODBOARD_WORLD_WIDTH:10000);
-  const worldH=(typeof MOODBOARD_WORLD_HEIGHT==='number'?MOODBOARD_WORLD_HEIGHT:7000);
+  const worldH=(typeof MOODBOARD_WORLD_HEIGHT==='number'?MOODBOARD_WORLD_HEIGHT:10000);
   const maxX=Math.max(0,worldW*scale-vp.clientWidth);
   const maxY=Math.max(0,worldH*scale-vp.clientHeight);
   vp.scrollTo({
