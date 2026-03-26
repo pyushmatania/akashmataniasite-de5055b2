@@ -6258,11 +6258,25 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     if(dx+iw<visL||dx>visR||dy+ih<visT||dy>visB)return;
     
     count++;
-    // Create lightweight representation instead of heavy cloneNode
-    const clone=document.createElement('div');
-    clone.className='mi';
-    clone.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+iw+'px;height:'+ih+'px;background:'+d.bg+';border-radius:'+d.radius+';z-index:4;cursor:pointer;'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
-    if(d.emoji){const l=document.createElement('span');l.textContent=d.emoji;l.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:'+Math.max(Math.min(iw*0.6,20),8)+'px;pointer-events:none';clone.appendChild(l)}
+    // Render actual sticker clone for faithful appearance
+    const iw=d.w*sc, ih=d.h*sc;
+    let clone;
+    if(d.ref && iw>4 && ih>3){
+      clone=d.ref.cloneNode(true);
+      clone.className='mi';
+      clone.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;transform:scale('+sc+');transform-origin:0 0;z-index:6;cursor:pointer;animation:none;transition:none;filter:none;';
+      clone.removeAttribute('data-anim');
+      clone.removeAttribute('data-splash');
+      clone.removeAttribute('data-contra');
+      clone.removeAttribute('onclick');
+      clone.classList.remove('dragging');
+      clone.querySelectorAll('*').forEach(c=>{c.style.animation='none';c.style.transition='none'});
+    } else {
+      clone=document.createElement('div');
+      clone.className='mi';
+      clone.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+Math.max(iw,8)+'px;height:'+Math.max(ih,6)+'px;background:'+d.bg+';border-radius:'+d.radius+';z-index:6;cursor:pointer;'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
+      if(d.emoji){const l=document.createElement('span');l.textContent=d.emoji;l.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:'+Math.max(Math.min(Math.max(iw,8)*0.6,20),8)+'px;pointer-events:none';clone.appendChild(l)}
+    }
     
     // Click to navigate
     clone.addEventListener('click',ev=>{
