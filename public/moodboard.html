@@ -3295,10 +3295,10 @@ const vp=document.getElementById('viewport'),cv=document.getElementById('canvas'
 const MOODBOARD_WORLD_WIDTH=14000;
 const MOODBOARD_WORLD_HEIGHT=MOODBOARD_WORLD_WIDTH;
 // Insert scroll-limiter wrapper so native scroll cannot exceed visual canvas bounds
-(function(){const w=document.createElement('div');w.id='cvWrap';w.style.cssText='position:relative;flex-shrink:0;overflow:hidden;';w.style.width=MOODBOARD_WORLD_WIDTH*0.5+'px';w.style.height=MOODBOARD_WORLD_HEIGHT*0.5+'px';cv.parentNode.insertBefore(w,cv);w.appendChild(cv);})();
-const MOODBOARD_ITEM_SAFE_MARGIN=80;
-const MOODBOARD_VIEW_SCALE=0.5;
+const MOODBOARD_VIEW_SCALE=window.innerWidth<=768?0.6:0.72;
 const SCALE=MOODBOARD_VIEW_SCALE;
+(function(){const w=document.createElement('div');w.id='cvWrap';w.style.cssText='position:relative;flex-shrink:0;overflow:hidden;';w.style.width=MOODBOARD_WORLD_WIDTH*SCALE+'px';w.style.height=MOODBOARD_WORLD_HEIGHT*SCALE+'px';cv.parentNode.insertBefore(w,cv);w.appendChild(cv);cv.style.transform='scale('+SCALE+')';})();
+const MOODBOARD_ITEM_SAFE_MARGIN=80;
 const MOODBOARD_VIEW_WIDTH=MOODBOARD_WORLD_WIDTH*MOODBOARD_VIEW_SCALE;
 const MOODBOARD_VIEW_HEIGHT=MOODBOARD_WORLD_HEIGHT*MOODBOARD_VIEW_SCALE;
 const sy=v=>v;
