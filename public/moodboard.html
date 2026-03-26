@@ -5413,10 +5413,11 @@ function mapClientToWorld(clientX,clientY){
   const innerRect=mmInner.getBoundingClientRect();
   const cL=parseFloat(mapCanvas.style.left)||0;
   const cT=parseFloat(mapCanvas.style.top)||0;
+  const hS=drawMap._hStretch||1;
   const mapX=clientX-innerRect.left+mmInner.scrollLeft-cL;
   const mapY=clientY-innerRect.top+mmInner.scrollTop-cT;
   return {
-    x:clampValue(mapX/sc+ox,0,MOODBOARD_WORLD_WIDTH),
+    x:clampValue(mapX/(sc*hS)+ox,0,MOODBOARD_WORLD_WIDTH),
     y:clampValue(mapY/sc+oy,0,MOODBOARD_WORLD_HEIGHT)
   };
 }
