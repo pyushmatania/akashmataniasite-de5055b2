@@ -3746,6 +3746,7 @@ document.addEventListener('mouseup',()=>{iD=false;vp.style.cursor='grab';if(_dra
 let as=null,sox,soy,hz=100,tapSX=0,tapSY=0,tapTime=0,didMove=false;
 let isRotating=false, rotStartAngle=0, stickerBaseAngle=0;
 let suppressStickerClickUntil=0;
+const DRAG_CLICK_GUARD_MS=900;
 
 function getAngle(t1,t2){return Math.atan2(t2.clientY-t1.clientY,t2.clientX-t1.clientX)*180/Math.PI}
 function getCurrentRotation(el){
@@ -3755,11 +3756,18 @@ function getCurrentRotation(el){
 }
 
 // Prevent accidental click handlers right after drag (stops interactive cards from "disappearing")
-document.addEventListener('click',e=>{
-  if(performance.now()<suppressStickerClickUntil&&e.target.closest('.sticker')){
-    e.preventDefault();
+function isInteractionSuppressed(e){
+  if(performance.now()>=suppressStickerClickUntil)return false;
+  if(e){
+    if(e.cancelable)e.preventDefault();
     e.stopPropagation();
+    if(typeof e.stopImmediatePropagation==='function')e.stopImmediatePropagation();
   }
+  return true;
+}
+
+document.addEventListener('click',e=>{
+  if(e.target.closest('.sticker'))isInteractionSuppressed(e);
 },true);
 
 // Event delegation for sticker drag — handles dynamically added stickers too
@@ -3806,7 +3814,7 @@ function _schedStickerMove(e){
     const ev=_smPendingE;
     const cx=ev.touches?ev.touches[0].clientX:ev.clientX;
     const cy=ev.touches?ev.touches[0].clientY:ev.clientY;
-    const moveThreshold=ev.touches?6:8;
+    const moveThreshold=ev.touches?4:5;
     if(Math.abs(cx-tapSX)>moveThreshold||Math.abs(cy-tapSY)>moveThreshold){
       didMove=true;as.classList.add('dragging');
       const cr=getCachedCanvasRect();
@@ -3827,6 +3835,13 @@ function sU(e){
   _cachedCanvasRect=null;
   if(_stickerMoveRAF){cancelAnimationFrame(_stickerMoveRAF);_stickerMoveRAF=null}
   _smPendingE=null;
+  const endTouch=e&&e.changedTouches&&e.changedTouches.length?e.changedTouches[0]:null;
+  const endX=endTouch?endTouch.clientX:(e?e.clientX:null);
+  const endY=endTouch?endTouch.clientY:(e?e.clientY:null);
+  if(typeof endX==='number'&&typeof endY==='number'){
+    const drift=Math.hypot(endX-tapSX,endY-tapSY);
+    if(drift>2)didMove=true;
+  }
   as.classList.remove('dragging');
   if(didMove){
     const left=parseFloat(as.style.left)||0;
@@ -3834,7 +3849,7 @@ function sU(e){
     const next=clampStickerToMoodboard(as,left,top);
     as.style.left=next.left+'px';
     as.style.top=next.top+'px';
-    suppressStickerClickUntil=performance.now()+420;
+    suppressStickerClickUntil=performance.now()+DRAG_CLICK_GUARD_MS;
     if(typeof scanStickers==='function')scanStickers();
   }
   if(isRotating){isRotating=false;as=null;return;}
@@ -3991,6 +4006,7 @@ function spawnConfetti(x,y){
 
 // INTERACTIVE ELEMENTS
 function incr(el,e){
+  if(isInteractionSuppressed(e))return;
   e.stopPropagation();
   const cd=el.querySelector('.c-count');
   let n=parseInt(cd.dataset.count)+1;
@@ -4000,6 +4016,7 @@ function incr(el,e){
 
 const sF=['You will ship something legendary 🚀','A wild unicorn idea approaches 🦄','Your next side project will blow up 💥','Someone will say "great question" 😏','Your PR approved first try ✅','Free chai incoming ☕','Circles will moon 🌙','Mr. Puchu approves 🐕'];
 function scratch(el,e){
+  if(isInteractionSuppressed(e))return;
   e.stopPropagation();
   el.style.display='none';
   const r=el.parentElement.querySelector('.scratch-reveal');
@@ -4010,6 +4027,7 @@ function scratch(el,e){
 
 const fF=["The best PRD is the one that ships","Your next API call returns 200","The real MVP is the MVP","Trust your gut, validate with data","That edge case? It's the main case","Your standup was 47 sec. Legend.","The backlog is a suggestion","You're one deploy from greatness","Circles will change how India funds creativity","Neural OS will be real someday 🧠","Hushh Jeypore is the move 🏡"];
 function fortune(el,e){
+  if(isInteractionSuppressed(e))return;
   e.stopPropagation();
   el.querySelector('.f-text').textContent=fF[Math.floor(Math.random()*fF.length)];
   el.querySelector('.f-label').textContent='tap again for more wisdom';
@@ -4020,6 +4038,7 @@ const moods=[{f:'😫',l:'Monday energy'},{f:'😐',l:'meh'},{f:'🙂',l:'gettin
 function mood(i){document.getElementById('moodFace').textContent=moods[i.value].f;document.getElementById('moodLabel').textContent=moods[i.value].l}
 
 function prog(el,e){
+  if(isInteractionSuppressed(e))return;
   e.stopPropagation();
   const f=el.querySelector('.p-fill'),l=el.querySelector('.p-label');
   let w=parseInt(f.style.width)||12;
@@ -6886,6 +6905,7 @@ let cityIdx=0;
 function journeyMap(el,e){e.stopPropagation();playSfx('click');const c=cities[cityIdx%cities.length];el.querySelector('.meme-text').textContent='📍 '+c.n+': '+c.m;cityIdx++;spawnConfetti(e.clientX||0,e.clientY||0)}
 const phoenixReveals=['From the ashes of Harrier… rose EnterCircles 🔥','From trading losses… rose better risk instincts 📈','From failed startup… rose a better founder 💪','From scoliosis surgery… rose unbreakable resilience 🦴'];
 function phoenixScratch(el,e){e.stopPropagation();playSfx('win');el.style.display='none';const r=el.parentElement.querySelector('.scratch-reveal');r.style.display='block';r.textContent=phoenixReveals[Math.floor(Math.random()*phoenixReveals.length)];spawnConfetti(e.clientX||0,e.clientY||0)}
+function phoenixScratch(el,e){if(isInteractionSuppressed(e))return;e.stopPropagation();playSfx('win');el.style.display='none';const r=el.parentElement.querySelector('.scratch-reveal');r.style.display='block';r.textContent=phoenixReveals[Math.floor(Math.random()*phoenixReveals.length)];spawnConfetti(e.clientX||0,e.clientY||0)}
 const comebackStages=['Scoliosis surgery 🦴','Car caught fire 🔥','Trading hit 📉','Startup death 💀','Still here. Still building. 💪'];
 function comebackCount(el,e){e.stopPropagation();playSfx('click');const cd=el.querySelector('.c-count');let n=parseInt(cd.dataset.count)+1;if(n>comebackStages.length)n=1;cd.dataset.count=n;cd.textContent=n;el.querySelector('.c-label').textContent=comebackStages[Math.min(n-1,comebackStages.length-1)];triggerAnim(el,e)}
 const tradingMoods=['🟢 Moon','🟡 Coping','🔴 Stop Loss','💀 Rekt','🚀 Buying the Dip','🧘 Zen (lying)'];
