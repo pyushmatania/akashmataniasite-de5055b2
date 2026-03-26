@@ -2387,6 +2387,7 @@ body.map-expanded .scroll-counter{display:none!important}
       </div>
       <div class="bar-info">
         <span class="bar-count" id="mapCount">98 items</span>
+        <span class="bar-counter-btn" id="mapCounterBtn" onclick="event.stopPropagation();cycleMapCountMode()" style="background:linear-gradient(135deg,#FF7043,#F4511E);color:#fff;font-size:8px;font-weight:700;padding:2px 7px;border-radius:10px;cursor:pointer;margin-left:4px;display:inline-block;min-width:20px;text-align:center;box-shadow:0 1px 4px rgba(244,81,30,0.4);border:none">🔢</span>
         <span class="bar-coords" id="barCoords">·</span>
       </div>
     </div>
@@ -5592,12 +5593,26 @@ function addMapDecorations(cw, ch){
   addDiv('map-terrain-edge','left:88%;top:15%;width:10%;height:35%;border-radius:40% 60% 50% 50%;background:linear-gradient(-90deg,#5a9e3e,#4e9035);z-index:0');
   addDiv('map-terrain-edge','left:15%;top:2%;width:40%;height:8%;border-radius:50% 50% 40% 60%;background:linear-gradient(180deg,#5a9e3e,#4e9035);z-index:0');
   addDiv('map-terrain-edge','left:20%;top:90%;width:50%;height:8%;border-radius:40% 60% 50% 50%;background:linear-gradient(0deg,#5a9e3e,#4e9035);z-index:0');
-  // Zone-colored tints on the terrain
-  addDiv('map-zone-tint','left:2%;top:3%;width:42%;height:37%;border-radius:30%;background:radial-gradient(ellipse,rgba(76,175,80,0.15),transparent 70%);z-index:0');
-  addDiv('map-zone-tint','left:55%;top:3%;width:43%;height:37%;border-radius:30%;background:radial-gradient(ellipse,rgba(229,57,53,0.1),transparent 70%);z-index:0');
-  addDiv('map-zone-tint','left:2%;top:44%;width:40%;height:26%;border-radius:30%;background:radial-gradient(ellipse,rgba(66,165,245,0.1),transparent 70%);z-index:0');
-  addDiv('map-zone-tint','left:2%;top:74%;width:45%;height:24%;border-radius:30%;background:radial-gradient(ellipse,rgba(255,152,0,0.12),transparent 70%);z-index:0');
-  addDiv('map-zone-tint','left:55%;top:46%;width:43%;height:52%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.1),transparent 70%);z-index:0');
+   // Zone-colored tints on the terrain — BOLDER with glow
+   addDiv('map-zone-tint','left:2%;top:3%;width:42%;height:37%;border-radius:30%;background:radial-gradient(ellipse,rgba(76,175,80,0.35),transparent 65%);z-index:0;filter:blur(2px)');
+   addDiv('map-zone-tint','left:55%;top:3%;width:43%;height:37%;border-radius:30%;background:radial-gradient(ellipse,rgba(229,57,53,0.28),transparent 65%);z-index:0;filter:blur(2px)');
+   addDiv('map-zone-tint','left:2%;top:44%;width:40%;height:26%;border-radius:30%;background:radial-gradient(ellipse,rgba(66,165,245,0.28),transparent 65%);z-index:0;filter:blur(2px)');
+   addDiv('map-zone-tint','left:2%;top:74%;width:45%;height:24%;border-radius:30%;background:radial-gradient(ellipse,rgba(255,152,0,0.32),transparent 65%);z-index:0;filter:blur(2px)');
+   addDiv('map-zone-tint','left:55%;top:46%;width:43%;height:52%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.28),transparent 65%);z-index:0;filter:blur(2px)');
+
+   // === ZONE BORDER LINES — colorful glowing outlines for each area ===
+   const zoneBorders=[
+     {x:2,y:3,w:42,h:37,color:'#4CAF50',label:'📸 Origin'},
+     {x:55,y:3,w:43,h:37,color:'#E53935',label:'🎯 Work'},
+     {x:2,y:44,w:40,h:26,color:'#42A5F5',label:'🚀 Portfolio'},
+     {x:2,y:74,w:45,h:24,color:'#FF9800',label:'🎮 Hobby'},
+     {x:55,y:46,w:43,h:52,color:'#AB47BC',label:'😂 Fun'}
+   ];
+   zoneBorders.forEach(zb=>{
+     addDiv('map-zone-border','left:'+zb.x+'%;top:'+zb.y+'%;width:'+zb.w+'%;height:'+zb.h+'%;border-radius:18px;border:2.5px solid '+zb.color+';box-shadow:0 0 14px '+zb.color+'80,inset 0 0 10px '+zb.color+'30;z-index:1;opacity:0.75');
+     const lbl=addDiv('map-zone-label','left:'+(zb.x+1)+'%;top:'+(zb.y+0.8)+'%;font-family:Arial Black,sans-serif;font-size:'+(!IS_MOBILE_MAP?'10px':'7px')+';font-weight:900;color:'+zb.color+';text-transform:uppercase;letter-spacing:1px;text-shadow:0 0 8px '+zb.color+'90,0 1px 3px rgba(0,0,0,0.4);z-index:2;white-space:nowrap;padding:2px 6px;background:rgba(0,0,0,0.25);border-radius:4px');
+     lbl.textContent=zb.label;
+   });
 
   // === BEACHES ===
   const beaches=[
@@ -6148,10 +6163,10 @@ function drawMap(){
     // Expanded map — keep true coordinates and add larger horizontal travel area
     const usableW=mw;
     const usableH=mh;
-    const leftWorldPad=4200;
-    const rightWorldPad=2600;
-    const topWorldPad=3600;
-    const bottomWorldPad=1200;
+    const leftWorldPad=5500;
+    const rightWorldPad=3500;
+    const topWorldPad=5000;
+    const bottomWorldPad=2400;
     const mapContentW=contentW+leftWorldPad+rightWorldPad;
     const mapContentH=contentH+topWorldPad+bottomWorldPad;
     const fitScale=Math.max(0.02,Math.max(usableW/mapContentW,usableH/mapContentH));
@@ -6256,6 +6271,15 @@ function drawMap(){
     if(mapCount)mapCount.textContent=count+' items';
     // Draw zone names on small minimap with zone-specific colors
     const zoneColors={'Origin':'#4CAF50','Work':'#E53935','Portfolio':'#42A5F5','Hobby':'#FF9800','Fun':'#AB47BC'};
+     // Draw zone borders on small map
+     mapZones.forEach(z=>{
+       const zx1=(z.x1-offsetX)*sc, zy1=(z.y1-offsetY)*sc;
+       const zw=(z.x2-z.x1)*sc, zh=(z.y2-z.y1)*sc;
+       const zc=zoneColors[z.name]||'#4CAF50';
+       const border=document.createElement('div');
+       border.style.cssText='position:absolute;left:'+zx1+'px;top:'+zy1+'px;width:'+zw+'px;height:'+zh+'px;border:1px solid '+zc+';border-radius:3px;box-shadow:0 0 4px '+zc+'50;pointer-events:none;z-index:2;opacity:0.5';
+       mapCanvas.appendChild(border);
+     });
     mapZones.forEach(z=>{
       const zx=((z.x1+z.x2)/2-offsetX)*sc;
       const zy=((z.y1+z.y2)/2-offsetY)*sc;
@@ -6652,6 +6676,36 @@ function matchesFilter(cat,filt){
   return cat===filt;
 }
 let filtClickCount={};
+let mapCountMode=0; // 0=total, 1=by zone, 2=by category
+function cycleMapCountMode(){
+  mapCountMode=(mapCountMode+1)%3;
+  const btn=document.getElementById('mapCounterBtn');
+  const countEl=document.getElementById('mapCount');
+  if(!countEl)return;
+  if(mapCountMode===0){
+    btn.textContent='🔢';
+    if(typeof drawMap==='function')drawMap();
+  } else if(mapCountMode===1){
+    btn.textContent='🗺️';
+    const zoneCounts={};
+    mapZones.forEach(z=>zoneCounts[z.name]=0);
+    stickerData.forEach(d=>{
+      if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
+      for(const z of mapZones){
+        if(d.left>=z.x1&&d.left<=z.x2&&d.top>=z.y1&&d.top<=z.y2){zoneCounts[z.name]++;break;}
+      }
+    });
+    countEl.textContent=Object.entries(zoneCounts).map(([k,v])=>k+':'+v).join(' · ');
+  } else {
+    btn.textContent='📊';
+    const catCounts={};
+    stickerData.forEach(d=>{
+      if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
+      catCounts[d.cat]=(catCounts[d.cat]||0)+1;
+    });
+    countEl.textContent=Object.entries(catCounts).map(([k,v])=>k+':'+v).join(' · ');
+  }
+}
 function filt(c,btn){
   const wasActive=(mFilt===c);
   if(wasActive && c!=='all'){
