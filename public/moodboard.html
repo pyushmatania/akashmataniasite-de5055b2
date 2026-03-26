@@ -5660,10 +5660,11 @@ function addMapDecorations(cw,ch){
   })();
 
   // === ANIMATED BOATS — sailboats, cargo ships, fishing boats ===
-  const sailboats=[
+  const allSailboats=[
     {x:3,y:40,s:22,delay:0},{x:90,y:25,s:20,delay:1.5},{x:5,y:85,s:24,delay:0.8},
     {x:88,y:80,s:18,delay:2},{x:45,y:92,s:22,delay:1},{x:92,y:50,s:20,delay:0.5},
   ];
+  const sailboats=IS_MOBILE_MAP?allSailboats.slice(0,3):allSailboats;
   sailboats.forEach(b=>{
     const wrap=addDiv('map-boat','left:'+b.x+'%;top:'+b.y+'%;width:'+b.s+'px;height:'+(b.s*0.7)+'px;animation-delay:'+b.delay+'s');
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
