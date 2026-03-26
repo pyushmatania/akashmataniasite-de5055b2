@@ -6126,15 +6126,21 @@ function drawMap(){
   let sc,offsetX,offsetY,canvasW,canvasH;
   
   if(mmExp){
-    // Expanded map — strict world sync (no artificial offset/padding)
+    // Expanded map — use wider horizontal area so left-side stickers are accessible
     const usableW=mw;
     const usableH=mh;
-    const fitScale=Math.max(0.02,Math.max(usableW/contentW,usableH/contentH));
+    // Fit vertically, then stretch horizontally by 1.8x so content spreads out
+    const fitScaleV=Math.max(0.02,usableH/contentH);
+    const fitScaleH=Math.max(0.02,usableW/contentW);
+    const fitScale=Math.max(fitScaleV,fitScaleH);
     sc=fitScale*mapZoomScale;
-    canvasW=contentW*sc;
+    // Widen canvas by 1.8x to give horizontal breathing room
+    const hStretch=1.8;
+    canvasW=contentW*sc*hStretch;
     canvasH=contentH*sc;
     offsetX=minL;
     offsetY=minT;
+    drawMap._hStretch=hStretch;
     mapCanvas.style.left=((mw-canvasW)/2)+'px';
     mapCanvas.style.top=((mh-canvasH)/2)+'px';
   } else {
