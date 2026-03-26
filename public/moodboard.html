@@ -6131,16 +6131,18 @@ function drawMap(){
     const usableH=mh;
     const leftWorldPad=4200;
     const rightWorldPad=2600;
+    const topWorldPad=3600;
+    const bottomWorldPad=1200;
     const mapContentW=contentW+leftWorldPad+rightWorldPad;
-    const fitScale=Math.max(0.02,Math.max(usableW/mapContentW,usableH/contentH));
+    const mapContentH=contentH+topWorldPad+bottomWorldPad;
+    const fitScale=Math.max(0.02,Math.max(usableW/mapContentW,usableH/mapContentH));
     sc=fitScale*mapZoomScale;
     canvasW=mapContentW*sc;
-    canvasH=contentH*sc;
+    canvasH=mapContentH*sc;
     offsetX=minL-leftWorldPad;
-    offsetY=minT;
-    // Anchor map canvas to the left so scroll range can actually reach left-side clusters
+    offsetY=minT-topWorldPad;
     mapCanvas.style.left='0px';
-    mapCanvas.style.top=((mh-canvasH)/2)+'px';
+    mapCanvas.style.top='0px';
   } else {
     // SMALL MAP: restore only small-map pan offsets (never expanded-map top offset)
     const zoomFactor=5;
