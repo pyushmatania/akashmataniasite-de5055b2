@@ -6110,33 +6110,22 @@ function addMapDecorations(cw, ch){
     addDiv('map-beach','left:'+b.x+'%;top:'+b.y+'%;width:'+b.w+'%;height:'+b.h+'%;border-radius:'+b.r+';background:'+b.bg);
   });
 
-  // === 3D ISOMETRIC BUILDINGS ===
+  // === 3D ISOMETRIC BUILDINGS — innerHTML is ~15× faster than individual createElementNS calls ===
   function addIsometricBuilding(x,y,w,h,color,roofColor,windows){
     const wrap=addDiv('map-building-iso','left:'+x+'%;top:'+y+'%;width:'+w+'px;height:'+h+'px');
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
     svg.setAttribute('viewBox','0 0 40 50');
-    // Right face (darker)
-    svg.appendChild(svgEl('polygon',{points:'20,18 36,26 36,46 20,38',fill:color,opacity:'0.7'}));
-    // Left face
-    svg.appendChild(svgEl('polygon',{points:'20,18 4,26 4,46 20,38',fill:color,opacity:'0.9'}));
-    // Top face (roof)
-    svg.appendChild(svgEl('polygon',{points:'20,18 36,26 20,34 4,26',fill:roofColor}));
-    // Windows on left face
+    let s='<polygon points="20,18 36,26 36,46 20,38" fill="'+color+'" opacity="0.7"/>';
+    s+='<polygon points="20,18 4,26 4,46 20,38" fill="'+color+'" opacity="0.9"/>';
+    s+='<polygon points="20,18 36,26 20,34 4,26" fill="'+roofColor+'"/>';
     if(windows){
-      for(let wy=0;wy<3;wy++){
-        for(let wx=0;wx<2;wx++){
-          svg.appendChild(svgEl('rect',{x:''+(7+wx*6),y:''+(28+wy*4),width:'3',height:'2.5',rx:'0.3',fill:'rgba(255,255,200,0.7)'}));
-        }
-      }
-      // Windows on right face
-      for(let wy=0;wy<3;wy++){
-        for(let wx=0;wx<2;wx++){
-          svg.appendChild(svgEl('rect',{x:''+(23+wx*6),y:''+(28+wy*4),width:'3',height:'2.5',rx:'0.3',fill:'rgba(255,255,200,0.5)'}));
-        }
+      for(let wy=0;wy<3;wy++)for(let wx=0;wx<2;wx++){
+        s+='<rect x="'+(7+wx*6)+'" y="'+(28+wy*4)+'" width="3" height="2.5" rx="0.3" fill="rgba(255,255,200,0.7)"/>';
+        s+='<rect x="'+(23+wx*6)+'" y="'+(28+wy*4)+'" width="3" height="2.5" rx="0.3" fill="rgba(255,255,200,0.5)"/>';
       }
     }
-    // Highlight edge
-    svg.appendChild(svgEl('line',{x1:'20',y1:'18',x2:'20',y2:'38',stroke:'rgba(255,255,255,0.3)','stroke-width':'0.5'}));
+    s+='<line x1="20" y1="18" x2="20" y2="38" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>';
+    svg.innerHTML=s;
     wrap.appendChild(svg);
   }
 
@@ -6178,26 +6167,21 @@ function addMapDecorations(cw, ch){
   const buildings=IS_MOBILE_MAP?allBuildings.filter((_,i)=>i%2===0):allBuildings;
   buildings.forEach(b=>addIsometricBuilding(b.x,b.y,b.w,b.h,b.c,b.r,b.win));
 
-  // === TALL TOWERS (special landmarks) ===
+  // === TALL TOWERS — innerHTML batch instead of individual createElementNS calls ===
   function addTower(x,y,w,h,color,topColor){
     const wrap=addDiv('map-building-iso','left:'+x+'%;top:'+y+'%;width:'+w+'px;height:'+h+'px');
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
     svg.setAttribute('viewBox','0 0 30 60');
-    // Tower body right
-    svg.appendChild(svgEl('polygon',{points:'15,8 25,14 25,54 15,48',fill:color,opacity:'0.7'}));
-    // Tower body left
-    svg.appendChild(svgEl('polygon',{points:'15,8 5,14 5,54 15,48',fill:color,opacity:'0.9'}));
-    // Top
-    svg.appendChild(svgEl('polygon',{points:'15,8 25,14 15,20 5,14',fill:topColor}));
-    // Spire
-    svg.appendChild(svgEl('polygon',{points:'15,0 17,8 13,8',fill:topColor}));
-    // Windows
+    let s='<polygon points="15,8 25,14 25,54 15,48" fill="'+color+'" opacity="0.7"/>';
+    s+='<polygon points="15,8 5,14 5,54 15,48" fill="'+color+'" opacity="0.9"/>';
+    s+='<polygon points="15,8 25,14 15,20 5,14" fill="'+topColor+'"/>';
+    s+='<polygon points="15,0 17,8 13,8" fill="'+topColor+'"/>';
     for(let i=0;i<5;i++){
-      svg.appendChild(svgEl('rect',{x:'7',y:''+(16+i*6),width:'5',height:'3',rx:'0.5',fill:'rgba(255,255,200,0.6)'}));
-      svg.appendChild(svgEl('rect',{x:'17',y:''+(18+i*6),width:'5',height:'3',rx:'0.5',fill:'rgba(255,255,200,0.4)'}));
+      s+='<rect x="7" y="'+(16+i*6)+'" width="5" height="3" rx="0.5" fill="rgba(255,255,200,0.6)"/>';
+      s+='<rect x="17" y="'+(18+i*6)+'" width="5" height="3" rx="0.5" fill="rgba(255,255,200,0.4)"/>';
     }
-    // Highlight
-    svg.appendChild(svgEl('line',{x1:'15',y1:'8',x2:'15',y2:'48',stroke:'rgba(255,255,255,0.4)','stroke-width':'0.5'}));
+    s+='<line x1="15" y1="8" x2="15" y2="48" stroke="rgba(255,255,255,0.4)" stroke-width="0.5"/>';
+    svg.innerHTML=s;
     wrap.appendChild(svg);
   }
   addTower(48,38,20,40,'#4a9bd9','#3580b8');
