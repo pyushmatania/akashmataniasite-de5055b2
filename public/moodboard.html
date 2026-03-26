@@ -5564,10 +5564,10 @@ function addMapDecorations(cw, ch){
   const IS_MOBILE_MAP=window.innerWidth<600;
 
   // === GREEN TERRAIN / LAND MASS ===
-  // Main island landmass — green grass covering ~80% of map center
-  addDiv('map-terrain','left:6%;top:6%;width:88%;height:88%;border-radius:8% 12% 6% 10%;background:linear-gradient(160deg,#5a9e3e 0%,#6bb848 20%,#4e9035 40%,#5da842 60%,#4a8830 80%,#528f38 100%);box-shadow:inset 0 0 60px rgba(0,0,0,0.08),0 0 30px rgba(0,0,0,0.15);z-index:0');
+  // Main island landmass — nearly full map so stickers stay on land like moodboard zones
+  addDiv('map-terrain','left:1%;top:1%;width:98%;height:96%;border-radius:6% 8% 7% 6%;background:linear-gradient(160deg,#5a9e3e 0%,#6bb848 20%,#4e9035 40%,#5da842 60%,#4a8830 80%,#528f38 100%);box-shadow:inset 0 0 60px rgba(0,0,0,0.08),0 0 30px rgba(0,0,0,0.15);z-index:0');
   // Terrain texture overlay — subtle grass pattern
-  addDiv('map-terrain-texture','left:6%;top:6%;width:88%;height:88%;border-radius:8% 12% 6% 10%;background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(255,255,255,0.03) 8px,rgba(255,255,255,0.03) 16px);z-index:0');
+  addDiv('map-terrain-texture','left:1%;top:1%;width:98%;height:96%;border-radius:6% 8% 7% 6%;background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(255,255,255,0.03) 8px,rgba(255,255,255,0.03) 16px);z-index:0');
   // Soft terrain edges — irregular coastline bumps
   addDiv('map-terrain-edge','left:4%;top:18%;width:8%;height:30%;border-radius:60% 40% 50% 50%;background:linear-gradient(90deg,#5a9e3e,#4e9035);z-index:0');
   addDiv('map-terrain-edge','left:88%;top:15%;width:10%;height:35%;border-radius:40% 60% 50% 50%;background:linear-gradient(-90deg,#5a9e3e,#4e9035);z-index:0');
