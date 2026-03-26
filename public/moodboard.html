@@ -3576,7 +3576,7 @@ document.querySelectorAll('.sticker-emoji').forEach((s,i)=>{
   const cur=s.style.transform||'';
   if(!cur.includes('rotate'))s.style.transform=cur+' rotate('+tilt.toFixed(1)+'deg)';
 });
-const akashCX=(4550)*SCALE, akashCY=sy(3250)*SCALE;
+const akashCX=(7000)*SCALE, akashCY=sy(7000)*SCALE;
 const initialClamp=clampViewportPoint(akashCX-vp.clientWidth/2,akashCY-vp.clientHeight/2);
 vp.scrollLeft=initialClamp.left;
 vp.scrollTop=initialClamp.top;
