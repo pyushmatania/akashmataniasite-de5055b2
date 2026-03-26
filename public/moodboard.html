@@ -5465,11 +5465,7 @@ function addMapDecorations(cw,ch){
     _decLayer.appendChild(el);return el;
   }
 
-  if(IS_LOW_POWER_DEVICE){
-    addDiv('map-land','left:6%;top:8%;width:88%;height:84%;background:linear-gradient(160deg,#7dc462 0%,#4da638 100%);border-radius:30% 40% 35% 45% / 40% 35% 45% 35%;box-shadow:0 6px 20px rgba(0,0,0,0.16)');
-    addDiv('map-beach','left:8%;top:76%;width:80%;height:8%;border-radius:40% 40% 50% 50%;background:linear-gradient(180deg,rgba(245,222,130,0.7),rgba(235,200,100,0.35))');
-    return;
-  }
+  const IS_MOBILE_MAP = IS_LOW_POWER_DEVICE;
 
   // === OCEAN WAVES ===
   for(let i=0;i<50;i++){
