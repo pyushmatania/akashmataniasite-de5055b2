@@ -79,7 +79,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .stats-cat{font-family:var(--font-hand);font-size:0.65rem;color:var(--text3);background:rgba(0,0,0,0.035);border-radius:10px;padding:2px 7px;line-height:1.5}
 
 /* STICKER BASE */
-.sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));contain:layout style paint;content-visibility:auto;contain-intrinsic-size:200px 120px}
+.sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));contain:layout style paint}
 .sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
 .sticker:active{cursor:grabbing}
 .sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important}
@@ -3505,23 +3505,10 @@ vp.scrollLeft=initialClamp.left;
 vp.scrollTop=initialClamp.top;
 
 // SCROLL COUNTER
-let _mmScrollRAF=null;
 vp.addEventListener('scroll',()=>{
-  const clamped=clampViewportPoint(vp.scrollLeft,vp.scrollTop);
-  if(Math.abs(clamped.left-vp.scrollLeft)>0.5||Math.abs(clamped.top-vp.scrollTop)>0.5){
-    vp.scrollLeft=clamped.left;
-    vp.scrollTop=clamped.top;
-    return;
-  }
   const bounds=getViewportPanBounds();
   const mx=bounds.maxX,my=bounds.maxY;
-  document.getElementById('scrollCounter').textContent=Math.round(((vp.scrollLeft+vp.scrollTop)/(mx+my))*100);
-  // Update small minimap on scroll (throttled)
-  if(!mmExp && typeof drawMap==='function'){
-    if(!_mmScrollRAF){
-      _mmScrollRAF=setTimeout(()=>{_mmScrollRAF=null;drawMap();},300);
-    }
-  }
+  if(mx+my>0)document.getElementById('scrollCounter').textContent=Math.round(((vp.scrollLeft+vp.scrollTop)/(mx+my))*100);
 },{passive:true});
 
 // ===== BOUNDARY TOAST — sticker-style edge message =====
