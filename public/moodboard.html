@@ -5384,12 +5384,6 @@ function addMapDecorations(cw,ch){
     signRow.appendChild(board);
     signRow.appendChild(mkPillar());
     wrap.appendChild(signRow);
-    // Description below signpost
-    const descSize=Math.max(8,fontSize*0.55);
-    const desc=document.createElement('div');
-    desc.textContent=z.desc;
-    desc.style.cssText='font-family:Fredoka,sans-serif;font-weight:500;font-size:'+descSize+'px;color:rgba(255,255,255,0.85);background:rgba(0,0,0,0.55);padding:'+Math.max(4,descSize*0.4)+'px '+Math.max(10,descSize*1.2)+'px;border-radius:'+Math.max(3,descSize*0.3)+'px;margin-top:'+Math.max(4,fontSize*0.3)+'px;white-space:normal;max-width:'+Math.max(180,fontSize*16)+'px;text-align:center;line-height:1.4;text-shadow:0 1px 2px rgba(0,0,0,0.4);letter-spacing:0.03em';
-    wrap.appendChild(desc);
     const shadow=document.createElement('div');
     shadow.style.cssText='position:absolute;bottom:-'+(capS*0.6)+'px;left:50%;transform:translateX(-50%);width:95%;height:'+(capS*0.6)+'px;background:radial-gradient(ellipse,rgba(0,0,0,0.3),transparent 70%);border-radius:50%;filter:blur(3px)';
     wrap.appendChild(shadow);
