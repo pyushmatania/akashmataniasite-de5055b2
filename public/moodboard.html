@@ -6569,7 +6569,7 @@ function getZoneName(px,py){
   for(const z of mapZones){
     if(px>=z.x1&&px<=z.x2&&py>=z.y1&&py<=z.y2)return z.icon+' '+z.name;
   }
-  return '⭐ Hub';
+  return '🗺️ Exploring...';
 }
 
 function clampSmallMapPan(rawPx,rawPy,mw,mh,cw,ch){
