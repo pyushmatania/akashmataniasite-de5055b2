@@ -354,6 +354,65 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker-progress .p-bar{height:12px;background:#f0ece6;border-radius:6px;overflow:hidden;margin-bottom:6px}
 .sticker-progress .p-fill{height:100%;border-radius:6px;transition:width 0.5s ease}
 .sticker-progress .p-label{font-size:0.65rem;color:var(--text3)}
+
+/* ===== SPIN WHEEL ===== */
+@keyframes wheelSpin{0%{transform:rotate(0deg)}100%{transform:rotate(var(--spin-deg,1800deg))}}
+.sticker-wheel{background:#fff;border-radius:18px;padding:20px;border:2px solid #f0ece6;width:220px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.08);cursor:pointer}
+.sticker-wheel .wheel-title{font-family:var(--font-fun);font-weight:700;font-size:0.9rem;margin-bottom:10px;color:var(--text)}
+.sticker-wheel .wheel-container{position:relative;width:160px;height:160px;margin:0 auto 10px}
+.sticker-wheel .wheel-svg{width:100%;height:100%;transition:none}
+.sticker-wheel .wheel-svg.spinning{animation:wheelSpin 3s cubic-bezier(0.17,0.67,0.12,0.99) forwards}
+.sticker-wheel .wheel-pointer{position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:1.5rem;z-index:5;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))}
+.sticker-wheel .wheel-result{font-family:var(--font-hand);font-size:1.1rem;color:var(--text);min-height:1.5em;transition:all 0.3s}
+.sticker-wheel .wheel-cta{font-size:0.65rem;color:var(--text3);margin-top:4px}
+
+/* ===== QUIZ CARD ===== */
+.sticker-quiz{background:linear-gradient(135deg,#E8EAF6,#C5CAE9);border-radius:16px;padding:18px 20px;width:230px;box-shadow:0 4px 18px rgba(63,81,181,0.15);cursor:pointer}
+.sticker-quiz .quiz-header{font-family:var(--font-fun);font-weight:700;font-size:0.85rem;color:#283593;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.sticker-quiz .quiz-q{font-family:var(--font-hand);font-size:1rem;color:#1A237E;line-height:1.4;margin-bottom:12px}
+.sticker-quiz .quiz-opts{display:flex;flex-direction:column;gap:6px}
+.sticker-quiz .quiz-opt{background:rgba(255,255,255,0.7);border:1.5px solid rgba(63,81,181,0.2);border-radius:8px;padding:8px 12px;font-family:var(--font-sans);font-size:0.75rem;color:#283593;cursor:pointer;transition:all 0.2s}
+.sticker-quiz .quiz-opt:hover{background:rgba(63,81,181,0.15);border-color:#3F51B5}
+.sticker-quiz .quiz-opt.correct{background:#C8E6C9!important;border-color:#4CAF50!important;color:#2E7D32!important}
+.sticker-quiz .quiz-opt.wrong{background:#FFCDD2!important;border-color:#E53935!important;color:#C62828!important}
+.sticker-quiz .quiz-feedback{font-family:var(--font-hand);font-size:0.85rem;margin-top:8px;min-height:1.2em;color:#283593}
+
+/* ===== SLOT MACHINE ===== */
+.sticker-slots{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:16px;padding:18px 20px;width:200px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.2);border:2px solid #FFD700;cursor:pointer}
+.sticker-slots .slots-title{font-family:var(--font-fun);font-weight:700;font-size:0.85rem;color:#FFD700;margin-bottom:10px;text-shadow:0 0 8px rgba(255,215,0,0.4)}
+.sticker-slots .slots-display{display:flex;gap:6px;justify-content:center;margin-bottom:10px}
+.sticker-slots .slot-reel{width:50px;height:55px;background:#0d0d1a;border-radius:8px;border:1.5px solid #FFD70060;display:flex;align-items:center;justify-content:center;font-size:1.8rem;transition:all 0.1s;overflow:hidden}
+.sticker-slots .slots-result{font-family:var(--font-hand);font-size:0.9rem;color:#FFD700;min-height:1.3em}
+.sticker-slots .slots-cta{font-size:0.6rem;color:#FFD70080;margin-top:4px}
+
+/* ===== MAGIC 8 BALL ===== */
+.sticker-8ball{width:160px;height:160px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#444,#1a1a1a 60%,#000);box-shadow:0 8px 30px rgba(0,0,0,0.3),inset 0 -4px 10px rgba(255,255,255,0.05);cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
+.sticker-8ball .ball-window{width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#1565C0,#0D47A1 70%);border:3px solid #1a1a1a;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 2px 8px rgba(0,0,0,0.4)}
+.sticker-8ball .ball-text{font-family:var(--font-fun);font-size:0.55rem;color:#fff;text-align:center;padding:4px;line-height:1.2;text-shadow:0 0 6px rgba(100,181,246,0.6)}
+.sticker-8ball .ball-label{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-family:var(--font-hand);font-size:0.75rem;color:var(--text3);white-space:nowrap}
+
+/* ===== TYPEWRITER ===== */
+.sticker-typewriter{background:#fff;border-radius:14px;padding:16px 20px;width:230px;border:2px solid #f0ece6;box-shadow:0 3px 14px rgba(0,0,0,0.06);cursor:pointer}
+.sticker-typewriter .tw-header{font-family:var(--font-fun);font-weight:700;font-size:0.8rem;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.sticker-typewriter .tw-paper{background:#FFFDE7;border:1px solid #F9E4A0;border-radius:6px;padding:12px;font-family:'Courier New',monospace;font-size:0.75rem;color:#333;line-height:1.5;min-height:60px;position:relative}
+.sticker-typewriter .tw-paper::after{content:'▊';animation:twBlink 0.8s step-end infinite;color:#333}
+@keyframes twBlink{0%,100%{opacity:1}50%{opacity:0}}
+.sticker-typewriter .tw-cta{font-size:0.6rem;color:var(--text3);margin-top:6px;text-align:right}
+
+/* ===== DICE ROLLER ===== */
+.sticker-dice{background:linear-gradient(135deg,#FFF3E0,#FFE0B2);border-radius:16px;padding:18px 20px;width:180px;text-align:center;box-shadow:0 4px 16px rgba(255,152,0,0.15);cursor:pointer;border:2px solid #FFB74D40}
+.sticker-dice .dice-display{font-size:3rem;margin:6px 0;transition:transform 0.3s}
+.sticker-dice .dice-title{font-family:var(--font-fun);font-weight:700;font-size:0.85rem;color:#E65100}
+.sticker-dice .dice-result{font-family:var(--font-hand);font-size:0.9rem;color:#BF360C;min-height:1.3em;margin-top:4px}
+
+/* ===== LOVE-O-METER ===== */
+.sticker-lovemeter{background:linear-gradient(135deg,#FCE4EC,#F8BBD0);border-radius:16px;padding:18px 20px;width:200px;text-align:center;box-shadow:0 4px 16px rgba(233,30,99,0.12);cursor:pointer;border:2px solid #F48FB140}
+.sticker-lovemeter .lm-title{font-family:var(--font-fun);font-weight:700;font-size:0.85rem;color:#AD1457;margin-bottom:6px}
+.sticker-lovemeter .lm-bar{height:16px;background:#fff;border-radius:8px;overflow:hidden;margin:8px 0;border:1px solid #F48FB1}
+.sticker-lovemeter .lm-fill{height:100%;border-radius:8px;transition:width 0.6s ease;background:linear-gradient(90deg,#E91E63,#FF5252,#FF1744)}
+.sticker-lovemeter .lm-emoji{font-size:2rem;margin:4px 0}
+.sticker-lovemeter .lm-result{font-family:var(--font-hand);font-size:0.9rem;color:#AD1457;min-height:1.3em}
+
 .sticker-washi{height:30px;width:160px;opacity:0.5}
 .sticker-swatches{display:flex;gap:4px;background:#fff;padding:8px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.06)}
 .sticker-swatches .sw{width:40px;height:48px;border-radius:6px}
