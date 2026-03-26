@@ -6686,7 +6686,7 @@ function drawMap(){
         clone.removeAttribute('data-contra');
         clone.removeAttribute('onclick');
         clone.classList.remove('dragging');
-        clone.querySelectorAll('*').forEach(c=>{c.style.animation='none';c.style.transition='none'});
+        clone.classList.add('no-anim-children');
         mapCanvas.appendChild(clone);
       } else {
         // Fallback: tiny colored dot for very small items
