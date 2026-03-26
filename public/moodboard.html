@@ -20,12 +20,12 @@
 html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);background:#FAF8F5;margin:0;padding:0;overscroll-behavior:none}
 *{-webkit-tap-highlight-color:transparent}
 .canvas-viewport{width:100vw;height:100vh;overflow:auto;cursor:grab;position:relative;margin:0;padding:0;background:#FAF8F5;overscroll-behavior:none;will-change:scroll-position}
-.canvas{transform:scale(0.35);transform-origin:0 0;overflow:hidden;contain:layout style}
+.canvas{transform:scale(0.5);transform-origin:0 0;overflow:hidden;contain:layout style}
 .canvas-viewport:active{cursor:grabbing}
 .canvas-viewport::-webkit-scrollbar{display:none}
 .canvas-viewport{scrollbar-width:none;-ms-overflow-style:none}
 .canvas{
-  width:13000px;height:13000px;position:relative;background-color:#FAF8F5;
+  width:14000px;height:14000px;position:relative;background-color:#FAF8F5;
   background-image:
     radial-gradient(circle at 15% 20%,rgba(206,147,216,0.04) 0%,transparent 40%),
     radial-gradient(circle at 85% 60%,rgba(255,183,77,0.04) 0%,transparent 40%),
@@ -373,7 +373,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .bottom-nav a svg{width:22px;height:22px}
 .logo{position:fixed;top:16px;left:20px;z-index:1000;font-family:var(--font-serif);font-style:italic;font-size:1.15rem;color:var(--text);padding:4px 10px;background:var(--yellow-hl);border-radius:4px}
 
-@media(max-width:768px){.canvas{width:12000px;height:12000px}.scroll-counter{font-size:2.5rem;bottom:65px;right:12px}.swipe-hint{bottom:72px}.sticker[data-anim]::after{display:none}}
+@media(max-width:768px){.canvas{width:14000px;height:14000px}.scroll-counter{font-size:2.5rem;bottom:65px;right:12px}.swipe-hint{bottom:72px}.sticker[data-anim]::after{display:none}}
 
 /* ===== SETTINGS PANEL ===== */
 .settings-btn{
@@ -1575,8 +1575,8 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="zone-tint zone-tint-playground" style="left:0;top:5590px;width:6370px;height:7410px"></div>
 <div class="zone-tint zone-tint-memealley" style="left:6760px;top:5590px;width:6240px;height:7410px"></div>
 <!-- Zone dividers -->
-<div class="zone-divider zone-divider-h" style="left:0;top:2860px;width:13000px"></div>
-<div class="zone-divider zone-divider-h" style="left:0;top:5590px;width:13000px"></div>
+<div class="zone-divider zone-divider-h" style="left:0;top:2860px;width:14000px"></div>
+<div class="zone-divider zone-divider-h" style="left:0;top:5590px;width:14000px"></div>
 <div class="zone-divider zone-divider-v" style="left:4420px;top:0;width:2px;height:5590px"></div>
 <div class="zone-divider zone-divider-v" style="left:6500px;top:5590px;width:2px;height:7410px"></div>
 
@@ -2525,12 +2525,12 @@ function closeWorkPanel(){
 
 // ===== ZONE NAVIGATION FROM BOTTOM NAV =====
 const zoneTargets={
-  hub:{x:4680,y:4160},
-  origin:{x:2080,y:1300},
-  warroom:{x:8580,y:1300},
-  launchpad:{x:3380,y:4160},
-  playground:{x:3120,y:7540},
-  memealley:{x:9360,y:7540}
+  hub:{x:5000,y:4500},
+  origin:{x:2700,y:1500},
+  warroom:{x:9500,y:1500},
+  launchpad:{x:3900,y:4300},
+  playground:{x:3500,y:9500},
+  memealley:{x:10500,y:9500}
 };
 function scrollToZone(e,zone){
   e.preventDefault();e.stopPropagation();
@@ -3228,7 +3228,7 @@ function revealHiddenSkills(){
 </script>
 <script>
 const vp=document.getElementById('viewport'),cv=document.getElementById('canvas');
-const MOODBOARD_WORLD_WIDTH=13000;
+const MOODBOARD_WORLD_WIDTH=14000;
 const MOODBOARD_WORLD_HEIGHT=MOODBOARD_WORLD_WIDTH;
 // Insert scroll-limiter wrapper so native scroll cannot exceed visual canvas bounds
 (function(){const w=document.createElement('div');w.id='cvWrap';w.style.cssText='position:relative;flex-shrink:0;overflow:hidden;';w.style.width=MOODBOARD_WORLD_WIDTH*0.5+'px';w.style.height=MOODBOARD_WORLD_HEIGHT*0.5+'px';cv.parentNode.insertBefore(w,cv);w.appendChild(cv);})();
@@ -3462,11 +3462,11 @@ function autoArrangeMoodboardItems(){
   });
 
   placeZoneSignposts(groups.signpost);
-  layoutGroupInGrid(groups.personal,{x1:260,y1:390,x2:4160,y2:2600});
-  layoutGroupInGrid(groups.work,{x1:5200,y1:390,x2:11960,y2:2600});
-  layoutGroupInGrid(groups.portfolio,{x1:390,y1:2990,x2:6760,y2:5200});
-  layoutGroupInGrid(groups.hobby,{x1:390,y1:5590,x2:6370,y2:9500});
-  layoutGroupInGrid(groups.fun,{x1:6760,y1:5590,x2:11960,y2:9500});
+  layoutGroupInGrid(groups.personal,{x1:260,y1:390,x2:5200,y2:2860});
+  layoutGroupInGrid(groups.work,{x1:5500,y1:390,x2:13500,y2:2860});
+  layoutGroupInGrid(groups.portfolio,{x1:390,y1:3100,x2:7500,y2:5590});
+  layoutGroupInGrid(groups.hobby,{x1:390,y1:5900,x2:7000,y2:13500});
+  layoutGroupInGrid(groups.fun,{x1:7200,y1:5900,x2:13500,y2:13500});
   positionBadgeBandages();
   normalizeAllStickerBounds();
 }
@@ -5398,7 +5398,7 @@ function addMapDecorations(cw,ch){
 
   // === MAIN LAND MASSES (bigger to cover all items) ===
   const lands=[
-    {x:3,y:4,w:92,h:88,bg:'linear-gradient(160deg,#7dc462 0%,#5db844 25%,#4da638 50%,#6bc452 75%,#8dd470 100%)',r:'38% 52% 42% 48% / 42% 48% 52% 45%'},
+    {x:1,y:1,w:98,h:96,bg:'linear-gradient(160deg,#7dc462 0%,#5db844 25%,#4da638 50%,#6bc452 75%,#8dd470 100%)',r:'38% 52% 42% 48% / 42% 48% 52% 45%'},
     {x:0,y:0,w:20,h:15,bg:'linear-gradient(135deg,#9dd882 0%,#6bc452 100%)',r:'0 0 55% 0 / 0 0 50% 0'},
     {x:82,y:0,w:18,h:20,bg:'linear-gradient(135deg,#9dd882 0%,#6bc452 100%)',r:'0 0 0 55% / 0 0 0 50%'},
     {x:0,y:80,w:18,h:20,bg:'linear-gradient(145deg,#e8c86a 0%,#d4a843 50%,#c89e3d 100%)',r:'0 55% 0 0 / 0 50% 0 0'},
@@ -5876,7 +5876,7 @@ function drawMap(){
   
   if(mmExp){
     // Expanded map — doubled size
-    const baseScale=Math.max(mw*8/contentW,0.28);
+    const baseScale=Math.max(mw*12/contentW,0.32);
     sc=baseScale*mapZoomScale;
     canvasW=contentW*sc;
     canvasH=contentH*sc;
@@ -6409,12 +6409,12 @@ function showNav(tx,ty){
 
 // Zone definitions for name lookup
 const mapZones=[
-  {name:'Origin Story',icon:'📸',x1:500,y1:500,x2:4000,y2:3500},
-  {name:'The War Room',icon:'🎯',x1:6500,y1:500,x2:12500,y2:3500},
-  {name:'Launch Pad',icon:'🚀',x1:500,y1:3500,x2:5500,y2:6500},
-  {name:'Akash Unplugged',icon:'⭐',x1:3500,y1:3000,x2:8500,y2:6500},
-  {name:'The Playground',icon:'🎮',x1:500,y1:6500,x2:5500,y2:12500},
-  {name:'Meme Alley',icon:'😂',x1:7000,y1:6500,x2:12500,y2:12500}
+  {name:'Origin Story',icon:'📸',x1:200,y1:200,x2:5200,y2:2860},
+  {name:'The War Room',icon:'🎯',x1:5500,y1:200,x2:13800,y2:2860},
+  {name:'Launch Pad',icon:'🚀',x1:200,y1:3100,x2:7500,y2:5590},
+  {name:'Akash Unplugged',icon:'⭐',x1:3500,y1:3000,x2:10000,y2:6000},
+  {name:'The Playground',icon:'🎮',x1:200,y1:5900,x2:7000,y2:13800},
+  {name:'Meme Alley',icon:'😂',x1:7200,y1:5900,x2:13800,y2:13800}
 ];
 function getZoneName(px,py){
   for(const z of mapZones){
