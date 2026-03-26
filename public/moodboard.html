@@ -13,6 +13,7 @@
   --bg:#FAF8F5;--grid:#E8E4DF;--accent:#C9A96E;--text:#1A1A1A;--text2:#5C5C5C;--text3:#8A8A8A;
   --yellow:#FFF176;--yellow-hl:rgba(255,241,118,0.6);--pink:#F8BBD0;--green:#C8E6C9;
   --purple:#E1BEE7;--blue:#B3E5FC;--orange:#FFCCBC;--mint:#B2DFDB;
+  --world-size:15000px;
   --font-sans:'DM Sans',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;
   --font-hand:'Caveat',cursive;--font-fun:'Fredoka',sans-serif;
 }
@@ -24,7 +25,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .canvas-viewport::-webkit-scrollbar{display:none}
 .canvas-viewport{scrollbar-width:none;-ms-overflow-style:none}
 .canvas{
-  width:15000px;height:10500px;position:relative;background-color:#FAF8F5;
+  width:var(--world-size);height:var(--world-size);position:relative;background-color:#FAF8F5;
   background-image:
     radial-gradient(circle at 15% 20%,rgba(206,147,216,0.04) 0%,transparent 40%),
     radial-gradient(circle at 85% 60%,rgba(255,183,77,0.04) 0%,transparent 40%),
@@ -372,7 +373,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .bottom-nav a svg{width:22px;height:22px}
 .logo{position:fixed;top:16px;left:20px;z-index:1000;font-family:var(--font-serif);font-style:italic;font-size:1.15rem;color:var(--text);padding:4px 10px;background:var(--yellow-hl);border-radius:4px}
 
-@media(max-width:768px){.canvas{width:12000px;height:8400px}.scroll-counter{font-size:2.5rem;bottom:65px;right:12px}.swipe-hint{bottom:72px}.sticker[data-anim]::after{display:none}}
+@media(max-width:768px){.canvas{width:12000px;height:12000px}.scroll-counter{font-size:2.5rem;bottom:65px;right:12px}.swipe-hint{bottom:72px}.sticker[data-anim]::after{display:none}}
 
 /* ===== SETTINGS PANEL ===== */
 .settings-btn{
@@ -405,6 +406,20 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   border:1px solid rgba(0,0,0,0.05);
 }
 .theme-label{font-family:var(--font-hand);font-size:0.8rem;color:var(--text2)}
+.rearrange-btn{
+  width:100%;margin-top:10px;border:none;border-radius:12px;padding:11px 12px;
+  background:linear-gradient(135deg,#F5EED9,#EBD8B1);color:#5E4D2E;
+  font-family:var(--font-fun);font-size:0.76rem;font-weight:700;letter-spacing:0.03em;
+  cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,0.08);transition:transform 0.15s,box-shadow 0.2s;
+}
+.rearrange-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.12)}
+.rearrange-btn:active{transform:scale(0.97)}
+.rearrange-note{margin-top:6px;text-align:center;font-size:0.63rem;color:var(--text3);letter-spacing:0.02em}
+
+/* Mobile crash guard */
+body.safety-mode .canvas{background-image:linear-gradient(#E8E4DF 1px, transparent 1px),linear-gradient(90deg,#E8E4DF 1px, transparent 1px)!important;background-size:48px 48px,48px 48px!important}
+body.safety-mode .sticker{filter:drop-shadow(0 2px 6px rgba(0,0,0,0.08))!important}
+body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5px rgba(0,0,0,0.18)!important}
 
 
 /* Notebook paper extras */
@@ -1536,6 +1551,8 @@ body.map-expanded .scroll-counter{display:none!important}
       <div class="theme-label">Matrix ☢️</div>
     </div>
   </div>
+  <button class="rearrange-btn" id="rearrangeBtn" onclick="runItemRearrange(true)">🔀 Rearrange Items</button>
+  <div class="rearrange-note">Organized by category + balanced random scatter</div>
   <div class="board-stats" id="boardStats">
     <div class="stats-total">— <span id="statsTotal">…</span> items on board —</div>
     <div class="stats-cats" id="statsCats"></div>
@@ -1553,15 +1570,15 @@ body.map-expanded .scroll-counter{display:none!important}
 <!-- ===== ZONE TINTS ===== -->
 <div class="zone-tint zone-tint-origin" style="left:0;top:0;width:4200px;height:2700px"></div>
 <div class="zone-tint zone-tint-warroom" style="left:6000px;top:0;width:4500px;height:2700px"></div>
-<div class="zone-tint zone-tint-launchpad" style="left:0;top:2700px;width:4200px;height:2550px"></div>
-<div class="zone-tint zone-tint-hub" style="left:3750px;top:2400px;width:3000px;height:2850px"></div>
-<div class="zone-tint zone-tint-playground" style="left:0;top:5250px;width:7500px;height:5250px"></div>
-<div class="zone-tint zone-tint-memealley" style="left:7500px;top:5250px;width:7500px;height:5250px"></div>
+<div class="zone-tint zone-tint-launchpad" style="left:0;top:3857px;width:4200px;height:3643px"></div>
+<div class="zone-tint zone-tint-hub" style="left:3750px;top:3429px;width:3000px;height:4071px"></div>
+<div class="zone-tint zone-tint-playground" style="left:0;top:7500px;width:7500px;height:7500px"></div>
+<div class="zone-tint zone-tint-memealley" style="left:7500px;top:7500px;width:7500px;height:7500px"></div>
 <!-- Zone dividers -->
-<div class="zone-divider zone-divider-h" style="left:0;top:2700px;width:15000px"></div>
-<div class="zone-divider zone-divider-h" style="left:0;top:5250px;width:15000px"></div>
-<div class="zone-divider zone-divider-v" style="left:4200px;top:0;width:2px;height:5250px"></div>
-<div class="zone-divider zone-divider-v" style="left:7500px;top:5250px;width:2px;height:5250px"></div>
+<div class="zone-divider zone-divider-h" style="left:0;top:3857px;width:15000px"></div>
+<div class="zone-divider zone-divider-h" style="left:0;top:7500px;width:15000px"></div>
+<div class="zone-divider zone-divider-v" style="left:4200px;top:0;width:2px;height:7500px"></div>
+<div class="zone-divider zone-divider-v" style="left:7500px;top:7500px;width:2px;height:7500px"></div>
 
 <!-- ===== YOUR PHOTOS ===== -->
 
@@ -2508,12 +2525,12 @@ function closeWorkPanel(){
 
 // ===== ZONE NAVIGATION FROM BOTTOM NAV =====
 const zoneTargets={
-  hub:{x:5250,y:3750},
-  origin:{x:2250,y:1395},
-  warroom:{x:8100,y:1470},
-  launchpad:{x:5100,y:3675},
-  playground:{x:5400,y:6450},
-  memealley:{x:9300,y:6825}
+  hub:{x:5250,y:5357},
+  origin:{x:2250,y:1993},
+  warroom:{x:8100,y:2100},
+  launchpad:{x:5100,y:5250},
+  playground:{x:5400,y:9214},
+  memealley:{x:9300,y:9750}
 };
 function scrollToZone(e,zone){
   e.preventDefault();e.stopPropagation();
@@ -3212,12 +3229,21 @@ function revealHiddenSkills(){
 <script>
 const vp=document.getElementById('viewport'),cv=document.getElementById('canvas');
 const MOODBOARD_WORLD_WIDTH=15000;
-const MOODBOARD_WORLD_HEIGHT=10500;
+const MOODBOARD_WORLD_HEIGHT=MOODBOARD_WORLD_WIDTH;
+const MOODBOARD_BASELINE_HEIGHT=10500;
+const WORLD_Y_SCALE=MOODBOARD_WORLD_HEIGHT/MOODBOARD_BASELINE_HEIGHT;
 const MOODBOARD_ITEM_SAFE_MARGIN=120;
 const MOODBOARD_VIEW_SCALE=0.35;
 const SCALE=MOODBOARD_VIEW_SCALE;
 const MOODBOARD_VIEW_WIDTH=MOODBOARD_WORLD_WIDTH*MOODBOARD_VIEW_SCALE;
 const MOODBOARD_VIEW_HEIGHT=MOODBOARD_WORLD_HEIGHT*MOODBOARD_VIEW_SCALE;
+const sy=v=>Math.round(v*WORLD_Y_SCALE);
+const IS_LOW_POWER_DEVICE=(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent||''))||((typeof navigator.deviceMemory==='number')&&navigator.deviceMemory<=4);
+
+cv.style.width=MOODBOARD_WORLD_WIDTH+'px';
+cv.style.height=MOODBOARD_WORLD_HEIGHT+'px';
+document.documentElement.style.setProperty('--world-size',MOODBOARD_WORLD_WIDTH+'px');
+if(IS_LOW_POWER_DEVICE)document.body.classList.add('safety-mode');
 
 function clampValue(v,min,max){
   return Math.max(min,Math.min(max,v));
@@ -3295,60 +3321,120 @@ function seededRandom(seed){
   return function(){s=(s*16807+0)%2147483647;return(s-1)/2147483646;};
 }
 
+function shuffleWithSeed(list,rng){
+  const out=list.slice();
+  for(let i=out.length-1;i>0;i--){
+    const j=Math.floor(rng()*(i+1));
+    const t=out[i];out[i]=out[j];out[j]=t;
+  }
+  return out;
+}
+
+function isOverlappingAny(rect,placed,pad){
+  for(const p of placed){
+    if(rect.left+rect.w+pad<p.left||p.left+p.w+pad<rect.left||rect.top+rect.h+pad<p.top||p.top+p.h+pad<rect.top)continue;
+    return true;
+  }
+  return false;
+}
+
 function layoutGroupInGrid(stickers,area){
   if(!stickers.length)return;
-  const ordered=stickers.slice().sort((a,b)=>{
+  const sorted=stickers.slice().sort((a,b)=>{
     const ay=parseFloat(a.style.top)||0;
     const by=parseFloat(b.style.top)||0;
     if(ay!==by)return ay-by;
     return (parseFloat(a.style.left)||0)-(parseFloat(b.style.left)||0);
   });
+  const rng=seededRandom(area.x1*7+area.y1*13+sorted.length*31);
+  const ordered=shuffleWithSeed(sorted,rng);
   const areaW=Math.max(1,area.x2-area.x1);
   const areaH=Math.max(1,area.y2-area.y1);
-  // Use golden ratio-ish columns for natural feel
   const aspect=areaW/areaH;
   const cols=Math.max(2,Math.min(ordered.length,Math.round(Math.sqrt(ordered.length*aspect))));
   const rows=Math.max(1,Math.ceil(ordered.length/cols));
   const cellW=areaW/cols;
   const cellH=areaH/rows;
-  const rng=seededRandom(area.x1*7+area.y1*13+ordered.length*31);
-  // Padding inside each cell to prevent overlap
-  const padX=cellW*0.08;
-  const padY=cellH*0.08;
+  const padX=Math.max(24,cellW*0.12);
+  const padY=Math.max(20,cellH*0.12);
+  const slots=[];
+  for(let row=0;row<rows;row++){
+    for(let col=0;col<cols;col++){
+      slots.push({row,col,jitterX:(rng()-0.5)*cellW*0.55,jitterY:(rng()-0.5)*cellH*0.5});
+    }
+  }
+  const shuffledSlots=shuffleWithSeed(slots,rng);
+  const placed=[];
 
   ordered.forEach((sticker,index)=>{
-    const col=index%cols;
-    const row=Math.floor(index/cols);
+    const slot=shuffledSlots[index%shuffledSlots.length];
+    const col=slot.col;
+    const row=slot.row;
     const w=sticker.offsetWidth||180;
     const h=sticker.offsetHeight||100;
-    // Base position centered in cell with padding
-    let left=area.x1+col*cellW+padX+Math.max(0,(cellW-2*padX-w)/2);
-    let top=area.y1+row*cellH+padY+Math.max(0,(cellH-2*padY-h)/2);
-    // Organic scatter — larger offset range for messier feel
-    const offsetX=(rng()-0.5)*cellW*0.45;
-    const offsetY=(rng()-0.5)*cellH*0.35;
-    left+=offsetX;
-    top+=offsetY;
-    // Stagger odd rows slightly for diagonal flow
-    if(row%2===1) left+=cellW*0.15;
+    let left=area.x1+col*cellW+padX+Math.max(0,(cellW-2*padX-w)/2)+slot.jitterX;
+    let top=area.y1+row*cellH+padY+Math.max(0,(cellH-2*padY-h)/2)+slot.jitterY;
+    if(row%2===1)left+=cellW*0.16;
+    let candidate={left,top,w,h};
+    let tries=0;
+    while(isOverlappingAny(candidate,placed,18)&&tries<16){
+      const nudgeX=(tries%2===0?1:-1)*(14+tries*3)*(0.5+rng());
+      const nudgeY=(tries%3===0?1:-1)*(10+tries*2)*(0.45+rng());
+      candidate.left+=nudgeX;
+      candidate.top+=nudgeY;
+      tries++;
+    }
     const clamped=clampStickerToMoodboard(sticker,left,top);
     sticker.style.left=clamped.left+'px';
     sticker.style.top=clamped.top+'px';
-    // Varied rotation: some items more tilted than others
-    const rotBase=(rng()-0.5)*14; // -7 to +7 degrees
-    const rotExtra=(index%3===0)?(rng()-0.5)*6:0; // occasional extra tilt
+    placed.push({left:clamped.left,top:clamped.top,w,h});
+    const rotBase=(rng()-0.5)*14;
+    const rotExtra=(index%3===0)?(rng()-0.5)*6:0;
     sticker.style.transform='rotate('+(rotBase+rotExtra).toFixed(1)+'deg)';
+  });
+}
+
+function positionBadgeBandages(){
+  const stickers=getAllStickers();
+  const badges=stickers.filter(s=>s.classList.contains('sticker-badge'));
+  if(!badges.length)return;
+  const anchors=stickers.filter(s=>
+    !s.classList.contains('sticker-badge')&&!s.classList.contains('zone-signpost')&&(
+      s.classList.contains('sticker-project')||
+      s.classList.contains('sticker-meme')||
+      s.classList.contains('sticker-postit')||
+      s.classList.contains('sticker-illustrated')||
+      s.classList.contains('sticker-hero-photo')||
+      s.classList.contains('sticker-photo-polaroid')||
+      s.classList.contains('sticker-photo-tilt')
+    )
+  );
+  if(!anchors.length)return;
+  const rng=seededRandom(9001+anchors.length*19+badges.length*11);
+  badges.forEach((badge,idx)=>{
+    const anchor=anchors[idx%anchors.length];
+    const aLeft=parseFloat(anchor.style.left)||0;
+    const aTop=parseFloat(anchor.style.top)||0;
+    const bW=badge.offsetWidth||170;
+    const bH=badge.offsetHeight||40;
+    const rawLeft=aLeft-Math.min(42,bW*0.32)+(rng()-0.5)*20;
+    const rawTop=aTop-Math.min(24,bH*0.55)+(rng()-0.5)*12;
+    const next=clampStickerToMoodboard(badge,rawLeft,rawTop);
+    badge.style.left=next.left+'px';
+    badge.style.top=next.top+'px';
+    badge.style.transform='rotate('+(-18+rng()*10).toFixed(1)+'deg)';
+    badge.style.zIndex='68';
   });
 }
 
 function placeZoneSignposts(signposts){
   const anchors={
-    origin:{left:1650,top:330},
-    warroom:{left:7800,top:330},
-    launchpad:{left:3900,top:3000},
-    hub:{left:5250,top:3900},
-    playground:{left:1800,top:5700},
-    memealley:{left:9600,top:5700}
+    origin:{left:1650,top:sy(330)},
+    warroom:{left:7800,top:sy(330)},
+    launchpad:{left:3900,top:sy(3000)},
+    hub:{left:5250,top:sy(3900)},
+    playground:{left:1800,top:sy(5700)},
+    memealley:{left:9600,top:sy(5700)}
   };
 
   signposts.forEach(sticker=>{
@@ -3376,21 +3462,28 @@ function autoArrangeMoodboardItems(){
   });
 
   placeZoneSignposts(groups.signpost);
-  // Origin/Personal — top-left, generous breathing room
-  layoutGroupInGrid(groups.personal,{x1:350,y1:450,x2:4800,y2:2700});
-  // Work — top-right, balanced width
-  layoutGroupInGrid(groups.work,{x1:6300,y1:450,x2:13800,y2:2700});
-  // Portfolio — center band, slightly wider
-  layoutGroupInGrid(groups.portfolio,{x1:450,y1:3150,x2:7800,y2:5250});
-  // Hobby — bottom-left, well-spaced for many items
-  layoutGroupInGrid(groups.hobby,{x1:450,y1:5850,x2:7500,y2:9750});
-  // Fun/Memes — bottom-right, balanced
-  layoutGroupInGrid(groups.fun,{x1:7800,y1:5850,x2:13800,y2:9750});
+  layoutGroupInGrid(groups.personal,{x1:350,y1:sy(450),x2:4800,y2:sy(2700)});
+  layoutGroupInGrid(groups.work,{x1:6300,y1:sy(450),x2:13800,y2:sy(2700)});
+  layoutGroupInGrid(groups.portfolio,{x1:450,y1:sy(3150),x2:7800,y2:sy(5250)});
+  layoutGroupInGrid(groups.hobby,{x1:450,y1:sy(5850),x2:7500,y2:sy(9750)});
+  layoutGroupInGrid(groups.fun,{x1:7800,y1:sy(5850),x2:13800,y2:sy(9750)});
+  positionBadgeBandages();
   normalizeAllStickerBounds();
 }
 
-// Center on the Akash hub zone
-autoArrangeMoodboardItems();
+function runItemRearrange(triggeredByUser){
+  autoArrangeMoodboardItems();
+  normalizeAllStickerBounds();
+  if(typeof ensureMapData==='function')ensureMapData(true);
+  if(typeof drawMap==='function')drawMap();
+  if(typeof updMap==='function')updMap();
+  const btn=document.getElementById('rearrangeBtn');
+  if(triggeredByUser&&btn){
+    const old=btn.textContent;
+    btn.textContent='✅ Rearranged';
+    setTimeout(()=>{btn.textContent=old;},1100);
+  }
+}
 
 // Add interactive badges to interactive stickers (including onclick-based ones)
 document.querySelectorAll('.sticker-counter,.sticker-mood,.sticker-scratch,.sticker-progress,.sticker-fortune,.sticker[onclick],.sticker-meme[onclick]').forEach(s=>{
@@ -3402,13 +3495,13 @@ document.querySelectorAll('.sticker-counter,.sticker-mood,.sticker-scratch,.stic
   s.appendChild(badge);
 });
 
-// Tilt badge & icon stickers slightly over other items
-document.querySelectorAll('.sticker-badge,.sticker-emoji').forEach((s,i)=>{
+// Tilt icon stickers slightly for playful depth
+document.querySelectorAll('.sticker-emoji').forEach((s,i)=>{
   const tilt=((i%2===0)?-8:8)+(Math.random()*4-2);
   const cur=s.style.transform||'';
   if(!cur.includes('rotate'))s.style.transform=cur+' rotate('+tilt.toFixed(1)+'deg)';
 });
-const akashCX=(3500)*SCALE, akashCY=(2500)*SCALE;
+const akashCX=(3500)*SCALE, akashCY=sy(2500)*SCALE;
 const initialClamp=clampViewportPoint(akashCX-vp.clientWidth/2,akashCY-vp.clientHeight/2);
 vp.scrollLeft=initialClamp.left;
 vp.scrollTop=initialClamp.top;
@@ -5082,6 +5175,7 @@ let activeDestinationMarker=null;
 let activeDestinationWorld=null;
 let mapBootstrapped=false;
 let mapResizeTimer=null;
+let hasAutoArranged=false;
 
 function viewportToWorld(vx,vy){
   return {x:vx/MOODBOARD_VIEW_SCALE,y:vy/MOODBOARD_VIEW_SCALE};
@@ -5283,6 +5377,12 @@ function addMapDecorations(cw,ch){
   function addDiv(cls,css){
     const el=document.createElement('div');el.className=cls;el.style.cssText=css;
     mapCanvas.appendChild(el);return el;
+  }
+
+  if(IS_LOW_POWER_DEVICE){
+    addDiv('map-land','left:6%;top:8%;width:88%;height:84%;background:linear-gradient(160deg,#7dc462 0%,#4da638 100%);border-radius:30% 40% 35% 45% / 40% 35% 45% 35%;box-shadow:0 6px 20px rgba(0,0,0,0.16)');
+    addDiv('map-beach','left:8%;top:76%;width:80%;height:8%;border-radius:40% 40% 50% 50%;background:linear-gradient(180deg,rgba(245,222,130,0.7),rgba(235,200,100,0.35))');
+    return;
   }
 
   // === OCEAN WAVES ===
@@ -6296,13 +6396,13 @@ function showNav(tx,ty){
 
 // Zone definitions for name lookup
 const mapZones=[
-  {x1:0,y1:0,x2:4200,y2:2700,name:'Origin Story',icon:'📸'},
-  {x1:4200,y1:2700,x2:6300,y2:4800,name:'Akash Unplugged',icon:'⭐'},
-  {x1:6000,y1:0,x2:10500,y2:2700,name:'The War Room',icon:'🎯'},
-  {x1:0,y1:2700,x2:4200,y2:5250,name:'Launch Pad',icon:'🚀'},
-  {x1:0,y1:5250,x2:7500,y2:10500,name:'The Playground',icon:'🎮'},
-  {x1:7500,y1:5250,x2:15000,y2:10500,name:'Meme Alley',icon:'😂'},
-  {x1:10500,y1:0,x2:15000,y2:5250,name:'The War Room',icon:'🎯'},
+  {x1:0,y1:0,x2:4200,y2:sy(2700),name:'Origin Story',icon:'📸'},
+  {x1:4200,y1:sy(2700),x2:6300,y2:sy(4800),name:'Akash Unplugged',icon:'⭐'},
+  {x1:6000,y1:0,x2:10500,y2:sy(2700),name:'The War Room',icon:'🎯'},
+  {x1:0,y1:sy(2700),x2:4200,y2:sy(5250),name:'Launch Pad',icon:'🚀'},
+  {x1:0,y1:sy(5250),x2:7500,y2:MOODBOARD_WORLD_HEIGHT,name:'The Playground',icon:'🎮'},
+  {x1:7500,y1:sy(5250),x2:15000,y2:MOODBOARD_WORLD_HEIGHT,name:'Meme Alley',icon:'😂'},
+  {x1:10500,y1:0,x2:15000,y2:sy(5250),name:'The War Room',icon:'🎯'},
 ];
 function getZoneName(px,py){
   for(const z of mapZones){
@@ -6540,7 +6640,10 @@ function initBoardStats(){
 // Scan once on load, then draw + greeting
 function bootstrapMap(forceRescan){
   try{
-    autoArrangeMoodboardItems();
+    if(forceRescan||!hasAutoArranged){
+      autoArrangeMoodboardItems();
+      hasAutoArranged=true;
+    }
     normalizeAllStickerBounds();
     ensureMapData(forceRescan);
     drawMap();
@@ -6563,7 +6666,7 @@ setTimeout(()=>{
 
 window.addEventListener('resize',()=>{
   clearTimeout(mapResizeTimer);
-  mapResizeTimer=setTimeout(()=>{if(mapBootstrapped)bootstrapMap(true)},140);
+  mapResizeTimer=setTimeout(()=>{if(mapBootstrapped)bootstrapMap(false)},140);
 });
 
 
