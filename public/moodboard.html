@@ -6196,7 +6196,7 @@ function drawMap(){
       if(zx<-30||zx>canvasW+30||zy<-30||zy>canvasH+30)return;
       const zc=zoneColors[z.name]||'rgba(40,60,30,0.5)';
       const lbl=document.createElement('div');
-      lbl.textContent=z.icon+' '+z.name.replace('The ','');
+      lbl.textContent=z.icon+' '+z.name;
       lbl.style.cssText='position:absolute;left:'+zx+'px;top:'+zy+'px;transform:translate(-50%,-50%);font-family:Arial Black,sans-serif;font-size:5px;font-weight:900;color:'+zc+';text-transform:uppercase;letter-spacing:0.5px;pointer-events:none;white-space:nowrap;text-shadow:0 0.5px 1px rgba(0,0,0,0.3);opacity:0.7';
       mapCanvas.appendChild(lbl);
     });
