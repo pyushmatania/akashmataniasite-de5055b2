@@ -5706,13 +5706,15 @@ function toggleMap(){
     // --- EXPAND ---
     mmExp=true;
     mmContainer.classList.add('map-opening');
-    // Rebuild at full size
-    ensureMapData(true);
-    mapZoomScale=2;
-    const zl=document.getElementById('mapZoomLevel');
-    if(zl)zl.textContent=mapZoomScale+'×';
-    drawMap();
-    updMap();
+    // Defer heavy work to next frame so CSS animation starts immediately
+    requestAnimationFrame(()=>{
+      ensureMapData(false);
+      mapZoomScale=2;
+      const zl=document.getElementById('mapZoomLevel');
+      if(zl)zl.textContent=mapZoomScale+'×';
+      drawMap();
+      updMap();
+    });
     // After animation, switch to expanded state
     setTimeout(()=>{
       mmContainer.classList.remove('map-opening');
@@ -5730,9 +5732,10 @@ function toggleMap(){
       mapTransitioning=false;
       mapZoomScale=1;
       // Redraw as small minimap
-      ensureMapData(true);
-      drawMap();
-      updMap();
+      requestAnimationFrame(()=>{
+        drawMap();
+        updMap();
+      });
     },550);
   }
 }
