@@ -6256,11 +6256,18 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
   stickerData.forEach(d=>{
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
     const dx=(d.left-ox)*sc, dy=(d.top-oy)*sc;
-    const cloneScale=sc;
+    const baseScale=sc;
+    const visibilityMinPx=window.innerWidth<600?16:12;
+    const maxDim=Math.max(d.w,d.h,1);
+    const minVisibleScale=visibilityMinPx/maxDim;
+    const cloneScale=Math.max(baseScale,minVisibleScale);
+    const baseW=d.w*baseScale, baseH=d.h*baseScale;
     const rawW=d.w*cloneScale, rawH=d.h*cloneScale;
+    const renderX=dx-((rawW-baseW)/2);
+    const renderY=dy-((rawH-baseH)/2);
     // Only render if in visible viewport
     const iw=Math.max(rawW,8), ih=Math.max(rawH,6);
-    if(dx+iw<visL||dx>visR||dy+ih<visT||dy>visB)return;
+    if(renderX+iw<visL||renderX>visR||renderY+ih<visT||renderY>visB)return;
 
     count++;
     // Render actual sticker clone for faithful appearance and sync
@@ -6271,8 +6278,8 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
       const rot=(d.ref.style.transform||'').match(/rotate\([^)]+\)/);
       const transform=(rot?rot[0]+' ':'')+'scale('+cloneScale+')';
       clone.style.position='absolute';
-      clone.style.left=dx+'px';
-      clone.style.top=dy+'px';
+      clone.style.left=renderX+'px';
+      clone.style.top=renderY+'px';
       clone.style.width=d.w+'px';
       clone.style.height=d.h+'px';
       clone.style.maxWidth='none';
@@ -6294,7 +6301,7 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     } else {
       clone=document.createElement('div');
       clone.className='mi';
-      clone.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+Math.max(iw,8)+'px;height:'+Math.max(ih,6)+'px;background:'+d.bg+';border-radius:'+d.radius+';z-index:7;cursor:pointer;'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
+      clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+Math.max(iw,8)+'px;height:'+Math.max(ih,6)+'px;background:'+d.bg+';border-radius:'+d.radius+';z-index:7;cursor:pointer;'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
       if(d.emoji){const l=document.createElement('span');l.textContent=d.emoji;l.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:'+Math.max(Math.min(Math.max(iw,8)*0.6,20),8)+'px;pointer-events:none';clone.appendChild(l)}
     }
     
