@@ -3342,7 +3342,7 @@ function clampStickerToMoodboard(sticker,left,top){
 }
 
 function getAllStickers(){
-  return Array.from(document.querySelectorAll('#canvas > .sticker:not(.intro-card)'));
+  return Array.from(document.querySelectorAll('#canvas > .sticker:not(.intro-card):not([data-zone="hub"])'));
 }
 function getAllStickersIncludingIntro(){
   return Array.from(document.querySelectorAll('#canvas > .sticker'));
