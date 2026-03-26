@@ -3317,6 +3317,22 @@ function autoArrangeMoodboardItems(){
 
 // Center on the Akash hub zone
 autoArrangeMoodboardItems();
+
+// Add interactive badges to interactive stickers
+document.querySelectorAll('.sticker-counter,.sticker-mood,.sticker-scratch,.sticker-progress,.sticker-fortune').forEach(s=>{
+  s.style.position='relative';
+  const badge=document.createElement('div');
+  badge.className='interactive-badge';
+  badge.textContent='🎮 Tap me';
+  s.appendChild(badge);
+});
+
+// Tilt badge & icon stickers slightly over other items
+document.querySelectorAll('.sticker-badge,.sticker-emoji').forEach((s,i)=>{
+  const tilt=((i%2===0)?-8:8)+(Math.random()*4-2);
+  const cur=s.style.transform||'';
+  if(!cur.includes('rotate'))s.style.transform=cur+' rotate('+tilt.toFixed(1)+'deg)';
+});
 const akashCX=(3500)*SCALE, akashCY=(2500)*SCALE;
 const initialClamp=clampViewportPoint(akashCX-vp.clientWidth/2,akashCY-vp.clientHeight/2);
 vp.scrollLeft=initialClamp.left;
