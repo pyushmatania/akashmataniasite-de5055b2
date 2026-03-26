@@ -6596,19 +6596,17 @@ function drawMap(){
       {x:86,y:58,type:'line',color:'#E53935',w:0.5,h:5},
     ];
     const cW=canvasW,cH=canvasH;
-    miniNeon.forEach(n=>{
+    miniNeon.forEach((n,idx)=>{
       const el=document.createElement('div');
-      el.style.position='absolute';
-      el.style.pointerEvents='none';
-      el.style.zIndex='5';
       const px=n.x/100*cW, py=n.y/100*cH;
+      const delay=(idx*0.3%2.5).toFixed(1);
       if(n.type==='dot'){
-        el.style.cssText='position:absolute;left:'+px+'px;top:'+py+'px;width:3px;height:3px;border-radius:50%;background:'+n.color+';box-shadow:0 0 3px '+n.color+',0 0 6px '+n.color+';pointer-events:none;z-index:5;opacity:0.8';
+        el.style.cssText='position:absolute;left:'+px+'px;top:'+py+'px;width:3px;height:3px;border-radius:50%;background:'+n.color+';box-shadow:0 0 3px '+n.color+',0 0 6px '+n.color+';pointer-events:none;z-index:5;animation:miniNeonPulse 2s ease-in-out '+delay+'s infinite';
       } else if(n.type==='ring'){
-        el.style.cssText='position:absolute;left:'+px+'px;top:'+py+'px;width:4px;height:4px;border-radius:50%;border:0.8px solid '+n.color+';box-shadow:0 0 3px '+n.color+',inset 0 0 2px '+n.color+';pointer-events:none;z-index:5;opacity:0.7';
+        el.style.cssText='position:absolute;left:'+px+'px;top:'+py+'px;width:4px;height:4px;border-radius:50%;border:0.8px solid '+n.color+';box-shadow:0 0 3px '+n.color+',inset 0 0 2px '+n.color+';pointer-events:none;z-index:5;animation:miniNeonPulse 2.4s ease-in-out '+delay+'s infinite';
       } else {
         const w=n.w/100*cW, h=n.h/100*cH;
-        el.style.cssText='position:absolute;left:'+px+'px;top:'+py+'px;width:'+Math.max(2,w)+'px;height:'+Math.max(1,h)+'px;border-radius:2px;background:'+n.color+';box-shadow:0 0 3px '+n.color+';pointer-events:none;z-index:5;opacity:0.6';
+        el.style.cssText='position:absolute;left:'+px+'px;top:'+py+'px;width:'+Math.max(2,w)+'px;height:'+Math.max(1,h)+'px;border-radius:2px;background:'+n.color+';box-shadow:0 0 3px '+n.color+';pointer-events:none;z-index:5;animation:miniNeonPulse 2.8s ease-in-out '+delay+'s infinite';
       }
       mapCanvas.appendChild(el);
     });
