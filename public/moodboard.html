@@ -2092,9 +2092,7 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="signpost-board" style="background:linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)">😂 FUN</div>
   <div class="signpost-pillar"><div class="pillar-cap"></div><div class="pillar-shaft"></div><div class="pillar-base"></div></div>
   <div class="signpost-ground"></div>
-</div>
-  </div>
-</div>
+
 
 <!-- ===== HUB: INTRO — CENTER OF CANVAS ===== -->
 <!-- ===== HUB: INTRO — CENTER OF CANVAS ===== -->
@@ -3428,7 +3426,7 @@ function identifyStickerGroup(sticker){
   if(zone==='origin')return 'personal';
   if(zone==='hobby')return 'hobby';
   if(zone==='fun')return 'fun';
-  if(zone==='hub')return 'personal';
+  if(zone==='hub')return 'hub';
   const c=sticker.classList;
   const text=(sticker.textContent||'').toLowerCase();
   if(c.contains('zone-signpost'))return 'signpost';
@@ -3579,7 +3577,7 @@ function placeZoneSignposts(signposts){
 }
 
 function autoArrangeMoodboardItems(){
-  const groups={signpost:[],personal:[],work:[],portfolio:[],hobby:[],fun:[]};
+  const groups={signpost:[],personal:[],work:[],portfolio:[],hobby:[],hub:[],fun:[]};
   const stickers=getAllStickers();
   stickers.forEach(sticker=>{
     const group=identifyStickerGroup(sticker);
@@ -3592,6 +3590,7 @@ function autoArrangeMoodboardItems(){
   layoutGroupInGrid(groups.work,{x1:7700,y1:400,x2:13700,y2:5600});
   layoutGroupInGrid(groups.portfolio,{x1:300,y1:6200,x2:5600,y2:9800});
   layoutGroupInGrid(groups.hobby,{x1:300,y1:10400,x2:6300,y2:13700});
+  layoutGroupInGrid(groups.hub,{x1:6050,y1:6050,x2:8100,y2:8150});
   layoutGroupInGrid(groups.fun,{x1:7700,y1:6400,x2:13700,y2:13700});
   positionBadgeBandages();
   normalizeAllStickerBounds();
