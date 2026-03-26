@@ -6618,49 +6618,25 @@ function drawMap(){
     }
     // SMALL: render mini sticker previews with actual content
     let count=0;
+    const frag=document.createDocumentFragment();
     stickerData.forEach(d=>{
      if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
       const dx=(d.left-offsetX)*sc, dy=(d.top-offsetY)*sc;
       if(dx<-30||dx>canvasW+30||dy<-30||dy>canvasH+30)return;
       count++;
       const w=Math.max(4,d.w*sc),h=Math.max(3,d.h*sc);
-      // Category color for minimap border
       const catColors={photo:'#64B5F6',meme:'#CE93D8',badge:'#FFD54F',interactive:'#FF7043',postit:'#81C784',stamp:'#EF5350',emoji:'transparent'};
       const catBorder=catColors[d.cat]||'rgba(255,255,255,0.3)';
       
-      // For items large enough, render a scaled-down clone of the actual sticker
-      if(w>6 && h>5 && d.ref){
-        const clone=d.ref.cloneNode(true);
-        clone.style.position='absolute';
-        clone.style.left=dx+'px';
-        clone.style.top=dy+'px';
-        clone.style.transform='scale('+sc+')';
-        clone.style.transformOrigin='0 0';
-        clone.style.zIndex='4';
-        clone.style.pointerEvents='none';
-        clone.style.cursor='default';
-        clone.style.animation='none';
-        clone.style.transition='none';
-        clone.style.filter='none';
-        clone.style.opacity='0.85';
-        if(catBorder!=='transparent')clone.style.outline='2px solid '+catBorder;
-        clone.style.outlineOffset='1px';
-        clone.removeAttribute('data-anim');
-        clone.removeAttribute('data-splash');
-        clone.removeAttribute('data-contra');
-        clone.removeAttribute('onclick');
-        clone.classList.remove('dragging');
-        clone.querySelectorAll('*').forEach(c=>{c.style.animation='none';c.style.transition='none'});
-        mapCanvas.appendChild(clone);
-      } else {
-        // Fallback: tiny colored dot for very small items
-        const el=document.createElement('div');
-        el.className='mi';
-        el.style.cssText='left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;background:'+d.bg+';border-radius:'+d.radius+';'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
-        if(d.emoji&&w>3){const l=document.createElement('div');l.className='mi-emoji-label';l.textContent=d.emoji;l.style.fontSize=Math.max(Math.min(w*0.55,20),3)+'px';el.appendChild(l)}
-        mapCanvas.appendChild(el);
-      }
+      // Always use lightweight rectangles for small map (no cloneNode)
+      const el=document.createElement('div');
+      el.className='mi';
+      el.style.cssText='left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;background:'+d.bg+';border-radius:'+d.radius+';'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
+      if(catBorder!=='transparent')el.style.outline='1px solid '+catBorder;
+      if(d.emoji&&w>3){const l=document.createElement('div');l.className='mi-emoji-label';l.textContent=d.emoji;l.style.fontSize=Math.max(Math.min(w*0.55,20),3)+'px';el.appendChild(l)}
+      frag.appendChild(el);
     });
+    mapCanvas.appendChild(frag);
     if(mapCount)mapCount.textContent=count+' items';
     // Draw zone names on small minimap with zone-specific colors
     const zoneColors={'Origin':'#4CAF50','Work':'#E53935','Portfolio':'#42A5F5','Hobby':'#FF9800','Fun':'#AB47BC'};
