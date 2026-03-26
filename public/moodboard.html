@@ -6126,11 +6126,11 @@ function drawMap(){
   let sc,offsetX,offsetY,canvasW,canvasH;
   
   if(mmExp){
-    // Expanded map — keep true coordinates but add extra horizontal room (left-biased)
+    // Expanded map — keep true coordinates and add larger horizontal travel area
     const usableW=mw;
     const usableH=mh;
-    const leftWorldPad=2600;
-    const rightWorldPad=900;
+    const leftWorldPad=4200;
+    const rightWorldPad=2600;
     const mapContentW=contentW+leftWorldPad+rightWorldPad;
     const fitScale=Math.max(0.02,Math.max(usableW/mapContentW,usableH/contentH));
     sc=fitScale*mapZoomScale;
@@ -6138,7 +6138,8 @@ function drawMap(){
     canvasH=contentH*sc;
     offsetX=minL-leftWorldPad;
     offsetY=minT;
-    mapCanvas.style.left=((mw-canvasW)/2)+'px';
+    // Anchor map canvas to the left so scroll range can actually reach left-side clusters
+    mapCanvas.style.left='0px';
     mapCanvas.style.top=((mh-canvasH)/2)+'px';
   } else {
     // SMALL MAP: restore only small-map pan offsets (never expanded-map top offset)
