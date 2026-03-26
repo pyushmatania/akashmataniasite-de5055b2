@@ -3309,15 +3309,15 @@ function autoArrangeMoodboardItems(){
 
   placeZoneSignposts(groups.signpost);
   // Origin/Personal — top-left, generous breathing room
-  layoutGroupInGrid(groups.personal,{x1:250,y1:300,x2:3200,y2:1800});
+  layoutGroupInGrid(groups.personal,{x1:350,y1:450,x2:4800,y2:2700});
   // Work — top-right, balanced width
-  layoutGroupInGrid(groups.work,{x1:4200,y1:300,x2:9200,y2:1800});
+  layoutGroupInGrid(groups.work,{x1:6300,y1:450,x2:13800,y2:2700});
   // Portfolio — center band, slightly wider
-  layoutGroupInGrid(groups.portfolio,{x1:300,y1:2100,x2:5200,y2:3500});
+  layoutGroupInGrid(groups.portfolio,{x1:450,y1:3150,x2:7800,y2:5250});
   // Hobby — bottom-left, well-spaced for many items
-  layoutGroupInGrid(groups.hobby,{x1:300,y1:3900,x2:5000,y2:6500});
+  layoutGroupInGrid(groups.hobby,{x1:450,y1:5850,x2:7500,y2:9750});
   // Fun/Memes — bottom-right, balanced
-  layoutGroupInGrid(groups.fun,{x1:5200,y1:3900,x2:9200,y2:6500});
+  layoutGroupInGrid(groups.fun,{x1:7800,y1:5850,x2:13800,y2:9750});
   normalizeAllStickerBounds();
 }
 
