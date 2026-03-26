@@ -5948,12 +5948,12 @@ function addMapDecorations(cw,ch){
 
   // === IMMERSIVE AREA SIGNPOSTS — tall poles, depth, ground shadows ===
   const areaNames=[
-    {x:14,y:22,t:'Origin Story',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)',glow:'rgba(76,175,80,0.5)'},
-    {x:55,y:14,t:'The War Room',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)',glow:'rgba(229,57,53,0.5)'},
-    {x:14,y:38,t:'Launch Pad',icon:'🚀',bg:'linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)',glow:'rgba(66,165,245,0.5)'},
-    {x:35,y:30,t:'Akash Unplugged',icon:'⭐',bg:'linear-gradient(135deg,#E65100,#FFB300,#FF8F00)',glow:'rgba(255,179,0,0.5)'},
-    {x:18,y:62,t:'The Playground',icon:'🎮',bg:'linear-gradient(135deg,#E65100,#FF9800,#EF6C00)',glow:'rgba(255,152,0,0.5)'},
-    {x:65,y:58,t:'Meme Alley',icon:'😂',bg:'linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)',glow:'rgba(171,71,188,0.5)'},
+    {x:14,y:22,t:'Origin',icon:'📸',bg:'linear-gradient(135deg,#1B5E20,#4CAF50,#2E7D32)',glow:'rgba(76,175,80,0.5)'},
+    {x:55,y:14,t:'Work',icon:'🎯',bg:'linear-gradient(135deg,#7f1d1d,#E53935,#B71C1C)',glow:'rgba(229,57,53,0.5)'},
+    {x:14,y:38,t:'Portfolio',icon:'🚀',bg:'linear-gradient(135deg,#0D47A1,#42A5F5,#1565C0)',glow:'rgba(66,165,245,0.5)'},
+    {x:35,y:30,t:'Hub',icon:'⭐',bg:'linear-gradient(135deg,#E65100,#FFB300,#FF8F00)',glow:'rgba(255,179,0,0.5)'},
+    {x:18,y:62,t:'Hobby',icon:'🎮',bg:'linear-gradient(135deg,#E65100,#FF9800,#EF6C00)',glow:'rgba(255,152,0,0.5)'},
+    {x:65,y:58,t:'Fun',icon:'😂',bg:'linear-gradient(135deg,#4A148C,#AB47BC,#6A1B9A)',glow:'rgba(171,71,188,0.5)'},
   ];
   areaNames.forEach(z=>{
     const wrap=document.createElement('div');
@@ -5984,14 +5984,51 @@ function addMapDecorations(cw,ch){
     signRow.appendChild(board);
     signRow.appendChild(mkPillar());
     wrap.appendChild(signRow);
-    // Ground shadow — immersive planted effect
     const shadow=document.createElement('div');
     shadow.style.cssText='position:absolute;bottom:-'+(capS*0.8)+'px;left:50%;transform:translateX(-50%);width:110%;height:'+(capS*1)+'px;background:radial-gradient(ellipse at 50% 40%,rgba(0,0,0,0.38) 0%,rgba(0,0,0,0.15) 40%,transparent 70%);border-radius:50%;filter:blur(5px)';
     wrap.appendChild(shadow);
     mapCanvas.appendChild(wrap);
   });
 
-  // Ground-painted zone labels removed (signposts with poles are the only labels now)
+  // === GROUND-PAINTED ZONE NAMES (painted on the land) ===
+  const groundLabels=[
+    {x:20,y:28,t:'ORIGIN',color:'rgba(76,175,80,0.25)',size:0.04},
+    {x:60,y:20,t:'WORK',color:'rgba(229,57,53,0.25)',size:0.04},
+    {x:20,y:44,t:'PORTFOLIO',color:'rgba(66,165,245,0.25)',size:0.04},
+    {x:38,y:35,t:'HUB',color:'rgba(255,179,0,0.3)',size:0.035},
+    {x:20,y:68,t:'HOBBY',color:'rgba(255,152,0,0.25)',size:0.04},
+    {x:65,y:64,t:'FUN',color:'rgba(171,71,188,0.25)',size:0.05},
+  ];
+  groundLabels.forEach(g=>{
+    const el=document.createElement('div');
+    el.textContent=g.t;
+    el.style.cssText='position:absolute;left:'+g.x+'%;top:'+g.y+'%;transform:translate(-50%,-50%) rotate(-8deg);font-family:Arial Black,Impact,sans-serif;font-size:'+Math.max(16,cw*g.size)+'px;font-weight:900;color:'+g.color+';letter-spacing:0.3em;text-transform:uppercase;pointer-events:none;z-index:1;white-space:nowrap;user-select:none';
+    mapCanvas.appendChild(el);
+  });
+
+  // === ZONE BOUNDARY DASHED LINES ===
+  const zoneBorders=[
+    // Horizontal split: Origin/Work top | Portfolio/Hub/Fun middle
+    {x1:0,y1:40,x2:100,y2:40,color:'rgba(201,169,110,0.2)'},
+    // Vertical split: left zones | right zones
+    {x1:42,y1:0,x2:42,y2:40,color:'rgba(201,169,110,0.18)'},
+    // Horizontal: Portfolio/Hobby split
+    {x1:0,y1:56,x2:42,y2:56,color:'rgba(201,169,110,0.15)'},
+    // Vertical: Hub/Fun split
+    {x1:42,y1:40,x2:42,y2:100,color:'rgba(201,169,110,0.15)'},
+    // Horizontal: Hobby bottom 
+    {x1:0,y1:75,x2:42,y2:75,color:'rgba(201,169,110,0.12)'},
+  ];
+  zoneBorders.forEach(b=>{
+    const line=document.createElement('div');
+    const isH=(b.y1===b.y2);
+    if(isH){
+      line.style.cssText='position:absolute;left:'+b.x1+'%;top:'+b.y1+'%;width:'+(b.x2-b.x1)+'%;height:0;border-top:2px dashed '+b.color+';pointer-events:none;z-index:3';
+    } else {
+      line.style.cssText='position:absolute;left:'+b.x1+'%;top:'+b.y1+'%;width:0;height:'+(b.y2-b.y1)+'%;border-left:2px dashed '+b.color+';pointer-events:none;z-index:3';
+    }
+    mapCanvas.appendChild(line);
+  });
 
   // === POI MARKERS ===
   const pois=[
