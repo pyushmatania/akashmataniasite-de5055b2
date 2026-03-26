@@ -3580,12 +3580,19 @@ document.querySelectorAll('.sticker-emoji').forEach((s,i)=>{
   if(!cur.includes('rotate'))s.style.transform=cur+' rotate('+tilt.toFixed(1)+'deg)';
 });
 function centerOnIntroCard(){
-  const akashCX=(7000)*SCALE, akashCY=sy(7000)*SCALE;
-  const initialClamp=clampViewportPoint(akashCX-vp.clientWidth/2,akashCY-vp.clientHeight/2);
-  vp.scrollLeft=initialClamp.left;
-  vp.scrollTop=initialClamp.top;
+  const vpW=vp.clientWidth||window.innerWidth||390;
+  const vpH=vp.clientHeight||window.innerHeight||700;
+  const akashCX=7000*SCALE, akashCY=sy(7000)*SCALE;
+  const targetLeft=Math.max(0,akashCX-vpW/2);
+  const targetTop=Math.max(0,akashCY-vpH/2);
+  vp.scrollLeft=targetLeft;
+  vp.scrollTop=targetTop;
 }
+// Center immediately
 centerOnIntroCard();
+// Also center after a brief delay in case DOM isn't ready
+setTimeout(centerOnIntroCard,50);
+setTimeout(centerOnIntroCard,200);
 
 // SCROLL COUNTER
 vp.addEventListener('scroll',()=>{
