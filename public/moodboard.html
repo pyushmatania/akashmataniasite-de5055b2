@@ -6066,9 +6066,9 @@ function addMapDecorations(cw, ch){
   const lakeEl=document.createElement('div');lakeEl.className='map-zone-marker';
   lakeEl.style.cssText='left:36%;top:40%;font-size:'+Math.max(5,cw*0.003)+'px;transform:translate(-50%,-50%);color:rgba(180,220,255,0.8);font-style:italic';
   lakeEl.textContent='Lake Akash';
-  mapCanvas.appendChild(lakeEl);
+  layer.appendChild(lakeEl);
 
-  // Watermark removed for cleaner look
+  mapCanvas.appendChild(layer);
 }
 
 let _decsCW=-1,_decsCH=-1;
