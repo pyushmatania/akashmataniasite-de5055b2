@@ -25,7 +25,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .canvas-viewport::-webkit-scrollbar{display:none}
 .canvas-viewport{scrollbar-width:none;-ms-overflow-style:none}
 .canvas{
-  width:var(--world-size);height:var(--world-size);position:relative;background-color:#FAF8F5;
+  width:13000px;height:13000px;position:relative;background-color:#FAF8F5;
   background-image:
     radial-gradient(circle at 15% 20%,rgba(206,147,216,0.04) 0%,transparent 40%),
     radial-gradient(circle at 85% 60%,rgba(255,183,77,0.04) 0%,transparent 40%),
@@ -79,7 +79,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .stats-cat{font-family:var(--font-hand);font-size:0.65rem;color:var(--text3);background:rgba(0,0,0,0.035);border-radius:10px;padding:2px 7px;line-height:1.5}
 
 /* STICKER BASE */
-.sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));contain:layout style paint}
+.sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));contain:layout style paint;content-visibility:auto;contain-intrinsic-size:auto 220px auto 160px}
 .sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
 .sticker:active{cursor:grabbing}
 .sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important}
@@ -1568,17 +1568,17 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="canvas" id="canvas">
 
 <!-- ===== ZONE TINTS ===== -->
-<div class="zone-tint zone-tint-origin" style="left:0;top:0;width:3400px;height:2200px"></div>
-<div class="zone-tint zone-tint-warroom" style="left:4000px;top:0;width:6000px;height:2200px"></div>
-<div class="zone-tint zone-tint-launchpad" style="left:0;top:2300px;width:5200px;height:1700px"></div>
-<div class="zone-tint zone-tint-hub" style="left:3200px;top:2000px;width:2500px;height:2300px"></div>
-<div class="zone-tint zone-tint-playground" style="left:0;top:4300px;width:4900px;height:5700px"></div>
-<div class="zone-tint zone-tint-memealley" style="left:5200px;top:4300px;width:4800px;height:5700px"></div>
+<div class="zone-tint zone-tint-origin" style="left:0;top:0;width:4420px;height:2860px"></div>
+<div class="zone-tint zone-tint-warroom" style="left:5200px;top:0;width:7800px;height:2860px"></div>
+<div class="zone-tint zone-tint-launchpad" style="left:0;top:2990px;width:6760px;height:2210px"></div>
+<div class="zone-tint zone-tint-hub" style="left:4160px;top:2600px;width:3250px;height:2990px"></div>
+<div class="zone-tint zone-tint-playground" style="left:0;top:5590px;width:6370px;height:7410px"></div>
+<div class="zone-tint zone-tint-memealley" style="left:6760px;top:5590px;width:6240px;height:7410px"></div>
 <!-- Zone dividers -->
-<div class="zone-divider zone-divider-h" style="left:0;top:2200px;width:10000px"></div>
-<div class="zone-divider zone-divider-h" style="left:0;top:4300px;width:10000px"></div>
-<div class="zone-divider zone-divider-v" style="left:3400px;top:0;width:2px;height:4300px"></div>
-<div class="zone-divider zone-divider-v" style="left:5000px;top:4300px;width:2px;height:5700px"></div>
+<div class="zone-divider zone-divider-h" style="left:0;top:2860px;width:13000px"></div>
+<div class="zone-divider zone-divider-h" style="left:0;top:5590px;width:13000px"></div>
+<div class="zone-divider zone-divider-v" style="left:4420px;top:0;width:2px;height:5590px"></div>
+<div class="zone-divider zone-divider-v" style="left:6500px;top:5590px;width:2px;height:7410px"></div>
 
 <!-- ===== YOUR PHOTOS ===== -->
 
@@ -2525,12 +2525,12 @@ function closeWorkPanel(){
 
 // ===== ZONE NAVIGATION FROM BOTTOM NAV =====
 const zoneTargets={
-  hub:{x:3600,y:3200},
-  origin:{x:1600,y:1000},
-  warroom:{x:6600,y:1000},
-  launchpad:{x:2600,y:3200},
-  playground:{x:2400,y:5800},
-  memealley:{x:7200,y:5800}
+  hub:{x:4680,y:4160},
+  origin:{x:2080,y:1300},
+  warroom:{x:8580,y:1300},
+  launchpad:{x:3380,y:4160},
+  playground:{x:3120,y:7540},
+  memealley:{x:9360,y:7540}
 };
 function scrollToZone(e,zone){
   e.preventDefault();e.stopPropagation();
@@ -3228,8 +3228,10 @@ function revealHiddenSkills(){
 </script>
 <script>
 const vp=document.getElementById('viewport'),cv=document.getElementById('canvas');
-const MOODBOARD_WORLD_WIDTH=10000;
+const MOODBOARD_WORLD_WIDTH=13000;
 const MOODBOARD_WORLD_HEIGHT=MOODBOARD_WORLD_WIDTH;
+// Insert scroll-limiter wrapper so native scroll cannot exceed visual canvas bounds
+(function(){const w=document.createElement('div');w.id='cvWrap';w.style.cssText='position:relative;flex-shrink:0;overflow:hidden;';w.style.width=MOODBOARD_WORLD_WIDTH*0.5+'px';w.style.height=MOODBOARD_WORLD_HEIGHT*0.5+'px';cv.parentNode.insertBefore(w,cv);w.appendChild(cv);})();
 const MOODBOARD_ITEM_SAFE_MARGIN=80;
 const MOODBOARD_VIEW_SCALE=0.5;
 const SCALE=MOODBOARD_VIEW_SCALE;
@@ -3460,11 +3462,11 @@ function autoArrangeMoodboardItems(){
   });
 
   placeZoneSignposts(groups.signpost);
-  layoutGroupInGrid(groups.personal,{x1:200,y1:300,x2:3200,y2:2000});
-  layoutGroupInGrid(groups.work,{x1:4000,y1:300,x2:9200,y2:2000});
-  layoutGroupInGrid(groups.portfolio,{x1:300,y1:2300,x2:5200,y2:4000});
-  layoutGroupInGrid(groups.hobby,{x1:300,y1:4300,x2:4900,y2:7400});
-  layoutGroupInGrid(groups.fun,{x1:5200,y1:4300,x2:9200,y2:7400});
+  layoutGroupInGrid(groups.personal,{x1:260,y1:390,x2:4160,y2:2600});
+  layoutGroupInGrid(groups.work,{x1:5200,y1:390,x2:11960,y2:2600});
+  layoutGroupInGrid(groups.portfolio,{x1:390,y1:2990,x2:6760,y2:5200});
+  layoutGroupInGrid(groups.hobby,{x1:390,y1:5590,x2:6370,y2:9500});
+  layoutGroupInGrid(groups.fun,{x1:6760,y1:5590,x2:11960,y2:9500});
   positionBadgeBandages();
   normalizeAllStickerBounds();
 }
@@ -3499,7 +3501,7 @@ document.querySelectorAll('.sticker-emoji').forEach((s,i)=>{
   const cur=s.style.transform||'';
   if(!cur.includes('rotate'))s.style.transform=cur+' rotate('+tilt.toFixed(1)+'deg)';
 });
-const akashCX=(3500)*SCALE, akashCY=sy(2500)*SCALE;
+const akashCX=(4550)*SCALE, akashCY=sy(3250)*SCALE;
 const initialClamp=clampViewportPoint(akashCX-vp.clientWidth/2,akashCY-vp.clientHeight/2);
 vp.scrollLeft=initialClamp.left;
 vp.scrollTop=initialClamp.top;
@@ -6407,12 +6409,11 @@ function showNav(tx,ty){
 
 // Zone definitions for name lookup
 const mapZones=[
-  {x1:0,y1:0,x2:3400,y2:2200,name:'Origin Story',icon:'📸'},
-  {x1:3200,y1:2000,x2:5700,y2:4300,name:'Akash Unplugged',icon:'⭐'},
-  {x1:4000,y1:0,x2:MOODBOARD_WORLD_WIDTH,y2:2200,name:'The War Room',icon:'🎯'},
-  {x1:0,y1:2300,x2:5200,y2:4000,name:'Launch Pad',icon:'🚀'},
-  {x1:0,y1:4300,x2:4900,y2:MOODBOARD_WORLD_HEIGHT,name:'The Playground',icon:'🎮'},
-  {x1:5200,y1:4300,x2:MOODBOARD_WORLD_WIDTH,y2:MOODBOARD_WORLD_HEIGHT,name:'Meme Alley',icon:'😂'},
+const MOODBOARD_WORLD_WIDTH=13000;
+const MOODBOARD_WORLD_HEIGHT=MOODBOARD_WORLD_WIDTH;
+// Insert scroll-limiter wrapper so native scroll cannot exceed visual canvas bounds
+(function(){const w=document.createElement('div');w.id='cvWrap';w.style.cssText='position:relative;flex-shrink:0;overflow:hidden;';w.style.width=MOODBOARD_WORLD_WIDTH*0.5+'px';w.style.height=MOODBOARD_WORLD_HEIGHT*0.5+'px';cv.parentNode.insertBefore(w,cv);w.appendChild(cv);})();
+const MOODBOARD_ITEM_SAFE_MARGIN=80;
 ];
 function getZoneName(px,py){
   for(const z of mapZones){
