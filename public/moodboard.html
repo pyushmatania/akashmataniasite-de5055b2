@@ -3342,7 +3342,7 @@ function clampStickerToMoodboard(sticker,left,top){
 }
 
 function getAllStickers(){
-  return Array.from(document.querySelectorAll('#canvas > .sticker:not(.intro-card)'));
+  return Array.from(document.querySelectorAll('#canvas > .sticker:not(.intro-card):not([data-zone="hub"])'));
 }
 function getAllStickersIncludingIntro(){
   return Array.from(document.querySelectorAll('#canvas > .sticker'));
@@ -3366,6 +3366,7 @@ function identifyStickerGroup(sticker){
   if(zone==='origin')return 'personal';
   if(zone==='hobby')return 'hobby';
   if(zone==='fun')return 'fun';
+  if(zone==='hub')return 'personal';
   const c=sticker.classList;
   const text=(sticker.textContent||'').toLowerCase();
   if(c.contains('zone-signpost'))return 'signpost';
@@ -3567,9 +3568,14 @@ document.querySelectorAll('.sticker-emoji').forEach((s,i)=>{
 function centerOnIntroCard(){
   const vpW=vp.clientWidth||window.innerWidth||390;
   const vpH=vp.clientHeight||window.innerHeight||700;
-  const akashCX=7000*SCALE, akashCY=sy(7000)*SCALE;
-  const targetLeft=Math.max(0,akashCX-vpW/2);
-  const targetTop=Math.max(0,akashCY-vpH/2);
+  const introEl=document.querySelector('.intro-card');
+  let cx=7000*SCALE, cy=7000*SCALE;
+  if(introEl){
+    cx=(parseFloat(introEl.style.left)||6770)*SCALE + (introEl.offsetWidth||340)*SCALE/2;
+    cy=(parseFloat(introEl.style.top)||6550)*SCALE + (introEl.offsetHeight||400)*SCALE/2;
+  }
+  const targetLeft=Math.max(0,cx-vpW/2);
+  const targetTop=Math.max(0,cy-vpH/2);
   vp.scrollLeft=targetLeft;
   vp.scrollTop=targetTop;
 }
