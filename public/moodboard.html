@@ -6128,18 +6128,15 @@ function drawMap(){
   let sc,offsetX,offsetY,canvasW,canvasH;
   
   if(mmExp){
-    // Expanded map — add world padding so items aren't stuck on boundaries
+    // Expanded map — strict world sync (no artificial offset/padding)
     const usableW=mw;
     const usableH=mh;
-    const worldPad=window.innerWidth<600?700:520;
-    const paddedW=contentW+worldPad*2;
-    const paddedH=contentH+worldPad*2;
-    const fitScale=Math.max(0.02,Math.max(usableW/paddedW,usableH/paddedH));
+    const fitScale=Math.max(0.02,Math.max(usableW/contentW,usableH/contentH));
     sc=fitScale*mapZoomScale;
-    canvasW=paddedW*sc;
-    canvasH=paddedH*sc;
-    offsetX=minL-worldPad;
-    offsetY=minT-worldPad;
+    canvasW=contentW*sc;
+    canvasH=contentH*sc;
+    offsetX=minL;
+    offsetY=minT;
     mapCanvas.style.left=((mw-canvasW)/2)+'px';
     mapCanvas.style.top=((mh-canvasH)/2)+'px';
   } else {
