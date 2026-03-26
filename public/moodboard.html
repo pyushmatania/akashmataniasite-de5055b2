@@ -6676,6 +6676,36 @@ function matchesFilter(cat,filt){
   return cat===filt;
 }
 let filtClickCount={};
+let mapCountMode=0; // 0=total, 1=by zone, 2=by category
+function cycleMapCountMode(){
+  mapCountMode=(mapCountMode+1)%3;
+  const btn=document.getElementById('mapCounterBtn');
+  const countEl=document.getElementById('mapCount');
+  if(!countEl)return;
+  if(mapCountMode===0){
+    btn.textContent='🔢';
+    if(typeof drawMap==='function')drawMap();
+  } else if(mapCountMode===1){
+    btn.textContent='🗺️';
+    const zoneCounts={};
+    mapZones.forEach(z=>zoneCounts[z.name]=0);
+    stickerData.forEach(d=>{
+      if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
+      for(const z of mapZones){
+        if(d.left>=z.x1&&d.left<=z.x2&&d.top>=z.y1&&d.top<=z.y2){zoneCounts[z.name]++;break;}
+      }
+    });
+    countEl.textContent=Object.entries(zoneCounts).map(([k,v])=>k+':'+v).join(' · ');
+  } else {
+    btn.textContent='📊';
+    const catCounts={};
+    stickerData.forEach(d=>{
+      if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
+      catCounts[d.cat]=(catCounts[d.cat]||0)+1;
+    });
+    countEl.textContent=Object.entries(catCounts).map(([k,v])=>k+':'+v).join(' · ');
+  }
+}
 function filt(c,btn){
   const wasActive=(mFilt===c);
   if(wasActive && c!=='all'){
