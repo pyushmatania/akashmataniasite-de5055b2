@@ -6792,6 +6792,8 @@ function bootstrapMap(forceRescan){
 
 setTimeout(()=>{
   bootstrapMap(true);
+  // Re-center on intro card AFTER items are rearranged
+  centerOnIntroCard();
   // Show bitmoji greeting
   const greet=document.createElement('div');
   greet.className='bitmoji-greeting';
