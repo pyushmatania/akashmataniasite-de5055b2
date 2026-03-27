@@ -1794,7 +1794,22 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <div class="zone-tint zone-tint-playground" style="left:0;top:10200px;width:6500px;height:3800px"></div>
 <div class="zone-tint zone-tint-memealley" style="left:7500px;top:6200px;width:6500px;height:7800px"></div>
-<!-- Zone dividers removed -->
+<!-- Zone boundary dotted lines (synced with big map zones) -->
+<!-- Horizontal: Origin/Work top → Portfolio/Hobby mid at y≈5800 -->
+<div class="zone-divider h origin" style="left:200px;top:5800px;width:13600px"></div>
+<!-- Horizontal: Portfolio/Hobby → Fun/Hobby bottom at y≈10200 -->
+<div class="zone-divider h fun" style="left:200px;top:10200px;width:13600px"></div>
+<!-- Vertical: Origin ↔ Work at x≈7500 (top half) -->
+<div class="zone-divider v work" style="left:7500px;top:200px;height:5600px"></div>
+<!-- Vertical: Portfolio ↔ Fun (bottom half) at x≈7500 -->
+<div class="zone-divider v fun" style="left:7500px;top:5800px;height:8200px"></div>
+
+<!-- Zone signpost markers (centered in each zone) -->
+<div class="zone-signpost-marker" style="left:2900px;top:2800px;background:rgba(76,175,80,0.85)">📸 ORIGIN</div>
+<div class="zone-signpost-marker" style="left:10500px;top:2800px;background:rgba(229,57,53,0.85)">🎯 WORK</div>
+<div class="zone-signpost-marker" style="left:2900px;top:8000px;background:rgba(66,165,245,0.85)">🚀 PORTFOLIO</div>
+<div class="zone-signpost-marker" style="left:3150px;top:12000px;background:rgba(255,152,0,0.85)">🎮 HOBBY</div>
+<div class="zone-signpost-marker" style="left:10500px;top:10000px;background:rgba(171,71,188,0.85)">😂 FUN</div>
 
 <!-- ===== YOUR PHOTOS ===== -->
 
