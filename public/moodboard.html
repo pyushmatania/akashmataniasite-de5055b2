@@ -7513,6 +7513,7 @@ function cycleMapCountMode(){
   }
 }
 function filt(c,btn){
+  if(!btn)return;
   const wasActive=(mFilt===c);
   if(wasActive && c!=='all'){
     if(!filtClickCount[c])filtClickCount[c]=0;
@@ -7521,7 +7522,6 @@ function filt(c,btn){
       const idx=filtClickCount[c]%matching.length;
       filtClickCount[c]++;
       navigateToFilteredItem(c,idx);
-      // Update counter badge
       const ctr=btn.querySelector('.mc-counter');
       if(ctr){ctr.textContent=(idx+1)+'/'+matching.length;ctr.style.display='inline-block';}
     }
@@ -7529,12 +7529,20 @@ function filt(c,btn){
   }
   mFilt=c;
   filtClickCount[c]=0;
-  document.querySelectorAll('.mc').forEach(b=>{
-    b.classList.remove('active');
-    const ctr=b.querySelector('.mc-counter');
-    if(ctr){ctr.textContent='';ctr.style.display='none';}
-  });
+  // Use bar-filters scope to avoid matching unrelated elements
+  const filterBar=document.querySelector('.bar-filters');
+  if(filterBar){
+    filterBar.querySelectorAll('.mc').forEach(b=>{
+      b.classList.remove('active');
+      b.style.visibility='visible';
+      b.style.opacity='1';
+      const ctr=b.querySelector('.mc-counter');
+      if(ctr){ctr.textContent='';ctr.style.display='none';}
+    });
+  }
   btn.classList.add('active');
+  btn.style.visibility='visible';
+  btn.style.opacity='1';
   if(c==='all'){
     clearWaypoints();
   } else {
@@ -7542,7 +7550,8 @@ function filt(c,btn){
     const ctr=btn.querySelector('.mc-counter');
     if(ctr&&matching.length>0){ctr.textContent='–/'+matching.length;ctr.style.display='inline-block';}
   }
-  drawMap();
+  // Defer map redraw to next frame to prevent button from flickering
+  requestAnimationFrame(()=>drawMap());
 }
 
 function recenter(){
