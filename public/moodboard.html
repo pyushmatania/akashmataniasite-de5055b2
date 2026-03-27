@@ -6781,6 +6781,30 @@ let mapBootstrapped=false;
 let mapResizeTimer=null;
 let hasAutoArranged=false;
 
+// Minimap click/tap → open big map (robust multi-event binding)
+(function(){
+  let _mmTapTime=0;
+  function handleMmTap(e){
+    if(mmExp)return;
+    if(Date.now()-_mmTapTime<600)return; // debounce
+    _mmTapTime=Date.now();
+    e.stopPropagation();
+    toggleMap();
+  }
+  mm.addEventListener('click',handleMmTap);
+  mm.addEventListener('pointerup',function(e){
+    if(mmExp)return;
+    e.stopPropagation();
+    // Only fire if click didn't already handle it
+    if(Date.now()-_mmTapTime>100)handleMmTap(e);
+  });
+  mm.addEventListener('touchend',function(e){
+    if(mmExp)return;
+    e.stopPropagation();
+    if(Date.now()-_mmTapTime>100)handleMmTap(e);
+  },{passive:true});
+})();
+
 /* ===== TOGGLE MAP (expand / collapse) ===== */
 let _cachedDecLayer=null;
 let _cachedDecDims={w:-1,h:-1};
