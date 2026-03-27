@@ -6654,11 +6654,15 @@ function addMapDecorations(cw, ch){
    addDiv('map-zone-tint','left:2%;top:74%;width:45%;height:24%;border-radius:30%;background:radial-gradient(ellipse,rgba(255,152,0,0.32),transparent 65%);z-index:0;filter:blur(2px)');
    addDiv('map-zone-tint','left:55%;top:46%;width:43%;height:52%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.28),transparent 65%);z-index:0;filter:blur(2px)');
 
-   // === ZONE BOUNDARY LINES — thick, visible, glowing ===
-   const zoneLine1=addDiv('map-zone-line','left:3%;top:40.5%;width:94%;height:0;border-top:5px dashed rgba(76,175,80,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(76,175,80,0.7)) drop-shadow(0 0 20px rgba(76,175,80,0.4))');
-   const zoneLine2=addDiv('map-zone-line','left:3%;top:73%;width:94%;height:0;border-top:5px dashed rgba(255,152,0,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(255,152,0,0.7)) drop-shadow(0 0 20px rgba(255,152,0,0.4))');
-   const zoneLine3=addDiv('map-zone-line','left:47.8%;top:2%;width:0;height:39%;border-left:5px dashed rgba(229,57,53,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(229,57,53,0.7)) drop-shadow(0 0 20px rgba(229,57,53,0.4))');
-   const zoneLine4=addDiv('map-zone-line','left:47.8%;top:40.5%;width:0;height:58%;border-left:5px dashed rgba(171,71,188,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(171,71,188,0.7)) drop-shadow(0 0 20px rgba(171,71,188,0.4))');
+   // === ZONE BOUNDARY LINES — positioned from actual world zone coordinates ===
+   // World is 14000x14000, map padding 400 each side → total range 14800
+   // H-line between Origin/Work (y≤5600) and Portfolio/Fun (y≥6200): midpoint y=5900 → (5900+400)/14800 = 42.6%
+   // H-line between Portfolio (y≤9800) and Hobby (y≥10400): midpoint y=10100 → (10100+400)/14800 = 70.9%
+   // V-line between Origin/Portfolio/Hobby (x≤5800/5600/6300) and Work/Fun (x≥7700): midpoint x=6750 → (6750+400)/14800 = 48.3%
+   const zoneLine1=addDiv('map-zone-line','left:3%;top:42.6%;width:94%;height:0;border-top:5px dashed rgba(76,175,80,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(76,175,80,0.7)) drop-shadow(0 0 20px rgba(76,175,80,0.4))');
+   const zoneLine2=addDiv('map-zone-line','left:3%;top:70.9%;width:45.3%;height:0;border-top:5px dashed rgba(255,152,0,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(255,152,0,0.7)) drop-shadow(0 0 20px rgba(255,152,0,0.4))');
+   const zoneLine3=addDiv('map-zone-line','left:48.3%;top:2%;width:0;height:40.6%;border-left:5px dashed rgba(229,57,53,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(229,57,53,0.7)) drop-shadow(0 0 20px rgba(229,57,53,0.4))');
+   const zoneLine4=addDiv('map-zone-line','left:48.3%;top:42.6%;width:0;height:56%;border-left:5px dashed rgba(171,71,188,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(171,71,188,0.7)) drop-shadow(0 0 20px rgba(171,71,188,0.4))');
 
    // === ZONE SIGNPOST LABELS ===
    const signposts=[
