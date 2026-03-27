@@ -7923,8 +7923,11 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
         
         const guide=document.createElement('div');
         guide.className='moodboard-bitmoji-guide';
-        const gX=Math.max(50,Math.min(worldX-70,cv.scrollWidth-140));
-        const gY=Math.max(40,Math.min(worldY-20,cv.scrollHeight-160));
+        // Position bitmoji to the LEFT side of the sticker, not on top
+        const sW=stickerRef?stickerRef.offsetWidth||200:200;
+        const sH=stickerRef?stickerRef.offsetHeight||150:150;
+        const gX=Math.max(50,Math.min(worldX-sW/2-120,cv.scrollWidth-140));
+        const gY=Math.max(40,Math.min(worldY-sH/4,cv.scrollHeight-160));
         guide.style.cssText='position:absolute;left:'+gX+'px;top:'+gY+'px;z-index:10002;opacity:1;visibility:visible;animation:bitmojiArriveSlide 0.7s ease-out forwards;';
         guide.innerHTML='<div class="arrive-glow"></div>'
           +'<div class="guide-speech">'+speech+'</div>'
