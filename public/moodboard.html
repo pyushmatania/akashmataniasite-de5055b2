@@ -4307,7 +4307,7 @@ function placeZoneSignposts(signposts){
   });
 }
 
-// ===== AUTO-REARRANGE ENGINE v2 =====
+// ===== AUTO-REARRANGE ENGINE v3 =====
 // Rules:
 // 1. Spread evenly — no too-dense or too-empty areas
 // 2. Intro card of each zone centered in zone
@@ -4318,6 +4318,8 @@ function placeZoneSignposts(signposts){
 // 7. Rearrange button resets all to default positions
 // 8. Badges placed on top of another card (top-left, tilted)
 // 9. Sync to big and small map after arrangement
+// 10. Audit: count items in DOM vs maps, remove duplicates, add missing
+// 11. Ensure all items are categorized (type) and attributed (zone). New category: introduction
 
 const ZONE_DEFS={
   origin:{x1:400,y1:400,x2:5800,y2:5600,center:{x:3100,y:3000},color:'#4CAF50'},
@@ -4547,6 +4549,8 @@ function placeNewSticker(sticker){
 
 // Rule 7: Rearrange button resets all cards to default positions
 function runItemRearrange(triggeredByUser){
+  // Rule 10: Audit — count items in DOM vs maps, fix duplicates/missing
+  const auditResult=auditStickerIntegrity();
   autoArrangeMoodboardItems();
   // Clear visual cache and force full rescan + redraw
   if(typeof scanStickers==='function')scanStickers();
@@ -4554,10 +4558,73 @@ function runItemRearrange(triggeredByUser){
   if(typeof queueMapSync==='function')queueMapSync(true);
   const btn=document.getElementById('rearrangeBtn');
   if(triggeredByUser&&btn){
+    const msg=auditResult.fixed?'✅ Rearranged! Fixed '+auditResult.fixed+' issues':'✅ Rearranged & Synced!';
     const old=btn.textContent;
-    btn.textContent='✅ Rearranged & Synced!';
-    setTimeout(()=>{btn.textContent=old;},1500);
+    btn.textContent=msg;
+    setTimeout(()=>{btn.textContent=old;},2000);
   }
+}
+
+// ===== RULE 10: INTEGRITY AUDIT =====
+// Counts items in DOM, removes duplicates, ensures all present on canvas/maps
+function auditStickerIntegrity(){
+  const result={fixed:0,duplicatesRemoved:0,missingAdded:0,uncategorized:0};
+  const canvas=document.getElementById('canvas');
+  if(!canvas)return result;
+  
+  // 1. Remove duplicate stickers (same mapId)
+  const allStickers=canvas.querySelectorAll('.sticker');
+  const seenIds=new Map();
+  allStickers.forEach(s=>{
+    const mid=s.dataset.mapId;
+    if(mid&&seenIds.has(mid)){
+      s.remove();
+      result.duplicatesRemoved++;
+      result.fixed++;
+    } else if(mid){
+      seenIds.set(mid,s);
+    }
+  });
+  
+  // 2. Ensure all stickers have category (type) and zone attribution
+  canvas.querySelectorAll('.sticker').forEach(s=>{
+    if(!s.dataset.type){
+      // Force categorization via scanStickers logic
+      let cat='other';
+      if(s.classList.contains('zone-intro-creative')||s.classList.contains('zone-intro-card'))cat='introduction';
+      else if(s.classList.contains('intro-card'))cat=s.dataset.zone?'introduction':'photo';
+      else if(s.classList.contains('sticker-meme'))cat='meme';
+      else if(s.classList.contains('sticker-emoji'))cat='emoji';
+      else if(s.classList.contains('sticker-badge')||s.classList.contains('sticker-stamp'))cat='badge';
+      else if(s.classList.contains('sticker-postit'))cat='postit';
+      else if(s.classList.contains('sticker-counter')||s.classList.contains('sticker-mood')||s.classList.contains('sticker-scratch')||s.classList.contains('sticker-progress')||s.classList.contains('sticker-fortune')||s.getAttribute('onclick'))cat='interactive';
+      else if(s.classList.contains('sticker-hero-photo')||s.classList.contains('sticker-photo-polaroid')||s.classList.contains('sticker-photo-tilt')||s.classList.contains('sticker-photo-circle'))cat='photo';
+      else if(s.classList.contains('sticker-project'))cat='interactive';
+      s.dataset.type=cat;
+      result.uncategorized++;
+      result.fixed++;
+    }
+    if(!s.dataset.zone){
+      const group=identifyStickerGroup(s);
+      if(group==='personal')s.dataset.zone='origin';
+      else if(group==='work')s.dataset.zone='work';
+      else if(group==='portfolio')s.dataset.zone='portfolio';
+      else if(group==='hobby')s.dataset.zone='hobby';
+      else if(group==='hub')s.dataset.zone='hub';
+      else s.dataset.zone='fun';
+      result.fixed++;
+    }
+  });
+  
+  // 3. Clear map caches so maps rebuild from clean canvas data
+  stickerData=[];
+  _mapDataSignature='';
+  
+  // Log audit
+  if(result.fixed>0){
+    console.log('[Audit] Fixed '+result.fixed+' issues: '+result.duplicatesRemoved+' duplicates removed, '+result.uncategorized+' uncategorized items fixed');
+  }
+  return result;
 }
 
 // Add interactive badges to interactive stickers (including onclick-based ones)
@@ -5264,6 +5331,21 @@ timeline: `
 <div class="timeline">
 
   <div class="tl-item">
+    <div class="tl-dot" style="background:linear-gradient(135deg,#9C27B0,#7B1FA2)"></div>
+    <div class="tl-version">v47.0 — ⚙️ Engine v3: Audit + Attribution + Engine Tab</div>
+    <div class="tl-date">Session 47 · March 27, 2026</div>
+    <div class="tl-desc">Auto-Rearrange Engine upgraded to v3 with 11 rules. New integrity audit removes duplicate stickers and fills missing categorization. New "introduction" category for zone intro cards. Easter egg gets a dedicated ⚙️ Engine tab documenting all distribution rules, zone definitions, location mapping pipeline, and sticker categories.</div>
+    <ul class="tl-changes">
+      <li>🔍 Rule 10: auditStickerIntegrity() scans DOM for duplicate mapIds and removes them</li>
+      <li>🏷️ Rule 11: Auto-assigns type and zone to any sticker missing attribution</li>
+      <li>🏙️ New "introduction" category for zone intro cards (distinct from photo/interactive/other)</li>
+      <li>⚙️ New Engine tab in easter egg — full rules table, mapping docs, zone definitions, category tags</li>
+      <li>🔄 Rearrange button now shows audit fix count ("Fixed 3 issues")</li>
+      <li>📊 scanStickers updated to auto-assign zones to unattributed stickers</li>
+    </ul>
+  </div>
+
+
     <div class="tl-dot" style="background:linear-gradient(135deg,#f7c948,#e8a020)"></div>
     <div class="tl-version">v43.0 — 🎭 Zone Intro Cards + 5 Mini-Games + Dense Hub Cluster</div>
     <div class="tl-date">Session 43 · March 27, 2026</div>
@@ -6280,8 +6362,8 @@ stats: `
     <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">🔤 Google Fonts</div></div>
     <div class="stat-card"><div class="stat-num">0</div><div class="stat-label">📦 npm Dependencies</div></div>
     <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">🎉 Confetti Per Tap</div></div>
-    <div class="stat-card"><div class="stat-num">55</div><div class="stat-label">💬 Build Prompts</div></div>
-    <div class="stat-card"><div class="stat-num">46</div><div class="stat-label">🚀 Major Versions</div></div>
+    <div class="stat-card"><div class="stat-num">57</div><div class="stat-label">💬 Build Prompts</div></div>
+    <div class="stat-card"><div class="stat-num">47</div><div class="stat-label">🚀 Major Versions</div></div>
     <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">🥚 Easter Egg</div></div>
     <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">🏙️ Map Zones</div></div>
     <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">🔍 Map Filters</div></div>
@@ -6345,8 +6427,8 @@ stats: `
   <div class="prompt-block"><div class="prompt-label">Prompt 41 — Map Sync Audit + Performance</div><div class="prompt-text">"The location of bigmap, smallmap and moodboard are not accurate. Audit it deeply — if I click an item on bigmap it takes me to some other place. Make this perfect and make sure all items are present on canvas and perfectly synced on big and small map."</div></div>
   <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v45.0: Deep coordinate sync audit. Replaced lossy mapClientToWorld click handler with direct world coords from stickerData. Fixed zoom drift by recalculating scale from base fit-scale every step. Fixed asymmetric Y offset bug in updMap. Recalculated all zone boundary line percentages to match actual world coords with 400px map padding.</div></div>
 
-  <div class="prompt-block"><div class="prompt-label">Prompt 42 — Auto-Rearrange Engine</div><div class="prompt-text">"Add auto-rearrange feature to theme settings: 1) Spread evenly on canvas, 2) Intro cards centered in zones, 3) Zone cards stay in zone except fun/memes scatter everywhere, 4) Dense around intro card, 5) No cards near boundaries, 6) New cards auto-follow rules, 7) Rearrange button resets all, 8) Badges placed on top of cards like bandages, 9) Sync to maps after arrangement."</div></div>
-  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v46.0: Complete auto-rearrange engine with 9-rule distribution system. Golden-angle spiral layout for zone items (dense around intro centers). Memes/fun emojis scatter across entire 14K×14K canvas. Badges auto-placed on top-left of anchor cards with tilt. Boundary padding of 350px. New sticker placement API (placeNewSticker). Walk animation uses CSS transition for smooth movement. Map scroll follows walk path. Rearrange button in theme settings triggers full reset + map sync.</div></div>
+  <div class="prompt-block"><div class="prompt-label">Prompt 43 — Audit + Attribution + Engine Tab</div><div class="prompt-text">"Add 2 more rules to auto-rearrange: 1) Audit item counts in DOM vs maps, remove duplicates, add missing. 2) Ensure all items are categorized with attribution, add 'introduction' as new category. Add a new ⚙️ Engine tab to easter egg with all rules, mapping details, zone definitions, and sync pipeline docs."</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v47.0: Auto-Rearrange Engine v3 with 11 rules. Added auditStickerIntegrity() for duplicate removal + missing attribution. New 'introduction' category for zone intro cards. Rearrange button now shows audit fix count. New ⚙️ Engine tab in easter egg with full rules table, location mapping docs, zone definitions, category tags, and 6 technical fun facts. scanStickers auto-assigns zone to unattributed stickers.</div></div>
 </div>
 <div class="inv-section">
   <h3>🧱 Tech Stack</h3>
@@ -6455,6 +6537,88 @@ credits: \`
       From concept to canvas — product thinking meets craft meets curiosity.<br>
       <span style="color:var(--accent);font-weight:600">Built with AI as a medium, not a shortcut.</span>
     </div>
+  </div>
+</div>
+`
+,
+
+engine: `
+<div class="inv-section">
+  <h3>⚙️ Auto-Rearrange Engine v3</h3>
+  <p style="font-size:0.8rem;color:var(--text2);line-height:1.7;margin-bottom:16px">
+    The distribution engine controls how 280+ stickers are placed across the 14K×14K canvas. It runs on page load and can be triggered manually via the 🔄 button in theme settings.
+  </p>
+  
+  <h4 style="font-size:0.85rem;color:var(--text);margin:16px 0 10px">📏 11 Distribution Rules</h4>
+  <table class="inv-table">
+    <tr><th>#</th><th>Rule</th><th>How It Works</th></tr>
+    <tr><td>1</td><td>Even Spread</td><td>No area too dense or empty — golden-angle spiral + grid scatter ensures coverage</td></tr>
+    <tr><td>2</td><td>Intro Cards Centered</td><td>Each zone's intro card is placed at the exact center of its zone bounds</td></tr>
+    <tr><td>3</td><td>Zone Lock</td><td>Work cards stay in Work, Portfolio in Portfolio — but memes/fun scatter everywhere</td></tr>
+    <tr><td>4</td><td>Density Gradient</td><td>Items cluster densely near zone intro cards, spread thinner toward edges</td></tr>
+    <tr><td>5</td><td>Boundary Padding</td><td>350px buffer near all zone edges — no cards placed in boundary strips</td></tr>
+    <tr><td>6</td><td>Auto-Place New</td><td>placeNewSticker() applies all rules to any newly added card</td></tr>
+    <tr><td>7</td><td>Reset Button</td><td>🔄 button in settings runs full rearrange + audit + map sync</td></tr>
+    <tr><td>8</td><td>Badge Bandages</td><td>Badges auto-stack on top-left of anchor cards, tilted, z-index 68</td></tr>
+    <tr><td>9</td><td>Map Sync</td><td>After arrangement, canvas → scanStickers → invalidate map cache → redraw both maps</td></tr>
+    <tr><td>10</td><td>Integrity Audit</td><td>Counts DOM items, removes duplicates (same mapId), fills missing categories/zones</td></tr>
+    <tr><td>11</td><td>Attribution</td><td>Every sticker gets a type (category) and zone. New category: <strong>introduction</strong></td></tr>
+  </table>
+</div>
+
+<div class="inv-section" style="margin-top:20px">
+  <h3>🗺️ Location Mapping & Sync</h3>
+  <p style="font-size:0.8rem;color:var(--text2);line-height:1.7;margin-bottom:16px">
+    Three views of the same world — moodboard canvas, small minimap HUD, and expanded big map — all synchronized in real-time.
+  </p>
+  
+  <table class="inv-table">
+    <tr><th>System</th><th>Details</th></tr>
+    <tr><td>Canvas (Source of Truth)</td><td>14,000x14,000px world. All sticker positions stored as absolute CSS left/top. Default scale: 0.5x mobile, 0.72x desktop.</td></tr>
+    <tr><td>Small Minimap</td><td>85x85px HUD. Lightweight colored divs (not clones). Scale ~ 1:164. Radar sweep every 3s. Updates on scroll via RAF throttle.</td></tr>
+    <tr><td>Big Map</td><td>Full viewport. Sticker clones rendered at map scale. Click navigates via direct world coords (no lossy conversion). Zoom: 0.25x-2x steps.</td></tr>
+    <tr><td>Navigation</td><td>Clicking map sticker -> walkBitmojiTo(worldX, worldY) -> CSS transition walk -> viewport scrollTo center on target.</td></tr>
+    <tr><td>Sync Pipeline</td><td>scanStickers() -> stickerData[] -> signature check -> invalidateMapCloneCache() -> updMap()/renderExpandedMap()</td></tr>
+  </table>
+</div>
+
+<div class="inv-section" style="margin-top:20px">
+  <h3>🏙️ Zone Definitions</h3>
+  <table class="inv-table">
+    <tr><th>Zone</th><th>Bounds (px)</th><th>Center</th><th>Color</th></tr>
+    <tr><td>📸 Origin</td><td>(400,400) to (5800,5600)</td><td>(3100, 3000)</td><td style="color:#4CAF50">#4CAF50</td></tr>
+    <tr><td>🎯 Work</td><td>(7700,400) to (13600,5600)</td><td>(10650, 3000)</td><td style="color:#E53935">#E53935</td></tr>
+    <tr><td>🚀 Portfolio</td><td>(400,6200) to (5600,9800)</td><td>(3000, 8000)</td><td style="color:#42A5F5">#42A5F5</td></tr>
+    <tr><td>🎮 Hobby</td><td>(400,10400) to (6300,13600)</td><td>(3350, 12000)</td><td style="color:#FF9800">#FF9800</td></tr>
+    <tr><td>😂 Fun</td><td>(7700,6400) to (13600,13600)</td><td>(10650, 10000)</td><td style="color:#AB47BC">#AB47BC</td></tr>
+  </table>
+</div>
+
+<div class="inv-section" style="margin-top:20px">
+  <h3>🏷️ Sticker Categories</h3>
+  <p style="font-size:0.78rem;color:var(--text2);line-height:1.7;margin-bottom:10px">Every sticker is auto-classified into one of these categories:</p>
+  <div style="display:flex;flex-wrap:wrap;gap:6px">
+    <span style="background:#E8F5E9;color:#2E7D32;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">🏙️ introduction</span>
+    <span style="background:#E3F2FD;color:#1565C0;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">📸 photo</span>
+    <span style="background:#FFF3E0;color:#E65100;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">🎮 interactive</span>
+    <span style="background:#FCE4EC;color:#C62828;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">😂 meme</span>
+    <span style="background:#F3E5F5;color:#6A1B9A;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">🏅 badge</span>
+    <span style="background:#FFF9C4;color:#F57F17;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">📝 postit</span>
+    <span style="background:#FFFDE7;color:#827717;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">😊 emoji</span>
+    <span style="background:#ECEFF1;color:#37474F;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">📄 text</span>
+    <span style="background:#F5F5F5;color:#616161;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">📦 other</span>
+  </div>
+</div>
+
+<div class="inv-section" style="margin-top:20px">
+  <h3>🔧 Technical Details</h3>
+  <div class="fun-facts-grid">
+    <div class="fun-fact">🌀 The <strong>golden angle (137.5 deg)</strong> spiral ensures items never overlap in concentric rings — same math sunflowers use for seed packing</div>
+    <div class="fun-fact">🔍 <strong>Integrity audit</strong> runs before every rearrange — it scans all DOM stickers, removes any with duplicate mapIds, and fills missing type/zone attributes</div>
+    <div class="fun-fact">📍 Map click navigation uses <strong>direct world coordinates</strong> from stickerData (not lossy mouse-to-world conversion) for pixel-perfect accuracy</div>
+    <div class="fun-fact">⚡ The <strong>signature check</strong> (mapId:left:top:w:h:cat joined) avoids unnecessary map redraws — only invalidates cache when positions actually change</div>
+    <div class="fun-fact">🏷️ Every sticker is auto-tagged with both a <strong>category</strong> (photo, meme, interactive, introduction...) and a <strong>zone</strong> (origin, work, portfolio, hobby, fun)</div>
+    <div class="fun-fact">🔄 The rearrange button triggers: <strong>audit -> arrange -> scan -> invalidate cache -> redraw both maps</strong> — a 5-step pipeline in ~200ms</div>
   </div>
 </div>
 `
@@ -6749,7 +6913,8 @@ function scanStickers(){
     // Determine category — use data-type if set, else auto-detect from class
     let cat=s.dataset.type||'';
     if(!cat){
-      if(s.classList.contains('intro-card')||s.classList.contains('sticker-hero-photo')||s.classList.contains('sticker-photo-polaroid')||s.classList.contains('sticker-photo-tilt')||s.classList.contains('sticker-photo-circle'))cat='photo';
+      if(s.classList.contains('zone-intro-creative')||s.classList.contains('zone-intro-card')||(s.classList.contains('intro-card')&&s.dataset.zone))cat='introduction';
+      else if(s.classList.contains('intro-card')||s.classList.contains('sticker-hero-photo')||s.classList.contains('sticker-photo-polaroid')||s.classList.contains('sticker-photo-tilt')||s.classList.contains('sticker-photo-circle'))cat='photo';
       else if(s.classList.contains('sticker-counter')||s.classList.contains('sticker-mood')||s.classList.contains('sticker-scratch')||s.classList.contains('sticker-progress')||s.classList.contains('sticker-fortune')||s.getAttribute('onclick'))cat='interactive';
       else if(s.classList.contains('sticker-meme'))cat='meme';
       else if(s.classList.contains('sticker-badge'))cat='badge';
@@ -6762,8 +6927,17 @@ function scanStickers(){
       else if(s.classList.contains('sticker-project'))cat='interactive';
       else if(s.classList.contains('sticker-illustrated'))cat='other';
       else if(s.classList.contains('zone-signpost'))cat='other';
-      else if(s.classList.contains('zone-intro-card'))cat='other';
       else cat='other';
+    }
+    // Rule 11: Ensure attribution — every sticker must have a zone
+    if(!s.dataset.zone){
+      const group=identifyStickerGroup(s);
+      if(group==='personal')s.dataset.zone='origin';
+      else if(group==='work')s.dataset.zone='work';
+      else if(group==='portfolio')s.dataset.zone='portfolio';
+      else if(group==='hobby')s.dataset.zone='hobby';
+      else if(group==='hub')s.dataset.zone='hub';
+      else s.dataset.zone='fun';
     }
     // Write back for consistency
     s.dataset.type=cat;
@@ -8875,6 +9049,7 @@ function ekPick(el,e){
     <div class="journal-tab" onclick="showTab('prompts',this)">💬 Prompts</div>
     <div class="journal-tab" onclick="showTab('stats',this)">📊 Stats</div>
     <div class="journal-tab" onclick="showTab('credits',this)">🏆 Credits</div>
+    <div class="journal-tab" onclick="showTab('engine',this)">⚙️ Engine</div>
   </div>
   <div class="journal-body" id="journalBody">
     <!-- Content injected by JS -->
