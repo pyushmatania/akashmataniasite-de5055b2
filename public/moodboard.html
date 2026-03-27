@@ -4881,13 +4881,13 @@ function centerOnIntroCard(){
   const vpW=vp.clientWidth||window.innerWidth||390;
   const vpH=vp.clientHeight||window.innerHeight||700;
   const introEl=document.querySelector('.intro-card');
-  let cx=7000*SCALE, cy=7000*SCALE;
+  let cx=10240*SCALE, cy=2810*SCALE; // Work zone center (intro card default)
   if(introEl){
     var iw=introEl.dataset.cw?parseFloat(introEl.dataset.cw):introEl.offsetWidth||340;
     var ih=introEl.dataset.ch?parseFloat(introEl.dataset.ch):introEl.offsetHeight||400;
     if(!introEl.dataset.cw){introEl.dataset.cw=iw;introEl.dataset.ch=ih;}
-    cx=(parseFloat(introEl.style.left)||6770)*SCALE + iw*SCALE/2;
-    cy=(parseFloat(introEl.style.top)||6550)*SCALE + ih*SCALE/2;
+    cx=(parseFloat(introEl.style.left)||10050)*SCALE + iw*SCALE/2;
+    cy=(parseFloat(introEl.style.top)||2600)*SCALE + ih*SCALE/2;
   }
   const targetLeft=Math.max(0,cx-vpW/2);
   const targetTop=Math.max(0,cy-vpH/2);
