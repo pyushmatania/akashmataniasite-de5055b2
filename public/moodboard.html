@@ -6811,8 +6811,14 @@ let _cachedDecDims={w:-1,h:-1};
 let _mapOpenRafId=null;
 
 function toggleMap(){
-  if(mapTransitioning)return;
+  if(mapTransitioning){
+    // Failsafe: if stuck transitioning for >3s, force reset
+    if(window._mapTransitionStart&&Date.now()-window._mapTransitionStart>3000){
+      mapTransitioning=false;
+    } else return;
+  }
   mapTransitioning=true;
+  window._mapTransitionStart=Date.now();
 
   const mmContainer=document.getElementById('mc');
   if(!mmExp){
