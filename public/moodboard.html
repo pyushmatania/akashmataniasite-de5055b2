@@ -102,14 +102,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .zone-tint-hub{background:radial-gradient(ellipse at center,#FFB300,transparent 70%)}
 .zone-tint-playground{background:radial-gradient(ellipse at center,#FF9800,transparent 70%)}
 .zone-tint-memealley{background:radial-gradient(ellipse at center,#AB47BC,transparent 70%)}
-/* Moodboard zone lines + signposts (synced with big map) */
-.zone-divider{position:absolute;pointer-events:none;z-index:2}
-.zone-divider.h{height:0;border-top:4px dashed rgba(0,0,0,0.18);filter:drop-shadow(0 1px 3px rgba(0,0,0,0.08))}
-.zone-divider.v{width:0;border-left:4px dashed rgba(0,0,0,0.18);filter:drop-shadow(1px 0 3px rgba(0,0,0,0.08))}
-.zone-divider.origin{border-color:rgba(76,175,80,0.55)}
-.zone-divider.work{border-color:rgba(229,57,53,0.55)}
-.zone-divider.portfolio{border-color:rgba(66,165,245,0.55)}
-.zone-divider.fun{border-color:rgba(255,152,0,0.55)}
+/* Organic country-style zone boundaries */
+.zone-boundary-svg{position:absolute;left:0;top:0;width:14000px;height:14000px;pointer-events:none;z-index:2;overflow:visible}
+.zone-boundary-svg path{fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12))}
 /* Zone intro cards — bold card style */
 .zone-intro-creative{width:380px;min-height:420px;border-radius:28px;overflow:hidden;background:#fff;border:2.5px solid #f0ece6;box-shadow:0 12px 48px rgba(0,0,0,0.12),0 4px 12px rgba(0,0,0,0.06);cursor:default;position:relative}
 .zone-intro-creative .zic-header{padding:28px 26px 18px;position:relative;overflow:hidden}
@@ -140,10 +135,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker-drag-handle svg{width:16px;height:16px;color:var(--text3)}
 .sticker.has-drag-handle{cursor:default!important}
 .sticker.has-drag-handle:active{cursor:default!important}
-/* Zone ground labels — road marking style */
-.zone-ground-label{position:absolute;pointer-events:none;z-index:3;font-family:var(--font-fun);font-weight:900;letter-spacing:0.3em;text-transform:uppercase;opacity:0.12;line-height:1}
-.zone-ground-label.horizontal{writing-mode:horizontal-tb}
-.zone-ground-label.vertical{writing-mode:vertical-rl;text-orientation:mixed}
+/* Zone ground labels — painted diagonally in zone center */
+.zone-ground-label{position:absolute;pointer-events:none;z-index:3;font-family:var(--font-fun);font-weight:900;letter-spacing:0.35em;text-transform:uppercase;opacity:0.10;line-height:1;white-space:nowrap}
 /* Glowing intro card on map */
 .map-intro-glow{animation:mapIntroGlow 2.5s ease-in-out infinite;border-radius:12px}
 @keyframes mapIntroGlow{0%,100%{box-shadow:0 0 15px var(--glow-color,rgba(76,175,80,0.6)),0 0 30px var(--glow-color,rgba(76,175,80,0.3))}50%{box-shadow:0 0 25px var(--glow-color,rgba(76,175,80,0.8)),0 0 50px var(--glow-color,rgba(76,175,80,0.4))}}
@@ -1835,25 +1828,24 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <div class="zone-tint zone-tint-playground" style="left:0;top:10200px;width:6500px;height:3800px"></div>
 <div class="zone-tint zone-tint-memealley" style="left:7500px;top:6200px;width:6500px;height:7800px"></div>
-<!-- Zone boundary dotted lines (synced with big map zones) -->
-<!-- Horizontal: Origin/Work (y≤5600) → Portfolio/Fun (y≥6200), midpoint y=5900 -->
-<div class="zone-divider h origin" style="left:200px;top:5900px;width:13600px"></div>
-<!-- Horizontal: Portfolio (y≤9800) → Hobby (y≥10400), midpoint y=10100 (left half only) -->
-<div class="zone-divider h fun" style="left:200px;top:10100px;width:6550px"></div>
-<!-- Vertical: Origin/Portfolio/Hobby (x≤5800) ↔ Work/Fun (x≥7700), midpoint x=6750 -->
-<div class="zone-divider v work" style="left:6750px;top:200px;height:5700px"></div>
-<!-- Vertical: Portfolio/Hobby ↔ Fun (bottom half) -->
-<div class="zone-divider v fun" style="left:6750px;top:5900px;height:8100px"></div>
+<!-- Organic country-style zone boundaries (SVG paths) -->
+<svg class="zone-boundary-svg" viewBox="0 0 14000 14000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Horizontal boundary: Origin/Work → Portfolio/Fun at y≈5900 -->
+  <path d="M200,5850 C800,5920 1400,5780 2100,5930 S3200,5860 4000,5940 S5200,5820 6000,5900 S7200,5960 8000,5850 S9400,5950 10200,5870 S11600,5920 12800,5860 L13600,5900" stroke="rgba(76,175,80,0.5)" stroke-dasharray="24 12"/>
+  <!-- Horizontal boundary: Portfolio → Hobby at y≈10100 (left half) -->
+  <path d="M200,10050 C700,10150 1300,9980 2000,10120 S3100,10060 3800,10140 S4800,10020 5500,10100 L6550,10080" stroke="rgba(255,152,0,0.5)" stroke-dasharray="24 12"/>
+  <!-- Vertical boundary: Origin/Portfolio/Hobby ↔ Work/Fun top half x≈6750 -->
+  <path d="M6700,200 C6780,700 6650,1300 6760,1900 S6700,2800 6780,3400 S6650,4200 6750,4800 L6720,5850" stroke="rgba(229,57,53,0.5)" stroke-dasharray="24 12"/>
+  <!-- Vertical boundary: bottom half x≈6750 -->
+  <path d="M6720,5900 C6800,6500 6660,7200 6770,7900 S6690,8800 6780,9500 S6650,10400 6740,11200 S6800,12400 6720,13200 L6750,13800" stroke="rgba(171,71,188,0.5)" stroke-dasharray="24 12"/>
+</svg>
 
-<!-- Zone ground labels — road markings near boundaries -->
-<div class="zone-ground-label horizontal" style="left:2600px;top:5620px;font-size:80px;color:#4CAF50">ORIGIN ↑</div>
-<div class="zone-ground-label horizontal" style="left:8800px;top:5620px;font-size:80px;color:#E53935">WORK ↑</div>
-<div class="zone-ground-label horizontal" style="left:2600px;top:5980px;font-size:70px;color:#42A5F5">↓ PORTFOLIO</div>
-<div class="zone-ground-label horizontal" style="left:8800px;top:5980px;font-size:70px;color:#AB47BC">↓ FUN</div>
-<div class="zone-ground-label horizontal" style="left:2600px;top:9820px;font-size:70px;color:#42A5F5">PORTFOLIO ↑</div>
-<div class="zone-ground-label horizontal" style="left:2600px;top:10180px;font-size:70px;color:#FF9800">↓ HOBBY</div>
-<div class="zone-ground-label vertical" style="left:6500px;top:1500px;font-size:70px;color:#4CAF50">ORIGIN</div>
-<div class="zone-ground-label vertical" style="left:6830px;top:1500px;font-size:70px;color:#E53935">WORK</div>
+<!-- Zone ground labels — painted diagonally in center of each zone, BIG -->
+<div class="zone-ground-label" style="left:2100px;top:2400px;font-size:220px;color:#4CAF50;transform:rotate(-25deg)">ORIGIN</div>
+<div class="zone-ground-label" style="left:9200px;top:2200px;font-size:220px;color:#E53935;transform:rotate(-20deg)">WORK</div>
+<div class="zone-ground-label" style="left:1600px;top:7400px;font-size:190px;color:#42A5F5;transform:rotate(-30deg)">PORTFOLIO</div>
+<div class="zone-ground-label" style="left:1800px;top:11400px;font-size:190px;color:#FF9800;transform:rotate(-22deg)">HOBBY</div>
+<div class="zone-ground-label" style="left:9000px;top:9200px;font-size:220px;color:#AB47BC;transform:rotate(-28deg)">FUN</div>
 
 <!-- Zone creative intro cards (wrapped as stickers for map sync) -->
 
@@ -4307,7 +4299,7 @@ function placeZoneSignposts(signposts){
   });
 }
 
-// ===== AUTO-REARRANGE ENGINE v3 =====
+// ===== AUTO-REARRANGE ENGINE v4 =====
 // Rules:
 // 1. Spread evenly — no too-dense or too-empty areas
 // 2. Intro card of each zone centered in zone
@@ -4320,7 +4312,8 @@ function placeZoneSignposts(signposts){
 // 9. Sync to big and small map after arrangement
 // 10. Audit: count items in DOM vs maps, remove duplicates, add missing
 // 11. Ensure all items are categorized (type) and attributed (zone). New category: introduction
-// 12. Cards CAN overlap/stack on top of each other (no anti-overlap enforcement)
+// 12. Anti-overlap: cards are nudged apart so they don't stack on top of each other
+// 13. Organic country-style zone boundaries (SVG curves, not straight lines)
 
 const ZONE_DEFS={
   origin:{x1:400,y1:400,x2:5800,y2:5600,center:{x:3100,y:3000},color:'#4CAF50'},
@@ -4382,7 +4375,25 @@ function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
     // Clamp to safe zone
     tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
     tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
-    // Rule 12: Allow overlapping/stacking — no anti-overlap nudge
+    // Rule 12: Anti-overlap nudge — push away from placed items
+    for(let attempt=0;attempt<12;attempt++){
+      let overlapping=false;
+      for(const p of placed){
+        const overlapX=tryLeft<p.left+p.w&&tryLeft+w>p.left;
+        const overlapY=tryTop<p.top+p.h&&tryTop+h>p.top;
+        if(overlapX&&overlapY){
+          overlapping=true;
+          // Nudge in spiral direction
+          const nudgeAngle=angle+attempt*0.5;
+          tryLeft+=Math.cos(nudgeAngle)*Math.max(w*0.6,80);
+          tryTop+=Math.sin(nudgeAngle)*Math.max(h*0.6,60);
+          tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
+          tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
+          break;
+        }
+      }
+      if(!overlapping)break;
+    }
     let candidate={left:tryLeft,top:tryTop,w,h};
     sticker.style.left=candidate.left+'px';
     sticker.style.top=candidate.top+'px';
@@ -4478,7 +4489,21 @@ function autoArrangeMoodboardItems(){
       let tryTop=BOUNDARY_PAD+row*cellH+(rng()*cellH*0.7)+cellH*0.1;
       tryLeft=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN-w,tryLeft));
       tryTop=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN-h,tryTop));
-      // Rule 12: Allow stacking — no anti-overlap nudge
+      // Rule 12: Anti-overlap nudge for scattered items
+      for(let attempt=0;attempt<8;attempt++){
+        let overlapping=false;
+        for(const p of allPlaced){
+          if(tryLeft<p.left+p.w&&tryLeft+w>p.left&&tryTop<p.top+p.h&&tryTop+h>p.top){
+            overlapping=true;
+            tryLeft+=((rng()-0.3)*Math.max(w,120));
+            tryTop+=((rng()-0.3)*Math.max(h,80));
+            tryLeft=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN-w,tryLeft));
+            tryTop=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN-h,tryTop));
+            break;
+          }
+        }
+        if(!overlapping)break;
+      }
       let candidate={left:tryLeft,top:tryTop,w,h};
       sticker.style.left=candidate.left+'px';
       sticker.style.top=candidate.top+'px';
@@ -5315,6 +5340,20 @@ const journalContent = {
 
 timeline: `
 <div class="timeline">
+
+  <div class="tl-item">
+    <div class="tl-dot" style="background:linear-gradient(135deg,#2196F3,#1565C0)"></div>
+    <div class="tl-version">v49.0 — 🗺️ Organic Borders + Anti-Overlap + Diagonal Labels</div>
+    <div class="tl-date">Session 49 · March 27, 2026</div>
+    <div class="tl-desc">Engine v4: Zone boundaries now use SVG bezier curves like country/state borders — organic, irregular, not straight. Cards no longer stack on top of each other — anti-overlap nudging re-enabled with 12 directional attempts. Zone names painted diagonally in the center of each zone, much bigger (190-220px). All synced across canvas, big map, and small map.</div>
+    <ul class="tl-changes">
+      <li>🗺️ Rule 13: Organic SVG bezier zone boundaries on canvas + big map (country-border style)</li>
+      <li>📐 Rule 12 revised: Anti-overlap nudging re-enabled — cards no longer stack</li>
+      <li>🏷️ Zone ground labels moved to zone centers, diagonal, 220px font-size</li>
+      <li>🔄 Big map boundaries rebuilt as SVG curves with glow filters</li>
+      <li>⚙️ Engine tab updated to 13 rules, zone border docs added</li>
+    </ul>
+  </div>
 
   <div class="tl-item">
     <div class="tl-dot" style="background:linear-gradient(135deg,#9C27B0,#7B1FA2)"></div>
@@ -6418,6 +6457,9 @@ stats: `
 
   <div class="prompt-block"><div class="prompt-label">Prompt 44 — Stacking + Map Click Restriction</div><div class="prompt-text">"New rule: cards should be on top of each other (allow stacking). On big map make sure user can only click on items, not blank spaces — character shouldn't wander. On canvas, bitmoji should go to the side of the listing near boundary, not on top."</div></div>
   <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v48.0: Rule 12 added — removed all anti-overlap nudge logic from spiral and scatter layouts, cards now naturally stack. Big map blank-area click and long-press disabled — character only walks when clicking a sticker. Bitmoji guide now spawns to the left side of the target sticker instead of on top. Engine tab updated to 12 rules.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 45 — Organic Borders + Anti-Overlap + Diagonal Labels</div><div class="prompt-text">"Cards still stacking — fix and update rule. Make zone names painted diagonally in center of each zone, bigger. Zone boundary lines should be irregular like country/state borders, not straight. Sync organic borders to canvas, big map, and small map."</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v49.0: Engine v4 with 13 rules. Rule 12 reversed — anti-overlap nudging re-enabled (12 attempts per card). Rule 13 added — organic SVG bezier boundaries on canvas and big map. Zone ground labels moved from boundaries to zone centers, written diagonally at 190-220px. Big map straight dashed lines replaced with SVG curves. Engine tab updated to 13 rules with border docs.</div></div>
 </div>
 <div class="inv-section">
   <h3>🧱 Tech Stack</h3>
@@ -6533,12 +6575,12 @@ credits: \`
 
 engine: `
 <div class="inv-section">
-  <h3>⚙️ Auto-Rearrange Engine v3 (12 Rules)</h3>
+  <h3>⚙️ Auto-Rearrange Engine v4 (13 Rules)</h3>
   <p style="font-size:0.8rem;color:var(--text2);line-height:1.7;margin-bottom:16px">
     The distribution engine controls how 280+ stickers are placed across the 14K×14K canvas. It runs on page load and can be triggered manually via the 🔄 button in theme settings.
   </p>
   
-  <h4 style="font-size:0.85rem;color:var(--text);margin:16px 0 10px">📏 11 Distribution Rules</h4>
+  <h4 style="font-size:0.85rem;color:var(--text);margin:16px 0 10px">📏 13 Distribution Rules</h4>
   <table class="inv-table">
     <tr><th>#</th><th>Rule</th><th>How It Works</th></tr>
     <tr><td>1</td><td>Even Spread</td><td>No area too dense or empty — golden-angle spiral + grid scatter ensures coverage</td></tr>
@@ -6552,7 +6594,8 @@ engine: `
     <tr><td>9</td><td>Map Sync</td><td>After arrangement, canvas → scanStickers → invalidate map cache → redraw both maps</td></tr>
     <tr><td>10</td><td>Integrity Audit</td><td>Counts DOM items, removes duplicates (same mapId), fills missing categories/zones</td></tr>
     <tr><td>11</td><td>Attribution</td><td>Every sticker gets a type (category) and zone. New category: <strong>introduction</strong></td></tr>
-    <tr><td>12</td><td>Allow Stacking</td><td>Cards CAN overlap on top of each other — no anti-overlap nudge, creating a natural layered feel</td></tr>
+    <tr><td>12</td><td>Anti-Overlap</td><td>Cards are nudged apart (up to 12 attempts) so they don't stack on top of each other</td></tr>
+    <tr><td>13</td><td>Organic Borders</td><td>Zone boundaries use SVG bezier curves — irregular like country/state borders, not straight lines. Synced across canvas, big map, and small map.</td></tr>
   </table>
 </div>
 
@@ -6569,18 +6612,19 @@ engine: `
     <tr><td>Big Map</td><td>Full viewport. Sticker clones rendered at map scale. Click navigates via direct world coords (no lossy conversion). Zoom: 0.25x-2x steps.</td></tr>
     <tr><td>Navigation</td><td>Clicking map sticker -> walkBitmojiTo(worldX, worldY) -> CSS transition walk -> viewport scrollTo center on target.</td></tr>
     <tr><td>Sync Pipeline</td><td>scanStickers() -> stickerData[] -> signature check -> invalidateMapCloneCache() -> updMap()/renderExpandedMap()</td></tr>
+    <tr><td>Zone Borders</td><td>Organic SVG bezier curves on canvas, big map, and minimap — irregular like country borders, matching world coordinate boundaries</td></tr>
   </table>
 </div>
 
 <div class="inv-section" style="margin-top:20px">
   <h3>🏙️ Zone Definitions</h3>
   <table class="inv-table">
-    <tr><th>Zone</th><th>Bounds (px)</th><th>Center</th><th>Color</th></tr>
-    <tr><td>📸 Origin</td><td>(400,400) to (5800,5600)</td><td>(3100, 3000)</td><td style="color:#4CAF50">#4CAF50</td></tr>
-    <tr><td>🎯 Work</td><td>(7700,400) to (13600,5600)</td><td>(10650, 3000)</td><td style="color:#E53935">#E53935</td></tr>
-    <tr><td>🚀 Portfolio</td><td>(400,6200) to (5600,9800)</td><td>(3000, 8000)</td><td style="color:#42A5F5">#42A5F5</td></tr>
-    <tr><td>🎮 Hobby</td><td>(400,10400) to (6300,13600)</td><td>(3350, 12000)</td><td style="color:#FF9800">#FF9800</td></tr>
-    <tr><td>😂 Fun</td><td>(7700,6400) to (13600,13600)</td><td>(10650, 10000)</td><td style="color:#AB47BC">#AB47BC</td></tr>
+    <tr><th>Zone</th><th>Bounds (px)</th><th>Center</th><th>Color</th><th>Boundary Style</th></tr>
+    <tr><td>📸 Origin</td><td>(400,400) to (5800,5600)</td><td>(3100, 3000)</td><td style="color:#4CAF50">#4CAF50</td><td>Organic curve, top-left</td></tr>
+    <tr><td>🎯 Work</td><td>(7700,400) to (13600,5600)</td><td>(10650, 3000)</td><td style="color:#E53935">#E53935</td><td>Organic curve, top-right</td></tr>
+    <tr><td>🚀 Portfolio</td><td>(400,6200) to (5600,9800)</td><td>(3000, 8000)</td><td style="color:#42A5F5">#42A5F5</td><td>Organic curve, mid-left</td></tr>
+    <tr><td>🎮 Hobby</td><td>(400,10400) to (6300,13600)</td><td>(3350, 12000)</td><td style="color:#FF9800">#FF9800</td><td>Organic curve, bottom-left</td></tr>
+    <tr><td>😂 Fun</td><td>(7700,6400) to (13600,13600)</td><td>(10650, 10000)</td><td style="color:#AB47BC">#AB47BC</td><td>Organic curve, right side</td></tr>
   </table>
 </div>
 
@@ -6609,6 +6653,8 @@ engine: `
     <div class="fun-fact">⚡ The <strong>signature check</strong> (mapId:left:top:w:h:cat joined) avoids unnecessary map redraws — only invalidates cache when positions actually change</div>
     <div class="fun-fact">🏷️ Every sticker is auto-tagged with both a <strong>category</strong> (photo, meme, interactive, introduction...) and a <strong>zone</strong> (origin, work, portfolio, hobby, fun)</div>
     <div class="fun-fact">🔄 The rearrange button triggers: <strong>audit -> arrange -> scan -> invalidate cache -> redraw both maps</strong> — a 5-step pipeline in ~200ms</div>
+    <div class="fun-fact">🗺️ Zone boundaries use <strong>SVG bezier curves</strong> with random control points — creating organic, country-map-style borders instead of straight lines</div>
+    <div class="fun-fact">📐 Anti-overlap nudging tries up to <strong>12 directional attempts</strong> per card, pushing along the spiral angle to find the nearest non-overlapping position</div>
   </div>
 </div>
 `
@@ -7055,22 +7101,39 @@ function addMapDecorations(cw, ch){
    // Fun: x[7700-13600]→[54.7%-94.6%], y[6400-13600]→[45.9%-94.6%]
    addDiv('map-zone-tint','left:55%;top:46%;width:40%;height:49%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.28),transparent 65%);z-index:0;filter:blur(2px)');
 
-   // === ZONE BOUNDARY LINES — positioned from actual world zone coordinates ===
-   // World is 14000x14000, map padding 400 each side → total range 14800
-   // H-line between Origin/Work (y≤5600) and Portfolio/Fun (y≥6200): midpoint y=5900 → (5900+400)/14800 = 42.6%
-   // H-line between Portfolio (y≤9800) and Hobby (y≥10400): midpoint y=10100 → (10100+400)/14800 = 70.9%
-   // V-line between Origin/Portfolio/Hobby (x≤5800/5600/6300) and Work/Fun (x≥7700): midpoint x=6750 → (6750+400)/14800 = 48.3%
-   const zoneLine1=addDiv('map-zone-line','left:3%;top:42.6%;width:94%;height:0;border-top:5px dashed rgba(76,175,80,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(76,175,80,0.7)) drop-shadow(0 0 20px rgba(76,175,80,0.4))');
-   const zoneLine2=addDiv('map-zone-line','left:3%;top:70.9%;width:45.3%;height:0;border-top:5px dashed rgba(255,152,0,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(255,152,0,0.7)) drop-shadow(0 0 20px rgba(255,152,0,0.4))');
-   const zoneLine3=addDiv('map-zone-line','left:48.3%;top:2%;width:0;height:40.6%;border-left:5px dashed rgba(229,57,53,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(229,57,53,0.7)) drop-shadow(0 0 20px rgba(229,57,53,0.4))');
-   const zoneLine4=addDiv('map-zone-line','left:48.3%;top:42.6%;width:0;height:56%;border-left:5px dashed rgba(171,71,188,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(171,71,188,0.7)) drop-shadow(0 0 20px rgba(171,71,188,0.4))');
+   // === ORGANIC ZONE BOUNDARY LINES — SVG curves like country borders ===
+   const svgNS='http://www.w3.org/2000/svg';
+   const mapBoundarySvg=document.createElementNS(svgNS,'svg');
+   mapBoundarySvg.setAttribute('viewBox','0 0 100 100');
+   mapBoundarySvg.setAttribute('preserveAspectRatio','none');
+   mapBoundarySvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:5;overflow:visible';
+   // H-line: Origin/Work → Portfolio/Fun at ~42.6%
+   const p1=document.createElementNS(svgNS,'path');
+   p1.setAttribute('d','M3,42.2 C10,43.2 18,41.5 27,42.8 S38,42 48,43.1 S58,41.8 68,42.5 S80,43.3 90,42.1 L97,42.6');
+   p1.setAttribute('fill','none');p1.setAttribute('stroke','rgba(76,175,80,0.7)');p1.setAttribute('stroke-width','0.4');p1.setAttribute('stroke-dasharray','1.6 0.8');p1.setAttribute('stroke-linecap','round');
+   p1.style.filter='drop-shadow(0 0 2px rgba(76,175,80,0.5))';
+   mapBoundarySvg.appendChild(p1);
+   // H-line: Portfolio → Hobby at ~70.9% (left half)
+   const p2=document.createElementNS(svgNS,'path');
+   p2.setAttribute('d','M3,70.5 C8,71.4 15,70 22,71.2 S32,70.3 38,71.1 L45.3,70.8');
+   p2.setAttribute('fill','none');p2.setAttribute('stroke','rgba(255,152,0,0.7)');p2.setAttribute('stroke-width','0.4');p2.setAttribute('stroke-dasharray','1.6 0.8');p2.setAttribute('stroke-linecap','round');
+   p2.style.filter='drop-shadow(0 0 2px rgba(255,152,0,0.5))';
+   mapBoundarySvg.appendChild(p2);
+   // V-line: top half at ~48.3%
+   const p3=document.createElementNS(svgNS,'path');
+   p3.setAttribute('d','M48,2 C48.8,6 47.5,11 48.3,16 S47.8,24 48.5,30 S47.6,36 48.2,42.2');
+   p3.setAttribute('fill','none');p3.setAttribute('stroke','rgba(229,57,53,0.7)');p3.setAttribute('stroke-width','0.4');p3.setAttribute('stroke-dasharray','1.6 0.8');p3.setAttribute('stroke-linecap','round');
+   p3.style.filter='drop-shadow(0 0 2px rgba(229,57,53,0.5))';
+   mapBoundarySvg.appendChild(p3);
+   // V-line: bottom half
+   const p4=document.createElementNS(svgNS,'path');
+   p4.setAttribute('d','M48.2,42.6 C48.9,48 47.6,54 48.4,60 S47.7,68 48.3,74 S47.8,82 48.1,90 L48.3,98');
+   p4.setAttribute('fill','none');p4.setAttribute('stroke','rgba(171,71,188,0.7)');p4.setAttribute('stroke-width','0.4');p4.setAttribute('stroke-dasharray','1.6 0.8');p4.setAttribute('stroke-linecap','round');
+   p4.style.filter='drop-shadow(0 0 2px rgba(171,71,188,0.5))';
+   mapBoundarySvg.appendChild(p4);
+   layer.appendChild(mapBoundarySvg);
 
    // === ZONE SIGNPOST LABELS — positioned at actual zone centers ===
-   // Origin center: ((400+5800)/2+400)/14800=23.6%, ((400+5600)/2+400)/14800=22.3%
-   // Work center: ((7700+13600)/2+400)/14800=74.0%, same Y as Origin
-   // Portfolio center: ((400+5600)/2+400)/14800=23.6%, ((6200+9800)/2+400)/14800=57.4%
-   // Hobby center: ((400+6300)/2+400)/14800=25.0%, ((10400+13600)/2+400)/14800=83.8%
-   // Fun center: ((7700+13600)/2+400)/14800=74.0%, ((6400+13600)/2+400)/14800=70.3%
    const signposts=[
      {x:23.6,y:22.3,label:'ORIGIN',color:'#4CAF50',bg:'rgba(76,175,80,0.85)'},
      {x:74.0,y:22.3,label:'WORK',color:'#E53935',bg:'rgba(229,57,53,0.85)'},
@@ -7083,25 +7146,16 @@ function addMapDecorations(cw, ch){
      el.textContent=sp.label;
    });
 
-   // === ZONE GROUND LABELS — road marking style near boundary lines ===
-   // Labels placed just above/below horizontal boundaries and beside vertical boundary
-   const groundLabels=[
-     // Above h-line at 42.6% (origin/work side)
-     {x:20,y:39.5,label:'ORIGIN ↑',color:'rgba(76,175,80,0.22)',size:Math.max(10,cw*0.012),rot:0},
-     {x:60,y:39.5,label:'WORK ↑',color:'rgba(229,57,53,0.22)',size:Math.max(10,cw*0.012),rot:0},
-     // Below h-line at 42.6% (portfolio/fun side)
-     {x:20,y:44.5,label:'↓ PORTFOLIO',color:'rgba(66,165,245,0.2)',size:Math.max(9,cw*0.01),rot:0},
-     {x:60,y:44.5,label:'↓ FUN',color:'rgba(171,71,188,0.2)',size:Math.max(9,cw*0.01),rot:0},
-     // Above h-line at 70.9% (portfolio side)
-     {x:20,y:68,label:'PORTFOLIO ↑',color:'rgba(66,165,245,0.18)',size:Math.max(9,cw*0.01),rot:0},
-     // Below h-line at 70.9% (hobby side)
-     {x:20,y:73,label:'↓ HOBBY',color:'rgba(255,152,0,0.2)',size:Math.max(9,cw*0.01),rot:0},
-     // Beside v-line at 48.3%
-     {x:45,y:18,label:'ORIGIN',color:'rgba(76,175,80,0.17)',size:Math.max(8,cw*0.008),rot:90},
-     {x:51,y:18,label:'WORK',color:'rgba(229,57,53,0.17)',size:Math.max(8,cw*0.008),rot:90},
+   // === ZONE GROUND LABELS ON MAP — diagonal, centered in zones ===
+   const mapGroundLabels=[
+     {x:18,y:20,label:'ORIGIN',color:'rgba(76,175,80,0.15)',rot:-25},
+     {x:62,y:18,label:'WORK',color:'rgba(229,57,53,0.13)',rot:-20},
+     {x:16,y:55,label:'PORTFOLIO',color:'rgba(66,165,245,0.12)',rot:-30},
+     {x:17,y:82,label:'HOBBY',color:'rgba(255,152,0,0.14)',rot:-22},
+     {x:62,y:68,label:'FUN',color:'rgba(171,71,188,0.13)',rot:-28},
    ];
-   groundLabels.forEach(gl=>{
-     const el=addDiv('map-ground-label','left:'+gl.x+'%;top:'+gl.y+'%;z-index:4;pointer-events:none;font-family:var(--font-fun);font-weight:900;font-size:'+gl.size+'px;color:'+gl.color+';letter-spacing:0.25em;text-transform:uppercase;'+(gl.rot?'writing-mode:vertical-rl;text-orientation:mixed;':''));
+   mapGroundLabels.forEach(gl=>{
+     const el=addDiv('map-ground-label','left:'+gl.x+'%;top:'+gl.y+'%;z-index:4;font-family:var(--font-fun);font-weight:900;font-size:'+Math.max(12,cw*0.018)+'px;color:'+gl.color+';letter-spacing:0.35em;text-transform:uppercase;transform:rotate('+gl.rot+'deg);white-space:nowrap');
      el.textContent=gl.label;
    });
 
