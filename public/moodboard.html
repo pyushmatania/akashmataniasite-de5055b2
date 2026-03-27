@@ -9118,29 +9118,80 @@ function ensureIntroCluster(){
 }
 
 function ensureZoneIntroCards(){
-  const fallbackByZone={
-    work:{left:10050,top:2600,title:'WORK',tagline:'This is where I build and ship'},
-    portfolio:{left:2640,top:7600,title:'PORTFOLIO',tagline:'Projects shipped and stories behind them'},
-    origin:{left:2740,top:2400,title:'ORIGIN',tagline:'Where my journey started'},
-    hobby:{left:2990,top:11800,title:'HOBBY',tagline:'What keeps me energized'},
-    fun:{left:10690,top:9800,title:'FUN',tagline:'Memes, vibes, and playful chaos'}
+  const zoneMeta={
+    work:{
+      left:10050,top:2600,cls:'zone-work',icon:'🎯',title:'WORK',
+      tagline:'Where ideas become shipped products — strategy, sprints & stakeholders.',
+      tags:['PRDs','Roadmaps','OKRs','Sprints','A/B Tests'],
+      stats:[{val:'8+',label:'Years'},{val:'5K+',label:'Users Scaled'},{val:'12',label:'Products'}]
+    },
+    portfolio:{
+      left:2640,top:7600,cls:'zone-portfolio',icon:'🚀',title:'PORTFOLIO',
+      tagline:'Projects I\'ve built, shipped & iterated on — from zero to one.',
+      tags:['Web3','EdTech','SaaS','FinTech','AI'],
+      stats:[{val:'6',label:'Startups'},{val:'3',label:'Founded'},{val:'∞',label:'Learnings'}]
+    },
+    origin:{
+      left:2740,top:2400,cls:'zone-origin',icon:'📸',title:'ORIGIN',
+      tagline:'The backstory — engineering roots, curious mind, builder spirit.',
+      tags:['B.Tech CS','Bhubaneswar','Bengaluru','Builder'],
+      stats:[{val:'2016',label:'Started'},{val:'4',label:'Cities'},{val:'1',label:'Mission'}]
+    },
+    hobby:{
+      left:2990,top:11800,cls:'zone-playground',icon:'🎮',title:'HOBBY',
+      tagline:'Off-duty mode — gaming, music, travel & creative experiments.',
+      tags:['Gaming','Music','Travel','Photography','Art'],
+      stats:[{val:'🎵',label:'Beats'},{val:'📷',label:'Shots'},{val:'✈️',label:'Trips'}]
+    },
+    fun:{
+      left:10690,top:9800,cls:'zone-meme',icon:'😂',title:'FUN',
+      tagline:'Memes, vibes & unfiltered chaos — the lighter side of building.',
+      tags:['Memes','Hot Takes','Vibes','Easter Eggs'],
+      stats:[{val:'💀',label:'Dead'},{val:'🔥',label:'Takes'},{val:'🤌',label:'Chef\'s Kiss'}]
+    }
   };
-  Object.entries(fallbackByZone).forEach(([zone,meta])=>{
+
+  Object.entries(zoneMeta).forEach(([zone,meta])=>{
     const existing=document.querySelector('.zone-intro-creative[data-zone="'+zone+'"], .zone-intro-card[data-zone="'+zone+'"], .intro-card[data-zone="'+zone+'"]');
     if(existing){
       existing.dataset.zone=zone;
-      if(!existing.dataset.type){existing.dataset.type=(zone==='work'&&existing.classList.contains('intro-card'))?'photo':'introduction';}
+      if(!existing.dataset.type) existing.dataset.type=(zone==='work'&&existing.classList.contains('intro-card'))?'photo':'introduction';
+      // Upgrade old plain cards to new design
+      if(!existing.querySelector('.zic-inner')){
+        existing.className='sticker zone-intro-card '+meta.cls;
+        existing.innerHTML=buildZoneCardHTML(meta);
+      }
       return;
     }
     const card=document.createElement('div');
-    card.className='sticker intro-card';
+    card.className='sticker zone-intro-card '+meta.cls;
     card.dataset.zone=zone;
     card.dataset.type='introduction';
     card.style.left=meta.left+'px';
     card.style.top=meta.top+'px';
-    card.innerHTML='<div class="intro-name">'+meta.title+'</div><div class="intro-tagline">'+meta.tagline+'</div><div class="intro-cta">↕ tap Play to explore this zone</div>';
+    card.innerHTML=buildZoneCardHTML(meta);
     cv.appendChild(card);
   });
+}
+
+function buildZoneCardHTML(meta){
+  const tagsHTML=meta.tags.map(t=>'<span class="zic-tag">'+t+'</span>').join('');
+  const statsHTML=meta.stats.map(s=>'<div class="zic-stat"><div class="zic-stat-val">'+s.val+'</div><div class="zic-stat-label">'+s.label+'</div></div>').join('');
+  return '<div class="zic-accent-bar"></div>'+
+    '<div class="zic-shapes">'+
+      '<div class="zic-shape s1"></div>'+
+      '<div class="zic-shape s2"></div>'+
+      '<div class="zic-shape s3"></div>'+
+      '<div class="zic-shape s4"></div>'+
+    '</div>'+
+    '<div class="zic-inner">'+
+      '<div class="zic-icon-wrap">'+meta.icon+'</div>'+
+      '<div class="zic-title">'+meta.title+'</div>'+
+      '<div class="zic-sub">'+meta.tagline+'</div>'+
+      '<div class="zic-tags">'+tagsHTML+'</div>'+
+      '<div class="zic-stats">'+statsHTML+'</div>'+
+      '<div class="zic-cta">▶ tap Play to continue</div>'+
+    '</div>';
 }
 
 // ===== INTERSECTION OBSERVER: pause animations on off-screen stickers =====
