@@ -4386,6 +4386,8 @@ function placeZoneSignposts(signposts){
 // 11. Ensure all items are categorized (type) and attributed (zone). New category: introduction
 // 12. Anti-overlap: cards are nudged apart so they don't stack on top of each other
 // 13. Organic country-style zone boundaries (SVG curves, not straight lines)
+// 14. Reserved zones: no cards placed on ground labels or signpost areas
+// 15. Hollywood casino-style 2-pole signposts near zone centers (canvas + maps)
 
 const ZONE_DEFS={
   origin:{x1:400,y1:400,x2:5800,y2:5600,center:{x:3100,y:3000},color:'#4CAF50'},
