@@ -1646,6 +1646,136 @@ body.map-expanded .scroll-counter{display:none!important}
   color:rgba(0,0,0,0.06);letter-spacing:0.15em;
   text-transform:uppercase;
 }
+
+/* ===== ENHANCED INTRO CARD — ADDITIONS ===== */
+.intro-card .intro-status{display:inline-flex;align-items:center;gap:6px;background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);border-radius:20px;padding:4px 12px 4px 8px;font-size:0.68rem;color:#2E7D32;font-weight:600;margin-bottom:16px}
+.intro-card .status-dot{width:8px;height:8px;border-radius:50%;background:#4CAF50;box-shadow:0 0 0 3px rgba(76,175,80,0.2);animation:statusPulse 2s ease-in-out infinite;flex-shrink:0}
+@keyframes statusPulse{0%,100%{box-shadow:0 0 0 3px rgba(76,175,80,0.2)}50%{box-shadow:0 0 0 6px rgba(76,175,80,0.06)}}
+.intro-card .intro-currently{background:rgba(201,169,110,0.07);border:1.5px dashed rgba(201,169,110,0.3);border-radius:12px;padding:10px 14px;margin-top:14px;text-align:left}
+.intro-card .curr-label{font-size:0.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px}
+.intro-card .curr-val{font-family:var(--font-hand);font-size:0.9rem;color:var(--text2);cursor:pointer;display:block;transition:color 0.3s}
+.intro-card .curr-val:hover{color:var(--accent)}
+.intro-card .intro-stats-row{display:flex;margin:14px -4px 0;padding-top:14px;border-top:1px solid rgba(0,0,0,0.06)}
+.intro-card .istat{flex:1;text-align:center;border-right:1px solid rgba(0,0,0,0.06);padding:0 4px}
+.intro-card .istat:last-child{border-right:none}
+.intro-card .istat-num{font-family:var(--font-fun);font-weight:800;font-size:1.1rem;color:var(--accent);display:block}
+.intro-card .istat-label{font-size:0.52rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.04em;display:block;margin-top:2px}
+.intro-card .photo-tap-count{position:absolute;top:-12px;right:-12px;background:linear-gradient(135deg,#FF5252,#E53935);color:#fff;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(229,57,53,0.4);opacity:0;transition:opacity 0.3s,transform 0.3s;transform:scale(0.5);pointer-events:none}
+.intro-card .photo-tap-count.visible{opacity:1;transform:scale(1)}
+
+/* ===== ZONE INTRO CARDS ===== */
+.zone-intro-card{position:absolute;z-index:75;border-radius:24px;padding:32px 36px 28px;width:420px;text-align:center;cursor:default;box-shadow:0 16px 50px rgba(0,0,0,0.1),0 6px 20px rgba(0,0,0,0.05),inset 0 1px 0 rgba(255,255,255,0.9);animation:introFloat 6s ease-in-out infinite}
+.zone-intro-card.zone-work{background:linear-gradient(145deg,#fff9f9,#fff,#fff5f5);border:3px solid rgba(229,57,53,0.18)}
+.zone-intro-card.zone-portfolio{background:linear-gradient(145deg,#f9fcff,#fff,#eef8ff);border:3px solid rgba(66,165,245,0.18)}
+.zone-intro-card.zone-origin{background:linear-gradient(145deg,#f9fff9,#fff,#f0fff0);border:3px solid rgba(76,175,80,0.18)}
+.zone-intro-card.zone-playground{background:linear-gradient(145deg,#fffdf5,#fff,#fff8e0);border:3px solid rgba(255,152,0,0.18)}
+.zone-intro-card.zone-meme{background:linear-gradient(145deg,#fdf5ff,#fff,#f5eaff);border:3px solid rgba(171,71,188,0.18)}
+.zone-intro-card .zic-icon{font-size:3rem;display:block;margin-bottom:10px}
+.zone-intro-card .zic-title{font-family:var(--font-fun);font-size:1.9rem;font-weight:800;color:var(--text);margin-bottom:6px}
+.zone-intro-card .zic-sub{font-family:var(--font-hand);font-size:1rem;color:var(--text2);margin-bottom:16px;line-height:1.55}
+.zone-intro-card .zic-tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.zone-intro-card .zic-tag{background:rgba(0,0,0,0.05);border-radius:16px;padding:5px 14px;font-family:var(--font-fun);font-size:0.66rem;font-weight:600;color:var(--text2)}
+.zone-intro-card .zic-cta{font-family:var(--font-hand);font-size:0.85rem;color:var(--text3);margin-top:6px}
+
+/* ===== STICKER — FACT CARD ===== */
+.sticker-factcard{background:linear-gradient(145deg,#fff,#fdfaf5);border-radius:18px;padding:20px 22px;width:240px;border:2px solid rgba(201,169,110,0.2);box-shadow:0 4px 18px rgba(0,0,0,0.07);cursor:pointer}
+.sticker-factcard .fc-title{font-family:var(--font-fun);font-weight:700;font-size:0.85rem;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.sticker-factcard .fc-num{background:var(--accent);color:#fff;font-size:0.52rem;font-weight:700;padding:2px 7px;border-radius:6px;margin-left:auto;font-family:var(--font-fun)}
+.sticker-factcard .fc-body{font-family:var(--font-hand);font-size:0.98rem;color:var(--text2);line-height:1.5;min-height:52px}
+.sticker-factcard .fc-footer{font-size:0.6rem;color:var(--text3);margin-top:8px;text-align:right}
+
+/* ===== STICKER — DNA BARS ===== */
+.sticker-dna{background:linear-gradient(135deg,#E8F5E9,#F1F8E9);border-radius:18px;padding:18px 20px;width:250px;border:2px solid rgba(76,175,80,0.2);box-shadow:0 4px 16px rgba(76,175,80,0.07)}
+.sticker-dna .dna-title{font-family:var(--font-fun);font-weight:700;font-size:0.85rem;color:#1B5E20;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.sticker-dna .dna-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.sticker-dna .dna-emoji{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
+.sticker-dna .dna-label{font-size:0.66rem;color:#2E7D32;font-weight:500;width:82px;flex-shrink:0}
+.sticker-dna .dna-bar{flex:1;height:9px;background:rgba(76,175,80,0.15);border-radius:5px;overflow:hidden}
+.sticker-dna .dna-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#66BB6A,#43A047)}
+
+/* ===== STICKER — HOT TAKES ===== */
+.sticker-hottake{background:linear-gradient(135deg,#FFF3E0,#FFE0B2);border-radius:18px;padding:18px 20px;width:230px;border:2px solid rgba(255,152,0,0.2);box-shadow:0 4px 16px rgba(255,152,0,0.1);cursor:pointer}
+.sticker-hottake .ht-title{font-family:var(--font-fun);font-weight:700;font-size:0.85rem;color:#E65100;margin-bottom:8px}
+.sticker-hottake .ht-body{font-family:var(--font-hand);font-size:1rem;color:#BF360C;line-height:1.5;min-height:52px}
+.sticker-hottake .ht-cta{font-size:0.6rem;color:#FF6D00;margin-top:8px;opacity:0.7}
+
+/* ===== STICKER — CURRENTLY CARD ===== */
+.sticker-currently{background:linear-gradient(135deg,#E3F2FD,#BBDEFB);border-radius:18px;padding:18px 20px;width:230px;border:2px solid rgba(66,165,245,0.2);box-shadow:0 4px 16px rgba(33,150,243,0.08)}
+.sticker-currently .cur-title{font-family:var(--font-fun);font-weight:700;font-size:0.85rem;color:#0D47A1;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.sticker-currently .cur-dot{width:8px;height:8px;border-radius:50%;background:#42A5F5;animation:statusPulse 2s ease-in-out infinite;flex-shrink:0}
+.sticker-currently .cur-item{background:rgba(255,255,255,0.6);border-radius:10px;padding:8px 12px;font-family:var(--font-hand);font-size:0.88rem;color:#1565C0;margin-bottom:5px;border-left:3px solid #42A5F5}
+.sticker-currently .cur-cta{font-size:0.6rem;color:#1976D2;margin-top:6px;opacity:0.65;cursor:pointer}
+
+/* ===== GAME: IRON THRONE ===== */
+.sticker-throne-game{background:linear-gradient(145deg,#1a1a2e,#16213e,#0f3460);border-radius:20px;padding:22px;width:310px;border:2px solid rgba(255,215,0,0.3);box-shadow:0 8px 32px rgba(0,0,0,0.35),0 0 40px rgba(255,215,0,0.04);text-align:center;cursor:default}
+.sticker-throne-game .tg-title{font-family:var(--font-fun);font-weight:800;font-size:0.95rem;color:#FFD700;margin-bottom:2px;text-shadow:0 0 12px rgba(255,215,0,0.3)}
+.sticker-throne-game .tg-sub{font-size:0.62rem;color:rgba(255,215,0,0.55);margin-bottom:14px}
+.tg-chars{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.tg-char{width:54px;height:64px;border-radius:12px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:grab;transition:all 0.2s;user-select:none}
+.tg-char:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,215,0,0.4)}
+.tg-char:active{cursor:grabbing;transform:scale(1.08)}
+.tg-char .char-name{font-size:0.44rem;color:rgba(255,255,255,0.5);margin-top:3px;font-family:var(--font-fun);font-weight:600;text-align:center;line-height:1.1}
+.tg-throne-wrap{width:90px;margin:0 auto 10px}
+.tg-throne{width:90px;height:90px;border-radius:16px;background:rgba(255,215,0,0.08);border:3px dashed rgba(255,215,0,0.4);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:2.4rem;transition:all 0.3s}
+.tg-throne.drag-over{background:rgba(255,215,0,0.18);border-style:solid;border-color:#FFD700;transform:scale(1.06);box-shadow:0 0 20px rgba(255,215,0,0.25)}
+.tg-throne .throne-hint{font-size:0.5rem;color:rgba(255,215,0,0.4);margin-top:3px;font-family:var(--font-fun)}
+.tg-result{font-family:var(--font-hand);font-size:0.88rem;color:#FFD700;min-height:1.4em;transition:all 0.3s;line-height:1.4}
+.tg-reset{background:none;border:1px solid rgba(255,215,0,0.25);color:rgba(255,215,0,0.55);font-family:var(--font-fun);font-size:0.58rem;border-radius:8px;padding:5px 12px;cursor:pointer;margin-top:8px;transition:all 0.2s}
+.tg-reset:hover{background:rgba(255,215,0,0.08);color:#FFD700}
+
+/* ===== GAME: STACK BUILDER ===== */
+.sticker-stackbuilder{background:#fff;border-radius:18px;padding:20px 22px;width:280px;border:2px solid rgba(63,81,181,0.2);box-shadow:0 6px 24px rgba(63,81,181,0.09);cursor:default}
+.sticker-stackbuilder .sb-title{font-family:var(--font-fun);font-weight:700;font-size:0.9rem;color:#283593;margin-bottom:2px}
+.sticker-stackbuilder .sb-sub{font-size:0.62rem;color:var(--text3);margin-bottom:12px}
+.sb-skills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.sb-skill{padding:5px 11px;border-radius:10px;font-family:var(--font-fun);font-size:0.64rem;font-weight:600;cursor:grab;border:1.5px solid transparent;transition:all 0.2s}
+.sb-skill:active{cursor:grabbing;transform:scale(1.06)}
+.sb-stack-zone{min-height:50px;border-radius:12px;background:rgba(63,81,181,0.04);border:2px dashed rgba(63,81,181,0.22);padding:7px;display:flex;flex-wrap:wrap;gap:4px;transition:all 0.2s;align-content:flex-start}
+.sb-stack-zone.drag-over{background:rgba(63,81,181,0.08);border-color:#3F51B5}
+.sb-stack-zone .sb-skill{cursor:default}
+.sb-feedback{font-family:var(--font-hand);font-size:0.82rem;color:#283593;margin-top:8px;min-height:1.1em}
+.sb-clear{background:none;border:1px solid rgba(63,81,181,0.22);color:#5C6BC0;font-size:0.58rem;border-radius:6px;padding:4px 10px;cursor:pointer;margin-top:6px;font-family:var(--font-fun);transition:all 0.2s}
+.sb-clear:hover{background:rgba(63,81,181,0.05);color:#3F51B5}
+
+/* ===== GAME: TIMELINE PUZZLE ===== */
+.sticker-tlpuzzle{background:linear-gradient(145deg,#fff,#fdfaf5);border-radius:18px;padding:20px 22px;width:290px;border:2px solid rgba(201,169,110,0.2);box-shadow:0 4px 18px rgba(0,0,0,0.06);cursor:default}
+.sticker-tlpuzzle .tlg-title{font-family:var(--font-fun);font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:3px;display:flex;align-items:center;gap:6px}
+.sticker-tlpuzzle .tlg-sub{font-size:0.62rem;color:var(--text3);margin-bottom:12px}
+.tlg-items{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+.tlg-item{padding:7px 11px;border-radius:9px;background:rgba(201,169,110,0.09);border:1.5px solid rgba(201,169,110,0.18);font-family:var(--font-hand);font-size:0.82rem;color:var(--text2);cursor:grab;transition:border-color 0.2s;display:flex;align-items:center;gap:7px;user-select:none}
+.tlg-item:active{cursor:grabbing}
+.tlg-item .tlg-handle{color:var(--text3);font-size:0.85rem;flex-shrink:0}
+.tlg-item.drag-over-top{border-top:3px solid var(--accent)!important}
+.tlg-item.drag-over-bottom{border-bottom:3px solid var(--accent)!important}
+.tlg-item.correct-pos{background:rgba(76,175,80,0.1)!important;border-color:#4CAF50!important;color:#2E7D32!important}
+.tlg-item.wrong-pos{background:rgba(229,57,53,0.08)!important;border-color:rgba(229,57,53,0.5)!important}
+.tlg-check{width:100%;padding:8px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--accent),#c8941f);color:#fff;font-family:var(--font-fun);font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 0.2s}
+.tlg-check:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(201,169,110,0.28)}
+.tlg-result{font-family:var(--font-hand);font-size:0.85rem;color:var(--accent);margin-top:7px;min-height:1.2em;text-align:center}
+
+/* ===== GAME: STARTUP RANDOMIZER ===== */
+.sticker-startup-rand{background:linear-gradient(135deg,#E8EAF6,#EDE7F6);border-radius:18px;padding:20px 22px;width:260px;border:2px solid rgba(103,58,183,0.15);box-shadow:0 4px 18px rgba(103,58,183,0.08);cursor:pointer;text-align:center}
+.sticker-startup-rand .sr-title{font-family:var(--font-fun);font-weight:700;font-size:0.9rem;color:#4527A0;margin-bottom:3px}
+.sticker-startup-rand .sr-sub{font-size:0.62rem;color:#7E57C2;margin-bottom:14px}
+.sr-slots{display:flex;gap:5px;justify-content:center;margin-bottom:12px}
+.sr-slot{flex:1;height:54px;background:rgba(255,255,255,0.65);border-radius:10px;border:1.5px solid rgba(103,58,183,0.18);display:flex;align-items:center;justify-content:center;font-size:0.66rem;color:#4527A0;font-family:var(--font-fun);font-weight:600;text-align:center;padding:4px;line-height:1.2;overflow:hidden}
+.sr-slot.spinning{animation:slotSpin 0.12s linear infinite}
+@keyframes slotSpin{0%{transform:translateY(-4px);opacity:0.3}50%{transform:translateY(0);opacity:1}100%{transform:translateY(4px);opacity:0.3}}
+.sr-result{font-family:var(--font-hand);font-size:0.92rem;color:#311B92;min-height:1.3em;transition:all 0.3s;line-height:1.4}
+.sr-cta{font-size:0.6rem;color:#7E57C2;margin-top:5px;opacity:0.7}
+
+/* ===== GAME: EMOJI KITCHEN ===== */
+.sticker-emoji-kitchen{background:linear-gradient(135deg,#FCE4EC,#F3E5F5);border-radius:18px;padding:20px 22px;width:250px;border:2px solid rgba(233,30,99,0.14);box-shadow:0 4px 16px rgba(233,30,99,0.07);text-align:center;cursor:default}
+.sticker-emoji-kitchen .ek-title{font-family:var(--font-fun);font-weight:700;font-size:0.88rem;color:#880E4F;margin-bottom:3px}
+.sticker-emoji-kitchen .ek-sub{font-size:0.62rem;color:#AD1457;margin-bottom:12px}
+.ek-bowl{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:8px;row-gap:4px}
+.ek-ingredient{font-size:1.7rem;cursor:pointer;transition:transform 0.2s;border:2px solid transparent;border-radius:10px;padding:4px}
+.ek-ingredient:hover{transform:scale(1.15)}
+.ek-ingredient.selected{border-color:#E91E63;background:rgba(233,30,99,0.1);transform:scale(1.08)}
+.ek-result-wrap{min-height:3rem;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:4px 0}
+.ek-result{font-size:2.2rem;transition:all 0.4s}
+.ek-result-label{font-family:var(--font-hand);font-size:0.8rem;color:#880E4F;min-height:1.1em}
+.ek-cta{font-size:0.6rem;color:#C2185B;margin-top:5px;opacity:0.65}
 </style>
 </head>
 <body>
@@ -1824,6 +1954,33 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="meme-emoji">📊</div>
   <div class="meme-text" id="velocityResult">Spin for velocity!</div>
   <div class="meme-sub">Sprint Velocity Wheel</div>
+</div>
+
+<!-- ===== LAUNCHPAD / PORTFOLIO ZONE INTRO CARD ===== -->
+<div class="sticker zone-intro-card zone-portfolio" data-zone="portfolio" style="left:600px;top:6400px;transform:rotate(-1deg)">
+  <span class="zic-icon">🚀</span>
+  <div class="zic-title">The Launchpad</div>
+  <div class="zic-sub">Products built. Companies started. Things that exist because someone had to build them — so Akash did.</div>
+  <div class="zic-tags">
+    <span class="zic-tag">💰 Recess EdTech</span>
+    <span class="zic-tag">🔗 EnterCircles</span>
+    <span class="zic-tag">🧠 Neural OS</span>
+    <span class="zic-tag">🏨 HUSHH</span>
+  </div>
+  <div class="zic-cta">↓ pick one and go deep</div>
+</div>
+
+<!-- GAME: STARTUP IDEA RANDOMIZER (Portfolio zone) -->
+<div class="sticker sticker-startup-rand" data-anim="pop" data-zone="portfolio" onclick="startupRand(this,event)" style="left:4500px;top:7800px;transform:rotate(2deg)">
+  <div class="sr-title">🎰 Startup Idea Machine</div>
+  <div class="sr-sub">Tap to generate your next unicorn idea</div>
+  <div class="sr-slots">
+    <div class="sr-slot" id="srSlot1">👤<br>Customer</div>
+    <div class="sr-slot" id="srSlot2">😤<br>Problem</div>
+    <div class="sr-slot" id="srSlot3">💡<br>Solution</div>
+  </div>
+  <div class="sr-result" id="srResult">Tap to generate!</div>
+  <div class="sr-cta">guaranteed Series A or your chai back ☕</div>
 </div>
 
 <div class="sticker sticker-project" data-anim="bounce" data-zone="portfolio" style="left:300px;top:2000px">
@@ -2112,6 +2269,41 @@ body.map-expanded .scroll-counter{display:none!important}
 </div>
 
 
+<!-- ===== MEME ALLEY ZONE INTRO CARD ===== -->
+<div class="sticker zone-intro-card zone-meme" data-zone="fun" style="left:8600px;top:6400px;transform:rotate(-1.5deg)">
+  <span class="zic-icon">😂</span>
+  <div class="zic-title">Meme Alley</div>
+  <div class="zic-sub">Product memes, startup trauma, and corporate BS translated to relatable content. Therapy disguised as humor. You've been warned.</div>
+  <div class="zic-tags">
+    <span class="zic-tag">😤 PM Life</span>
+    <span class="zic-tag">💀 Sprint Fails</span>
+    <span class="zic-tag">🎯 Standup Bingo</span>
+    <span class="zic-tag">🤡 Stakeholder Mode</span>
+  </div>
+  <div class="zic-cta">↓ don't show this to your manager</div>
+</div>
+
+<!-- GAME: EMOJI KITCHEN (Meme Alley) -->
+<div class="sticker sticker-emoji-kitchen" data-anim="pop" data-zone="fun" style="left:10000px;top:8500px;transform:rotate(-2deg)">
+  <div class="ek-title">👨‍🍳 Emoji Kitchen</div>
+  <div class="ek-sub">Pick any 2 emojis to cook something new!</div>
+  <div class="ek-bowl">
+    <span class="ek-ingredient" onclick="ekPick(this,event)">🔥</span>
+    <span class="ek-ingredient" onclick="ekPick(this,event)">💻</span>
+    <span class="ek-ingredient" onclick="ekPick(this,event)">🍕</span>
+    <span class="ek-ingredient" onclick="ekPick(this,event)">🤖</span>
+    <span class="ek-ingredient" onclick="ekPick(this,event)">🐕</span>
+    <span class="ek-ingredient" onclick="ekPick(this,event)">☕</span>
+    <span class="ek-ingredient" onclick="ekPick(this,event)">🚀</span>
+    <span class="ek-ingredient" onclick="ekPick(this,event)">💰</span>
+  </div>
+  <div class="ek-result-wrap">
+    <div class="ek-result" id="ekResult"></div>
+    <div class="ek-result-label" id="ekLabel">Select 2 ingredients to combine</div>
+  </div>
+  <div class="ek-cta">cooking up cursed combos since 1995 👨‍🍳</div>
+</div>
+
 <!-- ===== NEW INTERACTIVE ELEMENTS ===== -->
 
 <!-- SPIN WHEEL — Work zone -->
@@ -2378,9 +2570,14 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <!-- ===== HUB: INTRO — CENTER OF CANVAS ===== -->
 <div class="sticker intro-card" data-type="photo" data-zone="hub" style="left:6770px;top:6550px">
-  <div class="intro-photo-wrap">
+  <div class="intro-status">
+    <span class="status-dot"></span>
+    Available for cool projects
+  </div>
+  <div class="intro-photo-wrap" onclick="introPhotoTap(this,event)" style="cursor:pointer">
     <img class="intro-photo" src="/images/akash-photo.webp" alt="Akash Matania" decoding="async" loading="eager">
     <div class="photo-caption">yup, this is me 😎</div>
+    <div class="photo-tap-count" id="photoTapCount">0</div>
   </div>
   <div class="intro-name">Akash <span class="hl-name">Matania</span></div>
   <div class="intro-tagline">Product Manager · Founder · Dreamer</div>
@@ -2392,6 +2589,16 @@ body.map-expanded .scroll-counter{display:none!important}
     <span class="intro-role">🎬 Storyteller</span>
   </div>
   <div class="intro-location">📍 Bengaluru, India · from Jeypore, Odisha</div>
+  <div class="intro-currently">
+    <div class="curr-label">🔥 Currently</div>
+    <span class="curr-val" onclick="rotateCurrently(this,event)" title="tap to rotate">Building an AI-native product OS</span>
+  </div>
+  <div class="intro-stats-row">
+    <div class="istat"><span class="istat-num">8+</span><span class="istat-label">Yrs Exp</span></div>
+    <div class="istat"><span class="istat-num">3</span><span class="istat-label">Startups</span></div>
+    <div class="istat"><span class="istat-num">0→1</span><span class="istat-label">Builder</span></div>
+    <div class="istat"><span class="istat-num">∞</span><span class="istat-label">Chai ☕</span></div>
+  </div>
   <div class="intro-cta">↕ scroll around to explore my world ✨</div>
 </div>
 
@@ -2429,6 +2636,104 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-text" data-anim="float" data-zone="hub" style="left:6100px;top:7850px;font-size:1.1rem;transform:rotate(-1deg);color:var(--accent)">"the best portfolio<br>is a shipped product"</div>
 <div class="sticker sticker-text" data-anim="wave" data-zone="hub" style="left:7400px;top:7900px;font-size:0.95rem;transform:rotate(2deg);color:var(--text2)">"sleep is for people<br>without side projects" 😤</div>
 
+<!-- ===== DENSE INTRO CLUSTER — new cards orbiting intro card tightly ===== -->
+
+<!-- Fact Card (left of intro card, close) -->
+<div class="sticker sticker-factcard" data-anim="pop" data-zone="hub" onclick="factCardNext(this,event)" style="left:6460px;top:6520px;transform:rotate(-3deg)">
+  <div class="fc-title">🤯 Akash Facts <span class="fc-num" id="factNum">1/8</span></div>
+  <div class="fc-body" id="factBody">Started his career at 19, managing a team of 12 before finishing college</div>
+  <div class="fc-footer">tap for next fact →</div>
+</div>
+
+<!-- DNA Bars (below-left of intro card) -->
+<div class="sticker sticker-dna" data-zone="hub" style="left:6390px;top:6910px;transform:rotate(2deg)">
+  <div class="dna-title">🧬 Akash's DNA</div>
+  <div class="dna-row"><span class="dna-emoji">🚀</span><span class="dna-label">Shipping</span><div class="dna-bar"><div class="dna-fill" style="width:95%"></div></div></div>
+  <div class="dna-row"><span class="dna-emoji">🧠</span><span class="dna-label">Overthinking</span><div class="dna-bar"><div class="dna-fill" style="width:88%;background:linear-gradient(90deg,#AB47BC,#7B1FA2)"></div></div></div>
+  <div class="dna-row"><span class="dna-emoji">☕</span><span class="dna-label">Chai Intake</span><div class="dna-bar"><div class="dna-fill" style="width:100%;background:linear-gradient(90deg,#A1887F,#6D4C41)"></div></div></div>
+  <div class="dna-row"><span class="dna-emoji">😅</span><span class="dna-label">Work-life Balance</span><div class="dna-bar"><div class="dna-fill" style="width:12%;background:linear-gradient(90deg,#EF5350,#C62828)"></div></div></div>
+  <div class="dna-row"><span class="dna-emoji">🎬</span><span class="dna-label">Storytelling</span><div class="dna-bar"><div class="dna-fill" style="width:80%;background:linear-gradient(90deg,#FFB74D,#F57C00)"></div></div></div>
+</div>
+
+<!-- Hot Takes (right of intro card, very close) -->
+<div class="sticker sticker-hottake" data-anim="shake" data-zone="hub" onclick="hotTakeNext(this,event)" style="left:7270px;top:6450px;transform:rotate(3deg)">
+  <div class="ht-title">🌶️ Hot Takes</div>
+  <div class="ht-body">"Specs are suggestions. Shipping is strategy."</div>
+  <div class="ht-cta">tap to roast another take →</div>
+</div>
+
+<!-- Currently Obsessing Card (right, lower) -->
+<div class="sticker sticker-currently" data-zone="hub" onclick="currentlyNext(this,event)" style="left:7270px;top:6830px;transform:rotate(-2deg)">
+  <div class="cur-title"><span class="cur-dot"></span> Currently Obsessing</div>
+  <div class="cur-item">🤖 Agentic AI workflows</div>
+  <div class="cur-item">🎧 Ambient lo-fi + biryani</div>
+  <div class="cur-item">📚 "Zero to One" (again)</div>
+  <div class="cur-cta">tap to see what changed →</div>
+</div>
+
+<!-- Dense decorative stickers — very close to intro card -->
+<div class="sticker sticker-emoji" data-anim="heartbeat" data-zone="hub" style="left:6650px;top:6270px;font-size:2rem">🌟</div>
+<div class="sticker sticker-emoji" data-anim="float" data-zone="hub" style="left:7470px;top:6650px">🤙</div>
+<div class="sticker sticker-emoji big" data-anim="spin" data-zone="hub" style="left:6540px;top:7340px">🎯</div>
+<div class="sticker sticker-emoji" data-anim="dance" data-zone="hub" style="left:7350px;top:7360px">🔥</div>
+<div class="sticker sticker-emoji" data-anim="bounce" data-zone="hub" style="left:7460px;top:7170px">🐕</div>
+<div class="sticker sticker-emoji" data-anim="jelly" data-zone="hub" style="left:6450px;top:7250px">⚡</div>
+<div class="sticker sticker-emoji" data-anim="tada" data-zone="hub" style="left:7260px;top:6260px">👾</div>
+
+<!-- Super close post-its -->
+<div class="sticker sticker-postit" data-anim="wiggle" data-zone="hub" style="left:6560px;top:6280px;background:#FFF9C4;transform:rotate(-6deg);font-size:0.88rem">from small town<br>to big dreams 🌅</div>
+<div class="sticker sticker-postit" data-anim="float" data-zone="hub" style="left:7280px;top:7200px;background:var(--mint);transform:rotate(5deg);font-size:0.84rem">ships first,<br>perfects never 🚢</div>
+<div class="sticker sticker-postit" data-anim="pop" data-zone="hub" style="left:6700px;top:7450px;background:var(--pink);transform:rotate(-3deg)">Mr. Puchu approved<br>this bio 🐕✅</div>
+<div class="sticker sticker-postit" data-anim="jelly" data-zone="hub" style="left:7420px;top:6280px;background:var(--blue);transform:rotate(4deg);font-size:0.84rem">open to<br>collab? DM! 📩</div>
+<div class="sticker sticker-postit" data-anim="wave" data-zone="hub" style="left:6400px;top:7450px;background:var(--orange);transform:rotate(3deg);font-size:0.84rem">coffee chat?<br>chai preferred ☕</div>
+
+<div class="sticker sticker-badge" data-anim="tada" data-zone="hub" style="left:6490px;top:7520px;transform:rotate(3deg);border-color:#FF6F00;color:#FF6F00">ODISHA PRIDE 🌊</div>
+<div class="sticker sticker-badge" data-anim="bounce" data-zone="hub" style="left:7310px;top:6210px;transform:rotate(-2deg);border-color:#7C4DFF;color:#7C4DFF">SERIAL FOUNDER 🔁</div>
+<div class="sticker sticker-badge" data-anim="wave" data-zone="hub" style="left:7470px;top:7490px;transform:rotate(2deg);border-color:#00BCD4;color:#00BCD4">MR PUCHU'S DAD 🐾</div>
+<div class="sticker sticker-badge" data-anim="pop" data-zone="hub" style="left:6320px;top:6740px;transform:rotate(-3deg);border-color:#E91E63;color:#E91E63">CHAI POWERED ☕</div>
+
+<div class="sticker sticker-washi" data-zone="hub" style="left:6680px;top:6295px;transform:rotate(4deg);background:repeating-linear-gradient(-45deg,rgba(201,169,110,0.2),rgba(201,169,110,0.2) 4px,rgba(201,169,110,0.08) 4px,rgba(201,169,110,0.08) 8px);width:200px"></div>
+<div class="sticker sticker-washi" data-zone="hub" style="left:6600px;top:7560px;transform:rotate(-5deg);background:repeating-linear-gradient(45deg,rgba(233,30,99,0.15),rgba(233,30,99,0.15) 4px,rgba(233,30,99,0.06) 4px,rgba(233,30,99,0.06) 8px);width:230px"></div>
+
+<!-- ===== ORIGIN ZONE INTRO CARD ===== -->
+<div class="sticker zone-intro-card zone-origin" data-zone="origin" style="left:400px;top:200px;transform:rotate(-1deg)">
+  <span class="zic-icon">📸</span>
+  <div class="zic-title">Origin Story</div>
+  <div class="zic-sub">A small-town kid from Jeypore who dreamt too big and somehow made it work. Chai fuelled, ship-first, dog-dad energy.</div>
+  <div class="zic-tags">
+    <span class="zic-tag">🏠 Jeypore, Odisha</span>
+    <span class="zic-tag">🌆 Now in Bengaluru</span>
+    <span class="zic-tag">🐕 Mr. Puchu's Dad</span>
+    <span class="zic-tag">☕ Chai Connoisseur</span>
+  </div>
+  <div class="zic-cta">↓ scroll around — the good stuff is everywhere</div>
+</div>
+
+<!-- GAME: CAREER TIMELINE PUZZLE (Origin zone) -->
+<div class="sticker sticker-tlpuzzle" data-anim="pop" data-zone="origin" style="left:3600px;top:600px;transform:rotate(-2deg)">
+  <div class="tlg-title">📅 Timeline Puzzle <span style="font-size:0.7rem">🎮</span></div>
+  <div class="tlg-sub">Drag to sort Akash's career milestones in order!</div>
+  <div class="tlg-items" id="tlgList">
+    <div class="tlg-item" draggable="true" data-order="3" ondragstart="tlgDragStart(event)" ondragover="tlgDragOver(event)" ondrop="tlgDrop(event)">
+      <span class="tlg-handle">⠿</span> Entered the Web3 space 🌐
+    </div>
+    <div class="tlg-item" draggable="true" data-order="1" ondragstart="tlgDragStart(event)" ondragover="tlgDragOver(event)" ondrop="tlgDrop(event)">
+      <span class="tlg-handle">⠿</span> Started at Recess EdTech 📚
+    </div>
+    <div class="tlg-item" draggable="true" data-order="5" ondragstart="tlgDragStart(event)" ondragover="tlgDragOver(event)" ondrop="tlgDrop(event)">
+      <span class="tlg-handle">⠿</span> Building AI-native tools 🤖
+    </div>
+    <div class="tlg-item" draggable="true" data-order="2" ondragstart="tlgDragStart(event)" ondragover="tlgDragOver(event)" ondrop="tlgDrop(event)">
+      <span class="tlg-handle">⠿</span> Founded EnterCircles Labs 🔗
+    </div>
+    <div class="tlg-item" draggable="true" data-order="4" ondragstart="tlgDragStart(event)" ondragover="tlgDragOver(event)" ondrop="tlgDrop(event)">
+      <span class="tlg-handle">⠿</span> Launched Hushh Hotels 🏨
+    </div>
+  </div>
+  <button class="tlg-check" onclick="tlgCheck(event)">✅ Check My Order</button>
+  <div class="tlg-result" id="tlgResult"></div>
+</div>
+
 <!-- ===== ORIGIN STORY 📸 (top-left 400-2400, 400-1600) — Personal & About ===== -->
 <div class="sticker sticker-postit" data-anim="shake" data-zone="origin" style="left:1600px;top:1200px;transform:rotate(-3deg);background:var(--green)">Jeypore boy, Bengaluru dreams 🌆</div>
 <div class="sticker sticker-postit" data-anim="bounce" data-zone="origin" style="left:700px;top:1100px;transform:rotate(4deg);background:var(--orange)">Mr. Puchu is the real CEO 🐕</div>
@@ -2447,6 +2752,42 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-text" data-anim="dance" data-zone="origin" style="left:700px;top:1600px;font-size:1.3rem;transform:rotate(2deg);color:var(--accent)">"ordering an experience,<br>not booking a room"</div>
 <div class="sticker sticker-postit" data-anim="float" data-zone="origin" style="left:1400px;top:900px;transform:rotate(3deg);background:var(--blue)">trust the process 🌱</div>
 <div class="sticker sticker-postit" data-anim="bounce" data-zone="origin" style="left:2400px;top:1000px;transform:rotate(2deg);background:var(--mint)">Vedic astrology says: Mercury is retrograde. Don't deploy. 🪐</div>
+
+<!-- ===== WAR ROOM ZONE INTRO CARD ===== -->
+<div class="sticker zone-intro-card zone-work" data-zone="work" style="left:9600px;top:300px;transform:rotate(1deg)">
+  <span class="zic-icon">⚔️</span>
+  <div class="zic-title">The War Room</div>
+  <div class="zic-sub">8+ years of shipping. 3 startups founded. Countless pivots survived. The battle scars make great stories over chai.</div>
+  <div class="zic-tags">
+    <span class="zic-tag">📈 Growth PM</span>
+    <span class="zic-tag">🚀 0→1 Products</span>
+    <span class="zic-tag">🤖 AI-first</span>
+    <span class="zic-tag">🌐 Web3</span>
+    <span class="zic-tag">🔥 Founder Mode</span>
+  </div>
+  <div class="zic-cta">↙ your next hire is somewhere in here</div>
+</div>
+
+<!-- GAME: BUILD AKASH'S STACK (War Room) -->
+<div class="sticker sticker-stackbuilder" data-anim="pop" data-zone="work" style="left:12000px;top:2200px;transform:rotate(2deg)">
+  <div class="sb-title">🛠️ Build Akash's Stack</div>
+  <div class="sb-sub">Drag the skills you think he has into the stack!</div>
+  <div class="sb-skills" id="sbSkillsPool">
+    <div class="sb-skill" draggable="true" ondragstart="sbDragStart(event)" style="background:#E8EAF6;border-color:#7986CB;color:#283593">📋 Product</div>
+    <div class="sb-skill" draggable="true" ondragstart="sbDragStart(event)" style="background:#E3F2FD;border-color:#64B5F6;color:#1565C0">🤖 AI/ML</div>
+    <div class="sb-skill" draggable="true" ondragstart="sbDragStart(event)" style="background:#E8F5E9;border-color:#81C784;color:#1B5E20">📈 Growth</div>
+    <div class="sb-skill" draggable="true" ondragstart="sbDragStart(event)" style="background:#FFF3E0;border-color:#FFB74D;color:#E65100">🌐 Web3</div>
+    <div class="sb-skill" draggable="true" ondragstart="sbDragStart(event)" style="background:#FCE4EC;border-color:#F48FB1;color:#880E4F">🎨 Figma</div>
+    <div class="sb-skill" draggable="true" ondragstart="sbDragStart(event)" style="background:#F3E5F5;border-color:#CE93D8;color:#4A148C">🗣 Storytelling</div>
+    <div class="sb-skill" draggable="true" ondragstart="sbDragStart(event)" style="background:#E0F7FA;border-color:#80DEEA;color:#006064">🏄 No-Code</div>
+    <div class="sb-skill" draggable="true" ondragstart="sbDragStart(event)" style="background:#FFF9C4;border-color:#FFF176;color:#5C4A1E">☕ Chai</div>
+  </div>
+  <div class="sb-stack-zone" id="sbStackZone" ondragover="sbDragOver(event)" ondrop="sbDrop(event)">
+    <div style="font-size:0.68rem;color:var(--text3);padding:4px;width:100%">drop skills here 👇</div>
+  </div>
+  <div class="sb-feedback" id="sbFeedback"></div>
+  <button class="sb-clear" onclick="sbClear(event)">✕ Clear Stack</button>
+</div>
 
 <!-- ===== THE WAR ROOM 🎯 (top-right 4000-7000, 200-1700) — Work & Professional ===== -->
 <div class="sticker sticker-postit" data-anim="wiggle" data-zone="work" style="left:4400px;top:800px;transform:rotate(2deg);background:var(--yellow)">ship it. iterate later. SHIP IT. 🚀</div>
@@ -2574,6 +2915,52 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-emoji" data-anim="dance" data-zone="hobby" style="left:600px;top:6000px">🏝️</div>
 <div class="sticker sticker-emoji big" data-anim="rubberband" data-zone="hobby" style="left:2400px;top:4200px">🎧</div>
 <div class="sticker sticker-emoji huge" data-anim="spin" data-zone="hobby" style="left:1200px;top:4600px;font-size:6rem">🧃</div>
+
+<!-- ===== PLAYGROUND ZONE INTRO CARD ===== -->
+<div class="sticker zone-intro-card zone-playground" data-zone="hobby" style="left:600px;top:10400px;transform:rotate(1deg)">
+  <span class="zic-icon">🎮</span>
+  <div class="zic-title">The Playground</div>
+  <div class="zic-sub">When not shipping products — cooking experiments, cinematic obsessions, chai philosophy, and vibing with Mr. Puchu.</div>
+  <div class="zic-tags">
+    <span class="zic-tag">🎵 Music Head</span>
+    <span class="zic-tag">🍗 Biryani Research</span>
+    <span class="zic-tag">🎬 Cinema Nerd</span>
+    <span class="zic-tag">🐕 Mr. Puchu</span>
+    <span class="zic-tag">🌅 Odisha Roots</span>
+  </div>
+  <div class="zic-cta">↓ warning: may trigger snack cravings</div>
+</div>
+
+<!-- GAME: IRON THRONE — who should rule? (Playground zone) -->
+<div class="sticker sticker-throne-game" data-anim="pop" data-zone="hobby" style="left:3500px;top:11000px;transform:rotate(-1deg)">
+  <div class="tg-title">⚔️ Iron Throne: Who Rules?</div>
+  <div class="tg-sub">Drag the rightful ruler onto the throne</div>
+  <div class="tg-chars">
+    <div class="tg-char" draggable="true" data-char="bran" ondragstart="throneDragStart(event,'bran')">
+      <span style="font-size:1.4rem">🧊</span><span class="char-name">Bran<br>Stark</span>
+    </div>
+    <div class="tg-char" draggable="true" data-char="jon" ondragstart="throneDragStart(event,'jon')">
+      <span style="font-size:1.4rem">🐺</span><span class="char-name">Jon<br>Snow</span>
+    </div>
+    <div class="tg-char" draggable="true" data-char="dany" ondragstart="throneDragStart(event,'dany')">
+      <span style="font-size:1.4rem">🐉</span><span class="char-name">Daenerys</span>
+    </div>
+    <div class="tg-char" draggable="true" data-char="cersei" ondragstart="throneDragStart(event,'cersei')">
+      <span style="font-size:1.4rem">👑</span><span class="char-name">Cersei</span>
+    </div>
+    <div class="tg-char" draggable="true" data-char="arya" ondragstart="throneDragStart(event,'arya')">
+      <span style="font-size:1.4rem">🗡️</span><span class="char-name">Arya</span>
+    </div>
+  </div>
+  <div class="tg-throne-wrap">
+    <div class="tg-throne" id="throneTarget" ondragover="throneDragOver(event)" ondrop="throneDrop(event)">
+      <span style="font-size:2.4rem">🪑</span>
+      <span class="throne-hint">drop here</span>
+    </div>
+  </div>
+  <div class="tg-result" id="throneResult">Who sits on the Iron Throne?</div>
+  <button class="tg-reset" onclick="throneReset(event)">↺ Reset</button>
+</div>
 
 <!-- ===== MEME ALLEY 😂 (right side 5000-9500, 3600-6800) — Fun & Memes ===== -->
 
@@ -4586,6 +4973,26 @@ timeline: `
 <div class="timeline">
 
   <div class="tl-item">
+    <div class="tl-dot" style="background:linear-gradient(135deg,#f7c948,#e8a020)"></div>
+    <div class="tl-version">v43.0 — 🎭 Zone Intro Cards + 5 Mini-Games + Dense Hub Cluster</div>
+    <div class="tl-date">Session 43 · March 27, 2026</div>
+    <div class="tl-desc">The biggest creative expansion yet. Every zone now has a dedicated intro card that introduces its theme and personality. The hub around the intro card is now a dense, swipeable cluster of personality stickers — facts, hot takes, DNA bars, currently-obsessing cards, post-its, and badges. Five original mini-games were added, each living in a relevant zone.</div>
+    <ul class="tl-changes">
+      <li>🏙️ 5 zone intro cards added — Origin, War Room, Launchpad, Playground, Meme Alley each get a welcome card</li>
+      <li>✨ Redesigned intro card — status indicator, tap-the-photo easter egg, rotating "currently" section, live stats row</li>
+      <li>🃏 Dense hub cluster — 20+ new stickers within 700px of the intro card (facts, hot takes, DNA bars, emojis, post-its)</li>
+      <li>👑 Iron Throne game — drag 5 GoT characters to the throne; only one survives (hint: it's not who you think)</li>
+      <li>🛠️ Stack Builder — drag skills into your stack zone; combine Product + AI + Growth for a secret unlock message</li>
+      <li>🧩 Timeline Puzzle — reorder 5 scrambled career events in the correct chronological order</li>
+      <li>🎰 Startup Randomizer — spin 3 slots (customer × problem × solution) for 3-part startup ideas</li>
+      <li>👨‍🍳 Emoji Kitchen — pick 2 ingredients from 8 options, discover 1 of 28 unique combo recipes</li>
+      <li>📸 Photo tap easter egg — tap the intro photo repeatedly to unlock hidden messages at milestone counts</li>
+      <li>🔄 Rotating "currently" section — 7 rotating items reveal what Akash is building, reading, and obsessing over</li>
+      <li>🤯 Easter egg updated — 4 new stat cards, 4 new fun facts, full prompt log update</li>
+    </ul>
+  </div>
+
+  <div class="tl-item">
     <div class="tl-dot" style="background:linear-gradient(135deg,#3cd070,#2aa055)"></div>
     <div class="tl-version">v42.0 — ⚡ Performance Overhaul + Easter Egg Glow-Up</div>
     <div class="tl-date">Session 42 · March 26, 2026</div>
@@ -5573,23 +5980,27 @@ stats: `
   <h3>📊 Moodboard Stats</h3>
   <div class="stats-grid">
     <div class="stat-card"><div class="stat-num">14K×14K</div><div class="stat-label">🗺️ Canvas World Size</div></div>
-    <div class="stat-card"><div class="stat-num">~462KB</div><div class="stat-label">📦 Single File Size</div></div>
-    <div class="stat-card"><div class="stat-num">~7,895</div><div class="stat-label">💻 Lines of Code</div></div>
-    <div class="stat-card"><div class="stat-num">245+</div><div class="stat-label">🎨 Draggable Stickers</div></div>
+    <div class="stat-card"><div class="stat-num">~480KB</div><div class="stat-label">📦 Single File Size</div></div>
+    <div class="stat-card"><div class="stat-num">~8,500</div><div class="stat-label">💻 Lines of Code</div></div>
+    <div class="stat-card"><div class="stat-num">280+</div><div class="stat-label">🎨 Draggable Stickers</div></div>
     <div class="stat-card"><div class="stat-num">23</div><div class="stat-label">✨ CSS Animations</div></div>
     <div class="stat-card"><div class="stat-num">11</div><div class="stat-label">🖌️ Themes</div></div>
-    <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">🎮 Interactive Toys</div></div>
+    <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">🎮 Interactive Games</div></div>
     <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">🔤 Google Fonts</div></div>
     <div class="stat-card"><div class="stat-num">0</div><div class="stat-label">📦 npm Dependencies</div></div>
     <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">🎉 Confetti Per Tap</div></div>
-    <div class="stat-card"><div class="stat-num">48</div><div class="stat-label">💬 Build Prompts</div></div>
-    <div class="stat-card"><div class="stat-num">41</div><div class="stat-label">🚀 Major Versions</div></div>
+    <div class="stat-card"><div class="stat-num">50</div><div class="stat-label">💬 Build Prompts</div></div>
+    <div class="stat-card"><div class="stat-num">43</div><div class="stat-label">🚀 Major Versions</div></div>
     <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">🥚 Easter Egg</div></div>
     <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">🏙️ Map Zones</div></div>
     <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">🔍 Map Filters</div></div>
     <div class="stat-card"><div class="stat-num">~70%</div><div class="stat-label">⚡ Bundle Reduction</div></div>
     <div class="stat-card"><div class="stat-num">800ms</div><div class="stat-label">⏱️ Easter Egg Window</div></div>
     <div class="stat-card"><div class="stat-num">1:164</div><div class="stat-label">🗾 Minimap Scale</div></div>
+    <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">🎯 Zone Intro Cards</div></div>
+    <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">🕹️ Mini-Games</div></div>
+    <div class="stat-card"><div class="stat-num">28</div><div class="stat-label">👨‍🍳 Emoji Combos</div></div>
+    <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">🤯 Rotating Facts</div></div>
   </div>
 
   <div class="inv-section" style="margin-top:20px">
@@ -5597,16 +6008,20 @@ stats: `
     <div class="fun-facts-grid">
       <div class="fun-fact">⚡ This entire app is <strong>ONE HTML file</strong> with zero npm dependencies at runtime — no React, no Vue, no bundler needed</div>
       <div class="fun-fact">🗺️ The canvas is 14,000 × 14,000px — if printed at 96 dpi it would be <strong>over 12 feet wide</strong></div>
-      <div class="fun-fact">🎭 245+ draggable stickers are managed with <strong>pure vanilla JS</strong> — no framework, no virtual DOM, just raw DOM power</div>
+      <div class="fun-fact">🎭 280+ draggable stickers are managed with <strong>pure vanilla JS</strong> — no framework, no virtual DOM, just raw DOM power</div>
       <div class="fun-fact">🥚 You found the easter egg! Activation requires <strong>triple-tap within 800ms</strong> — a speed run in disguise</div>
-      <div class="fun-fact">🎨 11 themes × 245 stickers = <strong>2,695 possible sticker-theme combinations</strong> to explore</div>
+      <div class="fun-fact">🎨 11 themes × 280 stickers = <strong>3,080 possible sticker-theme combinations</strong> to explore</div>
       <div class="fun-fact">☕ The chai counter has been tapped 0 times on this device... <strong>for now</strong></div>
       <div class="fun-fact">🐛 Bugs fixed counter is also 0. Coincidence? <strong>The bugs disagree.</strong></div>
-      <div class="fun-fact">🏗️ Built in 41 versions over ~2 days — that's an average of <strong>1 version every 70 minutes</strong></div>
+      <div class="fun-fact">🏗️ Built in 43 versions over ~2 days — that's an average of <strong>1 version every 66 minutes</strong></div>
       <div class="fun-fact">📱 The minimap is 85 × 85px showing a 14,000 × 14,000px world — a scale of <strong>1:164</strong></div>
       <div class="fun-fact">🎡 The animated Ferris wheel in the big map has <strong>8 hand-coded SVG gondolas</strong> with individual colors</div>
       <div class="fun-fact">🔥 Every single tap on a sticker triggers <strong>12 confetti emoji particles</strong> radiating in all directions</div>
       <div class="fun-fact">🧭 The minimap radar sweep rotates every 3 seconds — a nod to <strong>classic GTA HUD design</strong></div>
+      <div class="fun-fact">🏙️ Each of the 5 zones has its own <strong>intro card</strong> — travel to Work, Portfolio, Playground, or Meme Alley to find yours</div>
+      <div class="fun-fact">👑 The Iron Throne mini-game has <strong>only one correct answer</strong> — can you figure out who actually deserves it?</div>
+      <div class="fun-fact">👨‍🍳 The Emoji Kitchen has <strong>28 unique combo recipes</strong> — some are obvious, some are completely unhinged</div>
+      <div class="fun-fact">📸 Tap Akash's photo enough times and something <strong>special happens</strong> — it's an easter egg within the easter egg</div>
     </div>
   </div>
 
@@ -5621,6 +6036,12 @@ stats: `
 
   <div class="prompt-block"><div class="prompt-label">Prompt 37 — Performance Fix + Easter Egg Glow-Up</div><div class="prompt-text">"The app is too slow and feels laggy. When I open the big map the app crashes and reloads automatically. Fix these without changing any visuals or UI/UX. Also update the easter egg with accurate stats, fun facts, and emojis — make it more fun."</div></div>
   <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v42.0: Eliminated 240+ forced DOM reflows per map open (getBoundingClientRect removed, lazy getComputedStyle, dataset cache). Small map cloneNode replaced with lightweight divs. Mobile neon reduced. DocumentFragment batching for zone signs. Batch size up 20→30. Easter egg Stats refreshed with accurate numbers and 12 fun facts.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 38 — Zone Intro Cards + Mini-Games + Dense Hub Cluster</div><div class="prompt-text">"Add some interactive elements on the intro card and make it more beautiful. Add more things, go wild creative. Bring the intro stickers near the intro card — make it look crowded but clever. Generate intro-related cards (facts, quirky, funny). Now do the same for Work, Portfolio, Playground, Meme Alley — zone intro cards in their own zones. Add small game interactive cards: Iron Throne drag-and-drop, and others."</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v43.0: Redesigned intro card with status dot, photo tap easter egg, rotating "currently" section, and live stats row. Dense hub cluster of 20+ personality stickers within 700px. 5 zone intro cards added (Origin, War Room, Launchpad, Playground, Meme Alley). 5 mini-games: Iron Throne, Stack Builder, Timeline Puzzle, Startup Randomizer, Emoji Kitchen (28 combos).</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 39 — Easter Egg Update + Merge</div><div class="prompt-text">"Unable to merge conflicts. First update the doc and add all these to easter egg and then create pr and merge. Fix the conflicts."</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">Fixed merge conflict via git rebase origin/main (clean rebase, no file conflicts). Updated Stats grid (480KB, 8500 lines, 280+ stickers, 12 games, 43 versions, 50 prompts — plus 4 new stat cards). Updated fun facts (sticker count, versions, added zone cards and games discoveries). Added v43.0 timeline entry. Prompt log updated. PR created and merged.</div></div>
 </div>
 <div class="inv-section">
   <h3>🧱 Tech Stack</h3>
@@ -7854,7 +8275,221 @@ window.addEventListener('resize',debounce(()=>{
   _cachedCanvasRect=null; // invalidate cached rect on resize
 },200));
 
+// ===== ENHANCED INTRO CARD =====
+let _photoTapCount=0;
+const _photoTapMilestones={3:'ok you really like this photo 😅',7:'stalker energy activated 👀',10:'🚨 Mr. Puchu alert: dad\'s being weird',15:'achievement unlocked: photo-tapper 🏆',25:'ok I\'m calling the authorities 📱'};
+function introPhotoTap(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();playSfx('pop');
+  _photoTapCount++;
+  const ctr=document.getElementById('photoTapCount');
+  if(ctr){ctr.textContent=_photoTapCount;ctr.classList.add('visible')}
+  spawnConfetti(e.clientX||0,e.clientY||0);
+  const msg=_photoTapMilestones[_photoTapCount];
+  if(msg){
+    const t=document.createElement('div');
+    t.className='boundary-toast edge-bottom show';t.textContent=msg;
+    document.body.appendChild(t);setTimeout(()=>t.remove(),2400);playSfx('win');
+  }
+}
+const _currentlyItems=['Building an AI-native product OS','Perfecting biryani science 🍗','Teaching Mr. Puchu to write PRDs','Saying "let\'s ship it" every 10 minutes','Reading "Zero to One" for the 4th time','Questioning every career decision (healthy)','Figuring out AGI before my chai gets cold'];
+let _currentlyIdx=0;
+function rotateCurrently(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();playSfx('click');
+  _currentlyIdx=(_currentlyIdx+1)%_currentlyItems.length;
+  el.textContent=_currentlyItems[_currentlyIdx];
+  spawnConfetti(e.clientX||0,e.clientY||0);
+}
 
+// ===== FACT CARD =====
+const _akashFacts=['Started career at 19, managing a team of 12 before finishing college','Has founded 3 companies — and is already planning #4 🔄','Moved from Jeypore to Bengaluru to build the life he wanted 🌆','Mr. Puchu, his dog, has veto power on all major life decisions 🐕','Runs on chai. Has never counted daily cups. Afraid of the number ☕','Has a retro-futuristic aesthetic nobody asked for but everyone appreciates 🎬','Believes specs are suggestions and shipping is the real strategy 🚢','Once convinced a room of VCs with just a napkin sketch and sheer confidence 💪'];
+let _factIdx=0;
+function factCardNext(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();playSfx('pop');
+  _factIdx=(_factIdx+1)%_akashFacts.length;
+  const body=el.querySelector('.fc-body'),num=el.querySelector('.fc-num');
+  if(body)body.textContent=_akashFacts[_factIdx];
+  if(num)num.textContent=(_factIdx+1)+'/'+_akashFacts.length;
+  spawnConfetti(e.clientX||0,e.clientY||0);
+}
+
+// ===== HOT TAKES =====
+const _hotTakes=['"Specs are suggestions. Shipping is strategy."','"The best PM is the one who says no most often."','"Dark mode is a personality trait, not a feature."','"If it\'s not on a Figma frame, it doesn\'t exist."','"Roadmaps are PRs for the future — always stale."','"User research: asking 5 friends and calling it statistically significant."','"Product-market fit is just vibes with a spreadsheet."','"Every pivot is a strategy. Every failed pivot is a strategic pivot."','"Standup is group therapy for people who don\'t believe in therapy."','"AI won\'t replace PMs. PMs using AI will replace PMs not using AI."'];
+let _hotTakeIdx=0;
+function hotTakeNext(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();playSfx('pop');
+  _hotTakeIdx=(_hotTakeIdx+1)%_hotTakes.length;
+  const body=el.querySelector('.ht-body');
+  if(body)body.textContent=_hotTakes[_hotTakeIdx];
+  spawnConfetti(e.clientX||0,e.clientY||0);
+}
+
+// ===== CURRENTLY CARD =====
+const _currBundles=[['🤖 Agentic AI workflows','🎧 Ambient lo-fi + biryani','📚 "Zero to One" (again)'],['🏗️ Building a no-code AI OS','🎬 Watching Andor (again)','🍕 Perfecting pizza dough recipe'],['🌐 Web3 comeback arc?','☕ Trying single-origin chai','🐕 Mr. Puchu obedience class (failing)'],['🚀 Pre-seed startup ideation','🎵 Making playlists nobody asked for','📈 Charting growth curves at 2am']];
+let _currBundleIdx=0;
+function currentlyNext(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();playSfx('click');
+  _currBundleIdx=(_currBundleIdx+1)%_currBundles.length;
+  const card=el.closest('.sticker-currently');
+  if(!card)return;
+  const items=card.querySelectorAll('.cur-item'),bundle=_currBundles[_currBundleIdx];
+  items.forEach((item,i)=>{if(bundle[i])item.textContent=bundle[i]});
+  spawnConfetti(e.clientX||0,e.clientY||0);
+}
+
+// ===== IRON THRONE GAME =====
+let _throneDragChar=null;
+function throneDragStart(e,char){e.dataTransfer.setData('text/plain',char);_throneDragChar=char;playSfx('click')}
+function throneDragOver(e){e.preventDefault();const t=document.getElementById('throneTarget');if(t)t.classList.add('drag-over')}
+function throneDrop(e){
+  e.preventDefault();
+  const target=document.getElementById('throneTarget');
+  if(target)target.classList.remove('drag-over');
+  const char=e.dataTransfer.getData('text/plain')||_throneDragChar;
+  const result=document.getElementById('throneResult');
+  const responses={bran:'🎉 Correct! Bran the Broken sits on the Iron Throne! (Still feels weird)',jon:'❌ Jon Snow knows nothing — including when to accept power',dany:'❌ She burned King\'s Landing and her PR career with it 🔥',cersei:'❌ Cersei\'s reign ended with the ceiling coming down. Literally.',arya:'❌ Arya chose to explore west of Westeros. Smart girl.'};
+  if(target){target.innerHTML='<span style="font-size:2.4rem">'+(char==='bran'?'🧊':'😬')+'</span>';}
+  if(result)result.textContent=responses[char]||'🤔 Unexpected ruler...';
+  if(char==='bran'){playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0);setTimeout(()=>spawnConfetti(e.clientX+20||20,e.clientY-20||0),300);}else{playSfx('fail');}
+}
+function throneReset(e){
+  e.stopPropagation();
+  const target=document.getElementById('throneTarget');
+  if(target)target.innerHTML='<span style="font-size:2.4rem">🪑</span><span class="throne-hint">drop here</span>';
+  const result=document.getElementById('throneResult');
+  if(result)result.textContent='Who sits on the Iron Throne?';
+  _throneDragChar=null;
+}
+
+// ===== STACK BUILDER =====
+let _sbDraggingEl=null;
+function sbDragStart(e){_sbDraggingEl=e.currentTarget;e.dataTransfer.effectAllowed='copy';playSfx('click')}
+function sbDragOver(e){e.preventDefault();e.dataTransfer.dropEffect='copy';const z=document.getElementById('sbStackZone');if(z)z.classList.add('drag-over')}
+function sbDrop(e){
+  e.preventDefault();
+  const zone=document.getElementById('sbStackZone');
+  if(zone)zone.classList.remove('drag-over');
+  if(!_sbDraggingEl)return;
+  const ph=zone&&zone.querySelector('div:not(.sb-skill)');if(ph)ph.remove();
+  const clone=_sbDraggingEl.cloneNode(true);
+  clone.removeAttribute('draggable');clone.removeAttribute('ondragstart');clone.style.cursor='default';
+  if(zone)zone.appendChild(clone);
+  _sbDraggingEl.style.opacity='0.4';
+  const stackText=zone?zone.textContent:'';
+  const fb=document.getElementById('sbFeedback');
+  if(stackText.includes('Product')&&stackText.includes('AI')&&stackText.includes('Growth')){
+    if(fb)fb.textContent='🎯 Core stack complete! That\'s the Akash combo!';
+    playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0);
+  } else {
+    const msgs=['Nice pick! 👍','Good taste!','Part of the stack!','Adding to the roster...'];
+    if(fb)fb.textContent=msgs[Math.floor(Math.random()*msgs.length)];
+    playSfx('pop');
+  }
+}
+function sbClear(e){
+  e.stopPropagation();
+  const zone=document.getElementById('sbStackZone');
+  if(zone)zone.innerHTML='<div style="font-size:0.68rem;color:var(--text3);padding:4px;width:100%">drop skills here 👇</div>';
+  const pool=document.getElementById('sbSkillsPool');
+  if(pool)pool.querySelectorAll('.sb-skill').forEach(s=>s.style.opacity='');
+  const fb=document.getElementById('sbFeedback');if(fb)fb.textContent='';
+}
+
+// ===== TIMELINE PUZZLE =====
+let _tlgDragItem=null;
+function tlgDragStart(e){_tlgDragItem=e.currentTarget;e.dataTransfer.effectAllowed='move';playSfx('click')}
+function tlgDragOver(e){
+  e.preventDefault();e.dataTransfer.dropEffect='move';
+  const target=e.currentTarget,bb=target.getBoundingClientRect();
+  document.querySelectorAll('.tlg-item').forEach(i=>i.classList.remove('drag-over-top','drag-over-bottom'));
+  target.classList.add(e.clientY-bb.top<bb.height/2?'drag-over-top':'drag-over-bottom');
+}
+function tlgDrop(e){
+  e.preventDefault();
+  document.querySelectorAll('.tlg-item').forEach(i=>i.classList.remove('drag-over-top','drag-over-bottom'));
+  const target=e.currentTarget;
+  if(!_tlgDragItem||target===_tlgDragItem)return;
+  const list=document.getElementById('tlgList'),bb=target.getBoundingClientRect();
+  if(e.clientY-bb.top<bb.height/2){list.insertBefore(_tlgDragItem,target);}else{list.insertBefore(_tlgDragItem,target.nextSibling);}
+  _tlgDragItem=null;
+  const result=document.getElementById('tlgResult');if(result)result.textContent='';
+  document.querySelectorAll('.tlg-item').forEach(i=>i.classList.remove('correct-pos','wrong-pos'));
+}
+function tlgCheck(e){
+  e.stopPropagation();
+  const list=document.getElementById('tlgList');if(!list)return;
+  const items=Array.from(list.querySelectorAll('.tlg-item'));
+  let correct=0;
+  items.forEach((item,i)=>{
+    const order=parseInt(item.dataset.order);
+    const isCorrect=order===(i+1);
+    item.classList.toggle('correct-pos',isCorrect);
+    item.classList.toggle('wrong-pos',!isCorrect);
+    if(isCorrect)correct++;
+  });
+  const result=document.getElementById('tlgResult');
+  if(correct===5){result.textContent='🏆 Perfect! You know the arc!';playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0);}
+  else if(correct>=3){result.textContent='🙌 '+correct+'/5 — almost there!';playSfx('pop');}
+  else{result.textContent='🤔 '+correct+'/5 — try rearranging!';playSfx('fail');}
+}
+
+// ===== STARTUP RANDOMIZER =====
+const _srCustomers=['Burned-out PMs','Freelance designers','Dog owners','Gen Z founders','Solo devs','Crypto believers (still)','Chai addicts','Remote workers'];
+const _srProblems=['too many Slack pings','can\'t focus at all','chronic doomscrolling','meetings without end','imposter syndrome','spec doc chaos','career anxiety'];
+const _srSolutions=['AI copilot','community app','gamification layer','voice-first UX','blockchain (of course)','no-code builder','WhatsApp bot','Chrome extension'];
+let _srSpinning=false;
+function startupRand(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();
+  if(_srSpinning)return;_srSpinning=true;playSfx('spin');
+  const slots=[document.getElementById('srSlot1'),document.getElementById('srSlot2'),document.getElementById('srSlot3')];
+  slots.forEach(s=>{if(s)s.classList.add('spinning')});
+  const result=document.getElementById('srResult');if(result)result.textContent='🎰 Generating...';
+  setTimeout(()=>{
+    const c=_srCustomers[Math.floor(Math.random()*_srCustomers.length)];
+    const p=_srProblems[Math.floor(Math.random()*_srProblems.length)];
+    const s=_srSolutions[Math.floor(Math.random()*_srSolutions.length)];
+    slots.forEach(sl=>{if(sl)sl.classList.remove('spinning')});
+    if(slots[0])slots[0].innerHTML='👤<br>'+c;
+    if(slots[1])slots[1].innerHTML='😤<br>'+p;
+    if(slots[2])slots[2].innerHTML='💡<br>'+s;
+    if(result)result.textContent=s+' for '+c+' struggling with '+p;
+    playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0);_srSpinning=false;
+  },1200);
+}
+
+// ===== EMOJI KITCHEN =====
+const _ekCombos={'🔥💻':'🔥💻 Cursor on Fire','🔥🍕':'🍕🔥 Cursed Pizza (somehow slaps)','🔥🤖':'🤖🔥 RoboToast (still smarter than interns)','🔥🐕':'🌭 Hot Dog — the original','🔥☕':'☕🔥 Double Espresso Brain Damage','🔥🚀':'🚀🔥 Ship It And Pray','🔥💰':'💸 Burn Rate','💻🍕':'💻🍕 Developer Fuel','💻🤖':'💻🤖 Self-Aware Codebase','💻🐕':'💻🐕 Mr. Puchu\'s PR Review (no notes)','💻☕':'☕💻 3am Code & Chai Night','💻🚀':'🚀 Just Deployed to Prod on Friday','💻💰':'💰 SaaS Dream (50 users deep)','🍕🤖':'🍕🤖 PizzaBot (Series A ready fr)','🍕🐕':'🍕🐕 Puchu Wants A Slice NOW','🍕☕':'🍕☕ Italian-Chai Fusion (don\'t)','🍕🚀':'🍕🚀 Delivery Startup #12954','🍕💰':'💰🍕 Food Delivery Unicorn (again)','🤖🐕':'🤖🐕 AI Dog Whisperer (patent pending)','🤖☕':'🤖☕ Caffeine-Powered AGI','🤖🚀':'🚀🤖 Autonomous Deployment Bot','🤖💰':'💰🤖 AI That Prints Money (jk it hallucinates)','🐕☕':'🐕☕ Mr. Puchu\'s Morning Chai (non-negotiable)','🐕🚀':'🐕🚀 Dogecoin 2.0','🐕💰':'🐕💰 Dog Dad Spending Habits','☕🚀':'☕🚀 Pre-Launch Panic Fuel','☕💰':'☕💰 Cost Per Acquisition in Chai','🚀💰':'🚀💰 Pitch Deck to Broke Pipeline'};
+let _ekSelected=[];
+function ekPick(el,e){
+  e.stopPropagation();playSfx('click');
+  if(_ekSelected.includes(el)){_ekSelected=_ekSelected.filter(x=>x!==el);el.classList.remove('selected');}
+  else{
+    if(_ekSelected.length>=2){_ekSelected[0].classList.remove('selected');_ekSelected.shift();}
+    _ekSelected.push(el);el.classList.add('selected');
+  }
+  if(_ekSelected.length===2){
+    const pair=_ekSelected.map(x=>x.textContent.trim());
+    const combo=_ekCombos[pair[0]+pair[1]]||_ekCombos[pair[1]+pair[0]];
+    const resultEl=document.getElementById('ekResult'),labelEl=document.getElementById('ekLabel');
+    if(combo){
+      const spaceIdx=combo.indexOf(' ');
+      if(resultEl)resultEl.textContent=combo.substring(0,spaceIdx);
+      if(labelEl)labelEl.textContent=combo.substring(spaceIdx+1);
+      playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0);
+    } else {
+      if(resultEl)resultEl.textContent='🤯';if(labelEl)labelEl.textContent='Unexpected combo! Try another!';playSfx('pop');
+    }
+  } else {
+    const resultEl=document.getElementById('ekResult'),labelEl=document.getElementById('ekLabel');
+    if(resultEl)resultEl.textContent='';
+    if(labelEl)labelEl.textContent=_ekSelected.length===1?'Pick one more ingredient! 👆':'Select 2 ingredients to combine';
+  }
+}
 
 </script>
 
