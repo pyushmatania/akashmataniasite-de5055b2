@@ -4383,7 +4383,7 @@ function placeZoneSignposts(signposts){
   });
 }
 
-// ===== AUTO-REARRANGE ENGINE v4 =====
+// ===== AUTO-REARRANGE ENGINE v5 =====
 // Rules:
 // 1. Spread evenly — no too-dense or too-empty areas
 // 2. Intro card of each zone centered in zone
@@ -4392,14 +4392,15 @@ function placeZoneSignposts(signposts){
 // 5. Leave space near boundary (padding)
 // 6. New cards auto-follow these rules
 // 7. Rearrange button resets all to default positions
-// 8. Badges placed on top of another card (top-left, tilted)
+// 8. Badges placed on top of another card (top-left, tilted) — ONLY exception to no-overlap
 // 9. Sync to big and small map after arrangement
 // 10. Audit: count items in DOM vs maps, remove duplicates, add missing
 // 11. Ensure all items are categorized (type) and attributed (zone). New category: introduction
-// 12. Anti-overlap: cards are nudged apart so they don't stack on top of each other
-// 13. Organic country-style zone boundaries (SVG curves, not straight lines)
+// 12. STRICT Anti-overlap: radial probe search (100+ attempts) — cards NEVER stack (badges exempt)
+// 13. Crime-scene tape zone boundaries (SVG yellow/black tape, not straight lines)
 // 14. Reserved zones: no cards placed on ground labels or signpost areas
 // 15. Hollywood casino-style 2-pole signposts near zone centers (canvas + maps)
+// 16. No cards placed on top of painted zone names
 
 const ZONE_DEFS={
   origin:{x1:400,y1:400,x2:5800,y2:5600,center:{x:3100,y:3000},color:'#4CAF50'},
@@ -4410,6 +4411,7 @@ const ZONE_DEFS={
 };
 const BOUNDARY_PAD=350; // no cards within this distance of zone edges
 const SCATTER_ZONES=['fun','hobby']; // these also scatter across canvas
+const ANTI_OVERLAP_GAP=50; // minimum gap between any two non-badge cards
 
 function getZoneForSticker(sticker){
   const zone=sticker.dataset.zone;
@@ -4436,54 +4438,56 @@ function isMemeOrFunEmoji(sticker){
     (sticker.classList.contains('sticker-emoji')&&(!sticker.dataset.zone||SCATTER_ZONES.includes(sticker.dataset.zone)||sticker.dataset.zone==='fun'));
 }
 
+// Rule 12: STRICT radial probe — finds nearest non-overlapping position
+function resolveNonOverlapPosition(tryLeft,tryTop,w,h,placed,zoneBounds,rng){
+  const gap=ANTI_OVERLAP_GAP;
+  const candidate={left:tryLeft,top:tryTop,w,h};
+  if(!isOverlappingAny(candidate,placed,gap))return candidate;
+  
+  const safeX1=zoneBounds?zoneBounds.x1+BOUNDARY_PAD:MOODBOARD_ITEM_SAFE_MARGIN;
+  const safeY1=zoneBounds?zoneBounds.y1+BOUNDARY_PAD:MOODBOARD_ITEM_SAFE_MARGIN;
+  const safeX2=zoneBounds?zoneBounds.x2-BOUNDARY_PAD:MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN;
+  const safeY2=zoneBounds?zoneBounds.y2-BOUNDARY_PAD:MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN;
+  
+  const golden=2.399963;
+  const ringStep=Math.max(w,h)*0.6+gap;
+  const maxRadius=Math.max(safeX2-safeX1,safeY2-safeY1)*0.8;
+  const probesPerRing=12;
+  
+  for(let radius=ringStep;radius<=maxRadius;radius+=ringStep){
+    for(let p=0;p<probesPerRing;p++){
+      const angle=p*golden+(rng?rng()*0.3:0);
+      const cL=Math.max(safeX1,Math.min(safeX2-w,tryLeft+Math.cos(angle)*radius));
+      const cT=Math.max(safeY1,Math.min(safeY2-h,tryTop+Math.sin(angle)*radius));
+      const test={left:cL,top:cT,w,h};
+      if(!isOverlappingAny(test,placed,gap))return test;
+    }
+  }
+  // Fallback: just nudge far enough
+  return {left:Math.max(safeX1,Math.min(safeX2-w,tryLeft+(rng?rng()*400:200))),top:Math.max(safeY1,Math.min(safeY2-h,tryTop+(rng?rng()*400:200))),w,h};
+}
+
 function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
-  // Place items in expanding spiral from center, denser near center
   const sorted=items.slice().sort((a,b)=>(a.offsetWidth*a.offsetHeight)-(b.offsetWidth*b.offsetHeight));
   const n=sorted.length;
   if(!n)return;
-  const padX=BOUNDARY_PAD;
-  const padY=BOUNDARY_PAD;
-  const safeX1=zoneBounds?zoneBounds.x1+padX:MOODBOARD_ITEM_SAFE_MARGIN;
-  const safeY1=zoneBounds?zoneBounds.y1+padY:MOODBOARD_ITEM_SAFE_MARGIN;
-  const safeX2=zoneBounds?zoneBounds.x2-padX:MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN;
-  const safeY2=zoneBounds?zoneBounds.y2-padY:MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN;
 
   sorted.forEach((sticker,i)=>{
     const w=sticker.offsetWidth||180;
     const h=sticker.offsetHeight||100;
-    // Spiral parameter: closer items get smaller radius
     const t=(i+1)/(n+1);
     const r=innerR+t*(outerR-innerR);
-    const angleStep=2.399963; // golden angle in radians
+    const angleStep=2.399963;
     const angle=i*angleStep;
     let tryLeft=cx+Math.cos(angle)*r-w/2+(rng()-0.5)*60;
     let tryTop=cy+Math.sin(angle)*r-h/2+(rng()-0.5)*60;
-    // Clamp to safe zone
-    tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
-    tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
-    // Rule 12: Anti-overlap nudge — push away from placed items (24 attempts)
-    for(let attempt=0;attempt<24;attempt++){
-      let overlapping=false;
-      for(const p of placed){
-        const overlapX=tryLeft<p.left+p.w+40&&tryLeft+w>p.left-40;
-        const overlapY=tryTop<p.top+p.h+40&&tryTop+h>p.top-40;
-        if(overlapX&&overlapY){
-          overlapping=true;
-          const nudgeAngle=angle+attempt*0.5;
-          tryLeft+=Math.cos(nudgeAngle)*Math.max(w*0.7,100);
-          tryTop+=Math.sin(nudgeAngle)*Math.max(h*0.7,80);
-          tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
-          tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
-          break;
-        }
-      }
-      if(!overlapping)break;
-    }
-    let candidate={left:tryLeft,top:tryTop,w,h};
-    sticker.style.left=candidate.left+'px';
-    sticker.style.top=candidate.top+'px';
+    
+    // Rule 12: Strict radial probe for non-overlap position
+    const resolved=resolveNonOverlapPosition(tryLeft,tryTop,w,h,placed,zoneBounds,rng);
+    sticker.style.left=resolved.left+'px';
+    sticker.style.top=resolved.top+'px';
     sticker.style.transform='rotate('+((rng()-0.5)*12).toFixed(1)+'deg)';
-    placed.push({left:candidate.left,top:candidate.top,w,h});
+    placed.push({left:resolved.left,top:resolved.top,w,h});
   });
 }
 
