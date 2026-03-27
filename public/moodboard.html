@@ -7793,19 +7793,29 @@ function mapZoom(dir){
   mapZoomScale=steps[idx];
   const zl=document.getElementById('mapZoomLevel');
   if(zl)zl.textContent=mapZoomScale+'×';
-  const factor=mapZoomScale/oldZoom;
+  // Recompute scale from scratch to avoid floating-point drift
+  const mr=mmInner.getBoundingClientRect();
+  const mw=mr.width||64,mh=mr.height||64;
+  const contentW=Math.max(cv.scrollWidth||0,cv.offsetWidth||0,MOODBOARD_WORLD_WIDTH);
+  const contentH=Math.max(cv.scrollHeight||0,cv.offsetHeight||0,MOODBOARD_WORLD_HEIGHT);
+  const leftWorldPad=400,rightWorldPad=400,topWorldPad=400,bottomWorldPad=400;
+  const mapContentW=contentW+leftWorldPad+rightWorldPad;
+  const mapContentH=contentH+topWorldPad+bottomWorldPad;
+  const fitScale=Math.max(0.02,Math.max(mw/mapContentW,mh/mapContentH));
+  const newSc=fitScale*mapZoomScale;
+  const factor=newSc/(drawMap._sc||0.05);
   const cx=mmInner.scrollLeft+mmInner.clientWidth/2;
   const cy=mmInner.scrollTop+mmInner.clientHeight/2;
-  const cw=parseFloat(mapCanvas.style.width)*factor;
-  const ch=parseFloat(mapCanvas.style.height)*factor;
-  drawMap._sc=(drawMap._sc||0.05)*factor;
+  const cw=mapContentW*newSc;
+  const ch=mapContentH*newSc;
+  drawMap._sc=newSc;
   drawMap._cw=cw;drawMap._ch=ch;
   mapCanvas.style.width=cw+'px';
   mapCanvas.style.height=ch+'px';
   mapCanvas.style.transform='none';
   const ox=drawMap._ox,oy=drawMap._oy;
   invalidateMapCloneCache(true);
-  renderVisibleClones(drawMap._sc,ox,oy,cw,ch);
+  renderVisibleClones(newSc,ox,oy,cw,ch);
   updMap();
   mmInner.scrollTo({left:cx*factor-mmInner.clientWidth/2,top:cy*factor-mmInner.clientHeight/2});
 }
