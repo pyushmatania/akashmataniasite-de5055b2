@@ -7605,6 +7605,9 @@ function centerMoodboardOn(worldX,worldY,behavior){
 }
 
 function walkBitmojiTo(worldX,worldY,stickerRef){
+  // Clamp to valid world coordinates
+  worldX=Math.max(400,Math.min(MOODBOARD_WORLD_WIDTH-400,worldX));
+  worldY=Math.max(400,Math.min(MOODBOARD_WORLD_HEIGHT-400,worldY));
   if(walkingInProgress||!mmExp)return;
   clearTimeout(_walkTimer);
   clearWalkTimers();
