@@ -847,26 +847,29 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
   filter:drop-shadow(0 0 4px rgba(0,255,128,0.4));
 }
 
+/* ===== Track label pulse animation ===== */
+@keyframes trackLabelPulse{0%,100%{opacity:0.85;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.05)}}
+
 /* ===== NEON GLOW on active item ===== */
 @keyframes neonGlow{
-  0%,100%{box-shadow:0 0 12px rgba(255,202,40,0.7),0 0 30px rgba(255,202,40,0.4),0 0 60px rgba(255,202,40,0.2);outline-color:rgba(255,202,40,1)}
-  50%{box-shadow:0 0 20px rgba(255,202,40,0.9),0 0 50px rgba(255,202,40,0.5),0 0 80px rgba(255,202,40,0.25);outline-color:rgba(255,202,40,1)}
+  0%,100%{box-shadow:0 0 15px rgba(255,202,40,0.8),0 0 40px rgba(255,202,40,0.5),0 0 80px rgba(255,202,40,0.3);outline-color:rgba(255,202,40,1)}
+  50%{box-shadow:0 0 25px rgba(255,202,40,1),0 0 60px rgba(255,202,40,0.6),0 0 100px rgba(255,202,40,0.3);outline-color:rgba(255,202,40,1)}
 }
 .neon-active{
-  outline:3px solid rgba(255,202,40,1)!important;outline-offset:8px!important;
-  animation:neonGlow 1.2s ease-in-out infinite!important;
+  outline:4px solid rgba(255,202,40,1)!important;outline-offset:10px!important;
+  animation:neonGlow 1s ease-in-out infinite!important;
   z-index:300!important;
-  filter:brightness(1.15)!important;
+  filter:brightness(1.2)!important;
 }
 /* Blinking glow ring around cycling filter items */
 @keyframes filterItemBlink{
-  0%,100%{box-shadow:0 0 0 4px rgba(255,215,0,0.9),0 0 18px rgba(255,215,0,0.5),0 0 36px rgba(255,215,0,0.2);transform:translate(-50%,-50%) scale(1)}
-  50%{box-shadow:0 0 0 8px rgba(255,215,0,0.5),0 0 28px rgba(255,215,0,0.3),0 0 50px rgba(255,215,0,0.15);transform:translate(-50%,-50%) scale(1.15)}
+  0%,100%{box-shadow:0 0 0 5px rgba(255,215,0,1),0 0 25px rgba(255,215,0,0.7),0 0 50px rgba(255,215,0,0.3);transform:translate(-50%,-50%) scale(1)}
+  50%{box-shadow:0 0 0 10px rgba(255,215,0,0.6),0 0 40px rgba(255,215,0,0.4),0 0 70px rgba(255,215,0,0.2);transform:translate(-50%,-50%) scale(1.2)}
 }
 .filter-glow-ring{
   position:absolute;pointer-events:none;z-index:998;
-  border-radius:50%;border:2.5px solid rgba(255,215,0,0.9);
-  animation:filterItemBlink 1s ease-in-out infinite;
+  border-radius:50%;border:3px solid rgba(255,215,0,1);
+  animation:filterItemBlink 0.8s ease-in-out infinite;
   transform:translate(-50%,-50%);
 }
 /* Zone track label pulse */
