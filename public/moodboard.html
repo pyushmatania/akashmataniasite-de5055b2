@@ -4819,12 +4819,13 @@ vp.addEventListener('scroll',()=>{
       else if(vp.scrollTop<=EDGE_THRESHOLD && my>0) triggerBounce('top');
       else if(vp.scrollTop>=my-EDGE_THRESHOLD && my>0) triggerBounce('bottom');
     }
-    // 3) Map update (was separate listener at bottom of file)
+    // 3) Map update — debounce more aggressively to reduce lag
     if(typeof updMap==='function'&&typeof mapTransitioning!=='undefined'&&!mapTransitioning){
       updMap();
       if(typeof mmExp!=='undefined'&&!mmExp&&!_bouncing){
-        clearTimeout(window._mapScrollTimer);window._mapScrollTimer=setTimeout(drawMap,320);
+        clearTimeout(window._mapScrollTimer);window._mapScrollTimer=setTimeout(drawMap,500);
       }
+    }
     }
   });
 },{passive:true});
