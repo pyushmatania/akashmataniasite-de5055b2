@@ -9478,9 +9478,12 @@ function ensureCompanionStickers(force){
   }
 
   function memeCard(top,bottom,bg){
-    return '<div style="background:'+bg+';border-radius:14px;padding:12px 14px;width:165px;box-shadow:0 4px 16px rgba(0,0,0,0.08);text-align:center">'+
-      '<div style="font-size:0.56rem;color:rgba(0,0,0,0.42);text-transform:uppercase;font-family:var(--font-fun);font-weight:700;margin-bottom:5px">'+top+'</div>'+
-      '<div style="font-family:var(--font-hand);font-size:0.8rem;color:rgba(0,0,0,0.74);line-height:1.35">'+bottom+'</div></div>';
+    var isDark=bg&&(bg.startsWith('#1')||bg.startsWith('#2')||bg.startsWith('#0')||bg.startsWith('#3')||bg.startsWith('#4'));
+    var txtA=isDark?'rgba(255,255,255,0.45)':'rgba(0,0,0,0.42)';
+    var txtB=isDark?'rgba(255,255,255,0.75)':'rgba(0,0,0,0.74)';
+    return '<div style="background:'+bg+';border-radius:14px;padding:12px 14px;width:165px;box-shadow:0 4px 16px rgba(0,0,0,0.15);text-align:center;border:1px solid rgba(255,255,255,0.06)">'+
+      '<div style="font-size:0.56rem;color:'+txtA+';text-transform:uppercase;font-family:var(--font-fun);font-weight:700;margin-bottom:5px">'+top+'</div>'+
+      '<div style="font-family:var(--font-hand);font-size:0.8rem;color:'+txtB+';line-height:1.35">'+bottom+'</div></div>';
   }
 
   function meterCard(emoji,label,bg1,bg2){
