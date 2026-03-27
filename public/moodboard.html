@@ -8552,7 +8552,7 @@ function updMap(){
   const mmZone=document.getElementById('minimapZoneName');
   if(mmZone){
     mmZone.textContent=zoneName;
-    const zoneColorMap={'Origin':'#388E3C','Work':'#C62828','Portfolio':'#1565C0','Hobby':'#E65100','Fun':'#6A1B9A'};
+    const zoneColorMap={'Origin':'#00838F','Work':'#C62828','Portfolio':'#1565C0','Hobby':'#E65100','Fun':'#6A1B9A'};
     const zKey=Object.keys(zoneColorMap).find(k=>zoneName.includes(k));
     mmZone.style.background=zKey?zoneColorMap[zKey]:'#37474F';
   }
