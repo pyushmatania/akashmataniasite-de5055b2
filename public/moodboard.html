@@ -7418,16 +7418,7 @@ function addMapDecorations(cw, ch){
      el.textContent=gl.label;
    });
 
-  // === BEACHES ===
-  const beaches=[
-    {x:6,y:78,w:84,h:6,r:'0 0 45% 55%',bg:'linear-gradient(180deg,rgba(245,222,130,0.8),rgba(235,200,100,0.5))'},
-    {x:5,y:12,w:6,h:65,r:'55% 0 0 45%',bg:'linear-gradient(90deg,rgba(245,222,130,0.7),rgba(235,200,100,0.3))'},
-    {x:83,y:15,w:6,h:60,r:'0 55% 45% 0',bg:'linear-gradient(-90deg,rgba(245,222,130,0.7),rgba(235,200,100,0.3))'},
-    {x:8,y:8,w:78,h:5,r:'45% 55% 0 0',bg:'linear-gradient(0deg,rgba(245,222,130,0.6),rgba(235,200,100,0.3))'},
-  ];
-  beaches.forEach(b=>{
-    addDiv('map-beach','left:'+b.x+'%;top:'+b.y+'%;width:'+b.w+'%;height:'+b.h+'%;border-radius:'+b.r+';background:'+b.bg);
-  });
+  // Beaches REMOVED — were creating visible rectangular lines on the map
 
   // === 3D ISOMETRIC BUILDINGS — innerHTML is ~15× faster than individual createElementNS calls ===
   function addIsometricBuilding(x,y,w,h,color,roofColor,windows){
