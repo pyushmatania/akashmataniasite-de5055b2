@@ -3337,11 +3337,11 @@ const MOODBOARD_VIEW_SCALE_NAV=window.innerWidth<=768?0.6:0.72;
 let _playIntroIdx=-1;
 // Play targets: Work → Portfolio → Origin → Hobby → Fun (exact intro card centers)
 const _playIntroTargets=[
-  {x:10050+190,y:2600+210,label:'Work'},
-  {x:2640+190,y:7600+210,label:'Portfolio'},
-  {x:2740+190,y:2400+210,label:'Origin'},
-  {x:2990+190,y:11800+210,label:'Hobby'},
-  {x:10690+190,y:9800+210,label:'Fun'},
+  {x:10050+190,y:2600+210,label:'Work'},       // Main Akash intro card
+  {x:2640+190,y:7600+210,label:'Portfolio'},    // Portfolio zone intro card
+  {x:2740+190,y:2400+210,label:'Origin'},       // Origin zone intro card
+  {x:2990+190,y:11800+210,label:'Hobby'},       // Hobby zone intro card
+  {x:10690+190,y:9800+210,label:'Fun'},         // Fun zone intro card
 ];
 function cycleIntroCards(e){
   if(e){e.preventDefault();e.stopPropagation();}
