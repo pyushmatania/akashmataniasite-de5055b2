@@ -4191,11 +4191,32 @@ function shuffleWithSeed(list,rng){
 }
 
 function isOverlappingAny(rect,placed,pad){
+  pad=pad||40;
   for(const p of placed){
     if(rect.left+rect.w+pad<p.left||p.left+p.w+pad<rect.left||rect.top+rect.h+pad<p.top||p.top+p.h+pad<rect.top)continue;
     return true;
   }
   return false;
+}
+
+// Rule 14: Reserved zones where no cards should be placed (ground labels, signposts)
+function getReservedZones(){
+  const labels=[
+    {left:2100,top:2400,w:900,h:280}, // ORIGIN label
+    {left:9200,top:2200,w:700,h:280}, // WORK label
+    {left:1600,top:7400,w:1100,h:260}, // PORTFOLIO label
+    {left:1800,top:11400,w:800,h:260}, // HOBBY label
+    {left:9000,top:9200,w:600,h:280}, // FUN label
+  ];
+  // Signpost positions (near zone centers)
+  const signpostPositions=[
+    {left:2800,top:2650,w:220,h:150},
+    {left:10350,top:2650,w:220,h:150},
+    {left:2700,top:7650,w:220,h:150},
+    {left:3050,top:11650,w:220,h:150},
+    {left:10350,top:9650,w:220,h:150},
+  ];
+  return labels.concat(signpostPositions);
 }
 
 function layoutGroupInGrid(stickers,area){
