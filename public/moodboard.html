@@ -7346,7 +7346,7 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
       let clone;
       if(d.ref){
         // Skip signpost clones on map
-        if(d.ref.classList.contains('zone-signpost')){idx++;continue;}
+        if(d.ref.classList.contains('zone-signpost')){continue;}
         clone=d.ref.cloneNode(true);
         clone.classList.add('mi','map-sticker-clone');
         const rot=(d.ref.style.transform||'').match(/rotate\([^)]+\)/);
