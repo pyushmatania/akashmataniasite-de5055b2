@@ -111,20 +111,42 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .zone-divider.portfolio{border-color:rgba(66,165,245,0.55)}
 .zone-divider.fun{border-color:rgba(255,152,0,0.55)}
 /* Zone intro cards — bold card style */
-.zone-intro-creative{width:340px;border-radius:22px;overflow:hidden;background:#fff;border:2.5px solid #f0ece6;box-shadow:0 8px 32px rgba(0,0,0,0.1),0 2px 8px rgba(0,0,0,0.04);cursor:default}
-.zone-intro-creative .zic-header{padding:22px 22px 14px;position:relative;overflow:hidden}
-.zone-intro-creative .zic-icon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:12px;position:relative;z-index:1;border:2px solid rgba(255,255,255,0.4);box-shadow:0 4px 16px rgba(0,0,0,0.12)}
-.zone-intro-creative .zic-title{font-family:var(--font-fun);font-weight:800;font-size:1.15rem;letter-spacing:0.04em;position:relative;z-index:1;margin-bottom:4px}
-.zone-intro-creative .zic-subtitle{font-family:var(--font-sans);font-size:0.74rem;opacity:0.65;position:relative;z-index:1;line-height:1.5}
-.zone-intro-creative .zic-body{padding:0 22px 20px}
-.zone-intro-creative .zic-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.zone-intro-creative .zic-tag{font-family:var(--font-sans);font-size:0.65rem;font-weight:600;padding:5px 12px;border-radius:20px;letter-spacing:0.03em;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;border:1.5px solid rgba(0,0,0,0.06)}
+.zone-intro-creative{width:380px;min-height:420px;border-radius:28px;overflow:hidden;background:#fff;border:2.5px solid #f0ece6;box-shadow:0 12px 48px rgba(0,0,0,0.12),0 4px 12px rgba(0,0,0,0.06);cursor:default;position:relative}
+.zone-intro-creative .zic-header{padding:28px 26px 18px;position:relative;overflow:hidden}
+.zone-intro-creative .zic-icon{width:60px;height:60px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:14px;position:relative;z-index:1;border:2px solid rgba(255,255,255,0.4);box-shadow:0 6px 20px rgba(0,0,0,0.15);transition:transform 0.3s}
+.zone-intro-creative .zic-icon:hover{transform:scale(1.15) rotate(5deg)}
+.zone-intro-creative .zic-title{font-family:var(--font-fun);font-weight:800;font-size:1.35rem;letter-spacing:0.04em;position:relative;z-index:1;margin-bottom:6px}
+.zone-intro-creative .zic-subtitle{font-family:var(--font-sans);font-size:0.78rem;opacity:0.65;position:relative;z-index:1;line-height:1.55}
+.zone-intro-creative .zic-body{padding:0 26px 26px}
+.zone-intro-creative .zic-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.zone-intro-creative .zic-tag{font-family:var(--font-sans);font-size:0.68rem;font-weight:600;padding:6px 14px;border-radius:20px;letter-spacing:0.03em;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s,background 0.2s;border:1.5px solid rgba(0,0,0,0.06)}
+.zone-intro-creative .zic-tag:hover{transform:scale(1.08);box-shadow:0 2px 8px rgba(0,0,0,0.1)}
 .zone-intro-creative .zic-tag:active{transform:scale(0.92)}
-.zone-intro-creative .zic-divider{height:1.5px;background:linear-gradient(90deg,transparent,rgba(0,0,0,0.08),transparent);margin:12px 0}
-.zone-intro-creative .zic-stat{display:flex;align-items:center;gap:8px;font-family:var(--font-hand);font-size:0.85rem;color:var(--text2);margin-top:8px}
-.zone-intro-creative .zic-counter{display:flex;align-items:center;gap:6px;margin-top:10px;font-family:var(--font-fun);font-size:0.72rem;color:var(--text3)}
-.zone-intro-creative .zic-counter button{width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(0,0,0,0.1);background:#fff;font-size:0.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.zone-intro-creative .zic-divider{height:1.5px;background:linear-gradient(90deg,transparent,rgba(0,0,0,0.08),transparent);margin:14px 0}
+.zone-intro-creative .zic-stat{display:flex;align-items:center;gap:8px;font-family:var(--font-hand);font-size:0.9rem;color:var(--text2);margin-top:10px}
+.zone-intro-creative .zic-counter{display:flex;align-items:center;gap:8px;margin-top:12px;font-family:var(--font-fun);font-size:0.75rem;color:var(--text3)}
+.zone-intro-creative .zic-counter button{width:32px;height:32px;border-radius:50%;border:1.5px solid rgba(0,0,0,0.1);background:#fff;font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.zone-intro-creative .zic-counter button:hover{transform:scale(1.1);box-shadow:0 2px 8px rgba(0,0,0,0.1)}
 .zone-intro-creative .zic-counter button:active{transform:scale(0.85);background:#f5f5f5}
+.zone-intro-creative .zic-explore{margin-top:16px;text-align:center}
+.zone-intro-creative .zic-explore-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:20px;border:none;cursor:pointer;font-family:var(--font-fun);font-size:0.7rem;font-weight:700;letter-spacing:0.04em;transition:all 0.2s;box-shadow:0 3px 12px rgba(0,0,0,0.12)}
+.zone-intro-creative .zic-explore-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.18)}
+.zone-intro-creative .zic-explore-btn:active{transform:scale(0.95)}
+.zone-intro-creative .zic-items-count{display:inline-block;padding:3px 8px;border-radius:10px;font-family:var(--font-fun);font-size:0.6rem;font-weight:700;margin-left:8px;opacity:0.7}
+/* Drag handle for interactive cards */
+.sticker-drag-handle{position:absolute;top:8px;right:8px;z-index:100;width:32px;height:32px;border-radius:8px;background:rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;transition:all 0.2s;opacity:0.5}
+.sticker-drag-handle:hover{opacity:1;background:rgba(0,0,0,0.1);transform:scale(1.1)}
+.sticker-drag-handle:active{cursor:grabbing;opacity:1;transform:scale(0.95)}
+.sticker-drag-handle svg{width:16px;height:16px;color:var(--text3)}
+.sticker.has-drag-handle{cursor:default!important}
+.sticker.has-drag-handle:active{cursor:default!important}
+/* Zone ground labels — road marking style */
+.zone-ground-label{position:absolute;pointer-events:none;z-index:3;font-family:var(--font-fun);font-weight:900;letter-spacing:0.3em;text-transform:uppercase;opacity:0.12;line-height:1}
+.zone-ground-label.horizontal{writing-mode:horizontal-tb}
+.zone-ground-label.vertical{writing-mode:vertical-rl;text-orientation:mixed}
+/* Glowing intro card on map */
+.map-intro-glow{animation:mapIntroGlow 2.5s ease-in-out infinite;border-radius:12px}
+@keyframes mapIntroGlow{0%,100%{box-shadow:0 0 15px var(--glow-color,rgba(76,175,80,0.6)),0 0 30px var(--glow-color,rgba(76,175,80,0.3))}50%{box-shadow:0 0 25px var(--glow-color,rgba(76,175,80,0.8)),0 0 50px var(--glow-color,rgba(76,175,80,0.4))}}
 .zone-signpost-marker{position:absolute;pointer-events:none;z-index:9;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;min-width:138px;padding:8px 14px;border-radius:10px;font-family:var(--font-fun);font-size:0.75rem;font-weight:800;color:#fff;letter-spacing:0.08em;text-transform:uppercase;text-align:center;border:2px solid rgba(255,255,255,0.32);box-shadow:0 3px 12px rgba(0,0,0,0.22);text-shadow:0 1px 2px rgba(0,0,0,0.35)}
 
 /* ===== PROJECT SHOWCASE CARDS ===== */
