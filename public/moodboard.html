@@ -7580,7 +7580,7 @@ mapCanvas.addEventListener('click',ev=>{
 
 
 function clearWaypoints(){
-  mapCanvas.querySelectorAll('.waypoint-marker,.waypoint-dist,.waypoint-line,.waypoint-line-active,.neon-active').forEach(e=>{
+  mapCanvas.querySelectorAll('.waypoint-marker,.waypoint-dist,.waypoint-line,.waypoint-line-active,.neon-active,.filter-glow-ring').forEach(e=>{
     if(e.classList.contains('neon-active')){e.classList.remove('neon-active');e.style.outline='';e.style.boxShadow=''}
     else e.remove();
   });
