@@ -3324,33 +3324,44 @@ const MOODBOARD_VIEW_SCALE_NAV=window.innerWidth<=768?0.6:0.72;
 
 // ===== PLAY BUTTON — cycles through intro cards =====
 let _playIntroIdx=0;
-// Play targets: Work → Portfolio → Origin → Hobby → Fun (exact intro card centers)
-// Starts at 0 (Work) so first press goes to 1 (Portfolio), after Fun loops to Work
-const _playIntroTargets=[
-  {x:10050+190,y:2600+210,label:'Work'},       // Main Akash intro card
-  {x:2640+190,y:7600+210,label:'Portfolio'},    // Portfolio zone intro card
-  {x:2740+190,y:2400+210,label:'Origin'},       // Origin zone intro card
-  {x:2990+190,y:11800+210,label:'Hobby'},       // Hobby zone intro card
-  {x:10690+190,y:9800+210,label:'Fun'},         // Fun zone intro card
+const _playIntroSequence=[
+  {zone:'work',label:'Work',fallback:{left:10050,top:2600,x:10050+190,y:2600+210}},
+  {zone:'portfolio',label:'Portfolio',fallback:{left:2640,top:7600,x:2640+190,y:7600+210}},
+  {zone:'origin',label:'Origin',fallback:{left:2740,top:2400,x:2740+190,y:2400+210}},
+  {zone:'hobby',label:'Hobby',fallback:{left:2990,top:11800,x:2990+190,y:11800+210}},
+  {zone:'fun',label:'Fun',fallback:{left:10690,top:9800,x:10690+190,y:9800+210}},
 ];
+function getZoneIntroElement(zone){
+  return document.querySelector('.zone-intro-creative[data-zone="'+zone+'"], .zone-intro-card[data-zone="'+zone+'"], .intro-card[data-zone="'+zone+'"]');
+}
+function getZoneIntroCenter(target){
+  const el=getZoneIntroElement(target.zone);
+  if(!el)return {x:target.fallback.x,y:target.fallback.y,found:false};
+  const left=parseFloat(el.style.left)||target.fallback.left;
+  const top=parseFloat(el.style.top)||target.fallback.top;
+  const w=el.offsetWidth||380;
+  const h=el.offsetHeight||420;
+  return {x:left+w/2,y:top+h/2,found:true};
+}
 function cycleIntroCards(e){
   if(e){e.preventDefault();e.stopPropagation();}
-  _playIntroIdx=(_playIntroIdx+1)%_playIntroTargets.length;
-  const t=_playIntroTargets[_playIntroIdx];
+  if(typeof ensureZoneIntroCards==='function')ensureZoneIntroCards();
+  _playIntroIdx=(_playIntroIdx+1)%_playIntroSequence.length;
+  const target=_playIntroSequence[_playIntroIdx];
+  const center=getZoneIntroCenter(target);
   const scale=(typeof MOODBOARD_VIEW_SCALE==='number'?MOODBOARD_VIEW_SCALE:0.5);
   const vp=document.getElementById('viewport');
   const worldW=14000,worldH=14000;
   const maxX=Math.max(0,worldW*scale-vp.clientWidth);
   const maxY=Math.max(0,worldH*scale-vp.clientHeight);
   vp.scrollTo({
-    left:Math.max(0,Math.min(t.x*scale-vp.clientWidth/2,maxX)),
-    top:Math.max(0,Math.min(t.y*scale-vp.clientHeight/2,maxY)),
+    left:Math.max(0,Math.min(center.x*scale-vp.clientWidth/2,maxX)),
+    top:Math.max(0,Math.min(center.y*scale-vp.clientHeight/2,maxY)),
     behavior:'smooth'
   });
-  // Brief toast
   const toast=document.createElement('div');
   toast.className='boundary-toast edge-bottom show';
-  toast.textContent='📍 '+t.label+' — zone intro';
+  toast.textContent='📍 '+target.label+' — zone intro';
   document.body.appendChild(toast);
   setTimeout(()=>toast.remove(),1800);
 }
