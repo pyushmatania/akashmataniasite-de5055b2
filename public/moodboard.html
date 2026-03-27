@@ -6902,51 +6902,22 @@ function addMapDecorations(cw, ch){
     wrap.appendChild(svg);
   });
 
-  // === NEON AREA SIGNPOSTS on big map ===
-  const neonSigns=[
-    {x:22,y:20,t:'ORIGIN',icon:'📸',color:'#4CAF50'},
-    {x:76,y:20,t:'WORK',icon:'🎯',color:'#E53935'},
-    {x:22,y:57,t:'PORTFOLIO',icon:'🚀',color:'#42A5F5'},
-    {x:22,y:86,t:'HOBBY',icon:'🎮',color:'#FF9800'},
-    {x:76,y:72,t:'FUN',icon:'😂',color:'#AB47BC'},
+  // === ZONE TRACK LABELS (replacing signposts) ===
+  const zoneTrackLabels=[
+    {x:22,y:20,t:'ORIGIN',icon:'📸',color:'#4CAF50',glow:'rgba(76,175,80,0.6)'},
+    {x:76,y:20,t:'WORK',icon:'🎯',color:'#E53935',glow:'rgba(229,57,53,0.6)'},
+    {x:22,y:57,t:'PORTFOLIO',icon:'🚀',color:'#42A5F5',glow:'rgba(66,165,245,0.6)'},
+    {x:22,y:86,t:'HOBBY',icon:'🎮',color:'#FF9800',glow:'rgba(255,152,0,0.6)'},
+    {x:76,y:72,t:'FUN',icon:'😂',color:'#AB47BC',glow:'rgba(171,71,188,0.6)'},
   ];
-  neonSigns.forEach(z=>{
+  zoneTrackLabels.forEach(z=>{
     const wrap=document.createElement('div');
     wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;z-index:8;pointer-events:none';
-    const fontSize=Math.max(9,cw*0.01);
-    const board=document.createElement('div');
-    board.style.cssText='background:#1a1a2e;border:1.5px solid '+z.color+';border-radius:4px;padding:'+Math.max(3,fontSize*0.4)+'px '+Math.max(8,fontSize*0.8)+'px;text-align:center;box-shadow:0 0 8px '+z.color+'80,0 0 16px '+z.color+'40,inset 0 0 6px rgba(0,0,0,0.5),0 4px 12px rgba(0,0,0,0.4)';
-    const txt=document.createElement('div');
-    txt.textContent=z.icon+' '+z.t;
-    txt.style.cssText='font-family:Fredoka,Arial Black,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:'+z.color+';letter-spacing:0.1em;white-space:nowrap;text-shadow:0 0 4px '+z.color+',0 0 10px '+z.color+',0 0 20px '+z.color+'80';
-    board.appendChild(txt);
-
-    const dots=document.createElement('div');
-    dots.style.cssText='display:flex;gap:3px;justify-content:center;margin-bottom:2px';
-    for(let i=0;i<6;i++){
-      const d=document.createElement('div');
-      d.style.cssText='width:2.5px;height:2.5px;border-radius:50%;background:'+z.color+';box-shadow:0 0 3px '+z.color+';animation:bulbChase 1.5s ease-in-out '+(i*0.2)+'s infinite';
-      dots.appendChild(d);
-    }
-
-    const poles=document.createElement('div');
-    poles.style.cssText='display:flex;gap:'+Math.max(12,fontSize*1.2)+'px;margin-top:-1px';
-    for(let i=0;i<2;i++){
-      const p=document.createElement('div');
-      p.style.cssText='width:2px;height:'+Math.max(16,cw*0.015)+'px;background:linear-gradient(90deg,#666,#bbb,#666);border-radius:1px;box-shadow:1px 0 2px rgba(0,0,0,0.15)';
-      poles.appendChild(p);
-    }
-
-    const base=document.createElement('div');
-    base.style.cssText='width:'+Math.max(14,fontSize*1.4)+'px;height:3px;background:linear-gradient(180deg,#888,#555);border-radius:1px;margin-top:-1px';
-    const glow=document.createElement('div');
-    glow.style.cssText='width:'+Math.max(20,fontSize*2)+'px;height:5px;background:radial-gradient(ellipse,'+z.color+'40,transparent 70%);border-radius:50%;filter:blur(2px);margin-top:1px';
-
-    wrap.appendChild(dots);
-    wrap.appendChild(board);
-    wrap.appendChild(poles);
-    wrap.appendChild(base);
-    wrap.appendChild(glow);
+    const fontSize=Math.max(11,cw*0.012);
+    const label=document.createElement('div');
+    label.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:'+z.color+';letter-spacing:0.15em;white-space:nowrap;text-shadow:0 0 8px '+z.glow+',0 0 20px '+z.glow+',0 2px 4px rgba(0,0,0,0.3);text-transform:uppercase;animation:zoneTrackPulse 3s ease-in-out infinite';
+    label.textContent=z.icon+' '+z.t;
+    wrap.appendChild(label);
     layer.appendChild(wrap);
   });
 
