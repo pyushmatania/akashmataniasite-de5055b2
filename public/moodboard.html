@@ -4413,7 +4413,8 @@ document.addEventListener('touchstart',e=>{
 },{passive:false});
 
 function sD(e){
-  const noDragTarget=e.target&&e.target.closest('.tlg-move-btn,button,input,textarea,select,a,[data-no-sticker-drag="true"],.tg-char,.ek-ingredient,.sb-skill,.scratch-cover,.sticker-mood input,.sticker-fortune,.zic-tag,.zone-intro-creative,.sticker-throne-game,.sticker-emoji-kitchen,.sticker-skillbuilder,.sticker-timeline,.sticker-counter,.sticker-scratch');
+  // Block sticker drag when interacting with internal interactive elements
+  const noDragTarget=e.target&&e.target.closest('.tlg-move-btn,button,input,textarea,select,a,[data-no-sticker-drag="true"],.tg-char,.tg-throne-target,.ek-ingredient,.ek-bowl,.sb-skill,.sb-stack-zone,.scratch-cover,.sticker-mood input[type=range],.zic-tag,.zic-icon,.tlg-item,.c-emoji,.c-count');
   if(noDragTarget){e.stopPropagation();return;}
   e.stopPropagation();
   // Two-finger rotation start (both on sticker)
