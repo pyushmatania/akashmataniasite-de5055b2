@@ -6763,8 +6763,10 @@ engine: `
     <div class="fun-fact">⚡ The <strong>signature check</strong> (mapId:left:top:w:h:cat joined) avoids unnecessary map redraws — only invalidates cache when positions actually change</div>
     <div class="fun-fact">🏷️ Every sticker is auto-tagged with both a <strong>category</strong> (photo, meme, interactive, introduction...) and a <strong>zone</strong> (origin, work, portfolio, hobby, fun)</div>
     <div class="fun-fact">🔄 The rearrange button triggers: <strong>audit -> arrange -> scan -> invalidate cache -> redraw both maps</strong> — a 5-step pipeline in ~200ms</div>
-    <div class="fun-fact">🗺️ Zone boundaries use <strong>SVG bezier curves</strong> with random control points — creating organic, country-map-style borders instead of straight lines</div>
-    <div class="fun-fact">📐 Anti-overlap nudging tries up to <strong>12 directional attempts</strong> per card, pushing along the spiral angle to find the nearest non-overlapping position</div>
+    <div class="fun-fact">🚧 Zone boundaries use <strong>yellow/black crime-scene tape</strong> SVG patterns — "⚠ DO NOT CROSS" text on bezier curves for maximum visual drama</div>
+    <div class="fun-fact">📐 <strong>Radial probe search</strong> tries 12 probes per ring × expanding golden-angle rings (100+ total attempts) — mathematically guarantees no card stacking</div>
+    <div class="fun-fact">🎨 Theme selection is <strong>persisted to localStorage</strong> — your board remembers its look across sessions and page reloads</div>
+    <div class="fun-fact">🗺️ Minimap uses <strong>3 event listeners</strong> (click + pointerup + touchend) with a 3-second failsafe timer to prevent the map from ever getting stuck</div>
   </div>
 </div>
 `
