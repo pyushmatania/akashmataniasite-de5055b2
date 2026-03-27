@@ -8160,27 +8160,26 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
 // Rule: Big map blank area clicks DISABLED — only sticker clicks allowed
 // (prevents character from wandering to empty spaces)
 mapCanvas.addEventListener('click',ev=>{
-  // Only block blank area clicks when map is EXPANDED — let minimap clicks through for toggleMap
   if(!mmExp) return;
   const t=ev.target instanceof Element?ev.target:null;
+  if(!t) return;
 
-  // Robust fallback: route click from any clone child to its sticker navigation
-  const cloneEl=t?t.closest('.map-sticker-clone'):null;
+  // Check if click is on or inside a map sticker clone
+  const cloneEl=t.closest('.map-sticker-clone');
   if(cloneEl){
     const cloneId=cloneEl.dataset.mapCloneId||'';
     const d=stickerData.find(item=>item.id===cloneId);
     if(d){
       ev.stopPropagation();
+      ev.preventDefault();
       walkBitmojiTo(d.left + d.w/2, d.top + d.h/2, d.ref);
       return;
     }
   }
 
-  if(t&&(t===mapCanvas||t.classList.contains('map-dec-layer')||t.classList.contains('map-terrain')||t.classList.contains('map-zone-tint')||t.classList.contains('map-ground-label')||t.classList.contains('map-signpost')||t.classList.contains('map-beach'))){
-    ev.stopPropagation();
-    return;
-  }
-});
+  // Block blank area clicks in expanded mode
+  ev.stopPropagation();
+},true);
 
 
 function clearWaypoints(){
