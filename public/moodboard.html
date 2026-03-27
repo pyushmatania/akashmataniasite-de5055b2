@@ -7257,29 +7257,25 @@ function addMapDecorations(cw, ch){
 
    // === HOLLYWOOD CASINO-STYLE SIGNPOSTS on big map ===
    const signposts=[
-     {x:23.6,y:22.3,label:'📸 ORIGIN',color:'#4CAF50',bg:'linear-gradient(135deg,#388E3C,#4CAF50,#66BB6A)',emoji:'📸'},
+     {x:23.6,y:22.3,label:'📸 ORIGIN',color:'#00BCD4',bg:'linear-gradient(135deg,#00838F,#00BCD4,#4DD0E1)',emoji:'📸'},
      {x:74.0,y:22.3,label:'🎯 WORK',color:'#E53935',bg:'linear-gradient(135deg,#C62828,#E53935,#EF5350)',emoji:'🎯'},
      {x:23.6,y:57.4,label:'🚀 PORTFOLIO',color:'#42A5F5',bg:'linear-gradient(135deg,#1565C0,#42A5F5,#64B5F6)',emoji:'🚀'},
      {x:25.0,y:83.8,label:'🎮 HOBBY',color:'#FF9800',bg:'linear-gradient(135deg,#E65100,#FF9800,#FFB74D)',emoji:'🎮'},
      {x:74.0,y:70.3,label:'😂 FUN',color:'#AB47BC',bg:'linear-gradient(135deg,#7B1FA2,#AB47BC,#CE93D8)',emoji:'😂'},
    ];
-   const spFS=Math.max(8,cw*0.006);
+   // Fixed signpost sizes — no zoom-dependent scaling
+   const spFS=10;
    signposts.forEach(sp=>{
-     // Signpost container
      const wrap=document.createElement('div');
      wrap.className='map-signpost';
      wrap.style.cssText='position:absolute;left:'+sp.x+'%;top:'+sp.y+'%;transform:translate(-50%,-100%);z-index:10;pointer-events:none;display:flex;flex-direction:column;align-items:center';
-     // Board
      const board=document.createElement('div');
-     board.style.cssText='padding:'+Math.max(4,spFS*0.6)+'px '+Math.max(8,spFS*1.2)+'px;border-radius:4px;background:'+sp.bg+';color:#fff;font-family:var(--font-fun);font-size:'+spFS+'px;font-weight:900;letter-spacing:0.1em;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.4);box-shadow:0 4px 16px rgba(0,0,0,0.3),inset 0 -2px 6px rgba(0,0,0,0.15)';
+     board.style.cssText='padding:5px 12px;border-radius:4px;background:'+sp.bg+';color:#fff;font-family:var(--font-fun);font-size:'+spFS+'px;font-weight:900;letter-spacing:0.1em;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.4);box-shadow:0 4px 16px rgba(0,0,0,0.3),inset 0 -2px 6px rgba(0,0,0,0.15)';
      board.textContent=sp.label;
      wrap.appendChild(board);
-     // Poles
      const poles=document.createElement('div');
-     const pH=Math.max(12,spFS*2.5);
-     const pW=Math.max(3,spFS*0.4);
-     poles.style.cssText='display:flex;gap:'+Math.max(20,spFS*3)+'px;justify-content:center;margin-top:-1px';
-     poles.innerHTML='<div style="width:'+pW+'px;height:'+pH+'px;background:linear-gradient(90deg,#8B6914,#C4A44A 40%,#8B6914);border-radius:1px 1px 2px 2px;box-shadow:1px 2px 4px rgba(0,0,0,0.25)"></div><div style="width:'+pW+'px;height:'+pH+'px;background:linear-gradient(90deg,#8B6914,#C4A44A 40%,#8B6914);border-radius:1px 1px 2px 2px;box-shadow:1px 2px 4px rgba(0,0,0,0.25)"></div>';
+     poles.style.cssText='display:flex;gap:26px;justify-content:center;margin-top:-1px';
+     poles.innerHTML='<div style="width:4px;height:24px;background:linear-gradient(90deg,#8B6914,#C4A44A 40%,#8B6914);border-radius:1px 1px 2px 2px;box-shadow:1px 2px 4px rgba(0,0,0,0.25)"></div><div style="width:4px;height:24px;background:linear-gradient(90deg,#8B6914,#C4A44A 40%,#8B6914);border-radius:1px 1px 2px 2px;box-shadow:1px 2px 4px rgba(0,0,0,0.25)"></div>';
      wrap.appendChild(poles);
      layer.appendChild(wrap);
    });
