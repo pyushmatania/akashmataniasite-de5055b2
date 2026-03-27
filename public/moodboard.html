@@ -9439,148 +9439,121 @@ function ensureZoneIntroCards(){
   ensureCompanionStickers();
 }
 
-function ensureCompanionStickers(){
-  if(document.querySelector('.zic-companion'))return;
+function ensureCompanionStickers(force){
+  if(force){
+    document.querySelectorAll('.zic-companion').forEach(el=>el.remove());
+  }else if(document.querySelector('.zic-companion')){
+    return;
+  }
 
-  // Helper to build dark skill-stack card like screenshot
+  const zones=['work','portfolio','origin','hobby','fun'];
+  const anchors={};
+  zones.forEach(zone=>{
+    const card=getZoneIntroElement(zone);
+    if(!card)return;
+    anchors[zone]={
+      left:parseFloat(card.style.left)||0,
+      top:parseFloat(card.style.top)||0,
+      w:card.offsetWidth||360,
+      h:card.offsetHeight||420
+    };
+  });
+
   function skillStackCard(title,emoji,skills,colors){
-    let tags=skills.map((s,i)=>'<span style="background:'+colors[i%colors.length]+';color:#fff;padding:4px 12px;border-radius:8px;font-size:0.65rem;font-family:var(--font-fun);font-weight:700;display:inline-block">'+s+'</span>').join('');
-    return '<div style="background:linear-gradient(145deg,#1a1a2e,#16213e);border-radius:16px;padding:18px 20px;width:220px;box-shadow:0 8px 28px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.06)">'+
-      '<div style="display:flex;align-items:center;gap:6px;margin-bottom:12px"><span style="width:8px;height:8px;border-radius:50%;background:#4CAF50;display:inline-block"></span><span style="font-family:var(--font-fun);font-size:0.75rem;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:0.05em">'+emoji+' '+title+'</span></div>'+
+    const tags=skills.map((s,i)=>'<span style="background:'+colors[i%colors.length]+';color:#fff;padding:4px 10px;border-radius:8px;font-size:0.62rem;font-family:var(--font-fun);font-weight:700;display:inline-block">'+s+'</span>').join('');
+    return '<div style="background:linear-gradient(145deg,#1a1a2e,#16213e);border-radius:16px;padding:14px 16px;width:210px;box-shadow:0 8px 28px rgba(0,0,0,0.28);border:1px solid rgba(255,255,255,0.06)">'+
+      '<div style="display:flex;align-items:center;gap:6px;margin-bottom:10px"><span style="width:8px;height:8px;border-radius:50%;background:#4CAF50;display:inline-block"></span><span style="font-family:var(--font-fun);font-size:0.72rem;font-weight:800;color:#fff;text-transform:uppercase">'+emoji+' '+title+'</span></div>'+
       '<div style="display:flex;gap:6px;flex-wrap:wrap">'+tags+'</div></div>';
   }
 
-  // Interactive click counter sticker
-  function clickCounterCard(){
-    return '<div class="zc-interactive-counter" onclick="(function(e){var c=e.closest(\'.zc-interactive-counter\');var n=parseInt(c.dataset.count||0)+1;c.dataset.count=n;c.querySelector(\'.cnt-val\').textContent=n;c.querySelector(\'.cnt-bar\').style.width=Math.min(n*5,100)+\'%\'})(this)" style="background:linear-gradient(145deg,#1a1a2e,#0f3460);border-radius:16px;padding:16px 18px;width:180px;box-shadow:0 6px 24px rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.08);cursor:pointer;user-select:none;text-align:center" data-count="0">'+
-      '<div style="font-size:1.8rem;margin-bottom:4px">👆</div>'+
-      '<div style="font-family:var(--font-fun);font-size:0.7rem;color:#90CAF9;font-weight:700;margin-bottom:6px">TAP COUNTER</div>'+
-      '<div class="cnt-val" style="font-family:var(--font-fun);font-size:2rem;font-weight:900;color:#fff">0</div>'+
-      '<div style="background:rgba(255,255,255,0.1);border-radius:4px;height:6px;margin-top:8px;overflow:hidden"><div class="cnt-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#42A5F5,#7E57C2);border-radius:4px;transition:width 0.3s"></div></div>'+
-      '<div style="font-size:0.55rem;color:rgba(255,255,255,0.3);margin-top:4px">how bored are you? 🤔</div></div>';
-  }
-
-  // Meme card
-  function memeCard(top,bottom,bg){
-    return '<div style="background:'+bg+';border-radius:14px;padding:14px 16px;width:180px;box-shadow:0 4px 16px rgba(0,0,0,0.08);text-align:center">'+
-      '<div style="font-size:0.6rem;color:rgba(0,0,0,0.4);text-transform:uppercase;font-family:var(--font-fun);font-weight:700;margin-bottom:6px">'+top+'</div>'+
-      '<div style="font-size:2rem;margin:4px 0">'+bottom.split(' ')[0]+'</div>'+
-      '<div style="font-family:var(--font-hand);font-size:0.82rem;color:rgba(0,0,0,0.7);line-height:1.4">'+bottom+'</div></div>';
-  }
-
-  // Polaroid photo sticker
   function polaroidPhoto(src,caption,rot){
-    return '<div style="transform:rotate('+rot+');display:inline-block"><div style="background:#fff;padding:8px 8px 30px;border-radius:4px;box-shadow:3px 5px 18px rgba(0,0,0,0.12)"><img src="'+src+'" alt="Akash" style="width:130px;height:155px;object-fit:cover;object-position:top;border-radius:2px;display:block"><div style="font-family:var(--font-hand);font-size:0.72rem;color:#888;text-align:center;margin-top:8px">'+caption+'</div></div></div>';
+    return '<div style="transform:rotate('+rot+');display:inline-block"><div style="background:#fff;padding:8px 8px 24px;border-radius:4px;box-shadow:3px 5px 18px rgba(0,0,0,0.12)"><img src="'+src+'" alt="Akash" style="width:122px;height:146px;object-fit:cover;object-position:top;border-radius:2px;display:block"><div style="font-family:var(--font-hand);font-size:0.66rem;color:#888;text-align:center;margin-top:6px">'+caption+'</div></div></div>';
   }
 
-  // Quote card
   function quoteCard(quote,author,bg,color){
-    return '<div style="background:'+bg+';border-radius:14px;padding:16px 18px;width:200px;box-shadow:0 4px 16px rgba(0,0,0,0.06)">'+
-      '<div style="font-size:1.4rem;opacity:0.2;font-family:serif;line-height:1;margin-bottom:4px">"</div>'+
-      '<div style="font-family:var(--font-hand);font-size:0.85rem;color:'+color+';line-height:1.5;font-style:italic">'+quote+'</div>'+
-      '<div style="font-family:var(--font-fun);font-size:0.55rem;color:rgba(0,0,0,0.35);margin-top:8px;text-align:right">— '+author+'</div></div>';
+    return '<div style="background:'+bg+';border-radius:14px;padding:14px 16px;width:180px;box-shadow:0 4px 16px rgba(0,0,0,0.06)">'+
+      '<div style="font-family:var(--font-hand);font-size:0.8rem;color:'+color+';line-height:1.45;font-style:italic">"'+quote+'"</div>'+
+      '<div style="font-family:var(--font-fun);font-size:0.52rem;color:rgba(0,0,0,0.35);margin-top:7px;text-align:right">— '+author+'</div></div>';
   }
 
-  // Toggle flip card
-  function flipCard(front,back,bg1,bg2){
-    return '<div class="zc-flip-card" onclick="this.classList.toggle(\'flipped\')" style="width:170px;height:100px;perspective:600px;cursor:pointer">'+
-      '<div style="position:relative;width:100%;height:100%;transition:transform 0.6s;transform-style:preserve-3d;'+
-        'transform:rotateY(0deg)" class="zc-flip-inner">'+
-        '<div style="position:absolute;inset:0;backface-visibility:hidden;background:'+bg1+';border-radius:14px;padding:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.08)">'+
-          '<div style="font-size:1.4rem">'+front.split('|')[0]+'</div>'+
-          '<div style="font-family:var(--font-fun);font-size:0.6rem;font-weight:700;color:rgba(0,0,0,0.5);margin-top:4px">'+front.split('|')[1]+'</div></div>'+
-        '<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);background:'+bg2+';border-radius:14px;padding:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.08)">'+
-          '<div style="font-family:var(--font-hand);font-size:0.8rem;color:rgba(0,0,0,0.7);text-align:center;line-height:1.4">'+back+'</div></div>'+
+  function memeCard(top,bottom,bg){
+    return '<div style="background:'+bg+';border-radius:14px;padding:12px 14px;width:165px;box-shadow:0 4px 16px rgba(0,0,0,0.08);text-align:center">'+
+      '<div style="font-size:0.56rem;color:rgba(0,0,0,0.42);text-transform:uppercase;font-family:var(--font-fun);font-weight:700;margin-bottom:5px">'+top+'</div>'+
+      '<div style="font-family:var(--font-hand);font-size:0.8rem;color:rgba(0,0,0,0.74);line-height:1.35">'+bottom+'</div></div>';
+  }
+
+  function meterCard(emoji,label,bg1,bg2){
+    return '<div class="zc-meter" data-count="0" style="background:linear-gradient(145deg,'+bg1+','+bg2+');border-radius:14px;padding:12px 14px;width:155px;box-shadow:0 6px 22px rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.1);cursor:pointer;user-select:none;text-align:center">'+
+      '<div style="font-size:1.4rem;margin-bottom:2px">'+emoji+'</div>'+
+      '<div style="font-family:var(--font-fun);font-size:0.58rem;color:rgba(255,255,255,0.75);font-weight:700">'+label+'</div>'+
+      '<div class="zc-meter-val" style="font-family:var(--font-fun);font-size:1.6rem;font-weight:900;color:#fff">0</div>'+
+      '<div style="background:rgba(255,255,255,0.14);border-radius:4px;height:5px;overflow:hidden"><div class="zc-meter-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#42A5F5,#7E57C2);border-radius:4px;transition:width 0.25s"></div></div></div>';
+  }
+
+  function flipCard(frontEmoji,frontLabel,backText,bg1,bg2){
+    return '<div class="zc-flip-card" style="width:168px;height:98px;perspective:600px;cursor:pointer">'+
+      '<div class="zc-flip-inner" style="position:relative;width:100%;height:100%;transition:transform 0.55s;transform-style:preserve-3d">'+
+        '<div style="position:absolute;inset:0;backface-visibility:hidden;background:'+bg1+';border-radius:14px;padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.08)">'+
+          '<div style="font-size:1.4rem">'+frontEmoji+'</div>'+
+          '<div style="font-family:var(--font-fun);font-size:0.58rem;font-weight:700;color:rgba(0,0,0,0.55);margin-top:4px">'+frontLabel+'</div></div>'+
+        '<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);background:'+bg2+';border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.08)">'+
+          '<div style="font-family:var(--font-hand);font-size:0.78rem;color:rgba(0,0,0,0.72);text-align:center;line-height:1.35">'+backText+'</div></div>'+
       '</div></div>';
   }
 
-  const companions=[
-    // ===== WORK ZONE (card at 10050, 2600) =====
-    // Suit photo — top right of card
-    {left:10420,top:2200,html:polaroidPhoto('/images/akash-photo.webp','the PM look 😎','4deg')},
-    // Skill stack — left of card
-    {left:9600,top:2500,html:skillStackCard('Skill Stack','🛠️',['Product Strategy','0→1 Building','AI/ML Products','Web3','Growth Hacking','User Research','Fundraising','Storytelling'],['#E53935','#FF9800','#4CAF50','#2196F3','#9C27B0','#00BCD4','#FF5722','#795548'])},
-    // Interactive tap counter
-    {left:10450,top:3300,html:clickCounterCard()},
-    // Funny sticky
-    {left:9650,top:2100,html:'<div class="zc-sticky coral" style="--r:-6deg">me in standup:<br>"it\'s almost done" 🤡</div>'},
-    // Quote
-    {left:9550,top:3250,html:quoteCard('Ship fast, learn faster, iterate forever.','Akash\'s brain at 3am','#FFF5F0','#C62828')},
-    // Meme card
-    {left:10500,top:2850,html:memeCard('WHEN THE SPRINT ENDS','😮‍💨 "we\'ll get it next sprint"','#FFE8E0')},
-    // Badge
-    {left:10100,top:2100,html:'<div class="zc-badge coral">⚡ Ships on Fridays</div>'},
-    // Flip card
-    {left:9750,top:3500,html:flipCard('💼|TAP TO REVEAL','First product: a college notes app that crashed every Tuesday','#FFE8E0','#FFF0EA')},
+  const zoneItems={
+    work:[
+      {dx:220,dy:-250,html:polaroidPhoto('/images/akash-photo.webp','the PM look 😎','4deg')},
+      {dx:-300,dy:-120,html:skillStackCard('Skill Stack','🛠️',['Product Strategy','0→1','AI/ML','Web3','Growth','Research','#PRD'],['#E53935','#FF9800','#4CAF50','#2196F3','#9C27B0','#00BCD4','#795548'])},
+      {dx:240,dy:120,html:meterCard('👆','TAP METER','#1a1a2e','#0f3460'),kind:'meter'},
+      {dx:-275,dy:160,html:quoteCard('Ship fast, learn faster.','work mode','#FFF5F0','#C62828')},
+      {dx:250,dy:-20,html:memeCard('SPRINT REVIEW','"it works on my machine" 🤡','#FFE8E0')},
+      {dx:-255,dy:-260,html:'<div class="zc-sticky coral" style="--r:-6deg">standup mood:<br>almost done™</div>'},
+      {dx:-70,dy:-285,html:'<div class="zc-badge coral">⚡ Ships on Fridays</div>'},
+      {dx:-40,dy:248,html:flipCard('💼','TAP TO FLIP','First product crashed every Tuesday. We still shipped.','#FFE8E0','#FFF0EA'),kind:'flip'}
+    ],
+    portfolio:[
+      {dx:-285,dy:-120,html:skillStackCard('Build Stack','💻',['React','TS','Node','Web3','Figma','AI'],['#61DAFB','#3178C6','#339933','#F6851B','#F24E1E','#AB47BC'])},
+      {dx:245,dy:-130,html:'<div class="zc-mini-card indigo" style="font-family:monospace;font-size:0.65rem">$ git log --oneline<br>ship v2 🚀<br>fix prod 🔥<br>"final" final fix</div>'},
+      {dx:250,dy:120,html:flipCard('🚀','SCORECARD','3 founded · 2 pivoted · 1 profitable','#EDE7F6','#F3E5F5'),kind:'flip'},
+      {dx:-270,dy:165,html:memeCard('DEV VS PROD','works 😎 → breaks 💀','#EDE7F6')},
+      {dx:5,dy:-300,html:'<div class="zc-badge indigo">🔗 EnterCircles + Recess</div>'},
+      {dx:-70,dy:250,html:meterCard('🎯','SHIP COUNT','#2E1065','#581C87'),kind:'meter'},
+      {dx:252,dy:-10,html:'<div class="zc-sticky indigo" style="--r:4deg">TODO: ship · iterate · repeat</div>'},
+      {dx:-270,dy:-270,html:'<div class="zc-emoji-float" style="font-size:2.5rem">⚡</div>'}
+    ],
+    origin:[
+      {dx:220,dy:-245,html:polaroidPhoto('/images/akash-photo.webp','chapter zero 📸','-3deg')},
+      {dx:-260,dy:-120,html:'<div class="zc-mini-card mint">📍 Jeypore → Bhubaneswar → Bengaluru<br>small town dreams, big city hustle</div>'},
+      {dx:238,dy:105,html:flipCard('🧒','FUN FACT','Wrote first code at 15. It could only add.','#E8F5E9','#F0FFF4'),kind:'flip'},
+      {dx:-250,dy:150,html:quoteCard('Started curious, stayed curious.','#life','#F0FFF4','#1B5E20')},
+      {dx:2,dy:-292,html:'<div class="zc-badge mint">🌱 Odisha roots</div>'},
+      {dx:-250,dy:-265,html:'<div class="zc-sticky mint" style="--r:5deg">Class of \'20 🎓</div>'},
+      {dx:5,dy:250,html:memeCard('FAMILY Q','"what do product managers do?"','#E8F5E9')},
+      {dx:242,dy:-15,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🏡</div>'}
+    ],
+    hobby:[
+      {dx:-290,dy:-120,html:skillStackCard('Now Playing','🎮',['Elden Ring','Valorant','Civ VI','FIFA','Music','Travel'],['#E53935','#FF5252','#FFB300','#66BB6A','#42A5F5','#8D6E63'])},
+      {dx:235,dy:-120,html:meterCard('🎯','HEADSHOT','#3E2723','#4E342E'),kind:'meter'},
+      {dx:-270,dy:160,html:flipCard('🎵','MUSIC TASTE','60% lo-fi · 25% Bollywood · 10% EDM','#FFF8E1','#FFF3E0'),kind:'flip'},
+      {dx:245,dy:160,html:memeCard('ONE MORE GAME','4 hours later... ⏰','#FFF3E0')},
+      {dx:0,dy:-290,html:'<div class="zc-badge amber">📷 15 Cities Explored</div>'},
+      {dx:-255,dy:-270,html:'<div class="zc-sticky amber" style="--r:-4deg">Player 1 Ready 🕹️</div>'},
+      {dx:235,dy:-8,html:quoteCard('Mountains > beaches, always.','#travel','#FFF8E1','#E65100')},
+      {dx:0,dy:248,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🎧</div>'}
+    ],
+    fun:[
+      {dx:-280,dy:-120,html:memeCard('NEW FEATURE IDEA','"quick 5 min change" 💀','#FCE4EC')},
+      {dx:240,dy:-125,html:memeCard('STARTUP BINGO','pivot · synergy · disrupt 🤡','#FFF0F5')},
+      {dx:-265,dy:140,html:flipCard('🎰','RANDOM EXCUSE','Works on my machine. Become my machine.','#FCE4EC','#FFF0F5'),kind:'flip'},
+      {dx:240,dy:140,html:meterCard('😂','LAUGH METER','#880E4F','#AD1457'),kind:'meter'},
+      {dx:0,dy:-292,html:'<div class="zc-badge pink">🔥 Meme Lord</div>'},
+      {dx:-255,dy:-270,html:'<div class="zc-sticky pink" style="--r:-5deg">git commit -m "please work" 🙏</div>'},
+      {dx:240,dy:-8,html:quoteCard('Debugging: removing bugs from code you wrote to add bugs.','#fun','#FFF0F5','#880E4F')},
+      {dx:0,dy:250,html:'<div class="zc-emoji-float" style="font-size:2.7rem">🤌</div>'}
+    ]
+  };
 
-    // ===== PORTFOLIO ZONE (card at 2640, 7600) =====
-    // Tech stack card
-    {left:2100,top:7450,html:skillStackCard('Tech Stack','💻',['React','TypeScript','Node.js','Web3','Supabase','Figma','Python','TailwindCSS'],['#61DAFB','#3178C6','#339933','#F6851B','#3ECF8E','#F24E1E','#3776AB','#38BDF8'])},
-    // Git commit sticky
-    {left:3100,top:7300,html:'<div class="zc-mini-card indigo" style="font-family:monospace;font-size:0.7rem">$ git log --oneline<br><span style="color:#7E57C2">a3f2b1c</span> shipped v2 🚀<br><span style="color:#7E57C2">8d1e4a2</span> fixed prod 🔥<br><span style="color:#7E57C2">2c9f0b3</span> "final" final fix</div>'},
-    // Interactive flip
-    {left:3200,top:8400,html:flipCard('🚀|STARTUP SCORECARD','3 founded · 2 pivoted · 1 profitable · 0 regrets','#EDE7F6','#F3E5F5')},
-    // Funny meme
-    {left:2000,top:8200,html:memeCard('MY CODE IN DEV vs PROD','🏗️ → 🔥','#EDE7F6')},
-    // Quote
-    {left:3200,top:7800,html:quoteCard('Every bug is just an undocumented feature waiting for its moment.','Stack Overflow philosophy','#F3E5F5','#4A148C')},
-    // Badges
-    {left:2700,top:7200,html:'<div class="zc-badge indigo">🔗 5 Products Shipped</div>'},
-    {left:2050,top:7900,html:'<div class="zc-emoji-float" style="font-size:2.8rem">⚡</div>'},
-    // Sticky
-    {left:2800,top:8600,html:'<div class="zc-sticky indigo" style="--r:3deg">TODO:<br>☑ ship it<br>☑ ship it again<br>☐ sleep</div>'},
-
-    // ===== ORIGIN ZONE (card at 2740, 2400) =====
-    // Photo polaroid
-    {left:3150,top:2000,html:polaroidPhoto('/images/akash-photo.webp','the early days 📸','-3deg')},
-    // Life timeline card
-    {left:2150,top:2200,html:'<div style="background:linear-gradient(145deg,#F0FFF4,#E8F5E9);border-radius:14px;padding:14px 16px;width:200px;box-shadow:0 4px 16px rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.12)"><div style="font-family:var(--font-fun);font-size:0.7rem;font-weight:700;color:#2E7D32;margin-bottom:8px">📍 LIFE MAP</div><div style="font-family:var(--font-hand);font-size:0.72rem;color:#3A6E3E;line-height:1.8">Jeypore → Bhubaneswar → Bengaluru<br>🏠 → 🎓 → 🏙️<br>Small town dreams,<br>big city hustle</div></div>'},
-    // Flip card
-    {left:3300,top:2800,html:flipCard('🧒|FUN FACT','Wrote first code at 15 — a calculator that could only add 🤦','#E8F5E9','#F0FFF4')},
-    // Quote
-    {left:2100,top:2900,html:quoteCard('Started curious, stayed curious. The best product is the next one.','younger Akash','#F0FFF4','#1B5E20')},
-    // Stickies & badges
-    {left:3400,top:2300,html:'<div class="zc-sticky mint" style="--r:5deg">Class of \'20 🎓<br>OUTR Bhubaneswar</div>'},
-    {left:2200,top:2700,html:'<div class="zc-badge mint">🌱 Odisha boy in tech</div>'},
-    {left:2800,top:1950,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🏡</div>'},
-    {left:2300,top:3100,html:memeCard('HOMETOWN FRIENDS','🧑‍💻 "what do you actually do?"','#E8F5E9')},
-
-    // ===== HOBBY ZONE (card at 2990, 11800) =====
-    // Gaming stats card
-    {left:2400,top:11550,html:skillStackCard('Now Playing','🎮',['Elden Ring','Valorant','Civilization VI','Stardew Valley','FIFA','Minecraft'],['#E53935','#FF5252','#FFB300','#66BB6A','#42A5F5','#8D6E63'])},
-    // Interactive tap counter
-    {left:3500,top:11600,html:'<div class="zc-interactive-counter" onclick="(function(e){var c=e.closest(\'.zc-interactive-counter\');var n=parseInt(c.dataset.count||0)+1;c.dataset.count=n;c.querySelector(\'.cnt-val\').textContent=n;c.querySelector(\'.cnt-bar\').style.width=Math.min(n*10,100)+\'%\'})(this)" style="background:linear-gradient(145deg,#3E2723,#4E342E);border-radius:16px;padding:14px 16px;width:160px;box-shadow:0 6px 24px rgba(0,0,0,0.2);border:1px solid rgba(255,152,0,0.15);cursor:pointer;user-select:none;text-align:center" data-count="0"><div style="font-size:1.6rem;margin-bottom:2px">🎯</div><div style="font-family:var(--font-fun);font-size:0.6rem;color:#FFB300;font-weight:700">HEADSHOT COUNT</div><div class="cnt-val" style="font-family:var(--font-fun);font-size:1.8rem;font-weight:900;color:#fff">0</div><div style="background:rgba(255,255,255,0.1);border-radius:4px;height:5px;margin-top:6px;overflow:hidden"><div class="cnt-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#FF9800,#F44336);border-radius:4px;transition:width 0.3s"></div></div></div>'},
-    // Flip card
-    {left:2350,top:12300,html:flipCard('🎵|MUSIC TASTE','60% lo-fi · 25% Bollywood · 10% EDM · 5% questionable choices','#FFF8E1','#FFF3E0')},
-    // Funny meme
-    {left:3500,top:12200,html:memeCard('"JUST ONE MORE GAME"','🕐 4 hours later...','#FFF3E0')},
-    // Quote
-    {left:2500,top:12600,html:quoteCard('Mountains over beaches. Every single time. 🏔️','travel philosophy','#FFF8E1','#E65100')},
-    // Stickies
-    {left:3400,top:11300,html:'<div class="zc-sticky amber" style="--r:-4deg">Player 1 Ready! 🕹️<br>Press START</div>'},
-    {left:2600,top:11400,html:'<div class="zc-badge amber">📷 15 Cities Explored</div>'},
-    {left:3100,top:12700,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🎧</div>'},
-
-    // ===== FUN ZONE (card at 10690, 9800) =====
-    // Meme collection
-    {left:10100,top:9600,html:memeCard('WHEN SOMEONE SAYS','💀 "let\'s add one more feature"','#FCE4EC')},
-    {left:11200,top:9550,html:memeCard('STARTUP BINGO','🤡 pivot · synergy · MVP · disrupt','#FFF0F5')},
-    // Interactive flip
-    {left:10150,top:10400,html:flipCard('🎰|RANDOM EXCUSE','Sorry, my code works on my machine — have you tried being my machine?','#FCE4EC','#FFF0F5')},
-    // Funny stickies
-    {left:11300,top:10100,html:'<div class="zc-sticky pink" style="--r:6deg">404: Motivation<br>not found 😴</div>'},
-    {left:10200,top:9200,html:'<div class="zc-sticky pink" style="--r:-5deg">git commit -m<br>"please work" 🙏</div>'},
-    {left:11100,top:10600,html:'<div class="zc-sticky pink" style="--r:3deg">me: *fixes 1 bug*<br>3 new bugs: 👋😈</div>'},
-    // Quote
-    {left:11300,top:9850,html:quoteCard('If debugging is removing bugs, then programming is putting them in.','Dijkstra, probably','#FFF0F5','#880E4F')},
-    // Interactive counter
-    {left:10700,top:10500,html:'<div class="zc-interactive-counter" onclick="(function(e){var c=e.closest(\'.zc-interactive-counter\');var n=parseInt(c.dataset.count||0)+1;c.dataset.count=n;c.querySelector(\'.cnt-val\').textContent=n})(this)" style="background:linear-gradient(145deg,#880E4F,#AD1457);border-radius:16px;padding:14px 16px;width:150px;box-shadow:0 6px 24px rgba(236,64,122,0.2);cursor:pointer;user-select:none;text-align:center" data-count="0"><div style="font-size:1.6rem;margin-bottom:2px">😂</div><div style="font-family:var(--font-fun);font-size:0.6rem;color:#F8BBD0;font-weight:700">LAUGH METER</div><div class="cnt-val" style="font-family:var(--font-fun);font-size:1.8rem;font-weight:900;color:#fff">0</div><div style="font-size:0.5rem;color:rgba(255,255,255,0.3);margin-top:4px">tap if funny</div></div>'},
-    // Badges
-    {left:10850,top:9300,html:'<div class="zc-badge pink">🔥 Certified Meme Lord</div>'},
-    {left:10400,top:10800,html:'<div class="zc-emoji-float" style="font-size:2.8rem">🤌</div>'},
-  ];
-
-  // Add flip card CSS if not already
   if(!document.getElementById('flipCardCSS')){
     const st=document.createElement('style');
     st.id='flipCardCSS';
@@ -9588,16 +9561,50 @@ function ensureCompanionStickers(){
     document.head.appendChild(st);
   }
 
-  companions.forEach(c=>{
+  function addCompanion(zone,item){
+    const a=anchors[zone];
+    if(!a)return;
     const el=document.createElement('div');
     el.className='sticker zic-companion';
-    el.style.left=c.left+'px';
-    el.style.top=c.top+'px';
-    if(c.html.includes('onclick'))el.style.pointerEvents='auto';
-    el.innerHTML=c.html;
-    el.style.animationDelay=(Math.random()*3).toFixed(1)+'s';
+    el.dataset.zone=zone;
+    el.dataset.locked='1';
+    el.dataset.type=item.kind==='meter'||item.kind==='flip'?'interactive':'other';
+    const cx=a.left+a.w/2;
+    const cy=a.top+a.h/2;
+    el.style.left=(cx+item.dx)+'px';
+    el.style.top=(cy+item.dy)+'px';
+    el.innerHTML=item.html;
+    el.style.animationDelay=(Math.random()*2).toFixed(1)+'s';
+
+    if(item.kind==='meter'){
+      const meter=el.querySelector('.zc-meter');
+      if(meter){
+        meter.addEventListener('click',ev=>{
+          ev.stopPropagation();
+          const n=(parseInt(meter.dataset.count||'0')+1);
+          meter.dataset.count=String(n);
+          const val=meter.querySelector('.zc-meter-val');
+          const bar=meter.querySelector('.zc-meter-bar');
+          if(val)val.textContent=String(n);
+          if(bar)bar.style.width=Math.min(n*8,100)+'%';
+        });
+      }
+    }
+
+    if(item.kind==='flip'){
+      const flip=el.querySelector('.zc-flip-card');
+      if(flip){
+        flip.addEventListener('click',ev=>{
+          ev.stopPropagation();
+          flip.classList.toggle('flipped');
+        });
+      }
+    }
+
     cv.appendChild(el);
-  });
+  }
+
+  Object.entries(zoneItems).forEach(([zone,items])=>items.forEach(item=>addCompanion(zone,item)));
 }
 
 function buildZoneCardHTML(meta){return '';}
