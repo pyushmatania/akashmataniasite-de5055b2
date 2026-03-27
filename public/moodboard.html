@@ -7368,39 +7368,28 @@ function addMapDecorations(cw, ch){
    // Fun: x[7700-13600]→[54.7%-94.6%], y[6400-13600]→[45.9%-94.6%]
    addDiv('map-zone-tint','left:55%;top:46%;width:40%;height:49%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.28),transparent 65%);z-index:0;filter:blur(2px)');
 
-   // === ZONE BOUNDARY OUTLINES — dashed colored organic borders per zone ===
+   // === ZONE BOUNDARY OUTLINES — generated from unified ZONE_BOUNDARY_POLYGONS ===
    const svgNS='http://www.w3.org/2000/svg';
    const mapBoundarySvg=document.createElementNS(svgNS,'svg');
    mapBoundarySvg.setAttribute('viewBox','0 0 100 100');
    mapBoundarySvg.setAttribute('preserveAspectRatio','none');
    mapBoundarySvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:5;overflow:visible';
-    const zonePaths=[
-      // ORIGIN (top-left) — cyan, country-shaped
-      {d:'M1.4,0.9 C4.3,0.4 7.9,2 12.9,1.3 L16.4,2.5 C19.3,1.1 22.9,0.6 25.7,1.6 Q29.3,2.7 32.1,1 C35,0.4 37.1,2.1 40,1.3 L42.1,1.9 Q43.6,2.9 45,2.5 C45.7,4.1 45.4,6.4 46.4,9.3 L45,12.9 C46.1,15 44.3,17.9 45.7,20.7 Q46.4,22.9 45,25.7 C43.9,27.9 45.7,30.7 44.3,33.6 L45.4,36.4 C44.3,38.6 45.4,40 45,41.8 Q42.1,42.9 38.6,42.1 C36.4,41.4 32.9,43.2 30,41.8 L26.4,42.5 Q22.9,41.1 19.3,42.1 C15.7,42.9 12.9,40.7 9.3,41.8 L5.7,40.7 Q2.9,41.4 1.4,40.6 C0.9,38.6 1.8,35.7 1.1,32.9 Q0.6,30 1.4,27.1 C2.1,24.3 0.7,21.4 1.3,18.6 L0.9,15.7 Q1.4,12.9 0.7,10 C0.6,7.1 1.8,4.3 1.4,0.9Z',
-       stroke:'rgba(0,188,212,0.7)'},
-      // WORK (top-right) — red, country-shaped
-      {d:'M47.9,1.4 C50.7,0.6 53.6,2.5 57.1,1.1 L60.7,2 Q63.6,0.7 67.1,2.1 C70,1.3 72.9,0.4 75.7,1.8 L79.3,0.9 Q82.1,2 85,1.1 C87.9,0.6 90.7,2.1 93.6,1.3 L96.4,1.9 Q97.9,2.9 99,4.3 C99.3,7.1 98.2,10.7 99.1,13.6 L97.9,17.1 Q99,20 97.9,23.6 C97.1,26.4 98.6,29.3 97.9,32.1 L99,35 Q98.2,37.9 98.6,40.7 C97.9,41.8 95.7,42.5 92.9,41.4 Q89.3,42.1 85.7,41.1 C82.1,40.4 78.6,42.5 75,41.4 L71.4,42.1 Q67.9,41.1 64.3,42.1 C60.7,42.9 57.1,40.7 53.6,41.8 L50.7,41.1 Q48.6,40 47.9,37.9 C47.1,35 48.2,31.4 47.1,28.6 L47.9,25 Q46.8,22.1 47.9,19.3 C48.6,16.4 47.1,12.9 47.9,10 Q48.2,7.1 47.5,4.3 C47.7,2.9 47.9,2.1 47.9,1.4Z',
-       stroke:'rgba(229,57,53,0.7)'},
-      // PORTFOLIO (mid-left) — blue, country-shaped
-      {d:'M1.1,43.6 C2.9,42.5 6.4,44.3 10,43.2 L13.6,44.1 Q17.1,42.9 20.7,44.3 C24.3,43.6 27.1,42.5 30.7,43.9 L34.3,43.2 Q37.1,44.3 40,43.4 C42.1,42.9 44.3,44.3 45.7,43.6 Q46.4,45.7 45.7,48.6 C45.4,50.7 46.4,52.9 45.4,55.7 L46.1,58.6 Q45,61.4 46.1,63.6 C45.7,65.7 45,67.9 45.7,70.4 Q45,71.8 42.9,72.1 C40,71.4 36.4,72.9 32.9,71.8 L29.3,72.5 Q25.7,71.1 22.1,72.1 C18.6,72.9 15,71.1 11.4,72.1 L7.9,71.1 Q4.3,72.1 2.1,71.1 C1.1,70 1.4,67.1 0.7,64.3 Q0.6,61.4 1.4,58.6 C2.1,55.7 0.7,52.9 1.4,50 L0.9,47.1 Q1.4,45 1.1,43.6Z',
-       stroke:'rgba(66,165,245,0.7)'},
-      // HOBBY (bottom-left) — orange, country-shaped
-      {d:'M1.1,73.6 C3.6,72.5 7.1,74.3 10.7,72.9 L14.3,73.9 Q17.9,72.5 21.4,73.9 C25,73.2 28.6,72.1 32.1,73.6 L35.7,72.9 Q38.6,73.9 41.4,72.9 C43.6,72.5 45,73.9 46.4,73.2 Q46.8,75.7 46.1,78.6 C45.7,81.4 46.8,84.3 45.7,87.1 L46.4,90 Q45.4,92.9 46.1,95 C45.7,97.1 45,98.6 44.3,99.3 Q40.7,99.6 37.1,98.9 C33.6,98.2 30,99.6 26.4,98.9 L22.9,99.3 Q18.6,98.6 14.3,99.4 C10.7,99.6 7.1,98.6 3.6,99.3 L1.8,98.9 Q0.9,97.9 0.7,95.7 C1.1,92.9 0.6,90 1.1,87.1 Q1.4,84.3 0.7,81.4 C0.6,78.6 1.4,76.4 1.1,73.6Z',
-       stroke:'rgba(255,152,0,0.7)'},
-      // FUN (right side) — purple, country-shaped
-      {d:'M48.6,43.6 C51.4,42.5 55,44.3 58.6,43.2 L62.1,44.1 Q65.7,42.9 69.3,44.3 C72.9,43.6 76.4,42.5 80,43.9 L83.6,43.2 Q87.1,44.3 90.7,43.4 C93.6,42.9 95.7,44.3 97.9,43.6 Q99,45.7 98.2,49.3 C97.9,52.1 99,55.7 97.9,59.3 L98.6,62.9 Q97.5,66.4 98.6,70 C98.2,73.6 97.5,77.1 98.6,80.7 L97.9,84.3 Q98.6,87.9 97.9,91.4 C97.5,94.3 98.2,96.4 97.5,98.6 Q95.7,99.4 92.9,98.9 C89.3,98.2 85.7,99.6 82.1,98.9 L78.6,99.3 Q74.3,98.6 70,99.4 C66.4,99.6 62.9,98.6 59.3,99.3 L55.7,98.9 Q52.1,98.2 49.3,99.1 C48.2,97.1 48.6,94.3 47.9,91.4 Q47.1,87.9 48.2,84.3 C48.6,80.7 47.5,77.1 48.2,73.6 L47.5,70 Q48.2,66.4 47.5,62.9 C47.1,59.3 48.2,55.7 47.5,52.1 Q47.9,48.6 47.5,45.7 C47.7,44.3 48.2,43.6 48.6,43.6Z',
-       stroke:'rgba(171,71,188,0.7)'},
-    ];
-    zonePaths.forEach(zp=>{
-      const p=document.createElementNS(svgNS,'path');
-      p.setAttribute('d',zp.d);
-      p.setAttribute('fill','none');p.setAttribute('stroke',zp.stroke);
-      p.setAttribute('stroke-width','0.5');p.setAttribute('stroke-linejoin','round');
-      p.setAttribute('stroke-dasharray','3 1.5');p.setAttribute('stroke-linecap','round');
-      p.style.filter='drop-shadow(0 0 1.5px rgba(80,60,30,0.3))';
-      mapBoundarySvg.appendChild(p);
-    });
-    layer.appendChild(mapBoundarySvg);
+   const zoneStrokes={origin:'rgba(0,188,212,0.5)',work:'rgba(229,57,53,0.5)',portfolio:'rgba(66,165,245,0.5)',hobby:'rgba(255,152,0,0.5)',fun:'rgba(171,71,188,0.5)'};
+   Object.entries(ZONE_BOUNDARY_POLYGONS).forEach(([name,poly])=>{
+     // Scale canvas coords (0-14000) to viewBox (0-100)
+     const pts=poly.map(p=>(p[0]/140).toFixed(2)+','+(p[1]/140).toFixed(2));
+     const d='M'+pts[0]+' L'+pts.slice(1).join(' L')+'Z';
+     const p=document.createElementNS(svgNS,'path');
+     p.setAttribute('d',d);
+     p.setAttribute('fill','none');
+     p.setAttribute('stroke',zoneStrokes[name]||'rgba(255,255,255,0.3)');
+     p.setAttribute('stroke-width','0.3');
+     p.setAttribute('stroke-linejoin','round');
+     p.setAttribute('stroke-dasharray','2 1');
+     p.setAttribute('stroke-linecap','round');
+     mapBoundarySvg.appendChild(p);
+   });
+   layer.appendChild(mapBoundarySvg);
 
    // === HOLLYWOOD CASINO-STYLE SIGNPOSTS on big map ===
    const signposts=[
