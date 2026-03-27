@@ -3386,7 +3386,7 @@ function cycleIntroCards(e){
   // Brief toast
   const toast=document.createElement('div');
   toast.className='boundary-toast edge-bottom show';
-  toast.textContent='📍 '+t.label+' '+(_playIntroIdx===0?'— center':'— zone intro');
+  toast.textContent='📍 '+t.label+' — zone intro';
   document.body.appendChild(toast);
   setTimeout(()=>toast.remove(),1800);
 }
