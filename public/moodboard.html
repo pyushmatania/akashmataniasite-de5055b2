@@ -8102,7 +8102,8 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
 // Rule: Big map blank area clicks DISABLED — only sticker clicks allowed
 // (prevents character from wandering to empty spaces)
 mapCanvas.addEventListener('click',ev=>{
-  // Only block blank area clicks — let sticker clone clicks through
+  // Only block blank area clicks when map is EXPANDED — let minimap clicks through for toggleMap
+  if(!mmExp) return;
   if(ev.target===mapCanvas||ev.target.classList.contains('map-dec-layer')||ev.target.classList.contains('map-terrain')||ev.target.classList.contains('map-zone-tint')||ev.target.classList.contains('map-ground-label')||ev.target.classList.contains('map-signpost')||ev.target.classList.contains('map-beach')){
     ev.stopPropagation();
     return;
