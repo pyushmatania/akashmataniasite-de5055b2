@@ -35,15 +35,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
     linear-gradient(#E8E4DF 1px, transparent 1px),
     linear-gradient(90deg, #E8E4DF 1px, transparent 1px);
   background-size:100% 100%,100% 100%,100% 100%,40px 40px,40px 40px;
-  border:6px solid transparent;
-  border-image:repeating-linear-gradient(90deg,#C9A96E 0px,#C9A96E 12px,transparent 12px,transparent 20px) 6;
-  box-shadow:inset 0 0 0 2px rgba(201,169,110,0.15);
 }
-/* Decorative border corners */
-.canvas::before{
-  content:'';position:absolute;inset:0;pointer-events:none;z-index:9999;
-  border:4px dashed rgba(201,169,110,0.25);border-radius:0;
-}
+.canvas::before{content:none}
 /* Bounce flash overlay */
 .bounce-flash{
   position:fixed;inset:0;pointer-events:none;z-index:99999;
