@@ -5438,15 +5438,15 @@ timeline: `
 
   <div class="tl-item">
     <div class="tl-dot" style="background:linear-gradient(135deg,#FFD600,#FF6F00)"></div>
-    <div class="tl-version">v51.0 — 🚧 Crime-Scene Tape + Engine v5 + Map Fix + Theme Persist</div>
+    <div class="tl-version">v51.1 — 🛣️ 3D Edge Rails + Minimap Tap Recovery</div>
     <div class="tl-date">Session 51 · March 27, 2026</div>
-    <div class="tl-desc">Engine v5: Zone boundaries redesigned as yellow/black crime-scene tape (⚠ DO NOT CROSS). Strict anti-overlap with radial probe search (100+ attempts per card, badges only exception). Minimap→big map click fixed with multi-event binding + transition failsafe. Theme selection persists to localStorage. Map scroll debounce increased to 500ms for smoother experience. New Rule 16: no cards on painted zone names.</div>
+    <div class="tl-desc">Moved boundary styling to canvas edges only: replaced crime tape with 3D road-rail perimeter. Zone boundaries reverted to organic internal lines. Minimap tap-to-open hardened with full state recovery so big map opens reliably even after interrupted transitions.</div>
     <ul class="tl-changes">
-      <li>🚧 Rule 13 upgraded: Zone boundaries now yellow/black crime-scene tape with "DO NOT CROSS" text</li>
-      <li>📐 Rule 12 upgraded: Radial probe search replaces simple nudging — 12 probes per ring, golden-angle spacing</li>
-      <li>🗺️ Minimap open fix: pointerup + touchend listeners + 3s transition failsafe</li>
-      <li>🎨 Theme persistence: selections saved to localStorage, restored on load</li>
-      <li>⚡ Scroll debounce increased 320ms→500ms for smoother minimap updates</li>
+      <li>🛣️ Edge boundary redesigned as 3D road rails (outer canvas perimeter only)</li>
+      <li>🗺️ Zone boundaries reverted to organic internal curves (no crime tape inside zones)</li>
+      <li>📱 Minimap tap open hardened: container + minimap listeners across click/touchstart/pointerup</li>
+      <li>🧯 Transition recovery: auto-resets stuck map state before opening</li>
+      <li>📐 Rule 13 docs corrected to internal zone lines only</li>
       <li>📏 Rule 16: Cards cannot overlap painted zone ground labels</li>
       <li>⚙️ Engine tab updated to 16 rules, stats updated to 51 versions</li>
     </ul>
