@@ -1840,15 +1840,18 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="zone-tint zone-tint-playground" style="left:0;top:10200px;width:6500px;height:3800px"></div>
 <div class="zone-tint zone-tint-memealley" style="left:7500px;top:6200px;width:6500px;height:7800px"></div>
 <!-- Organic country-style zone boundaries (SVG paths) -->
+<!-- Zone boundary borders — solid colored outlines for each zone area -->
 <svg class="zone-boundary-svg" viewBox="0 0 14000 14000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Horizontal boundary: Origin/Work → Portfolio/Fun at y≈5900 -->
-  <path d="M200,5850 C800,5920 1400,5780 2100,5930 S3200,5860 4000,5940 S5200,5820 6000,5900 S7200,5960 8000,5850 S9400,5950 10200,5870 S11600,5920 12800,5860 L13600,5900" stroke="rgba(76,175,80,0.5)" stroke-dasharray="24 12"/>
-  <!-- Horizontal boundary: Portfolio → Hobby at y≈10100 (left half) -->
-  <path d="M200,10050 C700,10150 1300,9980 2000,10120 S3100,10060 3800,10140 S4800,10020 5500,10100 L6550,10080" stroke="rgba(255,152,0,0.5)" stroke-dasharray="24 12"/>
-  <!-- Vertical boundary: Origin/Portfolio/Hobby ↔ Work/Fun top half x≈6750 -->
-  <path d="M6700,200 C6780,700 6650,1300 6760,1900 S6700,2800 6780,3400 S6650,4200 6750,4800 L6720,5850" stroke="rgba(229,57,53,0.5)" stroke-dasharray="24 12"/>
-  <!-- Vertical boundary: bottom half x≈6750 -->
-  <path d="M6720,5900 C6800,6500 6660,7200 6770,7900 S6690,8800 6780,9500 S6650,10400 6740,11200 S6800,12400 6720,13200 L6750,13800" stroke="rgba(171,71,188,0.5)" stroke-dasharray="24 12"/>
+  <!-- ORIGIN zone border (top-left: 0-6700, 0-5900) — green -->
+  <path d="M80,80 C200,60 600,90 1200,70 S2400,95 3400,75 S4800,85 5800,70 S6200,80 6650,90 C6680,800 6640,1600 6700,2400 S6660,3600 6720,4400 S6650,5200 6700,5850 C5800,5920 4600,5860 3400,5930 S1800,5870 800,5910 C300,5930 120,5890 80,5870 C90,4800 70,3600 85,2400 S75,1200 80,80Z" fill="none" stroke="rgba(76,175,80,0.45)" stroke-width="6" stroke-linejoin="round"/>
+  <!-- WORK zone border (top-right: 6700-14000, 0-5900) — red -->
+  <path d="M6750,90 C7400,70 8200,95 9200,75 S10400,88 11400,72 S12600,85 13400,70 C13600,80 13800,75 13920,80 C13910,800 13930,1600 13900,2400 S13920,3600 13900,4400 S13920,5200 13910,5860 C13400,5880 12200,5920 11000,5870 S9200,5940 8200,5860 S7200,5930 6750,5860 C6680,5200 6720,4400 6680,3400 S6720,2000 6700,1000 C6710,500 6730,200 6750,90Z" fill="none" stroke="rgba(229,57,53,0.45)" stroke-width="6" stroke-linejoin="round"/>
+  <!-- PORTFOLIO zone border (mid-left: 0-6700, 5900-10100) — blue -->
+  <path d="M80,5920 C800,5880 1800,5940 3400,5890 S5200,5930 6650,5900 C6680,6600 6640,7400 6700,8200 S6660,9200 6700,10050 C5800,10120 4600,10030 3400,10100 S1800,10060 800,10110 C300,10090 120,10070 80,10050 C90,9200 70,8200 85,7400 S75,6400 80,5920Z" fill="none" stroke="rgba(66,165,245,0.45)" stroke-width="6" stroke-linejoin="round"/>
+  <!-- HOBBY zone border (bottom-left: 0-6700, 10100-14000) — orange -->
+  <path d="M80,10100 C800,10060 1800,10130 3400,10070 S5200,10110 6650,10080 C6680,10800 6640,11600 6700,12400 S6660,13200 6700,13920 C6200,13910 5200,13930 4000,13900 S2200,13920 1000,13910 C400,13920 150,13910 80,13920 C90,13200 70,12400 85,11600 S75,10600 80,10100Z" fill="none" stroke="rgba(255,152,0,0.45)" stroke-width="6" stroke-linejoin="round"/>
+  <!-- FUN zone border (right: 6700-14000, 5900-14000) — purple -->
+  <path d="M6750,5910 C7400,5880 8200,5940 9200,5890 S10400,5930 11400,5870 S12600,5920 13400,5880 C13600,5900 13800,5890 13920,5900 C13910,6800 13930,7800 13900,8800 S13920,10200 13900,11400 S13920,12600 13910,13920 C13200,13910 12000,13930 10800,13900 S9000,13920 8000,13900 S7200,13920 6750,13910 C6680,13200 6720,12200 6680,11000 S6720,9200 6700,8000 C6710,7200 6730,6400 6750,5910Z" fill="none" stroke="rgba(171,71,188,0.45)" stroke-width="6" stroke-linejoin="round"/>
 </svg>
 
 <!-- Zone ground labels — painted diagonally in center of each zone, BIG -->
