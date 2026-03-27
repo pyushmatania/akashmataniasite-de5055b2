@@ -4530,11 +4530,48 @@ function isMemeOrFunEmoji(sticker){
     (sticker.classList.contains('sticker-emoji')&&(!sticker.dataset.zone||SCATTER_ZONES.includes(sticker.dataset.zone)||sticker.dataset.zone==='fun'));
 }
 
+// Check if a point (center of item) is inside the zone polygon with padding
+function isPointInZoneSafe(x,y,zoneName){
+  const poly=ZONE_BOUNDARY_POLYGONS[zoneName];
+  if(!poly)return true;
+  return pointInPolygon(x,y,poly);
+}
+
+// Clamp a point to be inside a polygon (find nearest interior point)
+function clampToPolygon(x,y,polygon,pad){
+  pad=pad||BOUNDARY_PAD;
+  // Shrink polygon inward by pad (approximate: move each vertex toward centroid)
+  const c=polygonCentroid(polygon);
+  const shrunk=polygon.map(p=>{
+    const dx=p[0]-c.x,dy=p[1]-c.y;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist<pad)return [c.x,c.y];
+    const factor=(dist-pad)/dist;
+    return [c.x+dx*factor,c.y+dy*factor];
+  });
+  if(pointInPolygon(x,y,shrunk))return {x,y};
+  // Find nearest point on shrunk polygon edges
+  let bestX=c.x,bestY=c.y,bestD=Infinity;
+  for(let i=0;i<shrunk.length;i++){
+    const j=(i+1)%shrunk.length;
+    const ax=shrunk[i][0],ay=shrunk[i][1],bx=shrunk[j][0],by=shrunk[j][1];
+    const abx=bx-ax,aby=by-ay;
+    const len2=abx*abx+aby*aby;
+    if(len2===0)continue;
+    let t=((x-ax)*abx+(y-ay)*aby)/len2;
+    t=Math.max(0,Math.min(1,t));
+    const px=ax+t*abx,py=ay+t*aby;
+    const d=(px-x)*(px-x)+(py-y)*(py-y);
+    if(d<bestD){bestD=d;bestX=px;bestY=py;}
+  }
+  return {x:bestX,y:bestY};
+}
+
 function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
-  // Place items in expanding spiral from center, denser near center
   const sorted=items.slice().sort((a,b)=>(a.offsetWidth*a.offsetHeight)-(b.offsetWidth*b.offsetHeight));
   const n=sorted.length;
   if(!n)return;
+  const poly=zoneBounds&&zoneBounds.polygon?zoneBounds.polygon:null;
   const padX=BOUNDARY_PAD;
   const padY=BOUNDARY_PAD;
   const safeX1=zoneBounds?zoneBounds.x1+padX:MOODBOARD_ITEM_SAFE_MARGIN;
@@ -4545,17 +4582,22 @@ function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
   sorted.forEach((sticker,i)=>{
     const w=sticker.offsetWidth||180;
     const h=sticker.offsetHeight||100;
-    // Spiral parameter: closer items get smaller radius
     const t=(i+1)/(n+1);
     const r=innerR+t*(outerR-innerR);
-    const angleStep=2.399963; // golden angle in radians
+    const angleStep=2.399963;
     const angle=i*angleStep;
     let tryLeft=cx+Math.cos(angle)*r-w/2+(rng()-0.5)*60;
     let tryTop=cy+Math.sin(angle)*r-h/2+(rng()-0.5)*60;
-    // Clamp to safe zone
+    // Clamp to bounding box first
     tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
     tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
-    // Rule 12: Anti-overlap nudge — push away from placed items (24 attempts)
+    // Then clamp center to polygon if available
+    if(poly){
+      const clamped=clampToPolygon(tryLeft+w/2,tryTop+h/2,poly,BOUNDARY_PAD);
+      tryLeft=clamped.x-w/2;
+      tryTop=clamped.y-h/2;
+    }
+    // Rule 12: Anti-overlap nudge
     for(let attempt=0;attempt<24;attempt++){
       let overlapping=false;
       for(const p of placed){
@@ -4568,16 +4610,20 @@ function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
           tryTop+=Math.sin(nudgeAngle)*Math.max(h*0.7,80);
           tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
           tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
+          if(poly){
+            const clamped=clampToPolygon(tryLeft+w/2,tryTop+h/2,poly,BOUNDARY_PAD);
+            tryLeft=clamped.x-w/2;
+            tryTop=clamped.y-h/2;
+          }
           break;
         }
       }
       if(!overlapping)break;
     }
-    let candidate={left:tryLeft,top:tryTop,w,h};
-    sticker.style.left=candidate.left+'px';
-    sticker.style.top=candidate.top+'px';
+    sticker.style.left=tryLeft+'px';
+    sticker.style.top=tryTop+'px';
     sticker.style.transform='rotate('+((rng()-0.5)*12).toFixed(1)+'deg)';
-    placed.push({left:candidate.left,top:candidate.top,w,h});
+    placed.push({left:tryLeft,top:tryTop,w,h});
   });
 }
 
