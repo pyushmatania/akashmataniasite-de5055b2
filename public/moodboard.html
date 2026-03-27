@@ -667,11 +667,12 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
 }
 .minimap-container.expanded{
   inset:0;width:100vw;height:100vh;bottom:0;right:0;
+  z-index:1001;
   filter:none;
 }
 .minimap-container.expanded::before{display:none}
 .minimap-container.map-opening{
-  inset:0;width:100vw;height:100vh;bottom:0;right:0;
+  inset:0;width:100vw;height:100vh;bottom:0;right:0;z-index:1001;
 }
 .minimap-container.map-opening::before{display:none}
 .minimap-container.map-opening .minimap{
@@ -1088,7 +1089,7 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
   position:absolute;bottom:0;left:0;right:0;z-index:1000;
   display:none;flex-direction:column;
   background:linear-gradient(0deg,rgba(30,70,120,0.85) 0%,rgba(30,70,120,0.4) 60%,transparent 100%);
-  padding:10px 10px max(10px,env(safe-area-inset-bottom,0px)+54px);
+  padding:10px 6px max(14px,env(safe-area-inset-bottom,0px)+64px);
 }
 .minimap-container.expanded .map-bottom-bar{display:flex}
 .minimap-container.map-opening .map-bottom-bar{display:flex}
@@ -1111,7 +1112,7 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
 .minimap-container.map-closing::before{display:none}
 .minimap-container.map-closing .minimap{border-radius:0;border:none;box-shadow:none;background:#6B9B37}
 .map-bottom-bar .bar-filters{
-  display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin-bottom:4px;
+  display:flex;justify-content:center;gap:4px;flex-wrap:nowrap;margin-bottom:4px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 4px;
 }
 .map-bottom-bar .bar-info{
   display:flex;justify-content:center;align-items:center;gap:12px;
@@ -1122,11 +1123,11 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
 
 /* Filter chips — redesigned modern pill buttons */
 .mc{
-  padding:7px 14px;border-radius:20px;font-family:var(--font-fun);
-  font-size:0.62rem;font-weight:700;cursor:pointer;
+  padding:6px 10px;border-radius:20px;font-family:var(--font-fun);
+  font-size:0.58rem;font-weight:700;cursor:pointer;
   border:1.5px solid rgba(255,255,255,0.15);
   transition:all 0.3s cubic-bezier(0.25,1,0.5,1);
-  display:flex;align-items:center;gap:5px;
+  display:flex;align-items:center;gap:4px;white-space:nowrap;flex-shrink:0;
   background:rgba(0,0,0,0.35);color:rgba(255,255,255,0.7);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   letter-spacing:0.04em;
