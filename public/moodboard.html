@@ -4381,16 +4381,8 @@ function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
     // Clamp to safe zone
     tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
     tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
-    // Anti-overlap nudge
+    // Rule 12: Allow overlapping/stacking — no anti-overlap nudge
     let candidate={left:tryLeft,top:tryTop,w,h};
-    let tries=0;
-    while(isOverlappingAny(candidate,placed,20)&&tries<20){
-      candidate.left+=((tries%2===0?1:-1)*(16+tries*4))*(0.5+rng());
-      candidate.top+=((tries%3===0?1:-1)*(12+tries*3))*(0.4+rng());
-      candidate.left=Math.max(safeX1,Math.min(safeX2-w,candidate.left));
-      candidate.top=Math.max(safeY1,Math.min(safeY2-h,candidate.top));
-      tries++;
-    }
     sticker.style.left=candidate.left+'px';
     sticker.style.top=candidate.top+'px';
     sticker.style.transform='rotate('+((rng()-0.5)*12).toFixed(1)+'deg)';
