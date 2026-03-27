@@ -5346,6 +5346,7 @@ const themes = {
 
 function setTheme(name, el){
   const t = themes[name];
+  if(!t)return;
   const c = document.getElementById('canvas');
   c.style.backgroundColor = t.canvasBg;
   c.style.backgroundImage = t.bgImage;
@@ -5360,13 +5361,11 @@ function setTheme(name, el){
   const logo = document.querySelector('.logo');
   const counter = document.getElementById('scrollCounter');
   if(t.textColor){
-    logo.style.color = t.textColor;
-    logo.style.background = 'rgba(255,255,255,0.08)';
-    counter.style.color = 'rgba(255,255,255,0.06)';
+    if(logo){logo.style.color = t.textColor;logo.style.background = 'rgba(255,255,255,0.08)';}
+    if(counter)counter.style.color = 'rgba(255,255,255,0.06)';
   } else {
-    logo.style.color = '';
-    logo.style.background = '';
-    counter.style.color = '';
+    if(logo){logo.style.color = '';logo.style.background = '';}
+    if(counter)counter.style.color = '';
   }
   
   // Remove all theme classes, add new one if needed
@@ -5377,7 +5376,21 @@ function setTheme(name, el){
   // Update active state
   document.querySelectorAll('.theme-option').forEach(o=>o.classList.remove('active'));
   if(el) el.classList.add('active');
+  
+  // Persist theme choice
+  try{localStorage.setItem('moodboard-theme',name)}catch(e){}
 }
+
+// Restore saved theme on load
+try{
+  const savedTheme=localStorage.getItem('moodboard-theme');
+  if(savedTheme&&themes[savedTheme]){
+    const themeOpts=document.querySelectorAll('.theme-option');
+    const themeNames=['grid','dots','combo','notebook','pixel','neon','retro','blueprint','vaporwave','lava','matrix'];
+    const idx=themeNames.indexOf(savedTheme);
+    if(idx>=0&&themeOpts[idx])setTheme(savedTheme,themeOpts[idx]);
+  }
+}catch(e){}
 
 
 
