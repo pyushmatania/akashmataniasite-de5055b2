@@ -98,9 +98,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .zone-tint-hub{background:radial-gradient(ellipse at center,#FFB300,transparent 70%)}
 .zone-tint-playground{background:radial-gradient(ellipse at center,#FF9800,transparent 70%)}
 .zone-tint-memealley{background:radial-gradient(ellipse at center,#AB47BC,transparent 70%)}
-.zone-divider{position:absolute;pointer-events:none;z-index:2}
-.zone-divider-h{height:2px;background:repeating-linear-gradient(90deg,transparent,transparent 12px,rgba(201,169,110,0.12) 12px,rgba(201,169,110,0.12) 24px)}
-.zone-divider-v{width:2px;background:repeating-linear-gradient(180deg,transparent,transparent 12px,rgba(201,169,110,0.12) 12px,rgba(201,169,110,0.12) 24px)}
+/* Zone divider styles removed */
 
 /* ===== PROJECT SHOWCASE CARDS ===== */
 .sticker-project{background:#fff;border-radius:18px;padding:20px;border:2px solid #f0ece6;width:240px;box-shadow:0 4px 24px rgba(0,0,0,0.08);transition:transform 0.2s,box-shadow 0.2s}
@@ -200,117 +198,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker-counter .c-count{font-family:var(--font-fun);font-weight:700;font-size:1.4rem;color:var(--text);min-width:30px}
 .sticker-counter .c-label{font-size:0.7rem;color:var(--text3)}
 
-/* ===== HARDWOOD ZONE SIGNPOST ===== */
-@keyframes woodSway{0%,100%{transform:rotate(-0.7deg) translateX(0)}50%{transform:rotate(0.7deg) translateX(1px)}}
-@keyframes woodColorPulse{0%,100%{filter:brightness(1) drop-shadow(0 8px 28px rgba(0,0,0,0.45))}50%{filter:brightness(1.06) drop-shadow(0 10px 36px rgba(0,0,0,0.55))}}
-.zone-signpost{
-  display:flex;flex-direction:column;align-items:center;gap:0;
-  z-index:100!important;position:absolute;cursor:default!important;
-  transition:transform 0.3s;
-  filter:drop-shadow(0 8px 28px rgba(0,0,0,0.45));
-  animation:woodColorPulse 5s ease-in-out infinite;
-}
-.zone-signpost:hover{transform:scale(1.04) translateY(-3px)}
-/* Hide all neon-specific decorations */
-.neon-aura,.neon-tube-row,.neon-dot,.neon-arrow,.neon-ground-glow,.neon-ground-shadow{display:none!important}
-/* Main hardwood plank board */
-.neon-board{
-  position:relative;z-index:5;
-  background:
-    repeating-linear-gradient(90deg,
-      rgba(255,255,255,0.035) 0,rgba(255,255,255,0.035) 1px,
-      transparent 1px,transparent 14px),
-    linear-gradient(165deg,#8B5420 0%,#5C3010 20%,#7A4A1A 40%,#4A2608 60%,#7C4C1E 80%,#6B3E14 100%);
-  border-top:4px solid #3A1C04;
-  border-left:3px solid #3A1C04;
-  border-right:5px solid #2A1202;
-  border-bottom:6px solid #2A1202;
-  border-radius:5px 5px 4px 4px;
-  padding:20px 52px 22px;
-  box-shadow:
-    0 6px 0 #2A1202,
-    0 8px 0 rgba(0,0,0,0.25),
-    0 10px 32px rgba(0,0,0,0.55),
-    inset 0 1px 0 rgba(255,255,255,0.14),
-    inset 0 -2px 0 rgba(0,0,0,0.45);
-  min-width:200px;text-align:center;
-  animation:woodSway 7s ease-in-out infinite;
-  transform-origin:top center;
-}
-/* Inner inset frame for routed look */
-.neon-board::before{
-  content:'';position:absolute;inset:6px;
-  border:1.5px solid rgba(0,0,0,0.25);
-  border-radius:3px;pointer-events:none;
-}
-/* Iron bracket at top */
-.neon-board::after{
-  content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);
-  width:60px;height:10px;
-  background:linear-gradient(90deg,#444 0%,#888 30%,#bbb 50%,#888 70%,#444 100%);
-  border-radius:2px;box-shadow:0 2px 6px rgba(0,0,0,0.4),inset 0 1px rgba(255,255,255,0.2);
-}
-/* Carved text */
-.neon-text{
-  font-family:var(--font-fun);font-weight:900;font-size:1.9rem;
-  color:var(--neon,#F5C842);letter-spacing:0.14em;white-space:nowrap;
-  text-shadow:
-    0 2px 0 rgba(0,0,0,0.7),
-    0 -1px 0 rgba(255,255,255,0.12),
-    0 0 22px color-mix(in srgb,var(--neon,#F5C842) 40%,transparent);
-}
-.neon-icon{font-size:2rem;display:block;margin-bottom:5px;filter:drop-shadow(0 2px 5px rgba(0,0,0,0.55))}
-/* Metal crossbar connector */
-.neon-frame{
-  width:200px;height:10px;
-  background:linear-gradient(90deg,#444 0%,#888 30%,#ccc 50%,#888 70%,#444 100%);
-  border-radius:2px;z-index:3;
-  box-shadow:0 3px 8px rgba(0,0,0,0.45),inset 0 1px rgba(255,255,255,0.18);
-  margin-top:-3px;
-}
-/* Wooden pole pair */
-.neon-poles{display:flex;gap:90px;z-index:3;margin-top:-1px}
-.neon-pole{
-  width:11px;height:280px;
-  background:linear-gradient(90deg,#3A1C04 0%,#6B3E14 22%,#8C5220 42%,#9A6030 50%,#8C5220 58%,#6B3E14 78%,#3A1C04 100%);
-  border-radius:3px;
-  box-shadow:3px 0 8px rgba(0,0,0,0.45),inset 1px 0 rgba(255,255,255,0.07);
-  position:relative;
-}
-.neon-pole::after{
-  content:'';position:absolute;top:8%;left:28%;
-  width:2px;height:82%;
-  background:linear-gradient(180deg,rgba(255,255,255,0.1),transparent 55%);
-  border-radius:1px;
-}
-/* Ground footing */
-.neon-base{
-  width:150px;height:15px;
-  background:linear-gradient(90deg,#2A1202,#5C3010,#7A4A1A,#5C3010,#2A1202);
-  border-radius:2px 2px 7px 7px;z-index:3;
-  box-shadow:0 5px 22px rgba(0,0,0,0.55),0 2px 8px rgba(0,0,0,0.3);
-  margin-top:-1px;
-}
-
-/* ===== NEON DECORATIVE ELEMENTS ===== */
-@keyframes neonArrowBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes neonStarSpin{0%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(1.15)}100%{transform:rotate(360deg) scale(1)}}
-@keyframes neonTubeGlow{0%,100%{opacity:0.7;filter:drop-shadow(0 0 6px var(--ntube,#fff))}50%{opacity:1;filter:drop-shadow(0 0 14px var(--ntube,#fff)) drop-shadow(0 0 30px var(--ntube,#fff))}}
-@keyframes neonDiamondFloat{0%,100%{transform:rotate(45deg) scale(1)}50%{transform:rotate(45deg) scale(1.2)}}
-@keyframes neonRingPulse{0%,100%{transform:scale(1);opacity:0.6}50%{transform:scale(1.15);opacity:1}}
-@keyframes neonZigzag{0%,100%{opacity:0.5}50%{opacity:1}}
-@keyframes miniNeonPulse{0%,100%{opacity:0.5;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
-.neon-decor{position:absolute;pointer-events:none;z-index:8}
-.neon-decor-arrow{animation:neonArrowBounce 2s ease-in-out infinite}
-.neon-decor-arrow svg{filter:drop-shadow(0 0 8px var(--nd,#fff)) drop-shadow(0 0 20px var(--nd,#fff))}
-.neon-decor-star{animation:neonStarSpin 8s linear infinite}
-.neon-decor-star svg{filter:drop-shadow(0 0 10px var(--nd,#fff)) drop-shadow(0 0 25px var(--nd,#fff))}
-.neon-decor-tube{border-radius:20px;animation:neonTubeGlow 3s ease-in-out infinite}
-.neon-decor-diamond{animation:neonDiamondFloat 4s ease-in-out infinite}
-.neon-decor-diamond svg{filter:drop-shadow(0 0 8px var(--nd,#fff)) drop-shadow(0 0 18px var(--nd,#fff))}
-.neon-decor-ring{border:3px solid var(--nd,#fff);border-radius:50%;animation:neonRingPulse 3s ease-in-out infinite;box-shadow:0 0 8px var(--nd,#fff),0 0 20px var(--nd,#fff),inset 0 0 8px var(--nd,#fff)}
-.neon-decor-zigzag{animation:neonZigzag 2s ease-in-out infinite}
-.neon-decor-zigzag svg{filter:drop-shadow(0 0 6px var(--nd,#fff)) drop-shadow(0 0 15px var(--nd,#fff))}
+/* Signpost styles removed */
 .sticker-fortune{background:linear-gradient(135deg,#FFE0B2,#FFB74D);border-radius:16px;padding:18px 22px;max-width:220px;box-shadow:0 3px 12px rgba(0,0,0,0.08);cursor:pointer}
 .sticker-fortune .f-icon{font-size:2rem;margin-bottom:6px}
 .sticker-fortune .f-text{font-family:var(--font-hand);font-size:1rem;color:#5D4037;line-height:1.4}
@@ -959,26 +847,29 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
   filter:drop-shadow(0 0 4px rgba(0,255,128,0.4));
 }
 
+/* ===== Track label pulse animation ===== */
+@keyframes trackLabelPulse{0%,100%{opacity:0.85;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.05)}}
+
 /* ===== NEON GLOW on active item ===== */
 @keyframes neonGlow{
-  0%,100%{box-shadow:0 0 12px rgba(255,202,40,0.7),0 0 30px rgba(255,202,40,0.4),0 0 60px rgba(255,202,40,0.2);outline-color:rgba(255,202,40,1)}
-  50%{box-shadow:0 0 20px rgba(255,202,40,0.9),0 0 50px rgba(255,202,40,0.5),0 0 80px rgba(255,202,40,0.25);outline-color:rgba(255,202,40,1)}
+  0%,100%{box-shadow:0 0 15px rgba(255,202,40,0.8),0 0 40px rgba(255,202,40,0.5),0 0 80px rgba(255,202,40,0.3);outline-color:rgba(255,202,40,1)}
+  50%{box-shadow:0 0 25px rgba(255,202,40,1),0 0 60px rgba(255,202,40,0.6),0 0 100px rgba(255,202,40,0.3);outline-color:rgba(255,202,40,1)}
 }
 .neon-active{
-  outline:3px solid rgba(255,202,40,1)!important;outline-offset:8px!important;
-  animation:neonGlow 1.2s ease-in-out infinite!important;
+  outline:4px solid rgba(255,202,40,1)!important;outline-offset:10px!important;
+  animation:neonGlow 1s ease-in-out infinite!important;
   z-index:300!important;
-  filter:brightness(1.15)!important;
+  filter:brightness(1.2)!important;
 }
 /* Blinking glow ring around cycling filter items */
 @keyframes filterItemBlink{
-  0%,100%{box-shadow:0 0 0 4px rgba(255,215,0,0.9),0 0 18px rgba(255,215,0,0.5),0 0 36px rgba(255,215,0,0.2);transform:translate(-50%,-50%) scale(1)}
-  50%{box-shadow:0 0 0 8px rgba(255,215,0,0.5),0 0 28px rgba(255,215,0,0.3),0 0 50px rgba(255,215,0,0.15);transform:translate(-50%,-50%) scale(1.15)}
+  0%,100%{box-shadow:0 0 0 5px rgba(255,215,0,1),0 0 25px rgba(255,215,0,0.7),0 0 50px rgba(255,215,0,0.3);transform:translate(-50%,-50%) scale(1)}
+  50%{box-shadow:0 0 0 10px rgba(255,215,0,0.6),0 0 40px rgba(255,215,0,0.4),0 0 70px rgba(255,215,0,0.2);transform:translate(-50%,-50%) scale(1.2)}
 }
 .filter-glow-ring{
   position:absolute;pointer-events:none;z-index:998;
-  border-radius:50%;border:2.5px solid rgba(255,215,0,0.9);
-  animation:filterItemBlink 1s ease-in-out infinite;
+  border-radius:50%;border:3px solid rgba(255,215,0,1);
+  animation:filterItemBlink 0.8s ease-in-out infinite;
   transform:translate(-50%,-50%);
 }
 /* Zone track label pulse */
@@ -1134,25 +1025,7 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
 }
 .map-landmark-icon{font-size:1.5rem;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.3))}
 
-/* Illustrated signpost labels */
-.map-signpost{
-  position:absolute;z-index:9;pointer-events:none;
-  transform:translate(-50%,-50%);
-  display:flex;flex-direction:column;align-items:center;
-  
-}
-
-/* Section badge — game checkpoint */
-.map-section-badge{
-  position:absolute;z-index:10;pointer-events:none;
-  background:rgba(60,60,60,0.85);
-  padding:3px 10px;border-radius:6px;
-  font-family:var(--font-fun);font-size:0.5rem;font-weight:700;
-  color:#fff;white-space:nowrap;letter-spacing:0.04em;
-  box-shadow:0 2px 8px rgba(0,0,0,0.3);
-  transform:translate(-50%,-50%);
-  border:1.5px solid rgba(255,255,255,0.2);
-}
+/* Map signpost and section badge styles removed */
 
 .map-tree{position:absolute;pointer-events:none;z-index:2;width:8px;height:8px;border-radius:50%;background:rgba(56,142,60,0.7);box-shadow:0 1px 2px rgba(0,0,0,0.15)}
 .map-park{position:absolute;pointer-events:none;z-index:2;background:rgba(76,175,80,0.45);border-radius:30% 40% 35% 45%}
@@ -1905,11 +1778,7 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <div class="zone-tint zone-tint-playground" style="left:0;top:10200px;width:6500px;height:3800px"></div>
 <div class="zone-tint zone-tint-memealley" style="left:7500px;top:6200px;width:6500px;height:7800px"></div>
-<!-- Zone dividers -->
-<div class="zone-divider zone-divider-h" style="left:0;top:5800px;width:14000px"></div>
-<div class="zone-divider zone-divider-h" style="left:0;top:10200px;width:14000px"></div>
-<div class="zone-divider zone-divider-v" style="left:6000px;top:0;width:2px;height:5800px"></div>
-<div class="zone-divider zone-divider-v" style="left:6500px;top:10200px;width:2px;height:3800px"></div>
+<!-- Zone dividers removed -->
 
 <!-- ===== YOUR PHOTOS ===== -->
 
@@ -7017,64 +6886,65 @@ function addMapDecorations(cw, ch){
     layer.appendChild(el);
   });
 
-  // === GROUND-PAINTED ZONE NAMES (painted on the land) ===
-  const groundLabels=[
-    {x:22,y:20,t:'ORIGIN',color:'rgba(76,175,80,0.25)',size:0.04},
-    {x:76,y:20,t:'WORK',color:'rgba(229,57,53,0.25)',size:0.04},
-    {x:22,y:57,t:'PORTFOLIO',color:'rgba(66,165,245,0.25)',size:0.04},
-    {x:22,y:86,t:'HOBBY',color:'rgba(255,152,0,0.25)',size:0.04},
-    {x:76,y:72,t:'FUN',color:'rgba(171,71,188,0.25)',size:0.05},
+  // === GLOWING ZONE TRACK LABELS ===
+  const trackLabels=[
+    {x:22,y:18,t:'📸 ORIGIN',color:'#4CAF50',glow:'rgba(76,175,80,0.6)'},
+    {x:76,y:18,t:'🎯 WORK',color:'#E53935',glow:'rgba(229,57,53,0.6)'},
+    {x:22,y:55,t:'🚀 PORTFOLIO',color:'#42A5F5',glow:'rgba(66,165,245,0.6)'},
+    {x:22,y:84,t:'🎮 HOBBY',color:'#FF9800',glow:'rgba(255,152,0,0.6)'},
+    {x:76,y:70,t:'😂 FUN',color:'#AB47BC',glow:'rgba(171,71,188,0.6)'},
   ];
-  groundLabels.forEach(g=>{
+  trackLabels.forEach(g=>{
     const el=document.createElement('div');
     el.textContent=g.t;
-    el.style.cssText='position:absolute;left:'+g.x+'%;top:'+g.y+'%;transform:translate(-50%,-50%) rotate(-8deg);font-family:Arial Black,Impact,sans-serif;font-size:'+Math.max(16,cw*g.size)+'px;font-weight:900;color:'+g.color+';letter-spacing:0.3em;text-transform:uppercase;pointer-events:none;z-index:1;white-space:nowrap;user-select:none';
+    const fs=Math.max(14,cw*0.028);
+    el.style.cssText='position:absolute;left:'+g.x+'%;top:'+g.y+'%;transform:translate(-50%,-50%);font-family:var(--font-fun);font-size:'+fs+'px;font-weight:800;color:'+g.color+';letter-spacing:0.15em;text-transform:uppercase;pointer-events:none;z-index:8;white-space:nowrap;user-select:none;text-shadow:0 0 12px '+g.glow+',0 0 30px '+g.glow+',0 2px 4px rgba(0,0,0,0.4);animation:trackLabelPulse 3s ease-in-out infinite';
     layer.appendChild(el);
   });
 
-  // === ZONE BOUNDARY — thick organic glowing random lines ===
+  // === ZONE BOUNDARY — thick organic glowing lines with zone colors ===
   const zoneBoundarySvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
   zoneBoundarySvg.setAttribute('viewBox','0 0 100 100');
   zoneBoundarySvg.setAttribute('preserveAspectRatio','none');
   zoneBoundarySvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:visible';
   const zoneBoundaries=[
-    // Horizontal: Origin/Work vs Portfolio/Fun (~40% y)
-    {d:'M 0,39 C 4,42 9,36 15,41 C 21,45 28,35 35,40 C 41,44 48,37 55,42 C 62,46 69,36 76,41 C 82,44 89,38 95,41 C 98,42 100,40 100,40',color:'#4CAF50',glow:'rgba(76,175,80,0.5)',w:1.8},
-    // Vertical: Origin/Portfolio vs Work/Fun (~45% x, top half)
-    {d:'M 43,0 C 46,4 41,9 45,14 C 48,19 42,24 46,29 C 49,34 43,37 45,40',color:'#66BB6A',glow:'rgba(102,187,106,0.5)',w:1.5},
-    // Horizontal: Portfolio vs Hobby (~70% y, left side)
-    {d:'M 0,69 C 3,72 8,66 14,71 C 19,75 25,67 31,72 C 36,76 41,69 45,71',color:'#42A5F5',glow:'rgba(66,165,245,0.5)',w:1.8},
-    // Vertical: Hobby/Portfolio vs Fun (~45% x, bottom half)
-    {d:'M 45,40 C 42,46 48,53 44,59 C 40,65 47,72 43,78 C 39,84 46,90 43,96 C 41,99 44,100 45,100',color:'#FF9800',glow:'rgba(255,152,0,0.5)',w:1.5},
+    // Horizontal: Origin/Work top vs Portfolio/Hobby/Fun bottom (~40% y)
+    {d:'M 0,38 C 3,41 7,35 12,40 C 17,44 22,34 28,39 C 33,43 38,36 44,41 C 49,45 54,35 60,40 C 65,44 70,36 76,41 C 81,44 86,37 92,40 C 96,42 100,39 100,39',color:'#4CAF50',glow:'rgba(76,175,80,0.7)',w:3.5},
+    // Vertical: Origin/Portfolio left vs Work/Fun right (~44% x, top half)
+    {d:'M 44,0 C 47,5 41,10 45,16 C 48,21 42,26 46,31 C 49,35 43,38 45,40',color:'#66BB6A',glow:'rgba(102,187,106,0.7)',w:3},
+    // Horizontal: Portfolio vs Hobby (~72% y, left side)
+    {d:'M 0,71 C 4,74 9,67 15,72 C 20,76 26,68 32,73 C 37,77 42,70 45,72',color:'#42A5F5',glow:'rgba(66,165,245,0.7)',w:3.5},
+    // Vertical: Hobby/Portfolio vs Fun (~44% x, bottom half)
+    {d:'M 45,40 C 42,47 48,54 44,61 C 40,68 47,75 43,82 C 39,88 46,93 43,97 C 41,99 44,100 45,100',color:'#FF9800',glow:'rgba(255,152,0,0.7)',w:3},
   ];
-  // Glow layer (thick, blurred) + sharp line layer
+  // Triple layer: outer glow + main color + bright core
   zoneBoundaries.forEach(zb=>{
-    // Glow behind
-    const glowPath=document.createElementNS('http://www.w3.org/2000/svg','path');
-    glowPath.setAttribute('d',zb.d);glowPath.setAttribute('fill','none');
-    glowPath.setAttribute('stroke',zb.glow);glowPath.setAttribute('stroke-width',''+(zb.w*3.5));
-    glowPath.setAttribute('stroke-linecap','round');glowPath.setAttribute('opacity','0.4');
-    glowPath.setAttribute('filter','url(#zoneBoundaryBlur)');
-    zoneBoundarySvg.appendChild(glowPath);
-    // Main line
+    // Outer glow (very thick, heavily blurred)
+    const outerGlow=document.createElementNS('http://www.w3.org/2000/svg','path');
+    outerGlow.setAttribute('d',zb.d);outerGlow.setAttribute('fill','none');
+    outerGlow.setAttribute('stroke',zb.glow);outerGlow.setAttribute('stroke-width',''+(zb.w*6));
+    outerGlow.setAttribute('stroke-linecap','round');outerGlow.setAttribute('opacity','0.35');
+    outerGlow.setAttribute('filter','url(#zoneBoundaryBlur)');
+    zoneBoundarySvg.appendChild(outerGlow);
+    // Main colored line
     const mainPath=document.createElementNS('http://www.w3.org/2000/svg','path');
     mainPath.setAttribute('d',zb.d);mainPath.setAttribute('fill','none');
     mainPath.setAttribute('stroke',zb.color);mainPath.setAttribute('stroke-width',''+zb.w);
-    mainPath.setAttribute('stroke-linecap','round');mainPath.setAttribute('opacity','0.7');
+    mainPath.setAttribute('stroke-linecap','round');mainPath.setAttribute('opacity','0.85');
     zoneBoundarySvg.appendChild(mainPath);
-    // Bright core
+    // Bright white core
     const corePath=document.createElementNS('http://www.w3.org/2000/svg','path');
     corePath.setAttribute('d',zb.d);corePath.setAttribute('fill','none');
-    corePath.setAttribute('stroke','rgba(255,255,255,0.4)');corePath.setAttribute('stroke-width',''+(zb.w*0.4));
-    corePath.setAttribute('stroke-linecap','round');corePath.setAttribute('opacity','0.6');
+    corePath.setAttribute('stroke','rgba(255,255,255,0.6)');corePath.setAttribute('stroke-width',''+(zb.w*0.5));
+    corePath.setAttribute('stroke-linecap','round');corePath.setAttribute('opacity','0.7');
     zoneBoundarySvg.appendChild(corePath);
   });
-  // SVG filter for glow blur
+  // SVG filters
   const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
   const blur=document.createElementNS('http://www.w3.org/2000/svg','filter');
   blur.setAttribute('id','zoneBoundaryBlur');
   const feBlur=document.createElementNS('http://www.w3.org/2000/svg','feGaussianBlur');
-  feBlur.setAttribute('in','SourceGraphic');feBlur.setAttribute('stdDeviation','0.8');
+  feBlur.setAttribute('in','SourceGraphic');feBlur.setAttribute('stdDeviation','1.5');
   blur.appendChild(feBlur);defs.appendChild(blur);zoneBoundarySvg.appendChild(defs);
   layer.appendChild(zoneBoundarySvg);
 
