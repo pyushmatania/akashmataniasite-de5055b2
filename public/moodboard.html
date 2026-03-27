@@ -89,7 +89,18 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 /* Pause all animations inside off-screen stickers — applied by IntersectionObserver */
 .sticker.paused-offscreen,.sticker.paused-offscreen *{animation-play-state:paused!important}
 
-/* ===== ZONE VISUAL TINTS ===== */
+/* Rotation handle — small circular button at bottom-right of sticker */
+.sticker-rotate-handle{
+  position:absolute;bottom:-14px;right:-14px;width:28px;height:28px;border-radius:50%;
+  background:rgba(255,255,255,0.92);border:2px solid rgba(0,0,0,0.15);
+  cursor:grab;z-index:101;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.15);opacity:0;transition:opacity 0.2s;
+  touch-action:none;
+}
+.sticker:hover .sticker-rotate-handle,.sticker.dragging .sticker-rotate-handle{opacity:1}
+.sticker-rotate-handle:active{cursor:grabbing;background:rgba(255,255,255,1)}
+.sticker-rotate-handle svg{width:14px;height:14px;color:rgba(0,0,0,0.45)}
+
 .zone-tint{position:absolute;pointer-events:none;z-index:1;border-radius:40px;opacity:0.06;transition:opacity 0.3s}
 .zone-tint-origin{background:radial-gradient(ellipse at center,#4CAF50,transparent 70%)}
 .zone-tint-warroom{background:radial-gradient(ellipse at center,#E53935,transparent 70%)}
