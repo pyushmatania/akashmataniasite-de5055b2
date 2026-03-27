@@ -6912,6 +6912,7 @@ function toggleMap(){
       mmExp=false;
       mmContainer.classList.remove('map-closing');
       mapTransitioning=false;
+      window._mapTransitionStart=0;
       mapZoomScale=1;
       // Redraw as small minimap — no force-rescan (stickers can't move while map is open)
       ensureMapData(false);
