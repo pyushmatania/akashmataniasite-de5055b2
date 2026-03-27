@@ -6042,7 +6042,7 @@ const mmInner=document.getElementById('mmInner');
 const mapCount=document.getElementById('mapCount');
 let mmExp=false,navLine=null,mFilt='all';
 let mapTransitioning=false;
-let mapZoomScale=2;
+let mapZoomScale=1;
 let stickerData=[];
 let smallMapPanX=0,smallMapPanY=0;
 let activeDestinationMarker=null;
@@ -6065,7 +6065,7 @@ function toggleMap(){
     // --- EXPAND ---
     mmExp=true;
     mmContainer.classList.add('map-opening');
-    mapZoomScale=2;
+    mapZoomScale=1;
     const zl=document.getElementById('mapZoomLevel');
     if(zl)zl.textContent=mapZoomScale+'×';
 
@@ -6151,7 +6151,7 @@ function drawMapLayoutOnly(){
   let sc,offsetX,offsetY,canvasW,canvasH;
   if(mmExp){
     const usableW=mw,usableH=mh;
-    const leftWorldPad=5500,rightWorldPad=3500,topWorldPad=5000,bottomWorldPad=2400;
+    const leftWorldPad=400,rightWorldPad=400,topWorldPad=400,bottomWorldPad=400;
     const mapContentW=contentW+leftWorldPad+rightWorldPad;
     const mapContentH=contentH+topWorldPad+bottomWorldPad;
     const fitScale=Math.max(0.02,Math.max(usableW/mapContentW,usableH/mapContentH));
@@ -6788,24 +6788,7 @@ function addMapDecorations(cw, ch){
     wrap.appendChild(svg);
   });
 
-  // === ZONE TRACK LABELS (replacing signposts) ===
-  const zoneTrackLabels=[
-    {x:22,y:20,t:'ORIGIN',icon:'📸',color:'#4CAF50',glow:'rgba(76,175,80,0.6)'},
-    {x:76,y:20,t:'WORK',icon:'🎯',color:'#E53935',glow:'rgba(229,57,53,0.6)'},
-    {x:22,y:57,t:'PORTFOLIO',icon:'🚀',color:'#42A5F5',glow:'rgba(66,165,245,0.6)'},
-    {x:22,y:86,t:'HOBBY',icon:'🎮',color:'#FF9800',glow:'rgba(255,152,0,0.6)'},
-    {x:76,y:72,t:'FUN',icon:'😂',color:'#AB47BC',glow:'rgba(171,71,188,0.6)'},
-  ];
-  zoneTrackLabels.forEach(z=>{
-    const wrap=document.createElement('div');
-    wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;z-index:8;pointer-events:none';
-    const fontSize=Math.max(11,cw*0.012);
-    const label=document.createElement('div');
-    label.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:'+z.color+';letter-spacing:0.15em;white-space:nowrap;text-shadow:0 0 8px '+z.glow+',0 0 20px '+z.glow+',0 2px 4px rgba(0,0,0,0.3);text-transform:uppercase;animation:zoneTrackPulse 3s ease-in-out infinite';
-    label.textContent=z.icon+' '+z.t;
-    wrap.appendChild(label);
-    layer.appendChild(wrap);
-  });
+  // Zone sign/track overlays removed
 
   // === SCATTERED NEON DECOR on big map (arrows, stars, tube lights) ===
   const neonDecor=[
@@ -6886,67 +6869,7 @@ function addMapDecorations(cw, ch){
     layer.appendChild(el);
   });
 
-  // === GLOWING ZONE TRACK LABELS ===
-  const trackLabels=[
-    {x:22,y:18,t:'📸 ORIGIN',color:'#4CAF50',glow:'rgba(76,175,80,0.6)'},
-    {x:76,y:18,t:'🎯 WORK',color:'#E53935',glow:'rgba(229,57,53,0.6)'},
-    {x:22,y:55,t:'🚀 PORTFOLIO',color:'#42A5F5',glow:'rgba(66,165,245,0.6)'},
-    {x:22,y:84,t:'🎮 HOBBY',color:'#FF9800',glow:'rgba(255,152,0,0.6)'},
-    {x:76,y:70,t:'😂 FUN',color:'#AB47BC',glow:'rgba(171,71,188,0.6)'},
-  ];
-  trackLabels.forEach(g=>{
-    const el=document.createElement('div');
-    el.textContent=g.t;
-    const fs=Math.max(14,cw*0.028);
-    el.style.cssText='position:absolute;left:'+g.x+'%;top:'+g.y+'%;transform:translate(-50%,-50%);font-family:var(--font-fun);font-size:'+fs+'px;font-weight:800;color:'+g.color+';letter-spacing:0.15em;text-transform:uppercase;pointer-events:none;z-index:8;white-space:nowrap;user-select:none;text-shadow:0 0 12px '+g.glow+',0 0 30px '+g.glow+',0 2px 4px rgba(0,0,0,0.4);animation:trackLabelPulse 3s ease-in-out infinite';
-    layer.appendChild(el);
-  });
-
-  // === ZONE BOUNDARY — thick organic glowing lines with zone colors ===
-  const zoneBoundarySvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-  zoneBoundarySvg.setAttribute('viewBox','0 0 100 100');
-  zoneBoundarySvg.setAttribute('preserveAspectRatio','none');
-  zoneBoundarySvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:visible';
-  const zoneBoundaries=[
-    // Horizontal: Origin/Work top vs Portfolio/Hobby/Fun bottom (~40% y)
-    {d:'M 0,38 C 3,41 7,35 12,40 C 17,44 22,34 28,39 C 33,43 38,36 44,41 C 49,45 54,35 60,40 C 65,44 70,36 76,41 C 81,44 86,37 92,40 C 96,42 100,39 100,39',color:'#4CAF50',glow:'rgba(76,175,80,0.7)',w:3.5},
-    // Vertical: Origin/Portfolio left vs Work/Fun right (~44% x, top half)
-    {d:'M 44,0 C 47,5 41,10 45,16 C 48,21 42,26 46,31 C 49,35 43,38 45,40',color:'#66BB6A',glow:'rgba(102,187,106,0.7)',w:3},
-    // Horizontal: Portfolio vs Hobby (~72% y, left side)
-    {d:'M 0,71 C 4,74 9,67 15,72 C 20,76 26,68 32,73 C 37,77 42,70 45,72',color:'#42A5F5',glow:'rgba(66,165,245,0.7)',w:3.5},
-    // Vertical: Hobby/Portfolio vs Fun (~44% x, bottom half)
-    {d:'M 45,40 C 42,47 48,54 44,61 C 40,68 47,75 43,82 C 39,88 46,93 43,97 C 41,99 44,100 45,100',color:'#FF9800',glow:'rgba(255,152,0,0.7)',w:3},
-  ];
-  // Triple layer: outer glow + main color + bright core
-  zoneBoundaries.forEach(zb=>{
-    // Outer glow (very thick, heavily blurred)
-    const outerGlow=document.createElementNS('http://www.w3.org/2000/svg','path');
-    outerGlow.setAttribute('d',zb.d);outerGlow.setAttribute('fill','none');
-    outerGlow.setAttribute('stroke',zb.glow);outerGlow.setAttribute('stroke-width',''+(zb.w*6));
-    outerGlow.setAttribute('stroke-linecap','round');outerGlow.setAttribute('opacity','0.35');
-    outerGlow.setAttribute('filter','url(#zoneBoundaryBlur)');
-    zoneBoundarySvg.appendChild(outerGlow);
-    // Main colored line
-    const mainPath=document.createElementNS('http://www.w3.org/2000/svg','path');
-    mainPath.setAttribute('d',zb.d);mainPath.setAttribute('fill','none');
-    mainPath.setAttribute('stroke',zb.color);mainPath.setAttribute('stroke-width',''+zb.w);
-    mainPath.setAttribute('stroke-linecap','round');mainPath.setAttribute('opacity','0.85');
-    zoneBoundarySvg.appendChild(mainPath);
-    // Bright white core
-    const corePath=document.createElementNS('http://www.w3.org/2000/svg','path');
-    corePath.setAttribute('d',zb.d);corePath.setAttribute('fill','none');
-    corePath.setAttribute('stroke','rgba(255,255,255,0.6)');corePath.setAttribute('stroke-width',''+(zb.w*0.5));
-    corePath.setAttribute('stroke-linecap','round');corePath.setAttribute('opacity','0.7');
-    zoneBoundarySvg.appendChild(corePath);
-  });
-  // SVG filters
-  const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
-  const blur=document.createElementNS('http://www.w3.org/2000/svg','filter');
-  blur.setAttribute('id','zoneBoundaryBlur');
-  const feBlur=document.createElementNS('http://www.w3.org/2000/svg','feGaussianBlur');
-  feBlur.setAttribute('in','SourceGraphic');feBlur.setAttribute('stdDeviation','1.5');
-  blur.appendChild(feBlur);defs.appendChild(blur);zoneBoundarySvg.appendChild(defs);
-  layer.appendChild(zoneBoundarySvg);
+  // Zone labels/boundary overlays removed
 
   // === POI MARKERS ===
   const pois=[
@@ -7003,7 +6926,7 @@ function drawMapLayout(){
   let sc,offsetX,offsetY,canvasW,canvasH;
   if(mmExp){
     const usableW=mw,usableH=mh;
-    const leftWorldPad=5500,rightWorldPad=3500,topWorldPad=5000,bottomWorldPad=2400;
+    const leftWorldPad=400,rightWorldPad=400,topWorldPad=400,bottomWorldPad=400;
     const mapContentW=contentW+leftWorldPad+rightWorldPad;
     const mapContentH=contentH+topWorldPad+bottomWorldPad;
     const fitScale=Math.max(0.02,Math.max(usableW/mapContentW,usableH/mapContentH));
@@ -7099,52 +7022,9 @@ function drawMap(){
       mapCanvas.appendChild(el);
     });
     if(mapCount)mapCount.textContent=count+' items';
-    // Draw zone names on small minimap — batch all into one DocumentFragment
+    // Draw special map markers — batch all into one DocumentFragment
     const zoneColors={'Origin':'#4CAF50','Work':'#E53935','Portfolio':'#42A5F5','Hobby':'#FF9800','Fun':'#AB47BC'};
     const zoneFrag=document.createDocumentFragment();
-    // Zone borders — dotted map-style boundary + subtle glow fill
-    mapZones.forEach(z=>{
-      const zx1=(z.x1-offsetX)*sc, zy1=(z.y1-offsetY)*sc;
-      const zw=(z.x2-z.x1)*sc, zh=(z.y2-z.y1)*sc;
-      const zc=zoneColors[z.name]||'#4CAF50';
-      // Glow fill (very subtle color wash)
-      const fill=document.createElement('div');
-      fill.style.cssText='position:absolute;left:'+zx1+'px;top:'+zy1+'px;width:'+zw+'px;height:'+zh+'px;background:'+zc+'12;border-radius:4px;pointer-events:none;z-index:1';
-      zoneFrag.appendChild(fill);
-      // Dotted boundary (SVG inline for crisp dash pattern)
-      const dsvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-      dsvg.setAttribute('viewBox','0 0 '+zw+' '+zh);
-      dsvg.style.cssText='position:absolute;left:'+zx1+'px;top:'+zy1+'px;width:'+zw+'px;height:'+zh+'px;pointer-events:none;z-index:3;overflow:visible';
-      const drect=document.createElementNS('http://www.w3.org/2000/svg','rect');
-      drect.setAttribute('x','0.5');drect.setAttribute('y','0.5');
-      drect.setAttribute('width',Math.max(1,zw-1)+'');drect.setAttribute('height',Math.max(1,zh-1)+'');
-      drect.setAttribute('rx','3');drect.setAttribute('fill','none');
-      drect.setAttribute('stroke',zc);drect.setAttribute('stroke-width','0.7');
-      drect.setAttribute('stroke-dasharray','2.5 2');drect.setAttribute('opacity','0.55');
-      dsvg.appendChild(drect);zoneFrag.appendChild(dsvg);
-    });
-    // Zone signposts
-    mapZones.forEach(z=>{
-      const zx=((z.x1+z.x2)/2-offsetX)*sc;
-      const zy=((z.y1+z.y2)/2-offsetY)*sc;
-      if(zx<-30||zx>canvasW+30||zy<-30||zy>canvasH+30)return;
-      const zc=zoneColors[z.name]||'#4CAF50';
-      const sign=document.createElement('div');
-      sign.style.cssText='position:absolute;left:'+zx+'px;top:'+zy+'px;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none;z-index:9';
-      const board=document.createElement('div');
-      board.style.cssText='font-family:Arial Black,sans-serif;font-size:4.5px;font-weight:900;color:'+zc+';padding:2px 5px;border-radius:2px;white-space:nowrap;letter-spacing:0.3px;border:0.6px solid '+zc+';background:#1a1a2e;text-shadow:0 0 3px '+zc+',0 0 6px '+zc+';box-shadow:0 0 4px '+zc+'60,0 1px 3px rgba(0,0,0,0.4)';
-      board.textContent=z.icon+' '+z.name.toUpperCase();
-      const dots=document.createElement('div');
-      dots.style.cssText='display:flex;gap:1.5px;justify-content:center;margin-bottom:1px';
-      dots.innerHTML='<div style="width:1.5px;height:1.5px;border-radius:50%;background:'+zc+';box-shadow:0 0 2px '+zc+'"></div>'.repeat(5);
-      const poles=document.createElement('div');
-      poles.style.cssText='display:flex;gap:8px;margin-top:-0.5px';
-      poles.innerHTML='<div style="width:1.5px;height:10px;background:linear-gradient(90deg,#666,#bbb,#666);border-radius:0.5px"></div>'.repeat(2);
-      sign.appendChild(dots);
-      sign.appendChild(board);
-      sign.appendChild(poles);
-      zoneFrag.appendChild(sign);
-    });
     // Zone intro card markers on big map — glowing diamond badges
     const zoneIntroData=stickerData.filter(d=>d.cat==='zone-intro');
     const ziColors={'origin':'#4CAF50','work':'#E53935','portfolio':'#42A5F5','hobby':'#FF9800','fun':'#AB47BC'};
@@ -7184,22 +7064,16 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
   const visL=scrollL-buf, visT=scrollT-50-buf;
   const visR=scrollL+vpW+buf, visB=scrollT+vpH+buf;
   const isMobile=window.innerWidth<600;
-  const visibilityMinPx=isMobile?16:12;
   
   // Collect visible items first
   const visibleItems=[];
   stickerData.forEach(d=>{
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
     const dx=(d.left-ox)*sc, dy=(d.top-oy)*sc;
-    const baseScale=sc;
-    const maxDim=Math.max(d.w,d.h,1);
-    const minVisibleScale=visibilityMinPx/maxDim;
-    const cloneScale=Math.max(baseScale,minVisibleScale);
-    const baseW=d.w*baseScale, baseH=d.h*baseScale;
-    const rawW=d.w*cloneScale, rawH=d.h*cloneScale;
-    const renderX=dx-((rawW-baseW)/2);
-    const renderY=dy-((rawH-baseH)/2);
-    const iw=Math.max(rawW,8), ih=Math.max(rawH,6);
+    const cloneScale=Math.max(sc,0.01);
+    const renderX=dx;
+    const renderY=dy;
+    const iw=Math.max(d.w*cloneScale,2), ih=Math.max(d.h*cloneScale,2);
     if(renderX+iw<visL||renderX>visR||renderY+ih<visT||renderY>visB)return;
     visibleItems.push({d,renderX,renderY,cloneScale,iw,ih});
   });
@@ -7811,6 +7685,8 @@ function updMap(){
 }
 
 let mapCloneTimer=null;
+let _lastCloneRenderLeft=0;
+let _lastCloneRenderTop=0;
 // Re-render visible clones when scrolling expanded map
 document.getElementById('mmInner').addEventListener('scroll',()=>{
   if(mapTransitioning)return;
@@ -7832,6 +7708,9 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
     }
   }
   if(mmExp && drawMap._sc){
+    const curL=mmInner.scrollLeft||0;
+    const curT=mmInner.scrollTop||0;
+    if(Math.abs(curL-_lastCloneRenderLeft)<120&&Math.abs(curT-_lastCloneRenderTop)<120)return;
     clearTimeout(mapCloneTimer);
     mapCloneTimer=setTimeout(()=>{
       if(!drawMap._sc){return;}
@@ -7841,9 +7720,11 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
         const items=mapCanvas.querySelectorAll('.mi');
         items.forEach(i=>i.remove());
         renderVisibleClones(sc,ox,oy,cw,ch);
+        _lastCloneRenderLeft=curL;
+        _lastCloneRenderTop=curT;
         updMap();
       }catch(e){}
-    },250);
+    },320);
   }
 },{passive:true});
 // Map scroll update is handled by the unified scroll handler above (near line 3587)
