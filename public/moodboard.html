@@ -8596,17 +8596,19 @@ function showNav(tx,ty){
   setTimeout(()=>{if(navLine===svg){svg.remove();navLine=null}},5000);
 }
 
-// Zone definitions for name lookup
+// Zone definitions for name lookup — uses polygon containment
 const mapZones=[
-  {name:'Origin',x1:400,y1:400,x2:5800,y2:5600},
-  {name:'Work',x1:7700,y1:400,x2:13600,y2:5600},
-  {name:'Portfolio',x1:400,y1:6200,x2:5600,y2:9800},
-  {name:'Hobby',x1:400,y1:10400,x2:6300,y2:13600},
-  {name:'Fun',x1:7700,y1:6400,x2:13600,y2:13600}
+  {name:'Origin',key:'origin'},
+  {name:'Work',key:'work'},
+  {name:'Portfolio',key:'portfolio'},
+  {name:'Hobby',key:'hobby'},
+  {name:'Fun',key:'fun'}
 ];
 function getZoneName(px,py){
-  for(const z of mapZones){
-    if(px>=z.x1&&px<=z.x2&&py>=z.y1&&py<=z.y2)return z.name;
+  const zone=pointInZone(px,py);
+  if(zone){
+    const found=mapZones.find(z=>z.key===zone);
+    return found?found.name:'Exploring';
   }
   return 'Exploring';
 }
