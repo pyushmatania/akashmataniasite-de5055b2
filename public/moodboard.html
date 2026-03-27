@@ -6838,10 +6838,13 @@ let _mapOpenRafId=null;
 
 function toggleMap(){
   if(mapTransitioning){
-    // Failsafe: if stuck transitioning for >3s, force reset
-    if(window._mapTransitionStart&&Date.now()-window._mapTransitionStart>3000){
-      mapTransitioning=false;
-    } else return;
+    // hard reset stuck transition immediately so tap always works
+    const mmContainer=document.getElementById('mc');
+    if(mmContainer){
+      mmContainer.classList.remove('map-opening');
+      mmContainer.classList.remove('map-closing');
+    }
+    mapTransitioning=false;
   }
   mapTransitioning=true;
   window._mapTransitionStart=Date.now();
