@@ -35,29 +35,14 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
     linear-gradient(#E8E4DF 1px, transparent 1px),
     linear-gradient(90deg, #E8E4DF 1px, transparent 1px);
   background-size:100% 100%,100% 100%,100% 100%,40px 40px,40px 40px;
-  border:none;
-  box-shadow:inset 0 0 0 2px rgba(201,169,110,0.12);
+  border:6px solid transparent;
+  border-image:repeating-linear-gradient(90deg,#C9A96E 0px,#C9A96E 12px,transparent 12px,transparent 20px) 6;
+  box-shadow:inset 0 0 0 2px rgba(201,169,110,0.15);
 }
-/* 3D road-rail edge boundary (canvas perimeter) */
+/* Decorative border corners */
 .canvas::before{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:9999;
-  border-radius:0;
-  background:
-    linear-gradient(180deg,rgba(70,70,70,0.92),rgba(35,35,35,0.95)) top/100% 34px no-repeat,
-    linear-gradient(180deg,rgba(35,35,35,0.95),rgba(70,70,70,0.92)) bottom/100% 34px no-repeat,
-    linear-gradient(90deg,rgba(70,70,70,0.92),rgba(35,35,35,0.95)) left/34px 100% no-repeat,
-    linear-gradient(90deg,rgba(35,35,35,0.95),rgba(70,70,70,0.92)) right/34px 100% no-repeat;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,0.28),inset 0 -1px 0 rgba(0,0,0,0.35),0 0 0 1px rgba(0,0,0,0.18);
-}
-.canvas::after{
-  content:'';position:absolute;inset:6px;pointer-events:none;z-index:9998;
-  border-radius:0;
-  background:
-    repeating-linear-gradient(90deg,rgba(255,215,0,0.9) 0 18px,rgba(20,20,20,0.9) 18px 30px) top/100% 10px no-repeat,
-    repeating-linear-gradient(90deg,rgba(255,215,0,0.9) 0 18px,rgba(20,20,20,0.9) 18px 30px) bottom/100% 10px no-repeat,
-    repeating-linear-gradient(0deg,rgba(255,215,0,0.9) 0 18px,rgba(20,20,20,0.9) 18px 30px) left/10px 100% no-repeat,
-    repeating-linear-gradient(0deg,rgba(255,215,0,0.9) 0 18px,rgba(20,20,20,0.9) 18px 30px) right/10px 100% no-repeat;
-  opacity:0.7;
+  border:4px dashed rgba(201,169,110,0.25);border-radius:0;
 }
 /* Bounce flash overlay */
 .bounce-flash{
@@ -117,7 +102,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .zone-tint-hub{background:radial-gradient(ellipse at center,#FFB300,transparent 70%)}
 .zone-tint-playground{background:radial-gradient(ellipse at center,#FF9800,transparent 70%)}
 .zone-tint-memealley{background:radial-gradient(ellipse at center,#AB47BC,transparent 70%)}
-/* Organic zone boundaries (inside map zones only) */
+/* Organic country-style zone boundaries */
 .zone-boundary-svg{position:absolute;left:0;top:0;width:14000px;height:14000px;pointer-events:none;z-index:2;overflow:visible}
 .zone-boundary-svg path{fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12))}
 /* Zone intro cards — bold card style */
@@ -765,7 +750,6 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
     0 0 0 3px rgba(10,10,10,0.6),
     inset 0 0 12px rgba(0,0,0,0.3);
   position:relative;cursor:pointer;
-  touch-action:manipulation;
   transition:none;
   background:#3d7ab5;
 }
@@ -3106,7 +3090,7 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="minimap-cardinal mc-w">W</div>
   <div class="minimap-north-pip"></div>
   <div class="minimap-zone-name" id="minimapZoneName">🗺️ Exploring...</div>
-  <div class="minimap" id="mm">
+  <div class="minimap" id="mm" onclick="if(!mmExp){toggleMap();event.stopPropagation()}">
     <div class="minimap-inner" id="mmInner">
       <div class="map-canvas" id="mapCanvas">
         <div class="map-canvas-grid"></div>
@@ -4387,7 +4371,7 @@ function placeZoneSignposts(signposts){
   });
 }
 
-// ===== AUTO-REARRANGE ENGINE v5 =====
+// ===== AUTO-REARRANGE ENGINE v4 =====
 // Rules:
 // 1. Spread evenly — no too-dense or too-empty areas
 // 2. Intro card of each zone centered in zone
@@ -4396,15 +4380,14 @@ function placeZoneSignposts(signposts){
 // 5. Leave space near boundary (padding)
 // 6. New cards auto-follow these rules
 // 7. Rearrange button resets all to default positions
-// 8. Badges placed on top of another card (top-left, tilted) — ONLY exception to no-overlap
+// 8. Badges placed on top of another card (top-left, tilted)
 // 9. Sync to big and small map after arrangement
 // 10. Audit: count items in DOM vs maps, remove duplicates, add missing
 // 11. Ensure all items are categorized (type) and attributed (zone). New category: introduction
-// 12. STRICT Anti-overlap: radial probe search (100+ attempts) — cards NEVER stack (badges exempt)
-// 13. Organic zone boundaries (curved SVG lines inside map zones)
+// 12. Anti-overlap: cards are nudged apart so they don't stack on top of each other
+// 13. Organic country-style zone boundaries (SVG curves, not straight lines)
 // 14. Reserved zones: no cards placed on ground labels or signpost areas
 // 15. Hollywood casino-style 2-pole signposts near zone centers (canvas + maps)
-// 16. No cards placed on top of painted zone names
 
 const ZONE_DEFS={
   origin:{x1:400,y1:400,x2:5800,y2:5600,center:{x:3100,y:3000},color:'#4CAF50'},
@@ -4415,7 +4398,6 @@ const ZONE_DEFS={
 };
 const BOUNDARY_PAD=350; // no cards within this distance of zone edges
 const SCATTER_ZONES=['fun','hobby']; // these also scatter across canvas
-const ANTI_OVERLAP_GAP=50; // minimum gap between any two non-badge cards
 
 function getZoneForSticker(sticker){
   const zone=sticker.dataset.zone;
@@ -4442,56 +4424,54 @@ function isMemeOrFunEmoji(sticker){
     (sticker.classList.contains('sticker-emoji')&&(!sticker.dataset.zone||SCATTER_ZONES.includes(sticker.dataset.zone)||sticker.dataset.zone==='fun'));
 }
 
-// Rule 12: STRICT radial probe — finds nearest non-overlapping position
-function resolveNonOverlapPosition(tryLeft,tryTop,w,h,placed,zoneBounds,rng){
-  const gap=ANTI_OVERLAP_GAP;
-  const candidate={left:tryLeft,top:tryTop,w,h};
-  if(!isOverlappingAny(candidate,placed,gap))return candidate;
-  
-  const safeX1=zoneBounds?zoneBounds.x1+BOUNDARY_PAD:MOODBOARD_ITEM_SAFE_MARGIN;
-  const safeY1=zoneBounds?zoneBounds.y1+BOUNDARY_PAD:MOODBOARD_ITEM_SAFE_MARGIN;
-  const safeX2=zoneBounds?zoneBounds.x2-BOUNDARY_PAD:MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN;
-  const safeY2=zoneBounds?zoneBounds.y2-BOUNDARY_PAD:MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN;
-  
-  const golden=2.399963;
-  const ringStep=Math.max(w,h)*0.6+gap;
-  const maxRadius=Math.max(safeX2-safeX1,safeY2-safeY1)*0.8;
-  const probesPerRing=12;
-  
-  for(let radius=ringStep;radius<=maxRadius;radius+=ringStep){
-    for(let p=0;p<probesPerRing;p++){
-      const angle=p*golden+(rng?rng()*0.3:0);
-      const cL=Math.max(safeX1,Math.min(safeX2-w,tryLeft+Math.cos(angle)*radius));
-      const cT=Math.max(safeY1,Math.min(safeY2-h,tryTop+Math.sin(angle)*radius));
-      const test={left:cL,top:cT,w,h};
-      if(!isOverlappingAny(test,placed,gap))return test;
-    }
-  }
-  // Fallback: just nudge far enough
-  return {left:Math.max(safeX1,Math.min(safeX2-w,tryLeft+(rng?rng()*400:200))),top:Math.max(safeY1,Math.min(safeY2-h,tryTop+(rng?rng()*400:200))),w,h};
-}
-
 function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
+  // Place items in expanding spiral from center, denser near center
   const sorted=items.slice().sort((a,b)=>(a.offsetWidth*a.offsetHeight)-(b.offsetWidth*b.offsetHeight));
   const n=sorted.length;
   if(!n)return;
+  const padX=BOUNDARY_PAD;
+  const padY=BOUNDARY_PAD;
+  const safeX1=zoneBounds?zoneBounds.x1+padX:MOODBOARD_ITEM_SAFE_MARGIN;
+  const safeY1=zoneBounds?zoneBounds.y1+padY:MOODBOARD_ITEM_SAFE_MARGIN;
+  const safeX2=zoneBounds?zoneBounds.x2-padX:MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN;
+  const safeY2=zoneBounds?zoneBounds.y2-padY:MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN;
 
   sorted.forEach((sticker,i)=>{
     const w=sticker.offsetWidth||180;
     const h=sticker.offsetHeight||100;
+    // Spiral parameter: closer items get smaller radius
     const t=(i+1)/(n+1);
     const r=innerR+t*(outerR-innerR);
-    const angleStep=2.399963;
+    const angleStep=2.399963; // golden angle in radians
     const angle=i*angleStep;
     let tryLeft=cx+Math.cos(angle)*r-w/2+(rng()-0.5)*60;
     let tryTop=cy+Math.sin(angle)*r-h/2+(rng()-0.5)*60;
-    
-    // Rule 12: Strict radial probe for non-overlap position
-    const resolved=resolveNonOverlapPosition(tryLeft,tryTop,w,h,placed,zoneBounds,rng);
-    sticker.style.left=resolved.left+'px';
-    sticker.style.top=resolved.top+'px';
+    // Clamp to safe zone
+    tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
+    tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
+    // Rule 12: Anti-overlap nudge — push away from placed items (24 attempts)
+    for(let attempt=0;attempt<24;attempt++){
+      let overlapping=false;
+      for(const p of placed){
+        const overlapX=tryLeft<p.left+p.w+40&&tryLeft+w>p.left-40;
+        const overlapY=tryTop<p.top+p.h+40&&tryTop+h>p.top-40;
+        if(overlapX&&overlapY){
+          overlapping=true;
+          const nudgeAngle=angle+attempt*0.5;
+          tryLeft+=Math.cos(nudgeAngle)*Math.max(w*0.7,100);
+          tryTop+=Math.sin(nudgeAngle)*Math.max(h*0.7,80);
+          tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
+          tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
+          break;
+        }
+      }
+      if(!overlapping)break;
+    }
+    let candidate={left:tryLeft,top:tryTop,w,h};
+    sticker.style.left=candidate.left+'px';
+    sticker.style.top=candidate.top+'px';
     sticker.style.transform='rotate('+((rng()-0.5)*12).toFixed(1)+'deg)';
-    placed.push({left:resolved.left,top:resolved.top,w,h});
+    placed.push({left:candidate.left,top:candidate.top,w,h});
   });
 }
 
@@ -4570,7 +4550,7 @@ function autoArrangeMoodboardItems(){
     spiralLayout(hubItems,7000,7000,200,900,rng,allPlaced,{x1:5800,y1:5600,x2:8200,y2:8400});
   }
 
-  // Rule 3: Scatter memes/fun emojis across the ENTIRE canvas with strict anti-overlap
+  // Rule 3: Scatter memes/fun emojis across the ENTIRE canvas
   if(scatterItems.length){
     const shuffled=shuffleWithSeed(scatterItems,rng);
     const gridCols=Math.ceil(Math.sqrt(shuffled.length*2));
@@ -4584,12 +4564,28 @@ function autoArrangeMoodboardItems(){
       const h=sticker.offsetHeight||100;
       let tryLeft=BOUNDARY_PAD+col*cellW+(rng()*cellW*0.7)+cellW*0.1;
       let tryTop=BOUNDARY_PAD+row*cellH+(rng()*cellH*0.7)+cellH*0.1;
-      // Rule 12: Strict radial probe for scattered items
-      const resolved=resolveNonOverlapPosition(tryLeft,tryTop,w,h,allPlaced,null,rng);
-      sticker.style.left=resolved.left+'px';
-      sticker.style.top=resolved.top+'px';
+      tryLeft=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN-w,tryLeft));
+      tryTop=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN-h,tryTop));
+      // Rule 12: Anti-overlap nudge for scattered items (20 attempts)
+      for(let attempt=0;attempt<20;attempt++){
+        let overlapping=false;
+        for(const p of allPlaced){
+          if(tryLeft<p.left+p.w+40&&tryLeft+w>p.left-40&&tryTop<p.top+p.h+40&&tryTop+h>p.top-40){
+            overlapping=true;
+            tryLeft+=((rng()-0.3)*Math.max(w,140));
+            tryTop+=((rng()-0.3)*Math.max(h,100));
+            tryLeft=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN-w,tryLeft));
+            tryTop=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN-h,tryTop));
+            break;
+          }
+        }
+        if(!overlapping)break;
+      }
+      let candidate={left:tryLeft,top:tryTop,w,h};
+      sticker.style.left=candidate.left+'px';
+      sticker.style.top=candidate.top+'px';
       sticker.style.transform='rotate('+((rng()-0.5)*14).toFixed(1)+'deg)';
-      allPlaced.push({left:resolved.left,top:resolved.top,w,h});
+      allPlaced.push({left:candidate.left,top:candidate.top,w,h});
     });
   }
 
@@ -4823,13 +4819,12 @@ vp.addEventListener('scroll',()=>{
       else if(vp.scrollTop<=EDGE_THRESHOLD && my>0) triggerBounce('top');
       else if(vp.scrollTop>=my-EDGE_THRESHOLD && my>0) triggerBounce('bottom');
     }
-    // 3) Map update — debounce more aggressively to reduce lag
+    // 3) Map update (was separate listener at bottom of file)
     if(typeof updMap==='function'&&typeof mapTransitioning!=='undefined'&&!mapTransitioning){
       updMap();
       if(typeof mmExp!=='undefined'&&!mmExp&&!_bouncing){
-        clearTimeout(window._mapScrollTimer);window._mapScrollTimer=setTimeout(drawMap,500);
+        clearTimeout(window._mapScrollTimer);window._mapScrollTimer=setTimeout(drawMap,320);
       }
-    }
     }
   });
 },{passive:true});
@@ -5351,7 +5346,6 @@ const themes = {
 
 function setTheme(name, el){
   const t = themes[name];
-  if(!t)return;
   const c = document.getElementById('canvas');
   c.style.backgroundColor = t.canvasBg;
   c.style.backgroundImage = t.bgImage;
@@ -5366,11 +5360,13 @@ function setTheme(name, el){
   const logo = document.querySelector('.logo');
   const counter = document.getElementById('scrollCounter');
   if(t.textColor){
-    if(logo){logo.style.color = t.textColor;logo.style.background = 'rgba(255,255,255,0.08)';}
-    if(counter)counter.style.color = 'rgba(255,255,255,0.06)';
+    logo.style.color = t.textColor;
+    logo.style.background = 'rgba(255,255,255,0.08)';
+    counter.style.color = 'rgba(255,255,255,0.06)';
   } else {
-    if(logo){logo.style.color = '';logo.style.background = '';}
-    if(counter)counter.style.color = '';
+    logo.style.color = '';
+    logo.style.background = '';
+    counter.style.color = '';
   }
   
   // Remove all theme classes, add new one if needed
@@ -5381,21 +5377,7 @@ function setTheme(name, el){
   // Update active state
   document.querySelectorAll('.theme-option').forEach(o=>o.classList.remove('active'));
   if(el) el.classList.add('active');
-  
-  // Persist theme choice
-  try{localStorage.setItem('moodboard-theme',name)}catch(e){}
 }
-
-// Restore saved theme on load
-try{
-  const savedTheme=localStorage.getItem('moodboard-theme');
-  if(savedTheme&&themes[savedTheme]){
-    const themeOpts=document.querySelectorAll('.theme-option');
-    const themeNames=['grid','dots','combo','notebook','pixel','neon','retro','blueprint','vaporwave','lava','matrix'];
-    const idx=themeNames.indexOf(savedTheme);
-    if(idx>=0&&themeOpts[idx])setTheme(savedTheme,themeOpts[idx]);
-  }
-}catch(e){}
 
 
 
@@ -5435,22 +5417,6 @@ const journalContent = {
 
 timeline: `
 <div class="timeline">
-
-  <div class="tl-item">
-    <div class="tl-dot" style="background:linear-gradient(135deg,#FFD600,#FF6F00)"></div>
-    <div class="tl-version">v51.1 — 🛣️ 3D Edge Rails + Minimap Tap Recovery</div>
-    <div class="tl-date">Session 51 · March 27, 2026</div>
-    <div class="tl-desc">Moved boundary styling to canvas edges only: replaced crime tape with 3D road-rail perimeter. Zone boundaries reverted to organic internal lines. Minimap tap-to-open hardened with full state recovery so big map opens reliably even after interrupted transitions.</div>
-    <ul class="tl-changes">
-      <li>🛣️ Edge boundary redesigned as 3D road rails (outer canvas perimeter only)</li>
-      <li>🗺️ Zone boundaries reverted to organic internal curves (no crime tape inside zones)</li>
-      <li>📱 Minimap tap open hardened: container + minimap listeners across click/touchstart/pointerup</li>
-      <li>🧯 Transition recovery: auto-resets stuck map state before opening</li>
-      <li>📐 Rule 13 docs corrected to internal zone lines only</li>
-      <li>📏 Rule 16: Cards cannot overlap painted zone ground labels</li>
-      <li>⚙️ Engine tab updated to 16 rules, stats updated to 51 versions</li>
-    </ul>
-  </div>
 
   <div class="tl-item">
     <div class="tl-dot" style="background:linear-gradient(135deg,#2196F3,#1565C0)"></div>
@@ -6489,17 +6455,17 @@ stats: `
   <h3>📊 Moodboard Stats</h3>
   <div class="stats-grid">
     <div class="stat-card"><div class="stat-num">14K×14K</div><div class="stat-label">🗺️ Canvas World Size</div></div>
-    <div class="stat-card"><div class="stat-num">~560KB</div><div class="stat-label">📦 Single File Size</div></div>
-    <div class="stat-card"><div class="stat-num">~9,200</div><div class="stat-label">💻 Lines of Code</div></div>
+    <div class="stat-card"><div class="stat-num">~525KB</div><div class="stat-label">📦 Single File Size</div></div>
+    <div class="stat-card"><div class="stat-num">~8,700</div><div class="stat-label">💻 Lines of Code</div></div>
     <div class="stat-card"><div class="stat-num">280+</div><div class="stat-label">🎨 Draggable Stickers</div></div>
     <div class="stat-card"><div class="stat-num">23</div><div class="stat-label">✨ CSS Animations</div></div>
     <div class="stat-card"><div class="stat-num">11</div><div class="stat-label">🖌️ Themes</div></div>
     <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">🎮 Interactive Games</div></div>
     <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">🔤 Google Fonts</div></div>
     <div class="stat-card"><div class="stat-num">0</div><div class="stat-label">📦 npm Dependencies</div></div>
-    <div class="stat-card"><div class="stat-num">16</div><div class="stat-label">⚙️ Engine Rules</div></div>
-    <div class="stat-card"><div class="stat-num">59</div><div class="stat-label">💬 Build Prompts</div></div>
-    <div class="stat-card"><div class="stat-num">51</div><div class="stat-label">🚀 Major Versions</div></div>
+    <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">🎉 Confetti Per Tap</div></div>
+    <div class="stat-card"><div class="stat-num">57</div><div class="stat-label">💬 Build Prompts</div></div>
+    <div class="stat-card"><div class="stat-num">47</div><div class="stat-label">🚀 Major Versions</div></div>
     <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">🥚 Easter Egg</div></div>
     <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">🏙️ Map Zones</div></div>
     <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">🔍 Map Filters</div></div>
@@ -6686,12 +6652,12 @@ credits: \`
 
 engine: `
 <div class="inv-section">
-  <h3>⚙️ Auto-Rearrange Engine v5 (16 Rules)</h3>
+  <h3>⚙️ Auto-Rearrange Engine v4 (13 Rules)</h3>
   <p style="font-size:0.8rem;color:var(--text2);line-height:1.7;margin-bottom:16px">
     The distribution engine controls how 280+ stickers are placed across the 14K×14K canvas. It runs on page load and can be triggered manually via the 🔄 button in theme settings.
   </p>
   
-  <h4 style="font-size:0.85rem;color:var(--text);margin:16px 0 10px">📏 16 Distribution Rules</h4>
+  <h4 style="font-size:0.85rem;color:var(--text);margin:16px 0 10px">📏 13 Distribution Rules</h4>
   <table class="inv-table">
     <tr><th>#</th><th>Rule</th><th>How It Works</th></tr>
     <tr><td>1</td><td>Even Spread</td><td>No area too dense or empty — golden-angle spiral + grid scatter ensures coverage</td></tr>
@@ -6701,15 +6667,14 @@ engine: `
     <tr><td>5</td><td>Boundary Padding</td><td>350px buffer near all zone edges — no cards placed in boundary strips</td></tr>
     <tr><td>6</td><td>Auto-Place New</td><td>placeNewSticker() applies all rules to any newly added card</td></tr>
     <tr><td>7</td><td>Reset Button</td><td>🔄 button in settings runs full rearrange + audit + map sync</td></tr>
-    <tr><td>8</td><td>Badge Bandages</td><td>Badges auto-stack on top-left of anchor cards, tilted, z-index 68 — ONLY exception to no-overlap</td></tr>
+    <tr><td>8</td><td>Badge Bandages</td><td>Badges auto-stack on top-left of anchor cards, tilted, z-index 68</td></tr>
     <tr><td>9</td><td>Map Sync</td><td>After arrangement, canvas → scanStickers → invalidate map cache → redraw both maps</td></tr>
     <tr><td>10</td><td>Integrity Audit</td><td>Counts DOM items, removes duplicates (same mapId), fills missing categories/zones</td></tr>
     <tr><td>11</td><td>Attribution</td><td>Every sticker gets a type (category) and zone. New category: <strong>introduction</strong></td></tr>
-    <tr><td>12</td><td><strong>STRICT Anti-Overlap</strong></td><td>Radial probe search: 12 probes per ring, expanding golden-angle rings, 100+ attempts — cards NEVER stack on each other</td></tr>
-    <tr><td>13</td><td>Zone Boundaries (Internal)</td><td>Organic curved SVG boundaries remain inside map zones only (canvas + big map + small map sync)</td></tr>
+    <tr><td>12</td><td>Anti-Overlap</td><td>Cards are nudged apart (up to 12 attempts) so they don't stack on top of each other</td></tr>
+    <tr><td>13</td><td>Organic Borders</td><td>Zone boundaries use SVG bezier curves — irregular like country/state borders, not straight lines. Synced across canvas, big map, and small map.</td></tr>
     <tr><td>14</td><td>Reserved Zones</td><td>No cards placed on ground-painted zone labels or signpost areas. These are exclusion zones during auto-rearrange.</td></tr>
-    <tr><td>15</td><td>Hollywood Signposts</td><td>Casino-style 2-pole signposts with gradient boards, wood poles, and ground shadows near zone centers.</td></tr>
-    <tr><td>16</td><td>No Cards on Zone Names</td><td>The painted diagonal zone labels (ORIGIN, WORK, etc.) are protected — no sticker can overlap them.</td></tr>
+    <tr><td>15</td><td>Hollywood Signposts</td><td>Casino-style 2-pole signposts with gradient boards, wood poles, and ground shadows. Placed near zone centers on canvas, big map, and small map.</td></tr>
   </table>
 </div>
 
@@ -6767,10 +6732,8 @@ engine: `
     <div class="fun-fact">⚡ The <strong>signature check</strong> (mapId:left:top:w:h:cat joined) avoids unnecessary map redraws — only invalidates cache when positions actually change</div>
     <div class="fun-fact">🏷️ Every sticker is auto-tagged with both a <strong>category</strong> (photo, meme, interactive, introduction...) and a <strong>zone</strong> (origin, work, portfolio, hobby, fun)</div>
     <div class="fun-fact">🔄 The rearrange button triggers: <strong>audit -> arrange -> scan -> invalidate cache -> redraw both maps</strong> — a 5-step pipeline in ~200ms</div>
-    <div class="fun-fact">🧭 Zone boundaries stay <strong>inside map zones only</strong> as organic curved SVG lines, while the canvas edge uses <strong>3D road-rail boundaries</strong> for the outer limit</div>
-    <div class="fun-fact">📐 <strong>Radial probe search</strong> tries 12 probes per ring × expanding golden-angle rings (100+ total attempts) — mathematically guarantees no card stacking</div>
-    <div class="fun-fact">🎨 Theme selection is <strong>persisted to localStorage</strong> — your board remembers its look across sessions and page reloads</div>
-    <div class="fun-fact">🗺️ Minimap uses <strong>3 event listeners</strong> (click + pointerup + touchend) with a 3-second failsafe timer to prevent the map from ever getting stuck</div>
+    <div class="fun-fact">🗺️ Zone boundaries use <strong>SVG bezier curves</strong> with random control points — creating organic, country-map-style borders instead of straight lines</div>
+    <div class="fun-fact">📐 Anti-overlap nudging tries up to <strong>12 directional attempts</strong> per card, pushing along the spiral angle to find the nearest non-overlapping position</div>
   </div>
 </div>
 `
@@ -6805,57 +6768,14 @@ let mapBootstrapped=false;
 let mapResizeTimer=null;
 let hasAutoArranged=false;
 
-// Minimap click/tap → open big map (robust and immediate)
-(function(){
-  function hardResetMapTransition(){
-    mapTransitioning=false;
-    const mmContainer=document.getElementById('mc');
-    if(mmContainer){
-      mmContainer.classList.remove('map-opening');
-      mmContainer.classList.remove('map-closing');
-    }
-  }
-
-  function openBigMapFromMini(e){
-    if(e)e.stopPropagation();
-
-    // Recover inconsistent state where mmExp got stuck true without actual expanded UI
-    if(mmExp && !mc.classList.contains('expanded') && !mc.classList.contains('map-opening')){
-      mmExp=false;
-    }
-
-    if(mmExp)return;
-    if(mapTransitioning)hardResetMapTransition();
-    toggleMap();
-  }
-
-  // Attach on both minimap and container to catch taps on overlays/rim
-  ['click','touchstart','pointerup'].forEach(evt=>{
-    mm.addEventListener(evt,openBigMapFromMini,{passive:true});
-    mc.addEventListener(evt,function(e){
-      if(mmExp)return;
-      if(e.target&&e.target.closest&&e.target.closest('#mc'))openBigMapFromMini(e);
-    },{passive:true});
-  });
-})();
-
 /* ===== TOGGLE MAP (expand / collapse) ===== */
 let _cachedDecLayer=null;
 let _cachedDecDims={w:-1,h:-1};
 let _mapOpenRafId=null;
 
 function toggleMap(){
-  if(mapTransitioning){
-    // hard reset stuck transition immediately so tap always works
-    const mmContainer=document.getElementById('mc');
-    if(mmContainer){
-      mmContainer.classList.remove('map-opening');
-      mmContainer.classList.remove('map-closing');
-    }
-    mapTransitioning=false;
-  }
+  if(mapTransitioning)return;
   mapTransitioning=true;
-  window._mapTransitionStart=Date.now();
 
   const mmContainer=document.getElementById('mc');
   if(!mmExp){
@@ -6874,14 +6794,7 @@ function toggleMap(){
     _mapOpenRafId=requestAnimationFrame(()=>{
       try{
         drawMapLayoutOnly();
-      }catch(e){
-        console.error('Map layout error:',e);
-        mapTransitioning=false;
-        mmExp=false;
-        mmContainer.classList.remove('map-opening');
-        mmContainer.classList.remove('expanded');
-        return;
-      }
+      }catch(e){console.error('Map layout error:',e);mapTransitioning=false;return;}
 
       // Phase 2: Decorations — use cached layer or build async
       _mapOpenRafId=requestAnimationFrame(()=>{
@@ -6913,7 +6826,6 @@ function toggleMap(){
             mmContainer.classList.remove('map-opening');
             mmContainer.classList.add('expanded');
             mapTransitioning=false;
-            window._mapTransitionStart=0;
             recenter();
           },500);
         });
@@ -6928,7 +6840,6 @@ function toggleMap(){
       mmExp=false;
       mmContainer.classList.remove('map-closing');
       mapTransitioning=false;
-      window._mapTransitionStart=0;
       mapZoomScale=1;
       // Redraw as small minimap — no force-rescan (stickers can't move while map is open)
       ensureMapData(false);
