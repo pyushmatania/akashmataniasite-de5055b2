@@ -82,6 +82,10 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 
 /* Kill animations/transitions on all descendants of map clones via CSS — avoids expensive JS iteration */
 .no-anim-children,.no-anim-children *{animation:none!important;transition:none!important}
+/* Kill heavy infinite animations on map decorations to prevent crashes */
+.map-dec-layer .map-cloud,.map-dec-layer .ferris-wheel-group,.map-dec-layer .windmill-blades,.map-dec-layer .map-boat{animation:none!important}
+.map-dec-layer .map-sparkle{animation:none!important}
+.map-sticker-clone,.map-sticker-clone *{animation:none!important;transition:none!important}
 /* STICKER BASE */
 .sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1))}
 .sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
@@ -1794,7 +1798,22 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <div class="zone-tint zone-tint-playground" style="left:0;top:10200px;width:6500px;height:3800px"></div>
 <div class="zone-tint zone-tint-memealley" style="left:7500px;top:6200px;width:6500px;height:7800px"></div>
-<!-- Zone dividers removed -->
+<!-- Zone boundary dotted lines (synced with big map zones) -->
+<!-- Horizontal: Origin/Work top → Portfolio/Hobby mid at y≈5800 -->
+<div class="zone-divider h origin" style="left:200px;top:5800px;width:13600px"></div>
+<!-- Horizontal: Portfolio/Hobby → Fun/Hobby bottom at y≈10200 -->
+<div class="zone-divider h fun" style="left:200px;top:10200px;width:13600px"></div>
+<!-- Vertical: Origin ↔ Work at x≈7500 (top half) -->
+<div class="zone-divider v work" style="left:7500px;top:200px;height:5600px"></div>
+<!-- Vertical: Portfolio ↔ Fun (bottom half) at x≈7500 -->
+<div class="zone-divider v fun" style="left:7500px;top:5800px;height:8200px"></div>
+
+<!-- Zone signpost markers (centered in each zone) -->
+<div class="zone-signpost-marker" style="left:2900px;top:2800px;background:rgba(76,175,80,0.85)">📸 ORIGIN</div>
+<div class="zone-signpost-marker" style="left:10500px;top:2800px;background:rgba(229,57,53,0.85)">🎯 WORK</div>
+<div class="zone-signpost-marker" style="left:2900px;top:8000px;background:rgba(66,165,245,0.85)">🚀 PORTFOLIO</div>
+<div class="zone-signpost-marker" style="left:3150px;top:12000px;background:rgba(255,152,0,0.85)">🎮 HOBBY</div>
+<div class="zone-signpost-marker" style="left:10500px;top:10000px;background:rgba(171,71,188,0.85)">😂 FUN</div>
 
 <!-- ===== YOUR PHOTOS ===== -->
 
@@ -2454,14 +2473,14 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <!-- ===== Surrounding intro stickers — quirky & fun (all within 450px of intro card) ===== -->
 <!-- Big emojis — orbit close to card edges -->
-<div class="sticker sticker-emoji huge auto-float" data-anim="heartbeat" data-zone="hub" style="left:6560px;top:6340px">✨</div>
-<div class="sticker sticker-emoji huge auto-bounce" data-anim="float" data-zone="hub" style="left:7350px;top:6370px">🚀</div>
-<div class="sticker sticker-emoji big auto-float v2" data-anim="dance" data-zone="hub" style="left:6520px;top:7380px">🎬</div>
-<div class="sticker sticker-emoji big auto-pulse" data-anim="spin" data-zone="hub" style="left:7360px;top:7300px">💡</div>
-<div class="sticker sticker-emoji auto-float" data-anim="tada" data-zone="hub" style="left:7470px;top:6700px">🤙</div>
+<div class="sticker sticker-emoji huge" data-anim="heartbeat" data-zone="hub" style="left:6560px;top:6340px">✨</div>
+<div class="sticker sticker-emoji huge" data-anim="float" data-zone="hub" style="left:7350px;top:6370px">🚀</div>
+<div class="sticker sticker-emoji big" data-anim="dance" data-zone="hub" style="left:6520px;top:7380px">🎬</div>
+<div class="sticker sticker-emoji big" data-anim="spin" data-zone="hub" style="left:7360px;top:7300px">💡</div>
+<div class="sticker sticker-emoji" data-anim="tada" data-zone="hub" style="left:7470px;top:6700px">🤙</div>
 <div class="sticker sticker-emoji" data-anim="bounce" data-zone="hub" style="left:6380px;top:7180px">🎧</div>
 <div class="sticker sticker-emoji big" data-anim="jelly" data-zone="hub" style="left:7280px;top:6220px">⚡</div>
-<div class="sticker sticker-emoji auto-float v2" data-anim="flip" data-zone="hub" style="left:6340px;top:6560px">🌙</div>
+<div class="sticker sticker-emoji" data-anim="flip" data-zone="hub" style="left:6340px;top:6560px">🌙</div>
 
 <!-- Badges — tight ring around the card -->
 <div class="sticker sticker-badge" data-anim="tada" data-zone="hub" style="left:6300px;top:7050px;border-color:var(--accent);color:var(--accent)">8+ YEARS SHIPPING 🚢</div>
@@ -2546,7 +2565,7 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-washi" data-zone="hub" style="left:6600px;top:7560px;transform:rotate(-5deg);background:repeating-linear-gradient(45deg,rgba(233,30,99,0.15),rgba(233,30,99,0.15) 4px,rgba(233,30,99,0.06) 4px,rgba(233,30,99,0.06) 8px);width:230px"></div>
 
 <!-- Skill Ping Card (dark, techy — left side) -->
-<div class="sticker sticker-skillping auto-glow" data-zone="hub" style="left:6300px;top:7100px;transform:rotate(2deg)">
+<div class="sticker sticker-skillping" data-zone="hub" style="left:6300px;top:7100px;transform:rotate(2deg)">
   <div class="sp-title">SKILL STACK</div>
   <div class="sp-tags">
     <span class="sp-tag blue">Product Strategy</span>
@@ -2561,7 +2580,7 @@ body.map-expanded .scroll-counter{display:none!important}
 </div>
 
 <!-- Vibe Check Card (purple galaxy, clickable) -->
-<div class="sticker sticker-vibecheck auto-float v2" data-zone="hub" onclick="vibeCheck(this,event)" style="left:7300px;top:7650px;transform:rotate(-3deg)">
+<div class="sticker sticker-vibecheck" data-zone="hub" onclick="vibeCheck(this,event)" style="left:7300px;top:7650px;transform:rotate(-3deg)">
   <div class="vc-label">current vibe</div>
   <span class="vc-emoji" id="vcEmoji">🔥</span>
   <div class="vc-text" id="vcText">Ship mode activated</div>
@@ -2570,21 +2589,21 @@ body.map-expanded .scroll-counter{display:none!important}
 </div>
 
 <!-- Ribbon banners — decorative auto-animated -->
-<div class="sticker sticker-ribbon auto-wiggle" data-zone="hub" style="left:6580px;top:7200px;transform:rotate(-4deg);--neon:#FFD54F;--neon2:#FF8F00">
+<div class="sticker sticker-ribbon" data-zone="hub" style="left:6580px;top:7200px;transform:rotate(-4deg);--neon:#FFD54F;--neon2:#FF8F00">
   <div class="rib-text">OPEN TO WORK 🤝</div>
   <div class="rib-sub">Remote · Hybrid · Full-time</div>
 </div>
 
-<div class="sticker sticker-ribbon auto-float" data-zone="hub" style="left:7280px;top:7050px;transform:rotate(3deg);--neon:#A5D6A7;--neon2:#43A047">
+<div class="sticker sticker-ribbon" data-zone="hub" style="left:7280px;top:7050px;transform:rotate(3deg);--neon:#A5D6A7;--neon2:#43A047">
   <div class="rib-text">CHAI CERTIFIED ☕</div>
   <div class="rib-sub">since 2009</div>
 </div>
 
 <!-- Auto-floating large emojis near intro card -->
-<div class="sticker sticker-emoji huge auto-float" data-zone="hub" style="left:6470px;top:6350px;font-size:2.4rem">🧡</div>
-<div class="sticker sticker-emoji auto-bounce" data-zone="hub" style="left:7490px;top:7250px;font-size:1.8rem">💫</div>
-<div class="sticker sticker-emoji auto-pulse" data-zone="hub" style="left:6360px;top:7430px;font-size:2rem">🎪</div>
-<div class="sticker sticker-emoji auto-float v2" data-zone="hub" style="left:7560px;top:6820px;font-size:2rem">🌈</div>
+<div class="sticker sticker-emoji huge" data-zone="hub" style="left:6470px;top:6350px;font-size:2.4rem">🧡</div>
+<div class="sticker sticker-emoji" data-zone="hub" style="left:7490px;top:7250px;font-size:1.8rem">💫</div>
+<div class="sticker sticker-emoji" data-zone="hub" style="left:6360px;top:7430px;font-size:2rem">🎪</div>
+<div class="sticker sticker-emoji" data-zone="hub" style="left:7560px;top:6820px;font-size:2rem">🌈</div>
 
 <!-- ===== ORIGIN ZONE INTRO CARD ===== -->
 <div class="sticker zone-intro-card zone-origin" data-type="zone-intro" data-zone="origin" style="left:2890px;top:2790px;transform:rotate(-1deg)">
@@ -7088,8 +7107,13 @@ function drawMap(){
 
 // Render real sticker clones for items visible in the map viewport
 let _cloneRafId=null;
+let _lastCloneRenderTime=0;
 function renderVisibleClones(sc,ox,oy,cw,ch){
   if(!sc||!mapCanvas)return;
+  // Debounce: skip if called within 100ms of last render
+  const now=performance.now();
+  if(now-_lastCloneRenderTime<100){return;}
+  _lastCloneRenderTime=now;
   if(_cloneRafId){cancelAnimationFrame(_cloneRafId);_cloneRafId=null;}
   // Clear existing clones
   mapCanvas.querySelectorAll('.mi,.map-sticker-clone').forEach(el=>el.remove());
@@ -7125,16 +7149,18 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     for(;idx<end;idx++){
       const{d,renderX,renderY,cloneScale,iw,ih}=visibleItems[idx];
       let clone;
-      // Cap rendered clone size to prevent oversized items
-      const maxCloneW=Math.min(d.w,300);
-      const maxCloneH=Math.min(d.h,300);
-      const adjustedScale=cloneScale*(d.w>300?d.w/300:1);
+      // Cap rendered clone size to prevent oversized items crashing the map
+      const MAX_CLONE_DIM=250;
+      const cappedW=Math.min(d.w,MAX_CLONE_DIM);
+      const cappedH=Math.min(d.h,MAX_CLONE_DIM);
+      const sizeRatio=cappedW/Math.max(d.w,1);
       if(d.ref){
         clone=d.ref.cloneNode(true);
         clone.classList.add('mi','map-sticker-clone');
         const rot=(d.ref.style.transform||'').match(/rotate\([^)]+\)/);
-        const transform=(rot?rot[0]+' ':'')+'scale('+cloneScale+')';
-        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+d.w+'px;height:'+d.h+'px;max-width:none;max-height:none;transform:'+transform+';transform-origin:0 0;z-index:7;cursor:pointer;animation:none;transition:none;filter:none;pointer-events:auto;overflow:hidden';
+        const finalScale=cloneScale/sizeRatio;
+        const transform=(rot?rot[0]+' ':'')+'scale('+finalScale+')';
+        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+cappedW+'px;height:'+cappedH+'px;max-width:'+MAX_CLONE_DIM+'px;max-height:'+MAX_CLONE_DIM+'px;transform:'+transform+';transform-origin:0 0;z-index:7;cursor:pointer;animation:none!important;transition:none!important;filter:none;pointer-events:auto;overflow:hidden';
         clone.removeAttribute('data-anim');
         clone.removeAttribute('data-splash');
         clone.removeAttribute('data-contra');
