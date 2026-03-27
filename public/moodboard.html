@@ -9502,56 +9502,58 @@ function ensureCompanionStickers(force){
       '</div></div>';
   }
 
+  const dragHandleSvg='<div class="sticker-drag-handle" style="position:absolute;top:6px;right:6px;z-index:100;width:28px;height:28px;border-radius:6px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;cursor:grab;opacity:0.5"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" style="color:rgba(255,255,255,0.6)"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>';
+
   const zoneItems={
     work:[
-      {dx:220,dy:-250,html:polaroidPhoto('/images/akash-photo.webp','the PM look 😎','4deg')},
-      {dx:-300,dy:-120,html:skillStackCard('Skill Stack','🛠️',['Product Strategy','0→1','AI/ML','Web3','Growth','Research','#PRD'],['#E53935','#FF9800','#4CAF50','#2196F3','#9C27B0','#00BCD4','#795548'])},
-      {dx:240,dy:120,html:meterCard('👆','TAP METER','#1a1a2e','#0f3460'),kind:'meter'},
-      {dx:-275,dy:160,html:quoteCard('Ship fast, learn faster.','work mode','#FFF5F0','#C62828')},
-      {dx:250,dy:-20,html:memeCard('SPRINT REVIEW','"it works on my machine" 🤡','#FFE8E0')},
-      {dx:-255,dy:-260,html:'<div class="zc-sticky coral" style="--r:-6deg">standup mood:<br>almost done™</div>'},
-      {dx:-70,dy:-285,html:'<div class="zc-badge coral">⚡ Ships on Fridays</div>'},
-      {dx:-40,dy:248,html:flipCard('💼','TAP TO FLIP','First product crashed every Tuesday. We still shipped.','#FFE8E0','#FFF0EA'),kind:'flip'}
+      {dx:420,dy:-80,html:polaroidPhoto('/images/akash-suit.jpeg','the PM look 😎','4deg')},
+      {dx:-420,dy:-60,html:skillStackCard('Skill Stack','🛠️',['Product Strategy','0→1','AI/ML','Web3','Growth','Research','PRDs'],['#E53935','#FF9800','#4CAF50','#2196F3','#9C27B0','#00BCD4','#795548'])},
+      {dx:430,dy:280,html:dragHandleSvg+meterCard('👆','TAP METER','#1a1a2e','#0f3460'),kind:'meter'},
+      {dx:-410,dy:260,html:quoteCard('Ship fast, learn faster.','work mode','#263238','#64B4FF')},
+      {dx:420,dy:120,html:memeCard('SPRINT REVIEW','"it works on my machine" 🤡','#1a2332')},
+      {dx:-400,dy:-240,html:'<div class="zc-sticky" style="--r:-6deg;background:#263238;color:#64B4FF;border-bottom:3px solid rgba(100,180,255,0.2)">standup mood:<br>almost done™</div>'},
+      {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(100,180,255,0.12);color:#64B4FF;border:1px solid rgba(100,180,255,0.25)">⚡ Ships on Fridays</div>'},
+      {dx:-20,dy:360,html:dragHandleSvg+flipCard('💼','TAP TO FLIP','First product crashed every Tuesday. We still shipped.','#1a2332','#263238'),kind:'flip'}
     ],
     portfolio:[
-      {dx:-285,dy:-120,html:skillStackCard('Build Stack','💻',['React','TS','Node','Web3','Figma','AI'],['#61DAFB','#3178C6','#339933','#F6851B','#F24E1E','#AB47BC'])},
-      {dx:245,dy:-130,html:'<div class="zc-mini-card indigo" style="font-family:monospace;font-size:0.65rem">$ git log --oneline<br>ship v2 🚀<br>fix prod 🔥<br>"final" final fix</div>'},
-      {dx:250,dy:120,html:flipCard('🚀','SCORECARD','3 founded · 2 pivoted · 1 profitable','#EDE7F6','#F3E5F5'),kind:'flip'},
-      {dx:-270,dy:165,html:memeCard('DEV VS PROD','works 😎 → breaks 💀','#EDE7F6')},
-      {dx:5,dy:-300,html:'<div class="zc-badge indigo">🔗 EnterCircles + Recess</div>'},
-      {dx:-70,dy:250,html:meterCard('🎯','SHIP COUNT','#2E1065','#581C87'),kind:'meter'},
-      {dx:252,dy:-10,html:'<div class="zc-sticky indigo" style="--r:4deg">TODO: ship · iterate · repeat</div>'},
-      {dx:-270,dy:-270,html:'<div class="zc-emoji-float" style="font-size:2.5rem">⚡</div>'}
+      {dx:-430,dy:-60,html:skillStackCard('Build Stack','💻',['React','TS','Node','Web3','Figma','AI'],['#61DAFB','#3178C6','#339933','#F6851B','#F24E1E','#AB47BC'])},
+      {dx:440,dy:-80,html:'<div class="zc-mini-card" style="background:#1a1a2e;color:#B39DDB;border:1.5px solid rgba(126,87,194,0.2);font-family:monospace;font-size:0.65rem;border-radius:14px;padding:12px 14px;max-width:160px">$ git log --oneline<br>ship v2 🚀<br>fix prod 🔥<br>"final" final fix</div>'},
+      {dx:440,dy:260,html:dragHandleSvg+flipCard('🚀','SCORECARD','3 founded · 2 pivoted · 1 profitable','#1a1a2e','#2E1065'),kind:'flip'},
+      {dx:-420,dy:260,html:memeCard('DEV VS PROD','works 😎 → breaks 💀','#1a1a2e')},
+      {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(126,87,194,0.12);color:#B39DDB;border:1px solid rgba(126,87,194,0.25)">🔗 EnterCircles + Recess</div>'},
+      {dx:-20,dy:360,html:dragHandleSvg+meterCard('🎯','SHIP COUNT','#2E1065','#581C87'),kind:'meter'},
+      {dx:440,dy:100,html:'<div class="zc-sticky" style="--r:4deg;background:#1a1a2e;color:#B39DDB;border-bottom:3px solid rgba(126,87,194,0.2)">TODO: ship · iterate · repeat</div>'},
+      {dx:-420,dy:-240,html:'<div class="zc-emoji-float" style="font-size:2.5rem">⚡</div>'}
     ],
     origin:[
-      {dx:220,dy:-245,html:polaroidPhoto('/images/akash-photo.webp','chapter zero 📸','-3deg')},
-      {dx:-260,dy:-120,html:'<div class="zc-mini-card mint">📍 Jeypore → Bhubaneswar → Bengaluru<br>small town dreams, big city hustle</div>'},
-      {dx:238,dy:105,html:flipCard('🧒','FUN FACT','Wrote first code at 15. It could only add.','#E8F5E9','#F0FFF4'),kind:'flip'},
-      {dx:-250,dy:150,html:quoteCard('Started curious, stayed curious.','#life','#F0FFF4','#1B5E20')},
-      {dx:2,dy:-292,html:'<div class="zc-badge mint">🌱 Odisha roots</div>'},
-      {dx:-250,dy:-265,html:'<div class="zc-sticky mint" style="--r:5deg">Class of \'20 🎓</div>'},
-      {dx:5,dy:250,html:memeCard('FAMILY Q','"what do product managers do?"','#E8F5E9')},
-      {dx:242,dy:-15,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🏡</div>'}
+      {dx:400,dy:-120,html:polaroidPhoto('/images/akash-photo.webp','chapter zero 📸','-3deg')},
+      {dx:-400,dy:-60,html:'<div class="zc-mini-card" style="background:#1B3B20;color:#A5D6A7;border:1.5px solid rgba(76,175,80,0.2);border-radius:14px;padding:12px 14px;max-width:160px;font-family:var(--font-hand);font-size:0.78rem;line-height:1.4">📍 Jeypore → Bhubaneswar → Bengaluru<br>small town dreams, big city hustle</div>'},
+      {dx:410,dy:220,html:dragHandleSvg+flipCard('🧒','FUN FACT','Wrote first code at 15. It could only add.','#1B3B20','#2E4A33'),kind:'flip'},
+      {dx:-400,dy:240,html:quoteCard('Started curious, stayed curious.','#life','#1B3B20','#A5D6A7')},
+      {dx:0,dy:-330,html:'<div class="zc-badge" style="background:rgba(76,175,80,0.12);color:#81C784;border:1px solid rgba(76,175,80,0.25)">🌱 Odisha roots</div>'},
+      {dx:-390,dy:-240,html:'<div class="zc-sticky" style="--r:5deg;background:#1B3B20;color:#81C784;border-bottom:3px solid rgba(76,175,80,0.2)">Class of \'20 🎓</div>'},
+      {dx:0,dy:340,html:memeCard('FAMILY Q','"what do product managers do?"','#1B3B20')},
+      {dx:410,dy:40,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🏡</div>'}
     ],
     hobby:[
-      {dx:-290,dy:-120,html:skillStackCard('Now Playing','🎮',['Elden Ring','Valorant','Civ VI','FIFA','Music','Travel'],['#E53935','#FF5252','#FFB300','#66BB6A','#42A5F5','#8D6E63'])},
-      {dx:235,dy:-120,html:meterCard('🎯','HEADSHOT','#3E2723','#4E342E'),kind:'meter'},
-      {dx:-270,dy:160,html:flipCard('🎵','MUSIC TASTE','60% lo-fi · 25% Bollywood · 10% EDM','#FFF8E1','#FFF3E0'),kind:'flip'},
-      {dx:245,dy:160,html:memeCard('ONE MORE GAME','4 hours later... ⏰','#FFF3E0')},
-      {dx:0,dy:-290,html:'<div class="zc-badge amber">📷 15 Cities Explored</div>'},
-      {dx:-255,dy:-270,html:'<div class="zc-sticky amber" style="--r:-4deg">Player 1 Ready 🕹️</div>'},
-      {dx:235,dy:-8,html:quoteCard('Mountains > beaches, always.','#travel','#FFF8E1','#E65100')},
-      {dx:0,dy:248,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🎧</div>'}
+      {dx:-430,dy:-60,html:skillStackCard('Now Playing','🎮',['Elden Ring','Valorant','Civ VI','FIFA','Music','Travel'],['#E53935','#FF5252','#FFB300','#66BB6A','#42A5F5','#8D6E63'])},
+      {dx:420,dy:-80,html:dragHandleSvg+meterCard('🎯','HEADSHOT','#3E2723','#4E342E'),kind:'meter'},
+      {dx:-420,dy:260,html:dragHandleSvg+flipCard('🎵','MUSIC TASTE','60% lo-fi · 25% Bollywood · 10% EDM','#3E2723','#4E342E'),kind:'flip'},
+      {dx:430,dy:260,html:memeCard('ONE MORE GAME','4 hours later... ⏰','#3E2723')},
+      {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(255,152,0,0.12);color:#FFB74D;border:1px solid rgba(255,152,0,0.25)">📷 15 Cities Explored</div>'},
+      {dx:-400,dy:-240,html:'<div class="zc-sticky" style="--r:-4deg;background:#3E2723;color:#FFB74D;border-bottom:3px solid rgba(255,152,0,0.2)">Player 1 Ready 🕹️</div>'},
+      {dx:420,dy:100,html:quoteCard('Mountains > beaches, always.','#travel','#3E2723','#FFB74D')},
+      {dx:0,dy:340,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🎧</div>'}
     ],
     fun:[
-      {dx:-280,dy:-120,html:memeCard('NEW FEATURE IDEA','"quick 5 min change" 💀','#FCE4EC')},
-      {dx:240,dy:-125,html:memeCard('STARTUP BINGO','pivot · synergy · disrupt 🤡','#FFF0F5')},
-      {dx:-265,dy:140,html:flipCard('🎰','RANDOM EXCUSE','Works on my machine. Become my machine.','#FCE4EC','#FFF0F5'),kind:'flip'},
-      {dx:240,dy:140,html:meterCard('😂','LAUGH METER','#880E4F','#AD1457'),kind:'meter'},
-      {dx:0,dy:-292,html:'<div class="zc-badge pink">🔥 Meme Lord</div>'},
-      {dx:-255,dy:-270,html:'<div class="zc-sticky pink" style="--r:-5deg">git commit -m "please work" 🙏</div>'},
-      {dx:240,dy:-8,html:quoteCard('Debugging: removing bugs from code you wrote to add bugs.','#fun','#FFF0F5','#880E4F')},
-      {dx:0,dy:250,html:'<div class="zc-emoji-float" style="font-size:2.7rem">🤌</div>'}
+      {dx:-420,dy:-60,html:memeCard('NEW FEATURE IDEA','"quick 5 min change" 💀','#1a1a1a')},
+      {dx:430,dy:-80,html:memeCard('GOD OF WAR QUOTE','"Do not be sorry. Be better." — Kratos 🪓','#2d1a00')},
+      {dx:-410,dy:260,html:dragHandleSvg+flipCard('🏎️','DREAM GARAGE','GT-R · Supra · M3 · 911 — in that order','#2d1a00','#1a1a1a'),kind:'flip'},
+      {dx:430,dy:260,html:dragHandleSvg+meterCard('⚔️','BOSS KILLS','#4a0000','#8b0000'),kind:'meter'},
+      {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(255,69,0,0.12);color:#FF6347;border:1px solid rgba(255,69,0,0.25)">🔥 Meme Lord</div>'},
+      {dx:-400,dy:-240,html:'<div class="zc-sticky" style="--r:-5deg;background:#1a1a1a;color:#FF6347;border-bottom:3px solid rgba(255,69,0,0.2)">git commit -m "please work" 🙏</div>'},
+      {dx:420,dy:100,html:quoteCard('In the darkest times, hope is something you give yourself.','Kratos','#1a1a1a','#FF6347')},
+      {dx:0,dy:340,html:'<div style="font-size:2.7rem;text-align:center">🪓</div>'}
     ]
   };
 
@@ -9567,6 +9569,7 @@ function ensureCompanionStickers(force){
     if(!a)return;
     const el=document.createElement('div');
     el.className='sticker zic-companion';
+    if(item.kind==='meter'||item.kind==='flip') el.className+=' has-drag-handle';
     el.dataset.zone=zone;
     el.dataset.locked='1';
     el.dataset.type=item.kind==='meter'||item.kind==='flip'?'interactive':'other';
@@ -9576,16 +9579,18 @@ function ensureCompanionStickers(force){
     el.style.top=(cy+item.dy)+'px';
     el.innerHTML=item.html;
     el.style.animationDelay=(Math.random()*2).toFixed(1)+'s';
+    el.style.pointerEvents='auto';
 
     if(item.kind==='meter'){
       const meter=el.querySelector('.zc-meter');
       if(meter){
-        meter.addEventListener('click',ev=>{
-          ev.stopPropagation();
-          const n=(parseInt(meter.dataset.count||'0')+1);
-          meter.dataset.count=String(n);
-          const val=meter.querySelector('.zc-meter-val');
-          const bar=meter.querySelector('.zc-meter-bar');
+        meter.style.pointerEvents='auto';
+        meter.addEventListener('click',function(ev){
+          ev.stopPropagation();ev.preventDefault();
+          const n=(parseInt(this.dataset.count||'0')+1);
+          this.dataset.count=String(n);
+          const val=this.querySelector('.zc-meter-val');
+          const bar=this.querySelector('.zc-meter-bar');
           if(val)val.textContent=String(n);
           if(bar)bar.style.width=Math.min(n*8,100)+'%';
         });
@@ -9595,9 +9600,10 @@ function ensureCompanionStickers(force){
     if(item.kind==='flip'){
       const flip=el.querySelector('.zc-flip-card');
       if(flip){
-        flip.addEventListener('click',ev=>{
-          ev.stopPropagation();
-          flip.classList.toggle('flipped');
+        flip.style.pointerEvents='auto';
+        flip.addEventListener('click',function(ev){
+          ev.stopPropagation();ev.preventDefault();
+          this.classList.toggle('flipped');
         });
       }
     }
