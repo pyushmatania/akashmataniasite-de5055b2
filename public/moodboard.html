@@ -6807,29 +6807,36 @@ let hasAutoArranged=false;
 
 // Minimap click/tap → open big map (robust and immediate)
 (function(){
+  function hardResetMapTransition(){
+    mapTransitioning=false;
+    const mmContainer=document.getElementById('mc');
+    if(mmContainer){
+      mmContainer.classList.remove('map-opening');
+      mmContainer.classList.remove('map-closing');
+    }
+  }
+
   function openBigMapFromMini(e){
     if(e)e.stopPropagation();
-    if(mmExp)return;
-    if(mapTransitioning){
-      mapTransitioning=false;
-      const mmContainer=document.getElementById('mc');
-      if(mmContainer){
-        mmContainer.classList.remove('map-opening');
-        mmContainer.classList.remove('map-closing');
-      }
+
+    // Recover inconsistent state where mmExp got stuck true without actual expanded UI
+    if(mmExp && !mc.classList.contains('expanded') && !mc.classList.contains('map-opening')){
+      mmExp=false;
     }
+
+    if(mmExp)return;
+    if(mapTransitioning)hardResetMapTransition();
     toggleMap();
   }
 
-  mm.addEventListener('click',openBigMapFromMini,{passive:true});
-  mm.addEventListener('touchstart',openBigMapFromMini,{passive:true});
-  mm.addEventListener('pointerup',openBigMapFromMini,{passive:true});
-
-  // Fallback in case pointer events are captured by child overlay
-  mc.addEventListener('click',function(e){
-    if(mmExp)return;
-    if(e.target&&e.target.closest&&e.target.closest('#mm'))openBigMapFromMini(e);
-  },{passive:true});
+  // Attach on both minimap and container to catch taps on overlays/rim
+  ['click','touchstart','pointerup'].forEach(evt=>{
+    mm.addEventListener(evt,openBigMapFromMini,{passive:true});
+    mc.addEventListener(evt,function(e){
+      if(mmExp)return;
+      if(e.target&&e.target.closest&&e.target.closest('#mc'))openBigMapFromMini(e);
+    },{passive:true});
+  });
 })();
 
 /* ===== TOGGLE MAP (expand / collapse) ===== */
