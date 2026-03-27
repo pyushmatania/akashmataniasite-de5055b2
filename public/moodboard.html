@@ -7243,6 +7243,15 @@ function makeMapCloneNode(d){
     clone.classList.remove('dragging');
     clone.classList.add('no-anim-children');
     clone.querySelectorAll('[draggable="true"]').forEach(el=>el.removeAttribute('draggable'));
+    // Remove drag handles from map clones
+    clone.querySelectorAll('.sticker-drag-handle').forEach(h=>h.remove());
+    // Add glowing border for zone intro cards on map
+    if(d.ref.classList.contains('zone-intro-creative')){
+      const zone=d.ref.dataset.zone;
+      const glowColors={origin:'rgba(76,175,80,0.7)',work:'rgba(229,57,53,0.7)',portfolio:'rgba(66,165,245,0.7)',hobby:'rgba(255,152,0,0.7)',fun:'rgba(171,71,188,0.7)'};
+      clone.classList.add('map-intro-glow');
+      clone.style.setProperty('--glow-color',glowColors[zone]||'rgba(201,169,110,0.6)');
+    }
   } else {
     clone=document.createElement('div');
     clone.style.background=d.bg;
