@@ -7345,11 +7345,13 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
       const{d,renderX,renderY,cloneScale,iw,ih}=visibleItems[idx];
       let clone;
       if(d.ref){
+        // Skip signpost clones on map
+        if(d.ref.classList.contains('zone-signpost')){idx++;continue;}
         clone=d.ref.cloneNode(true);
         clone.classList.add('mi','map-sticker-clone');
         const rot=(d.ref.style.transform||'').match(/rotate\([^)]+\)/);
         const transform=(rot?rot[0]+' ':'')+'scale('+cloneScale+')';
-        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+d.w+'px;height:'+d.h+'px;max-width:none;max-height:none;transform:'+transform+';transform-origin:0 0;z-index:'+(d.ref.classList.contains('zone-signpost')?'5':'7')+';cursor:pointer;animation:none;transition:none;filter:none;pointer-events:auto';
+        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+d.w+'px;height:'+d.h+'px;max-width:none;max-height:none;transform:'+transform+';transform-origin:0 0;z-index:7;cursor:pointer;animation:none;transition:none;filter:none;pointer-events:auto';
         clone.removeAttribute('data-anim');
         clone.removeAttribute('data-splash');
         clone.removeAttribute('data-contra');
