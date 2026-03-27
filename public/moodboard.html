@@ -7865,7 +7865,13 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
     walkingInProgress=false;
     toggleMap();
     setTimeout(()=>{
-      // Center selected item in viewport after returning to moodboard
+      // Center viewport on the SIDE of the sticker (not on top)
+      // Position viewport so sticker is visible but bitmoji arrives beside it
+      const stickerW=stickerRef?stickerRef.offsetWidth||200:200;
+      const stickerH=stickerRef?stickerRef.offsetHeight||150:150;
+      // Navigate to the sticker's left side (offset by sticker width + margin)
+      const sideX=worldX-stickerW/2-100; // left side of sticker
+      const sideY=worldY; // same vertical
       centerMoodboardOn(worldX,worldY,'smooth');
       // Multiple resyncs to ensure small map catches the final scroll position
       setTimeout(()=>{
