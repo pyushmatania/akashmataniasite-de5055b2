@@ -7088,26 +7088,29 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     for(;idx<end;idx++){
       const{d,renderX,renderY,cloneScale,iw,ih}=visibleItems[idx];
       let clone;
+      // Cap rendered clone size to prevent oversized items
+      const maxCloneW=Math.min(d.w,300);
+      const maxCloneH=Math.min(d.h,300);
+      const adjustedScale=cloneScale*(d.w>300?d.w/300:1);
       if(d.ref){
-        // Skip signpost clones on map
-        if(d.ref.classList.contains('zone-signpost')){continue;}
         clone=d.ref.cloneNode(true);
         clone.classList.add('mi','map-sticker-clone');
         const rot=(d.ref.style.transform||'').match(/rotate\([^)]+\)/);
         const transform=(rot?rot[0]+' ':'')+'scale('+cloneScale+')';
-        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+d.w+'px;height:'+d.h+'px;max-width:none;max-height:none;transform:'+transform+';transform-origin:0 0;z-index:7;cursor:pointer;animation:none;transition:none;filter:none;pointer-events:auto';
+        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+d.w+'px;height:'+d.h+'px;max-width:none;max-height:none;transform:'+transform+';transform-origin:0 0;z-index:7;cursor:pointer;animation:none;transition:none;filter:none;pointer-events:auto;overflow:hidden';
         clone.removeAttribute('data-anim');
         clone.removeAttribute('data-splash');
         clone.removeAttribute('data-contra');
         clone.removeAttribute('onclick');
         clone.classList.remove('dragging');
-        // Disable animations on children — use CSS class instead of iterating all descendants
         clone.classList.add('no-anim-children');
       } else {
         clone=document.createElement('div');
         clone.className='mi';
-        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+Math.max(iw,8)+'px;height:'+Math.max(ih,6)+'px;background:'+d.bg+';border-radius:'+d.radius+';z-index:7;cursor:pointer;'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
-        if(d.emoji){const l=document.createElement('span');l.textContent=d.emoji;l.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:'+Math.max(Math.min(Math.max(iw,8)*0.6,20),8)+'px;pointer-events:none';clone.appendChild(l)}
+        const renderW=Math.max(Math.min(iw,60),4);
+        const renderH=Math.max(Math.min(ih,60),3);
+        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+renderW+'px;height:'+renderH+'px;background:'+d.bg+';border-radius:'+d.radius+';z-index:7;cursor:pointer;'+(d.border?'border:'+d.border+';':'')+(d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
+        if(d.emoji){const l=document.createElement('span');l.textContent=d.emoji;l.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:'+Math.max(Math.min(renderW*0.6,16),6)+'px;pointer-events:none';clone.appendChild(l)}
       }
       clone.addEventListener('click',ev=>{
         ev.stopPropagation();
