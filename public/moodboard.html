@@ -7964,12 +7964,11 @@ mmInner.addEventListener('pointermove',ev=>{
 });
 mmInner.addEventListener('pointercancel',()=>{clearTimeout(longPressTimer);longPressTimer=null});
 
-// Single tap on big map blank area = walk to exact tapped world coordinate
+// Rule: Big map blank area clicks DISABLED — only sticker clicks allowed
+// (prevents character from wandering to empty spaces)
 mapCanvas.addEventListener('click',ev=>{
-  if(!mmExp||walkingInProgress)return;
-  if(ev.target.closest('.sticker'))return;
-  const target=mapClientToWorld(ev.clientX,ev.clientY);
-  walkBitmojiTo(target.x,target.y);
+  // Do nothing on blank area — only sticker clones trigger navigation
+  ev.stopPropagation();
 });
 
 
