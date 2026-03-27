@@ -9209,6 +9209,8 @@ function bootstrapMap(forceRescan){
       autoArrangeMoodboardItems();
       hasAutoArranged=true;
     }
+    // Keep companion stickers attached to intro cards after auto-arrange
+    if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
     normalizeAllStickerBounds();
     ensureMapData(forceRescan);
     drawMap();
