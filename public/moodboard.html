@@ -6530,15 +6530,11 @@ function addMapDecorations(cw, ch){
    addDiv('map-zone-tint','left:2%;top:74%;width:45%;height:24%;border-radius:30%;background:radial-gradient(ellipse,rgba(255,152,0,0.32),transparent 65%);z-index:0;filter:blur(2px)');
    addDiv('map-zone-tint','left:55%;top:46%;width:43%;height:52%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.28),transparent 65%);z-index:0;filter:blur(2px)');
 
-   // === ZONE BOUNDARY DOTTED LINES (glowing) ===
-   // Horizontal line between Origin/Work (top) and Portfolio/Hobby (mid) — y≈40%
-   const zoneLine1=addDiv('map-zone-line','left:4%;top:40.5%;width:90%;height:0;border-top:3px dotted rgba(76,175,80,0.6);z-index:3;filter:drop-shadow(0 0 6px rgba(76,175,80,0.5)) drop-shadow(0 0 12px rgba(76,175,80,0.3));transform:rotate(-0.5deg)');
-   // Horizontal line between Portfolio/Hobby and Fun — y≈74%
-    const zoneLine2=addDiv('map-zone-line','left:3%;top:73%;width:92%;height:0;border-top:3px dotted rgba(255,152,0,0.6);z-index:3;filter:drop-shadow(0 0 6px rgba(255,152,0,0.5)) drop-shadow(0 0 12px rgba(255,152,0,0.3));transform:rotate(0.3deg)');
-   // Vertical line between Origin and Work — x≈55%
-    const zoneLine3=addDiv('map-zone-line','left:47.8%;top:3%;width:0;height:38%;border-left:3px dotted rgba(229,57,53,0.6);z-index:3;filter:drop-shadow(0 0 6px rgba(229,57,53,0.5)) drop-shadow(0 0 12px rgba(229,57,53,0.3));transform:rotate(0.4deg)');
-   // Vertical line between Portfolio and Fun/Meme — x≈55%
-    const zoneLine4=addDiv('map-zone-line','left:47.8%;top:40.5%;width:0;height:57.5%;border-left:3px dotted rgba(171,71,188,0.6);z-index:3;filter:drop-shadow(0 0 6px rgba(171,71,188,0.5)) drop-shadow(0 0 12px rgba(171,71,188,0.3));transform:rotate(-0.3deg)');
+   // === ZONE BOUNDARY LINES — thick, visible, glowing ===
+   const zoneLine1=addDiv('map-zone-line','left:3%;top:40.5%;width:94%;height:0;border-top:5px dashed rgba(76,175,80,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(76,175,80,0.7)) drop-shadow(0 0 20px rgba(76,175,80,0.4))');
+   const zoneLine2=addDiv('map-zone-line','left:3%;top:73%;width:94%;height:0;border-top:5px dashed rgba(255,152,0,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(255,152,0,0.7)) drop-shadow(0 0 20px rgba(255,152,0,0.4))');
+   const zoneLine3=addDiv('map-zone-line','left:47.8%;top:2%;width:0;height:39%;border-left:5px dashed rgba(229,57,53,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(229,57,53,0.7)) drop-shadow(0 0 20px rgba(229,57,53,0.4))');
+   const zoneLine4=addDiv('map-zone-line','left:47.8%;top:40.5%;width:0;height:58%;border-left:5px dashed rgba(171,71,188,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(171,71,188,0.7)) drop-shadow(0 0 20px rgba(171,71,188,0.4))');
 
    // === ZONE SIGNPOST LABELS ===
    const signposts=[
