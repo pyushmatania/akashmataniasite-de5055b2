@@ -7080,22 +7080,39 @@ function addMapDecorations(cw, ch){
    // Fun: x[7700-13600]→[54.7%-94.6%], y[6400-13600]→[45.9%-94.6%]
    addDiv('map-zone-tint','left:55%;top:46%;width:40%;height:49%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.28),transparent 65%);z-index:0;filter:blur(2px)');
 
-   // === ZONE BOUNDARY LINES — positioned from actual world zone coordinates ===
-   // World is 14000x14000, map padding 400 each side → total range 14800
-   // H-line between Origin/Work (y≤5600) and Portfolio/Fun (y≥6200): midpoint y=5900 → (5900+400)/14800 = 42.6%
-   // H-line between Portfolio (y≤9800) and Hobby (y≥10400): midpoint y=10100 → (10100+400)/14800 = 70.9%
-   // V-line between Origin/Portfolio/Hobby (x≤5800/5600/6300) and Work/Fun (x≥7700): midpoint x=6750 → (6750+400)/14800 = 48.3%
-   const zoneLine1=addDiv('map-zone-line','left:3%;top:42.6%;width:94%;height:0;border-top:5px dashed rgba(76,175,80,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(76,175,80,0.7)) drop-shadow(0 0 20px rgba(76,175,80,0.4))');
-   const zoneLine2=addDiv('map-zone-line','left:3%;top:70.9%;width:45.3%;height:0;border-top:5px dashed rgba(255,152,0,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(255,152,0,0.7)) drop-shadow(0 0 20px rgba(255,152,0,0.4))');
-   const zoneLine3=addDiv('map-zone-line','left:48.3%;top:2%;width:0;height:40.6%;border-left:5px dashed rgba(229,57,53,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(229,57,53,0.7)) drop-shadow(0 0 20px rgba(229,57,53,0.4))');
-   const zoneLine4=addDiv('map-zone-line','left:48.3%;top:42.6%;width:0;height:56%;border-left:5px dashed rgba(171,71,188,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(171,71,188,0.7)) drop-shadow(0 0 20px rgba(171,71,188,0.4))');
+   // === ORGANIC ZONE BOUNDARY LINES — SVG curves like country borders ===
+   const svgNS='http://www.w3.org/2000/svg';
+   const mapBoundarySvg=document.createElementNS(svgNS,'svg');
+   mapBoundarySvg.setAttribute('viewBox','0 0 100 100');
+   mapBoundarySvg.setAttribute('preserveAspectRatio','none');
+   mapBoundarySvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:5;overflow:visible';
+   // H-line: Origin/Work → Portfolio/Fun at ~42.6%
+   const p1=document.createElementNS(svgNS,'path');
+   p1.setAttribute('d','M3,42.2 C10,43.2 18,41.5 27,42.8 S38,42 48,43.1 S58,41.8 68,42.5 S80,43.3 90,42.1 L97,42.6');
+   p1.setAttribute('fill','none');p1.setAttribute('stroke','rgba(76,175,80,0.7)');p1.setAttribute('stroke-width','0.4');p1.setAttribute('stroke-dasharray','1.6 0.8');p1.setAttribute('stroke-linecap','round');
+   p1.style.filter='drop-shadow(0 0 2px rgba(76,175,80,0.5))';
+   mapBoundarySvg.appendChild(p1);
+   // H-line: Portfolio → Hobby at ~70.9% (left half)
+   const p2=document.createElementNS(svgNS,'path');
+   p2.setAttribute('d','M3,70.5 C8,71.4 15,70 22,71.2 S32,70.3 38,71.1 L45.3,70.8');
+   p2.setAttribute('fill','none');p2.setAttribute('stroke','rgba(255,152,0,0.7)');p2.setAttribute('stroke-width','0.4');p2.setAttribute('stroke-dasharray','1.6 0.8');p2.setAttribute('stroke-linecap','round');
+   p2.style.filter='drop-shadow(0 0 2px rgba(255,152,0,0.5))';
+   mapBoundarySvg.appendChild(p2);
+   // V-line: top half at ~48.3%
+   const p3=document.createElementNS(svgNS,'path');
+   p3.setAttribute('d','M48,2 C48.8,6 47.5,11 48.3,16 S47.8,24 48.5,30 S47.6,36 48.2,42.2');
+   p3.setAttribute('fill','none');p3.setAttribute('stroke','rgba(229,57,53,0.7)');p3.setAttribute('stroke-width','0.4');p3.setAttribute('stroke-dasharray','1.6 0.8');p3.setAttribute('stroke-linecap','round');
+   p3.style.filter='drop-shadow(0 0 2px rgba(229,57,53,0.5))';
+   mapBoundarySvg.appendChild(p3);
+   // V-line: bottom half
+   const p4=document.createElementNS(svgNS,'path');
+   p4.setAttribute('d','M48.2,42.6 C48.9,48 47.6,54 48.4,60 S47.7,68 48.3,74 S47.8,82 48.1,90 L48.3,98');
+   p4.setAttribute('fill','none');p4.setAttribute('stroke','rgba(171,71,188,0.7)');p4.setAttribute('stroke-width','0.4');p4.setAttribute('stroke-dasharray','1.6 0.8');p4.setAttribute('stroke-linecap','round');
+   p4.style.filter='drop-shadow(0 0 2px rgba(171,71,188,0.5))';
+   mapBoundarySvg.appendChild(p4);
+   layer.appendChild(mapBoundarySvg);
 
    // === ZONE SIGNPOST LABELS — positioned at actual zone centers ===
-   // Origin center: ((400+5800)/2+400)/14800=23.6%, ((400+5600)/2+400)/14800=22.3%
-   // Work center: ((7700+13600)/2+400)/14800=74.0%, same Y as Origin
-   // Portfolio center: ((400+5600)/2+400)/14800=23.6%, ((6200+9800)/2+400)/14800=57.4%
-   // Hobby center: ((400+6300)/2+400)/14800=25.0%, ((10400+13600)/2+400)/14800=83.8%
-   // Fun center: ((7700+13600)/2+400)/14800=74.0%, ((6400+13600)/2+400)/14800=70.3%
    const signposts=[
      {x:23.6,y:22.3,label:'ORIGIN',color:'#4CAF50',bg:'rgba(76,175,80,0.85)'},
      {x:74.0,y:22.3,label:'WORK',color:'#E53935',bg:'rgba(229,57,53,0.85)'},
@@ -7108,25 +7125,16 @@ function addMapDecorations(cw, ch){
      el.textContent=sp.label;
    });
 
-   // === ZONE GROUND LABELS — road marking style near boundary lines ===
-   // Labels placed just above/below horizontal boundaries and beside vertical boundary
-   const groundLabels=[
-     // Above h-line at 42.6% (origin/work side)
-     {x:20,y:39.5,label:'ORIGIN ↑',color:'rgba(76,175,80,0.22)',size:Math.max(10,cw*0.012),rot:0},
-     {x:60,y:39.5,label:'WORK ↑',color:'rgba(229,57,53,0.22)',size:Math.max(10,cw*0.012),rot:0},
-     // Below h-line at 42.6% (portfolio/fun side)
-     {x:20,y:44.5,label:'↓ PORTFOLIO',color:'rgba(66,165,245,0.2)',size:Math.max(9,cw*0.01),rot:0},
-     {x:60,y:44.5,label:'↓ FUN',color:'rgba(171,71,188,0.2)',size:Math.max(9,cw*0.01),rot:0},
-     // Above h-line at 70.9% (portfolio side)
-     {x:20,y:68,label:'PORTFOLIO ↑',color:'rgba(66,165,245,0.18)',size:Math.max(9,cw*0.01),rot:0},
-     // Below h-line at 70.9% (hobby side)
-     {x:20,y:73,label:'↓ HOBBY',color:'rgba(255,152,0,0.2)',size:Math.max(9,cw*0.01),rot:0},
-     // Beside v-line at 48.3%
-     {x:45,y:18,label:'ORIGIN',color:'rgba(76,175,80,0.17)',size:Math.max(8,cw*0.008),rot:90},
-     {x:51,y:18,label:'WORK',color:'rgba(229,57,53,0.17)',size:Math.max(8,cw*0.008),rot:90},
+   // === ZONE GROUND LABELS ON MAP — diagonal, centered in zones ===
+   const mapGroundLabels=[
+     {x:18,y:20,label:'ORIGIN',color:'rgba(76,175,80,0.15)',rot:-25},
+     {x:62,y:18,label:'WORK',color:'rgba(229,57,53,0.13)',rot:-20},
+     {x:16,y:55,label:'PORTFOLIO',color:'rgba(66,165,245,0.12)',rot:-30},
+     {x:17,y:82,label:'HOBBY',color:'rgba(255,152,0,0.14)',rot:-22},
+     {x:62,y:68,label:'FUN',color:'rgba(171,71,188,0.13)',rot:-28},
    ];
-   groundLabels.forEach(gl=>{
-     const el=addDiv('map-ground-label','left:'+gl.x+'%;top:'+gl.y+'%;z-index:4;pointer-events:none;font-family:var(--font-fun);font-weight:900;font-size:'+gl.size+'px;color:'+gl.color+';letter-spacing:0.25em;text-transform:uppercase;'+(gl.rot?'writing-mode:vertical-rl;text-orientation:mixed;':''));
+   mapGroundLabels.forEach(gl=>{
+     const el=addDiv('map-ground-label','left:'+gl.x+'%;top:'+gl.y+'%;z-index:4;font-family:var(--font-fun);font-weight:900;font-size:'+Math.max(12,cw*0.018)+'px;color:'+gl.color+';letter-spacing:0.35em;text-transform:uppercase;transform:rotate('+gl.rot+'deg);white-space:nowrap');
      el.textContent=gl.label;
    });
 
