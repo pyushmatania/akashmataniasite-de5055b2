@@ -1854,25 +1854,16 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <div class="zone-tint zone-tint-playground" style="left:0;top:10200px;width:6500px;height:3800px"></div>
 <div class="zone-tint zone-tint-memealley" style="left:7500px;top:6200px;width:6500px;height:7800px"></div>
-<!-- Crime-scene tape zone boundaries (SVG paths) -->
+<!-- Organic country-style zone boundaries (SVG paths) -->
 <svg class="zone-boundary-svg" viewBox="0 0 14000 14000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <pattern id="tapePattern" patternUnits="userSpaceOnUse" width="60" height="18" patternTransform="rotate(0)">
-      <rect width="40" height="18" fill="#FFD600"/>
-      <rect x="40" width="20" height="18" fill="#1A1A1A"/>
-    </pattern>
-  </defs>
   <!-- Horizontal boundary: Origin/Work → Portfolio/Fun at y≈5900 -->
-  <path d="M200,5850 C800,5920 1400,5780 2100,5930 S3200,5860 4000,5940 S5200,5820 6000,5900 S7200,5960 8000,5850 S9400,5950 10200,5870 S11600,5920 12800,5860 L13600,5900" stroke="url(#tapePattern)" stroke-width="18"/>
-  <text><textPath href="#tapePath1" style="font-family:'Fredoka',sans-serif;font-size:11px;fill:#1A1A1A;font-weight:900;letter-spacing:0.4em">⚠ DO NOT CROSS ⚠ DO NOT CROSS ⚠ DO NOT CROSS ⚠ DO NOT CROSS ⚠</textPath></text>
+  <path d="M200,5850 C800,5920 1400,5780 2100,5930 S3200,5860 4000,5940 S5200,5820 6000,5900 S7200,5960 8000,5850 S9400,5950 10200,5870 S11600,5920 12800,5860 L13600,5900" stroke="rgba(76,175,80,0.5)" stroke-dasharray="24 12"/>
   <!-- Horizontal boundary: Portfolio → Hobby at y≈10100 (left half) -->
-  <path d="M200,10050 C700,10150 1300,9980 2000,10120 S3100,10060 3800,10140 S4800,10020 5500,10100 L6550,10080" stroke="url(#tapePattern)" stroke-width="18"/>
+  <path d="M200,10050 C700,10150 1300,9980 2000,10120 S3100,10060 3800,10140 S4800,10020 5500,10100 L6550,10080" stroke="rgba(255,152,0,0.5)" stroke-dasharray="24 12"/>
   <!-- Vertical boundary: Origin/Portfolio/Hobby ↔ Work/Fun top half x≈6750 -->
-  <path d="M6700,200 C6780,700 6650,1300 6760,1900 S6700,2800 6780,3400 S6650,4200 6750,4800 L6720,5850" stroke="url(#tapePattern)" stroke-width="18"/>
+  <path d="M6700,200 C6780,700 6650,1300 6760,1900 S6700,2800 6780,3400 S6650,4200 6750,4800 L6720,5850" stroke="rgba(229,57,53,0.5)" stroke-dasharray="24 12"/>
   <!-- Vertical boundary: bottom half x≈6750 -->
-  <path d="M6720,5900 C6800,6500 6660,7200 6770,7900 S6690,8800 6780,9500 S6650,10400 6740,11200 S6800,12400 6720,13200 L6750,13800" stroke="url(#tapePattern)" stroke-width="18"/>
-  <!-- Named paths for text placement -->
-  <path id="tapePath1" d="M200,5830 C800,5900 1400,5760 2100,5910 S3200,5840 4000,5920 S5200,5800 6000,5880 S7200,5940 8000,5830 S9400,5930 10200,5850 S11600,5900 12800,5840 L13600,5880" fill="none" stroke="none"/>
+  <path d="M6720,5900 C6800,6500 6660,7200 6770,7900 S6690,8800 6780,9500 S6650,10400 6740,11200 S6800,12400 6720,13200 L6750,13800" stroke="rgba(171,71,188,0.5)" stroke-dasharray="24 12"/>
 </svg>
 
 <!-- Zone ground labels — painted diagonally in center of each zone, BIG -->
