@@ -104,25 +104,27 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .zone-tint-memealley{background:radial-gradient(ellipse at center,#AB47BC,transparent 70%)}
 /* Moodboard zone lines + signposts (synced with big map) */
 .zone-divider{position:absolute;pointer-events:none;z-index:2}
-.zone-divider.h{border-top:4px dashed rgba(255,255,255,0.85);filter:drop-shadow(0 0 8px rgba(0,0,0,0.25)) drop-shadow(0 0 16px rgba(0,0,0,0.12))}
-.zone-divider.v{border-left:4px dashed rgba(255,255,255,0.85);filter:drop-shadow(0 0 8px rgba(0,0,0,0.25)) drop-shadow(0 0 16px rgba(0,0,0,0.12))}
-.zone-divider.origin{border-color:rgba(76,175,80,0.85)}
-.zone-divider.work{border-color:rgba(229,57,53,0.85)}
-.zone-divider.portfolio{border-color:rgba(66,165,245,0.85)}
-.zone-divider.fun{border-color:rgba(255,152,0,0.85)}
-/* Zone intro cards — creative glassmorphic style */
-.zone-intro-creative{position:absolute;pointer-events:auto;z-index:8;width:320px;border-radius:20px;overflow:hidden;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.25);box-shadow:0 8px 32px rgba(0,0,0,0.08),0 0 0 1px rgba(255,255,255,0.08) inset;transition:transform 0.3s cubic-bezier(0.4,0,0.2,1),box-shadow 0.3s;cursor:default}
-.zone-intro-creative:hover{transform:translateY(-4px) scale(1.01)!important;box-shadow:0 16px 48px rgba(0,0,0,0.14),0 0 0 1px rgba(255,255,255,0.12) inset}
-.zone-intro-creative .zic-header{padding:20px 22px 14px;position:relative;overflow:hidden}
-.zone-intro-creative .zic-header::before{content:'';position:absolute;inset:0;opacity:0.15;z-index:0}
-.zone-intro-creative .zic-icon{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:10px;position:relative;z-index:1;border:1.5px solid rgba(255,255,255,0.2);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
-.zone-intro-creative .zic-title{font-family:var(--font-fun);font-weight:800;font-size:1.05rem;letter-spacing:0.04em;position:relative;z-index:1;margin-bottom:4px}
-.zone-intro-creative .zic-subtitle{font-family:var(--font-sans);font-size:0.72rem;opacity:0.7;position:relative;z-index:1;line-height:1.5}
-.zone-intro-creative .zic-body{padding:0 22px 18px}
-.zone-intro-creative .zic-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.zone-intro-creative .zic-tag{font-family:var(--font-sans);font-size:0.62rem;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:0.03em;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.15)}
-.zone-intro-creative .zic-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);margin:10px 0}
-.zone-intro-creative .zic-stat{display:flex;align-items:center;gap:8px;font-family:var(--font-hand);font-size:0.82rem;opacity:0.65;margin-top:6px}
+.zone-divider.h{height:0;border-top:4px dashed rgba(0,0,0,0.18);filter:drop-shadow(0 1px 3px rgba(0,0,0,0.08))}
+.zone-divider.v{width:0;border-left:4px dashed rgba(0,0,0,0.18);filter:drop-shadow(1px 0 3px rgba(0,0,0,0.08))}
+.zone-divider.origin{border-color:rgba(76,175,80,0.55)}
+.zone-divider.work{border-color:rgba(229,57,53,0.55)}
+.zone-divider.portfolio{border-color:rgba(66,165,245,0.55)}
+.zone-divider.fun{border-color:rgba(255,152,0,0.55)}
+/* Zone intro cards — bold card style */
+.zone-intro-creative{width:340px;border-radius:22px;overflow:hidden;background:#fff;border:2.5px solid #f0ece6;box-shadow:0 8px 32px rgba(0,0,0,0.1),0 2px 8px rgba(0,0,0,0.04);cursor:default}
+.zone-intro-creative .zic-header{padding:22px 22px 14px;position:relative;overflow:hidden}
+.zone-intro-creative .zic-icon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:12px;position:relative;z-index:1;border:2px solid rgba(255,255,255,0.4);box-shadow:0 4px 16px rgba(0,0,0,0.12)}
+.zone-intro-creative .zic-title{font-family:var(--font-fun);font-weight:800;font-size:1.15rem;letter-spacing:0.04em;position:relative;z-index:1;margin-bottom:4px}
+.zone-intro-creative .zic-subtitle{font-family:var(--font-sans);font-size:0.74rem;opacity:0.65;position:relative;z-index:1;line-height:1.5}
+.zone-intro-creative .zic-body{padding:0 22px 20px}
+.zone-intro-creative .zic-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.zone-intro-creative .zic-tag{font-family:var(--font-sans);font-size:0.65rem;font-weight:600;padding:5px 12px;border-radius:20px;letter-spacing:0.03em;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;border:1.5px solid rgba(0,0,0,0.06)}
+.zone-intro-creative .zic-tag:active{transform:scale(0.92)}
+.zone-intro-creative .zic-divider{height:1.5px;background:linear-gradient(90deg,transparent,rgba(0,0,0,0.08),transparent);margin:12px 0}
+.zone-intro-creative .zic-stat{display:flex;align-items:center;gap:8px;font-family:var(--font-hand);font-size:0.85rem;color:var(--text2);margin-top:8px}
+.zone-intro-creative .zic-counter{display:flex;align-items:center;gap:6px;margin-top:10px;font-family:var(--font-fun);font-size:0.72rem;color:var(--text3)}
+.zone-intro-creative .zic-counter button{width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(0,0,0,0.1);background:#fff;font-size:0.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.zone-intro-creative .zic-counter button:active{transform:scale(0.85);background:#f5f5f5}
 .zone-signpost-marker{position:absolute;pointer-events:none;z-index:9;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;min-width:138px;padding:8px 14px;border-radius:10px;font-family:var(--font-fun);font-size:0.75rem;font-weight:800;color:#fff;letter-spacing:0.08em;text-transform:uppercase;text-align:center;border:2px solid rgba(255,255,255,0.32);box-shadow:0 3px 12px rgba(0,0,0,0.22);text-shadow:0 1px 2px rgba(0,0,0,0.35)}
 
 /* ===== PROJECT SHOWCASE CARDS ===== */
