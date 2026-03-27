@@ -4413,8 +4413,8 @@ document.addEventListener('touchstart',e=>{
 },{passive:false});
 
 function sD(e){
-  const noDragTarget=e.target&&e.target.closest('.tlg-move-btn,button,input,textarea,select,a,[data-no-sticker-drag="true"]');
-  if(noDragTarget)return;
+  const noDragTarget=e.target&&e.target.closest('.tlg-move-btn,button,input,textarea,select,a,[data-no-sticker-drag="true"],.tg-char,.ek-ingredient,.sb-skill,.scratch-cover,.sticker-mood input,.sticker-fortune,.zic-tag,.zone-intro-creative,.sticker-throne-game,.sticker-emoji-kitchen,.sticker-skillbuilder,.sticker-timeline,.sticker-counter,.sticker-scratch');
+  if(noDragTarget){e.stopPropagation();return;}
   e.stopPropagation();
   // Two-finger rotation start (both on sticker)
   if(e.touches&&e.touches.length===2){
