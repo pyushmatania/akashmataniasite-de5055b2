@@ -2634,8 +2634,8 @@ body.map-expanded .scroll-counter{display:none!important}
 </div>
 
 
-<!-- ===== HUB: INTRO — CENTER OF CANVAS ===== -->
-<div class="sticker intro-card" data-type="photo" data-zone="hub" style="left:6770px;top:6550px">
+<!-- ===== INTRO CARD — IN WORK ZONE ===== -->
+<div class="sticker intro-card" data-type="photo" data-zone="work" style="left:10050px;top:2600px">
   <div class="intro-status">
     <span class="status-dot"></span>
     Available for cool projects
@@ -3361,12 +3361,11 @@ const MOODBOARD_VIEW_SCALE_NAV=window.innerWidth<=768?0.6:0.72;
 
 // ===== PLAY BUTTON — cycles through intro cards =====
 let _playIntroIdx=-1;
-// Play targets: exact center of each intro card from HTML positions + card dimensions (~380x420)
+// Play targets: Work → Portfolio → Origin → Hobby → Fun (exact intro card centers)
 const _playIntroTargets=[
-  {x:7000,y:7000,label:'Intro Card'},
-  {x:2740+190,y:2400+210,label:'Origin'},
-  {x:10690+190,y:2400+210,label:'Work'},
+  {x:10050+190,y:2600+210,label:'Work'},
   {x:2640+190,y:7600+210,label:'Portfolio'},
+  {x:2740+190,y:2400+210,label:'Origin'},
   {x:2990+190,y:11800+210,label:'Hobby'},
   {x:10690+190,y:9800+210,label:'Fun'},
 ];
@@ -3387,7 +3386,7 @@ function cycleIntroCards(e){
   // Brief toast
   const toast=document.createElement('div');
   toast.className='boundary-toast edge-bottom show';
-  toast.textContent='📍 '+t.label+' '+(_playIntroIdx===0?'— center':'— zone intro');
+  toast.textContent='📍 '+t.label+' — zone intro';
   document.body.appendChild(toast);
   setTimeout(()=>toast.remove(),1800);
 }
@@ -4634,7 +4633,7 @@ function autoArrangeMoodboardItems(){
   stickers.forEach(sticker=>{
     if(isBadgeSticker(sticker)){badges.push(sticker);return;}
     if(isIntroCard(sticker)){
-      const zone=sticker.dataset.zone||(sticker.classList.contains('intro-card')?'center':'fun');
+      const zone=sticker.dataset.zone||(sticker.classList.contains('intro-card')?'work':'fun');
       introCards[zone]=sticker;
       return;
     }
@@ -4882,13 +4881,13 @@ function centerOnIntroCard(){
   const vpW=vp.clientWidth||window.innerWidth||390;
   const vpH=vp.clientHeight||window.innerHeight||700;
   const introEl=document.querySelector('.intro-card');
-  let cx=7000*SCALE, cy=7000*SCALE;
+  let cx=10240*SCALE, cy=2810*SCALE; // Work zone center (intro card default)
   if(introEl){
     var iw=introEl.dataset.cw?parseFloat(introEl.dataset.cw):introEl.offsetWidth||340;
     var ih=introEl.dataset.ch?parseFloat(introEl.dataset.ch):introEl.offsetHeight||400;
     if(!introEl.dataset.cw){introEl.dataset.cw=iw;introEl.dataset.ch=ih;}
-    cx=(parseFloat(introEl.style.left)||6770)*SCALE + iw*SCALE/2;
-    cy=(parseFloat(introEl.style.top)||6550)*SCALE + ih*SCALE/2;
+    cx=(parseFloat(introEl.style.left)||10050)*SCALE + iw*SCALE/2;
+    cy=(parseFloat(introEl.style.top)||2600)*SCALE + ih*SCALE/2;
   }
   const targetLeft=Math.max(0,cx-vpW/2);
   const targetTop=Math.max(0,cy-vpH/2);
@@ -9053,9 +9052,9 @@ function ensureIntroCluster(){
   const intro=document.createElement('div');
   intro.className='sticker intro-card';
   intro.dataset.type='photo';
-  intro.dataset.zone='hub';
-  intro.style.left='6770px';
-  intro.style.top='6550px';
+  intro.dataset.zone='work';
+  intro.style.left='10050px';
+  intro.style.top='2600px';
   intro.innerHTML='<div class="intro-name">Akash <span class="hl-name">Matania</span></div><div class="intro-tagline">Product Manager · Founder · Dreamer</div><div class="intro-cta">↕ scroll around to explore my world ✨</div>';
   cv.appendChild(intro);
   const seeds=[['✨',6420,6300],['🚀',7440,6350],['🎬',6480,7420],['💡',7420,7300],['🎧',6280,7150]];
