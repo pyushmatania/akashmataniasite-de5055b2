@@ -7125,16 +7125,18 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     for(;idx<end;idx++){
       const{d,renderX,renderY,cloneScale,iw,ih}=visibleItems[idx];
       let clone;
-      // Cap rendered clone size to prevent oversized items
-      const maxCloneW=Math.min(d.w,300);
-      const maxCloneH=Math.min(d.h,300);
-      const adjustedScale=cloneScale*(d.w>300?d.w/300:1);
+      // Cap rendered clone size to prevent oversized items crashing the map
+      const MAX_CLONE_DIM=250;
+      const cappedW=Math.min(d.w,MAX_CLONE_DIM);
+      const cappedH=Math.min(d.h,MAX_CLONE_DIM);
+      const sizeRatio=cappedW/Math.max(d.w,1);
       if(d.ref){
         clone=d.ref.cloneNode(true);
         clone.classList.add('mi','map-sticker-clone');
         const rot=(d.ref.style.transform||'').match(/rotate\([^)]+\)/);
-        const transform=(rot?rot[0]+' ':'')+'scale('+cloneScale+')';
-        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+d.w+'px;height:'+d.h+'px;max-width:none;max-height:none;transform:'+transform+';transform-origin:0 0;z-index:7;cursor:pointer;animation:none;transition:none;filter:none;pointer-events:auto;overflow:hidden';
+        const finalScale=cloneScale/sizeRatio;
+        const transform=(rot?rot[0]+' ':'')+'scale('+finalScale+')';
+        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+cappedW+'px;height:'+cappedH+'px;max-width:'+MAX_CLONE_DIM+'px;max-height:'+MAX_CLONE_DIM+'px;transform:'+transform+';transform-origin:0 0;z-index:7;cursor:pointer;animation:none!important;transition:none!important;filter:none;pointer-events:auto;overflow:hidden';
         clone.removeAttribute('data-anim');
         clone.removeAttribute('data-splash');
         clone.removeAttribute('data-contra');
