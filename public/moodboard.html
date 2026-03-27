@@ -6558,12 +6558,12 @@ credits: \`
 
 engine: `
 <div class="inv-section">
-  <h3>⚙️ Auto-Rearrange Engine v3 (12 Rules)</h3>
+  <h3>⚙️ Auto-Rearrange Engine v4 (13 Rules)</h3>
   <p style="font-size:0.8rem;color:var(--text2);line-height:1.7;margin-bottom:16px">
     The distribution engine controls how 280+ stickers are placed across the 14K×14K canvas. It runs on page load and can be triggered manually via the 🔄 button in theme settings.
   </p>
   
-  <h4 style="font-size:0.85rem;color:var(--text);margin:16px 0 10px">📏 11 Distribution Rules</h4>
+  <h4 style="font-size:0.85rem;color:var(--text);margin:16px 0 10px">📏 13 Distribution Rules</h4>
   <table class="inv-table">
     <tr><th>#</th><th>Rule</th><th>How It Works</th></tr>
     <tr><td>1</td><td>Even Spread</td><td>No area too dense or empty — golden-angle spiral + grid scatter ensures coverage</td></tr>
@@ -6577,7 +6577,8 @@ engine: `
     <tr><td>9</td><td>Map Sync</td><td>After arrangement, canvas → scanStickers → invalidate map cache → redraw both maps</td></tr>
     <tr><td>10</td><td>Integrity Audit</td><td>Counts DOM items, removes duplicates (same mapId), fills missing categories/zones</td></tr>
     <tr><td>11</td><td>Attribution</td><td>Every sticker gets a type (category) and zone. New category: <strong>introduction</strong></td></tr>
-    <tr><td>12</td><td>Allow Stacking</td><td>Cards CAN overlap on top of each other — no anti-overlap nudge, creating a natural layered feel</td></tr>
+    <tr><td>12</td><td>Anti-Overlap</td><td>Cards are nudged apart (up to 12 attempts) so they don't stack on top of each other</td></tr>
+    <tr><td>13</td><td>Organic Borders</td><td>Zone boundaries use SVG bezier curves — irregular like country/state borders, not straight lines. Synced across canvas, big map, and small map.</td></tr>
   </table>
 </div>
 
@@ -6594,18 +6595,19 @@ engine: `
     <tr><td>Big Map</td><td>Full viewport. Sticker clones rendered at map scale. Click navigates via direct world coords (no lossy conversion). Zoom: 0.25x-2x steps.</td></tr>
     <tr><td>Navigation</td><td>Clicking map sticker -> walkBitmojiTo(worldX, worldY) -> CSS transition walk -> viewport scrollTo center on target.</td></tr>
     <tr><td>Sync Pipeline</td><td>scanStickers() -> stickerData[] -> signature check -> invalidateMapCloneCache() -> updMap()/renderExpandedMap()</td></tr>
+    <tr><td>Zone Borders</td><td>Organic SVG bezier curves on canvas, big map, and minimap — irregular like country borders, matching world coordinate boundaries</td></tr>
   </table>
 </div>
 
 <div class="inv-section" style="margin-top:20px">
   <h3>🏙️ Zone Definitions</h3>
   <table class="inv-table">
-    <tr><th>Zone</th><th>Bounds (px)</th><th>Center</th><th>Color</th></tr>
-    <tr><td>📸 Origin</td><td>(400,400) to (5800,5600)</td><td>(3100, 3000)</td><td style="color:#4CAF50">#4CAF50</td></tr>
-    <tr><td>🎯 Work</td><td>(7700,400) to (13600,5600)</td><td>(10650, 3000)</td><td style="color:#E53935">#E53935</td></tr>
-    <tr><td>🚀 Portfolio</td><td>(400,6200) to (5600,9800)</td><td>(3000, 8000)</td><td style="color:#42A5F5">#42A5F5</td></tr>
-    <tr><td>🎮 Hobby</td><td>(400,10400) to (6300,13600)</td><td>(3350, 12000)</td><td style="color:#FF9800">#FF9800</td></tr>
-    <tr><td>😂 Fun</td><td>(7700,6400) to (13600,13600)</td><td>(10650, 10000)</td><td style="color:#AB47BC">#AB47BC</td></tr>
+    <tr><th>Zone</th><th>Bounds (px)</th><th>Center</th><th>Color</th><th>Boundary Style</th></tr>
+    <tr><td>📸 Origin</td><td>(400,400) to (5800,5600)</td><td>(3100, 3000)</td><td style="color:#4CAF50">#4CAF50</td><td>Organic curve, top-left</td></tr>
+    <tr><td>🎯 Work</td><td>(7700,400) to (13600,5600)</td><td>(10650, 3000)</td><td style="color:#E53935">#E53935</td><td>Organic curve, top-right</td></tr>
+    <tr><td>🚀 Portfolio</td><td>(400,6200) to (5600,9800)</td><td>(3000, 8000)</td><td style="color:#42A5F5">#42A5F5</td><td>Organic curve, mid-left</td></tr>
+    <tr><td>🎮 Hobby</td><td>(400,10400) to (6300,13600)</td><td>(3350, 12000)</td><td style="color:#FF9800">#FF9800</td><td>Organic curve, bottom-left</td></tr>
+    <tr><td>😂 Fun</td><td>(7700,6400) to (13600,13600)</td><td>(10650, 10000)</td><td style="color:#AB47BC">#AB47BC</td><td>Organic curve, right side</td></tr>
   </table>
 </div>
 
@@ -6634,6 +6636,8 @@ engine: `
     <div class="fun-fact">⚡ The <strong>signature check</strong> (mapId:left:top:w:h:cat joined) avoids unnecessary map redraws — only invalidates cache when positions actually change</div>
     <div class="fun-fact">🏷️ Every sticker is auto-tagged with both a <strong>category</strong> (photo, meme, interactive, introduction...) and a <strong>zone</strong> (origin, work, portfolio, hobby, fun)</div>
     <div class="fun-fact">🔄 The rearrange button triggers: <strong>audit -> arrange -> scan -> invalidate cache -> redraw both maps</strong> — a 5-step pipeline in ~200ms</div>
+    <div class="fun-fact">🗺️ Zone boundaries use <strong>SVG bezier curves</strong> with random control points — creating organic, country-map-style borders instead of straight lines</div>
+    <div class="fun-fact">📐 Anti-overlap nudging tries up to <strong>12 directional attempts</strong> per card, pushing along the spiral angle to find the nearest non-overlapping position</div>
   </div>
 </div>
 `
