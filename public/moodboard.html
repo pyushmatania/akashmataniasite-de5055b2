@@ -6052,8 +6052,8 @@ stats: `
   <h3>📊 Moodboard Stats</h3>
   <div class="stats-grid">
     <div class="stat-card"><div class="stat-num">14K×14K</div><div class="stat-label">🗺️ Canvas World Size</div></div>
-    <div class="stat-card"><div class="stat-num">~480KB</div><div class="stat-label">📦 Single File Size</div></div>
-    <div class="stat-card"><div class="stat-num">~8,500</div><div class="stat-label">💻 Lines of Code</div></div>
+    <div class="stat-card"><div class="stat-num">~525KB</div><div class="stat-label">📦 Single File Size</div></div>
+    <div class="stat-card"><div class="stat-num">~8,700</div><div class="stat-label">💻 Lines of Code</div></div>
     <div class="stat-card"><div class="stat-num">280+</div><div class="stat-label">🎨 Draggable Stickers</div></div>
     <div class="stat-card"><div class="stat-num">23</div><div class="stat-label">✨ CSS Animations</div></div>
     <div class="stat-card"><div class="stat-num">11</div><div class="stat-label">🖌️ Themes</div></div>
@@ -7077,7 +7077,9 @@ function addMapDecorations(cw, ch){
     {type:'tube',x:69,y:68,colorA:'#AB47BC',colorB:'#E53935',w:0.4,h:7.5,rot:0}
   ];
 
-  neonDecor.forEach(n=>{
+  // On mobile, render every other neon element to halve GPU animation load
+  const neonDecorList=IS_MOBILE_MAP?neonDecor.filter((_,i)=>i%2===0):neonDecor;
+  neonDecorList.forEach(n=>{
     const el=document.createElement('div');
     const rot=(typeof n.rot==='number')?' rotate('+n.rot+'deg)':'';
     el.style.cssText='position:absolute;left:'+n.x+'%;top:'+n.y+'%;transform:translate(-50%,-50%)'+rot+';pointer-events:none;z-index:6';
