@@ -7015,33 +7015,51 @@ function addMapDecorations(cw, ch){
     layer.appendChild(el);
   });
 
-  // === ZONE BOUNDARY — organic wavy dotted SVG paths ===
-  const wavySvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-  wavySvg.setAttribute('viewBox','0 0 100 100');
-  wavySvg.setAttribute('preserveAspectRatio','none');
-  wavySvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:visible';
-  const wavyPaths=[
-    // Horizontal wavy: Origin/Work top vs lower zones
-    {d:'M 0,40 C 6,37 12,43 18,39 C 24,35 30,42 36,40 C 42,38 48,43 54,39 C 60,36 66,42 72,40 C 78,38 84,43 90,39 C 96,37 98,41 100,40',color:'#4CAF50',w:'0.35'},
-    // Vertical wavy: left vs right (top)
-    {d:'M 44,0 C 42,5 46,10 43,15 C 40,20 47,25 44,30 C 41,35 46,38 44,40',color:'#66BB6A',w:'0.35'},
-    // Horizontal wavy: Portfolio vs Hobby
-    {d:'M 0,70 C 5,68 10,73 15,69 C 20,66 25,72 30,70 C 35,68 40,73 45,70',color:'#42A5F5',w:'0.35'},
-    // Vertical wavy: left vs Fun (bottom)
-    {d:'M 45,40 C 43,46 47,52 44,58 C 41,64 47,70 44,76 C 41,82 47,88 44,94 C 42,97 46,99 45,100',color:'#FF9800',w:'0.35'},
+  // === ZONE BOUNDARY — thick organic glowing random lines ===
+  const zoneBoundarySvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  zoneBoundarySvg.setAttribute('viewBox','0 0 100 100');
+  zoneBoundarySvg.setAttribute('preserveAspectRatio','none');
+  zoneBoundarySvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:visible';
+  const zoneBoundaries=[
+    // Horizontal: Origin/Work vs Portfolio/Fun (~40% y)
+    {d:'M 0,39 C 4,42 9,36 15,41 C 21,45 28,35 35,40 C 41,44 48,37 55,42 C 62,46 69,36 76,41 C 82,44 89,38 95,41 C 98,42 100,40 100,40',color:'#4CAF50',glow:'rgba(76,175,80,0.5)',w:1.8},
+    // Vertical: Origin/Portfolio vs Work/Fun (~45% x, top half)
+    {d:'M 43,0 C 46,4 41,9 45,14 C 48,19 42,24 46,29 C 49,34 43,37 45,40',color:'#66BB6A',glow:'rgba(102,187,106,0.5)',w:1.5},
+    // Horizontal: Portfolio vs Hobby (~70% y, left side)
+    {d:'M 0,69 C 3,72 8,66 14,71 C 19,75 25,67 31,72 C 36,76 41,69 45,71',color:'#42A5F5',glow:'rgba(66,165,245,0.5)',w:1.8},
+    // Vertical: Hobby/Portfolio vs Fun (~45% x, bottom half)
+    {d:'M 45,40 C 42,46 48,53 44,59 C 40,65 47,72 43,78 C 39,84 46,90 43,96 C 41,99 44,100 45,100',color:'#FF9800',glow:'rgba(255,152,0,0.5)',w:1.5},
   ];
-  wavyPaths.forEach(wp=>{
-    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
-    path.setAttribute('d',wp.d);
-    path.setAttribute('fill','none');
-    path.setAttribute('stroke',wp.color);
-    path.setAttribute('stroke-width',wp.w);
-    path.setAttribute('stroke-dasharray','1.2 0.8');
-    path.setAttribute('stroke-linecap','round');
-    path.setAttribute('opacity','0.55');
-    wavySvg.appendChild(path);
+  // Glow layer (thick, blurred) + sharp line layer
+  zoneBoundaries.forEach(zb=>{
+    // Glow behind
+    const glowPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+    glowPath.setAttribute('d',zb.d);glowPath.setAttribute('fill','none');
+    glowPath.setAttribute('stroke',zb.glow);glowPath.setAttribute('stroke-width',''+(zb.w*3.5));
+    glowPath.setAttribute('stroke-linecap','round');glowPath.setAttribute('opacity','0.4');
+    glowPath.setAttribute('filter','url(#zoneBoundaryBlur)');
+    zoneBoundarySvg.appendChild(glowPath);
+    // Main line
+    const mainPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+    mainPath.setAttribute('d',zb.d);mainPath.setAttribute('fill','none');
+    mainPath.setAttribute('stroke',zb.color);mainPath.setAttribute('stroke-width',''+zb.w);
+    mainPath.setAttribute('stroke-linecap','round');mainPath.setAttribute('opacity','0.7');
+    zoneBoundarySvg.appendChild(mainPath);
+    // Bright core
+    const corePath=document.createElementNS('http://www.w3.org/2000/svg','path');
+    corePath.setAttribute('d',zb.d);corePath.setAttribute('fill','none');
+    corePath.setAttribute('stroke','rgba(255,255,255,0.4)');corePath.setAttribute('stroke-width',''+(zb.w*0.4));
+    corePath.setAttribute('stroke-linecap','round');corePath.setAttribute('opacity','0.6');
+    zoneBoundarySvg.appendChild(corePath);
   });
-  layer.appendChild(wavySvg);
+  // SVG filter for glow blur
+  const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
+  const blur=document.createElementNS('http://www.w3.org/2000/svg','filter');
+  blur.setAttribute('id','zoneBoundaryBlur');
+  const feBlur=document.createElementNS('http://www.w3.org/2000/svg','feGaussianBlur');
+  feBlur.setAttribute('in','SourceGraphic');feBlur.setAttribute('stdDeviation','0.8');
+  blur.appendChild(feBlur);defs.appendChild(blur);zoneBoundarySvg.appendChild(defs);
+  layer.appendChild(zoneBoundarySvg);
 
   // === POI MARKERS ===
   const pois=[
