@@ -6682,12 +6682,12 @@ credits: \`
 
 engine: `
 <div class="inv-section">
-  <h3>⚙️ Auto-Rearrange Engine v4 (13 Rules)</h3>
+  <h3>⚙️ Auto-Rearrange Engine v5 (16 Rules)</h3>
   <p style="font-size:0.8rem;color:var(--text2);line-height:1.7;margin-bottom:16px">
     The distribution engine controls how 280+ stickers are placed across the 14K×14K canvas. It runs on page load and can be triggered manually via the 🔄 button in theme settings.
   </p>
   
-  <h4 style="font-size:0.85rem;color:var(--text);margin:16px 0 10px">📏 13 Distribution Rules</h4>
+  <h4 style="font-size:0.85rem;color:var(--text);margin:16px 0 10px">📏 16 Distribution Rules</h4>
   <table class="inv-table">
     <tr><th>#</th><th>Rule</th><th>How It Works</th></tr>
     <tr><td>1</td><td>Even Spread</td><td>No area too dense or empty — golden-angle spiral + grid scatter ensures coverage</td></tr>
@@ -6697,14 +6697,15 @@ engine: `
     <tr><td>5</td><td>Boundary Padding</td><td>350px buffer near all zone edges — no cards placed in boundary strips</td></tr>
     <tr><td>6</td><td>Auto-Place New</td><td>placeNewSticker() applies all rules to any newly added card</td></tr>
     <tr><td>7</td><td>Reset Button</td><td>🔄 button in settings runs full rearrange + audit + map sync</td></tr>
-    <tr><td>8</td><td>Badge Bandages</td><td>Badges auto-stack on top-left of anchor cards, tilted, z-index 68</td></tr>
+    <tr><td>8</td><td>Badge Bandages</td><td>Badges auto-stack on top-left of anchor cards, tilted, z-index 68 — ONLY exception to no-overlap</td></tr>
     <tr><td>9</td><td>Map Sync</td><td>After arrangement, canvas → scanStickers → invalidate map cache → redraw both maps</td></tr>
     <tr><td>10</td><td>Integrity Audit</td><td>Counts DOM items, removes duplicates (same mapId), fills missing categories/zones</td></tr>
     <tr><td>11</td><td>Attribution</td><td>Every sticker gets a type (category) and zone. New category: <strong>introduction</strong></td></tr>
-    <tr><td>12</td><td>Anti-Overlap</td><td>Cards are nudged apart (up to 12 attempts) so they don't stack on top of each other</td></tr>
-    <tr><td>13</td><td>Organic Borders</td><td>Zone boundaries use SVG bezier curves — irregular like country/state borders, not straight lines. Synced across canvas, big map, and small map.</td></tr>
+    <tr><td>12</td><td><strong>STRICT Anti-Overlap</strong></td><td>Radial probe search: 12 probes per ring, expanding golden-angle rings, 100+ attempts — cards NEVER stack on each other</td></tr>
+    <tr><td>13</td><td>Crime-Scene Tape Borders</td><td>Zone boundaries as yellow/black "⚠ DO NOT CROSS" tape — SVG pattern with bezier curves, synced across canvas, big map, small map</td></tr>
     <tr><td>14</td><td>Reserved Zones</td><td>No cards placed on ground-painted zone labels or signpost areas. These are exclusion zones during auto-rearrange.</td></tr>
-    <tr><td>15</td><td>Hollywood Signposts</td><td>Casino-style 2-pole signposts with gradient boards, wood poles, and ground shadows. Placed near zone centers on canvas, big map, and small map.</td></tr>
+    <tr><td>15</td><td>Hollywood Signposts</td><td>Casino-style 2-pole signposts with gradient boards, wood poles, and ground shadows near zone centers.</td></tr>
+    <tr><td>16</td><td>No Cards on Zone Names</td><td>The painted diagonal zone labels (ORIGIN, WORK, etc.) are protected — no sticker can overlap them.</td></tr>
   </table>
 </div>
 
