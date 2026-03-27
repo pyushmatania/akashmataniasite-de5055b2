@@ -1821,12 +1821,101 @@ body.map-expanded .scroll-counter{display:none!important}
 <!-- Vertical: Portfolio ↔ Fun (bottom half) at x≈7500 -->
 <div class="zone-divider v fun" style="left:7500px;top:5800px;height:8200px"></div>
 
-<!-- Zone signpost markers (centered in each zone) -->
-<div class="zone-signpost-marker" style="left:2900px;top:2800px;background:rgba(76,175,80,0.85)">ORIGIN</div>
-<div class="zone-signpost-marker" style="left:10500px;top:2800px;background:rgba(229,57,53,0.85)">WORK</div>
-<div class="zone-signpost-marker" style="left:2900px;top:8000px;background:rgba(66,165,245,0.85)">PORTFOLIO</div>
-<div class="zone-signpost-marker" style="left:3150px;top:12000px;background:rgba(255,152,0,0.85)">HOBBY</div>
-<div class="zone-signpost-marker" style="left:10500px;top:10000px;background:rgba(171,71,188,0.85)">FUN</div>
+<!-- Zone creative intro cards (centered in each zone, synced with big map) -->
+<!-- ORIGIN — Personal & About (center of 0-5800, 0-5600 → 2900,2800) -->
+<div class="zone-intro-creative" style="left:2740px;top:2600px;transform:rotate(-1deg)">
+  <div class="zic-header" style="color:#1B5E20"><div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(76,175,80,0.18),rgba(129,199,132,0.08));z-index:0"></div>
+    <div class="zic-icon" style="background:linear-gradient(135deg,#4CAF50,#81C784)">📸</div>
+    <div class="zic-title" style="color:#2E7D32">ORIGIN STORY</div>
+    <div class="zic-subtitle" style="color:#4E7D52">Where it all began — the person behind the products</div>
+  </div>
+  <div class="zic-body">
+    <div class="zic-divider"></div>
+    <div class="zic-tags">
+      <span class="zic-tag" style="background:rgba(76,175,80,0.15);color:#2E7D32">🎓 Education</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.15);color:#2E7D32">📍 Bengaluru</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.15);color:#2E7D32">🌱 Growth</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.15);color:#2E7D32">💭 Values</span>
+    </div>
+    <div class="zic-stat">✦ B.Tech CS · OUTR Bhubaneswar</div>
+  </div>
+</div>
+
+<!-- WORK — Professional (center of 7700-14000, 0-5600 → 10850,2800) -->
+<div class="zone-intro-creative" style="left:10690px;top:2600px;transform:rotate(0.8deg)">
+  <div class="zic-header" style="color:#B71C1C"><div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(229,57,53,0.18),rgba(239,154,154,0.08));z-index:0"></div>
+    <div class="zic-icon" style="background:linear-gradient(135deg,#E53935,#EF5350)">🎯</div>
+    <div class="zic-title" style="color:#C62828">WAR ROOM</div>
+    <div class="zic-subtitle" style="color:#8E3A3A">8+ years of building products that matter</div>
+  </div>
+  <div class="zic-body">
+    <div class="zic-divider"></div>
+    <div class="zic-tags">
+      <span class="zic-tag" style="background:rgba(229,57,53,0.15);color:#C62828">🚀 Fintech</span>
+      <span class="zic-tag" style="background:rgba(229,57,53,0.15);color:#C62828">🌐 Web3</span>
+      <span class="zic-tag" style="background:rgba(229,57,53,0.15);color:#C62828">📊 Strategy</span>
+      <span class="zic-tag" style="background:rgba(229,57,53,0.15);color:#C62828">⚡ Growth</span>
+    </div>
+    <div class="zic-stat">✦ Founder · PM · Builder</div>
+  </div>
+</div>
+
+<!-- PORTFOLIO — Creative (center of 0-5600, 6200-9800 → 2800,8000) -->
+<div class="zone-intro-creative" style="left:2640px;top:7800px;transform:rotate(-0.5deg)">
+  <div class="zic-header" style="color:#0D47A1"><div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(66,165,245,0.18),rgba(144,202,249,0.08));z-index:0"></div>
+    <div class="zic-icon" style="background:linear-gradient(135deg,#42A5F5,#90CAF9)">🚀</div>
+    <div class="zic-title" style="color:#1565C0">LAUNCHPAD</div>
+    <div class="zic-subtitle" style="color:#3D6E99">Projects shipped, products launched, ideas realized</div>
+  </div>
+  <div class="zic-body">
+    <div class="zic-divider"></div>
+    <div class="zic-tags">
+      <span class="zic-tag" style="background:rgba(66,165,245,0.15);color:#1565C0">💻 SaaS</span>
+      <span class="zic-tag" style="background:rgba(66,165,245,0.15);color:#1565C0">📱 Apps</span>
+      <span class="zic-tag" style="background:rgba(66,165,245,0.15);color:#1565C0">🎨 Design</span>
+      <span class="zic-tag" style="background:rgba(66,165,245,0.15);color:#1565C0">🔧 Build</span>
+    </div>
+    <div class="zic-stat">✦ EnterCircles · Recess · More</div>
+  </div>
+</div>
+
+<!-- HOBBY — Interests (center of 0-6300, 10400-14000 → 3150,12200) -->
+<div class="zone-intro-creative" style="left:2990px;top:12000px;transform:rotate(0.6deg)">
+  <div class="zic-header" style="color:#E65100"><div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,152,0,0.18),rgba(255,204,128,0.08));z-index:0"></div>
+    <div class="zic-icon" style="background:linear-gradient(135deg,#FF9800,#FFB74D)">🎮</div>
+    <div class="zic-title" style="color:#E65100">HOBBY CORNER</div>
+    <div class="zic-subtitle" style="color:#8E5A1A">The things that keep me sane — gaming, chai, vibes</div>
+  </div>
+  <div class="zic-body">
+    <div class="zic-divider"></div>
+    <div class="zic-tags">
+      <span class="zic-tag" style="background:rgba(255,152,0,0.15);color:#E65100">☕ Chai</span>
+      <span class="zic-tag" style="background:rgba(255,152,0,0.15);color:#E65100">🎮 Gaming</span>
+      <span class="zic-tag" style="background:rgba(255,152,0,0.15);color:#E65100">🎵 Music</span>
+      <span class="zic-tag" style="background:rgba(255,152,0,0.15);color:#E65100">📚 Books</span>
+    </div>
+    <div class="zic-stat">✦ Level: Certified Enthusiast</div>
+  </div>
+</div>
+
+<!-- FUN — Memes (center of 7700-14000, 6400-14000 → 10850,10200) -->
+<div class="zone-intro-creative" style="left:10690px;top:10000px;transform:rotate(-0.7deg)">
+  <div class="zic-header" style="color:#6A1B9A"><div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(171,71,188,0.18),rgba(206,147,216,0.08));z-index:0"></div>
+    <div class="zic-icon" style="background:linear-gradient(135deg,#AB47BC,#CE93D8)">😂</div>
+    <div class="zic-title" style="color:#7B1FA2">MEME ALLEY</div>
+    <div class="zic-subtitle" style="color:#7A4A8A">Where humor meets hustle — PM memes & fun stuff</div>
+  </div>
+  <div class="zic-body">
+    <div class="zic-divider"></div>
+    <div class="zic-tags">
+      <span class="zic-tag" style="background:rgba(171,71,188,0.15);color:#7B1FA2">😎 Vibes</span>
+      <span class="zic-tag" style="background:rgba(171,71,188,0.15);color:#7B1FA2">🎭 Memes</span>
+      <span class="zic-tag" style="background:rgba(171,71,188,0.15);color:#7B1FA2">🎉 Fun</span>
+      <span class="zic-tag" style="background:rgba(171,71,188,0.15);color:#7B1FA2">✨ Random</span>
+    </div>
+    <div class="zic-stat">✦ Procrastination Level: Expert</div>
+  </div>
+</div>
 
 <!-- ===== YOUR PHOTOS ===== -->
 
