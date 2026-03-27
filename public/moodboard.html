@@ -4299,7 +4299,7 @@ function placeZoneSignposts(signposts){
   });
 }
 
-// ===== AUTO-REARRANGE ENGINE v3 =====
+// ===== AUTO-REARRANGE ENGINE v4 =====
 // Rules:
 // 1. Spread evenly — no too-dense or too-empty areas
 // 2. Intro card of each zone centered in zone
@@ -4312,7 +4312,8 @@ function placeZoneSignposts(signposts){
 // 9. Sync to big and small map after arrangement
 // 10. Audit: count items in DOM vs maps, remove duplicates, add missing
 // 11. Ensure all items are categorized (type) and attributed (zone). New category: introduction
-// 12. Cards CAN overlap/stack on top of each other (no anti-overlap enforcement)
+// 12. Anti-overlap: cards are nudged apart so they don't stack on top of each other
+// 13. Organic country-style zone boundaries (SVG curves, not straight lines)
 
 const ZONE_DEFS={
   origin:{x1:400,y1:400,x2:5800,y2:5600,center:{x:3100,y:3000},color:'#4CAF50'},
