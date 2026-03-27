@@ -7103,8 +7103,13 @@ function drawMap(){
 
 // Render real sticker clones for items visible in the map viewport
 let _cloneRafId=null;
+let _lastCloneRenderTime=0;
 function renderVisibleClones(sc,ox,oy,cw,ch){
   if(!sc||!mapCanvas)return;
+  // Debounce: skip if called within 100ms of last render
+  const now=performance.now();
+  if(now-_lastCloneRenderTime<100){return;}
+  _lastCloneRenderTime=now;
   if(_cloneRafId){cancelAnimationFrame(_cloneRafId);_cloneRafId=null;}
   // Clear existing clones
   mapCanvas.querySelectorAll('.mi,.map-sticker-clone').forEach(el=>el.remove());
