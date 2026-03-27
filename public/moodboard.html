@@ -4394,13 +4394,114 @@ function placeZoneSignposts(signposts){
 // 14. Reserved zones: no cards placed on ground labels or signpost areas
 // 15. Hollywood casino-style 2-pole signposts near zone centers (canvas + maps)
 
-const ZONE_DEFS={
-  origin:{x1:400,y1:400,x2:5800,y2:5600,center:{x:3100,y:3000},color:'#4CAF50'},
-  work:{x1:7700,y1:400,x2:13600,y2:5600,center:{x:10650,y:3000},color:'#E53935'},
-  portfolio:{x1:400,y1:6200,x2:5600,y2:9800,center:{x:3000,y:8000},color:'#42A5F5'},
-  hobby:{x1:400,y1:10400,x2:6300,y2:13600,center:{x:3350,y:12000},color:'#FF9800'},
-  fun:{x1:7700,y1:6400,x2:13600,y2:13600,center:{x:10650,y:10000},color:'#AB47BC'}
+// ===== UNIFIED ZONE BOUNDARY POLYGONS =====
+// Extracted from canvas SVG paths — used for containment, maps, and zone detection
+const ZONE_BOUNDARY_POLYGONS={
+  origin:[
+    [200,120],[600,60],[1100,280],[1800,180],[2300,350],[2700,150],[3200,80],[3600,220],
+    [4100,380],[4500,140],[4900,60],[5200,300],[5600,180],[5900,260],[6100,400],[6300,350],
+    [6400,580],[6350,900],[6500,1300],[6300,1800],[6450,2100],[6200,2500],[6400,2900],
+    [6500,3200],[6300,3600],[6150,3900],[6400,4300],[6200,4700],[6350,5100],[6200,5400],
+    [6350,5600],[6300,5850],[5900,6000],[5400,5900],[5100,5800],[4600,6050],[4200,5850],
+    [3700,5950],[3200,5750],[2700,5900],[2200,6000],[1800,5700],[1300,5850],[800,5700],
+    [400,5800],[200,5680],[120,5400],[250,5000],[150,4600],[80,4200],[200,3800],
+    [300,3400],[100,3000],[180,2600],[120,2200],[200,1800],[100,1400],[80,1000],[250,600]
+  ],
+  work:[
+    [6700,200],[7100,80],[7500,350],[8000,150],[8500,280],[8900,100],[9400,300],
+    [9800,180],[10200,50],[10600,250],[11100,120],[11500,280],[11900,160],[12300,80],
+    [12700,300],[13100,180],[13500,260],[13700,400],[13850,600],[13900,1000],[13750,1500],
+    [13880,1900],[13700,2400],[13850,2800],[13700,3300],[13600,3700],[13800,4100],
+    [13700,4500],[13850,4900],[13750,5300],[13800,5700],[13700,5850],[13400,5950],
+    [13000,5800],[12500,5900],[12000,5750],[11500,5650],[11000,5950],[10500,5800],
+    [10000,5900],[9500,5750],[9000,5900],[8500,6000],[8000,5700],[7500,5850],
+    [7100,5750],[6800,5600],[6700,5300],[6600,4900],[6750,4400],[6600,4000],
+    [6700,3500],[6550,3100],[6700,2700],[6800,2300],[6600,1800],[6700,1400],
+    [6750,1000],[6650,600],[6680,400],[6700,300]
+  ],
+  portfolio:[
+    [150,6100],[400,5950],[900,6200],[1400,6050],[1900,6180],[2400,6000],[2900,6200],
+    [3400,6100],[3800,5950],[4300,6150],[4800,6050],[5200,6200],[5600,6080],[5900,6000],
+    [6200,6200],[6400,6100],[6500,6400],[6400,6800],[6350,7100],[6500,7400],[6350,7800],
+    [6450,8200],[6300,8600],[6450,8900],[6400,9200],[6300,9500],[6400,9850],[6300,10050],
+    [6000,10100],[5600,10000],[5100,10200],[4600,10050],[4100,10150],[3600,9950],
+    [3100,10100],[2600,10200],[2100,9950],[1600,10100],[1100,9950],[600,10100],
+    [300,9950],[150,9800],[200,9400],[100,9000],[80,8600],[200,8200],[300,7800],
+    [100,7400],[200,7000],[120,6600],[200,6300]
+  ],
+  hobby:[
+    [150,10300],[500,10150],[1000,10400],[1500,10200],[2000,10350],[2500,10150],
+    [3000,10350],[3500,10250],[4000,10100],[4500,10300],[5000,10200],[5400,10350],
+    [5800,10200],[6100,10150],[6300,10350],[6500,10250],[6550,10600],[6450,11000],
+    [6400,11400],[6550,11800],[6400,12200],[6500,12600],[6350,13000],[6450,13300],
+    [6400,13600],[6300,13800],[6200,13900],[5700,13950],[5200,13850],[4700,13750],
+    [4200,13950],[3700,13850],[3200,13900],[2600,13800],[2000,13920],[1500,13950],
+    [1000,13800],[500,13900],[250,13850],[120,13700],[100,13400],[150,13000],
+    [80,12600],[150,12200],[200,11800],[100,11400],[80,11000],[200,10700]
+  ],
+  fun:[
+    [6800,6100],[7200,5950],[7700,6200],[8200,6050],[8700,6180],[9200,6000],
+    [9700,6200],[10200,6100],[10700,5950],[11200,6150],[11700,6050],[12200,6200],
+    [12700,6080],[13100,6000],[13400,6200],[13700,6100],[13850,6400],[13750,6900],
+    [13700,7300],[13850,7800],[13700,8300],[13800,8800],[13650,9300],[13800,9800],
+    [13750,10300],[13650,10800],[13800,11300],[13700,11800],[13800,12300],[13700,12800],
+    [13650,13200],[13750,13500],[13650,13800],[13400,13920],[13000,13850],[12500,13750],
+    [12000,13950],[11500,13850],[11000,13900],[10400,13800],[9800,13920],[9300,13950],
+    [8800,13800],[8300,13900],[7800,13850],[7300,13750],[6900,13880],[6750,13600],
+    [6800,13200],[6700,12800],[6600,12300],[6750,11800],[6800,11300],[6650,10800],
+    [6750,10300],[6650,9800],[6750,9300],[6650,8800],[6600,8300],[6750,7800],
+    [6650,7300],[6700,6800],[6650,6400],[6680,6200],[6750,6100]
+  ]
 };
+
+// Point-in-polygon test using ray-casting algorithm
+function pointInPolygon(x,y,polygon){
+  let inside=false;
+  for(let i=0,j=polygon.length-1;i<polygon.length;j=i++){
+    const xi=polygon[i][0],yi=polygon[i][1];
+    const xj=polygon[j][0],yj=polygon[j][1];
+    if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi)){
+      inside=!inside;
+    }
+  }
+  return inside;
+}
+
+// Get zone name using polygon containment
+function pointInZone(x,y){
+  for(const [name,poly] of Object.entries(ZONE_BOUNDARY_POLYGONS)){
+    if(pointInPolygon(x,y,poly))return name;
+  }
+  return null;
+}
+
+// Compute centroid of a polygon
+function polygonCentroid(poly){
+  let cx=0,cy=0;
+  poly.forEach(p=>{cx+=p[0];cy+=p[1];});
+  return {x:cx/poly.length,y:cy/poly.length};
+}
+
+// Compute bounding box of polygon
+function polygonBBox(poly){
+  let x1=Infinity,y1=Infinity,x2=-Infinity,y2=-Infinity;
+  poly.forEach(p=>{
+    if(p[0]<x1)x1=p[0]; if(p[0]>x2)x2=p[0];
+    if(p[1]<y1)y1=p[1]; if(p[1]>y2)y2=p[1];
+  });
+  return {x1,y1,x2,y2};
+}
+
+// Build ZONE_DEFS from polygon data
+const ZONE_DEFS={};
+(function(){
+  const colors={origin:'#4CAF50',work:'#E53935',portfolio:'#42A5F5',hobby:'#FF9800',fun:'#AB47BC'};
+  Object.entries(ZONE_BOUNDARY_POLYGONS).forEach(([name,poly])=>{
+    const bb=polygonBBox(poly);
+    const c=polygonCentroid(poly);
+    ZONE_DEFS[name]={x1:bb.x1,y1:bb.y1,x2:bb.x2,y2:bb.y2,center:c,color:colors[name],polygon:poly};
+  });
+})();
 const BOUNDARY_PAD=350; // no cards within this distance of zone edges
 const SCATTER_ZONES=['fun','hobby']; // these also scatter across canvas
 
@@ -4429,11 +4530,48 @@ function isMemeOrFunEmoji(sticker){
     (sticker.classList.contains('sticker-emoji')&&(!sticker.dataset.zone||SCATTER_ZONES.includes(sticker.dataset.zone)||sticker.dataset.zone==='fun'));
 }
 
+// Check if a point (center of item) is inside the zone polygon with padding
+function isPointInZoneSafe(x,y,zoneName){
+  const poly=ZONE_BOUNDARY_POLYGONS[zoneName];
+  if(!poly)return true;
+  return pointInPolygon(x,y,poly);
+}
+
+// Clamp a point to be inside a polygon (find nearest interior point)
+function clampToPolygon(x,y,polygon,pad){
+  pad=pad||BOUNDARY_PAD;
+  // Shrink polygon inward by pad (approximate: move each vertex toward centroid)
+  const c=polygonCentroid(polygon);
+  const shrunk=polygon.map(p=>{
+    const dx=p[0]-c.x,dy=p[1]-c.y;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist<pad)return [c.x,c.y];
+    const factor=(dist-pad)/dist;
+    return [c.x+dx*factor,c.y+dy*factor];
+  });
+  if(pointInPolygon(x,y,shrunk))return {x,y};
+  // Find nearest point on shrunk polygon edges
+  let bestX=c.x,bestY=c.y,bestD=Infinity;
+  for(let i=0;i<shrunk.length;i++){
+    const j=(i+1)%shrunk.length;
+    const ax=shrunk[i][0],ay=shrunk[i][1],bx=shrunk[j][0],by=shrunk[j][1];
+    const abx=bx-ax,aby=by-ay;
+    const len2=abx*abx+aby*aby;
+    if(len2===0)continue;
+    let t=((x-ax)*abx+(y-ay)*aby)/len2;
+    t=Math.max(0,Math.min(1,t));
+    const px=ax+t*abx,py=ay+t*aby;
+    const d=(px-x)*(px-x)+(py-y)*(py-y);
+    if(d<bestD){bestD=d;bestX=px;bestY=py;}
+  }
+  return {x:bestX,y:bestY};
+}
+
 function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
-  // Place items in expanding spiral from center, denser near center
   const sorted=items.slice().sort((a,b)=>(a.offsetWidth*a.offsetHeight)-(b.offsetWidth*b.offsetHeight));
   const n=sorted.length;
   if(!n)return;
+  const poly=zoneBounds&&zoneBounds.polygon?zoneBounds.polygon:null;
   const padX=BOUNDARY_PAD;
   const padY=BOUNDARY_PAD;
   const safeX1=zoneBounds?zoneBounds.x1+padX:MOODBOARD_ITEM_SAFE_MARGIN;
@@ -4444,17 +4582,22 @@ function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
   sorted.forEach((sticker,i)=>{
     const w=sticker.offsetWidth||180;
     const h=sticker.offsetHeight||100;
-    // Spiral parameter: closer items get smaller radius
     const t=(i+1)/(n+1);
     const r=innerR+t*(outerR-innerR);
-    const angleStep=2.399963; // golden angle in radians
+    const angleStep=2.399963;
     const angle=i*angleStep;
     let tryLeft=cx+Math.cos(angle)*r-w/2+(rng()-0.5)*60;
     let tryTop=cy+Math.sin(angle)*r-h/2+(rng()-0.5)*60;
-    // Clamp to safe zone
+    // Clamp to bounding box first
     tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
     tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
-    // Rule 12: Anti-overlap nudge — push away from placed items (24 attempts)
+    // Then clamp center to polygon if available
+    if(poly){
+      const clamped=clampToPolygon(tryLeft+w/2,tryTop+h/2,poly,BOUNDARY_PAD);
+      tryLeft=clamped.x-w/2;
+      tryTop=clamped.y-h/2;
+    }
+    // Rule 12: Anti-overlap nudge
     for(let attempt=0;attempt<24;attempt++){
       let overlapping=false;
       for(const p of placed){
@@ -4467,16 +4610,20 @@ function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
           tryTop+=Math.sin(nudgeAngle)*Math.max(h*0.7,80);
           tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
           tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
+          if(poly){
+            const clamped=clampToPolygon(tryLeft+w/2,tryTop+h/2,poly,BOUNDARY_PAD);
+            tryLeft=clamped.x-w/2;
+            tryTop=clamped.y-h/2;
+          }
           break;
         }
       }
       if(!overlapping)break;
     }
-    let candidate={left:tryLeft,top:tryTop,w,h};
-    sticker.style.left=candidate.left+'px';
-    sticker.style.top=candidate.top+'px';
+    sticker.style.left=tryLeft+'px';
+    sticker.style.top=tryTop+'px';
     sticker.style.transform='rotate('+((rng()-0.5)*12).toFixed(1)+'deg)';
-    placed.push({left:candidate.left,top:candidate.top,w,h});
+    placed.push({left:tryLeft,top:tryTop,w,h});
   });
 }
 
@@ -7221,39 +7368,28 @@ function addMapDecorations(cw, ch){
    // Fun: x[7700-13600]→[54.7%-94.6%], y[6400-13600]→[45.9%-94.6%]
    addDiv('map-zone-tint','left:55%;top:46%;width:40%;height:49%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.28),transparent 65%);z-index:0;filter:blur(2px)');
 
-   // === ZONE BOUNDARY OUTLINES — dashed colored organic borders per zone ===
+   // === ZONE BOUNDARY OUTLINES — generated from unified ZONE_BOUNDARY_POLYGONS ===
    const svgNS='http://www.w3.org/2000/svg';
    const mapBoundarySvg=document.createElementNS(svgNS,'svg');
    mapBoundarySvg.setAttribute('viewBox','0 0 100 100');
    mapBoundarySvg.setAttribute('preserveAspectRatio','none');
    mapBoundarySvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:5;overflow:visible';
-    const zonePaths=[
-      // ORIGIN (top-left) — cyan, country-shaped
-      {d:'M1.4,0.9 C4.3,0.4 7.9,2 12.9,1.3 L16.4,2.5 C19.3,1.1 22.9,0.6 25.7,1.6 Q29.3,2.7 32.1,1 C35,0.4 37.1,2.1 40,1.3 L42.1,1.9 Q43.6,2.9 45,2.5 C45.7,4.1 45.4,6.4 46.4,9.3 L45,12.9 C46.1,15 44.3,17.9 45.7,20.7 Q46.4,22.9 45,25.7 C43.9,27.9 45.7,30.7 44.3,33.6 L45.4,36.4 C44.3,38.6 45.4,40 45,41.8 Q42.1,42.9 38.6,42.1 C36.4,41.4 32.9,43.2 30,41.8 L26.4,42.5 Q22.9,41.1 19.3,42.1 C15.7,42.9 12.9,40.7 9.3,41.8 L5.7,40.7 Q2.9,41.4 1.4,40.6 C0.9,38.6 1.8,35.7 1.1,32.9 Q0.6,30 1.4,27.1 C2.1,24.3 0.7,21.4 1.3,18.6 L0.9,15.7 Q1.4,12.9 0.7,10 C0.6,7.1 1.8,4.3 1.4,0.9Z',
-       stroke:'rgba(0,188,212,0.7)'},
-      // WORK (top-right) — red, country-shaped
-      {d:'M47.9,1.4 C50.7,0.6 53.6,2.5 57.1,1.1 L60.7,2 Q63.6,0.7 67.1,2.1 C70,1.3 72.9,0.4 75.7,1.8 L79.3,0.9 Q82.1,2 85,1.1 C87.9,0.6 90.7,2.1 93.6,1.3 L96.4,1.9 Q97.9,2.9 99,4.3 C99.3,7.1 98.2,10.7 99.1,13.6 L97.9,17.1 Q99,20 97.9,23.6 C97.1,26.4 98.6,29.3 97.9,32.1 L99,35 Q98.2,37.9 98.6,40.7 C97.9,41.8 95.7,42.5 92.9,41.4 Q89.3,42.1 85.7,41.1 C82.1,40.4 78.6,42.5 75,41.4 L71.4,42.1 Q67.9,41.1 64.3,42.1 C60.7,42.9 57.1,40.7 53.6,41.8 L50.7,41.1 Q48.6,40 47.9,37.9 C47.1,35 48.2,31.4 47.1,28.6 L47.9,25 Q46.8,22.1 47.9,19.3 C48.6,16.4 47.1,12.9 47.9,10 Q48.2,7.1 47.5,4.3 C47.7,2.9 47.9,2.1 47.9,1.4Z',
-       stroke:'rgba(229,57,53,0.7)'},
-      // PORTFOLIO (mid-left) — blue, country-shaped
-      {d:'M1.1,43.6 C2.9,42.5 6.4,44.3 10,43.2 L13.6,44.1 Q17.1,42.9 20.7,44.3 C24.3,43.6 27.1,42.5 30.7,43.9 L34.3,43.2 Q37.1,44.3 40,43.4 C42.1,42.9 44.3,44.3 45.7,43.6 Q46.4,45.7 45.7,48.6 C45.4,50.7 46.4,52.9 45.4,55.7 L46.1,58.6 Q45,61.4 46.1,63.6 C45.7,65.7 45,67.9 45.7,70.4 Q45,71.8 42.9,72.1 C40,71.4 36.4,72.9 32.9,71.8 L29.3,72.5 Q25.7,71.1 22.1,72.1 C18.6,72.9 15,71.1 11.4,72.1 L7.9,71.1 Q4.3,72.1 2.1,71.1 C1.1,70 1.4,67.1 0.7,64.3 Q0.6,61.4 1.4,58.6 C2.1,55.7 0.7,52.9 1.4,50 L0.9,47.1 Q1.4,45 1.1,43.6Z',
-       stroke:'rgba(66,165,245,0.7)'},
-      // HOBBY (bottom-left) — orange, country-shaped
-      {d:'M1.1,73.6 C3.6,72.5 7.1,74.3 10.7,72.9 L14.3,73.9 Q17.9,72.5 21.4,73.9 C25,73.2 28.6,72.1 32.1,73.6 L35.7,72.9 Q38.6,73.9 41.4,72.9 C43.6,72.5 45,73.9 46.4,73.2 Q46.8,75.7 46.1,78.6 C45.7,81.4 46.8,84.3 45.7,87.1 L46.4,90 Q45.4,92.9 46.1,95 C45.7,97.1 45,98.6 44.3,99.3 Q40.7,99.6 37.1,98.9 C33.6,98.2 30,99.6 26.4,98.9 L22.9,99.3 Q18.6,98.6 14.3,99.4 C10.7,99.6 7.1,98.6 3.6,99.3 L1.8,98.9 Q0.9,97.9 0.7,95.7 C1.1,92.9 0.6,90 1.1,87.1 Q1.4,84.3 0.7,81.4 C0.6,78.6 1.4,76.4 1.1,73.6Z',
-       stroke:'rgba(255,152,0,0.7)'},
-      // FUN (right side) — purple, country-shaped
-      {d:'M48.6,43.6 C51.4,42.5 55,44.3 58.6,43.2 L62.1,44.1 Q65.7,42.9 69.3,44.3 C72.9,43.6 76.4,42.5 80,43.9 L83.6,43.2 Q87.1,44.3 90.7,43.4 C93.6,42.9 95.7,44.3 97.9,43.6 Q99,45.7 98.2,49.3 C97.9,52.1 99,55.7 97.9,59.3 L98.6,62.9 Q97.5,66.4 98.6,70 C98.2,73.6 97.5,77.1 98.6,80.7 L97.9,84.3 Q98.6,87.9 97.9,91.4 C97.5,94.3 98.2,96.4 97.5,98.6 Q95.7,99.4 92.9,98.9 C89.3,98.2 85.7,99.6 82.1,98.9 L78.6,99.3 Q74.3,98.6 70,99.4 C66.4,99.6 62.9,98.6 59.3,99.3 L55.7,98.9 Q52.1,98.2 49.3,99.1 C48.2,97.1 48.6,94.3 47.9,91.4 Q47.1,87.9 48.2,84.3 C48.6,80.7 47.5,77.1 48.2,73.6 L47.5,70 Q48.2,66.4 47.5,62.9 C47.1,59.3 48.2,55.7 47.5,52.1 Q47.9,48.6 47.5,45.7 C47.7,44.3 48.2,43.6 48.6,43.6Z',
-       stroke:'rgba(171,71,188,0.7)'},
-    ];
-    zonePaths.forEach(zp=>{
-      const p=document.createElementNS(svgNS,'path');
-      p.setAttribute('d',zp.d);
-      p.setAttribute('fill','none');p.setAttribute('stroke',zp.stroke);
-      p.setAttribute('stroke-width','0.5');p.setAttribute('stroke-linejoin','round');
-      p.setAttribute('stroke-dasharray','3 1.5');p.setAttribute('stroke-linecap','round');
-      p.style.filter='drop-shadow(0 0 1.5px rgba(80,60,30,0.3))';
-      mapBoundarySvg.appendChild(p);
-    });
-    layer.appendChild(mapBoundarySvg);
+   const zoneStrokes={origin:'rgba(0,188,212,0.5)',work:'rgba(229,57,53,0.5)',portfolio:'rgba(66,165,245,0.5)',hobby:'rgba(255,152,0,0.5)',fun:'rgba(171,71,188,0.5)'};
+   Object.entries(ZONE_BOUNDARY_POLYGONS).forEach(([name,poly])=>{
+     // Scale canvas coords (0-14000) to viewBox (0-100)
+     const pts=poly.map(p=>(p[0]/140).toFixed(2)+','+(p[1]/140).toFixed(2));
+     const d='M'+pts[0]+' L'+pts.slice(1).join(' L')+'Z';
+     const p=document.createElementNS(svgNS,'path');
+     p.setAttribute('d',d);
+     p.setAttribute('fill','none');
+     p.setAttribute('stroke',zoneStrokes[name]||'rgba(255,255,255,0.3)');
+     p.setAttribute('stroke-width','0.3');
+     p.setAttribute('stroke-linejoin','round');
+     p.setAttribute('stroke-dasharray','2 1');
+     p.setAttribute('stroke-linecap','round');
+     mapBoundarySvg.appendChild(p);
+   });
+   layer.appendChild(mapBoundarySvg);
 
    // === HOLLYWOOD CASINO-STYLE SIGNPOSTS on big map ===
    const signposts=[
@@ -7816,6 +7952,29 @@ function drawMap(){
       mapCanvas.appendChild(el);
     });
     if(mapCount)mapCount.textContent=count+' items';
+    // Add zone boundary overlay to small map
+    const oldBSvg=mapCanvas.querySelector('.small-map-boundaries');
+    if(oldBSvg)oldBSvg.remove();
+    const bSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    bSvg.setAttribute('class','small-map-boundaries');
+    bSvg.setAttribute('viewBox','0 0 14000 14000');
+    bSvg.setAttribute('preserveAspectRatio','none');
+    bSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:5;overflow:visible';
+    const smStrokes={origin:'rgba(0,188,212,0.4)',work:'rgba(229,57,53,0.4)',portfolio:'rgba(66,165,245,0.4)',hobby:'rgba(255,152,0,0.4)',fun:'rgba(171,71,188,0.4)'};
+    Object.entries(ZONE_BOUNDARY_POLYGONS).forEach(([name,poly])=>{
+      const pts=poly.map(p=>p[0]+','+p[1]);
+      const d='M'+pts[0]+' L'+pts.slice(1).join(' L')+'Z';
+      const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+      p.setAttribute('d',d);
+      p.setAttribute('fill','none');
+      p.setAttribute('stroke',smStrokes[name]||'rgba(255,255,255,0.3)');
+      p.setAttribute('stroke-width','80');
+      p.setAttribute('stroke-linejoin','round');
+      p.setAttribute('stroke-dasharray','300 150');
+      p.setAttribute('stroke-linecap','round');
+      bSvg.appendChild(p);
+    });
+    mapCanvas.appendChild(bSvg);
   }
   updMap();
 }
@@ -8449,17 +8608,19 @@ function showNav(tx,ty){
   setTimeout(()=>{if(navLine===svg){svg.remove();navLine=null}},5000);
 }
 
-// Zone definitions for name lookup
+// Zone definitions for name lookup — uses polygon containment
 const mapZones=[
-  {name:'Origin',x1:400,y1:400,x2:5800,y2:5600},
-  {name:'Work',x1:7700,y1:400,x2:13600,y2:5600},
-  {name:'Portfolio',x1:400,y1:6200,x2:5600,y2:9800},
-  {name:'Hobby',x1:400,y1:10400,x2:6300,y2:13600},
-  {name:'Fun',x1:7700,y1:6400,x2:13600,y2:13600}
+  {name:'Origin',key:'origin'},
+  {name:'Work',key:'work'},
+  {name:'Portfolio',key:'portfolio'},
+  {name:'Hobby',key:'hobby'},
+  {name:'Fun',key:'fun'}
 ];
 function getZoneName(px,py){
-  for(const z of mapZones){
-    if(px>=z.x1&&px<=z.x2&&py>=z.y1&&py<=z.y2)return z.name;
+  const zone=pointInZone(px,py);
+  if(zone){
+    const found=mapZones.find(z=>z.key===zone);
+    return found?found.name:'Exploring';
   }
   return 'Exploring';
 }
