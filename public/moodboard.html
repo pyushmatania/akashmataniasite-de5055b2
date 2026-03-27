@@ -3323,8 +3323,9 @@ function scrollToZone(e,zone){
 const MOODBOARD_VIEW_SCALE_NAV=window.innerWidth<=768?0.6:0.72;
 
 // ===== PLAY BUTTON — cycles through intro cards =====
-let _playIntroIdx=-1;
+let _playIntroIdx=0;
 // Play targets: Work → Portfolio → Origin → Hobby → Fun (exact intro card centers)
+// Starts at 0 (Work) so first press goes to 1 (Portfolio), after Fun loops to Work
 const _playIntroTargets=[
   {x:10050+190,y:2600+210,label:'Work'},       // Main Akash intro card
   {x:2640+190,y:7600+210,label:'Portfolio'},    // Portfolio zone intro card
