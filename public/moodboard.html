@@ -35,14 +35,29 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
     linear-gradient(#E8E4DF 1px, transparent 1px),
     linear-gradient(90deg, #E8E4DF 1px, transparent 1px);
   background-size:100% 100%,100% 100%,100% 100%,40px 40px,40px 40px;
-  border:6px solid transparent;
-  border-image:repeating-linear-gradient(90deg,#C9A96E 0px,#C9A96E 12px,transparent 12px,transparent 20px) 6;
-  box-shadow:inset 0 0 0 2px rgba(201,169,110,0.15);
+  border:none;
+  box-shadow:inset 0 0 0 2px rgba(201,169,110,0.12);
 }
-/* Decorative border corners */
+/* 3D road-rail edge boundary (canvas perimeter) */
 .canvas::before{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:9999;
-  border:4px dashed rgba(201,169,110,0.25);border-radius:0;
+  border-radius:0;
+  background:
+    linear-gradient(180deg,rgba(70,70,70,0.92),rgba(35,35,35,0.95)) top/100% 34px no-repeat,
+    linear-gradient(180deg,rgba(35,35,35,0.95),rgba(70,70,70,0.92)) bottom/100% 34px no-repeat,
+    linear-gradient(90deg,rgba(70,70,70,0.92),rgba(35,35,35,0.95)) left/34px 100% no-repeat,
+    linear-gradient(90deg,rgba(35,35,35,0.95),rgba(70,70,70,0.92)) right/34px 100% no-repeat;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.28),inset 0 -1px 0 rgba(0,0,0,0.35),0 0 0 1px rgba(0,0,0,0.18);
+}
+.canvas::after{
+  content:'';position:absolute;inset:6px;pointer-events:none;z-index:9998;
+  border-radius:0;
+  background:
+    repeating-linear-gradient(90deg,rgba(255,215,0,0.9) 0 18px,rgba(20,20,20,0.9) 18px 30px) top/100% 10px no-repeat,
+    repeating-linear-gradient(90deg,rgba(255,215,0,0.9) 0 18px,rgba(20,20,20,0.9) 18px 30px) bottom/100% 10px no-repeat,
+    repeating-linear-gradient(0deg,rgba(255,215,0,0.9) 0 18px,rgba(20,20,20,0.9) 18px 30px) left/10px 100% no-repeat,
+    repeating-linear-gradient(0deg,rgba(255,215,0,0.9) 0 18px,rgba(20,20,20,0.9) 18px 30px) right/10px 100% no-repeat;
+  opacity:0.7;
 }
 /* Bounce flash overlay */
 .bounce-flash{
@@ -102,12 +117,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .zone-tint-hub{background:radial-gradient(ellipse at center,#FFB300,transparent 70%)}
 .zone-tint-playground{background:radial-gradient(ellipse at center,#FF9800,transparent 70%)}
 .zone-tint-memealley{background:radial-gradient(ellipse at center,#AB47BC,transparent 70%)}
-/* Crime-scene tape zone boundaries */
+/* Organic zone boundaries (inside map zones only) */
 .zone-boundary-svg{position:absolute;left:0;top:0;width:14000px;height:14000px;pointer-events:none;z-index:2;overflow:visible}
-.zone-boundary-svg path{fill:none;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.2))}
-.zone-boundary-svg .tape-yellow{stroke:#FFD600;stroke-dasharray:40 20}
-.zone-boundary-svg .tape-black{stroke:#1A1A1A;stroke-dasharray:20 40;stroke-dashoffset:40}
-.zone-boundary-svg .tape-text{fill:#1A1A1A;font-family:var(--font-fun);font-size:18px;font-weight:900;letter-spacing:0.3em}
+.zone-boundary-svg path{fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12))}
 /* Zone intro cards — bold card style */
 .zone-intro-creative{width:380px;min-height:420px;border-radius:28px;overflow:hidden;background:#fff;border:2.5px solid #f0ece6;box-shadow:0 12px 48px rgba(0,0,0,0.12),0 4px 12px rgba(0,0,0,0.06);cursor:default;position:relative}
 .zone-intro-creative .zic-header{padding:28px 26px 18px;position:relative;overflow:hidden}
@@ -753,6 +765,7 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
     0 0 0 3px rgba(10,10,10,0.6),
     inset 0 0 12px rgba(0,0,0,0.3);
   position:relative;cursor:pointer;
+  touch-action:manipulation;
   transition:none;
   background:#3d7ab5;
 }
@@ -1842,25 +1855,16 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <div class="zone-tint zone-tint-playground" style="left:0;top:10200px;width:6500px;height:3800px"></div>
 <div class="zone-tint zone-tint-memealley" style="left:7500px;top:6200px;width:6500px;height:7800px"></div>
-<!-- Crime-scene tape zone boundaries (SVG paths) -->
+<!-- Organic country-style zone boundaries (SVG paths) -->
 <svg class="zone-boundary-svg" viewBox="0 0 14000 14000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <pattern id="tapePattern" patternUnits="userSpaceOnUse" width="60" height="18" patternTransform="rotate(0)">
-      <rect width="40" height="18" fill="#FFD600"/>
-      <rect x="40" width="20" height="18" fill="#1A1A1A"/>
-    </pattern>
-  </defs>
   <!-- Horizontal boundary: Origin/Work → Portfolio/Fun at y≈5900 -->
-  <path d="M200,5850 C800,5920 1400,5780 2100,5930 S3200,5860 4000,5940 S5200,5820 6000,5900 S7200,5960 8000,5850 S9400,5950 10200,5870 S11600,5920 12800,5860 L13600,5900" stroke="url(#tapePattern)" stroke-width="18"/>
-  <text><textPath href="#tapePath1" style="font-family:'Fredoka',sans-serif;font-size:11px;fill:#1A1A1A;font-weight:900;letter-spacing:0.4em">⚠ DO NOT CROSS ⚠ DO NOT CROSS ⚠ DO NOT CROSS ⚠ DO NOT CROSS ⚠</textPath></text>
+  <path d="M200,5850 C800,5920 1400,5780 2100,5930 S3200,5860 4000,5940 S5200,5820 6000,5900 S7200,5960 8000,5850 S9400,5950 10200,5870 S11600,5920 12800,5860 L13600,5900" stroke="rgba(76,175,80,0.5)" stroke-dasharray="24 12"/>
   <!-- Horizontal boundary: Portfolio → Hobby at y≈10100 (left half) -->
-  <path d="M200,10050 C700,10150 1300,9980 2000,10120 S3100,10060 3800,10140 S4800,10020 5500,10100 L6550,10080" stroke="url(#tapePattern)" stroke-width="18"/>
+  <path d="M200,10050 C700,10150 1300,9980 2000,10120 S3100,10060 3800,10140 S4800,10020 5500,10100 L6550,10080" stroke="rgba(255,152,0,0.5)" stroke-dasharray="24 12"/>
   <!-- Vertical boundary: Origin/Portfolio/Hobby ↔ Work/Fun top half x≈6750 -->
-  <path d="M6700,200 C6780,700 6650,1300 6760,1900 S6700,2800 6780,3400 S6650,4200 6750,4800 L6720,5850" stroke="url(#tapePattern)" stroke-width="18"/>
+  <path d="M6700,200 C6780,700 6650,1300 6760,1900 S6700,2800 6780,3400 S6650,4200 6750,4800 L6720,5850" stroke="rgba(229,57,53,0.5)" stroke-dasharray="24 12"/>
   <!-- Vertical boundary: bottom half x≈6750 -->
-  <path d="M6720,5900 C6800,6500 6660,7200 6770,7900 S6690,8800 6780,9500 S6650,10400 6740,11200 S6800,12400 6720,13200 L6750,13800" stroke="url(#tapePattern)" stroke-width="18"/>
-  <!-- Named paths for text placement -->
-  <path id="tapePath1" d="M200,5830 C800,5900 1400,5760 2100,5910 S3200,5840 4000,5920 S5200,5800 6000,5880 S7200,5940 8000,5830 S9400,5930 10200,5850 S11600,5900 12800,5840 L13600,5880" fill="none" stroke="none"/>
+  <path d="M6720,5900 C6800,6500 6660,7200 6770,7900 S6690,8800 6780,9500 S6650,10400 6740,11200 S6800,12400 6720,13200 L6750,13800" stroke="rgba(171,71,188,0.5)" stroke-dasharray="24 12"/>
 </svg>
 
 <!-- Zone ground labels — painted diagonally in center of each zone, BIG -->
@@ -4397,7 +4401,7 @@ function placeZoneSignposts(signposts){
 // 10. Audit: count items in DOM vs maps, remove duplicates, add missing
 // 11. Ensure all items are categorized (type) and attributed (zone). New category: introduction
 // 12. STRICT Anti-overlap: radial probe search (100+ attempts) — cards NEVER stack (badges exempt)
-// 13. Crime-scene tape zone boundaries (SVG yellow/black tape, not straight lines)
+// 13. Organic zone boundaries (curved SVG lines inside map zones)
 // 14. Reserved zones: no cards placed on ground labels or signpost areas
 // 15. Hollywood casino-style 2-pole signposts near zone centers (canvas + maps)
 // 16. No cards placed on top of painted zone names
@@ -5434,15 +5438,15 @@ timeline: `
 
   <div class="tl-item">
     <div class="tl-dot" style="background:linear-gradient(135deg,#FFD600,#FF6F00)"></div>
-    <div class="tl-version">v51.0 — 🚧 Crime-Scene Tape + Engine v5 + Map Fix + Theme Persist</div>
+    <div class="tl-version">v51.1 — 🛣️ 3D Edge Rails + Minimap Tap Recovery</div>
     <div class="tl-date">Session 51 · March 27, 2026</div>
-    <div class="tl-desc">Engine v5: Zone boundaries redesigned as yellow/black crime-scene tape (⚠ DO NOT CROSS). Strict anti-overlap with radial probe search (100+ attempts per card, badges only exception). Minimap→big map click fixed with multi-event binding + transition failsafe. Theme selection persists to localStorage. Map scroll debounce increased to 500ms for smoother experience. New Rule 16: no cards on painted zone names.</div>
+    <div class="tl-desc">Moved boundary styling to canvas edges only: replaced crime tape with 3D road-rail perimeter. Zone boundaries reverted to organic internal lines. Minimap tap-to-open hardened with full state recovery so big map opens reliably even after interrupted transitions.</div>
     <ul class="tl-changes">
-      <li>🚧 Rule 13 upgraded: Zone boundaries now yellow/black crime-scene tape with "DO NOT CROSS" text</li>
-      <li>📐 Rule 12 upgraded: Radial probe search replaces simple nudging — 12 probes per ring, golden-angle spacing</li>
-      <li>🗺️ Minimap open fix: pointerup + touchend listeners + 3s transition failsafe</li>
-      <li>🎨 Theme persistence: selections saved to localStorage, restored on load</li>
-      <li>⚡ Scroll debounce increased 320ms→500ms for smoother minimap updates</li>
+      <li>🛣️ Edge boundary redesigned as 3D road rails (outer canvas perimeter only)</li>
+      <li>🗺️ Zone boundaries reverted to organic internal curves (no crime tape inside zones)</li>
+      <li>📱 Minimap tap open hardened: container + minimap listeners across click/touchstart/pointerup</li>
+      <li>🧯 Transition recovery: auto-resets stuck map state before opening</li>
+      <li>📐 Rule 13 docs corrected to internal zone lines only</li>
       <li>📏 Rule 16: Cards cannot overlap painted zone ground labels</li>
       <li>⚙️ Engine tab updated to 16 rules, stats updated to 51 versions</li>
     </ul>
@@ -6702,7 +6706,7 @@ engine: `
     <tr><td>10</td><td>Integrity Audit</td><td>Counts DOM items, removes duplicates (same mapId), fills missing categories/zones</td></tr>
     <tr><td>11</td><td>Attribution</td><td>Every sticker gets a type (category) and zone. New category: <strong>introduction</strong></td></tr>
     <tr><td>12</td><td><strong>STRICT Anti-Overlap</strong></td><td>Radial probe search: 12 probes per ring, expanding golden-angle rings, 100+ attempts — cards NEVER stack on each other</td></tr>
-    <tr><td>13</td><td>Crime-Scene Tape Borders</td><td>Zone boundaries as yellow/black "⚠ DO NOT CROSS" tape — SVG pattern with bezier curves, synced across canvas, big map, small map</td></tr>
+    <tr><td>13</td><td>Zone Boundaries (Internal)</td><td>Organic curved SVG boundaries remain inside map zones only (canvas + big map + small map sync)</td></tr>
     <tr><td>14</td><td>Reserved Zones</td><td>No cards placed on ground-painted zone labels or signpost areas. These are exclusion zones during auto-rearrange.</td></tr>
     <tr><td>15</td><td>Hollywood Signposts</td><td>Casino-style 2-pole signposts with gradient boards, wood poles, and ground shadows near zone centers.</td></tr>
     <tr><td>16</td><td>No Cards on Zone Names</td><td>The painted diagonal zone labels (ORIGIN, WORK, etc.) are protected — no sticker can overlap them.</td></tr>
@@ -6763,7 +6767,7 @@ engine: `
     <div class="fun-fact">⚡ The <strong>signature check</strong> (mapId:left:top:w:h:cat joined) avoids unnecessary map redraws — only invalidates cache when positions actually change</div>
     <div class="fun-fact">🏷️ Every sticker is auto-tagged with both a <strong>category</strong> (photo, meme, interactive, introduction...) and a <strong>zone</strong> (origin, work, portfolio, hobby, fun)</div>
     <div class="fun-fact">🔄 The rearrange button triggers: <strong>audit -> arrange -> scan -> invalidate cache -> redraw both maps</strong> — a 5-step pipeline in ~200ms</div>
-    <div class="fun-fact">🚧 Zone boundaries use <strong>yellow/black crime-scene tape</strong> SVG patterns — "⚠ DO NOT CROSS" text on bezier curves for maximum visual drama</div>
+    <div class="fun-fact">🧭 Zone boundaries stay <strong>inside map zones only</strong> as organic curved SVG lines, while the canvas edge uses <strong>3D road-rail boundaries</strong> for the outer limit</div>
     <div class="fun-fact">📐 <strong>Radial probe search</strong> tries 12 probes per ring × expanding golden-angle rings (100+ total attempts) — mathematically guarantees no card stacking</div>
     <div class="fun-fact">🎨 Theme selection is <strong>persisted to localStorage</strong> — your board remembers its look across sessions and page reloads</div>
     <div class="fun-fact">🗺️ Minimap uses <strong>3 event listeners</strong> (click + pointerup + touchend) with a 3-second failsafe timer to prevent the map from ever getting stuck</div>
@@ -6801,28 +6805,38 @@ let mapBootstrapped=false;
 let mapResizeTimer=null;
 let hasAutoArranged=false;
 
-// Minimap click/tap → open big map (robust multi-event binding)
+// Minimap click/tap → open big map (robust and immediate)
 (function(){
-  let _mmTapTime=0;
-  function handleMmTap(e){
+  function hardResetMapTransition(){
+    mapTransitioning=false;
+    const mmContainer=document.getElementById('mc');
+    if(mmContainer){
+      mmContainer.classList.remove('map-opening');
+      mmContainer.classList.remove('map-closing');
+    }
+  }
+
+  function openBigMapFromMini(e){
+    if(e)e.stopPropagation();
+
+    // Recover inconsistent state where mmExp got stuck true without actual expanded UI
+    if(mmExp && !mc.classList.contains('expanded') && !mc.classList.contains('map-opening')){
+      mmExp=false;
+    }
+
     if(mmExp)return;
-    if(Date.now()-_mmTapTime<600)return; // debounce
-    _mmTapTime=Date.now();
-    e.stopPropagation();
+    if(mapTransitioning)hardResetMapTransition();
     toggleMap();
   }
-  mm.addEventListener('click',handleMmTap);
-  mm.addEventListener('pointerup',function(e){
-    if(mmExp)return;
-    e.stopPropagation();
-    // Only fire if click didn't already handle it
-    if(Date.now()-_mmTapTime>100)handleMmTap(e);
+
+  // Attach on both minimap and container to catch taps on overlays/rim
+  ['click','touchstart','pointerup'].forEach(evt=>{
+    mm.addEventListener(evt,openBigMapFromMini,{passive:true});
+    mc.addEventListener(evt,function(e){
+      if(mmExp)return;
+      if(e.target&&e.target.closest&&e.target.closest('#mc'))openBigMapFromMini(e);
+    },{passive:true});
   });
-  mm.addEventListener('touchend',function(e){
-    if(mmExp)return;
-    e.stopPropagation();
-    if(Date.now()-_mmTapTime>100)handleMmTap(e);
-  },{passive:true});
 })();
 
 /* ===== TOGGLE MAP (expand / collapse) ===== */
@@ -6832,10 +6846,13 @@ let _mapOpenRafId=null;
 
 function toggleMap(){
   if(mapTransitioning){
-    // Failsafe: if stuck transitioning for >3s, force reset
-    if(window._mapTransitionStart&&Date.now()-window._mapTransitionStart>3000){
-      mapTransitioning=false;
-    } else return;
+    // hard reset stuck transition immediately so tap always works
+    const mmContainer=document.getElementById('mc');
+    if(mmContainer){
+      mmContainer.classList.remove('map-opening');
+      mmContainer.classList.remove('map-closing');
+    }
+    mapTransitioning=false;
   }
   mapTransitioning=true;
   window._mapTransitionStart=Date.now();
@@ -6857,7 +6874,14 @@ function toggleMap(){
     _mapOpenRafId=requestAnimationFrame(()=>{
       try{
         drawMapLayoutOnly();
-      }catch(e){console.error('Map layout error:',e);mapTransitioning=false;return;}
+      }catch(e){
+        console.error('Map layout error:',e);
+        mapTransitioning=false;
+        mmExp=false;
+        mmContainer.classList.remove('map-opening');
+        mmContainer.classList.remove('expanded');
+        return;
+      }
 
       // Phase 2: Decorations — use cached layer or build async
       _mapOpenRafId=requestAnimationFrame(()=>{
@@ -6889,6 +6913,7 @@ function toggleMap(){
             mmContainer.classList.remove('map-opening');
             mmContainer.classList.add('expanded');
             mapTransitioning=false;
+            window._mapTransitionStart=0;
             recenter();
           },500);
         });
@@ -6903,6 +6928,7 @@ function toggleMap(){
       mmExp=false;
       mmContainer.classList.remove('map-closing');
       mapTransitioning=false;
+      window._mapTransitionStart=0;
       mapZoomScale=1;
       // Redraw as small minimap — no force-rescan (stickers can't move while map is open)
       ensureMapData(false);
