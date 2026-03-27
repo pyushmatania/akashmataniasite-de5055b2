@@ -6874,7 +6874,14 @@ function toggleMap(){
     _mapOpenRafId=requestAnimationFrame(()=>{
       try{
         drawMapLayoutOnly();
-      }catch(e){console.error('Map layout error:',e);mapTransitioning=false;return;}
+      }catch(e){
+        console.error('Map layout error:',e);
+        mapTransitioning=false;
+        mmExp=false;
+        mmContainer.classList.remove('map-opening');
+        mmContainer.classList.remove('expanded');
+        return;
+      }
 
       // Phase 2: Decorations — use cached layer or build async
       _mapOpenRafId=requestAnimationFrame(()=>{
