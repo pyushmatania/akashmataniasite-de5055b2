@@ -4258,12 +4258,12 @@ function layoutGroupInGrid(stickers,area){
     if(row%2===1)left+=cellW*0.16;
     let candidate={left,top,w,h};
     let tries=0;
-    while(isOverlappingAny(candidate,placed,18)&&tries<16){
-      const nudgeX=(tries%2===0?1:-1)*(14+tries*3)*(0.5+rng());
-      const nudgeY=(tries%3===0?1:-1)*(10+tries*2)*(0.45+rng());
-      candidate.left+=nudgeX;
-      candidate.top+=nudgeY;
-      tries++;
+     while(isOverlappingAny(candidate,placed,40)&&tries<30){
+       const nudgeX=(tries%2===0?1:-1)*(20+tries*5)*(0.5+rng());
+       const nudgeY=(tries%3===0?1:-1)*(16+tries*4)*(0.45+rng());
+       candidate.left+=nudgeX;
+       candidate.top+=nudgeY;
+       tries++;
     }
     const clamped=clampStickerToMoodboard(sticker,left,top);
     sticker.style.left=clamped.left+'px';
