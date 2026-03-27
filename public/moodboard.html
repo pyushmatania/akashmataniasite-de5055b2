@@ -6525,6 +6525,88 @@ credits: \`
   </div>
 </div>
 `
+,
+
+engine: `
+<div class="inv-section">
+  <h3>⚙️ Auto-Rearrange Engine v3</h3>
+  <p style="font-size:0.8rem;color:var(--text2);line-height:1.7;margin-bottom:16px">
+    The distribution engine controls how 280+ stickers are placed across the 14K×14K canvas. It runs on page load and can be triggered manually via the 🔄 button in theme settings.
+  </p>
+  
+  <h4 style="font-size:0.85rem;color:var(--text);margin:16px 0 10px">📏 11 Distribution Rules</h4>
+  <table class="inv-table">
+    <tr><th>#</th><th>Rule</th><th>How It Works</th></tr>
+    <tr><td>1</td><td>Even Spread</td><td>No area too dense or empty — golden-angle spiral + grid scatter ensures coverage</td></tr>
+    <tr><td>2</td><td>Intro Cards Centered</td><td>Each zone's intro card is placed at the exact center of its zone bounds</td></tr>
+    <tr><td>3</td><td>Zone Lock</td><td>Work cards stay in Work, Portfolio in Portfolio — but memes/fun scatter everywhere</td></tr>
+    <tr><td>4</td><td>Density Gradient</td><td>Items cluster densely near zone intro cards, spread thinner toward edges</td></tr>
+    <tr><td>5</td><td>Boundary Padding</td><td>350px buffer near all zone edges — no cards placed in boundary strips</td></tr>
+    <tr><td>6</td><td>Auto-Place New</td><td>placeNewSticker() applies all rules to any newly added card</td></tr>
+    <tr><td>7</td><td>Reset Button</td><td>🔄 button in settings runs full rearrange + audit + map sync</td></tr>
+    <tr><td>8</td><td>Badge Bandages</td><td>Badges auto-stack on top-left of anchor cards, tilted, z-index 68</td></tr>
+    <tr><td>9</td><td>Map Sync</td><td>After arrangement, canvas → scanStickers → invalidate map cache → redraw both maps</td></tr>
+    <tr><td>10</td><td>Integrity Audit</td><td>Counts DOM items, removes duplicates (same mapId), fills missing categories/zones</td></tr>
+    <tr><td>11</td><td>Attribution</td><td>Every sticker gets a type (category) and zone. New category: <strong>introduction</strong></td></tr>
+  </table>
+</div>
+
+<div class="inv-section" style="margin-top:20px">
+  <h3>🗺️ Location Mapping & Sync</h3>
+  <p style="font-size:0.8rem;color:var(--text2);line-height:1.7;margin-bottom:16px">
+    Three views of the same world — moodboard canvas, small minimap HUD, and expanded big map — all synchronized in real-time.
+  </p>
+  
+  <table class="inv-table">
+    <tr><th>System</th><th>Details</th></tr>
+    <tr><td>Canvas (Source of Truth)</td><td>14,000x14,000px world. All sticker positions stored as absolute CSS left/top. Default scale: 0.5x mobile, 0.72x desktop.</td></tr>
+    <tr><td>Small Minimap</td><td>85x85px HUD. Lightweight colored divs (not clones). Scale ~ 1:164. Radar sweep every 3s. Updates on scroll via RAF throttle.</td></tr>
+    <tr><td>Big Map</td><td>Full viewport. Sticker clones rendered at map scale. Click navigates via direct world coords (no lossy conversion). Zoom: 0.25x-2x steps.</td></tr>
+    <tr><td>Navigation</td><td>Clicking map sticker -> walkBitmojiTo(worldX, worldY) -> CSS transition walk -> viewport scrollTo center on target.</td></tr>
+    <tr><td>Sync Pipeline</td><td>scanStickers() -> stickerData[] -> signature check -> invalidateMapCloneCache() -> updMap()/renderExpandedMap()</td></tr>
+  </table>
+</div>
+
+<div class="inv-section" style="margin-top:20px">
+  <h3>🏙️ Zone Definitions</h3>
+  <table class="inv-table">
+    <tr><th>Zone</th><th>Bounds (px)</th><th>Center</th><th>Color</th></tr>
+    <tr><td>📸 Origin</td><td>(400,400) to (5800,5600)</td><td>(3100, 3000)</td><td style="color:#4CAF50">#4CAF50</td></tr>
+    <tr><td>🎯 Work</td><td>(7700,400) to (13600,5600)</td><td>(10650, 3000)</td><td style="color:#E53935">#E53935</td></tr>
+    <tr><td>🚀 Portfolio</td><td>(400,6200) to (5600,9800)</td><td>(3000, 8000)</td><td style="color:#42A5F5">#42A5F5</td></tr>
+    <tr><td>🎮 Hobby</td><td>(400,10400) to (6300,13600)</td><td>(3350, 12000)</td><td style="color:#FF9800">#FF9800</td></tr>
+    <tr><td>😂 Fun</td><td>(7700,6400) to (13600,13600)</td><td>(10650, 10000)</td><td style="color:#AB47BC">#AB47BC</td></tr>
+  </table>
+</div>
+
+<div class="inv-section" style="margin-top:20px">
+  <h3>🏷️ Sticker Categories</h3>
+  <p style="font-size:0.78rem;color:var(--text2);line-height:1.7;margin-bottom:10px">Every sticker is auto-classified into one of these categories:</p>
+  <div style="display:flex;flex-wrap:wrap;gap:6px">
+    <span style="background:#E8F5E9;color:#2E7D32;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">🏙️ introduction</span>
+    <span style="background:#E3F2FD;color:#1565C0;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">📸 photo</span>
+    <span style="background:#FFF3E0;color:#E65100;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">🎮 interactive</span>
+    <span style="background:#FCE4EC;color:#C62828;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">😂 meme</span>
+    <span style="background:#F3E5F5;color:#6A1B9A;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">🏅 badge</span>
+    <span style="background:#FFF9C4;color:#F57F17;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">📝 postit</span>
+    <span style="background:#FFFDE7;color:#827717;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">😊 emoji</span>
+    <span style="background:#ECEFF1;color:#37474F;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">📄 text</span>
+    <span style="background:#F5F5F5;color:#616161;padding:4px 10px;border-radius:12px;font-size:0.72rem;font-weight:600">📦 other</span>
+  </div>
+</div>
+
+<div class="inv-section" style="margin-top:20px">
+  <h3>🔧 Technical Details</h3>
+  <div class="fun-facts-grid">
+    <div class="fun-fact">🌀 The <strong>golden angle (137.5 deg)</strong> spiral ensures items never overlap in concentric rings — same math sunflowers use for seed packing</div>
+    <div class="fun-fact">🔍 <strong>Integrity audit</strong> runs before every rearrange — it scans all DOM stickers, removes any with duplicate mapIds, and fills missing type/zone attributes</div>
+    <div class="fun-fact">📍 Map click navigation uses <strong>direct world coordinates</strong> from stickerData (not lossy mouse-to-world conversion) for pixel-perfect accuracy</div>
+    <div class="fun-fact">⚡ The <strong>signature check</strong> (mapId:left:top:w:h:cat joined) avoids unnecessary map redraws — only invalidates cache when positions actually change</div>
+    <div class="fun-fact">🏷️ Every sticker is auto-tagged with both a <strong>category</strong> (photo, meme, interactive, introduction...) and a <strong>zone</strong> (origin, work, portfolio, hobby, fun)</div>
+    <div class="fun-fact">🔄 The rearrange button triggers: <strong>audit -> arrange -> scan -> invalidate cache -> redraw both maps</strong> — a 5-step pipeline in ~200ms</div>
+  </div>
+</div>
+`
 
 };
 
