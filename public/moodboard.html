@@ -6682,17 +6682,22 @@ function addMapDecorations(cw, ch){
      el.textContent=sp.label;
    });
 
-   // === ZONE GROUND LABELS — road marking style near boundaries ===
+   // === ZONE GROUND LABELS — road marking style near boundary lines ===
+   // Labels placed just above/below horizontal boundaries and beside vertical boundary
    const groundLabels=[
-     {x:18,y:38,label:'ORIGIN',color:'rgba(76,175,80,0.2)',size:Math.max(10,cw*0.012),rot:0},
-     {x:60,y:38,label:'WORK',color:'rgba(229,57,53,0.2)',size:Math.max(10,cw*0.012),rot:0},
-     {x:18,y:43,label:'PORTFOLIO',color:'rgba(66,165,245,0.18)',size:Math.max(9,cw*0.01),rot:0},
-     {x:60,y:43,label:'FUN',color:'rgba(171,71,188,0.18)',size:Math.max(9,cw*0.01),rot:0},
-     {x:18,y:71,label:'PORTFOLIO',color:'rgba(66,165,245,0.18)',size:Math.max(9,cw*0.01),rot:0},
-     {x:18,y:75,label:'HOBBY',color:'rgba(255,152,0,0.18)',size:Math.max(9,cw*0.01),rot:0},
-     {x:60,y:71,label:'FUN',color:'rgba(171,71,188,0.18)',size:Math.max(9,cw*0.01),rot:0},
-     {x:45,y:15,label:'ORIGIN',color:'rgba(76,175,80,0.15)',size:Math.max(8,cw*0.008),rot:90},
-     {x:50,y:15,label:'WORK',color:'rgba(229,57,53,0.15)',size:Math.max(8,cw*0.008),rot:90},
+     // Above h-line at 42.6% (origin/work side)
+     {x:20,y:39.5,label:'ORIGIN ↑',color:'rgba(76,175,80,0.22)',size:Math.max(10,cw*0.012),rot:0},
+     {x:60,y:39.5,label:'WORK ↑',color:'rgba(229,57,53,0.22)',size:Math.max(10,cw*0.012),rot:0},
+     // Below h-line at 42.6% (portfolio/fun side)
+     {x:20,y:44.5,label:'↓ PORTFOLIO',color:'rgba(66,165,245,0.2)',size:Math.max(9,cw*0.01),rot:0},
+     {x:60,y:44.5,label:'↓ FUN',color:'rgba(171,71,188,0.2)',size:Math.max(9,cw*0.01),rot:0},
+     // Above h-line at 70.9% (portfolio side)
+     {x:20,y:68,label:'PORTFOLIO ↑',color:'rgba(66,165,245,0.18)',size:Math.max(9,cw*0.01),rot:0},
+     // Below h-line at 70.9% (hobby side)
+     {x:20,y:73,label:'↓ HOBBY',color:'rgba(255,152,0,0.2)',size:Math.max(9,cw*0.01),rot:0},
+     // Beside v-line at 48.3%
+     {x:45,y:18,label:'ORIGIN',color:'rgba(76,175,80,0.17)',size:Math.max(8,cw*0.008),rot:90},
+     {x:51,y:18,label:'WORK',color:'rgba(229,57,53,0.17)',size:Math.max(8,cw*0.008),rot:90},
    ];
    groundLabels.forEach(gl=>{
      const el=addDiv('map-ground-label','left:'+gl.x+'%;top:'+gl.y+'%;z-index:4;pointer-events:none;font-family:var(--font-fun);font-weight:900;font-size:'+gl.size+'px;color:'+gl.color+';letter-spacing:0.25em;text-transform:uppercase;'+(gl.rot?'writing-mode:vertical-rl;text-orientation:mixed;':''));
