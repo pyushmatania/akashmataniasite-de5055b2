@@ -4813,8 +4813,15 @@ function autoArrangeMoodboardItems(){
   const scatterItems=[];
   const hubItems=[];
 
+  const fixedCompanions=[];
+
   // Categorize all stickers
   stickers.forEach(sticker=>{
+    // Keep companion stickers fixed near intro cards (do NOT auto-rearrange)
+    if(sticker.classList.contains('zic-companion')||sticker.dataset.locked==='1'){
+      fixedCompanions.push(sticker);
+      return;
+    }
     if(isBadgeSticker(sticker)){badges.push(sticker);return;}
     if(isIntroCard(sticker)){
       const zone=sticker.dataset.zone||(sticker.classList.contains('intro-card')?'work':'fun');
@@ -4830,6 +4837,12 @@ function autoArrangeMoodboardItems(){
   });
 
   const allPlaced=[];
+  // Reserve current companion positions so other stickers don't overlap them
+  fixedCompanions.forEach(s=>{
+    const w=s.offsetWidth||180,h=s.offsetHeight||120;
+    const left=parseFloat(s.style.left)||0,top=parseFloat(s.style.top)||0;
+    allPlaced.push({left,top,w,h});
+  });
   // Rule 14: Reserve ground label and signpost zones — no cards placed there
   const reserved=getReservedZones();
   reserved.forEach(r=>allPlaced.push(r));
