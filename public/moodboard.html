@@ -1247,28 +1247,30 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
 .bar-count{font-family:var(--font-fun);font-size:0.5rem;color:rgba(255,255,255,0.5);font-weight:500}
 .bar-coords{font-family:var(--font-fun);font-size:0.45rem;color:rgba(255,255,255,0.4);font-variant-numeric:tabular-nums;letter-spacing:0.02em}
 
-/* Filter chips — modern floating glass */
+/* Filter chips — redesigned modern pill buttons */
 .mc{
-  padding:8px 16px;border-radius:14px;font-family:var(--font-fun);
-  font-size:0.65rem;font-weight:700;cursor:pointer;
-  border:1.5px solid rgba(255,255,255,0.12);
-  transition:all 0.25s cubic-bezier(0.25,1,0.5,1);
-  display:flex;align-items:center;gap:6px;
-  background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  letter-spacing:0.03em;
+  padding:7px 14px;border-radius:20px;font-family:var(--font-fun);
+  font-size:0.62rem;font-weight:700;cursor:pointer;
+  border:1.5px solid rgba(255,255,255,0.15);
+  transition:all 0.3s cubic-bezier(0.25,1,0.5,1);
+  display:flex;align-items:center;gap:5px;
+  background:rgba(0,0,0,0.35);color:rgba(255,255,255,0.7);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  letter-spacing:0.04em;
+  box-shadow:0 2px 8px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.08);
 }
 .mc.active{
-  background:rgba(255,255,255,0.95);color:#1a1a1a;
+  background:linear-gradient(135deg,rgba(255,255,255,0.95),rgba(240,240,240,0.95));color:#1a1a1a;
   border-color:rgba(255,255,255,0.9);
-  box-shadow:0 4px 20px rgba(255,255,255,0.15),0 0 0 1px rgba(255,255,255,0.3);
-  transform:translateY(-1px);
+  box-shadow:0 4px 20px rgba(255,255,255,0.2),0 0 0 1px rgba(255,255,255,0.4),0 0 12px rgba(255,255,255,0.1);
+  transform:translateY(-2px) scale(1.05);
 }
 .mc:not(.active):hover{
-  background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);
-  border-color:rgba(255,255,255,0.25);
+  background:rgba(255,255,255,0.18);color:rgba(255,255,255,0.95);
+  border-color:rgba(255,255,255,0.3);
+  transform:translateY(-1px);
 }
-.mc:active{transform:scale(0.95)}
+.mc:active{transform:scale(0.93)}
 .mc .legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;box-shadow:0 0 6px currentColor}
 .mc.active .legend-dot{box-shadow:0 0 8px currentColor}
 .mc .chip-count{
