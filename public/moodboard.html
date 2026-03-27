@@ -6804,27 +6804,30 @@ let mapBootstrapped=false;
 let mapResizeTimer=null;
 let hasAutoArranged=false;
 
-// Minimap click/tap → open big map (robust multi-event binding)
+// Minimap click/tap → open big map (robust and immediate)
 (function(){
-  let _mmTapTime=0;
-  function handleMmTap(e){
+  function openBigMapFromMini(e){
+    if(e)e.stopPropagation();
     if(mmExp)return;
-    if(Date.now()-_mmTapTime<600)return; // debounce
-    _mmTapTime=Date.now();
-    e.stopPropagation();
+    if(mapTransitioning){
+      mapTransitioning=false;
+      const mmContainer=document.getElementById('mc');
+      if(mmContainer){
+        mmContainer.classList.remove('map-opening');
+        mmContainer.classList.remove('map-closing');
+      }
+    }
     toggleMap();
   }
-  mm.addEventListener('click',handleMmTap);
-  mm.addEventListener('pointerup',function(e){
+
+  mm.addEventListener('click',openBigMapFromMini,{passive:true});
+  mm.addEventListener('touchstart',openBigMapFromMini,{passive:true});
+  mm.addEventListener('pointerup',openBigMapFromMini,{passive:true});
+
+  // Fallback in case pointer events are captured by child overlay
+  mc.addEventListener('click',function(e){
     if(mmExp)return;
-    e.stopPropagation();
-    // Only fire if click didn't already handle it
-    if(Date.now()-_mmTapTime>100)handleMmTap(e);
-  });
-  mm.addEventListener('touchend',function(e){
-    if(mmExp)return;
-    e.stopPropagation();
-    if(Date.now()-_mmTapTime>100)handleMmTap(e);
+    if(e.target&&e.target.closest&&e.target.closest('#mm'))openBigMapFromMini(e);
   },{passive:true});
 })();
 
