@@ -200,128 +200,96 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker-counter .c-count{font-family:var(--font-fun);font-weight:700;font-size:1.4rem;color:var(--text);min-width:30px}
 .sticker-counter .c-label{font-size:0.7rem;color:var(--text3)}
 
-/* ===== VEGAS NEON SIGNPOST ===== */
-@keyframes neonFlicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1;filter:brightness(1)}20%,24%,55%{opacity:0.6;filter:brightness(0.7)}}
-@keyframes neonPulse{0%,100%{filter:drop-shadow(0 0 8px var(--neon,#fff)) drop-shadow(0 0 20px var(--neon,#fff))}50%{filter:drop-shadow(0 0 14px var(--neon,#fff)) drop-shadow(0 0 35px var(--neon,#fff)) drop-shadow(0 0 50px var(--neon,#fff))}}
-@keyframes bulbChase{0%{opacity:1}25%{opacity:0.3}50%{opacity:1}75%{opacity:0.3}100%{opacity:1}}
-@keyframes spotlightSweep{0%,100%{opacity:0.3;transform:translateX(-50%) scaleX(0.8)}50%{opacity:0.7;transform:translateX(-50%) scaleX(1.2)}}
+/* ===== HARDWOOD ZONE SIGNPOST ===== */
+@keyframes woodSway{0%,100%{transform:rotate(-0.7deg) translateX(0)}50%{transform:rotate(0.7deg) translateX(1px)}}
+@keyframes woodColorPulse{0%,100%{filter:brightness(1) drop-shadow(0 8px 28px rgba(0,0,0,0.45))}50%{filter:brightness(1.06) drop-shadow(0 10px 36px rgba(0,0,0,0.55))}}
 .zone-signpost{
   display:flex;flex-direction:column;align-items:center;gap:0;
   z-index:100!important;position:absolute;cursor:default!important;
-  transition:filter 0.3s,transform 0.3s;
+  transition:transform 0.3s;
+  filter:drop-shadow(0 8px 28px rgba(0,0,0,0.45));
+  animation:woodColorPulse 5s ease-in-out infinite;
 }
-.zone-signpost:hover{transform:scale(1.03)}
-/* Neon glow aura behind whole sign */
-.neon-aura{
-  position:absolute;top:-40px;left:50%;transform:translateX(-50%);
-  width:350px;height:120px;
-  background:radial-gradient(ellipse at 50% 80%,var(--neon-glow,rgba(255,255,255,0.15)),transparent 65%);
-  pointer-events:none;z-index:0;
-  animation:spotlightSweep 4s ease-in-out infinite;
-}
-/* Main sign board - dark background like Vegas signs */
+.zone-signpost:hover{transform:scale(1.04) translateY(-3px)}
+/* Hide all neon-specific decorations */
+.neon-aura,.neon-tube-row,.neon-dot,.neon-arrow,.neon-ground-glow,.neon-ground-shadow{display:none!important}
+/* Main hardwood plank board */
 .neon-board{
   position:relative;z-index:5;
-  background:#1a1a2e;
-  border:3px solid var(--neon,#fff);
-  border-radius:10px;
-  padding:22px 50px 22px 50px;
+  background:
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,0.035) 0,rgba(255,255,255,0.035) 1px,
+      transparent 1px,transparent 14px),
+    linear-gradient(165deg,#8B5420 0%,#5C3010 20%,#7A4A1A 40%,#4A2608 60%,#7C4C1E 80%,#6B3E14 100%);
+  border-top:4px solid #3A1C04;
+  border-left:3px solid #3A1C04;
+  border-right:5px solid #2A1202;
+  border-bottom:6px solid #2A1202;
+  border-radius:5px 5px 4px 4px;
+  padding:20px 52px 22px;
   box-shadow:
-    0 0 15px var(--neon,#fff),
-    0 0 30px var(--neon-dim,rgba(255,255,255,0.3)),
-    inset 0 0 15px rgba(0,0,0,0.5),
-    0 10px 40px rgba(0,0,0,0.5);
+    0 6px 0 #2A1202,
+    0 8px 0 rgba(0,0,0,0.25),
+    0 10px 32px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.14),
+    inset 0 -2px 0 rgba(0,0,0,0.45);
   min-width:200px;text-align:center;
+  animation:woodSway 7s ease-in-out infinite;
+  transform-origin:top center;
 }
-/* Neon text */
+/* Inner inset frame for routed look */
+.neon-board::before{
+  content:'';position:absolute;inset:6px;
+  border:1.5px solid rgba(0,0,0,0.25);
+  border-radius:3px;pointer-events:none;
+}
+/* Iron bracket at top */
+.neon-board::after{
+  content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+  width:60px;height:10px;
+  background:linear-gradient(90deg,#444 0%,#888 30%,#bbb 50%,#888 70%,#444 100%);
+  border-radius:2px;box-shadow:0 2px 6px rgba(0,0,0,0.4),inset 0 1px rgba(255,255,255,0.2);
+}
+/* Carved text */
 .neon-text{
-  font-family:var(--font-fun);font-weight:900;font-size:2rem;
-  color:var(--neon,#fff);letter-spacing:0.12em;white-space:nowrap;
+  font-family:var(--font-fun);font-weight:900;font-size:1.9rem;
+  color:var(--neon,#F5C842);letter-spacing:0.14em;white-space:nowrap;
   text-shadow:
-    0 0 7px var(--neon,#fff),
-    0 0 20px var(--neon,#fff),
-    0 0 42px var(--neon,#fff),
-    0 0 80px var(--neon-dim,rgba(255,255,255,0.4));
-  animation:neonFlicker 4s ease-in-out infinite;
+    0 2px 0 rgba(0,0,0,0.7),
+    0 -1px 0 rgba(255,255,255,0.12),
+    0 0 22px color-mix(in srgb,var(--neon,#F5C842) 40%,transparent);
 }
-.neon-icon{
-  font-size:2.2rem;display:block;margin-bottom:4px;
-  filter:drop-shadow(0 0 8px var(--neon,#fff));
-}
-/* Neon tube border lights — dots around the board */
-.neon-tube-row{
-  position:absolute;z-index:6;pointer-events:none;
-  display:flex;gap:6px;
-}
-.neon-tube-row.top{top:-5px;left:12px;right:12px;justify-content:space-around}
-.neon-tube-row.bottom{bottom:-5px;left:12px;right:12px;justify-content:space-around}
-.neon-tube-row.lft{top:12px;bottom:12px;left:-5px;flex-direction:column;justify-content:space-around}
-.neon-tube-row.rgt{top:12px;bottom:12px;right:-5px;flex-direction:column;justify-content:space-around}
-.neon-dot{
-  width:8px;height:8px;border-radius:50%;
-  background:var(--neon,#fff);
-  box-shadow:0 0 4px var(--neon,#fff),0 0 10px var(--neon,#fff),0 0 20px var(--neon-dim,rgba(255,255,255,0.3));
-}
-.neon-dot:nth-child(1){animation:bulbChase 1.5s ease-in-out 0s infinite}
-.neon-dot:nth-child(2){animation:bulbChase 1.5s ease-in-out 0.15s infinite}
-.neon-dot:nth-child(3){animation:bulbChase 1.5s ease-in-out 0.3s infinite}
-.neon-dot:nth-child(4){animation:bulbChase 1.5s ease-in-out 0.45s infinite}
-.neon-dot:nth-child(5){animation:bulbChase 1.5s ease-in-out 0.6s infinite}
-.neon-dot:nth-child(6){animation:bulbChase 1.5s ease-in-out 0.75s infinite}
-.neon-dot:nth-child(7){animation:bulbChase 1.5s ease-in-out 0.9s infinite}
-.neon-dot:nth-child(8){animation:bulbChase 1.5s ease-in-out 1.05s infinite}
-/* Decorative neon arrow under sign */
-.neon-arrow{
-  z-index:4;pointer-events:none;margin-top:-6px;
-  animation:neonPulse 2.5s ease-in-out infinite;
-}
-.neon-arrow svg{width:80px;height:35px}
-/* Metal support frame / crossbar */
+.neon-icon{font-size:2rem;display:block;margin-bottom:5px;filter:drop-shadow(0 2px 5px rgba(0,0,0,0.55))}
+/* Metal crossbar connector */
 .neon-frame{
-  width:180px;height:8px;
-  background:linear-gradient(90deg,#555,#999,#bbb,#999,#555);
+  width:200px;height:10px;
+  background:linear-gradient(90deg,#444 0%,#888 30%,#ccc 50%,#888 70%,#444 100%);
   border-radius:2px;z-index:3;
-  box-shadow:0 2px 6px rgba(0,0,0,0.3);
-  margin-top:-2px;
+  box-shadow:0 3px 8px rgba(0,0,0,0.45),inset 0 1px rgba(255,255,255,0.18);
+  margin-top:-3px;
 }
-/* Double metal poles */
-.neon-poles{
-  display:flex;gap:60px;z-index:3;margin-top:-2px;
-}
+/* Wooden pole pair */
+.neon-poles{display:flex;gap:90px;z-index:3;margin-top:-1px}
 .neon-pole{
-  width:8px;height:300px;
-  background:linear-gradient(90deg,#666 0%,#aaa 25%,#ddd 50%,#aaa 75%,#666 100%);
-  border-radius:2px;
-  box-shadow:2px 0 4px rgba(0,0,0,0.15),-1px 0 3px rgba(0,0,0,0.1);
+  width:11px;height:280px;
+  background:linear-gradient(90deg,#3A1C04 0%,#6B3E14 22%,#8C5220 42%,#9A6030 50%,#8C5220 58%,#6B3E14 78%,#3A1C04 100%);
+  border-radius:3px;
+  box-shadow:3px 0 8px rgba(0,0,0,0.45),inset 1px 0 rgba(255,255,255,0.07);
   position:relative;
 }
 .neon-pole::after{
-  content:'';position:absolute;top:40px;left:50%;transform:translateX(-50%);
-  width:5px;height:5px;border-radius:50%;
-  background:radial-gradient(circle at 35% 35%,#eee,#888);
-  box-shadow:0 50px 0 0 #aaa,0 100px 0 0 #aaa,0 150px 0 0 #aaa,0 200px 0 0 #aaa;
+  content:'';position:absolute;top:8%;left:28%;
+  width:2px;height:82%;
+  background:linear-gradient(180deg,rgba(255,255,255,0.1),transparent 55%);
+  border-radius:1px;
 }
-/* Pole base plate */
+/* Ground footing */
 .neon-base{
-  width:120px;height:14px;
-  background:linear-gradient(180deg,#888,#555);
-  border-radius:3px 3px 5px 5px;z-index:3;
-  box-shadow:0 4px 12px rgba(0,0,0,0.3);
-  margin-top:-2px;
-}
-/* Ground neon reflection */
-.neon-ground-glow{
-  position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
-  width:250px;height:40px;
-  background:radial-gradient(ellipse at 50% 50%,var(--neon-glow,rgba(255,255,255,0.2)),transparent 70%);
-  border-radius:50%;filter:blur(8px);z-index:0;pointer-events:none;
-  animation:neonPulse 3s ease-in-out infinite;
-}
-.neon-ground-shadow{
-  position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);
-  width:160px;height:24px;
-  background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,0.4) 0%,transparent 70%);
-  border-radius:50%;filter:blur(6px);z-index:0;
+  width:150px;height:15px;
+  background:linear-gradient(90deg,#2A1202,#5C3010,#7A4A1A,#5C3010,#2A1202);
+  border-radius:2px 2px 7px 7px;z-index:3;
+  box-shadow:0 5px 22px rgba(0,0,0,0.55),0 2px 8px rgba(0,0,0,0.3);
+  margin-top:-1px;
 }
 
 /* ===== NEON DECORATIVE ELEMENTS ===== */
@@ -797,7 +765,7 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
 }
 
 .minimap-container{
-  position:fixed;bottom:60px;right:10px;z-index:998;
+  position:fixed;bottom:calc(64px + env(safe-area-inset-bottom,0px));right:10px;z-index:998;
   width:85px;height:85px;
   transition:none;
   filter:none;
@@ -871,16 +839,16 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
 }
 .minimap-container.expanded .minimap-north-pip{display:none}
 
-/* Zone name display below minimap — bus sign style */
+/* Zone name display ABOVE minimap — bus sign style */
 .minimap-zone-name{
-  position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);z-index:21;
+  position:absolute;top:-22px;left:50%;transform:translateX(-50%);z-index:21;
   font-family:var(--font-fun);font-weight:700;font-size:0.45rem;
   color:#fff;background:#2E7D32;
   padding:3px 10px;border-radius:3px;
   border:1.5px solid rgba(255,255,255,0.3);
   white-space:nowrap;letter-spacing:0.06em;text-transform:uppercase;
-  pointer-events:none;transition:all 0.3s;
-  box-shadow:0 2px 6px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.15);
+  pointer-events:none;transition:background 0.4s;
+  box-shadow:0 2px 6px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.15);
   text-shadow:0 1px 2px rgba(0,0,0,0.4);
 }
 .minimap-container.expanded .minimap-zone-name{display:none}
@@ -1179,8 +1147,8 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
 .map-road{position:absolute;pointer-events:none;z-index:3;background:rgba(160,140,100,0.25);border-radius:1px;box-shadow:none;border:none}
 .minimap-container.expanded .map-road{background:rgba(160,140,100,0.25)}
 .map-zone-grid{position:absolute;pointer-events:none;z-index:2;border:1.5px dashed;border-radius:3px;opacity:0.15}
-.map-compass-rose{position:absolute;z-index:11;pointer-events:none;opacity:0.2}
-.minimap-container.expanded .map-compass-rose{opacity:0.4}
+.map-compass-rose{display:none!important}
+.minimap-container.expanded .map-compass-rose{display:none!important}
 .map-scale-bar{position:absolute;bottom:8px;right:8px;z-index:11;display:none;align-items:center;gap:4px;font-family:var(--font-fun);font-size:0.4rem;color:rgba(255,255,255,0.5)}
 .minimap-container.expanded .map-scale-bar{color:rgba(255,255,255,0.6);display:flex}
 .minimap-container.expanded .scale-line{border-color:rgba(255,255,255,0.4)}
@@ -1292,6 +1260,25 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
   background:rgba(0,0,0,0.1);border-radius:6px;padding:1px 4px;
 }
 .mc.active .chip-count{opacity:0.7;background:rgba(0,0,0,0.08)}
+/* Cycle counter badge on filter buttons */
+.mc-counter{
+  display:none;font-size:0.5rem;font-weight:800;letter-spacing:0.02em;
+  background:rgba(0,0,0,0.18);color:rgba(0,0,0,0.75);
+  border-radius:8px;padding:1px 5px;margin-left:1px;min-width:26px;text-align:center;
+  vertical-align:middle;font-variant-numeric:tabular-nums;
+}
+.mc.active .mc-counter{
+  background:var(--accent,#FF6B35);color:#fff;
+  box-shadow:0 1px 4px rgba(255,107,53,0.4);
+}
+/* Glow pulse on sticker when navigated to via filter */
+@keyframes stickerNavGlow{0%{box-shadow:0 0 0 0 rgba(255,160,50,0.8)}60%{box-shadow:0 0 0 18px rgba(255,160,50,0)}100%{box-shadow:0 0 0 0 rgba(255,160,50,0)}}
+.sticker.nav-highlight{
+  animation:stickerNavGlow 1.4s ease-out!important;
+  outline:2px solid rgba(255,180,60,0.7)!important;
+  outline-offset:4px;
+  z-index:500!important;
+}
 
 /* Coordinates display on map */
 .map-coord-display{
@@ -1662,6 +1649,50 @@ body.map-expanded .scroll-counter{display:none!important}
 .intro-card .istat-label{font-size:0.52rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.04em;display:block;margin-top:2px}
 .intro-card .photo-tap-count{position:absolute;top:-12px;right:-12px;background:linear-gradient(135deg,#FF5252,#E53935);color:#fff;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(229,57,53,0.4);opacity:0;transition:opacity 0.3s,transform 0.3s;transform:scale(0.5);pointer-events:none}
 .intro-card .photo-tap-count.visible{opacity:1;transform:scale(1)}
+
+/* ===== AUTO-ANIMATED DECORATIVE STICKERS ===== */
+@keyframes autoFloat{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-14px) rotate(1.5deg)}}
+@keyframes autoFloat2{0%,100%{transform:translateY(0) rotate(2deg)}50%{transform:translateY(-10px) rotate(-2deg)}}
+@keyframes autoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+@keyframes autoBounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-16px)}70%{transform:translateY(-8px)}}
+@keyframes autoSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+@keyframes autoGlow{0%,100%{box-shadow:0 4px 20px rgba(255,160,50,0.15)}50%{box-shadow:0 4px 32px rgba(255,160,50,0.45),0 0 0 4px rgba(255,160,50,0.08)}}
+@keyframes autoWiggle{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+.sticker.auto-float{animation:autoFloat 5s ease-in-out infinite!important;transform-origin:center bottom}
+.sticker.auto-float.v2{animation:autoFloat2 6.5s ease-in-out infinite!important}
+.sticker.auto-pulse{animation:autoPulse 3s ease-in-out infinite!important}
+.sticker.auto-bounce{animation:autoBounce 2.2s ease-in-out infinite!important}
+.sticker.auto-glow{animation:autoGlow 3s ease-in-out infinite!important}
+.sticker.auto-wiggle{animation:autoWiggle 4s ease-in-out infinite!important}
+
+/* ===== SKILL PING CARD ===== */
+.sticker-skillping{background:linear-gradient(145deg,#0F1923,#1A2535);border-radius:16px;padding:18px 20px;width:230px;border:1.5px solid rgba(100,180,255,0.2);box-shadow:0 8px 28px rgba(0,0,0,0.35),inset 0 1px 0 rgba(255,255,255,0.06)}
+.sticker-skillping .sp-title{font-family:var(--font-fun);font-weight:800;font-size:0.75rem;color:rgba(255,255,255,0.9);letter-spacing:0.08em;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.sticker-skillping .sp-title::before{content:'';display:block;width:6px;height:6px;background:#4CAF50;border-radius:50%;box-shadow:0 0 0 3px rgba(76,175,80,0.25);animation:statusPulse 2s ease-in-out infinite}
+.sticker-skillping .sp-tags{display:flex;flex-wrap:wrap;gap:5px}
+.sticker-skillping .sp-tag{font-size:0.6rem;font-weight:700;padding:4px 9px;border-radius:20px;letter-spacing:0.04em;white-space:nowrap}
+.sticker-skillping .sp-tag.blue{background:rgba(66,165,245,0.15);color:#64B5F6;border:1px solid rgba(66,165,245,0.25)}
+.sticker-skillping .sp-tag.green{background:rgba(76,175,80,0.15);color:#81C784;border:1px solid rgba(76,175,80,0.25)}
+.sticker-skillping .sp-tag.orange{background:rgba(255,152,0,0.15);color:#FFB74D;border:1px solid rgba(255,152,0,0.25)}
+.sticker-skillping .sp-tag.purple{background:rgba(171,71,188,0.15);color:#CE93D8;border:1px solid rgba(171,71,188,0.25)}
+.sticker-skillping .sp-tag.red{background:rgba(239,83,80,0.15);color:#EF9A9A;border:1px solid rgba(239,83,80,0.25)}
+
+/* ===== VIBE CHECK CARD ===== */
+.sticker-vibecheck{background:linear-gradient(135deg,#1a0533,#2D1B69,#0d1b4b);border-radius:20px;padding:22px 24px;width:220px;text-align:center;border:2px solid rgba(160,80,255,0.3);box-shadow:0 8px 32px rgba(80,20,200,0.25),0 0 0 1px rgba(160,80,255,0.1);cursor:pointer}
+.sticker-vibecheck .vc-label{font-size:0.55rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(200,160,255,0.7);margin-bottom:8px}
+.sticker-vibecheck .vc-emoji{font-size:2.8rem;display:block;margin:4px 0;filter:drop-shadow(0 0 12px rgba(160,80,255,0.6))}
+.sticker-vibecheck .vc-text{font-family:var(--font-fun);font-weight:800;font-size:1rem;color:#fff;margin:6px 0 4px;text-shadow:0 0 20px rgba(160,80,255,0.6)}
+.sticker-vibecheck .vc-sub{font-size:0.6rem;color:rgba(200,160,255,0.6);font-style:italic}
+.sticker-vibecheck .vc-tap{font-size:0.55rem;color:rgba(160,120,255,0.5);margin-top:10px;letter-spacing:0.06em}
+
+/* ===== TIMELINE RIBBON ===== */
+.sticker-ribbon{background:linear-gradient(135deg,var(--neon,#FFD54F),var(--neon2,#FF8F00));border-radius:4px;padding:12px 20px;text-align:center;position:relative;box-shadow:0 4px 16px rgba(0,0,0,0.18),0 2px 6px rgba(0,0,0,0.1)}
+.sticker-ribbon::before,.sticker-ribbon::after{content:'';position:absolute;top:50%;width:0;height:0;border-top:18px solid transparent;border-bottom:18px solid transparent;transform:translateY(-50%)}
+.sticker-ribbon::before{left:-14px;border-right:14px solid var(--neon,#FFD54F)}
+.sticker-ribbon::after{right:-14px;border-left:14px solid var(--neon2,#FF8F00)}
+.sticker-ribbon .rib-text{font-family:var(--font-fun);font-weight:900;font-size:1.1rem;color:#1a1a1a;letter-spacing:0.08em;white-space:nowrap}
+.sticker-ribbon .rib-sub{font-size:0.6rem;color:rgba(0,0,0,0.55);margin-top:2px}
 
 /* ===== ZONE INTRO CARDS ===== */
 .zone-intro-card{position:absolute;z-index:75;border-radius:24px;padding:32px 36px 28px;width:420px;text-align:center;cursor:default;box-shadow:0 16px 50px rgba(0,0,0,0.1),0 6px 20px rgba(0,0,0,0.05),inset 0 1px 0 rgba(255,255,255,0.9);animation:introFloat 6s ease-in-out infinite}
@@ -2695,6 +2726,47 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-washi" data-zone="hub" style="left:6680px;top:6295px;transform:rotate(4deg);background:repeating-linear-gradient(-45deg,rgba(201,169,110,0.2),rgba(201,169,110,0.2) 4px,rgba(201,169,110,0.08) 4px,rgba(201,169,110,0.08) 8px);width:200px"></div>
 <div class="sticker sticker-washi" data-zone="hub" style="left:6600px;top:7560px;transform:rotate(-5deg);background:repeating-linear-gradient(45deg,rgba(233,30,99,0.15),rgba(233,30,99,0.15) 4px,rgba(233,30,99,0.06) 4px,rgba(233,30,99,0.06) 8px);width:230px"></div>
 
+<!-- Skill Ping Card (dark, techy — left side) -->
+<div class="sticker sticker-skillping auto-glow" data-zone="hub" style="left:6300px;top:7100px;transform:rotate(2deg)">
+  <div class="sp-title">SKILL STACK</div>
+  <div class="sp-tags">
+    <span class="sp-tag blue">Product Strategy</span>
+    <span class="sp-tag green">0→1 Building</span>
+    <span class="sp-tag orange">AI/ML Products</span>
+    <span class="sp-tag purple">Web3</span>
+    <span class="sp-tag red">Growth Hacking</span>
+    <span class="sp-tag blue">User Research</span>
+    <span class="sp-tag green">Fundraising</span>
+    <span class="sp-tag orange">Storytelling</span>
+  </div>
+</div>
+
+<!-- Vibe Check Card (purple galaxy, clickable) -->
+<div class="sticker sticker-vibecheck auto-float v2" data-zone="hub" onclick="vibeCheck(this,event)" style="left:7300px;top:7650px;transform:rotate(-3deg)">
+  <div class="vc-label">current vibe</div>
+  <span class="vc-emoji" id="vcEmoji">🔥</span>
+  <div class="vc-text" id="vcText">Ship mode activated</div>
+  <div class="vc-sub" id="vcSub">100% focus, 0% apologies</div>
+  <div class="vc-tap">tap to check vibe →</div>
+</div>
+
+<!-- Ribbon banners — decorative auto-animated -->
+<div class="sticker sticker-ribbon auto-wiggle" data-zone="hub" style="left:6580px;top:7200px;transform:rotate(-4deg);--neon:#FFD54F;--neon2:#FF8F00">
+  <div class="rib-text">OPEN TO WORK 🤝</div>
+  <div class="rib-sub">Remote · Hybrid · Full-time</div>
+</div>
+
+<div class="sticker sticker-ribbon auto-float" data-zone="hub" style="left:7280px;top:7050px;transform:rotate(3deg);--neon:#A5D6A7;--neon2:#43A047">
+  <div class="rib-text">CHAI CERTIFIED ☕</div>
+  <div class="rib-sub">since 2009</div>
+</div>
+
+<!-- Auto-floating large emojis near intro card -->
+<div class="sticker sticker-emoji huge auto-float" data-zone="hub" style="left:6470px;top:6350px;font-size:2.4rem">🧡</div>
+<div class="sticker sticker-emoji auto-bounce" data-zone="hub" style="left:7490px;top:7250px;font-size:1.8rem">💫</div>
+<div class="sticker sticker-emoji auto-pulse" data-zone="hub" style="left:6360px;top:7430px;font-size:2rem">🎪</div>
+<div class="sticker sticker-emoji auto-float v2" data-zone="hub" style="left:7560px;top:6820px;font-size:2rem">🌈</div>
+
 <!-- ===== ORIGIN ZONE INTRO CARD ===== -->
 <div class="sticker zone-intro-card zone-origin" data-zone="origin" style="left:400px;top:200px;transform:rotate(-1deg)">
   <span class="zic-icon">📸</span>
@@ -3046,11 +3118,11 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="map-bottom-bar">
       <div class="bar-filters">
         <button class="mc active" onclick="event.stopPropagation();filt('all',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#66BB6A,#43A047)"></div>All</button>
-        <button class="mc" onclick="event.stopPropagation();filt('photo',this)"><div class="legend-dot" style="background:#64B5F6"></div>📸 Photos</button>
-        <button class="mc" onclick="event.stopPropagation();filt('meme',this)"><div class="legend-dot" style="background:#CE93D8"></div>😂 Memes</button>
-        <button class="mc" onclick="event.stopPropagation();filt('interactive',this)"><div class="legend-dot" style="background:#FF7043"></div>🎮 Interactive</button>
-        <button class="mc" onclick="event.stopPropagation();filt('badge',this)"><div class="legend-dot" style="background:#FFB300"></div>🏅 Badges</button>
-        <button class="mc" onclick="event.stopPropagation();filt('other',this)"><div class="legend-dot" style="background:#90A4AE"></div>📦 Others</button>
+        <button class="mc" onclick="event.stopPropagation();filt('photo',this)"><div class="legend-dot" style="background:#64B5F6"></div>📸 Photos<span class="mc-counter"></span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('meme',this)"><div class="legend-dot" style="background:#CE93D8"></div>😂 Memes<span class="mc-counter"></span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('interactive',this)"><div class="legend-dot" style="background:#FF7043"></div>🎮 Interactive<span class="mc-counter"></span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('badge',this)"><div class="legend-dot" style="background:#FFB300"></div>🏅 Badges<span class="mc-counter"></span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('other',this)"><div class="legend-dot" style="background:#90A4AE"></div>📦 Others<span class="mc-counter"></span></button>
       </div>
       <div class="bar-info">
         <span class="bar-count" id="mapCount">98 items</span>
@@ -7234,14 +7306,26 @@ function drawMap(){
     // Draw zone names on small minimap — batch all into one DocumentFragment
     const zoneColors={'Origin':'#4CAF50','Work':'#E53935','Portfolio':'#42A5F5','Hobby':'#FF9800','Fun':'#AB47BC'};
     const zoneFrag=document.createDocumentFragment();
-    // Zone borders
+    // Zone borders — dotted map-style boundary + subtle glow fill
     mapZones.forEach(z=>{
       const zx1=(z.x1-offsetX)*sc, zy1=(z.y1-offsetY)*sc;
       const zw=(z.x2-z.x1)*sc, zh=(z.y2-z.y1)*sc;
       const zc=zoneColors[z.name]||'#4CAF50';
-      const border=document.createElement('div');
-      border.style.cssText='position:absolute;left:'+zx1+'px;top:'+zy1+'px;width:'+zw+'px;height:'+zh+'px;border:1px solid '+zc+';border-radius:3px;box-shadow:0 0 4px '+zc+'50;pointer-events:none;z-index:2;opacity:0.5';
-      zoneFrag.appendChild(border);
+      // Glow fill (very subtle color wash)
+      const fill=document.createElement('div');
+      fill.style.cssText='position:absolute;left:'+zx1+'px;top:'+zy1+'px;width:'+zw+'px;height:'+zh+'px;background:'+zc+'12;border-radius:4px;pointer-events:none;z-index:1';
+      zoneFrag.appendChild(fill);
+      // Dotted boundary (SVG inline for crisp dash pattern)
+      const dsvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      dsvg.setAttribute('viewBox','0 0 '+zw+' '+zh);
+      dsvg.style.cssText='position:absolute;left:'+zx1+'px;top:'+zy1+'px;width:'+zw+'px;height:'+zh+'px;pointer-events:none;z-index:3;overflow:visible';
+      const drect=document.createElementNS('http://www.w3.org/2000/svg','rect');
+      drect.setAttribute('x','0.5');drect.setAttribute('y','0.5');
+      drect.setAttribute('width',Math.max(1,zw-1)+'');drect.setAttribute('height',Math.max(1,zh-1)+'');
+      drect.setAttribute('rx','3');drect.setAttribute('fill','none');
+      drect.setAttribute('stroke',zc);drect.setAttribute('stroke-width','0.7');
+      drect.setAttribute('stroke-dasharray','2.5 2');drect.setAttribute('opacity','0.55');
+      dsvg.appendChild(drect);zoneFrag.appendChild(dsvg);
     });
     // Zone signposts
     mapZones.forEach(z=>{
@@ -7649,10 +7733,21 @@ function navigateToFilteredItem(cat,idx){
   const px=(target.left-ox)*sc+cL;
   const py=(target.top-oy)*sc+cT;
   mmInner.scrollTo({left:px-mmInner.clientWidth/2,top:py-mmInner.clientHeight/2,behavior:'smooth'});
-  // Make item itself glow directly — no HUD, no lines
+  // Glow on map item
+  setTimeout(()=>{applyNeonGlow(target);},400);
+  // Also highlight the real sticker on canvas with nav-highlight glow
   setTimeout(()=>{
-    applyNeonGlow(target);
-  },400);
+    const allStickers=cv.querySelectorAll('.sticker');
+    allStickers.forEach(el=>{
+      const l=parseFloat(el.style.left),t=parseFloat(el.style.top);
+      if(Math.abs(l-target.left)<60&&Math.abs(t-target.top)<60){
+        el.classList.remove('nav-highlight');
+        void el.offsetWidth; // reflow to restart animation
+        el.classList.add('nav-highlight');
+        setTimeout(()=>el.classList.remove('nav-highlight'),1500);
+      }
+    });
+  },350);
 }
 
 // Filter with cycle-through navigation
@@ -7702,15 +7797,26 @@ function filt(c,btn){
       const idx=filtClickCount[c]%matching.length;
       filtClickCount[c]++;
       navigateToFilteredItem(c,idx);
+      // Update counter badge
+      const ctr=btn.querySelector('.mc-counter');
+      if(ctr){ctr.textContent=(idx+1)+'/'+matching.length;ctr.style.display='inline-block';}
     }
     return;
   }
   mFilt=c;
   filtClickCount[c]=0;
-  document.querySelectorAll('.mc').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.mc').forEach(b=>{
+    b.classList.remove('active');
+    const ctr=b.querySelector('.mc-counter');
+    if(ctr){ctr.textContent='';ctr.style.display='none';}
+  });
   btn.classList.add('active');
   if(c==='all'){
     clearWaypoints();
+  } else {
+    const matching=stickerData.filter(d=>matchesFilter(d.cat,c));
+    const ctr=btn.querySelector('.mc-counter');
+    if(ctr&&matching.length>0){ctr.textContent='–/'+matching.length;ctr.style.display='inline-block';}
   }
   drawMap();
 }
@@ -7867,10 +7973,15 @@ function updMap(){
     mapVP.style.height=(worldVpH*sc)+'px';
   }
   
-  // Update zone name on minimap
+  // Update zone name on minimap with zone-matching color
   const zoneName=getZoneName(centerWorld.x,centerWorld.y);
   const mmZone=document.getElementById('minimapZoneName');
-  if(mmZone)mmZone.textContent=zoneName;
+  if(mmZone){
+    mmZone.textContent=zoneName;
+    const zoneColorMap={'Origin':'#388E3C','Work':'#C62828','Portfolio':'#1565C0','Hobby':'#E65100','Fun':'#6A1B9A'};
+    const zKey=Object.keys(zoneColorMap).find(k=>zoneName.includes(k));
+    mmZone.style.background=zKey?zoneColorMap[zKey]:'#37474F';
+  }
 }
 
 let mapCloneTimer=null;
@@ -8338,6 +8449,29 @@ function currentlyNext(el,e){
   if(!card)return;
   const items=card.querySelectorAll('.cur-item'),bundle=_currBundles[_currBundleIdx];
   items.forEach((item,i)=>{if(bundle[i])item.textContent=bundle[i]});
+  spawnConfetti(e.clientX||0,e.clientY||0);
+}
+
+// ===== VIBE CHECK CARD =====
+const _vibes=[
+  {e:'🔥',t:'Ship mode activated',s:'100% focus, 0% apologies'},
+  {e:'☕',t:'Chai & chill',s:'solving big problems, one sip at a time'},
+  {e:'🧠',t:'Deep work unlocked',s:'do not disturb. building.'},
+  {e:'🚀',t:'Launch day energy',s:'let\'s gooo 🎉'},
+  {e:'💡',t:'Idea overflow',s:'brain needs a USB-C port rn'},
+  {e:'😤',t:'Deadline activated',s:'sleep is for the weak'},
+  {e:'🌈',t:'Good vibes only',s:'manifesting product-market fit'},
+  {e:'🤝',t:'Open to connect',s:'DM me, let\'s build something'},
+];
+let _vibeIdx=0;
+function vibeCheck(el,e){
+  if(isInteractionSuppressed(e))return;
+  e.stopPropagation();playSfx('pop');
+  _vibeIdx=(_vibeIdx+1)%_vibes.length;
+  const v=_vibes[_vibeIdx];
+  const em=document.getElementById('vcEmoji'),tx=document.getElementById('vcText'),sb=document.getElementById('vcSub');
+  if(em){em.style.transform='scale(0)';setTimeout(()=>{em.textContent=v.e;em.style.transition='transform 0.3s cubic-bezier(0.34,1.56,0.64,1)';em.style.transform='scale(1)'},150);}
+  if(tx)tx.textContent=v.t;if(sb)sb.textContent=v.s;
   spawnConfetti(e.clientX||0,e.clientY||0);
 }
 
