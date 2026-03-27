@@ -1836,25 +1836,24 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="zone-tint zone-tint-playground" style="left:0;top:10200px;width:6500px;height:3800px"></div>
 <div class="zone-tint zone-tint-memealley" style="left:7500px;top:6200px;width:6500px;height:7800px"></div>
 <!-- Zone boundary dotted lines (synced with big map zones) -->
-<!-- Horizontal: Origin/Work top → Portfolio/Hobby mid at y≈5800 -->
-<div class="zone-divider h origin" style="left:200px;top:5800px;width:13600px"></div>
-<!-- Horizontal: Portfolio/Hobby → Fun/Hobby bottom at y≈10200 -->
-<div class="zone-divider h fun" style="left:200px;top:10200px;width:13600px"></div>
-<!-- Vertical: Origin ↔ Work at x≈7500 (top half) -->
-<div class="zone-divider v work" style="left:7500px;top:200px;height:5600px"></div>
-<!-- Vertical: Portfolio ↔ Fun (bottom half) at x≈7500 -->
-<div class="zone-divider v fun" style="left:7500px;top:5800px;height:8200px"></div>
+<!-- Horizontal: Origin/Work (y≤5600) → Portfolio/Fun (y≥6200), midpoint y=5900 -->
+<div class="zone-divider h origin" style="left:200px;top:5900px;width:13600px"></div>
+<!-- Horizontal: Portfolio (y≤9800) → Hobby (y≥10400), midpoint y=10100 (left half only) -->
+<div class="zone-divider h fun" style="left:200px;top:10100px;width:6550px"></div>
+<!-- Vertical: Origin/Portfolio/Hobby (x≤5800) ↔ Work/Fun (x≥7700), midpoint x=6750 -->
+<div class="zone-divider v work" style="left:6750px;top:200px;height:5700px"></div>
+<!-- Vertical: Portfolio/Hobby ↔ Fun (bottom half) -->
+<div class="zone-divider v fun" style="left:6750px;top:5900px;height:8100px"></div>
 
 <!-- Zone ground labels — road markings near boundaries -->
-<div class="zone-ground-label horizontal" style="left:2600px;top:5550px;font-size:80px;color:#4CAF50">ORIGIN</div>
-<div class="zone-ground-label horizontal" style="left:8800px;top:5550px;font-size:80px;color:#E53935">WORK</div>
-<div class="zone-ground-label horizontal" style="left:2600px;top:5880px;font-size:70px;color:#42A5F5">PORTFOLIO</div>
-<div class="zone-ground-label horizontal" style="left:8800px;top:5880px;font-size:70px;color:#AB47BC">FUN</div>
-<div class="zone-ground-label horizontal" style="left:2600px;top:9950px;font-size:70px;color:#42A5F5">PORTFOLIO</div>
-<div class="zone-ground-label horizontal" style="left:2600px;top:10280px;font-size:70px;color:#FF9800">HOBBY</div>
-<div class="zone-ground-label horizontal" style="left:8800px;top:9950px;font-size:70px;color:#AB47BC">FUN</div>
-<div class="zone-ground-label vertical" style="left:7250px;top:1500px;font-size:70px;color:#4CAF50">ORIGIN</div>
-<div class="zone-ground-label vertical" style="left:7580px;top:1500px;font-size:70px;color:#E53935">WORK</div>
+<div class="zone-ground-label horizontal" style="left:2600px;top:5620px;font-size:80px;color:#4CAF50">ORIGIN ↑</div>
+<div class="zone-ground-label horizontal" style="left:8800px;top:5620px;font-size:80px;color:#E53935">WORK ↑</div>
+<div class="zone-ground-label horizontal" style="left:2600px;top:5980px;font-size:70px;color:#42A5F5">↓ PORTFOLIO</div>
+<div class="zone-ground-label horizontal" style="left:8800px;top:5980px;font-size:70px;color:#AB47BC">↓ FUN</div>
+<div class="zone-ground-label horizontal" style="left:2600px;top:9820px;font-size:70px;color:#42A5F5">PORTFOLIO ↑</div>
+<div class="zone-ground-label horizontal" style="left:2600px;top:10180px;font-size:70px;color:#FF9800">↓ HOBBY</div>
+<div class="zone-ground-label vertical" style="left:6500px;top:1500px;font-size:70px;color:#4CAF50">ORIGIN</div>
+<div class="zone-ground-label vertical" style="left:6830px;top:1500px;font-size:70px;color:#E53935">WORK</div>
 
 <!-- Zone creative intro cards (wrapped as stickers for map sync) -->
 
@@ -6647,43 +6646,62 @@ function addMapDecorations(cw, ch){
   addDiv('map-terrain-edge','left:88%;top:15%;width:10%;height:35%;border-radius:40% 60% 50% 50%;background:linear-gradient(-90deg,#5a9e3e,#4e9035);z-index:0');
   addDiv('map-terrain-edge','left:15%;top:2%;width:40%;height:8%;border-radius:50% 50% 40% 60%;background:linear-gradient(180deg,#5a9e3e,#4e9035);z-index:0');
   addDiv('map-terrain-edge','left:20%;top:90%;width:50%;height:8%;border-radius:40% 60% 50% 50%;background:linear-gradient(0deg,#5a9e3e,#4e9035);z-index:0');
-   // Zone-colored tints on the terrain — BOLDER with glow
-   addDiv('map-zone-tint','left:2%;top:3%;width:42%;height:37%;border-radius:30%;background:radial-gradient(ellipse,rgba(76,175,80,0.35),transparent 65%);z-index:0;filter:blur(2px)');
-   addDiv('map-zone-tint','left:55%;top:3%;width:43%;height:37%;border-radius:30%;background:radial-gradient(ellipse,rgba(229,57,53,0.28),transparent 65%);z-index:0;filter:blur(2px)');
-   addDiv('map-zone-tint','left:2%;top:44%;width:40%;height:26%;border-radius:30%;background:radial-gradient(ellipse,rgba(66,165,245,0.28),transparent 65%);z-index:0;filter:blur(2px)');
-   addDiv('map-zone-tint','left:2%;top:74%;width:45%;height:24%;border-radius:30%;background:radial-gradient(ellipse,rgba(255,152,0,0.32),transparent 65%);z-index:0;filter:blur(2px)');
-   addDiv('map-zone-tint','left:55%;top:46%;width:43%;height:52%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.28),transparent 65%);z-index:0;filter:blur(2px)');
+   // Zone-colored tints — matched to actual world zone positions
+   // Origin: x[400-5800]→[5.4%-41.9%], y[400-5600]→[5.4%-40.5%]
+   addDiv('map-zone-tint','left:5%;top:5%;width:37%;height:38%;border-radius:30%;background:radial-gradient(ellipse,rgba(76,175,80,0.35),transparent 65%);z-index:0;filter:blur(2px)');
+   // Work: x[7700-13600]→[54.7%-94.6%], y[400-5600]
+   addDiv('map-zone-tint','left:55%;top:5%;width:40%;height:38%;border-radius:30%;background:radial-gradient(ellipse,rgba(229,57,53,0.28),transparent 65%);z-index:0;filter:blur(2px)');
+   // Portfolio: x[400-5600]→[5.4%-40.5%], y[6200-9800]→[44.6%-68.9%]
+   addDiv('map-zone-tint','left:5%;top:44%;width:36%;height:25%;border-radius:30%;background:radial-gradient(ellipse,rgba(66,165,245,0.28),transparent 65%);z-index:0;filter:blur(2px)');
+   // Hobby: x[400-6300]→[5.4%-45.3%], y[10400-13600]→[73%-94.6%]
+   addDiv('map-zone-tint','left:5%;top:73%;width:40%;height:22%;border-radius:30%;background:radial-gradient(ellipse,rgba(255,152,0,0.32),transparent 65%);z-index:0;filter:blur(2px)');
+   // Fun: x[7700-13600]→[54.7%-94.6%], y[6400-13600]→[45.9%-94.6%]
+   addDiv('map-zone-tint','left:55%;top:46%;width:40%;height:49%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.28),transparent 65%);z-index:0;filter:blur(2px)');
 
-   // === ZONE BOUNDARY LINES — thick, visible, glowing ===
-   const zoneLine1=addDiv('map-zone-line','left:3%;top:40.5%;width:94%;height:0;border-top:5px dashed rgba(76,175,80,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(76,175,80,0.7)) drop-shadow(0 0 20px rgba(76,175,80,0.4))');
-   const zoneLine2=addDiv('map-zone-line','left:3%;top:73%;width:94%;height:0;border-top:5px dashed rgba(255,152,0,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(255,152,0,0.7)) drop-shadow(0 0 20px rgba(255,152,0,0.4))');
-   const zoneLine3=addDiv('map-zone-line','left:47.8%;top:2%;width:0;height:39%;border-left:5px dashed rgba(229,57,53,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(229,57,53,0.7)) drop-shadow(0 0 20px rgba(229,57,53,0.4))');
-   const zoneLine4=addDiv('map-zone-line','left:47.8%;top:40.5%;width:0;height:58%;border-left:5px dashed rgba(171,71,188,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(171,71,188,0.7)) drop-shadow(0 0 20px rgba(171,71,188,0.4))');
+   // === ZONE BOUNDARY LINES — positioned from actual world zone coordinates ===
+   // World is 14000x14000, map padding 400 each side → total range 14800
+   // H-line between Origin/Work (y≤5600) and Portfolio/Fun (y≥6200): midpoint y=5900 → (5900+400)/14800 = 42.6%
+   // H-line between Portfolio (y≤9800) and Hobby (y≥10400): midpoint y=10100 → (10100+400)/14800 = 70.9%
+   // V-line between Origin/Portfolio/Hobby (x≤5800/5600/6300) and Work/Fun (x≥7700): midpoint x=6750 → (6750+400)/14800 = 48.3%
+   const zoneLine1=addDiv('map-zone-line','left:3%;top:42.6%;width:94%;height:0;border-top:5px dashed rgba(76,175,80,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(76,175,80,0.7)) drop-shadow(0 0 20px rgba(76,175,80,0.4))');
+   const zoneLine2=addDiv('map-zone-line','left:3%;top:70.9%;width:45.3%;height:0;border-top:5px dashed rgba(255,152,0,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(255,152,0,0.7)) drop-shadow(0 0 20px rgba(255,152,0,0.4))');
+   const zoneLine3=addDiv('map-zone-line','left:48.3%;top:2%;width:0;height:40.6%;border-left:5px dashed rgba(229,57,53,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(229,57,53,0.7)) drop-shadow(0 0 20px rgba(229,57,53,0.4))');
+   const zoneLine4=addDiv('map-zone-line','left:48.3%;top:42.6%;width:0;height:56%;border-left:5px dashed rgba(171,71,188,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(171,71,188,0.7)) drop-shadow(0 0 20px rgba(171,71,188,0.4))');
 
-   // === ZONE SIGNPOST LABELS ===
+   // === ZONE SIGNPOST LABELS — positioned at actual zone centers ===
+   // Origin center: ((400+5800)/2+400)/14800=23.6%, ((400+5600)/2+400)/14800=22.3%
+   // Work center: ((7700+13600)/2+400)/14800=74.0%, same Y as Origin
+   // Portfolio center: ((400+5600)/2+400)/14800=23.6%, ((6200+9800)/2+400)/14800=57.4%
+   // Hobby center: ((400+6300)/2+400)/14800=25.0%, ((10400+13600)/2+400)/14800=83.8%
+   // Fun center: ((7700+13600)/2+400)/14800=74.0%, ((6400+13600)/2+400)/14800=70.3%
    const signposts=[
-     {x:22.3,y:21.6,label:'ORIGIN',color:'#4CAF50',bg:'rgba(76,175,80,0.85)'},
-     {x:73.6,y:21.6,label:'WORK',color:'#E53935',bg:'rgba(229,57,53,0.85)'},
-     {x:22.3,y:56.8,label:'PORTFOLIO',color:'#42A5F5',bg:'rgba(66,165,245,0.85)'},
-     {x:24.0,y:83.8,label:'HOBBY',color:'#FF9800',bg:'rgba(255,152,0,0.85)'},
-     {x:73.6,y:70.3,label:'FUN',color:'#AB47BC',bg:'rgba(171,71,188,0.85)'},
+     {x:23.6,y:22.3,label:'ORIGIN',color:'#4CAF50',bg:'rgba(76,175,80,0.85)'},
+     {x:74.0,y:22.3,label:'WORK',color:'#E53935',bg:'rgba(229,57,53,0.85)'},
+     {x:23.6,y:57.4,label:'PORTFOLIO',color:'#42A5F5',bg:'rgba(66,165,245,0.85)'},
+     {x:25.0,y:83.8,label:'HOBBY',color:'#FF9800',bg:'rgba(255,152,0,0.85)'},
+     {x:74.0,y:70.3,label:'FUN',color:'#AB47BC',bg:'rgba(171,71,188,0.85)'},
    ];
    signposts.forEach(sp=>{
      const el=addDiv('map-signpost','left:'+sp.x+'%;top:'+sp.y+'%;transform:translate(-50%,-50%);z-index:10;padding:6px 16px;border-radius:8px;background:'+sp.bg+';color:#fff;font-family:var(--font-fun);font-size:'+Math.max(8,cw*0.006)+'px;font-weight:800;letter-spacing:0.08em;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,0.4);box-shadow:0 3px 12px rgba(0,0,0,0.25),0 0 20px '+sp.color+'60;border:2px solid rgba(255,255,255,0.3)');
      el.textContent=sp.label;
    });
 
-   // === ZONE GROUND LABELS — road marking style near boundaries ===
+   // === ZONE GROUND LABELS — road marking style near boundary lines ===
+   // Labels placed just above/below horizontal boundaries and beside vertical boundary
    const groundLabels=[
-     {x:18,y:38,label:'ORIGIN',color:'rgba(76,175,80,0.2)',size:Math.max(10,cw*0.012),rot:0},
-     {x:60,y:38,label:'WORK',color:'rgba(229,57,53,0.2)',size:Math.max(10,cw*0.012),rot:0},
-     {x:18,y:43,label:'PORTFOLIO',color:'rgba(66,165,245,0.18)',size:Math.max(9,cw*0.01),rot:0},
-     {x:60,y:43,label:'FUN',color:'rgba(171,71,188,0.18)',size:Math.max(9,cw*0.01),rot:0},
-     {x:18,y:71,label:'PORTFOLIO',color:'rgba(66,165,245,0.18)',size:Math.max(9,cw*0.01),rot:0},
-     {x:18,y:75,label:'HOBBY',color:'rgba(255,152,0,0.18)',size:Math.max(9,cw*0.01),rot:0},
-     {x:60,y:71,label:'FUN',color:'rgba(171,71,188,0.18)',size:Math.max(9,cw*0.01),rot:0},
-     {x:45,y:15,label:'ORIGIN',color:'rgba(76,175,80,0.15)',size:Math.max(8,cw*0.008),rot:90},
-     {x:50,y:15,label:'WORK',color:'rgba(229,57,53,0.15)',size:Math.max(8,cw*0.008),rot:90},
+     // Above h-line at 42.6% (origin/work side)
+     {x:20,y:39.5,label:'ORIGIN ↑',color:'rgba(76,175,80,0.22)',size:Math.max(10,cw*0.012),rot:0},
+     {x:60,y:39.5,label:'WORK ↑',color:'rgba(229,57,53,0.22)',size:Math.max(10,cw*0.012),rot:0},
+     // Below h-line at 42.6% (portfolio/fun side)
+     {x:20,y:44.5,label:'↓ PORTFOLIO',color:'rgba(66,165,245,0.2)',size:Math.max(9,cw*0.01),rot:0},
+     {x:60,y:44.5,label:'↓ FUN',color:'rgba(171,71,188,0.2)',size:Math.max(9,cw*0.01),rot:0},
+     // Above h-line at 70.9% (portfolio side)
+     {x:20,y:68,label:'PORTFOLIO ↑',color:'rgba(66,165,245,0.18)',size:Math.max(9,cw*0.01),rot:0},
+     // Below h-line at 70.9% (hobby side)
+     {x:20,y:73,label:'↓ HOBBY',color:'rgba(255,152,0,0.2)',size:Math.max(9,cw*0.01),rot:0},
+     // Beside v-line at 48.3%
+     {x:45,y:18,label:'ORIGIN',color:'rgba(76,175,80,0.17)',size:Math.max(8,cw*0.008),rot:90},
+     {x:51,y:18,label:'WORK',color:'rgba(229,57,53,0.17)',size:Math.max(8,cw*0.008),rot:90},
    ];
    groundLabels.forEach(gl=>{
      const el=addDiv('map-ground-label','left:'+gl.x+'%;top:'+gl.y+'%;z-index:4;pointer-events:none;font-family:var(--font-fun);font-weight:900;font-size:'+gl.size+'px;color:'+gl.color+';letter-spacing:0.25em;text-transform:uppercase;'+(gl.rot?'writing-mode:vertical-rl;text-orientation:mixed;':''));
@@ -7279,8 +7297,8 @@ function makeMapCloneNode(d){
   clone.dataset.mapCloneId=d.id||'';
   clone.addEventListener('click',ev=>{
     ev.stopPropagation();
-    const target=mapClientToWorld(ev.clientX,ev.clientY);
-    walkBitmojiTo(target.x,target.y,d.ref);
+    // Use sticker's actual world coordinates directly — avoids lossy mapClientToWorld conversion
+    walkBitmojiTo(d.left + d.w/2, d.top + d.h/2, d.ref);
   });
   return clone;
 }
@@ -7775,19 +7793,29 @@ function mapZoom(dir){
   mapZoomScale=steps[idx];
   const zl=document.getElementById('mapZoomLevel');
   if(zl)zl.textContent=mapZoomScale+'×';
-  const factor=mapZoomScale/oldZoom;
+  // Recompute scale from scratch to avoid floating-point drift
+  const mr=mmInner.getBoundingClientRect();
+  const mw=mr.width||64,mh=mr.height||64;
+  const contentW=Math.max(cv.scrollWidth||0,cv.offsetWidth||0,MOODBOARD_WORLD_WIDTH);
+  const contentH=Math.max(cv.scrollHeight||0,cv.offsetHeight||0,MOODBOARD_WORLD_HEIGHT);
+  const leftWorldPad=400,rightWorldPad=400,topWorldPad=400,bottomWorldPad=400;
+  const mapContentW=contentW+leftWorldPad+rightWorldPad;
+  const mapContentH=contentH+topWorldPad+bottomWorldPad;
+  const fitScale=Math.max(0.02,Math.max(mw/mapContentW,mh/mapContentH));
+  const newSc=fitScale*mapZoomScale;
+  const factor=newSc/(drawMap._sc||0.05);
   const cx=mmInner.scrollLeft+mmInner.clientWidth/2;
   const cy=mmInner.scrollTop+mmInner.clientHeight/2;
-  const cw=parseFloat(mapCanvas.style.width)*factor;
-  const ch=parseFloat(mapCanvas.style.height)*factor;
-  drawMap._sc=(drawMap._sc||0.05)*factor;
+  const cw=mapContentW*newSc;
+  const ch=mapContentH*newSc;
+  drawMap._sc=newSc;
   drawMap._cw=cw;drawMap._ch=ch;
   mapCanvas.style.width=cw+'px';
   mapCanvas.style.height=ch+'px';
   mapCanvas.style.transform='none';
   const ox=drawMap._ox,oy=drawMap._oy;
   invalidateMapCloneCache(true);
-  renderVisibleClones(drawMap._sc,ox,oy,cw,ch);
+  renderVisibleClones(newSc,ox,oy,cw,ch);
   updMap();
   mmInner.scrollTo({left:cx*factor-mmInner.clientWidth/2,top:cy*factor-mmInner.clientHeight/2});
 }
@@ -7883,8 +7911,9 @@ function updMap(){
     // EXPANDED: keep click-walk position during walking, otherwise follow viewport center
     if(!walkingInProgress){
       const cL=parseFloat(mapCanvas.style.left)||0;
+      const cT2=parseFloat(mapCanvas.style.top)||0;
       const px=cL+(centerWorld.x-ox)*sc;
-      const py=(centerWorld.y-oy)*sc;
+      const py=cT2+(centerWorld.y-oy)*sc;
       mapPlayer.style.left=px+'px';
       mapPlayer.style.top=py+'px';
     }
