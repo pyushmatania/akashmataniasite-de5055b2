@@ -7252,14 +7252,14 @@ function addMapDecorations(cw, ch){
 
    // === ZONE GROUND LABELS ON MAP — diagonal, centered in zones ===
    const mapGroundLabels=[
-     {x:18,y:20,label:'ORIGIN',color:'rgba(76,175,80,0.15)',rot:-25},
-     {x:62,y:18,label:'WORK',color:'rgba(229,57,53,0.13)',rot:-20},
-     {x:16,y:55,label:'PORTFOLIO',color:'rgba(66,165,245,0.12)',rot:-30},
-     {x:17,y:82,label:'HOBBY',color:'rgba(255,152,0,0.14)',rot:-22},
-     {x:62,y:68,label:'FUN',color:'rgba(171,71,188,0.13)',rot:-28},
+     {x:15,y:18,label:'ORIGIN',color:'rgba(76,175,80,0.22)',rot:-25},
+     {x:58,y:16,label:'WORK',color:'rgba(229,57,53,0.20)',rot:-20},
+     {x:13,y:53,label:'PORTFOLIO',color:'rgba(66,165,245,0.18)',rot:-30},
+     {x:14,y:80,label:'HOBBY',color:'rgba(255,152,0,0.20)',rot:-22},
+     {x:58,y:65,label:'FUN',color:'rgba(171,71,188,0.20)',rot:-28},
    ];
    mapGroundLabels.forEach(gl=>{
-     const el=addDiv('map-ground-label','left:'+gl.x+'%;top:'+gl.y+'%;z-index:4;font-family:var(--font-fun);font-weight:900;font-size:'+Math.max(12,cw*0.018)+'px;color:'+gl.color+';letter-spacing:0.35em;text-transform:uppercase;transform:rotate('+gl.rot+'deg);white-space:nowrap');
+     const el=addDiv('map-ground-label','left:'+gl.x+'%;top:'+gl.y+'%;z-index:4;font-family:var(--font-fun);font-weight:900;font-size:'+Math.max(16,cw*0.026)+'px;color:'+gl.color+';letter-spacing:0.35em;text-transform:uppercase;transform:rotate('+gl.rot+'deg);white-space:nowrap;text-shadow:0 1px 4px rgba(0,0,0,0.05)');
      el.textContent=gl.label;
    });
 
