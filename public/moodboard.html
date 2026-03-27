@@ -970,6 +970,22 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
   z-index:300!important;
   filter:brightness(1.15)!important;
 }
+/* Blinking glow ring around cycling filter items */
+@keyframes filterItemBlink{
+  0%,100%{box-shadow:0 0 0 4px rgba(255,215,0,0.9),0 0 18px rgba(255,215,0,0.5),0 0 36px rgba(255,215,0,0.2);transform:translate(-50%,-50%) scale(1)}
+  50%{box-shadow:0 0 0 8px rgba(255,215,0,0.5),0 0 28px rgba(255,215,0,0.3),0 0 50px rgba(255,215,0,0.15);transform:translate(-50%,-50%) scale(1.15)}
+}
+.filter-glow-ring{
+  position:absolute;pointer-events:none;z-index:998;
+  border-radius:50%;border:2.5px solid rgba(255,215,0,0.9);
+  animation:filterItemBlink 1s ease-in-out infinite;
+  transform:translate(-50%,-50%);
+}
+/* Zone track label pulse */
+@keyframes zoneTrackPulse{
+  0%,100%{opacity:0.85;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.05)}
+}
 
 /* ===== CYCLE COUNTER HUD ===== */
 .cycle-counter-hud{
@@ -1146,7 +1162,7 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
 .minimap-container.expanded .map-highway{background:rgba(180,160,120,0.3);box-shadow:none}
 .map-road{position:absolute;pointer-events:none;z-index:3;background:rgba(160,140,100,0.25);border-radius:1px;box-shadow:none;border:none}
 .minimap-container.expanded .map-road{background:rgba(160,140,100,0.25)}
-.map-zone-grid{position:absolute;pointer-events:none;z-index:2;border:1.5px dashed;border-radius:3px;opacity:0.15}
+.map-zone-grid{display:none!important}
 .map-compass-rose{display:none!important}
 .minimap-container.expanded .map-compass-rose{display:none!important}
 .map-scale-bar{position:absolute;bottom:8px;right:8px;z-index:11;display:none;align-items:center;gap:4px;font-family:var(--font-fun);font-size:0.4rem;color:rgba(255,255,255,0.5)}
@@ -1231,28 +1247,30 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
 .bar-count{font-family:var(--font-fun);font-size:0.5rem;color:rgba(255,255,255,0.5);font-weight:500}
 .bar-coords{font-family:var(--font-fun);font-size:0.45rem;color:rgba(255,255,255,0.4);font-variant-numeric:tabular-nums;letter-spacing:0.02em}
 
-/* Filter chips — modern floating glass */
+/* Filter chips — redesigned modern pill buttons */
 .mc{
-  padding:8px 16px;border-radius:14px;font-family:var(--font-fun);
-  font-size:0.65rem;font-weight:700;cursor:pointer;
-  border:1.5px solid rgba(255,255,255,0.12);
-  transition:all 0.25s cubic-bezier(0.25,1,0.5,1);
-  display:flex;align-items:center;gap:6px;
-  background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  letter-spacing:0.03em;
+  padding:7px 14px;border-radius:20px;font-family:var(--font-fun);
+  font-size:0.62rem;font-weight:700;cursor:pointer;
+  border:1.5px solid rgba(255,255,255,0.15);
+  transition:all 0.3s cubic-bezier(0.25,1,0.5,1);
+  display:flex;align-items:center;gap:5px;
+  background:rgba(0,0,0,0.35);color:rgba(255,255,255,0.7);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  letter-spacing:0.04em;
+  box-shadow:0 2px 8px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.08);
 }
 .mc.active{
-  background:rgba(255,255,255,0.95);color:#1a1a1a;
+  background:linear-gradient(135deg,rgba(255,255,255,0.95),rgba(240,240,240,0.95));color:#1a1a1a;
   border-color:rgba(255,255,255,0.9);
-  box-shadow:0 4px 20px rgba(255,255,255,0.15),0 0 0 1px rgba(255,255,255,0.3);
-  transform:translateY(-1px);
+  box-shadow:0 4px 20px rgba(255,255,255,0.2),0 0 0 1px rgba(255,255,255,0.4),0 0 12px rgba(255,255,255,0.1);
+  transform:translateY(-2px) scale(1.05);
 }
 .mc:not(.active):hover{
-  background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);
-  border-color:rgba(255,255,255,0.25);
+  background:rgba(255,255,255,0.18);color:rgba(255,255,255,0.95);
+  border-color:rgba(255,255,255,0.3);
+  transform:translateY(-1px);
 }
-.mc:active{transform:scale(0.95)}
+.mc:active{transform:scale(0.93)}
 .mc .legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;box-shadow:0 0 6px currentColor}
 .mc.active .legend-dot{box-shadow:0 0 8px currentColor}
 .mc .chip-count{
@@ -2512,91 +2530,7 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="meme-sub">Salary Roulette</div>
 </div>
 
-<!-- ===== ZONE SIGNPOSTS — Vegas Neon Style ===== -->
-<div class="sticker zone-signpost" style="left:3100px;top:2600px;--neon:#4CAF50;--neon-dim:rgba(76,175,80,0.4);--neon-glow:rgba(76,175,80,0.25)">
-  <div class="neon-aura"></div>
-  <div style="position:relative">
-    <div class="neon-tube-row top"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-tube-row bottom"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-tube-row lft"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-tube-row rgt"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-board"><span class="neon-text">ORIGIN</span></div>
-  </div>
-  <div class="neon-arrow"><svg viewBox="0 0 80 35"><path d="M10,5 L40,30 L70,5" fill="none" stroke="#4CAF50" stroke-width="3" stroke-linecap="round"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></path></svg></div>
-  <div class="neon-frame"></div>
-  <div class="neon-poles"><div class="neon-pole"></div><div class="neon-pole"></div></div>
-  <div class="neon-base"></div>
-  <div class="neon-ground-glow"></div>
-  <div class="neon-ground-shadow"></div>
-</div>
-
-<div class="sticker zone-signpost" style="left:10650px;top:2600px;--neon:#E53935;--neon-dim:rgba(229,57,53,0.4);--neon-glow:rgba(229,57,53,0.25)">
-  <div class="neon-aura"></div>
-  <div style="position:relative">
-    <div class="neon-tube-row top"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-tube-row bottom"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-tube-row lft"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-tube-row rgt"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-board"><span class="neon-text">WORK</span></div>
-  </div>
-  <div class="neon-arrow"><svg viewBox="0 0 80 35"><path d="M10,5 L40,30 L70,5" fill="none" stroke="#E53935" stroke-width="3" stroke-linecap="round"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></path></svg></div>
-  <div class="neon-frame"></div>
-  <div class="neon-poles"><div class="neon-pole"></div><div class="neon-pole"></div></div>
-  <div class="neon-base"></div>
-  <div class="neon-ground-glow"></div>
-  <div class="neon-ground-shadow"></div>
-</div>
-
-<div class="sticker zone-signpost" style="left:3000px;top:7600px;--neon:#42A5F5;--neon-dim:rgba(66,165,245,0.4);--neon-glow:rgba(66,165,245,0.25)">
-  <div class="neon-aura"></div>
-  <div style="position:relative">
-    <div class="neon-tube-row top"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-tube-row bottom"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-tube-row lft"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-tube-row rgt"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-board"><span class="neon-text">PORTFOLIO</span></div>
-  </div>
-  <div class="neon-arrow"><svg viewBox="0 0 80 35"><path d="M10,5 L40,30 L70,5" fill="none" stroke="#42A5F5" stroke-width="3" stroke-linecap="round"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></path></svg></div>
-  <div class="neon-frame"></div>
-  <div class="neon-poles"><div class="neon-pole"></div><div class="neon-pole"></div></div>
-  <div class="neon-base"></div>
-  <div class="neon-ground-glow"></div>
-  <div class="neon-ground-shadow"></div>
-</div>
-
-<div class="sticker zone-signpost" style="left:3350px;top:11800px;--neon:#FF9800;--neon-dim:rgba(255,152,0,0.4);--neon-glow:rgba(255,152,0,0.25)">
-  <div class="neon-aura"></div>
-  <div style="position:relative">
-    <div class="neon-tube-row top"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-tube-row bottom"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-tube-row lft"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-tube-row rgt"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-board"><span class="neon-text">HOBBY</span></div>
-  </div>
-  <div class="neon-arrow"><svg viewBox="0 0 80 35"><path d="M10,5 L40,30 L70,5" fill="none" stroke="#FF9800" stroke-width="3" stroke-linecap="round"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></path></svg></div>
-  <div class="neon-frame"></div>
-  <div class="neon-poles"><div class="neon-pole"></div><div class="neon-pole"></div></div>
-  <div class="neon-base"></div>
-  <div class="neon-ground-glow"></div>
-  <div class="neon-ground-shadow"></div>
-</div>
-
-<div class="sticker zone-signpost" style="left:10650px;top:9800px;--neon:#AB47BC;--neon-dim:rgba(171,71,188,0.4);--neon-glow:rgba(171,71,188,0.25)">
-  <div class="neon-aura"></div>
-  <div style="position:relative">
-    <div class="neon-tube-row top"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-tube-row bottom"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-tube-row lft"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-tube-row rgt"><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div><div class="neon-dot"></div></div>
-    <div class="neon-board"><span class="neon-text">FUN</span></div>
-  </div>
-  <div class="neon-arrow"><svg viewBox="0 0 80 35"><path d="M10,5 L40,30 L70,5" fill="none" stroke="#AB47BC" stroke-width="3" stroke-linecap="round"><animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/></path></svg></div>
-  <div class="neon-frame"></div>
-  <div class="neon-poles"><div class="neon-pole"></div><div class="neon-pole"></div></div>
-  <div class="neon-base"></div>
-  <div class="neon-ground-glow"></div>
-  <div class="neon-ground-shadow"></div>
-</div>
+<!-- Zone signposts removed -->
 
 
 <!-- ===== HUB: INTRO — CENTER OF CANVAS ===== -->
@@ -3118,11 +3052,10 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="map-bottom-bar">
       <div class="bar-filters">
         <button class="mc active" onclick="event.stopPropagation();filt('all',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#66BB6A,#43A047)"></div>All</button>
-        <button class="mc" onclick="event.stopPropagation();filt('photo',this)"><div class="legend-dot" style="background:#64B5F6"></div>📸 Photos<span class="mc-counter"></span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('meme',this)"><div class="legend-dot" style="background:#CE93D8"></div>😂 Memes<span class="mc-counter"></span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('interactive',this)"><div class="legend-dot" style="background:#FF7043"></div>🎮 Interactive<span class="mc-counter"></span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('badge',this)"><div class="legend-dot" style="background:#FFB300"></div>🏅 Badges<span class="mc-counter"></span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('other',this)"><div class="legend-dot" style="background:#90A4AE"></div>📦 Others<span class="mc-counter"></span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('photo',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#64B5F6,#42A5F5)"></div>📸 Photos<span class="mc-counter"></span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('meme',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#CE93D8,#AB47BC)"></div>😂 Memes<span class="mc-counter"></span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('interactive',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#FF7043,#F4511E)"></div>🎮 Interactive<span class="mc-counter"></span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('other',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#90A4AE,#78909C)"></div>📦 Others<span class="mc-counter"></span></button>
       </div>
       <div class="bar-info">
         <span class="bar-count" id="mapCount">98 items</span>
@@ -4170,7 +4103,7 @@ function identifyStickerGroup(sticker){
   if(zone==='hub')return 'hub';
   const c=sticker.classList;
   const text=(sticker.textContent||'').toLowerCase();
-  if(c.contains('zone-signpost'))return 'signpost';
+  if(c.contains('zone-signpost'))return 'fun'; // signposts removed, treat as misc
   if(c.contains('sticker-hero-photo')||c.contains('sticker-photo-polaroid')||c.contains('sticker-photo-tilt')||c.contains('sticker-photo-circle')||c.contains('sticker-highlight')||c.contains('sticker-text')||c.contains('sticker-washi'))return 'personal';
   if(c.contains('sticker-project')||c.contains('sticker-illustrated'))return 'portfolio';
   if(c.contains('sticker-badge')||c.contains('sticker-stamp')||c.contains('sticker-swatches'))return 'work';
@@ -4326,7 +4259,7 @@ function autoArrangeMoodboardItems(){
     else groups.fun.push(sticker);
   });
 
-  placeZoneSignposts(groups.signpost);
+  // signposts removed — no placement needed
   layoutGroupInGrid(groups.personal,{x1:300,y1:400,x2:5800,y2:5600});
   layoutGroupInGrid(groups.work,{x1:7700,y1:400,x2:13700,y2:5600});
   layoutGroupInGrid(groups.portfolio,{x1:300,y1:6200,x2:5600,y2:9800});
@@ -6590,21 +6523,7 @@ function addMapDecorations(cw, ch){
    addDiv('map-zone-tint','left:2%;top:74%;width:45%;height:24%;border-radius:30%;background:radial-gradient(ellipse,rgba(255,152,0,0.32),transparent 65%);z-index:0;filter:blur(2px)');
    addDiv('map-zone-tint','left:55%;top:46%;width:43%;height:52%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.28),transparent 65%);z-index:0;filter:blur(2px)');
 
-   // === ZONE BORDER LINES — organic wavy dotted SVG paths (single SVG, innerHTML is faster than 4× createElementNS loops) ===
-   const zoneBorderPaths=[
-     {d:'M 2,40 C 10,38 20,43 30,39 C 40,35 50,42 60,40 C 70,38 80,43 90,39 C 95,37 98,40 100,40',color:'#4CAF50'},
-     {d:'M 44,0 C 42,8 46,16 43,24 C 40,32 46,36 44,40',color:'#4CAF50'},
-     {d:'M 0,70 C 8,68 16,73 24,69 C 32,65 40,72 45,70',color:'#42A5F5'},
-     {d:'M 45,40 C 43,48 47,56 44,64 C 41,72 46,80 44,88 C 42,94 46,98 45,100',color:'#FF9800'},
-   ];
-   (function(){
-     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-     svg.setAttribute('viewBox','0 0 100 100');
-     svg.setAttribute('preserveAspectRatio','none');
-     svg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:visible';
-     svg.innerHTML=zoneBorderPaths.map(bp=>'<path d="'+bp.d+'" fill="none" stroke="'+bp.color+'" stroke-width="0.4" stroke-dasharray="1.5 1" stroke-linecap="round" opacity="0.5"/>').join('');
-     layer.appendChild(svg);
-   })();
+   // Zone border lines removed — redesigned below in ZONE BOUNDARY section
 
   // === BEACHES ===
   const beaches=[
@@ -7000,51 +6919,22 @@ function addMapDecorations(cw, ch){
     wrap.appendChild(svg);
   });
 
-  // === NEON AREA SIGNPOSTS on big map ===
-  const neonSigns=[
-    {x:22,y:20,t:'ORIGIN',icon:'📸',color:'#4CAF50'},
-    {x:76,y:20,t:'WORK',icon:'🎯',color:'#E53935'},
-    {x:22,y:57,t:'PORTFOLIO',icon:'🚀',color:'#42A5F5'},
-    {x:22,y:86,t:'HOBBY',icon:'🎮',color:'#FF9800'},
-    {x:76,y:72,t:'FUN',icon:'😂',color:'#AB47BC'},
+  // === ZONE TRACK LABELS (replacing signposts) ===
+  const zoneTrackLabels=[
+    {x:22,y:20,t:'ORIGIN',icon:'📸',color:'#4CAF50',glow:'rgba(76,175,80,0.6)'},
+    {x:76,y:20,t:'WORK',icon:'🎯',color:'#E53935',glow:'rgba(229,57,53,0.6)'},
+    {x:22,y:57,t:'PORTFOLIO',icon:'🚀',color:'#42A5F5',glow:'rgba(66,165,245,0.6)'},
+    {x:22,y:86,t:'HOBBY',icon:'🎮',color:'#FF9800',glow:'rgba(255,152,0,0.6)'},
+    {x:76,y:72,t:'FUN',icon:'😂',color:'#AB47BC',glow:'rgba(171,71,188,0.6)'},
   ];
-  neonSigns.forEach(z=>{
+  zoneTrackLabels.forEach(z=>{
     const wrap=document.createElement('div');
     wrap.style.cssText='position:absolute;left:'+z.x+'%;top:'+z.y+'%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;z-index:8;pointer-events:none';
-    const fontSize=Math.max(9,cw*0.01);
-    const board=document.createElement('div');
-    board.style.cssText='background:#1a1a2e;border:1.5px solid '+z.color+';border-radius:4px;padding:'+Math.max(3,fontSize*0.4)+'px '+Math.max(8,fontSize*0.8)+'px;text-align:center;box-shadow:0 0 8px '+z.color+'80,0 0 16px '+z.color+'40,inset 0 0 6px rgba(0,0,0,0.5),0 4px 12px rgba(0,0,0,0.4)';
-    const txt=document.createElement('div');
-    txt.textContent=z.icon+' '+z.t;
-    txt.style.cssText='font-family:Fredoka,Arial Black,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:'+z.color+';letter-spacing:0.1em;white-space:nowrap;text-shadow:0 0 4px '+z.color+',0 0 10px '+z.color+',0 0 20px '+z.color+'80';
-    board.appendChild(txt);
-
-    const dots=document.createElement('div');
-    dots.style.cssText='display:flex;gap:3px;justify-content:center;margin-bottom:2px';
-    for(let i=0;i<6;i++){
-      const d=document.createElement('div');
-      d.style.cssText='width:2.5px;height:2.5px;border-radius:50%;background:'+z.color+';box-shadow:0 0 3px '+z.color+';animation:bulbChase 1.5s ease-in-out '+(i*0.2)+'s infinite';
-      dots.appendChild(d);
-    }
-
-    const poles=document.createElement('div');
-    poles.style.cssText='display:flex;gap:'+Math.max(12,fontSize*1.2)+'px;margin-top:-1px';
-    for(let i=0;i<2;i++){
-      const p=document.createElement('div');
-      p.style.cssText='width:2px;height:'+Math.max(16,cw*0.015)+'px;background:linear-gradient(90deg,#666,#bbb,#666);border-radius:1px;box-shadow:1px 0 2px rgba(0,0,0,0.15)';
-      poles.appendChild(p);
-    }
-
-    const base=document.createElement('div');
-    base.style.cssText='width:'+Math.max(14,fontSize*1.4)+'px;height:3px;background:linear-gradient(180deg,#888,#555);border-radius:1px;margin-top:-1px';
-    const glow=document.createElement('div');
-    glow.style.cssText='width:'+Math.max(20,fontSize*2)+'px;height:5px;background:radial-gradient(ellipse,'+z.color+'40,transparent 70%);border-radius:50%;filter:blur(2px);margin-top:1px';
-
-    wrap.appendChild(dots);
-    wrap.appendChild(board);
-    wrap.appendChild(poles);
-    wrap.appendChild(base);
-    wrap.appendChild(glow);
+    const fontSize=Math.max(11,cw*0.012);
+    const label=document.createElement('div');
+    label.style.cssText='font-family:Fredoka,sans-serif;font-weight:900;font-size:'+fontSize+'px;color:'+z.color+';letter-spacing:0.15em;white-space:nowrap;text-shadow:0 0 8px '+z.glow+',0 0 20px '+z.glow+',0 2px 4px rgba(0,0,0,0.3);text-transform:uppercase;animation:zoneTrackPulse 3s ease-in-out infinite';
+    label.textContent=z.icon+' '+z.t;
+    wrap.appendChild(label);
     layer.appendChild(wrap);
   });
 
@@ -7142,33 +7032,51 @@ function addMapDecorations(cw, ch){
     layer.appendChild(el);
   });
 
-  // === ZONE BOUNDARY — organic wavy dotted SVG paths ===
-  const wavySvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-  wavySvg.setAttribute('viewBox','0 0 100 100');
-  wavySvg.setAttribute('preserveAspectRatio','none');
-  wavySvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:visible';
-  const wavyPaths=[
-    // Horizontal wavy: Origin/Work top vs lower zones
-    {d:'M 0,40 C 6,37 12,43 18,39 C 24,35 30,42 36,40 C 42,38 48,43 54,39 C 60,36 66,42 72,40 C 78,38 84,43 90,39 C 96,37 98,41 100,40',color:'#4CAF50',w:'0.35'},
-    // Vertical wavy: left vs right (top)
-    {d:'M 44,0 C 42,5 46,10 43,15 C 40,20 47,25 44,30 C 41,35 46,38 44,40',color:'#66BB6A',w:'0.35'},
-    // Horizontal wavy: Portfolio vs Hobby
-    {d:'M 0,70 C 5,68 10,73 15,69 C 20,66 25,72 30,70 C 35,68 40,73 45,70',color:'#42A5F5',w:'0.35'},
-    // Vertical wavy: left vs Fun (bottom)
-    {d:'M 45,40 C 43,46 47,52 44,58 C 41,64 47,70 44,76 C 41,82 47,88 44,94 C 42,97 46,99 45,100',color:'#FF9800',w:'0.35'},
+  // === ZONE BOUNDARY — thick organic glowing random lines ===
+  const zoneBoundarySvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  zoneBoundarySvg.setAttribute('viewBox','0 0 100 100');
+  zoneBoundarySvg.setAttribute('preserveAspectRatio','none');
+  zoneBoundarySvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:visible';
+  const zoneBoundaries=[
+    // Horizontal: Origin/Work vs Portfolio/Fun (~40% y)
+    {d:'M 0,39 C 4,42 9,36 15,41 C 21,45 28,35 35,40 C 41,44 48,37 55,42 C 62,46 69,36 76,41 C 82,44 89,38 95,41 C 98,42 100,40 100,40',color:'#4CAF50',glow:'rgba(76,175,80,0.5)',w:1.8},
+    // Vertical: Origin/Portfolio vs Work/Fun (~45% x, top half)
+    {d:'M 43,0 C 46,4 41,9 45,14 C 48,19 42,24 46,29 C 49,34 43,37 45,40',color:'#66BB6A',glow:'rgba(102,187,106,0.5)',w:1.5},
+    // Horizontal: Portfolio vs Hobby (~70% y, left side)
+    {d:'M 0,69 C 3,72 8,66 14,71 C 19,75 25,67 31,72 C 36,76 41,69 45,71',color:'#42A5F5',glow:'rgba(66,165,245,0.5)',w:1.8},
+    // Vertical: Hobby/Portfolio vs Fun (~45% x, bottom half)
+    {d:'M 45,40 C 42,46 48,53 44,59 C 40,65 47,72 43,78 C 39,84 46,90 43,96 C 41,99 44,100 45,100',color:'#FF9800',glow:'rgba(255,152,0,0.5)',w:1.5},
   ];
-  wavyPaths.forEach(wp=>{
-    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
-    path.setAttribute('d',wp.d);
-    path.setAttribute('fill','none');
-    path.setAttribute('stroke',wp.color);
-    path.setAttribute('stroke-width',wp.w);
-    path.setAttribute('stroke-dasharray','1.2 0.8');
-    path.setAttribute('stroke-linecap','round');
-    path.setAttribute('opacity','0.55');
-    wavySvg.appendChild(path);
+  // Glow layer (thick, blurred) + sharp line layer
+  zoneBoundaries.forEach(zb=>{
+    // Glow behind
+    const glowPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+    glowPath.setAttribute('d',zb.d);glowPath.setAttribute('fill','none');
+    glowPath.setAttribute('stroke',zb.glow);glowPath.setAttribute('stroke-width',''+(zb.w*3.5));
+    glowPath.setAttribute('stroke-linecap','round');glowPath.setAttribute('opacity','0.4');
+    glowPath.setAttribute('filter','url(#zoneBoundaryBlur)');
+    zoneBoundarySvg.appendChild(glowPath);
+    // Main line
+    const mainPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+    mainPath.setAttribute('d',zb.d);mainPath.setAttribute('fill','none');
+    mainPath.setAttribute('stroke',zb.color);mainPath.setAttribute('stroke-width',''+zb.w);
+    mainPath.setAttribute('stroke-linecap','round');mainPath.setAttribute('opacity','0.7');
+    zoneBoundarySvg.appendChild(mainPath);
+    // Bright core
+    const corePath=document.createElementNS('http://www.w3.org/2000/svg','path');
+    corePath.setAttribute('d',zb.d);corePath.setAttribute('fill','none');
+    corePath.setAttribute('stroke','rgba(255,255,255,0.4)');corePath.setAttribute('stroke-width',''+(zb.w*0.4));
+    corePath.setAttribute('stroke-linecap','round');corePath.setAttribute('opacity','0.6');
+    zoneBoundarySvg.appendChild(corePath);
   });
-  layer.appendChild(wavySvg);
+  // SVG filter for glow blur
+  const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
+  const blur=document.createElementNS('http://www.w3.org/2000/svg','filter');
+  blur.setAttribute('id','zoneBoundaryBlur');
+  const feBlur=document.createElementNS('http://www.w3.org/2000/svg','feGaussianBlur');
+  feBlur.setAttribute('in','SourceGraphic');feBlur.setAttribute('stdDeviation','0.8');
+  blur.appendChild(feBlur);defs.appendChild(blur);zoneBoundarySvg.appendChild(defs);
+  layer.appendChild(zoneBoundarySvg);
 
   // === POI MARKERS ===
   const pois=[
@@ -7437,11 +7345,13 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
       const{d,renderX,renderY,cloneScale,iw,ih}=visibleItems[idx];
       let clone;
       if(d.ref){
+        // Skip signpost clones on map
+        if(d.ref.classList.contains('zone-signpost')){continue;}
         clone=d.ref.cloneNode(true);
         clone.classList.add('mi','map-sticker-clone');
         const rot=(d.ref.style.transform||'').match(/rotate\([^)]+\)/);
         const transform=(rot?rot[0]+' ':'')+'scale('+cloneScale+')';
-        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+d.w+'px;height:'+d.h+'px;max-width:none;max-height:none;transform:'+transform+';transform-origin:0 0;z-index:'+(d.ref.classList.contains('zone-signpost')?'5':'7')+';cursor:pointer;animation:none;transition:none;filter:none;pointer-events:auto';
+        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+d.w+'px;height:'+d.h+'px;max-width:none;max-height:none;transform:'+transform+';transform-origin:0 0;z-index:7;cursor:pointer;animation:none;transition:none;filter:none;pointer-events:auto';
         clone.removeAttribute('data-anim');
         clone.removeAttribute('data-splash');
         clone.removeAttribute('data-contra');
@@ -7674,7 +7584,7 @@ mapCanvas.addEventListener('click',ev=>{
 
 
 function clearWaypoints(){
-  mapCanvas.querySelectorAll('.waypoint-marker,.waypoint-dist,.waypoint-line,.waypoint-line-active,.neon-active').forEach(e=>{
+  mapCanvas.querySelectorAll('.waypoint-marker,.waypoint-dist,.waypoint-line,.waypoint-line-active,.neon-active,.filter-glow-ring').forEach(e=>{
     if(e.classList.contains('neon-active')){e.classList.remove('neon-active');e.style.outline='';e.style.boxShadow=''}
     else e.remove();
   });
@@ -7729,12 +7639,15 @@ function addWaypoints(cat, activeIdx){
   });
 }
 
-// Apply neon glow to a specific map item
+// Apply neon glow to a specific map item + blinking ring
 function applyNeonGlow(target){
-  // Clear previous
+  // Clear previous glow and rings
   mapCanvas.querySelectorAll('.neon-active').forEach(el=>{el.classList.remove('neon-active');el.style.outline='';el.style.boxShadow=''});
+  mapCanvas.querySelectorAll('.filter-glow-ring').forEach(el=>el.remove());
   const sc=drawMap._sc||0.05;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
+  const cL=parseFloat(mapCanvas.style.left)||0;
+  const cT=parseFloat(mapCanvas.style.top)||0;
   const px=(target.left-ox)*sc;
   const py=(target.top-oy)*sc;
   const items=mapCanvas.querySelectorAll('.sticker,.mi');
@@ -7744,6 +7657,12 @@ function applyNeonGlow(target){
       el.classList.add('neon-active');
     }
   });
+  // Add blinking glow ring
+  const ringSize=Math.max(40,Math.max(target.w,target.h)*sc*1.8);
+  const ring=document.createElement('div');
+  ring.className='filter-glow-ring';
+  ring.style.cssText='left:'+px+'px;top:'+py+'px;width:'+ringSize+'px;height:'+ringSize+'px';
+  mapCanvas.appendChild(ring);
 }
 
 // Cycle navigation from HUD arrows
@@ -7788,7 +7707,7 @@ function navigateToFilteredItem(cat,idx){
 }
 
 // Filter with cycle-through navigation
-const mainCats=['photo','meme','interactive','badge'];
+const mainCats=['photo','meme','interactive'];
 function matchesFilter(cat,filt){
   if(filt==='all')return true;
   if(filt==='other')return !mainCats.includes(cat);
