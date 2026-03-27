@@ -4457,7 +4457,10 @@ function autoArrangeMoodboardItems(){
     else zoneItems.fun.push(sticker);
   });
 
-  const allPlaced=[];
+  // Rule 14: Reserve ground label and signpost zones — no cards placed there
+  const reserved=getReservedZones();
+  reserved.forEach(r=>allPlaced.push(r));
+
   const rng=seededRandom(42+stickers.length*7);
 
   // Rule 2: Place intro cards at zone centers first
