@@ -1645,36 +1645,36 @@ body.map-expanded .scroll-counter{display:none!important}
 /* ── Animated counter ── */
 .zic-counter{font-family:var(--font-fun);font-weight:900;animation:zicCountUp 0.6s ease-out both}
 
-/* ── WORK: Tall Clipboard / Notebook — Pastel Coral ── */
+/* ── WORK: Main-card style — warm white vertical ── */
 .zic-work{
-  width:380px;background:linear-gradient(175deg,#FFF5F0,#FFE8E0,#FFF0EA);border-radius:6px 6px 18px 18px;
-  border:2px solid rgba(229,115,115,0.25);padding:0;
-  box-shadow:4px 8px 28px rgba(229,115,115,0.12),inset 0 0 0 1px rgba(229,115,115,0.05);
-  transform:rotate(-1deg);min-height:520px;
+  width:360px;background:linear-gradient(145deg,#fff 0%,#fdfcfa 50%,#f8f5ef 100%);
+  border-radius:24px;padding:36px 28px 28px;text-align:center;
+  box-shadow:0 8px 40px rgba(0,0,0,0.08),0 2px 8px rgba(201,169,110,0.1);
+  border:1.5px solid rgba(201,169,110,0.12);min-height:520px;
+  transform:rotate(-0.5deg);
 }
-.zic-work .zic-clip{
-  width:120px;height:32px;background:linear-gradient(180deg,#E8A0A0,#D08080);
-  border-radius:4px 4px 0 0;margin:-18px auto 0;position:relative;z-index:3;
-  box-shadow:0 2px 6px rgba(229,115,115,0.25);border:1px solid #C08080;
-}
-.zic-work .zic-clip::after{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);width:40px;height:6px;background:#B07070;border-radius:3px}
-.zic-work .zic-body{padding:30px 24px 28px;background:repeating-linear-gradient(transparent,transparent 27px,rgba(229,115,115,0.08) 27px,rgba(229,115,115,0.08) 28px);position:relative}
-.zic-work .zic-red-line{position:absolute;left:48px;top:0;bottom:0;width:2px;background:rgba(229,115,115,0.15);z-index:1}
-.zic-work .zic-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.zic-work .zic-stamp{width:50px;height:50px;border-radius:50%;border:3px solid #E57373;display:flex;align-items:center;justify-content:center;font-size:1.5rem;transform:rotate(-8deg);color:#E57373;font-weight:900;font-family:var(--font-fun)}
-.zic-work .zic-title{font-family:var(--font-fun);font-size:1.6rem;font-weight:900;color:#C62828;letter-spacing:-0.02em}
-.zic-work .zic-sub{font-family:var(--font-hand);font-size:0.95rem;color:#7A4A4A;line-height:1.6;margin-bottom:14px;padding-left:16px;border-left:3px solid rgba(229,115,115,0.3)}
-.zic-work .zic-timeline{margin:0 0 14px;padding:0;list-style:none}
-.zic-work .zic-timeline li{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-family:var(--font-hand);font-size:0.82rem;color:#5D3A3A;position:relative;padding-left:18px}
-.zic-work .zic-timeline li::before{content:'';position:absolute;left:0;top:6px;width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#E57373,#EF9A9A);border:2px solid #FFF5F0}
-.zic-work .zic-timeline .tl-role{font-weight:700;color:#C62828;display:block}
-.zic-work .zic-timeline .tl-co{color:#7A4A4A;font-size:0.72rem}
-.zic-work .zic-skills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
-.zic-work .zic-skill{background:rgba(229,115,115,0.1);border:1px solid rgba(229,115,115,0.2);color:#C62828;border-radius:12px;padding:3px 10px;font-family:var(--font-hand);font-size:0.65rem}
-.zic-work .zic-stats{display:flex;gap:12px;padding-top:12px;border-top:1px dashed rgba(229,115,115,0.2)}
-.zic-work .zic-stat{text-align:center;flex:1}
-.zic-work .zic-stat-val{font-family:var(--font-fun);font-size:1.4rem;font-weight:900;color:#E57373}
-.zic-work .zic-stat-label{font-family:var(--font-hand);font-size:0.58rem;color:#B07070;margin-top:2px}
+.zic-work .zic-status{display:inline-flex;align-items:center;gap:6px;background:rgba(229,115,115,0.08);border:1px solid rgba(229,115,115,0.25);border-radius:20px;padding:4px 12px 4px 8px;font-size:0.68rem;color:#C62828;font-weight:600;margin-bottom:16px}
+.zic-work .zic-status-dot{width:8px;height:8px;border-radius:50%;background:#E57373;box-shadow:0 0 0 3px rgba(229,115,115,0.2);animation:statusPulse 2s ease-in-out infinite;flex-shrink:0}
+.zic-work .zic-title{font-family:var(--font-fun);font-size:2.2rem;font-weight:800;color:var(--text);line-height:1.1;margin-bottom:4px}
+.zic-work .zic-title .hl{background:linear-gradient(135deg,#E57373,#EF5350);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.zic-work .zic-tagline{font-family:var(--font-hand);font-size:1rem;color:var(--text2);margin-bottom:16px;line-height:1.5}
+.zic-work .zic-roles{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.zic-work .zic-role{background:linear-gradient(135deg,rgba(229,115,115,0.1),rgba(229,115,115,0.04));border:1.5px solid rgba(229,115,115,0.2);border-radius:20px;padding:5px 12px;font-family:var(--font-hand);font-size:0.72rem;font-weight:600;color:var(--text2)}
+.zic-work .zic-timeline{margin:0 0 14px;padding:0;list-style:none;text-align:left}
+.zic-work .zic-timeline li{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;font-family:var(--font-hand);font-size:0.78rem;color:#5D3A3A;position:relative;padding-left:18px}
+.zic-work .zic-timeline li::before{content:'';position:absolute;left:0;top:6px;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#E57373,#EF9A9A);border:2px solid #fff}
+.zic-work .zic-timeline .tl-role{font-weight:700;color:#C62828;display:block;font-size:0.8rem}
+.zic-work .zic-timeline .tl-co{color:#9E7070;font-size:0.68rem}
+.zic-work .zic-skills{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
+.zic-work .zic-skill{background:rgba(229,115,115,0.06);border:1px solid rgba(229,115,115,0.12);color:#C62828;border-radius:12px;padding:3px 10px;font-family:var(--font-hand);font-size:0.62rem}
+.zic-work .zic-currently{background:rgba(229,115,115,0.04);border:1.5px dashed rgba(229,115,115,0.18);border-radius:12px;padding:10px 14px;margin-bottom:14px;text-align:left}
+.zic-work .zic-curr-label{font-size:0.58rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px}
+.zic-work .zic-curr-val{font-family:var(--font-hand);font-size:0.85rem;color:var(--text2)}
+.zic-work .zic-stats{display:flex;margin:0 -4px;padding-top:14px;border-top:1px solid rgba(0,0,0,0.06)}
+.zic-work .zic-stat{flex:1;text-align:center;border-right:1px solid rgba(0,0,0,0.06);padding:0 4px}
+.zic-work .zic-stat:last-child{border-right:none}
+.zic-work .zic-stat-val{font-family:var(--font-fun);font-size:1.1rem;font-weight:800;color:#E57373;display:block}
+.zic-work .zic-stat-label{font-size:0.5rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.04em;display:block;margin-top:2px}
 
 /* ── PORTFOLIO: Tall Laptop — Pastel Indigo ── */
 .zic-portfolio{width:420px;padding:0;min-height:560px}
@@ -9227,28 +9227,33 @@ function ensureZoneIntroCards(){
 
   const builders={
     work:function(){
-      return '<div class="zic-clip"></div>'+
-        '<div class="zic-body" style="position:relative">'+
-          '<div class="zic-red-line"></div>'+
-          '<div class="zic-header"><div class="zic-stamp">W</div><div class="zic-title">WORK ZONE</div></div>'+
-          '<div class="zic-sub">8+ years building products across fintech, media, Web3 & edtech. From zero-to-one launches to scaling growth.</div>'+
-          '<ul class="zic-timeline">'+
-            '<li><span class="tl-role">Founder & Product Lead</span><span class="tl-co">EnterCircles Labs · 2023–Present</span></li>'+
-            '<li><span class="tl-role">Freelance Product Consultant</span><span class="tl-co">Web3 & SaaS · 2021–2023</span></li>'+
-            '<li><span class="tl-role">Co-Founder & PM</span><span class="tl-co">Recess EdTech · 2019–2021</span></li>'+
-            '<li><span class="tl-role">Product Analyst</span><span class="tl-co">Freelance SaaS · 2017–2019</span></li>'+
-          '</ul>'+
-          '<div class="zic-skills">'+
-            '<span class="zic-skill">Product Strategy</span><span class="zic-skill">User Research</span>'+
-            '<span class="zic-skill">Growth Analytics</span><span class="zic-skill">Technical PRDs</span>'+
-            '<span class="zic-skill">Sprint Planning</span><span class="zic-skill">OKRs</span>'+
-            '<span class="zic-skill">A/B Testing</span><span class="zic-skill">AI-Assisted Dev</span>'+
-          '</div>'+
-          '<div class="zic-stats">'+
-            '<div class="zic-stat"><div class="zic-stat-val zic-counter" data-target="8">0</div><div class="zic-stat-label">Years Exp</div></div>'+
-            '<div class="zic-stat"><div class="zic-stat-val zic-counter" data-target="12">0</div><div class="zic-stat-label">Products</div></div>'+
-            '<div class="zic-stat"><div class="zic-stat-val zic-counter" data-target="4">0</div><div class="zic-stat-label">Startups</div></div>'+
-          '</div>'+
+      return '<div class="zic-status"><span class="zic-status-dot"></span>Work Zone · Professional</div>'+
+        '<div class="zic-title">Work <span class="hl">Zone</span></div>'+
+        '<div class="zic-tagline">Product Manager · Builder · Strategist</div>'+
+        '<div class="zic-roles">'+
+          '<span class="zic-role">🚀 0→1 Builder</span>'+
+          '<span class="zic-role">📈 Growth PM</span>'+
+          '<span class="zic-role">🌐 Web3</span>'+
+          '<span class="zic-role">🧠 AI Native</span>'+
+        '</div>'+
+        '<ul class="zic-timeline">'+
+          '<li><span class="tl-role">Founder & Product Lead</span><span class="tl-co">EnterCircles Labs · 2023–Present</span></li>'+
+          '<li><span class="tl-role">Freelance Product Consultant</span><span class="tl-co">Web3 & SaaS · 2021–2023</span></li>'+
+          '<li><span class="tl-role">Co-Founder & PM</span><span class="tl-co">Recess EdTech · 2019–2021</span></li>'+
+          '<li><span class="tl-role">Product Analyst</span><span class="tl-co">Freelance SaaS · 2017–2019</span></li>'+
+        '</ul>'+
+        '<div class="zic-skills">'+
+          '<span class="zic-skill">Product Strategy</span><span class="zic-skill">User Research</span>'+
+          '<span class="zic-skill">Growth Analytics</span><span class="zic-skill">Technical PRDs</span>'+
+          '<span class="zic-skill">Sprint Planning</span><span class="zic-skill">OKRs</span>'+
+          '<span class="zic-skill">A/B Testing</span><span class="zic-skill">AI-Assisted Dev</span>'+
+        '</div>'+
+        '<div class="zic-currently"><div class="zic-curr-label">🔥 Currently</div><span class="zic-curr-val">Building products at EnterCircles Labs</span></div>'+
+        '<div class="zic-stats">'+
+          '<div class="zic-stat"><div class="zic-stat-val zic-counter" data-target="8">0</div><div class="zic-stat-label">Yrs Exp</div></div>'+
+          '<div class="zic-stat"><div class="zic-stat-val zic-counter" data-target="12">0</div><div class="zic-stat-label">Products</div></div>'+
+          '<div class="zic-stat"><div class="zic-stat-val">0→1</div><div class="zic-stat-label">Builder</div></div>'+
+          '<div class="zic-stat"><div class="zic-stat-val zic-counter" data-target="4">0</div><div class="zic-stat-label">Startups</div></div>'+
         '</div>';
     },
     portfolio:function(){
@@ -9420,13 +9425,14 @@ function ensureZoneIntroCards(){
 function ensureCompanionStickers(){
   if(document.querySelector('.zic-companion'))return;
   const companions=[
-    // Work zone (coral) — 6 items
+    // Work zone (coral) — 7 items including photo
     {left:9400,top:2100,html:'<div class="zc-sticky coral" style="--r:-5deg">📋 Ship it!</div>'},
     {left:10650,top:2050,html:'<div class="zc-emoji-float">🚀</div>'},
     {left:10700,top:3200,html:'<div class="zc-mini-card coral">Sprint #42<br>✅ 12/12 done</div>'},
     {left:9350,top:3400,html:'<div class="zc-badge coral">⚡ 0→1 Specialist</div>'},
     {left:10800,top:2700,html:'<div class="zc-sticky coral" style="--r:4deg">LGTM 👍</div>'},
     {left:9500,top:1700,html:'<div class="zc-emoji-float">💼</div>'},
+    {left:10500,top:1800,html:'<div style="transform:rotate(4deg);display:inline-block"><div style="background:#fff;padding:8px 8px 28px;border-radius:4px;box-shadow:3px 4px 15px rgba(0,0,0,0.12)"><img src="/images/akash-photo.webp" alt="Akash" style="width:120px;height:140px;object-fit:cover;border-radius:2px;display:block"><div style="font-family:var(--font-hand);font-size:0.7rem;color:#888;text-align:center;margin-top:8px">the man behind the PRDs 😎</div></div></div>'},
 
     // Portfolio zone (indigo) — 7 items
     {left:2000,top:7150,html:'<div class="zc-emoji-float">💻</div>'},
