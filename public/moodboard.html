@@ -6,7 +6,7 @@
 <title>Akash's Moodboard — Playground</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&family=Caveat:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&family=Caveat:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -15,7 +15,7 @@
   --purple:#E1BEE7;--blue:#B3E5FC;--orange:#FFCCBC;--mint:#B2DFDB;
   --world-size:7000px;
   --font-sans:'DM Sans',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;
-  --font-hand:'Caveat',cursive;--font-fun:'Fredoka',sans-serif;
+  --font-hand:'Caveat',cursive;--font-fun:'Space Grotesk',sans-serif;
 }
 html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);background:#FAF8F5;margin:0;padding:0;overscroll-behavior:none}
 *{-webkit-tap-highlight-color:transparent}
@@ -1645,110 +1645,110 @@ body.map-expanded .scroll-counter{display:none!important}
 /* ── Animated counter ── */
 .zic-counter{font-family:var(--font-fun);font-weight:900;animation:zicCountUp 0.6s ease-out both}
 
-/* ── WORK: Main-card style — warm white vertical ── */
+/* ── WORK: Bold dark professional card ── */
 .zic-work{
-  width:360px;background:linear-gradient(145deg,#fff 0%,#fdfcfa 50%,#f8f5ef 100%);
-  border-radius:24px;padding:36px 28px 28px;text-align:center;
-  box-shadow:0 8px 40px rgba(0,0,0,0.08),0 2px 8px rgba(201,169,110,0.1);
-  border:1.5px solid rgba(201,169,110,0.12);min-height:520px;
-  transform:rotate(-0.5deg);
+  width:380px;background:linear-gradient(145deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);
+  border-radius:20px;padding:36px 28px 28px;text-align:center;
+  box-shadow:0 12px 48px rgba(0,0,0,0.3),0 2px 8px rgba(15,52,96,0.2);
+  border:1.5px solid rgba(100,180,255,0.15);min-height:520px;
+  transform:rotate(-0.5deg);color:#e0e0e0;
 }
-.zic-work .zic-status{display:inline-flex;align-items:center;gap:6px;background:rgba(229,115,115,0.08);border:1px solid rgba(229,115,115,0.25);border-radius:20px;padding:4px 12px 4px 8px;font-size:0.68rem;color:#C62828;font-weight:600;margin-bottom:16px}
-.zic-work .zic-status-dot{width:8px;height:8px;border-radius:50%;background:#E57373;box-shadow:0 0 0 3px rgba(229,115,115,0.2);animation:statusPulse 2s ease-in-out infinite;flex-shrink:0}
-.zic-work .zic-title{font-family:var(--font-fun);font-size:2.2rem;font-weight:800;color:var(--text);line-height:1.1;margin-bottom:4px}
-.zic-work .zic-title .hl{background:linear-gradient(135deg,#E57373,#EF5350);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.zic-work .zic-tagline{font-family:var(--font-hand);font-size:1rem;color:var(--text2);margin-bottom:16px;line-height:1.5}
+.zic-work .zic-status{display:inline-flex;align-items:center;gap:6px;background:rgba(100,180,255,0.12);border:1px solid rgba(100,180,255,0.3);border-radius:20px;padding:4px 12px 4px 8px;font-size:0.68rem;color:#64B4FF;font-weight:600;margin-bottom:16px}
+.zic-work .zic-status-dot{width:8px;height:8px;border-radius:50%;background:#64B4FF;box-shadow:0 0 0 3px rgba(100,180,255,0.2);animation:statusPulse 2s ease-in-out infinite;flex-shrink:0}
+.zic-work .zic-title{font-family:var(--font-fun);font-size:2.2rem;font-weight:700;color:#fff;line-height:1.1;margin-bottom:4px;letter-spacing:-0.02em}
+.zic-work .zic-title .hl{background:linear-gradient(135deg,#64B4FF,#4FC3F7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.zic-work .zic-tagline{font-family:var(--font-hand);font-size:1rem;color:rgba(255,255,255,0.55);margin-bottom:16px;line-height:1.5}
 .zic-work .zic-roles{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
-.zic-work .zic-role{background:linear-gradient(135deg,rgba(229,115,115,0.1),rgba(229,115,115,0.04));border:1.5px solid rgba(229,115,115,0.2);border-radius:20px;padding:5px 12px;font-family:var(--font-hand);font-size:0.72rem;font-weight:600;color:var(--text2)}
+.zic-work .zic-role{background:rgba(100,180,255,0.08);border:1.5px solid rgba(100,180,255,0.2);border-radius:8px;padding:5px 12px;font-family:var(--font-fun);font-size:0.68rem;font-weight:600;color:rgba(255,255,255,0.7)}
 .zic-work .zic-timeline{margin:0 0 14px;padding:0;list-style:none;text-align:left}
-.zic-work .zic-timeline li{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;font-family:var(--font-hand);font-size:0.78rem;color:#5D3A3A;position:relative;padding-left:18px}
-.zic-work .zic-timeline li::before{content:'';position:absolute;left:0;top:6px;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#E57373,#EF9A9A);border:2px solid #fff}
-.zic-work .zic-timeline .tl-role{font-weight:700;color:#C62828;display:block;font-size:0.8rem}
-.zic-work .zic-timeline .tl-co{color:#9E7070;font-size:0.68rem}
+.zic-work .zic-timeline li{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;font-family:var(--font-sans);font-size:0.75rem;color:rgba(255,255,255,0.6);position:relative;padding-left:18px}
+.zic-work .zic-timeline li::before{content:'';position:absolute;left:0;top:6px;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#64B4FF,#4FC3F7);border:2px solid rgba(26,26,46,0.8)}
+.zic-work .zic-timeline .tl-role{font-weight:700;color:#64B4FF;display:block;font-size:0.78rem}
+.zic-work .zic-timeline .tl-co{color:rgba(255,255,255,0.4);font-size:0.66rem}
 .zic-work .zic-skills{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
-.zic-work .zic-skill{background:rgba(229,115,115,0.06);border:1px solid rgba(229,115,115,0.12);color:#C62828;border-radius:12px;padding:3px 10px;font-family:var(--font-hand);font-size:0.62rem}
-.zic-work .zic-currently{background:rgba(229,115,115,0.04);border:1.5px dashed rgba(229,115,115,0.18);border-radius:12px;padding:10px 14px;margin-bottom:14px;text-align:left}
-.zic-work .zic-curr-label{font-size:0.58rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px}
-.zic-work .zic-curr-val{font-family:var(--font-hand);font-size:0.85rem;color:var(--text2)}
-.zic-work .zic-stats{display:flex;margin:0 -4px;padding-top:14px;border-top:1px solid rgba(0,0,0,0.06)}
-.zic-work .zic-stat{flex:1;text-align:center;border-right:1px solid rgba(0,0,0,0.06);padding:0 4px}
+.zic-work .zic-skill{background:rgba(100,180,255,0.08);border:1px solid rgba(100,180,255,0.15);color:#4FC3F7;border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.6rem}
+.zic-work .zic-currently{background:rgba(100,180,255,0.06);border:1.5px dashed rgba(100,180,255,0.2);border-radius:12px;padding:10px 14px;margin-bottom:14px;text-align:left}
+.zic-work .zic-curr-label{font-size:0.58rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px}
+.zic-work .zic-curr-val{font-family:var(--font-hand);font-size:0.85rem;color:rgba(255,255,255,0.7)}
+.zic-work .zic-stats{display:flex;margin:0 -4px;padding-top:14px;border-top:1px solid rgba(100,180,255,0.1)}
+.zic-work .zic-stat{flex:1;text-align:center;border-right:1px solid rgba(100,180,255,0.1);padding:0 4px}
 .zic-work .zic-stat:last-child{border-right:none}
-.zic-work .zic-stat-val{font-family:var(--font-fun);font-size:1.1rem;font-weight:800;color:#E57373;display:block}
-.zic-work .zic-stat-label{font-size:0.5rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.04em;display:block;margin-top:2px}
+.zic-work .zic-stat-val{font-family:var(--font-fun);font-size:1.1rem;font-weight:700;color:#64B4FF;display:block}
+.zic-work .zic-stat-label{font-size:0.5rem;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.04em;display:block;margin-top:2px}
 
-/* ── PORTFOLIO: Tall Laptop — Pastel Indigo ── */
+/* ── PORTFOLIO: Tall Laptop — Dark Indigo ── */
 .zic-portfolio{width:420px;padding:0;min-height:560px}
 .zic-portfolio .zic-screen{
-  background:linear-gradient(160deg,#F0F0FF,#E8E0F8,#F5F0FF);
-  border-radius:16px 16px 0 0;border:2px solid rgba(126,87,194,0.2);padding:36px 24px 28px;
+  background:linear-gradient(160deg,#1a1a2e,#16213e,#0f3460);
+  border-radius:16px 16px 0 0;border:2px solid rgba(126,87,194,0.25);padding:36px 24px 28px;
   position:relative;overflow:hidden;min-height:480px;
   box-shadow:inset 0 0 40px rgba(126,87,194,0.06);
 }
-.zic-portfolio .zic-screen::before{content:'';position:absolute;top:0;left:0;right:0;height:28px;background:rgba(126,87,194,0.08);border-radius:14px 14px 0 0}
+.zic-portfolio .zic-screen::before{content:'';position:absolute;top:0;left:0;right:0;height:28px;background:rgba(126,87,194,0.12);border-radius:14px 14px 0 0}
 .zic-portfolio .zic-dots{position:absolute;top:8px;left:14px;display:flex;gap:6px;z-index:2}
 .zic-portfolio .zic-dot{width:10px;height:10px;border-radius:50%}
 .zic-portfolio .zic-dot.r{background:#FF8A80}.zic-portfolio .zic-dot.y{background:#FFD180}.zic-portfolio .zic-dot.g{background:#B9F6CA}
-.zic-portfolio .zic-url-bar{position:absolute;top:5px;left:80px;right:14px;height:18px;background:rgba(126,87,194,0.08);border-radius:4px;z-index:2}
-.zic-portfolio .zic-url-text{color:#7E57C2;font-size:0.55rem;font-family:monospace;line-height:18px;padding:0 8px}
+.zic-portfolio .zic-url-bar{position:absolute;top:5px;left:80px;right:14px;height:18px;background:rgba(126,87,194,0.12);border-radius:4px;z-index:2}
+.zic-portfolio .zic-url-text{color:#B39DDB;font-size:0.55rem;font-family:monospace;line-height:18px;padding:0 8px}
 .zic-portfolio .zic-screen-body{margin-top:14px}
 .zic-portfolio .zic-cursor{position:absolute;bottom:30px;right:40px;font-size:1.4rem;animation:zicCursorBlink 1.2s ease-in-out infinite;z-index:3}
 @keyframes zicCursorBlink{0%,100%{opacity:1;transform:translate(0,0)}50%{opacity:0.5;transform:translate(-5px,5px)}}
-.zic-portfolio .zic-title{font-family:'Courier New',monospace;font-size:1.4rem;font-weight:700;color:#7E57C2;margin-bottom:4px}
-.zic-portfolio .zic-title .zic-blink{animation:zicTermBlink 1s step-end infinite;color:#AB47BC}
+.zic-portfolio .zic-title{font-family:'Courier New',monospace;font-size:1.4rem;font-weight:700;color:#B39DDB;margin-bottom:4px}
+.zic-portfolio .zic-title .zic-blink{animation:zicTermBlink 1s step-end infinite;color:#CE93D8}
 @keyframes zicTermBlink{0%,100%{opacity:1}50%{opacity:0}}
-.zic-portfolio .zic-sub{font-family:var(--font-hand);font-size:0.9rem;color:#6A4A8A;line-height:1.6;margin-bottom:14px}
+.zic-portfolio .zic-sub{font-family:var(--font-hand);font-size:0.9rem;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:14px}
 .zic-portfolio .zic-project-list{list-style:none;margin:0 0 14px;padding:0}
-.zic-portfolio .zic-project-list li{font-family:var(--font-hand);font-size:0.82rem;color:#5C3D8F;padding:6px 10px;margin-bottom:4px;background:rgba(126,87,194,0.06);border-radius:8px;border-left:3px solid rgba(126,87,194,0.3);display:flex;align-items:center;gap:8px}
+.zic-portfolio .zic-project-list li{font-family:var(--font-sans);font-size:0.78rem;color:rgba(255,255,255,0.65);padding:6px 10px;margin-bottom:4px;background:rgba(126,87,194,0.08);border-radius:8px;border-left:3px solid rgba(126,87,194,0.35);display:flex;align-items:center;gap:8px}
 .zic-portfolio .zic-project-list li .proj-emoji{font-size:1rem}
-.zic-portfolio .zic-project-list li .proj-name{font-weight:700;color:#7E57C2}
-.zic-portfolio .zic-project-list li .proj-desc{font-size:0.7rem;color:#8A6AAA;display:block}
+.zic-portfolio .zic-project-list li .proj-name{font-weight:700;color:#B39DDB}
+.zic-portfolio .zic-project-list li .proj-desc{font-size:0.7rem;color:rgba(255,255,255,0.4);display:block}
 .zic-portfolio .zic-code-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.zic-portfolio .zic-code-tag{background:rgba(126,87,194,0.08);border:1px solid rgba(126,87,194,0.18);color:#7E57C2;border-radius:10px;padding:4px 10px;font-family:monospace;font-size:0.62rem}
-.zic-portfolio .zic-stats{display:flex;gap:12px;padding-top:12px;border-top:1px solid rgba(126,87,194,0.1)}
-.zic-portfolio .zic-stat-val{font-family:monospace;font-size:1.3rem;font-weight:900;color:#7E57C2}
-.zic-portfolio .zic-stat-label{font-family:var(--font-hand);font-size:0.58rem;color:#9A80B8;margin-top:2px}
+.zic-portfolio .zic-code-tag{background:rgba(126,87,194,0.1);border:1px solid rgba(126,87,194,0.2);color:#B39DDB;border-radius:6px;padding:4px 10px;font-family:monospace;font-size:0.62rem}
+.zic-portfolio .zic-stats{display:flex;gap:12px;padding-top:12px;border-top:1px solid rgba(126,87,194,0.15)}
+.zic-portfolio .zic-stat-val{font-family:monospace;font-size:1.3rem;font-weight:900;color:#B39DDB}
+.zic-portfolio .zic-stat-label{font-family:var(--font-sans);font-size:0.58rem;color:rgba(255,255,255,0.35);margin-top:2px}
 .zic-portfolio .zic-stat{text-align:center;flex:1}
-.zic-portfolio .zic-base{height:18px;background:linear-gradient(180deg,rgba(126,87,194,0.15),rgba(126,87,194,0.08));border-radius:0 0 6px 6px}
+.zic-portfolio .zic-base{height:18px;background:linear-gradient(180deg,rgba(126,87,194,0.2),rgba(126,87,194,0.08));border-radius:0 0 6px 6px}
 .zic-portfolio .zic-base::after{content:'';position:absolute;bottom:-6px;left:15%;right:15%;height:6px;background:rgba(126,87,194,0.06);border-radius:0 0 8px 8px}
 
-/* ── ORIGIN: Tall Polaroid — Pastel Mint ── */
+/* ── ORIGIN: Tall Polaroid — Deep Forest Green ── */
 .zic-origin{width:360px;padding:0;transform:rotate(2deg);min-height:480px}
 .zic-origin .zic-polaroid{
-  background:linear-gradient(175deg,#F0FFF4,#E0F5E8,#F5FFF8);padding:16px 16px 40px;border-radius:6px;
-  box-shadow:3px 5px 20px rgba(76,175,80,0.12),0 0 0 1px rgba(76,175,80,0.06);
+  background:linear-gradient(175deg,#1B3B20,#2E4A33,#1B3B20);padding:16px 16px 40px;border-radius:6px;
+  box-shadow:3px 5px 20px rgba(0,0,0,0.25),0 0 0 1px rgba(76,175,80,0.15);
   position:relative;z-index:2;min-height:420px;
 }
-.zic-origin .zic-polaroid-bg1{position:absolute;top:8px;left:-12px;right:12px;bottom:-8px;background:#F0FFF4;border-radius:4px;transform:rotate(-4deg);z-index:0;box-shadow:2px 3px 10px rgba(76,175,80,0.08)}
-.zic-origin .zic-polaroid-bg2{position:absolute;top:4px;left:10px;right:-10px;bottom:-12px;background:#F5FFF8;border-radius:4px;transform:rotate(3deg);z-index:1;box-shadow:2px 3px 10px rgba(76,175,80,0.06)}
+.zic-origin .zic-polaroid-bg1{position:absolute;top:8px;left:-12px;right:12px;bottom:-8px;background:#1B3B20;border-radius:4px;transform:rotate(-4deg);z-index:0;box-shadow:2px 3px 10px rgba(0,0,0,0.2)}
+.zic-origin .zic-polaroid-bg2{position:absolute;top:4px;left:10px;right:-10px;bottom:-12px;background:#2E4A33;border-radius:4px;transform:rotate(3deg);z-index:1;box-shadow:2px 3px 10px rgba(0,0,0,0.15)}
 .zic-origin .zic-photo-area{
-  background:linear-gradient(135deg,#C8E6C9,#A5D6A7,#81C784);
+  background:linear-gradient(135deg,#2E7D32,#388E3C,#43A047);
   height:180px;border-radius:4px;display:flex;align-items:center;justify-content:center;
   position:relative;overflow:hidden;
 }
 .zic-origin .zic-photo-area img{width:100%;height:100%;object-fit:cover;object-position:top}
-.zic-origin .zic-photo-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(0,0,0,0.25));z-index:1}
+.zic-origin .zic-photo-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(0,0,0,0.4));z-index:1}
 .zic-origin .zic-photo-text{position:absolute;bottom:10px;left:14px;z-index:2;color:#fff;font-family:var(--font-hand);font-size:0.95rem;text-shadow:0 1px 4px rgba(0,0,0,0.5)}
 .zic-origin .zic-caption{padding:14px 4px 0;text-align:center}
-.zic-origin .zic-title{font-family:var(--font-hand);font-size:1.5rem;font-weight:700;color:#2E7D32;margin-bottom:4px}
-.zic-origin .zic-sub{font-family:var(--font-hand);font-size:0.88rem;color:#4E8A52;line-height:1.5;margin-bottom:10px}
+.zic-origin .zic-title{font-family:var(--font-hand);font-size:1.5rem;font-weight:700;color:#81C784;margin-bottom:4px}
+.zic-origin .zic-sub{font-family:var(--font-sans);font-size:0.82rem;color:rgba(255,255,255,0.55);line-height:1.5;margin-bottom:10px}
 .zic-origin .zic-bio-items{list-style:none;padding:0;margin:0 0 12px}
-.zic-origin .zic-bio-items li{font-family:var(--font-hand);font-size:0.8rem;color:#3A6E3E;padding:4px 0;display:flex;align-items:center;gap:8px}
+.zic-origin .zic-bio-items li{font-family:var(--font-sans);font-size:0.78rem;color:rgba(255,255,255,0.6);padding:4px 0;display:flex;align-items:center;gap:8px}
 .zic-origin .zic-bio-items li .bio-icon{font-size:1rem}
 .zic-origin .zic-tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
-.zic-origin .zic-tag{background:rgba(76,175,80,0.08);color:#2E7D32;border:1px solid rgba(76,175,80,0.15);border-radius:12px;padding:3px 10px;font-family:var(--font-hand);font-size:0.68rem}
-.zic-origin .zic-tape{position:absolute;top:-14px;left:50%;transform:translateX(-50%) rotate(-2deg);width:80px;height:28px;background:rgba(200,230,201,0.5);z-index:4;box-shadow:0 1px 3px rgba(76,175,80,0.1)}
+.zic-origin .zic-tag{background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.66rem}
+.zic-origin .zic-tape{position:absolute;top:-14px;left:50%;transform:translateX(-50%) rotate(-2deg);width:80px;height:28px;background:rgba(76,175,80,0.15);z-index:4;box-shadow:0 1px 3px rgba(0,0,0,0.15)}
 
-/* ── HOBBY: Tall Game Controller — Pastel Amber ── */
+/* ── HOBBY: Tall Game Controller — Dark Amber/Brown ── */
 .zic-hobby{width:400px;padding:0;min-height:500px}
 .zic-hobby .zic-controller{
-  background:linear-gradient(160deg,#FFF8E1,#FFE0B2,#FFF3E0);
+  background:linear-gradient(160deg,#3E2723,#4E342E,#3E2723);
   border-radius:60px 60px 80px 80px / 30px 30px 60px 60px;
   padding:30px 28px 40px;position:relative;
-  box-shadow:0 12px 40px rgba(255,152,0,0.12),inset 0 2px 0 rgba(255,255,255,0.5);
-  border:2px solid rgba(255,152,0,0.15);min-height:440px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.35),inset 0 2px 0 rgba(255,255,255,0.05);
+  border:2px solid rgba(255,152,0,0.2);min-height:440px;
 }
 .zic-hobby .zic-dpad{position:absolute;top:24px;left:24px;width:50px;height:50px}
-.zic-hobby .zic-dpad-h,.zic-hobby .zic-dpad-v{position:absolute;background:rgba(255,152,0,0.2);border-radius:3px}
+.zic-hobby .zic-dpad-h,.zic-hobby .zic-dpad-v{position:absolute;background:rgba(255,152,0,0.25);border-radius:3px}
 .zic-hobby .zic-dpad-h{width:50px;height:16px;top:17px;left:0}
 .zic-hobby .zic-dpad-v{width:16px;height:50px;top:0;left:17px}
 .zic-hobby .zic-btns{position:absolute;top:24px;right:24px;width:60px;height:60px;display:inline-block}
@@ -1756,45 +1756,45 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-hobby .zic-abtn.a{background:#81C784;right:0;top:20px}.zic-hobby .zic-abtn.b{background:#E57373;bottom:0;left:20px}
 .zic-hobby .zic-abtn.x{background:#90CAF9;top:0;left:20px}.zic-hobby .zic-abtn.y{background:#FFD54F;left:0;top:20px}
 .zic-hobby .zic-screen-area{
-  background:rgba(255,255,255,0.5);border:2px solid rgba(255,152,0,0.15);border-radius:16px;
+  background:rgba(0,0,0,0.3);border:2px solid rgba(255,152,0,0.2);border-radius:16px;
   margin:20px auto 0;padding:22px 18px;width:88%;
-  box-shadow:inset 0 2px 8px rgba(255,152,0,0.05);
+  box-shadow:inset 0 2px 8px rgba(0,0,0,0.2);
 }
-.zic-hobby .zic-title{font-family:var(--font-fun);font-size:1.3rem;font-weight:900;color:#E65100;margin-bottom:6px;text-transform:uppercase}
-.zic-hobby .zic-sub{font-family:var(--font-hand);font-size:0.85rem;color:#8D6E63;line-height:1.5;margin-bottom:12px}
+.zic-hobby .zic-title{font-family:var(--font-fun);font-size:1.3rem;font-weight:700;color:#FFB74D;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em}
+.zic-hobby .zic-sub{font-family:var(--font-sans);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.5;margin-bottom:12px}
 .zic-hobby .zic-hobby-list{list-style:none;padding:0;margin:0 0 12px}
-.zic-hobby .zic-hobby-list li{font-family:var(--font-hand);font-size:0.8rem;color:#795548;padding:5px 10px;margin-bottom:4px;background:rgba(255,152,0,0.06);border-radius:8px;display:flex;align-items:center;gap:8px}
+.zic-hobby .zic-hobby-list li{font-family:var(--font-sans);font-size:0.78rem;color:rgba(255,255,255,0.6);padding:5px 10px;margin-bottom:4px;background:rgba(255,152,0,0.08);border-radius:8px;display:flex;align-items:center;gap:8px}
 .zic-hobby .zic-pixel-tags{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:10px}
-.zic-hobby .zic-pixel-tag{background:rgba(255,152,0,0.08);border:1px solid rgba(255,152,0,0.15);color:#E65100;border-radius:10px;padding:3px 8px;font-family:var(--font-hand);font-size:0.62rem}
+.zic-hobby .zic-pixel-tag{background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.2);color:#FFB74D;border-radius:6px;padding:3px 8px;font-family:var(--font-fun);font-size:0.62rem}
 .zic-hobby .zic-lives{display:flex;gap:4px;justify-content:center;margin-top:10px}
 .zic-hobby .zic-heart{color:#E57373;font-size:0.9rem;animation:zicHeartPop 1.5s ease-in-out infinite}
 .zic-hobby .zic-heart:nth-child(2){animation-delay:0.3s}.zic-hobby .zic-heart:nth-child(3){animation-delay:0.6s}
 @keyframes zicHeartPop{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
 .zic-hobby .zic-led{position:absolute;bottom:20px;right:36px;width:8px;height:8px;border-radius:50%;background:#81C784;animation:zicLedBlink 2s ease-in-out infinite;box-shadow:0 0 6px rgba(129,199,132,0.4)}
 @keyframes zicLedBlink{0%,100%{opacity:1}50%{opacity:0.3}}
-.zic-hobby .zic-stats{display:flex;gap:12px;padding-top:12px;border-top:1px dashed rgba(255,152,0,0.15)}
+.zic-hobby .zic-stats{display:flex;gap:12px;padding-top:12px;border-top:1px dashed rgba(255,152,0,0.2)}
 .zic-hobby .zic-stat{text-align:center;flex:1}
-.zic-hobby .zic-stat-val{font-family:var(--font-fun);font-size:1.3rem;font-weight:900;color:#E65100}
-.zic-hobby .zic-stat-label{font-family:var(--font-hand);font-size:0.55rem;color:#A1887F;margin-top:2px}
+.zic-hobby .zic-stat-val{font-family:var(--font-fun);font-size:1.3rem;font-weight:700;color:#FFB74D}
+.zic-hobby .zic-stat-label{font-family:var(--font-sans);font-size:0.55rem;color:rgba(255,255,255,0.35);margin-top:2px}
 
-/* ── FUN: Tall Retro TV — Pastel Pink ── */
+/* ── FUN: Dark arcade cabinet — masculine gaming ── */
 .zic-fun{width:380px;padding:0;min-height:520px}
 .zic-fun .zic-tv{
-  background:linear-gradient(145deg,#FFF0F5,#FFE0EB,#FFF5F8);
-  border-radius:24px;padding:24px;position:relative;
-  box-shadow:6px 8px 30px rgba(236,64,122,0.1),inset 0 2px 0 rgba(255,255,255,0.5);
-  border:2px solid rgba(236,64,122,0.15);min-height:460px;
+  background:linear-gradient(145deg,#1a1a1a,#2d2d2d,#1a1a1a);
+  border-radius:20px;padding:24px;position:relative;
+  box-shadow:6px 8px 30px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.05);
+  border:2px solid rgba(255,69,0,0.25);min-height:460px;
 }
 .zic-fun .zic-tv-screen{
-  background:linear-gradient(135deg,#FCE4EC,#F8BBD0,#FCE4EC);
+  background:linear-gradient(135deg,#0a0a0a,#1a1a2e,#0a0a0a);
   border-radius:16px;padding:24px 20px;position:relative;overflow:hidden;
-  box-shadow:inset 0 0 20px rgba(236,64,122,0.08);border:2px solid rgba(236,64,122,0.12);min-height:340px;
+  box-shadow:inset 0 0 20px rgba(255,69,0,0.08);border:2px solid rgba(255,69,0,0.15);min-height:340px;
 }
-.zic-fun .zic-scanlines{position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 2px,rgba(236,64,122,0.02) 2px,rgba(236,64,122,0.02) 4px);z-index:1;pointer-events:none;border-radius:14px}
+.zic-fun .zic-scanlines{position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 2px,rgba(255,69,0,0.02) 2px,rgba(255,69,0,0.02) 4px);z-index:1;pointer-events:none;border-radius:14px}
 .zic-fun .zic-static{position:absolute;inset:0;opacity:0.02;z-index:0}
 .zic-fun .zic-tv-content{position:relative;z-index:2}
-.zic-fun .zic-title{font-family:var(--font-fun);font-size:1.6rem;font-weight:900;color:#C2185B;margin-bottom:6px}
-.zic-fun .zic-sub{font-family:var(--font-hand);font-size:0.88rem;color:#8A4A6A;line-height:1.5;margin-bottom:14px}
+.zic-fun .zic-title{font-family:var(--font-fun);font-size:1.6rem;font-weight:700;color:#FF4500;margin-bottom:6px;letter-spacing:0.06em;text-transform:uppercase}
+.zic-fun .zic-sub{font-family:var(--font-sans);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.5;margin-bottom:14px}
 .zic-fun .zic-emoji-row{display:flex;gap:8px;justify-content:center;font-size:1.6rem;margin-bottom:14px}
 .zic-fun .zic-emoji-bounce{animation:zicEmojiBounce 2s ease-in-out infinite}
 .zic-fun .zic-emoji-bounce:nth-child(2){animation-delay:0.2s}
@@ -1802,22 +1802,22 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-fun .zic-emoji-bounce:nth-child(4){animation-delay:0.6s}
 @keyframes zicEmojiBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 .zic-fun .zic-meme-list{list-style:none;padding:0;margin:0 0 12px}
-.zic-fun .zic-meme-list li{font-family:var(--font-hand);font-size:0.8rem;color:#AD1457;padding:5px 10px;margin-bottom:4px;background:rgba(236,64,122,0.05);border-radius:8px;display:flex;align-items:center;gap:8px}
+.zic-fun .zic-meme-list li{font-family:var(--font-sans);font-size:0.78rem;color:rgba(255,255,255,0.65);padding:5px 10px;margin-bottom:4px;background:rgba(255,69,0,0.06);border-radius:8px;display:flex;align-items:center;gap:8px}
 .zic-fun .zic-neon-tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
-.zic-fun .zic-neon-tag{border:1px solid rgba(236,64,122,0.2);color:#C2185B;background:rgba(236,64,122,0.05);border-radius:20px;padding:4px 12px;font-family:var(--font-fun);font-size:0.62rem;font-weight:700}
-.zic-fun .zic-channel{position:absolute;bottom:12px;right:16px;font-family:monospace;font-size:0.6rem;color:rgba(194,24,91,0.3);z-index:2}
+.zic-fun .zic-neon-tag{border:1px solid rgba(255,69,0,0.3);color:#FF6347;background:rgba(255,69,0,0.08);border-radius:6px;padding:4px 12px;font-family:var(--font-fun);font-size:0.62rem;font-weight:700}
+.zic-fun .zic-channel{position:absolute;bottom:12px;right:16px;font-family:monospace;font-size:0.6rem;color:rgba(255,69,0,0.3);z-index:2}
 .zic-fun .zic-tv-controls{display:flex;gap:12px;align-items:center;justify-content:flex-end;margin-top:14px}
-.zic-fun .zic-knob{width:28px;height:28px;border-radius:50%;background:linear-gradient(145deg,rgba(236,64,122,0.15),rgba(236,64,122,0.08));border:2px solid rgba(236,64,122,0.15);position:relative}
-.zic-fun .zic-knob::after{content:'';position:absolute;top:4px;left:50%;width:2px;height:10px;background:rgba(236,64,122,0.2);transform:translateX(-50%)}
+.zic-fun .zic-knob{width:28px;height:28px;border-radius:50%;background:linear-gradient(145deg,rgba(255,69,0,0.2),rgba(255,69,0,0.08));border:2px solid rgba(255,69,0,0.2);position:relative}
+.zic-fun .zic-knob::after{content:'';position:absolute;top:4px;left:50%;width:2px;height:10px;background:rgba(255,69,0,0.3);transform:translateX(-50%)}
 .zic-fun .zic-antenna{position:absolute;top:-30px;z-index:4}
-.zic-fun .zic-antenna-l{left:30%;width:3px;height:35px;background:linear-gradient(180deg,rgba(236,64,122,0.3),rgba(236,64,122,0.15));transform:rotate(-20deg);transform-origin:bottom;position:absolute;border-radius:2px}
-.zic-fun .zic-antenna-r{right:30%;width:3px;height:35px;background:linear-gradient(180deg,rgba(236,64,122,0.3),rgba(236,64,122,0.15));transform:rotate(20deg);transform-origin:bottom;position:absolute;border-radius:2px}
-.zic-fun .zic-antenna-tip{width:8px;height:8px;border-radius:50%;background:#E57373;position:absolute;top:-5px}
+.zic-fun .zic-antenna-l{left:30%;width:3px;height:35px;background:linear-gradient(180deg,rgba(255,69,0,0.4),rgba(255,69,0,0.15));transform:rotate(-20deg);transform-origin:bottom;position:absolute;border-radius:2px}
+.zic-fun .zic-antenna-r{right:30%;width:3px;height:35px;background:linear-gradient(180deg,rgba(255,69,0,0.4),rgba(255,69,0,0.15));transform:rotate(20deg);transform-origin:bottom;position:absolute;border-radius:2px}
+.zic-fun .zic-antenna-tip{width:8px;height:8px;border-radius:50%;background:#FF4500;position:absolute;top:-5px}
 .zic-fun .zic-antenna-l .zic-antenna-tip{left:-3px}.zic-fun .zic-antenna-r .zic-antenna-tip{right:-3px}
-.zic-fun .zic-stats{display:flex;gap:12px;padding-top:12px;border-top:1px dashed rgba(236,64,122,0.12)}
+.zic-fun .zic-stats{display:flex;gap:12px;padding-top:12px;border-top:1px dashed rgba(255,69,0,0.15)}
 .zic-fun .zic-stat{text-align:center;flex:1}
-.zic-fun .zic-stat-val{font-family:var(--font-fun);font-size:1.3rem;font-weight:900;color:#C2185B}
-.zic-fun .zic-stat-label{font-family:var(--font-hand);font-size:0.55rem;color:#D48AA8;margin-top:2px}
+.zic-fun .zic-stat-val{font-family:var(--font-fun);font-size:1.3rem;font-weight:700;color:#FF4500}
+.zic-fun .zic-stat-label{font-family:var(--font-sans);font-size:0.55rem;color:rgba(255,255,255,0.35);margin-top:2px}
 
 /* ── Zone companion stickers ── */
 .zic-companion{position:absolute;z-index:86;animation:introFloat 5s ease-in-out infinite}
@@ -9369,26 +9369,27 @@ function ensureZoneIntroCards(){
           '<div class="zic-tv-screen">'+
             '<div class="zic-scanlines"></div><div class="zic-static"></div>'+
             '<div class="zic-tv-content">'+
-              '<div class="zic-title">FUN ZONE 📺</div>'+
-              '<div class="zic-sub">Memes, vibes & unfiltered chaos — the lighter side of building products.</div>'+
+              '<div class="zic-title">⚔️ FUN ZONE</div>'+
+              '<div class="zic-sub">Cars, games, memes & chaos — the stuff that keeps me sane between sprints.</div>'+
               '<div class="zic-emoji-row">'+
-                '<span class="zic-emoji-bounce">💀</span><span class="zic-emoji-bounce">🔥</span>'+
-                '<span class="zic-emoji-bounce">🤌</span><span class="zic-emoji-bounce">😂</span>'+
+                '<span class="zic-emoji-bounce">🏎️</span><span class="zic-emoji-bounce">⚔️</span>'+
+                '<span class="zic-emoji-bounce">🎮</span><span class="zic-emoji-bounce">💀</span>'+
               '</div>'+
               '<ul class="zic-meme-list">'+
-                '<li>💀 "It\'s not a bug, it\'s a feature"</li>'+
-                '<li>🔥 Hot takes on product Twitter</li>'+
-                '<li>🤡 Startup pitch fails collection</li>'+
-                '<li>😭 When prod breaks on a Friday</li>'+
+                '<li>⚔️ God of War — BOY! energy in every standup</li>'+
+                '<li>🏎️ Cars & racing — Gasoline runs in my veins</li>'+
+                '<li>🥊 Fight Club vibes — first rule: ship fast</li>'+
+                '<li>🎮 Late night gaming > late night coding</li>'+
+                '<li>💀 "Works on prod" — famous last words</li>'+
               '</ul>'+
               '<div class="zic-neon-tags">'+
-                '<span class="zic-neon-tag">Memes</span><span class="zic-neon-tag">Hot Takes</span>'+
-                '<span class="zic-neon-tag">Vibes</span><span class="zic-neon-tag">Easter Eggs</span>'+
+                '<span class="zic-neon-tag">God of War</span><span class="zic-neon-tag">Racing</span>'+
+                '<span class="zic-neon-tag">Memes</span><span class="zic-neon-tag">Combat</span>'+
               '</div>'+
               '<div class="zic-channel">CH 42</div>'+
               '<div class="zic-stats">'+
                 '<div class="zic-stat"><div class="zic-stat-val zic-counter" data-target="999">0</div><div class="zic-stat-label">Memes</div></div>'+
-                '<div class="zic-stat"><div class="zic-stat-val zic-counter" data-target="42">0</div><div class="zic-stat-label">Hot Takes</div></div>'+
+                '<div class="zic-stat"><div class="zic-stat-val zic-counter" data-target="42">0</div><div class="zic-stat-label">Boss Fights</div></div>'+
               '</div>'+
             '</div>'+
           '</div>'+
@@ -9477,9 +9478,12 @@ function ensureCompanionStickers(force){
   }
 
   function memeCard(top,bottom,bg){
-    return '<div style="background:'+bg+';border-radius:14px;padding:12px 14px;width:165px;box-shadow:0 4px 16px rgba(0,0,0,0.08);text-align:center">'+
-      '<div style="font-size:0.56rem;color:rgba(0,0,0,0.42);text-transform:uppercase;font-family:var(--font-fun);font-weight:700;margin-bottom:5px">'+top+'</div>'+
-      '<div style="font-family:var(--font-hand);font-size:0.8rem;color:rgba(0,0,0,0.74);line-height:1.35">'+bottom+'</div></div>';
+    var isDark=bg&&(bg.startsWith('#1')||bg.startsWith('#2')||bg.startsWith('#0')||bg.startsWith('#3')||bg.startsWith('#4'));
+    var txtA=isDark?'rgba(255,255,255,0.45)':'rgba(0,0,0,0.42)';
+    var txtB=isDark?'rgba(255,255,255,0.75)':'rgba(0,0,0,0.74)';
+    return '<div style="background:'+bg+';border-radius:14px;padding:12px 14px;width:165px;box-shadow:0 4px 16px rgba(0,0,0,0.15);text-align:center;border:1px solid rgba(255,255,255,0.06)">'+
+      '<div style="font-size:0.56rem;color:'+txtA+';text-transform:uppercase;font-family:var(--font-fun);font-weight:700;margin-bottom:5px">'+top+'</div>'+
+      '<div style="font-family:var(--font-hand);font-size:0.8rem;color:'+txtB+';line-height:1.35">'+bottom+'</div></div>';
   }
 
   function meterCard(emoji,label,bg1,bg2){
@@ -9501,56 +9505,58 @@ function ensureCompanionStickers(force){
       '</div></div>';
   }
 
+  const dragHandleSvg='<div class="sticker-drag-handle" style="position:absolute;top:6px;right:6px;z-index:100;width:28px;height:28px;border-radius:6px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;cursor:grab;opacity:0.5"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" style="color:rgba(255,255,255,0.6)"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>';
+
   const zoneItems={
     work:[
-      {dx:220,dy:-250,html:polaroidPhoto('/images/akash-photo.webp','the PM look 😎','4deg')},
-      {dx:-300,dy:-120,html:skillStackCard('Skill Stack','🛠️',['Product Strategy','0→1','AI/ML','Web3','Growth','Research','#PRD'],['#E53935','#FF9800','#4CAF50','#2196F3','#9C27B0','#00BCD4','#795548'])},
-      {dx:240,dy:120,html:meterCard('👆','TAP METER','#1a1a2e','#0f3460'),kind:'meter'},
-      {dx:-275,dy:160,html:quoteCard('Ship fast, learn faster.','work mode','#FFF5F0','#C62828')},
-      {dx:250,dy:-20,html:memeCard('SPRINT REVIEW','"it works on my machine" 🤡','#FFE8E0')},
-      {dx:-255,dy:-260,html:'<div class="zc-sticky coral" style="--r:-6deg">standup mood:<br>almost done™</div>'},
-      {dx:-70,dy:-285,html:'<div class="zc-badge coral">⚡ Ships on Fridays</div>'},
-      {dx:-40,dy:248,html:flipCard('💼','TAP TO FLIP','First product crashed every Tuesday. We still shipped.','#FFE8E0','#FFF0EA'),kind:'flip'}
+      {dx:420,dy:-80,html:polaroidPhoto('/images/akash-suit.jpeg','the PM look 😎','4deg')},
+      {dx:-420,dy:-60,html:skillStackCard('Skill Stack','🛠️',['Product Strategy','0→1','AI/ML','Web3','Growth','Research','PRDs'],['#E53935','#FF9800','#4CAF50','#2196F3','#9C27B0','#00BCD4','#795548'])},
+      {dx:430,dy:280,html:dragHandleSvg+meterCard('👆','TAP METER','#1a1a2e','#0f3460'),kind:'meter'},
+      {dx:-410,dy:260,html:quoteCard('Ship fast, learn faster.','work mode','#263238','#64B4FF')},
+      {dx:420,dy:120,html:memeCard('SPRINT REVIEW','"it works on my machine" 🤡','#1a2332')},
+      {dx:-400,dy:-240,html:'<div class="zc-sticky" style="--r:-6deg;background:#263238;color:#64B4FF;border-bottom:3px solid rgba(100,180,255,0.2)">standup mood:<br>almost done™</div>'},
+      {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(100,180,255,0.12);color:#64B4FF;border:1px solid rgba(100,180,255,0.25)">⚡ Ships on Fridays</div>'},
+      {dx:-20,dy:360,html:dragHandleSvg+flipCard('💼','TAP TO FLIP','First product crashed every Tuesday. We still shipped.','#1a2332','#263238'),kind:'flip'}
     ],
     portfolio:[
-      {dx:-285,dy:-120,html:skillStackCard('Build Stack','💻',['React','TS','Node','Web3','Figma','AI'],['#61DAFB','#3178C6','#339933','#F6851B','#F24E1E','#AB47BC'])},
-      {dx:245,dy:-130,html:'<div class="zc-mini-card indigo" style="font-family:monospace;font-size:0.65rem">$ git log --oneline<br>ship v2 🚀<br>fix prod 🔥<br>"final" final fix</div>'},
-      {dx:250,dy:120,html:flipCard('🚀','SCORECARD','3 founded · 2 pivoted · 1 profitable','#EDE7F6','#F3E5F5'),kind:'flip'},
-      {dx:-270,dy:165,html:memeCard('DEV VS PROD','works 😎 → breaks 💀','#EDE7F6')},
-      {dx:5,dy:-300,html:'<div class="zc-badge indigo">🔗 EnterCircles + Recess</div>'},
-      {dx:-70,dy:250,html:meterCard('🎯','SHIP COUNT','#2E1065','#581C87'),kind:'meter'},
-      {dx:252,dy:-10,html:'<div class="zc-sticky indigo" style="--r:4deg">TODO: ship · iterate · repeat</div>'},
-      {dx:-270,dy:-270,html:'<div class="zc-emoji-float" style="font-size:2.5rem">⚡</div>'}
+      {dx:-430,dy:-60,html:skillStackCard('Build Stack','💻',['React','TS','Node','Web3','Figma','AI'],['#61DAFB','#3178C6','#339933','#F6851B','#F24E1E','#AB47BC'])},
+      {dx:440,dy:-80,html:'<div class="zc-mini-card" style="background:#1a1a2e;color:#B39DDB;border:1.5px solid rgba(126,87,194,0.2);font-family:monospace;font-size:0.65rem;border-radius:14px;padding:12px 14px;max-width:160px">$ git log --oneline<br>ship v2 🚀<br>fix prod 🔥<br>"final" final fix</div>'},
+      {dx:440,dy:260,html:dragHandleSvg+flipCard('🚀','SCORECARD','3 founded · 2 pivoted · 1 profitable','#1a1a2e','#2E1065'),kind:'flip'},
+      {dx:-420,dy:260,html:memeCard('DEV VS PROD','works 😎 → breaks 💀','#1a1a2e')},
+      {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(126,87,194,0.12);color:#B39DDB;border:1px solid rgba(126,87,194,0.25)">🔗 EnterCircles + Recess</div>'},
+      {dx:-20,dy:360,html:dragHandleSvg+meterCard('🎯','SHIP COUNT','#2E1065','#581C87'),kind:'meter'},
+      {dx:440,dy:100,html:'<div class="zc-sticky" style="--r:4deg;background:#1a1a2e;color:#B39DDB;border-bottom:3px solid rgba(126,87,194,0.2)">TODO: ship · iterate · repeat</div>'},
+      {dx:-420,dy:-240,html:'<div class="zc-emoji-float" style="font-size:2.5rem">⚡</div>'}
     ],
     origin:[
-      {dx:220,dy:-245,html:polaroidPhoto('/images/akash-photo.webp','chapter zero 📸','-3deg')},
-      {dx:-260,dy:-120,html:'<div class="zc-mini-card mint">📍 Jeypore → Bhubaneswar → Bengaluru<br>small town dreams, big city hustle</div>'},
-      {dx:238,dy:105,html:flipCard('🧒','FUN FACT','Wrote first code at 15. It could only add.','#E8F5E9','#F0FFF4'),kind:'flip'},
-      {dx:-250,dy:150,html:quoteCard('Started curious, stayed curious.','#life','#F0FFF4','#1B5E20')},
-      {dx:2,dy:-292,html:'<div class="zc-badge mint">🌱 Odisha roots</div>'},
-      {dx:-250,dy:-265,html:'<div class="zc-sticky mint" style="--r:5deg">Class of \'20 🎓</div>'},
-      {dx:5,dy:250,html:memeCard('FAMILY Q','"what do product managers do?"','#E8F5E9')},
-      {dx:242,dy:-15,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🏡</div>'}
+      {dx:400,dy:-120,html:polaroidPhoto('/images/akash-photo.webp','chapter zero 📸','-3deg')},
+      {dx:-400,dy:-60,html:'<div class="zc-mini-card" style="background:#1B3B20;color:#A5D6A7;border:1.5px solid rgba(76,175,80,0.2);border-radius:14px;padding:12px 14px;max-width:160px;font-family:var(--font-hand);font-size:0.78rem;line-height:1.4">📍 Jeypore → Bhubaneswar → Bengaluru<br>small town dreams, big city hustle</div>'},
+      {dx:410,dy:220,html:dragHandleSvg+flipCard('🧒','FUN FACT','Wrote first code at 15. It could only add.','#1B3B20','#2E4A33'),kind:'flip'},
+      {dx:-400,dy:240,html:quoteCard('Started curious, stayed curious.','#life','#1B3B20','#A5D6A7')},
+      {dx:0,dy:-330,html:'<div class="zc-badge" style="background:rgba(76,175,80,0.12);color:#81C784;border:1px solid rgba(76,175,80,0.25)">🌱 Odisha roots</div>'},
+      {dx:-390,dy:-240,html:'<div class="zc-sticky" style="--r:5deg;background:#1B3B20;color:#81C784;border-bottom:3px solid rgba(76,175,80,0.2)">Class of \'20 🎓</div>'},
+      {dx:0,dy:340,html:memeCard('FAMILY Q','"what do product managers do?"','#1B3B20')},
+      {dx:410,dy:40,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🏡</div>'}
     ],
     hobby:[
-      {dx:-290,dy:-120,html:skillStackCard('Now Playing','🎮',['Elden Ring','Valorant','Civ VI','FIFA','Music','Travel'],['#E53935','#FF5252','#FFB300','#66BB6A','#42A5F5','#8D6E63'])},
-      {dx:235,dy:-120,html:meterCard('🎯','HEADSHOT','#3E2723','#4E342E'),kind:'meter'},
-      {dx:-270,dy:160,html:flipCard('🎵','MUSIC TASTE','60% lo-fi · 25% Bollywood · 10% EDM','#FFF8E1','#FFF3E0'),kind:'flip'},
-      {dx:245,dy:160,html:memeCard('ONE MORE GAME','4 hours later... ⏰','#FFF3E0')},
-      {dx:0,dy:-290,html:'<div class="zc-badge amber">📷 15 Cities Explored</div>'},
-      {dx:-255,dy:-270,html:'<div class="zc-sticky amber" style="--r:-4deg">Player 1 Ready 🕹️</div>'},
-      {dx:235,dy:-8,html:quoteCard('Mountains > beaches, always.','#travel','#FFF8E1','#E65100')},
-      {dx:0,dy:248,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🎧</div>'}
+      {dx:-430,dy:-60,html:skillStackCard('Now Playing','🎮',['Elden Ring','Valorant','Civ VI','FIFA','Music','Travel'],['#E53935','#FF5252','#FFB300','#66BB6A','#42A5F5','#8D6E63'])},
+      {dx:420,dy:-80,html:dragHandleSvg+meterCard('🎯','HEADSHOT','#3E2723','#4E342E'),kind:'meter'},
+      {dx:-420,dy:260,html:dragHandleSvg+flipCard('🎵','MUSIC TASTE','60% lo-fi · 25% Bollywood · 10% EDM','#3E2723','#4E342E'),kind:'flip'},
+      {dx:430,dy:260,html:memeCard('ONE MORE GAME','4 hours later... ⏰','#3E2723')},
+      {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(255,152,0,0.12);color:#FFB74D;border:1px solid rgba(255,152,0,0.25)">📷 15 Cities Explored</div>'},
+      {dx:-400,dy:-240,html:'<div class="zc-sticky" style="--r:-4deg;background:#3E2723;color:#FFB74D;border-bottom:3px solid rgba(255,152,0,0.2)">Player 1 Ready 🕹️</div>'},
+      {dx:420,dy:100,html:quoteCard('Mountains > beaches, always.','#travel','#3E2723','#FFB74D')},
+      {dx:0,dy:340,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🎧</div>'}
     ],
     fun:[
-      {dx:-280,dy:-120,html:memeCard('NEW FEATURE IDEA','"quick 5 min change" 💀','#FCE4EC')},
-      {dx:240,dy:-125,html:memeCard('STARTUP BINGO','pivot · synergy · disrupt 🤡','#FFF0F5')},
-      {dx:-265,dy:140,html:flipCard('🎰','RANDOM EXCUSE','Works on my machine. Become my machine.','#FCE4EC','#FFF0F5'),kind:'flip'},
-      {dx:240,dy:140,html:meterCard('😂','LAUGH METER','#880E4F','#AD1457'),kind:'meter'},
-      {dx:0,dy:-292,html:'<div class="zc-badge pink">🔥 Meme Lord</div>'},
-      {dx:-255,dy:-270,html:'<div class="zc-sticky pink" style="--r:-5deg">git commit -m "please work" 🙏</div>'},
-      {dx:240,dy:-8,html:quoteCard('Debugging: removing bugs from code you wrote to add bugs.','#fun','#FFF0F5','#880E4F')},
-      {dx:0,dy:250,html:'<div class="zc-emoji-float" style="font-size:2.7rem">🤌</div>'}
+      {dx:-420,dy:-60,html:memeCard('NEW FEATURE IDEA','"quick 5 min change" 💀','#1a1a1a')},
+      {dx:430,dy:-80,html:memeCard('GOD OF WAR QUOTE','"Do not be sorry. Be better." — Kratos 🪓','#2d1a00')},
+      {dx:-410,dy:260,html:dragHandleSvg+flipCard('🏎️','DREAM GARAGE','GT-R · Supra · M3 · 911 — in that order','#2d1a00','#1a1a1a'),kind:'flip'},
+      {dx:430,dy:260,html:dragHandleSvg+meterCard('⚔️','BOSS KILLS','#4a0000','#8b0000'),kind:'meter'},
+      {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(255,69,0,0.12);color:#FF6347;border:1px solid rgba(255,69,0,0.25)">🔥 Meme Lord</div>'},
+      {dx:-400,dy:-240,html:'<div class="zc-sticky" style="--r:-5deg;background:#1a1a1a;color:#FF6347;border-bottom:3px solid rgba(255,69,0,0.2)">git commit -m "please work" 🙏</div>'},
+      {dx:420,dy:100,html:quoteCard('In the darkest times, hope is something you give yourself.','Kratos','#1a1a1a','#FF6347')},
+      {dx:0,dy:340,html:'<div style="font-size:2.7rem;text-align:center">🪓</div>'}
     ]
   };
 
@@ -9566,6 +9572,7 @@ function ensureCompanionStickers(force){
     if(!a)return;
     const el=document.createElement('div');
     el.className='sticker zic-companion';
+    if(item.kind==='meter'||item.kind==='flip') el.className+=' has-drag-handle';
     el.dataset.zone=zone;
     el.dataset.locked='1';
     el.dataset.type=item.kind==='meter'||item.kind==='flip'?'interactive':'other';
@@ -9575,16 +9582,18 @@ function ensureCompanionStickers(force){
     el.style.top=(cy+item.dy)+'px';
     el.innerHTML=item.html;
     el.style.animationDelay=(Math.random()*2).toFixed(1)+'s';
+    el.style.pointerEvents='auto';
 
     if(item.kind==='meter'){
       const meter=el.querySelector('.zc-meter');
       if(meter){
-        meter.addEventListener('click',ev=>{
-          ev.stopPropagation();
-          const n=(parseInt(meter.dataset.count||'0')+1);
-          meter.dataset.count=String(n);
-          const val=meter.querySelector('.zc-meter-val');
-          const bar=meter.querySelector('.zc-meter-bar');
+        meter.style.pointerEvents='auto';
+        meter.addEventListener('click',function(ev){
+          ev.stopPropagation();ev.preventDefault();
+          const n=(parseInt(this.dataset.count||'0')+1);
+          this.dataset.count=String(n);
+          const val=this.querySelector('.zc-meter-val');
+          const bar=this.querySelector('.zc-meter-bar');
           if(val)val.textContent=String(n);
           if(bar)bar.style.width=Math.min(n*8,100)+'%';
         });
@@ -9594,9 +9603,10 @@ function ensureCompanionStickers(force){
     if(item.kind==='flip'){
       const flip=el.querySelector('.zc-flip-card');
       if(flip){
-        flip.addEventListener('click',ev=>{
-          ev.stopPropagation();
-          flip.classList.toggle('flipped');
+        flip.style.pointerEvents='auto';
+        flip.addEventListener('click',function(ev){
+          ev.stopPropagation();ev.preventDefault();
+          this.classList.toggle('flipped');
         });
       }
     }
