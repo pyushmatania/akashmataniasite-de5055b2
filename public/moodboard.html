@@ -4101,7 +4101,7 @@ function identifyStickerGroup(sticker){
   if(zone==='hub')return 'hub';
   const c=sticker.classList;
   const text=(sticker.textContent||'').toLowerCase();
-  if(c.contains('zone-signpost'))return 'signpost';
+  if(c.contains('zone-signpost'))return 'fun'; // signposts removed, treat as misc
   if(c.contains('sticker-hero-photo')||c.contains('sticker-photo-polaroid')||c.contains('sticker-photo-tilt')||c.contains('sticker-photo-circle')||c.contains('sticker-highlight')||c.contains('sticker-text')||c.contains('sticker-washi'))return 'personal';
   if(c.contains('sticker-project')||c.contains('sticker-illustrated'))return 'portfolio';
   if(c.contains('sticker-badge')||c.contains('sticker-stamp')||c.contains('sticker-swatches'))return 'work';
