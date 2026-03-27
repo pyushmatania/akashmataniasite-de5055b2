@@ -6899,6 +6899,7 @@ function toggleMap(){
             mmContainer.classList.add('expanded');
             mapTransitioning=false;
             window._mapTransitionStart=0;
+            recenter();
           },500);
         });
       });
