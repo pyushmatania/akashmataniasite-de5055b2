@@ -6638,6 +6638,23 @@ function addMapDecorations(cw, ch){
      el.textContent=sp.label;
    });
 
+   // === ZONE GROUND LABELS — road marking style near boundaries ===
+   const groundLabels=[
+     {x:18,y:38,label:'ORIGIN',color:'rgba(76,175,80,0.2)',size:Math.max(10,cw*0.012),rot:0},
+     {x:60,y:38,label:'WORK',color:'rgba(229,57,53,0.2)',size:Math.max(10,cw*0.012),rot:0},
+     {x:18,y:43,label:'PORTFOLIO',color:'rgba(66,165,245,0.18)',size:Math.max(9,cw*0.01),rot:0},
+     {x:60,y:43,label:'FUN',color:'rgba(171,71,188,0.18)',size:Math.max(9,cw*0.01),rot:0},
+     {x:18,y:71,label:'PORTFOLIO',color:'rgba(66,165,245,0.18)',size:Math.max(9,cw*0.01),rot:0},
+     {x:18,y:75,label:'HOBBY',color:'rgba(255,152,0,0.18)',size:Math.max(9,cw*0.01),rot:0},
+     {x:60,y:71,label:'FUN',color:'rgba(171,71,188,0.18)',size:Math.max(9,cw*0.01),rot:0},
+     {x:45,y:15,label:'ORIGIN',color:'rgba(76,175,80,0.15)',size:Math.max(8,cw*0.008),rot:90},
+     {x:50,y:15,label:'WORK',color:'rgba(229,57,53,0.15)',size:Math.max(8,cw*0.008),rot:90},
+   ];
+   groundLabels.forEach(gl=>{
+     const el=addDiv('map-ground-label','left:'+gl.x+'%;top:'+gl.y+'%;z-index:4;pointer-events:none;font-family:var(--font-fun);font-weight:900;font-size:'+gl.size+'px;color:'+gl.color+';letter-spacing:0.25em;text-transform:uppercase;'+(gl.rot?'writing-mode:vertical-rl;text-orientation:mixed;':''));
+     el.textContent=gl.label;
+   });
+
   // === BEACHES ===
   const beaches=[
     {x:6,y:78,w:84,h:6,r:'0 0 45% 55%',bg:'linear-gradient(180deg,rgba(245,222,130,0.8),rgba(235,200,100,0.5))'},
