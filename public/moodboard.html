@@ -4489,7 +4489,21 @@ function autoArrangeMoodboardItems(){
       let tryTop=BOUNDARY_PAD+row*cellH+(rng()*cellH*0.7)+cellH*0.1;
       tryLeft=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN-w,tryLeft));
       tryTop=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN-h,tryTop));
-      // Rule 12: Allow stacking — no anti-overlap nudge
+      // Rule 12: Anti-overlap nudge for scattered items
+      for(let attempt=0;attempt<8;attempt++){
+        let overlapping=false;
+        for(const p of allPlaced){
+          if(tryLeft<p.left+p.w&&tryLeft+w>p.left&&tryTop<p.top+p.h&&tryTop+h>p.top){
+            overlapping=true;
+            tryLeft+=((rng()-0.3)*Math.max(w,120));
+            tryTop+=((rng()-0.3)*Math.max(h,80));
+            tryLeft=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN-w,tryLeft));
+            tryTop=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN-h,tryTop));
+            break;
+          }
+        }
+        if(!overlapping)break;
+      }
       let candidate={left:tryLeft,top:tryTop,w,h};
       sticker.style.left=candidate.left+'px';
       sticker.style.top=candidate.top+'px';
