@@ -7684,6 +7684,7 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
   // After walk completes, close map and navigate to exact item
   _walkTimer=setTimeout(()=>{
     mapPlayer.classList.remove('walking');
+    mapPlayer.style.transition='';
     walkingInProgress=false;
     toggleMap();
     setTimeout(()=>{
