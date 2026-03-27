@@ -9662,7 +9662,63 @@ function buildZoneCardHTML(meta){return '';}
   });
 })();
 
-setTimeout(()=>{
+// ===== ROTATION HANDLE: single-finger rotate for non-interactive stickers =====
+(function(){
+  const rotHandleSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>';
+  let rotTarget=null,rotCenterX=0,rotCenterY=0,rotBaseAngle=0,rotStartAngle=0;
+
+  function addRotateHandles(){
+    document.querySelectorAll('#canvas > .sticker').forEach(s=>{
+      if(s.querySelector('.sticker-rotate-handle'))return;
+      if(s.classList.contains('has-drag-handle'))return; // skip interactive
+      const h=document.createElement('div');
+      h.className='sticker-rotate-handle';
+      h.innerHTML=rotHandleSVG;
+      s.style.position='relative';
+      s.appendChild(h);
+      function startRot(e){
+        e.stopPropagation();e.preventDefault();
+        rotTarget=s;
+        const rect=s.getBoundingClientRect();
+        rotCenterX=rect.left+rect.width/2;
+        rotCenterY=rect.top+rect.height/2;
+        rotBaseAngle=getCurrentRotation(s);
+        const cx=e.touches?e.touches[0].clientX:e.clientX;
+        const cy=e.touches?e.touches[0].clientY:e.clientY;
+        rotStartAngle=Math.atan2(cy-rotCenterY,cx-rotCenterX)*180/Math.PI;
+      }
+      h.addEventListener('mousedown',startRot);
+      h.addEventListener('touchstart',startRot,{passive:false});
+    });
+  }
+
+  function moveRot(e){
+    if(!rotTarget)return;
+    if(e.cancelable)e.preventDefault();
+    const cx=e.touches?e.touches[0].clientX:e.clientX;
+    const cy=e.touches?e.touches[0].clientY:e.clientY;
+    const angle=Math.atan2(cy-rotCenterY,cx-rotCenterX)*180/Math.PI;
+    const delta=angle-rotStartAngle;
+    rotTarget.style.transform='rotate('+(rotBaseAngle+delta)+'deg)';
+  }
+  function endRot(){rotTarget=null;}
+
+  document.addEventListener('mousemove',moveRot);
+  document.addEventListener('touchmove',moveRot,{passive:false});
+  document.addEventListener('mouseup',endRot);
+  document.addEventListener('touchend',endRot);
+
+  // Run after stickers are placed
+  setTimeout(addRotateHandles,800);
+  // Re-run after companion stickers are added
+  const origEnsure=window.ensureCompanionStickers;
+  if(origEnsure){
+    window.ensureCompanionStickers=function(f){
+      origEnsure(f);
+      setTimeout(addRotateHandles,100);
+    };
+  }
+})();
   ensureIntroCluster();
   ensureZoneIntroCards();
   bootstrapMap(true);
