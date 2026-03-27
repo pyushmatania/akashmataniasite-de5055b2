@@ -4375,7 +4375,25 @@ function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
     // Clamp to safe zone
     tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
     tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
-    // Rule 12: Allow overlapping/stacking — no anti-overlap nudge
+    // Rule 12: Anti-overlap nudge — push away from placed items
+    for(let attempt=0;attempt<12;attempt++){
+      let overlapping=false;
+      for(const p of placed){
+        const overlapX=tryLeft<p.left+p.w&&tryLeft+w>p.left;
+        const overlapY=tryTop<p.top+p.h&&tryTop+h>p.top;
+        if(overlapX&&overlapY){
+          overlapping=true;
+          // Nudge in spiral direction
+          const nudgeAngle=angle+attempt*0.5;
+          tryLeft+=Math.cos(nudgeAngle)*Math.max(w*0.6,80);
+          tryTop+=Math.sin(nudgeAngle)*Math.max(h*0.6,60);
+          tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
+          tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
+          break;
+        }
+      }
+      if(!overlapping)break;
+    }
     let candidate={left:tryLeft,top:tryTop,w,h};
     sticker.style.left=candidate.left+'px';
     sticker.style.top=candidate.top+'px';
