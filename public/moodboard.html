@@ -7703,7 +7703,7 @@ function navigateToFilteredItem(cat,idx){
 }
 
 // Filter with cycle-through navigation
-const mainCats=['photo','meme','interactive','badge'];
+const mainCats=['photo','meme','interactive'];
 function matchesFilter(cat,filt){
   if(filt==='all')return true;
   if(filt==='other')return !mainCats.includes(cat);
