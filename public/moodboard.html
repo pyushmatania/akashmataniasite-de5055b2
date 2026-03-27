@@ -4633,7 +4633,7 @@ function autoArrangeMoodboardItems(){
   stickers.forEach(sticker=>{
     if(isBadgeSticker(sticker)){badges.push(sticker);return;}
     if(isIntroCard(sticker)){
-      const zone=sticker.dataset.zone||(sticker.classList.contains('intro-card')?'center':'fun');
+      const zone=sticker.dataset.zone||(sticker.classList.contains('intro-card')?'work':'fun');
       introCards[zone]=sticker;
       return;
     }
