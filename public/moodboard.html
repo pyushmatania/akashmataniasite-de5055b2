@@ -4320,6 +4320,7 @@ function placeZoneSignposts(signposts){
 // 9. Sync to big and small map after arrangement
 // 10. Audit: count items in DOM vs maps, remove duplicates, add missing
 // 11. Ensure all items are categorized (type) and attributed (zone). New category: introduction
+// 12. Cards CAN overlap/stack on top of each other (no anti-overlap enforcement)
 
 const ZONE_DEFS={
   origin:{x1:400,y1:400,x2:5800,y2:5600,center:{x:3100,y:3000},color:'#4CAF50'},
@@ -4381,16 +4382,8 @@ function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
     // Clamp to safe zone
     tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
     tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
-    // Anti-overlap nudge
+    // Rule 12: Allow overlapping/stacking — no anti-overlap nudge
     let candidate={left:tryLeft,top:tryTop,w,h};
-    let tries=0;
-    while(isOverlappingAny(candidate,placed,20)&&tries<20){
-      candidate.left+=((tries%2===0?1:-1)*(16+tries*4))*(0.5+rng());
-      candidate.top+=((tries%3===0?1:-1)*(12+tries*3))*(0.4+rng());
-      candidate.left=Math.max(safeX1,Math.min(safeX2-w,candidate.left));
-      candidate.top=Math.max(safeY1,Math.min(safeY2-h,candidate.top));
-      tries++;
-    }
     sticker.style.left=candidate.left+'px';
     sticker.style.top=candidate.top+'px';
     sticker.style.transform='rotate('+((rng()-0.5)*12).toFixed(1)+'deg)';
@@ -4485,15 +4478,8 @@ function autoArrangeMoodboardItems(){
       let tryTop=BOUNDARY_PAD+row*cellH+(rng()*cellH*0.7)+cellH*0.1;
       tryLeft=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN-w,tryLeft));
       tryTop=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN-h,tryTop));
+      // Rule 12: Allow stacking — no anti-overlap nudge
       let candidate={left:tryLeft,top:tryTop,w,h};
-      let tries=0;
-      while(isOverlappingAny(candidate,allPlaced,16)&&tries<12){
-        candidate.left+=(rng()-0.5)*80;
-        candidate.top+=(rng()-0.5)*80;
-        candidate.left=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN-w,candidate.left));
-        candidate.top=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN-h,candidate.top));
-        tries++;
-      }
       sticker.style.left=candidate.left+'px';
       sticker.style.top=candidate.top+'px';
       sticker.style.transform='rotate('+((rng()-0.5)*14).toFixed(1)+'deg)';
@@ -6429,6 +6415,9 @@ stats: `
 
   <div class="prompt-block"><div class="prompt-label">Prompt 43 — Audit + Attribution + Engine Tab</div><div class="prompt-text">"Add 2 more rules to auto-rearrange: 1) Audit item counts in DOM vs maps, remove duplicates, add missing. 2) Ensure all items are categorized with attribution, add 'introduction' as new category. Add a new ⚙️ Engine tab to easter egg with all rules, mapping details, zone definitions, and sync pipeline docs."</div></div>
   <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v47.0: Auto-Rearrange Engine v3 with 11 rules. Added auditStickerIntegrity() for duplicate removal + missing attribution. New 'introduction' category for zone intro cards. Rearrange button now shows audit fix count. New ⚙️ Engine tab in easter egg with full rules table, location mapping docs, zone definitions, category tags, and 6 technical fun facts. scanStickers auto-assigns zone to unattributed stickers.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 44 — Stacking + Map Click Restriction</div><div class="prompt-text">"New rule: cards should be on top of each other (allow stacking). On big map make sure user can only click on items, not blank spaces — character shouldn't wander. On canvas, bitmoji should go to the side of the listing near boundary, not on top."</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v48.0: Rule 12 added — removed all anti-overlap nudge logic from spiral and scatter layouts, cards now naturally stack. Big map blank-area click and long-press disabled — character only walks when clicking a sticker. Bitmoji guide now spawns to the left side of the target sticker instead of on top. Engine tab updated to 12 rules.</div></div>
 </div>
 <div class="inv-section">
   <h3>🧱 Tech Stack</h3>
@@ -6544,7 +6533,7 @@ credits: \`
 
 engine: `
 <div class="inv-section">
-  <h3>⚙️ Auto-Rearrange Engine v3</h3>
+  <h3>⚙️ Auto-Rearrange Engine v3 (12 Rules)</h3>
   <p style="font-size:0.8rem;color:var(--text2);line-height:1.7;margin-bottom:16px">
     The distribution engine controls how 280+ stickers are placed across the 14K×14K canvas. It runs on page load and can be triggered manually via the 🔄 button in theme settings.
   </p>
@@ -6563,6 +6552,7 @@ engine: `
     <tr><td>9</td><td>Map Sync</td><td>After arrangement, canvas → scanStickers → invalidate map cache → redraw both maps</td></tr>
     <tr><td>10</td><td>Integrity Audit</td><td>Counts DOM items, removes duplicates (same mapId), fills missing categories/zones</td></tr>
     <tr><td>11</td><td>Attribution</td><td>Every sticker gets a type (category) and zone. New category: <strong>introduction</strong></td></tr>
+    <tr><td>12</td><td>Allow Stacking</td><td>Cards CAN overlap on top of each other — no anti-overlap nudge, creating a natural layered feel</td></tr>
   </table>
 </div>
 
@@ -7873,7 +7863,13 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
     walkingInProgress=false;
     toggleMap();
     setTimeout(()=>{
-      // Center selected item in viewport after returning to moodboard
+      // Center viewport on the SIDE of the sticker (not on top)
+      // Position viewport so sticker is visible but bitmoji arrives beside it
+      const stickerW=stickerRef?stickerRef.offsetWidth||200:200;
+      const stickerH=stickerRef?stickerRef.offsetHeight||150:150;
+      // Navigate to the sticker's left side (offset by sticker width + margin)
+      const sideX=worldX-stickerW/2-100; // left side of sticker
+      const sideY=worldY; // same vertical
       centerMoodboardOn(worldX,worldY,'smooth');
       // Multiple resyncs to ensure small map catches the final scroll position
       setTimeout(()=>{
@@ -7925,8 +7921,11 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
         
         const guide=document.createElement('div');
         guide.className='moodboard-bitmoji-guide';
-        const gX=Math.max(50,Math.min(worldX-70,cv.scrollWidth-140));
-        const gY=Math.max(40,Math.min(worldY-20,cv.scrollHeight-160));
+        // Position bitmoji to the LEFT side of the sticker, not on top
+        const sW=stickerRef?stickerRef.offsetWidth||200:200;
+        const sH=stickerRef?stickerRef.offsetHeight||150:150;
+        const gX=Math.max(50,Math.min(worldX-sW/2-120,cv.scrollWidth-140));
+        const gY=Math.max(40,Math.min(worldY-sH/4,cv.scrollHeight-160));
         guide.style.cssText='position:absolute;left:'+gX+'px;top:'+gY+'px;z-index:10002;opacity:1;visibility:visible;animation:bitmojiArriveSlide 0.7s ease-out forwards;';
         guide.innerHTML='<div class="arrive-glow"></div>'
           +'<div class="guide-speech">'+speech+'</div>'
@@ -7949,35 +7948,13 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
   },WALK_DURATION+300);
 }
 
-// ===== LONG-PRESS ON BLANK SPACE TO WALK THERE =====
-let longPressTimer=null;
-let longPressTarget=null;
-mmInner.addEventListener('pointerdown',ev=>{
-  if(!mmExp||walkingInProgress)return;
-  longPressTarget={x:ev.clientX,y:ev.clientY};
-  longPressTimer=setTimeout(()=>{
-    if(!mmExp||!drawMap._sc)return;
-    const target=mapClientToWorld(ev.clientX,ev.clientY);
-    // Haptic feedback
-    try{if(navigator.vibrate)navigator.vibrate(50)}catch(e){}
-    walkBitmojiTo(target.x,target.y);
-  },3000);
-});
-mmInner.addEventListener('pointerup',()=>{clearTimeout(longPressTimer);longPressTimer=null});
-mmInner.addEventListener('pointermove',ev=>{
-  if(longPressTarget&&longPressTimer){
-    const dx=ev.clientX-longPressTarget.x,dy=ev.clientY-longPressTarget.y;
-    if(Math.sqrt(dx*dx+dy*dy)>15){clearTimeout(longPressTimer);longPressTimer=null}
-  }
-});
-mmInner.addEventListener('pointercancel',()=>{clearTimeout(longPressTimer);longPressTimer=null});
+// Long-press walk disabled — character only walks to sticker locations
 
-// Single tap on big map blank area = walk to exact tapped world coordinate
+// Rule: Big map blank area clicks DISABLED — only sticker clicks allowed
+// (prevents character from wandering to empty spaces)
 mapCanvas.addEventListener('click',ev=>{
-  if(!mmExp||walkingInProgress)return;
-  if(ev.target.closest('.sticker'))return;
-  const target=mapClientToWorld(ev.clientX,ev.clientY);
-  walkBitmojiTo(target.x,target.y);
+  // Do nothing on blank area — only sticker clones trigger navigation
+  ev.stopPropagation();
 });
 
 
