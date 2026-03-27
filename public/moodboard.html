@@ -7635,12 +7635,15 @@ function addWaypoints(cat, activeIdx){
   });
 }
 
-// Apply neon glow to a specific map item
+// Apply neon glow to a specific map item + blinking ring
 function applyNeonGlow(target){
-  // Clear previous
+  // Clear previous glow and rings
   mapCanvas.querySelectorAll('.neon-active').forEach(el=>{el.classList.remove('neon-active');el.style.outline='';el.style.boxShadow=''});
+  mapCanvas.querySelectorAll('.filter-glow-ring').forEach(el=>el.remove());
   const sc=drawMap._sc||0.05;
   const ox=drawMap._ox||0,oy=drawMap._oy||0;
+  const cL=parseFloat(mapCanvas.style.left)||0;
+  const cT=parseFloat(mapCanvas.style.top)||0;
   const px=(target.left-ox)*sc;
   const py=(target.top-oy)*sc;
   const items=mapCanvas.querySelectorAll('.sticker,.mi');
@@ -7650,6 +7653,12 @@ function applyNeonGlow(target){
       el.classList.add('neon-active');
     }
   });
+  // Add blinking glow ring
+  const ringSize=Math.max(40,Math.max(target.w,target.h)*sc*1.8);
+  const ring=document.createElement('div');
+  ring.className='filter-glow-ring';
+  ring.style.cssText='left:'+px+'px;top:'+py+'px;width:'+ringSize+'px;height:'+ringSize+'px';
+  mapCanvas.appendChild(ring);
 }
 
 // Cycle navigation from HUD arrows
