@@ -89,18 +89,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 /* Pause all animations inside off-screen stickers — applied by IntersectionObserver */
 .sticker.paused-offscreen,.sticker.paused-offscreen *{animation-play-state:paused!important}
 
-/* Rotation handle — small circular button at bottom-right of sticker */
-.sticker-rotate-handle{
-  position:absolute;bottom:-14px;right:-14px;width:28px;height:28px;border-radius:50%;
-  background:rgba(255,255,255,0.92);border:2px solid rgba(0,0,0,0.15);
-  cursor:grab;z-index:101;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 2px 8px rgba(0,0,0,0.15);opacity:0;transition:opacity 0.2s;
-  touch-action:none;
-}
-.sticker:hover .sticker-rotate-handle,.sticker.dragging .sticker-rotate-handle{opacity:1}
-.sticker-rotate-handle:active{cursor:grabbing;background:rgba(255,255,255,1)}
-.sticker-rotate-handle svg{width:14px;height:14px;color:rgba(0,0,0,0.45)}
-
+/* ===== ZONE VISUAL TINTS ===== */
 .zone-tint{position:absolute;pointer-events:none;z-index:1;border-radius:40px;opacity:0.06;transition:opacity 0.3s}
 .zone-tint-origin{background:radial-gradient(ellipse at center,#4CAF50,transparent 70%)}
 .zone-tint-warroom{background:radial-gradient(ellipse at center,#E53935,transparent 70%)}
@@ -9520,54 +9509,54 @@ function ensureCompanionStickers(force){
 
   const zoneItems={
     work:[
-      {dx:380,dy:-220,html:polaroidPhoto('/images/akash-suit.jpeg','the PM look 😎','4deg')},
-      {dx:-380,dy:320,html:skillStackCard('Skill Stack','🛠️',['Product Strategy','0→1','AI/ML','Web3','Growth','Research','PRDs'],['#E53935','#FF9800','#4CAF50','#2196F3','#9C27B0','#00BCD4','#795548'])},
-      {dx:400,dy:340,html:dragHandleSvg+meterCard('👆','TAP METER','#6A1B9A','#4A148C'),kind:'meter'},
-      {dx:-380,dy:-180,html:quoteCard('Ship fast, learn faster.','work mode','#FFF8E1','#5D4037')},
-      {dx:380,dy:140,html:memeCard('SPRINT REVIEW','"it works on my machine" 🤡','#37474F')},
-      {dx:-380,dy:80,html:'<div class="zc-sticky" style="--r:-6deg;background:#FFF9C4;color:#5D4037;border-bottom:3px solid rgba(255,183,77,0.4)">standup mood:<br>almost done™</div>'},
-      {dx:0,dy:-320,html:'<div class="zc-badge" style="background:rgba(255,183,77,0.15);color:#FF8F00;border:1px solid rgba(255,183,77,0.3)">⚡ Ships on Fridays</div>'},
-      {dx:-120,dy:400,html:dragHandleSvg+flipCard('💼','TAP TO FLIP','First product crashed every Tuesday. We still shipped.','#E8EAF6','#C5CAE9'),kind:'flip'}
+      {dx:420,dy:-80,html:polaroidPhoto('/images/akash-suit.jpeg','the PM look 😎','4deg')},
+      {dx:-420,dy:-60,html:skillStackCard('Skill Stack','🛠️',['Product Strategy','0→1','AI/ML','Web3','Growth','Research','PRDs'],['#E53935','#FF9800','#4CAF50','#2196F3','#9C27B0','#00BCD4','#795548'])},
+      {dx:430,dy:280,html:dragHandleSvg+meterCard('👆','TAP METER','#1a1a2e','#0f3460'),kind:'meter'},
+      {dx:-410,dy:260,html:quoteCard('Ship fast, learn faster.','work mode','#263238','#64B4FF')},
+      {dx:420,dy:120,html:memeCard('SPRINT REVIEW','"it works on my machine" 🤡','#1a2332')},
+      {dx:-400,dy:-240,html:'<div class="zc-sticky" style="--r:-6deg;background:#263238;color:#64B4FF;border-bottom:3px solid rgba(100,180,255,0.2)">standup mood:<br>almost done™</div>'},
+      {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(100,180,255,0.12);color:#64B4FF;border:1px solid rgba(100,180,255,0.25)">⚡ Ships on Fridays</div>'},
+      {dx:-20,dy:360,html:dragHandleSvg+flipCard('💼','TAP TO FLIP','First product crashed every Tuesday. We still shipped.','#1a2332','#263238'),kind:'flip'}
     ],
     portfolio:[
-      {dx:-380,dy:-180,html:skillStackCard('Build Stack','💻',['React','TS','Node','Web3','Figma','AI'],['#61DAFB','#3178C6','#339933','#F6851B','#F24E1E','#AB47BC'])},
-      {dx:400,dy:-200,html:'<div class="zc-mini-card" style="background:#263238;color:#80CBC4;border:1.5px solid rgba(128,203,196,0.2);font-family:monospace;font-size:0.65rem;border-radius:14px;padding:12px 14px;max-width:160px">$ git log --oneline<br>ship v2 🚀<br>fix prod 🔥<br>"final" final fix</div>'},
-      {dx:400,dy:320,html:dragHandleSvg+flipCard('🚀','SCORECARD','3 founded · 2 pivoted · 1 profitable','#FFF3E0','#FFE0B2'),kind:'flip'},
-      {dx:-380,dy:320,html:memeCard('DEV VS PROD','works 😎 → breaks 💀','#37474F')},
-      {dx:0,dy:-320,html:'<div class="zc-badge" style="background:rgba(255,138,101,0.12);color:#FF8A65;border:1px solid rgba(255,138,101,0.25)">🔗 EnterCircles + Recess</div>'},
-      {dx:-120,dy:400,html:dragHandleSvg+meterCard('🎯','SHIP COUNT','#004D40','#00695C'),kind:'meter'},
-      {dx:400,dy:80,html:'<div class="zc-sticky" style="--r:4deg;background:#E0F2F1;color:#004D40;border-bottom:3px solid rgba(0,77,64,0.2)">TODO: ship · iterate · repeat</div>'},
-      {dx:-380,dy:80,html:'<div class="zc-emoji-float" style="font-size:2.5rem">⚡</div>'}
+      {dx:-430,dy:-60,html:skillStackCard('Build Stack','💻',['React','TS','Node','Web3','Figma','AI'],['#61DAFB','#3178C6','#339933','#F6851B','#F24E1E','#AB47BC'])},
+      {dx:440,dy:-80,html:'<div class="zc-mini-card" style="background:#1a1a2e;color:#B39DDB;border:1.5px solid rgba(126,87,194,0.2);font-family:monospace;font-size:0.65rem;border-radius:14px;padding:12px 14px;max-width:160px">$ git log --oneline<br>ship v2 🚀<br>fix prod 🔥<br>"final" final fix</div>'},
+      {dx:440,dy:260,html:dragHandleSvg+flipCard('🚀','SCORECARD','3 founded · 2 pivoted · 1 profitable','#1a1a2e','#2E1065'),kind:'flip'},
+      {dx:-420,dy:260,html:memeCard('DEV VS PROD','works 😎 → breaks 💀','#1a1a2e')},
+      {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(126,87,194,0.12);color:#B39DDB;border:1px solid rgba(126,87,194,0.25)">🔗 EnterCircles + Recess</div>'},
+      {dx:-20,dy:360,html:dragHandleSvg+meterCard('🎯','SHIP COUNT','#2E1065','#581C87'),kind:'meter'},
+      {dx:440,dy:100,html:'<div class="zc-sticky" style="--r:4deg;background:#1a1a2e;color:#B39DDB;border-bottom:3px solid rgba(126,87,194,0.2)">TODO: ship · iterate · repeat</div>'},
+      {dx:-420,dy:-240,html:'<div class="zc-emoji-float" style="font-size:2.5rem">⚡</div>'}
     ],
     origin:[
-      {dx:380,dy:-220,html:polaroidPhoto('/images/akash-photo.webp','chapter zero 📸','-3deg')},
-      {dx:-380,dy:-100,html:'<div class="zc-mini-card" style="background:#FFF8E1;color:#5D4037;border:1.5px solid rgba(255,183,77,0.3);border-radius:14px;padding:12px 14px;max-width:160px;font-family:var(--font-hand);font-size:0.78rem;line-height:1.4">📍 Jeypore → Bhubaneswar → Bengaluru<br>small town dreams, big city hustle</div>'},
-      {dx:400,dy:300,html:dragHandleSvg+flipCard('🧒','FUN FACT','Wrote first code at 15. It could only add.','#E8EAF6','#C5CAE9'),kind:'flip'},
-      {dx:-380,dy:300,html:quoteCard('Started curious, stayed curious.','#life','#EFEBE9','#5D4037')},
-      {dx:0,dy:-320,html:'<div class="zc-badge" style="background:rgba(255,183,77,0.12);color:#FFB300;border:1px solid rgba(255,183,77,0.25)">🌱 Odisha roots</div>'},
-      {dx:-380,dy:-260,html:'<div class="zc-sticky" style="--r:5deg;background:#E3F2FD;color:#1565C0;border-bottom:3px solid rgba(21,101,192,0.2)">Class of \'20 🎓</div>'},
-      {dx:120,dy:380,html:memeCard('FAMILY Q','"what do product managers do?"','#455A64')},
-      {dx:400,dy:60,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🏡</div>'}
+      {dx:400,dy:-120,html:polaroidPhoto('/images/akash-photo.webp','chapter zero 📸','-3deg')},
+      {dx:-400,dy:-60,html:'<div class="zc-mini-card" style="background:#1B3B20;color:#A5D6A7;border:1.5px solid rgba(76,175,80,0.2);border-radius:14px;padding:12px 14px;max-width:160px;font-family:var(--font-hand);font-size:0.78rem;line-height:1.4">📍 Jeypore → Bhubaneswar → Bengaluru<br>small town dreams, big city hustle</div>'},
+      {dx:410,dy:220,html:dragHandleSvg+flipCard('🧒','FUN FACT','Wrote first code at 15. It could only add.','#1B3B20','#2E4A33'),kind:'flip'},
+      {dx:-400,dy:240,html:quoteCard('Started curious, stayed curious.','#life','#1B3B20','#A5D6A7')},
+      {dx:0,dy:-330,html:'<div class="zc-badge" style="background:rgba(76,175,80,0.12);color:#81C784;border:1px solid rgba(76,175,80,0.25)">🌱 Odisha roots</div>'},
+      {dx:-390,dy:-240,html:'<div class="zc-sticky" style="--r:5deg;background:#1B3B20;color:#81C784;border-bottom:3px solid rgba(76,175,80,0.2)">Class of \'20 🎓</div>'},
+      {dx:0,dy:340,html:memeCard('FAMILY Q','"what do product managers do?"','#1B3B20')},
+      {dx:410,dy:40,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🏡</div>'}
     ],
     hobby:[
-      {dx:-380,dy:-180,html:skillStackCard('Now Playing','🎮',['Elden Ring','Valorant','Civ VI','FIFA','Music','Travel'],['#E53935','#FF5252','#FFB300','#66BB6A','#42A5F5','#8D6E63'])},
-      {dx:400,dy:-200,html:dragHandleSvg+meterCard('🎯','HEADSHOT','#1565C0','#0D47A1'),kind:'meter'},
-      {dx:-380,dy:320,html:dragHandleSvg+flipCard('🎵','MUSIC TASTE','60% lo-fi · 25% Bollywood · 10% EDM','#FFF3E0','#FFE0B2'),kind:'flip'},
-      {dx:400,dy:320,html:memeCard('ONE MORE GAME','4 hours later... ⏰','#455A64')},
-      {dx:0,dy:-320,html:'<div class="zc-badge" style="background:rgba(66,165,245,0.12);color:#42A5F5;border:1px solid rgba(66,165,245,0.25)">📷 15 Cities Explored</div>'},
-      {dx:-380,dy:80,html:'<div class="zc-sticky" style="--r:-4deg;background:#FFF9C4;color:#F57F17;border-bottom:3px solid rgba(245,127,23,0.3)">Player 1 Ready 🕹️</div>'},
-      {dx:400,dy:80,html:quoteCard('Mountains > beaches, always.','#travel','#E8EAF6','#283593')},
-      {dx:0,dy:380,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🎧</div>'}
+      {dx:-430,dy:-60,html:skillStackCard('Now Playing','🎮',['Elden Ring','Valorant','Civ VI','FIFA','Music','Travel'],['#E53935','#FF5252','#FFB300','#66BB6A','#42A5F5','#8D6E63'])},
+      {dx:420,dy:-80,html:dragHandleSvg+meterCard('🎯','HEADSHOT','#3E2723','#4E342E'),kind:'meter'},
+      {dx:-420,dy:260,html:dragHandleSvg+flipCard('🎵','MUSIC TASTE','60% lo-fi · 25% Bollywood · 10% EDM','#3E2723','#4E342E'),kind:'flip'},
+      {dx:430,dy:260,html:memeCard('ONE MORE GAME','4 hours later... ⏰','#3E2723')},
+      {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(255,152,0,0.12);color:#FFB74D;border:1px solid rgba(255,152,0,0.25)">📷 15 Cities Explored</div>'},
+      {dx:-400,dy:-240,html:'<div class="zc-sticky" style="--r:-4deg;background:#3E2723;color:#FFB74D;border-bottom:3px solid rgba(255,152,0,0.2)">Player 1 Ready 🕹️</div>'},
+      {dx:420,dy:100,html:quoteCard('Mountains > beaches, always.','#travel','#3E2723','#FFB74D')},
+      {dx:0,dy:340,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🎧</div>'}
     ],
     fun:[
-      {dx:-380,dy:-180,html:memeCard('NEW FEATURE IDEA','"quick 5 min change" 💀','#37474F')},
-      {dx:400,dy:-200,html:memeCard('GOD OF WAR QUOTE','"Do not be sorry. Be better." — Kratos 🪓','#B71C1C')},
-      {dx:-380,dy:320,html:dragHandleSvg+flipCard('🏎️','DREAM GARAGE','GT-R · Supra · M3 · 911 — in that order','#FFF3E0','#FFE0B2'),kind:'flip'},
-      {dx:400,dy:320,html:dragHandleSvg+meterCard('⚔️','BOSS KILLS','#1B5E20','#2E7D32'),kind:'meter'},
-      {dx:0,dy:-320,html:'<div class="zc-badge" style="background:rgba(244,67,54,0.12);color:#EF5350;border:1px solid rgba(244,67,54,0.25)">🔥 Meme Lord</div>'},
-      {dx:-380,dy:80,html:'<div class="zc-sticky" style="--r:-5deg;background:#E3F2FD;color:#1565C0;border-bottom:3px solid rgba(21,101,192,0.2)">git commit -m "please work" 🙏</div>'},
-      {dx:400,dy:80,html:quoteCard('In the darkest times, hope is something you give yourself.','Kratos','#EFEBE9','#BF360C')},
-      {dx:0,dy:380,html:'<div style="font-size:2.7rem;text-align:center">🪓</div>'}
+      {dx:-420,dy:-60,html:memeCard('NEW FEATURE IDEA','"quick 5 min change" 💀','#1a1a1a')},
+      {dx:430,dy:-80,html:memeCard('GOD OF WAR QUOTE','"Do not be sorry. Be better." — Kratos 🪓','#2d1a00')},
+      {dx:-410,dy:260,html:dragHandleSvg+flipCard('🏎️','DREAM GARAGE','GT-R · Supra · M3 · 911 — in that order','#2d1a00','#1a1a1a'),kind:'flip'},
+      {dx:430,dy:260,html:dragHandleSvg+meterCard('⚔️','BOSS KILLS','#4a0000','#8b0000'),kind:'meter'},
+      {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(255,69,0,0.12);color:#FF6347;border:1px solid rgba(255,69,0,0.25)">🔥 Meme Lord</div>'},
+      {dx:-400,dy:-240,html:'<div class="zc-sticky" style="--r:-5deg;background:#1a1a1a;color:#FF6347;border-bottom:3px solid rgba(255,69,0,0.2)">git commit -m "please work" 🙏</div>'},
+      {dx:420,dy:100,html:quoteCard('In the darkest times, hope is something you give yourself.','Kratos','#1a1a1a','#FF6347')},
+      {dx:0,dy:340,html:'<div style="font-size:2.7rem;text-align:center">🪓</div>'}
     ]
   };
 
@@ -9662,63 +9651,6 @@ function buildZoneCardHTML(meta){return '';}
   });
 })();
 
-// ===== ROTATION HANDLE: single-finger rotate for non-interactive stickers =====
-(function(){
-  const rotHandleSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>';
-  let rotTarget=null,rotCenterX=0,rotCenterY=0,rotBaseAngle=0,rotStartAngle=0;
-
-  function addRotateHandles(){
-    document.querySelectorAll('#canvas > .sticker').forEach(s=>{
-      if(s.querySelector('.sticker-rotate-handle'))return;
-      if(s.classList.contains('has-drag-handle'))return; // skip interactive
-      const h=document.createElement('div');
-      h.className='sticker-rotate-handle';
-      h.innerHTML=rotHandleSVG;
-      s.style.position='relative';
-      s.appendChild(h);
-      function startRot(e){
-        e.stopPropagation();e.preventDefault();
-        rotTarget=s;
-        const rect=s.getBoundingClientRect();
-        rotCenterX=rect.left+rect.width/2;
-        rotCenterY=rect.top+rect.height/2;
-        rotBaseAngle=getCurrentRotation(s);
-        const cx=e.touches?e.touches[0].clientX:e.clientX;
-        const cy=e.touches?e.touches[0].clientY:e.clientY;
-        rotStartAngle=Math.atan2(cy-rotCenterY,cx-rotCenterX)*180/Math.PI;
-      }
-      h.addEventListener('mousedown',startRot);
-      h.addEventListener('touchstart',startRot,{passive:false});
-    });
-  }
-
-  function moveRot(e){
-    if(!rotTarget)return;
-    if(e.cancelable)e.preventDefault();
-    const cx=e.touches?e.touches[0].clientX:e.clientX;
-    const cy=e.touches?e.touches[0].clientY:e.clientY;
-    const angle=Math.atan2(cy-rotCenterY,cx-rotCenterX)*180/Math.PI;
-    const delta=angle-rotStartAngle;
-    rotTarget.style.transform='rotate('+(rotBaseAngle+delta)+'deg)';
-  }
-  function endRot(){rotTarget=null;}
-
-  document.addEventListener('mousemove',moveRot);
-  document.addEventListener('touchmove',moveRot,{passive:false});
-  document.addEventListener('mouseup',endRot);
-  document.addEventListener('touchend',endRot);
-
-  // Run after stickers are placed
-  setTimeout(addRotateHandles,800);
-  // Re-run after companion stickers are added
-  const origEnsure=window.ensureCompanionStickers;
-  if(origEnsure){
-    window.ensureCompanionStickers=function(f){
-      origEnsure(f);
-      setTimeout(addRotateHandles,100);
-    };
-  }
-})();
 setTimeout(()=>{
   ensureIntroCluster();
   ensureZoneIntroCards();
@@ -9734,7 +9666,7 @@ setTimeout(()=>{
   greet.innerHTML='<div class="greet-bubble">Hey there! 👋</div><img src="/images/bitmoji-full.webp" alt="Akash waving"/>';
   document.body.appendChild(greet);
   setTimeout(()=>greet.remove(),3200);
-},120);
+},120)
 
 window.addEventListener('resize',debounce(()=>{
   if(mapBootstrapped)bootstrapMap(false);
