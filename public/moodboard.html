@@ -970,6 +970,22 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
   z-index:300!important;
   filter:brightness(1.15)!important;
 }
+/* Blinking glow ring around cycling filter items */
+@keyframes filterItemBlink{
+  0%,100%{box-shadow:0 0 0 4px rgba(255,215,0,0.9),0 0 18px rgba(255,215,0,0.5),0 0 36px rgba(255,215,0,0.2);transform:translate(-50%,-50%) scale(1)}
+  50%{box-shadow:0 0 0 8px rgba(255,215,0,0.5),0 0 28px rgba(255,215,0,0.3),0 0 50px rgba(255,215,0,0.15);transform:translate(-50%,-50%) scale(1.15)}
+}
+.filter-glow-ring{
+  position:absolute;pointer-events:none;z-index:998;
+  border-radius:50%;border:2.5px solid rgba(255,215,0,0.9);
+  animation:filterItemBlink 1s ease-in-out infinite;
+  transform:translate(-50%,-50%);
+}
+/* Zone track label pulse */
+@keyframes zoneTrackPulse{
+  0%,100%{opacity:0.85;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.05)}
+}
 
 /* ===== CYCLE COUNTER HUD ===== */
 .cycle-counter-hud{
