@@ -1836,25 +1836,24 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="zone-tint zone-tint-playground" style="left:0;top:10200px;width:6500px;height:3800px"></div>
 <div class="zone-tint zone-tint-memealley" style="left:7500px;top:6200px;width:6500px;height:7800px"></div>
 <!-- Zone boundary dotted lines (synced with big map zones) -->
-<!-- Horizontal: Origin/Work top → Portfolio/Hobby mid at y≈5800 -->
-<div class="zone-divider h origin" style="left:200px;top:5800px;width:13600px"></div>
-<!-- Horizontal: Portfolio/Hobby → Fun/Hobby bottom at y≈10200 -->
-<div class="zone-divider h fun" style="left:200px;top:10200px;width:13600px"></div>
-<!-- Vertical: Origin ↔ Work at x≈7500 (top half) -->
-<div class="zone-divider v work" style="left:7500px;top:200px;height:5600px"></div>
-<!-- Vertical: Portfolio ↔ Fun (bottom half) at x≈7500 -->
-<div class="zone-divider v fun" style="left:7500px;top:5800px;height:8200px"></div>
+<!-- Horizontal: Origin/Work (y≤5600) → Portfolio/Fun (y≥6200), midpoint y=5900 -->
+<div class="zone-divider h origin" style="left:200px;top:5900px;width:13600px"></div>
+<!-- Horizontal: Portfolio (y≤9800) → Hobby (y≥10400), midpoint y=10100 (left half only) -->
+<div class="zone-divider h fun" style="left:200px;top:10100px;width:6550px"></div>
+<!-- Vertical: Origin/Portfolio/Hobby (x≤5800) ↔ Work/Fun (x≥7700), midpoint x=6750 -->
+<div class="zone-divider v work" style="left:6750px;top:200px;height:5700px"></div>
+<!-- Vertical: Portfolio/Hobby ↔ Fun (bottom half) -->
+<div class="zone-divider v fun" style="left:6750px;top:5900px;height:8100px"></div>
 
 <!-- Zone ground labels — road markings near boundaries -->
-<div class="zone-ground-label horizontal" style="left:2600px;top:5550px;font-size:80px;color:#4CAF50">ORIGIN</div>
-<div class="zone-ground-label horizontal" style="left:8800px;top:5550px;font-size:80px;color:#E53935">WORK</div>
-<div class="zone-ground-label horizontal" style="left:2600px;top:5880px;font-size:70px;color:#42A5F5">PORTFOLIO</div>
-<div class="zone-ground-label horizontal" style="left:8800px;top:5880px;font-size:70px;color:#AB47BC">FUN</div>
-<div class="zone-ground-label horizontal" style="left:2600px;top:9950px;font-size:70px;color:#42A5F5">PORTFOLIO</div>
-<div class="zone-ground-label horizontal" style="left:2600px;top:10280px;font-size:70px;color:#FF9800">HOBBY</div>
-<div class="zone-ground-label horizontal" style="left:8800px;top:9950px;font-size:70px;color:#AB47BC">FUN</div>
-<div class="zone-ground-label vertical" style="left:7250px;top:1500px;font-size:70px;color:#4CAF50">ORIGIN</div>
-<div class="zone-ground-label vertical" style="left:7580px;top:1500px;font-size:70px;color:#E53935">WORK</div>
+<div class="zone-ground-label horizontal" style="left:2600px;top:5620px;font-size:80px;color:#4CAF50">ORIGIN ↑</div>
+<div class="zone-ground-label horizontal" style="left:8800px;top:5620px;font-size:80px;color:#E53935">WORK ↑</div>
+<div class="zone-ground-label horizontal" style="left:2600px;top:5980px;font-size:70px;color:#42A5F5">↓ PORTFOLIO</div>
+<div class="zone-ground-label horizontal" style="left:8800px;top:5980px;font-size:70px;color:#AB47BC">↓ FUN</div>
+<div class="zone-ground-label horizontal" style="left:2600px;top:9820px;font-size:70px;color:#42A5F5">PORTFOLIO ↑</div>
+<div class="zone-ground-label horizontal" style="left:2600px;top:10180px;font-size:70px;color:#FF9800">↓ HOBBY</div>
+<div class="zone-ground-label vertical" style="left:6500px;top:1500px;font-size:70px;color:#4CAF50">ORIGIN</div>
+<div class="zone-ground-label vertical" style="left:6830px;top:1500px;font-size:70px;color:#E53935">WORK</div>
 
 <!-- Zone creative intro cards (wrapped as stickers for map sync) -->
 
