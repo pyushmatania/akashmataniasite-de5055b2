@@ -111,20 +111,42 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .zone-divider.portfolio{border-color:rgba(66,165,245,0.55)}
 .zone-divider.fun{border-color:rgba(255,152,0,0.55)}
 /* Zone intro cards — bold card style */
-.zone-intro-creative{width:340px;border-radius:22px;overflow:hidden;background:#fff;border:2.5px solid #f0ece6;box-shadow:0 8px 32px rgba(0,0,0,0.1),0 2px 8px rgba(0,0,0,0.04);cursor:default}
-.zone-intro-creative .zic-header{padding:22px 22px 14px;position:relative;overflow:hidden}
-.zone-intro-creative .zic-icon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:12px;position:relative;z-index:1;border:2px solid rgba(255,255,255,0.4);box-shadow:0 4px 16px rgba(0,0,0,0.12)}
-.zone-intro-creative .zic-title{font-family:var(--font-fun);font-weight:800;font-size:1.15rem;letter-spacing:0.04em;position:relative;z-index:1;margin-bottom:4px}
-.zone-intro-creative .zic-subtitle{font-family:var(--font-sans);font-size:0.74rem;opacity:0.65;position:relative;z-index:1;line-height:1.5}
-.zone-intro-creative .zic-body{padding:0 22px 20px}
-.zone-intro-creative .zic-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.zone-intro-creative .zic-tag{font-family:var(--font-sans);font-size:0.65rem;font-weight:600;padding:5px 12px;border-radius:20px;letter-spacing:0.03em;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;border:1.5px solid rgba(0,0,0,0.06)}
+.zone-intro-creative{width:380px;min-height:420px;border-radius:28px;overflow:hidden;background:#fff;border:2.5px solid #f0ece6;box-shadow:0 12px 48px rgba(0,0,0,0.12),0 4px 12px rgba(0,0,0,0.06);cursor:default;position:relative}
+.zone-intro-creative .zic-header{padding:28px 26px 18px;position:relative;overflow:hidden}
+.zone-intro-creative .zic-icon{width:60px;height:60px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:14px;position:relative;z-index:1;border:2px solid rgba(255,255,255,0.4);box-shadow:0 6px 20px rgba(0,0,0,0.15);transition:transform 0.3s}
+.zone-intro-creative .zic-icon:hover{transform:scale(1.15) rotate(5deg)}
+.zone-intro-creative .zic-title{font-family:var(--font-fun);font-weight:800;font-size:1.35rem;letter-spacing:0.04em;position:relative;z-index:1;margin-bottom:6px}
+.zone-intro-creative .zic-subtitle{font-family:var(--font-sans);font-size:0.78rem;opacity:0.65;position:relative;z-index:1;line-height:1.55}
+.zone-intro-creative .zic-body{padding:0 26px 26px}
+.zone-intro-creative .zic-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.zone-intro-creative .zic-tag{font-family:var(--font-sans);font-size:0.68rem;font-weight:600;padding:6px 14px;border-radius:20px;letter-spacing:0.03em;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s,background 0.2s;border:1.5px solid rgba(0,0,0,0.06)}
+.zone-intro-creative .zic-tag:hover{transform:scale(1.08);box-shadow:0 2px 8px rgba(0,0,0,0.1)}
 .zone-intro-creative .zic-tag:active{transform:scale(0.92)}
-.zone-intro-creative .zic-divider{height:1.5px;background:linear-gradient(90deg,transparent,rgba(0,0,0,0.08),transparent);margin:12px 0}
-.zone-intro-creative .zic-stat{display:flex;align-items:center;gap:8px;font-family:var(--font-hand);font-size:0.85rem;color:var(--text2);margin-top:8px}
-.zone-intro-creative .zic-counter{display:flex;align-items:center;gap:6px;margin-top:10px;font-family:var(--font-fun);font-size:0.72rem;color:var(--text3)}
-.zone-intro-creative .zic-counter button{width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(0,0,0,0.1);background:#fff;font-size:0.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.zone-intro-creative .zic-divider{height:1.5px;background:linear-gradient(90deg,transparent,rgba(0,0,0,0.08),transparent);margin:14px 0}
+.zone-intro-creative .zic-stat{display:flex;align-items:center;gap:8px;font-family:var(--font-hand);font-size:0.9rem;color:var(--text2);margin-top:10px}
+.zone-intro-creative .zic-counter{display:flex;align-items:center;gap:8px;margin-top:12px;font-family:var(--font-fun);font-size:0.75rem;color:var(--text3)}
+.zone-intro-creative .zic-counter button{width:32px;height:32px;border-radius:50%;border:1.5px solid rgba(0,0,0,0.1);background:#fff;font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.zone-intro-creative .zic-counter button:hover{transform:scale(1.1);box-shadow:0 2px 8px rgba(0,0,0,0.1)}
 .zone-intro-creative .zic-counter button:active{transform:scale(0.85);background:#f5f5f5}
+.zone-intro-creative .zic-explore{margin-top:16px;text-align:center}
+.zone-intro-creative .zic-explore-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:20px;border:none;cursor:pointer;font-family:var(--font-fun);font-size:0.7rem;font-weight:700;letter-spacing:0.04em;transition:all 0.2s;box-shadow:0 3px 12px rgba(0,0,0,0.12)}
+.zone-intro-creative .zic-explore-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.18)}
+.zone-intro-creative .zic-explore-btn:active{transform:scale(0.95)}
+.zone-intro-creative .zic-items-count{display:inline-block;padding:3px 8px;border-radius:10px;font-family:var(--font-fun);font-size:0.6rem;font-weight:700;margin-left:8px;opacity:0.7}
+/* Drag handle for interactive cards */
+.sticker-drag-handle{position:absolute;top:8px;right:8px;z-index:100;width:32px;height:32px;border-radius:8px;background:rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;transition:all 0.2s;opacity:0.5}
+.sticker-drag-handle:hover{opacity:1;background:rgba(0,0,0,0.1);transform:scale(1.1)}
+.sticker-drag-handle:active{cursor:grabbing;opacity:1;transform:scale(0.95)}
+.sticker-drag-handle svg{width:16px;height:16px;color:var(--text3)}
+.sticker.has-drag-handle{cursor:default!important}
+.sticker.has-drag-handle:active{cursor:default!important}
+/* Zone ground labels — road marking style */
+.zone-ground-label{position:absolute;pointer-events:none;z-index:3;font-family:var(--font-fun);font-weight:900;letter-spacing:0.3em;text-transform:uppercase;opacity:0.12;line-height:1}
+.zone-ground-label.horizontal{writing-mode:horizontal-tb}
+.zone-ground-label.vertical{writing-mode:vertical-rl;text-orientation:mixed}
+/* Glowing intro card on map */
+.map-intro-glow{animation:mapIntroGlow 2.5s ease-in-out infinite;border-radius:12px}
+@keyframes mapIntroGlow{0%,100%{box-shadow:0 0 15px var(--glow-color,rgba(76,175,80,0.6)),0 0 30px var(--glow-color,rgba(76,175,80,0.3))}50%{box-shadow:0 0 25px var(--glow-color,rgba(76,175,80,0.8)),0 0 50px var(--glow-color,rgba(76,175,80,0.4))}}
 .zone-signpost-marker{position:absolute;pointer-events:none;z-index:9;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;min-width:138px;padding:8px 14px;border-radius:10px;font-family:var(--font-fun);font-size:0.75rem;font-weight:800;color:#fff;letter-spacing:0.08em;text-transform:uppercase;text-align:center;border:2px solid rgba(255,255,255,0.32);box-shadow:0 3px 12px rgba(0,0,0,0.22);text-shadow:0 1px 2px rgba(0,0,0,0.35)}
 
 /* ===== PROJECT SHOWCASE CARDS ===== */
@@ -1823,127 +1845,159 @@ body.map-expanded .scroll-counter{display:none!important}
 <!-- Vertical: Portfolio ↔ Fun (bottom half) at x≈7500 -->
 <div class="zone-divider v fun" style="left:7500px;top:5800px;height:8200px"></div>
 
+<!-- Zone ground labels — road markings near boundaries -->
+<div class="zone-ground-label horizontal" style="left:2600px;top:5550px;font-size:80px;color:#4CAF50">ORIGIN</div>
+<div class="zone-ground-label horizontal" style="left:8800px;top:5550px;font-size:80px;color:#E53935">WORK</div>
+<div class="zone-ground-label horizontal" style="left:2600px;top:5880px;font-size:70px;color:#42A5F5">PORTFOLIO</div>
+<div class="zone-ground-label horizontal" style="left:8800px;top:5880px;font-size:70px;color:#AB47BC">FUN</div>
+<div class="zone-ground-label horizontal" style="left:2600px;top:9950px;font-size:70px;color:#42A5F5">PORTFOLIO</div>
+<div class="zone-ground-label horizontal" style="left:2600px;top:10280px;font-size:70px;color:#FF9800">HOBBY</div>
+<div class="zone-ground-label horizontal" style="left:8800px;top:9950px;font-size:70px;color:#AB47BC">FUN</div>
+<div class="zone-ground-label vertical" style="left:7250px;top:1500px;font-size:70px;color:#4CAF50">ORIGIN</div>
+<div class="zone-ground-label vertical" style="left:7580px;top:1500px;font-size:70px;color:#E53935">WORK</div>
+
 <!-- Zone creative intro cards (wrapped as stickers for map sync) -->
 
 <!-- ORIGIN — Personal & About (center: 2900,2800) -->
-<div class="sticker zone-intro-creative" data-zone="origin" style="left:2740px;top:2600px;transform:rotate(-1deg)">
-  <div class="zic-header" style="background:linear-gradient(135deg,rgba(76,175,80,0.12),rgba(200,230,201,0.2))">
-    <div class="zic-icon" style="background:linear-gradient(135deg,#4CAF50,#81C784)">📸</div>
+<div class="sticker zone-intro-creative has-drag-handle" data-zone="origin" data-type="interactive" style="left:2740px;top:2400px;transform:rotate(-1deg)">
+  <div class="sticker-drag-handle" data-no-sticker-drag="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
+  <div class="zic-header" style="background:linear-gradient(135deg,rgba(76,175,80,0.15),rgba(200,230,201,0.25))">
+    <div class="zic-icon" style="background:linear-gradient(135deg,#4CAF50,#81C784)" data-no-sticker-drag="true">📸</div>
     <div class="zic-title" style="color:#2E7D32">ORIGIN STORY</div>
     <div class="zic-subtitle" style="color:#4E7D52">Where it all began — the person behind the products</div>
   </div>
-  <div class="zic-body">
+  <div class="zic-body" data-no-sticker-drag="true">
     <div class="zic-divider"></div>
     <div class="zic-tags">
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎓 Education</span>
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📍 Bengaluru</span>
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🌱 Growth</span>
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">💭 Values</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎓 B.Tech CS</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📍 Bengaluru</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🌱 Growth</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">💭 Values</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🐕 Mr. Puchu</span>
     </div>
-    <div class="zic-stat">✦ B.Tech CS · OUTR Bhubaneswar</div>
+    <div class="zic-stat">✦ OUTR Bhubaneswar → Bengaluru</div>
+    <div class="zic-stat">✦ Jeypore → Big city dreams realized</div>
     <div class="zic-counter">
       <span>Vibes received:</span>
-      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1">👍</button>
+      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zone-intro-creative').style.boxShadow='0 0 30px rgba(76,175,80,0.4),0 12px 48px rgba(0,0,0,0.12)'}">👍</button>
       <span style="font-weight:700;min-width:20px;text-align:center">0</span>
     </div>
+    <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#4CAF50,#81C784);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'origin')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(76,175,80,0.1);color:#2E7D32">Photos · About · Values</span></div>
   </div>
 </div>
 
 <!-- WORK — Professional (center: 10850,2800) -->
-<div class="sticker zone-intro-creative" data-zone="work" style="left:10690px;top:2600px;transform:rotate(0.8deg)">
-  <div class="zic-header" style="background:linear-gradient(135deg,rgba(229,57,53,0.12),rgba(239,154,154,0.15))">
-    <div class="zic-icon" style="background:linear-gradient(135deg,#E53935,#EF5350)">🎯</div>
+<div class="sticker zone-intro-creative has-drag-handle" data-zone="work" data-type="interactive" style="left:10690px;top:2400px;transform:rotate(0.8deg)">
+  <div class="sticker-drag-handle" data-no-sticker-drag="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
+  <div class="zic-header" style="background:linear-gradient(135deg,rgba(229,57,53,0.15),rgba(239,154,154,0.2))">
+    <div class="zic-icon" style="background:linear-gradient(135deg,#E53935,#EF5350)" data-no-sticker-drag="true">🎯</div>
     <div class="zic-title" style="color:#C62828">WAR ROOM</div>
     <div class="zic-subtitle" style="color:#8E3A3A">8+ years of building products that matter</div>
   </div>
-  <div class="zic-body">
+  <div class="zic-body" data-no-sticker-drag="true">
     <div class="zic-divider"></div>
     <div class="zic-tags">
-      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🚀 Fintech</span>
-      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🌐 Web3</span>
-      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📊 Strategy</span>
-      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">⚡ Growth</span>
+      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🚀 Fintech</span>
+      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🌐 Web3</span>
+      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📊 Strategy</span>
+      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">⚡ Growth</span>
+      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🏗️ 0→1</span>
     </div>
-    <div class="zic-stat">✦ Founder · PM · Builder</div>
+    <div class="zic-stat">✦ Founder · PM · Builder · Dreamer</div>
+    <div class="zic-stat">✦ "Ship fast, learn faster, iterate always"</div>
     <div class="zic-counter">
       <span>Ships launched:</span>
-      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1">🚢</button>
+      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zone-intro-creative').style.boxShadow='0 0 30px rgba(229,57,53,0.4),0 12px 48px rgba(0,0,0,0.12)'}">🚢</button>
       <span style="font-weight:700;min-width:20px;text-align:center">0</span>
     </div>
+    <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#E53935,#EF5350);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'warroom')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(229,57,53,0.1);color:#C62828">PRDs · Memes · Badges</span></div>
   </div>
 </div>
 
 <!-- PORTFOLIO — Creative (center: 2800,8000) -->
-<div class="sticker zone-intro-creative" data-zone="portfolio" style="left:2640px;top:7800px;transform:rotate(-0.5deg)">
-  <div class="zic-header" style="background:linear-gradient(135deg,rgba(66,165,245,0.12),rgba(144,202,249,0.15))">
-    <div class="zic-icon" style="background:linear-gradient(135deg,#42A5F5,#90CAF9)">🚀</div>
+<div class="sticker zone-intro-creative has-drag-handle" data-zone="portfolio" data-type="interactive" style="left:2640px;top:7600px;transform:rotate(-0.5deg)">
+  <div class="sticker-drag-handle" data-no-sticker-drag="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
+  <div class="zic-header" style="background:linear-gradient(135deg,rgba(66,165,245,0.15),rgba(144,202,249,0.2))">
+    <div class="zic-icon" style="background:linear-gradient(135deg,#42A5F5,#90CAF9)" data-no-sticker-drag="true">🚀</div>
     <div class="zic-title" style="color:#1565C0">LAUNCHPAD</div>
     <div class="zic-subtitle" style="color:#3D6E99">Projects shipped, products launched, ideas realized</div>
   </div>
-  <div class="zic-body">
+  <div class="zic-body" data-no-sticker-drag="true">
     <div class="zic-divider"></div>
     <div class="zic-tags">
-      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">💻 SaaS</span>
-      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📱 Apps</span>
-      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎨 Design</span>
-      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🔧 Build</span>
+      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">💻 SaaS</span>
+      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📱 Apps</span>
+      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎨 Design</span>
+      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🔧 Build</span>
+      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎬 Media</span>
     </div>
-    <div class="zic-stat">✦ EnterCircles · Recess · More</div>
+    <div class="zic-stat">✦ EnterCircles · Recess · Neural OS</div>
+    <div class="zic-stat">✦ "From napkin sketch to Series A pitch"</div>
     <div class="zic-counter">
       <span>Ideas sparked:</span>
-      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1">💡</button>
+      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zone-intro-creative').style.boxShadow='0 0 30px rgba(66,165,245,0.4),0 12px 48px rgba(0,0,0,0.12)'}">💡</button>
       <span style="font-weight:700;min-width:20px;text-align:center">0</span>
     </div>
+    <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#42A5F5,#90CAF9);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'launchpad')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(66,165,245,0.1);color:#1565C0">7 Projects · Cases</span></div>
   </div>
 </div>
 
 <!-- HOBBY — Interests (center: 3150,12200) -->
-<div class="sticker zone-intro-creative" data-zone="hobby" style="left:2990px;top:12000px;transform:rotate(0.6deg)">
-  <div class="zic-header" style="background:linear-gradient(135deg,rgba(255,152,0,0.12),rgba(255,224,130,0.15))">
-    <div class="zic-icon" style="background:linear-gradient(135deg,#FF9800,#FFB74D)">🎮</div>
+<div class="sticker zone-intro-creative has-drag-handle" data-zone="hobby" data-type="interactive" style="left:2990px;top:11800px;transform:rotate(0.6deg)">
+  <div class="sticker-drag-handle" data-no-sticker-drag="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
+  <div class="zic-header" style="background:linear-gradient(135deg,rgba(255,152,0,0.15),rgba(255,224,130,0.2))">
+    <div class="zic-icon" style="background:linear-gradient(135deg,#FF9800,#FFB74D)" data-no-sticker-drag="true">🎮</div>
     <div class="zic-title" style="color:#E65100">HOBBY CORNER</div>
     <div class="zic-subtitle" style="color:#8E5A1A">The things that keep me sane — gaming, chai, vibes</div>
   </div>
-  <div class="zic-body">
+  <div class="zic-body" data-no-sticker-drag="true">
     <div class="zic-divider"></div>
     <div class="zic-tags">
-      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">☕ Chai</span>
-      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎮 Gaming</span>
-      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎵 Music</span>
-      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📚 Books</span>
+      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">☕ Chai</span>
+      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎮 Gaming</span>
+      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎵 Music</span>
+      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📚 Books</span>
+      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎬 Movies</span>
     </div>
     <div class="zic-stat">✦ Level: Certified Enthusiast</div>
+    <div class="zic-stat">✦ "Chai > Coffee. This is non-negotiable."</div>
     <div class="zic-counter">
       <span>Chai cups today:</span>
-      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1">☕</button>
+      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zone-intro-creative').style.boxShadow='0 0 30px rgba(255,152,0,0.4),0 12px 48px rgba(0,0,0,0.12)'}">☕</button>
       <span style="font-weight:700;min-width:20px;text-align:center">0</span>
     </div>
+    <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#FF9800,#FFB74D);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'playground')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(255,152,0,0.1);color:#E65100">Games · Music · Vibes</span></div>
   </div>
 </div>
 
 <!-- FUN — Memes (center: 10850,10200) -->
-<div class="sticker zone-intro-creative" data-zone="fun" style="left:10690px;top:10000px;transform:rotate(-0.7deg)">
-  <div class="zic-header" style="background:linear-gradient(135deg,rgba(171,71,188,0.12),rgba(225,190,231,0.15))">
-    <div class="zic-icon" style="background:linear-gradient(135deg,#AB47BC,#CE93D8)">😂</div>
+<div class="sticker zone-intro-creative has-drag-handle" data-zone="fun" data-type="interactive" style="left:10690px;top:9800px;transform:rotate(-0.7deg)">
+  <div class="sticker-drag-handle" data-no-sticker-drag="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
+  <div class="zic-header" style="background:linear-gradient(135deg,rgba(171,71,188,0.15),rgba(225,190,231,0.2))">
+    <div class="zic-icon" style="background:linear-gradient(135deg,#AB47BC,#CE93D8)" data-no-sticker-drag="true">😂</div>
     <div class="zic-title" style="color:#7B1FA2">MEME ALLEY</div>
     <div class="zic-subtitle" style="color:#7A4A8A">Where humor meets hustle — PM memes & fun stuff</div>
   </div>
-  <div class="zic-body">
+  <div class="zic-body" data-no-sticker-drag="true">
     <div class="zic-divider"></div>
     <div class="zic-tags">
-      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">😎 Vibes</span>
-      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎭 Memes</span>
-      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎉 Fun</span>
-      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">✨ Random</span>
+      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">😎 Vibes</span>
+      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎭 Memes</span>
+      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎉 Fun</span>
+      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">✨ Random</span>
+      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎰 Games</span>
     </div>
     <div class="zic-stat">✦ Procrastination Level: Expert</div>
+    <div class="zic-stat">✦ "If you can't laugh at your code, rewrite it"</div>
     <div class="zic-counter">
       <span>LOLs collected:</span>
-      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1">😂</button>
+      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zone-intro-creative').style.boxShadow='0 0 30px rgba(171,71,188,0.4),0 12px 48px rgba(0,0,0,0.12)'}">😂</button>
       <span style="font-weight:700;min-width:20px;text-align:center">0</span>
     </div>
+    <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#AB47BC,#CE93D8);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'memealley')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(171,71,188,0.1);color:#7B1FA2">Memes · Games · Vibes</span></div>
   </div>
 </div>
+
 
 <!-- ===== YOUR PHOTOS ===== -->
 
@@ -3068,7 +3122,7 @@ body.map-expanded .scroll-counter{display:none!important}
 <nav class="bottom-nav">
   <a href="#" onclick="scrollToZone(event,'hub')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Home</a>
   <a href="#" id="workBtn" onclick="toggleWorkPanel(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Work</a>
-  <a href="#" class="active" onclick="scrollToZone(event,'playground')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>Play</a>
+  <a href="#" class="active" id="playBtn" onclick="cycleIntroCards(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>Play</a>
   <a href="#" id="aboutBtn" onclick="toggleAboutPanel(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>About</a>
   <a href="#" id="contactBtn" onclick="toggleContactPanel(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg>Contact</a>
 </nav>
@@ -3263,6 +3317,38 @@ function scrollToZone(e,zone){
   setTimeout(()=>{flash.style.opacity='0'},400);
 }
 const MOODBOARD_VIEW_SCALE_NAV=window.innerWidth<=768?0.6:0.72;
+
+// ===== PLAY BUTTON — cycles through intro cards =====
+let _playIntroIdx=-1;
+const _playIntroTargets=[
+  {x:7000,y:7000,label:'Intro Card'},
+  {x:2900,y:2600,label:'Origin'},
+  {x:10850,y:2600,label:'Work'},
+  {x:2800,y:7800,label:'Portfolio'},
+  {x:3150,y:12000,label:'Hobby'},
+  {x:10850,y:10000,label:'Fun'},
+];
+function cycleIntroCards(e){
+  if(e){e.preventDefault();e.stopPropagation();}
+  _playIntroIdx=(_playIntroIdx+1)%_playIntroTargets.length;
+  const t=_playIntroTargets[_playIntroIdx];
+  const scale=(typeof MOODBOARD_VIEW_SCALE==='number'?MOODBOARD_VIEW_SCALE:0.5);
+  const vp=document.getElementById('viewport');
+  const worldW=14000,worldH=14000;
+  const maxX=Math.max(0,worldW*scale-vp.clientWidth);
+  const maxY=Math.max(0,worldH*scale-vp.clientHeight);
+  vp.scrollTo({
+    left:Math.max(0,Math.min(t.x*scale-vp.clientWidth/2,maxX)),
+    top:Math.max(0,Math.min(t.y*scale-vp.clientHeight/2,maxY)),
+    behavior:'smooth'
+  });
+  // Brief toast
+  const toast=document.createElement('div');
+  toast.className='boundary-toast edge-bottom show';
+  toast.textContent='📍 '+t.label+' '+(_playIntroIdx===0?'— center':'— zone intro');
+  document.body.appendChild(toast);
+  setTimeout(()=>toast.remove(),1800);
+}
 </script>
 
 <!-- ==================== CONTACT PANEL ==================== -->
@@ -4442,8 +4528,14 @@ document.addEventListener('touchstart',e=>{
 
 function sD(e){
   // Block sticker drag when interacting with internal interactive elements
-  const noDragTarget=e.target&&e.target.closest('.tlg-move-btn,button,input,textarea,select,a,[data-no-sticker-drag="true"],.tg-char,.tg-throne-target,.ek-ingredient,.ek-bowl,.sb-skill,.sb-stack-zone,.scratch-cover,.sticker-mood input[type=range],.zic-tag,.zic-icon,.zic-counter,.tlg-item,.c-emoji,.c-count');
+  const noDragTarget=e.target&&e.target.closest('.tlg-move-btn,button,input,textarea,select,a,[data-no-sticker-drag="true"],.tg-char,.tg-throne-target,.ek-ingredient,.ek-bowl,.sb-skill,.sb-stack-zone,.scratch-cover,.sticker-mood input[type=range],.zic-tag,.zic-icon,.zic-counter,.zic-body,.zic-explore-btn,.zic-items-count,.tlg-item,.c-emoji,.c-count');
   if(noDragTarget){e.stopPropagation();return;}
+  // For cards with drag handles, only allow dragging from the handle
+  const stickerEl=e.target.closest('.sticker');
+  if(stickerEl&&stickerEl.classList.contains('has-drag-handle')){
+    const isHandle=e.target.closest('.sticker-drag-handle');
+    if(!isHandle){e.stopPropagation();return;}
+  }
   e.stopPropagation();
   // Two-finger rotation start (both on sticker)
   if(e.touches&&e.touches.length===2){
@@ -6020,6 +6112,9 @@ stats: `
 
   <div class="prompt-block"><div class="prompt-label">Prompt 39 — Easter Egg Update + Merge</div><div class="prompt-text">"Unable to merge conflicts. First update the doc and add all these to easter egg and then create pr and merge. Fix the conflicts."</div></div>
   <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">Fixed merge conflict via git rebase origin/main (clean rebase, no file conflicts). Updated Stats grid (480KB, 8500 lines, 280+ stickers, 12 games, 43 versions, 50 prompts — plus 4 new stat cards). Updated fun facts (sticker count, versions, added zone cards and games discoveries). Added v43.0 timeline entry. Prompt log updated. PR created and merged.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 40 — Zone Ground Labels + Drag Handles + Play Nav</div><div class="prompt-text">"Add zone labels painted on the ground near boundary lines, like road markings. Add drag handle on interactive cards — make card non-draggable except from handle. Play button should cycle through intro cards. Make intro cards taller with more content. Glowing boundaries on intro cards in small/big map."</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v44.0: Road-marking zone ground labels on moodboard canvas + map (10 labels near every boundary, faded font-weight:900, 0.12 opacity). Drag handle grip pattern on all interactive cards — whole card no longer draggable, only the ⠿ handle. Zone intro cards redesigned: 380px wide, min-height 420px, "Explore Zone" buttons, extra stat lines, 5 tags each, counter-glow easter egg at 5 taps. Play nav button now cycles hub→origin→work→portfolio→hobby→fun with toast. Map clone intro cards get animated glowing borders per zone color. 9 ground labels added to big map too.</div></div>
 </div>
 <div class="inv-section">
   <h3>🧱 Tech Stack</h3>
@@ -6578,6 +6673,23 @@ function addMapDecorations(cw, ch){
      el.textContent=sp.label;
    });
 
+   // === ZONE GROUND LABELS — road marking style near boundaries ===
+   const groundLabels=[
+     {x:18,y:38,label:'ORIGIN',color:'rgba(76,175,80,0.2)',size:Math.max(10,cw*0.012),rot:0},
+     {x:60,y:38,label:'WORK',color:'rgba(229,57,53,0.2)',size:Math.max(10,cw*0.012),rot:0},
+     {x:18,y:43,label:'PORTFOLIO',color:'rgba(66,165,245,0.18)',size:Math.max(9,cw*0.01),rot:0},
+     {x:60,y:43,label:'FUN',color:'rgba(171,71,188,0.18)',size:Math.max(9,cw*0.01),rot:0},
+     {x:18,y:71,label:'PORTFOLIO',color:'rgba(66,165,245,0.18)',size:Math.max(9,cw*0.01),rot:0},
+     {x:18,y:75,label:'HOBBY',color:'rgba(255,152,0,0.18)',size:Math.max(9,cw*0.01),rot:0},
+     {x:60,y:71,label:'FUN',color:'rgba(171,71,188,0.18)',size:Math.max(9,cw*0.01),rot:0},
+     {x:45,y:15,label:'ORIGIN',color:'rgba(76,175,80,0.15)',size:Math.max(8,cw*0.008),rot:90},
+     {x:50,y:15,label:'WORK',color:'rgba(229,57,53,0.15)',size:Math.max(8,cw*0.008),rot:90},
+   ];
+   groundLabels.forEach(gl=>{
+     const el=addDiv('map-ground-label','left:'+gl.x+'%;top:'+gl.y+'%;z-index:4;pointer-events:none;font-family:var(--font-fun);font-weight:900;font-size:'+gl.size+'px;color:'+gl.color+';letter-spacing:0.25em;text-transform:uppercase;'+(gl.rot?'writing-mode:vertical-rl;text-orientation:mixed;':''));
+     el.textContent=gl.label;
+   });
+
   // === BEACHES ===
   const beaches=[
     {x:6,y:78,w:84,h:6,r:'0 0 45% 55%',bg:'linear-gradient(180deg,rgba(245,222,130,0.8),rgba(235,200,100,0.5))'},
@@ -7134,6 +7246,15 @@ function makeMapCloneNode(d){
     clone.classList.remove('dragging');
     clone.classList.add('no-anim-children');
     clone.querySelectorAll('[draggable="true"]').forEach(el=>el.removeAttribute('draggable'));
+    // Remove drag handles from map clones
+    clone.querySelectorAll('.sticker-drag-handle').forEach(h=>h.remove());
+    // Add glowing border for zone intro cards on map
+    if(d.ref.classList.contains('zone-intro-creative')){
+      const zone=d.ref.dataset.zone;
+      const glowColors={origin:'rgba(76,175,80,0.7)',work:'rgba(229,57,53,0.7)',portfolio:'rgba(66,165,245,0.7)',hobby:'rgba(255,152,0,0.7)',fun:'rgba(171,71,188,0.7)'};
+      clone.classList.add('map-intro-glow');
+      clone.style.setProperty('--glow-color',glowColors[zone]||'rgba(201,169,110,0.6)');
+    }
   } else {
     clone=document.createElement('div');
     clone.style.background=d.bg;
@@ -8175,6 +8296,20 @@ function ensureIntroCluster(){
   setTimeout(()=>{
     document.querySelectorAll('#canvas > .sticker').forEach(s=>obs.observe(s));
   },500);
+})();
+
+// ===== Add drag handles to all interactive sticker cards =====
+(function(){
+  const interactiveSelectors='.sticker-throne-game,.sticker-emoji-kitchen,.sticker-tlpuzzle,.sticker-vibecheck,.sticker-skillping,.sticker-startup-rand,.sticker-wheel,.sticker-quiz,.sticker-slots,.sticker-8ball,.sticker-typewriter,.sticker-dice,.sticker-lovemeter,.sticker-scratch,.sticker-mood,.sticker-counter,.sticker-fortune';
+  document.querySelectorAll(interactiveSelectors).forEach(s=>{
+    if(s.classList.contains('has-drag-handle'))return;
+    s.classList.add('has-drag-handle');
+    s.style.position='relative';
+    const handle=document.createElement('div');
+    handle.className='sticker-drag-handle';
+    handle.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg>';
+    s.insertBefore(handle,s.firstChild);
+  });
 })();
 
 setTimeout(()=>{
