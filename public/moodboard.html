@@ -106,7 +106,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .zone-tint-memealley{background:radial-gradient(ellipse at center,#AB47BC,transparent 70%)}
 /* Organic country-style zone boundaries */
 .zone-boundary-svg{position:absolute;left:0;top:0;width:14000px;height:14000px;pointer-events:none;z-index:2;overflow:visible}
-.zone-boundary-svg path{fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40 18;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12))}
+.zone-boundary-svg path{fill:none;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40 18;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12))}
 /* Zone intro cards — bold card style */
 .zone-intro-creative{width:380px;min-height:420px;border-radius:28px;overflow:hidden;background:#fff;border:2.5px solid #f0ece6;box-shadow:0 12px 48px rgba(0,0,0,0.12),0 4px 12px rgba(0,0,0,0.06);cursor:default;position:relative}
 .zone-intro-creative .zic-header{padding:28px 26px 18px;position:relative;overflow:hidden}
@@ -1844,16 +1844,16 @@ body.map-expanded .scroll-counter{display:none!important}
 <!-- Organic country-style zone boundaries (SVG paths) -->
 <!-- Zone boundary borders — solid colored outlines for each zone area -->
 <svg class="zone-boundary-svg" viewBox="0 0 14000 14000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- ORIGIN zone border (top-left) — cyan (not green, for grass contrast) -->
-  <path d="M120,150 C400,80 1200,200 2400,130 Q3600,60 4800,180 C5400,220 5900,100 6200,160 Q6500,280 6600,800 C6650,1600 6500,2400 6600,3200 Q6700,4000 6550,4800 C6500,5200 6600,5600 6580,5850 Q5800,5950 4800,5800 C3600,5700 2400,5900 1400,5780 Q600,5700 200,5800 C100,5780 80,5600 70,5400 Q60,4200 120,3000 C180,2000 80,1200 120,150Z" fill="none" stroke="rgba(0,188,212,0.55)" stroke-width="6" stroke-linejoin="round"/>
-  <!-- WORK zone border (top-right) — red -->
-  <path d="M6700,160 C7200,80 8000,220 9200,120 Q10400,60 11600,200 C12400,260 13000,100 13500,150 Q13800,180 13900,400 C13920,1200 13800,2400 13900,3600 Q13950,4400 13850,5200 C13800,5600 13880,5800 13860,5850 Q12800,5950 11600,5780 C10400,5700 9200,5900 8200,5800 Q7400,5720 6800,5860 C6680,5200 6750,4400 6650,3400 Q6580,2200 6650,1200 C6680,600 6700,300 6700,160Z" fill="none" stroke="rgba(229,57,53,0.55)" stroke-width="6" stroke-linejoin="round"/>
-  <!-- PORTFOLIO zone border (mid-left) — blue -->
-  <path d="M70,5920 C400,5800 1400,6000 2800,5850 Q4200,5750 5400,5900 C5800,5940 6200,5820 6580,5900 Q6650,6600 6500,7400 C6450,7800 6600,8400 6550,9000 Q6500,9600 6580,10050 C5800,10150 4600,9950 3400,10100 Q2000,10180 800,10050 C300,10020 120,10080 70,10050 Q60,9200 100,8200 C140,7400 60,6600 70,5920Z" fill="none" stroke="rgba(66,165,245,0.55)" stroke-width="6" stroke-linejoin="round"/>
-  <!-- HOBBY zone border (bottom-left) — orange -->
-  <path d="M70,10100 C400,10000 1400,10200 2800,10050 Q4200,9950 5400,10100 C5800,10140 6200,10020 6580,10100 Q6650,10800 6500,11600 C6450,12200 6600,12800 6550,13400 Q6500,13700 6580,13920 C5400,13960 4000,13850 2600,13920 Q1400,13960 600,13900 C200,13880 80,13920 70,13900 Q60,13200 100,12400 C140,11600 60,10800 70,10100Z" fill="none" stroke="rgba(255,152,0,0.55)" stroke-width="6" stroke-linejoin="round"/>
-  <!-- FUN zone border (right half) — purple -->
-  <path d="M6800,5920 C7400,5800 8400,5980 9600,5850 Q10800,5750 12000,5900 C12800,5960 13400,5820 13860,5900 Q13920,6800 13800,7800 C13750,8800 13900,10000 13850,11200 Q13800,12400 13880,13400 C13900,13700 13920,13880 13880,13920 Q12800,13960 11600,13850 C10400,13780 9200,13920 8200,13860 Q7400,13800 6800,13900 C6700,13200 6750,12200 6650,11000 Q6580,9600 6700,8200 C6750,7200 6700,6400 6800,5920Z" fill="none" stroke="rgba(171,71,188,0.55)" stroke-width="6" stroke-linejoin="round"/>
+  <!-- ORIGIN zone border (top-left) — cyan, country-shaped -->
+  <path d="M200,120 C600,60 1100,280 1800,180 L2300,350 C2700,150 3200,80 3600,220 Q4100,380 4500,140 C4900,60 5200,300 5600,180 L5900,260 Q6100,400 6300,350 C6400,580 6350,900 6500,1300 L6300,1800 C6450,2100 6200,2500 6400,2900 Q6500,3200 6300,3600 C6150,3900 6400,4300 6200,4700 L6350,5100 C6200,5400 6350,5600 6300,5850 Q5900,6000 5400,5900 C5100,5800 4600,6050 4200,5850 L3700,5950 Q3200,5750 2700,5900 C2200,6000 1800,5700 1300,5850 L800,5700 Q400,5800 200,5680 C120,5400 250,5000 150,4600 Q80,4200 200,3800 C300,3400 100,3000 180,2600 L120,2200 Q200,1800 100,1400 C80,1000 250,600 200,120Z" fill="none" stroke="rgba(0,188,212,0.55)" stroke-width="6" stroke-dasharray="40 18" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- WORK zone border (top-right) — red, country-shaped -->
+  <path d="M6700,200 C7100,80 7500,350 8000,150 L8500,280 Q8900,100 9400,300 C9800,180 10200,50 10600,250 L11100,120 Q11500,280 11900,160 C12300,80 12700,300 13100,180 L13500,260 Q13700,400 13850,600 C13900,1000 13750,1500 13880,1900 L13700,2400 Q13850,2800 13700,3300 C13600,3700 13800,4100 13700,4500 L13850,4900 Q13750,5300 13800,5700 C13700,5850 13400,5950 13000,5800 Q12500,5900 12000,5750 C11500,5650 11000,5950 10500,5800 L10000,5900 Q9500,5750 9000,5900 C8500,6000 8000,5700 7500,5850 L7100,5750 Q6800,5600 6700,5300 C6600,4900 6750,4400 6600,4000 L6700,3500 Q6550,3100 6700,2700 C6800,2300 6600,1800 6700,1400 Q6750,1000 6650,600 C6680,400 6700,300 6700,200Z" fill="none" stroke="rgba(229,57,53,0.55)" stroke-width="6" stroke-dasharray="40 18" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- PORTFOLIO zone border (mid-left) — blue, country-shaped -->
+  <path d="M150,6100 C400,5950 900,6200 1400,6050 L1900,6180 Q2400,6000 2900,6200 C3400,6100 3800,5950 4300,6150 L4800,6050 Q5200,6200 5600,6080 C5900,6000 6200,6200 6400,6100 Q6500,6400 6400,6800 C6350,7100 6500,7400 6350,7800 L6450,8200 Q6300,8600 6450,8900 C6400,9200 6300,9500 6400,9850 Q6300,10050 6000,10100 C5600,10000 5100,10200 4600,10050 L4100,10150 Q3600,9950 3100,10100 C2600,10200 2100,9950 1600,10100 L1100,9950 Q600,10100 300,9950 C150,9800 200,9400 100,9000 Q80,8600 200,8200 C300,7800 100,7400 200,7000 L120,6600 Q200,6300 150,6100Z" fill="none" stroke="rgba(66,165,245,0.55)" stroke-width="6" stroke-dasharray="40 18" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- HOBBY zone border (bottom-left) — orange, country-shaped -->
+  <path d="M150,10300 C500,10150 1000,10400 1500,10200 L2000,10350 Q2500,10150 3000,10350 C3500,10250 4000,10100 4500,10300 L5000,10200 Q5400,10350 5800,10200 C6100,10150 6300,10350 6500,10250 Q6550,10600 6450,11000 C6400,11400 6550,11800 6400,12200 L6500,12600 Q6350,13000 6450,13300 C6400,13600 6300,13800 6200,13900 Q5700,13950 5200,13850 C4700,13750 4200,13950 3700,13850 L3200,13900 Q2600,13800 2000,13920 C1500,13950 1000,13800 500,13900 L250,13850 Q120,13700 100,13400 C150,13000 80,12600 150,12200 Q200,11800 100,11400 C80,11000 200,10700 150,10300Z" fill="none" stroke="rgba(255,152,0,0.55)" stroke-width="6" stroke-dasharray="40 18" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- FUN zone border (right side) — purple, country-shaped -->
+  <path d="M6800,6100 C7200,5950 7700,6200 8200,6050 L8700,6180 Q9200,6000 9700,6200 C10200,6100 10700,5950 11200,6150 L11700,6050 Q12200,6200 12700,6080 C13100,6000 13400,6200 13700,6100 Q13850,6400 13750,6900 C13700,7300 13850,7800 13700,8300 L13800,8800 Q13650,9300 13800,9800 C13750,10300 13650,10800 13800,11300 L13700,11800 Q13800,12300 13700,12800 C13650,13200 13750,13500 13650,13800 Q13400,13920 13000,13850 C12500,13750 12000,13950 11500,13850 L11000,13900 Q10400,13800 9800,13920 C9300,13950 8800,13800 8300,13900 L7800,13850 Q7300,13750 6900,13880 C6750,13600 6800,13200 6700,12800 Q6600,12300 6750,11800 C6800,11300 6650,10800 6750,10300 L6650,9800 Q6750,9300 6650,8800 C6600,8300 6750,7800 6650,7300 Q6700,6800 6650,6400 C6680,6200 6750,6100 6800,6100Z" fill="none" stroke="rgba(171,71,188,0.55)" stroke-width="6" stroke-dasharray="40 18" stroke-linejoin="round" stroke-linecap="round"/>
 </svg>
 
 <!-- Zone ground labels — painted diagonally in center of each zone, BIG -->
@@ -2598,7 +2598,7 @@ body.map-expanded .scroll-counter{display:none!important}
 </div>
 
 <!-- Hollywood Casino-style signposts with 2 poles -->
-<div class="hollywood-signpost" style="left:3100px;top:2800px">
+<div class="hollywood-signpost" style="left:1200px;top:1200px">
   <div class="hp-board" style="background:linear-gradient(135deg,#00838F,#00BCD4,#4DD0E1)">
     <div class="hp-bulbs"></div>
     📸 ORIGIN
@@ -2606,7 +2606,7 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="hp-poles"><div class="hp-pole"></div><div class="hp-pole"></div></div>
   <div class="hp-ground"></div>
 </div>
-<div class="hollywood-signpost" style="left:10650px;top:2800px">
+<div class="hollywood-signpost" style="left:12200px;top:1200px">
   <div class="hp-board" style="background:linear-gradient(135deg,#C62828,#E53935,#EF5350)">
     <div class="hp-bulbs"></div>
     🎯 WORK
@@ -2614,7 +2614,7 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="hp-poles"><div class="hp-pole"></div><div class="hp-pole"></div></div>
   <div class="hp-ground"></div>
 </div>
-<div class="hollywood-signpost" style="left:3000px;top:7800px">
+<div class="hollywood-signpost" style="left:1200px;top:6600px">
   <div class="hp-board" style="background:linear-gradient(135deg,#1565C0,#42A5F5,#64B5F6)">
     <div class="hp-bulbs"></div>
     🚀 PORTFOLIO
@@ -2622,7 +2622,7 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="hp-poles"><div class="hp-pole"></div><div class="hp-pole"></div></div>
   <div class="hp-ground"></div>
 </div>
-<div class="hollywood-signpost" style="left:3350px;top:11800px">
+<div class="hollywood-signpost" style="left:1200px;top:10800px">
   <div class="hp-board" style="background:linear-gradient(135deg,#E65100,#FF9800,#FFB74D)">
     <div class="hp-bulbs"></div>
     🎮 HOBBY
@@ -2630,7 +2630,7 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="hp-poles"><div class="hp-pole"></div><div class="hp-pole"></div></div>
   <div class="hp-ground"></div>
 </div>
-<div class="hollywood-signpost" style="left:10650px;top:9800px">
+<div class="hollywood-signpost" style="left:12200px;top:7200px">
   <div class="hp-board" style="background:linear-gradient(135deg,#7B1FA2,#AB47BC,#CE93D8)">
     <div class="hp-bulbs"></div>
     😂 FUN
@@ -7228,21 +7228,21 @@ function addMapDecorations(cw, ch){
    mapBoundarySvg.setAttribute('preserveAspectRatio','none');
    mapBoundarySvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:5;overflow:visible';
     const zonePaths=[
-      // ORIGIN (top-left) — cyan-brown
-      {d:'M1,1.5 C4,0.5 12,2 22,1 Q32,0.3 40,1.5 C44,2 46,1 47.5,1.5 Q48,6 47.2,14 C46.8,22 47.5,30 47,38 Q46.5,40 47.2,42 C40,42.8 30,41.5 20,42.5 Q10,43.2 4,42 C2,41.5 1,42.2 0.8,41.5 Q0.5,32 1.2,22 C1.5,14 0.8,8 1,1.5Z',
-       stroke:'rgba(0,160,180,0.7)'},
-      // WORK (top-right) — red-brown
-      {d:'M47.8,1.5 C52,0.8 60,2.2 70,1 Q80,0.3 88,1.8 C94,2.3 97,1 99,1.5 Q99.2,8 98.5,16 C98,24 99,32 98.5,38 Q98,40 98.8,42 C92,42.8 82,41.5 72,42.5 Q60,43 52,42 C49,41.8 48,42.3 47.5,42 Q47,34 47.8,24 C48.2,16 47.5,8 47.8,1.5Z',
-       stroke:'rgba(180,50,40,0.7)'},
-      // PORTFOLIO (mid-left) — blue-brown
-      {d:'M0.8,42.5 C4,41.8 12,43 22,42 Q32,41 42,42.8 C45,43 47,42 47.5,42.5 Q48,48 47,54 C46.5,60 47.2,66 47,70 Q46.5,72 47.2,72.5 C40,73.2 30,71.5 20,72.8 Q10,73.5 4,72 C2,71.5 1,72.5 0.8,72 Q0.5,64 1.2,56 C1.5,48 0.8,44 0.8,42.5Z',
-       stroke:'rgba(50,120,180,0.7)'},
-      // HOBBY (bottom-left) — orange-brown
-      {d:'M0.8,72.5 C4,72 12,73.5 22,72 Q32,71 42,73 C45,73.3 47,72 47.5,72.5 Q48,78 47,84 C46.5,88 47.2,92 47,96 Q46.5,98 47.2,99 C40,99.3 30,98.5 20,99.2 Q10,99.5 4,99 C2,98.8 1,99.2 0.8,99 Q0.5,92 1.2,84 C1.5,78 0.8,74 0.8,72.5Z',
-       stroke:'rgba(180,110,30,0.7)'},
-      // FUN (right half) — purple-brown
-      {d:'M47.8,42.5 C52,42 60,43.5 70,42 Q80,41 88,43 C94,43.3 97,42 99,42.5 Q99.2,50 98.5,60 C98,68 99,76 98.5,84 Q98,90 98.8,96 C99,98 99.2,99 98.8,99.2 Q90,99.5 80,98.5 C70,98 60,99.2 52,98.8 Q49,98.5 47.5,99 C47,92 47.8,82 47.2,72 Q46.8,62 47.5,52 C47.8,48 47.5,44 47.8,42.5Z',
-       stroke:'rgba(140,55,150,0.7)'},
+      // ORIGIN (top-left) — cyan, country-shaped
+      {d:'M1.4,0.9 C4.3,0.4 7.9,2 12.9,1.3 L16.4,2.5 C19.3,1.1 22.9,0.6 25.7,1.6 Q29.3,2.7 32.1,1 C35,0.4 37.1,2.1 40,1.3 L42.1,1.9 Q43.6,2.9 45,2.5 C45.7,4.1 45.4,6.4 46.4,9.3 L45,12.9 C46.1,15 44.3,17.9 45.7,20.7 Q46.4,22.9 45,25.7 C43.9,27.9 45.7,30.7 44.3,33.6 L45.4,36.4 C44.3,38.6 45.4,40 45,41.8 Q42.1,42.9 38.6,42.1 C36.4,41.4 32.9,43.2 30,41.8 L26.4,42.5 Q22.9,41.1 19.3,42.1 C15.7,42.9 12.9,40.7 9.3,41.8 L5.7,40.7 Q2.9,41.4 1.4,40.6 C0.9,38.6 1.8,35.7 1.1,32.9 Q0.6,30 1.4,27.1 C2.1,24.3 0.7,21.4 1.3,18.6 L0.9,15.7 Q1.4,12.9 0.7,10 C0.6,7.1 1.8,4.3 1.4,0.9Z',
+       stroke:'rgba(0,188,212,0.7)'},
+      // WORK (top-right) — red, country-shaped
+      {d:'M47.9,1.4 C50.7,0.6 53.6,2.5 57.1,1.1 L60.7,2 Q63.6,0.7 67.1,2.1 C70,1.3 72.9,0.4 75.7,1.8 L79.3,0.9 Q82.1,2 85,1.1 C87.9,0.6 90.7,2.1 93.6,1.3 L96.4,1.9 Q97.9,2.9 99,4.3 C99.3,7.1 98.2,10.7 99.1,13.6 L97.9,17.1 Q99,20 97.9,23.6 C97.1,26.4 98.6,29.3 97.9,32.1 L99,35 Q98.2,37.9 98.6,40.7 C97.9,41.8 95.7,42.5 92.9,41.4 Q89.3,42.1 85.7,41.1 C82.1,40.4 78.6,42.5 75,41.4 L71.4,42.1 Q67.9,41.1 64.3,42.1 C60.7,42.9 57.1,40.7 53.6,41.8 L50.7,41.1 Q48.6,40 47.9,37.9 C47.1,35 48.2,31.4 47.1,28.6 L47.9,25 Q46.8,22.1 47.9,19.3 C48.6,16.4 47.1,12.9 47.9,10 Q48.2,7.1 47.5,4.3 C47.7,2.9 47.9,2.1 47.9,1.4Z',
+       stroke:'rgba(229,57,53,0.7)'},
+      // PORTFOLIO (mid-left) — blue, country-shaped
+      {d:'M1.1,43.6 C2.9,42.5 6.4,44.3 10,43.2 L13.6,44.1 Q17.1,42.9 20.7,44.3 C24.3,43.6 27.1,42.5 30.7,43.9 L34.3,43.2 Q37.1,44.3 40,43.4 C42.1,42.9 44.3,44.3 45.7,43.6 Q46.4,45.7 45.7,48.6 C45.4,50.7 46.4,52.9 45.4,55.7 L46.1,58.6 Q45,61.4 46.1,63.6 C45.7,65.7 45,67.9 45.7,70.4 Q45,71.8 42.9,72.1 C40,71.4 36.4,72.9 32.9,71.8 L29.3,72.5 Q25.7,71.1 22.1,72.1 C18.6,72.9 15,71.1 11.4,72.1 L7.9,71.1 Q4.3,72.1 2.1,71.1 C1.1,70 1.4,67.1 0.7,64.3 Q0.6,61.4 1.4,58.6 C2.1,55.7 0.7,52.9 1.4,50 L0.9,47.1 Q1.4,45 1.1,43.6Z',
+       stroke:'rgba(66,165,245,0.7)'},
+      // HOBBY (bottom-left) — orange, country-shaped
+      {d:'M1.1,73.6 C3.6,72.5 7.1,74.3 10.7,72.9 L14.3,73.9 Q17.9,72.5 21.4,73.9 C25,73.2 28.6,72.1 32.1,73.6 L35.7,72.9 Q38.6,73.9 41.4,72.9 C43.6,72.5 45,73.9 46.4,73.2 Q46.8,75.7 46.1,78.6 C45.7,81.4 46.8,84.3 45.7,87.1 L46.4,90 Q45.4,92.9 46.1,95 C45.7,97.1 45,98.6 44.3,99.3 Q40.7,99.6 37.1,98.9 C33.6,98.2 30,99.6 26.4,98.9 L22.9,99.3 Q18.6,98.6 14.3,99.4 C10.7,99.6 7.1,98.6 3.6,99.3 L1.8,98.9 Q0.9,97.9 0.7,95.7 C1.1,92.9 0.6,90 1.1,87.1 Q1.4,84.3 0.7,81.4 C0.6,78.6 1.4,76.4 1.1,73.6Z',
+       stroke:'rgba(255,152,0,0.7)'},
+      // FUN (right side) — purple, country-shaped
+      {d:'M48.6,43.6 C51.4,42.5 55,44.3 58.6,43.2 L62.1,44.1 Q65.7,42.9 69.3,44.3 C72.9,43.6 76.4,42.5 80,43.9 L83.6,43.2 Q87.1,44.3 90.7,43.4 C93.6,42.9 95.7,44.3 97.9,43.6 Q99,45.7 98.2,49.3 C97.9,52.1 99,55.7 97.9,59.3 L98.6,62.9 Q97.5,66.4 98.6,70 C98.2,73.6 97.5,77.1 98.6,80.7 L97.9,84.3 Q98.6,87.9 97.9,91.4 C97.5,94.3 98.2,96.4 97.5,98.6 Q95.7,99.4 92.9,98.9 C89.3,98.2 85.7,99.6 82.1,98.9 L78.6,99.3 Q74.3,98.6 70,99.4 C66.4,99.6 62.9,98.6 59.3,99.3 L55.7,98.9 Q52.1,98.2 49.3,99.1 C48.2,97.1 48.6,94.3 47.9,91.4 Q47.1,87.9 48.2,84.3 C48.6,80.7 47.5,77.1 48.2,73.6 L47.5,70 Q48.2,66.4 47.5,62.9 C47.1,59.3 48.2,55.7 47.5,52.1 Q47.9,48.6 47.5,45.7 C47.7,44.3 48.2,43.6 48.6,43.6Z',
+       stroke:'rgba(171,71,188,0.7)'},
     ];
     zonePaths.forEach(zp=>{
       const p=document.createElementNS(svgNS,'path');
@@ -7257,11 +7257,11 @@ function addMapDecorations(cw, ch){
 
    // === HOLLYWOOD CASINO-STYLE SIGNPOSTS on big map ===
    const signposts=[
-     {x:23.6,y:22.3,label:'📸 ORIGIN',color:'#00BCD4',bg:'linear-gradient(135deg,#00838F,#00BCD4,#4DD0E1)',emoji:'📸'},
-     {x:74.0,y:22.3,label:'🎯 WORK',color:'#E53935',bg:'linear-gradient(135deg,#C62828,#E53935,#EF5350)',emoji:'🎯'},
-     {x:23.6,y:57.4,label:'🚀 PORTFOLIO',color:'#42A5F5',bg:'linear-gradient(135deg,#1565C0,#42A5F5,#64B5F6)',emoji:'🚀'},
-     {x:25.0,y:83.8,label:'🎮 HOBBY',color:'#FF9800',bg:'linear-gradient(135deg,#E65100,#FF9800,#FFB74D)',emoji:'🎮'},
-     {x:74.0,y:70.3,label:'😂 FUN',color:'#AB47BC',bg:'linear-gradient(135deg,#7B1FA2,#AB47BC,#CE93D8)',emoji:'😂'},
+     {x:10,y:10,label:'📸 ORIGIN',color:'#00BCD4',bg:'linear-gradient(135deg,#00838F,#00BCD4,#4DD0E1)',emoji:'📸'},
+     {x:87,y:10,label:'🎯 WORK',color:'#E53935',bg:'linear-gradient(135deg,#C62828,#E53935,#EF5350)',emoji:'🎯'},
+     {x:10,y:49,label:'🚀 PORTFOLIO',color:'#42A5F5',bg:'linear-gradient(135deg,#1565C0,#42A5F5,#64B5F6)',emoji:'🚀'},
+     {x:10,y:78,label:'🎮 HOBBY',color:'#FF9800',bg:'linear-gradient(135deg,#E65100,#FF9800,#FFB74D)',emoji:'🎮'},
+     {x:87,y:53,label:'😂 FUN',color:'#AB47BC',bg:'linear-gradient(135deg,#7B1FA2,#AB47BC,#CE93D8)',emoji:'😂'},
    ];
    // Fixed signpost sizes — no zoom-dependent scaling
    const spFS=10;
