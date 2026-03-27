@@ -7620,10 +7620,15 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
   const targetMY=(worldY-oy)*sc;
   const startX=parseFloat(mapPlayer.style.left)||0;
   const startY=parseFloat(mapPlayer.style.top)||0;
-  // Start walking
+  // Start walking with smooth CSS transition
   mapPlayer.classList.add('walking');
+  mapPlayer.style.transition='left '+WALK_DURATION+'ms ease-in-out, top '+WALK_DURATION+'ms ease-in-out';
   mapPlayer.style.left=targetMX+'px';
   mapPlayer.style.top=targetMY+'px';
+  // Smooth scroll map view to follow the walk
+  const cL=parseFloat(mapCanvas.style.left)||0;
+  const cT=parseFloat(mapCanvas.style.top)||0;
+  mmInner.scrollTo({left:targetMX+cL-mmInner.clientWidth/2,top:targetMY+cT-mmInner.clientHeight/2,behavior:'smooth'});
   // Destination target marker
   clearActiveDestinationMarker();
   const destMarker=document.createElement('div');
