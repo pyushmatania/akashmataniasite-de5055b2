@@ -1859,124 +1859,145 @@ body.map-expanded .scroll-counter{display:none!important}
 <!-- Zone creative intro cards (wrapped as stickers for map sync) -->
 
 <!-- ORIGIN — Personal & About (center: 2900,2800) -->
-<div class="sticker zone-intro-creative" data-zone="origin" style="left:2740px;top:2600px;transform:rotate(-1deg)">
-  <div class="zic-header" style="background:linear-gradient(135deg,rgba(76,175,80,0.12),rgba(200,230,201,0.2))">
-    <div class="zic-icon" style="background:linear-gradient(135deg,#4CAF50,#81C784)">📸</div>
+<div class="sticker zone-intro-creative has-drag-handle" data-zone="origin" data-type="interactive" style="left:2740px;top:2400px;transform:rotate(-1deg)">
+  <div class="sticker-drag-handle" data-no-sticker-drag="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
+  <div class="zic-header" style="background:linear-gradient(135deg,rgba(76,175,80,0.15),rgba(200,230,201,0.25))">
+    <div class="zic-icon" style="background:linear-gradient(135deg,#4CAF50,#81C784)" data-no-sticker-drag="true">📸</div>
     <div class="zic-title" style="color:#2E7D32">ORIGIN STORY</div>
     <div class="zic-subtitle" style="color:#4E7D52">Where it all began — the person behind the products</div>
   </div>
-  <div class="zic-body">
+  <div class="zic-body" data-no-sticker-drag="true">
     <div class="zic-divider"></div>
     <div class="zic-tags">
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎓 Education</span>
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📍 Bengaluru</span>
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🌱 Growth</span>
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">💭 Values</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎓 B.Tech CS</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📍 Bengaluru</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🌱 Growth</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">💭 Values</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🐕 Mr. Puchu</span>
     </div>
-    <div class="zic-stat">✦ B.Tech CS · OUTR Bhubaneswar</div>
+    <div class="zic-stat">✦ OUTR Bhubaneswar → Bengaluru</div>
+    <div class="zic-stat">✦ Jeypore → Big city dreams realized</div>
     <div class="zic-counter">
       <span>Vibes received:</span>
-      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1">👍</button>
+      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zone-intro-creative').style.boxShadow='0 0 30px rgba(76,175,80,0.4),0 12px 48px rgba(0,0,0,0.12)'}">👍</button>
       <span style="font-weight:700;min-width:20px;text-align:center">0</span>
     </div>
+    <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#4CAF50,#81C784);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'origin')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(76,175,80,0.1);color:#2E7D32">Photos · About · Values</span></div>
   </div>
 </div>
 
 <!-- WORK — Professional (center: 10850,2800) -->
-<div class="sticker zone-intro-creative" data-zone="work" style="left:10690px;top:2600px;transform:rotate(0.8deg)">
-  <div class="zic-header" style="background:linear-gradient(135deg,rgba(229,57,53,0.12),rgba(239,154,154,0.15))">
-    <div class="zic-icon" style="background:linear-gradient(135deg,#E53935,#EF5350)">🎯</div>
+<div class="sticker zone-intro-creative has-drag-handle" data-zone="work" data-type="interactive" style="left:10690px;top:2400px;transform:rotate(0.8deg)">
+  <div class="sticker-drag-handle" data-no-sticker-drag="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
+  <div class="zic-header" style="background:linear-gradient(135deg,rgba(229,57,53,0.15),rgba(239,154,154,0.2))">
+    <div class="zic-icon" style="background:linear-gradient(135deg,#E53935,#EF5350)" data-no-sticker-drag="true">🎯</div>
     <div class="zic-title" style="color:#C62828">WAR ROOM</div>
     <div class="zic-subtitle" style="color:#8E3A3A">8+ years of building products that matter</div>
   </div>
-  <div class="zic-body">
+  <div class="zic-body" data-no-sticker-drag="true">
     <div class="zic-divider"></div>
     <div class="zic-tags">
-      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🚀 Fintech</span>
-      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🌐 Web3</span>
-      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📊 Strategy</span>
-      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">⚡ Growth</span>
+      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🚀 Fintech</span>
+      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🌐 Web3</span>
+      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📊 Strategy</span>
+      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">⚡ Growth</span>
+      <span class="zic-tag" style="background:rgba(229,57,53,0.1);color:#C62828" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🏗️ 0→1</span>
     </div>
-    <div class="zic-stat">✦ Founder · PM · Builder</div>
+    <div class="zic-stat">✦ Founder · PM · Builder · Dreamer</div>
+    <div class="zic-stat">✦ "Ship fast, learn faster, iterate always"</div>
     <div class="zic-counter">
       <span>Ships launched:</span>
-      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1">🚢</button>
+      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zone-intro-creative').style.boxShadow='0 0 30px rgba(229,57,53,0.4),0 12px 48px rgba(0,0,0,0.12)'}">🚢</button>
       <span style="font-weight:700;min-width:20px;text-align:center">0</span>
     </div>
+    <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#E53935,#EF5350);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'warroom')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(229,57,53,0.1);color:#C62828">PRDs · Memes · Badges</span></div>
   </div>
 </div>
 
 <!-- PORTFOLIO — Creative (center: 2800,8000) -->
-<div class="sticker zone-intro-creative" data-zone="portfolio" style="left:2640px;top:7800px;transform:rotate(-0.5deg)">
-  <div class="zic-header" style="background:linear-gradient(135deg,rgba(66,165,245,0.12),rgba(144,202,249,0.15))">
-    <div class="zic-icon" style="background:linear-gradient(135deg,#42A5F5,#90CAF9)">🚀</div>
+<div class="sticker zone-intro-creative has-drag-handle" data-zone="portfolio" data-type="interactive" style="left:2640px;top:7600px;transform:rotate(-0.5deg)">
+  <div class="sticker-drag-handle" data-no-sticker-drag="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
+  <div class="zic-header" style="background:linear-gradient(135deg,rgba(66,165,245,0.15),rgba(144,202,249,0.2))">
+    <div class="zic-icon" style="background:linear-gradient(135deg,#42A5F5,#90CAF9)" data-no-sticker-drag="true">🚀</div>
     <div class="zic-title" style="color:#1565C0">LAUNCHPAD</div>
     <div class="zic-subtitle" style="color:#3D6E99">Projects shipped, products launched, ideas realized</div>
   </div>
-  <div class="zic-body">
+  <div class="zic-body" data-no-sticker-drag="true">
     <div class="zic-divider"></div>
     <div class="zic-tags">
-      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">💻 SaaS</span>
-      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📱 Apps</span>
-      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎨 Design</span>
-      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🔧 Build</span>
+      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">💻 SaaS</span>
+      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📱 Apps</span>
+      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎨 Design</span>
+      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🔧 Build</span>
+      <span class="zic-tag" style="background:rgba(66,165,245,0.1);color:#1565C0" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎬 Media</span>
     </div>
-    <div class="zic-stat">✦ EnterCircles · Recess · More</div>
+    <div class="zic-stat">✦ EnterCircles · Recess · Neural OS</div>
+    <div class="zic-stat">✦ "From napkin sketch to Series A pitch"</div>
     <div class="zic-counter">
       <span>Ideas sparked:</span>
-      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1">💡</button>
+      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zone-intro-creative').style.boxShadow='0 0 30px rgba(66,165,245,0.4),0 12px 48px rgba(0,0,0,0.12)'}">💡</button>
       <span style="font-weight:700;min-width:20px;text-align:center">0</span>
     </div>
+    <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#42A5F5,#90CAF9);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'launchpad')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(66,165,245,0.1);color:#1565C0">7 Projects · Cases</span></div>
   </div>
 </div>
 
 <!-- HOBBY — Interests (center: 3150,12200) -->
-<div class="sticker zone-intro-creative" data-zone="hobby" style="left:2990px;top:12000px;transform:rotate(0.6deg)">
-  <div class="zic-header" style="background:linear-gradient(135deg,rgba(255,152,0,0.12),rgba(255,224,130,0.15))">
-    <div class="zic-icon" style="background:linear-gradient(135deg,#FF9800,#FFB74D)">🎮</div>
+<div class="sticker zone-intro-creative has-drag-handle" data-zone="hobby" data-type="interactive" style="left:2990px;top:11800px;transform:rotate(0.6deg)">
+  <div class="sticker-drag-handle" data-no-sticker-drag="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
+  <div class="zic-header" style="background:linear-gradient(135deg,rgba(255,152,0,0.15),rgba(255,224,130,0.2))">
+    <div class="zic-icon" style="background:linear-gradient(135deg,#FF9800,#FFB74D)" data-no-sticker-drag="true">🎮</div>
     <div class="zic-title" style="color:#E65100">HOBBY CORNER</div>
     <div class="zic-subtitle" style="color:#8E5A1A">The things that keep me sane — gaming, chai, vibes</div>
   </div>
-  <div class="zic-body">
+  <div class="zic-body" data-no-sticker-drag="true">
     <div class="zic-divider"></div>
     <div class="zic-tags">
-      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">☕ Chai</span>
-      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎮 Gaming</span>
-      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎵 Music</span>
-      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📚 Books</span>
+      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">☕ Chai</span>
+      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎮 Gaming</span>
+      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎵 Music</span>
+      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📚 Books</span>
+      <span class="zic-tag" style="background:rgba(255,152,0,0.1);color:#E65100" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎬 Movies</span>
     </div>
     <div class="zic-stat">✦ Level: Certified Enthusiast</div>
+    <div class="zic-stat">✦ "Chai > Coffee. This is non-negotiable."</div>
     <div class="zic-counter">
       <span>Chai cups today:</span>
-      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1">☕</button>
+      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zone-intro-creative').style.boxShadow='0 0 30px rgba(255,152,0,0.4),0 12px 48px rgba(0,0,0,0.12)'}">☕</button>
       <span style="font-weight:700;min-width:20px;text-align:center">0</span>
     </div>
+    <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#FF9800,#FFB74D);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'playground')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(255,152,0,0.1);color:#E65100">Games · Music · Vibes</span></div>
   </div>
 </div>
 
 <!-- FUN — Memes (center: 10850,10200) -->
-<div class="sticker zone-intro-creative" data-zone="fun" style="left:10690px;top:10000px;transform:rotate(-0.7deg)">
-  <div class="zic-header" style="background:linear-gradient(135deg,rgba(171,71,188,0.12),rgba(225,190,231,0.15))">
-    <div class="zic-icon" style="background:linear-gradient(135deg,#AB47BC,#CE93D8)">😂</div>
+<div class="sticker zone-intro-creative has-drag-handle" data-zone="fun" data-type="interactive" style="left:10690px;top:9800px;transform:rotate(-0.7deg)">
+  <div class="sticker-drag-handle" data-no-sticker-drag="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
+  <div class="zic-header" style="background:linear-gradient(135deg,rgba(171,71,188,0.15),rgba(225,190,231,0.2))">
+    <div class="zic-icon" style="background:linear-gradient(135deg,#AB47BC,#CE93D8)" data-no-sticker-drag="true">😂</div>
     <div class="zic-title" style="color:#7B1FA2">MEME ALLEY</div>
     <div class="zic-subtitle" style="color:#7A4A8A">Where humor meets hustle — PM memes & fun stuff</div>
   </div>
-  <div class="zic-body">
+  <div class="zic-body" data-no-sticker-drag="true">
     <div class="zic-divider"></div>
     <div class="zic-tags">
-      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">😎 Vibes</span>
-      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎭 Memes</span>
-      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎉 Fun</span>
-      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">✨ Random</span>
+      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">😎 Vibes</span>
+      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎭 Memes</span>
+      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎉 Fun</span>
+      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">✨ Random</span>
+      <span class="zic-tag" style="background:rgba(171,71,188,0.1);color:#7B1FA2" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎰 Games</span>
     </div>
     <div class="zic-stat">✦ Procrastination Level: Expert</div>
+    <div class="zic-stat">✦ "If you can't laugh at your code, rewrite it"</div>
     <div class="zic-counter">
       <span>LOLs collected:</span>
-      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1">😂</button>
+      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zone-intro-creative').style.boxShadow='0 0 30px rgba(171,71,188,0.4),0 12px 48px rgba(0,0,0,0.12)'}">😂</button>
       <span style="font-weight:700;min-width:20px;text-align:center">0</span>
     </div>
+    <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#AB47BC,#CE93D8);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'memealley')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(171,71,188,0.1);color:#7B1FA2">Memes · Games · Vibes</span></div>
   </div>
 </div>
+
 
 <!-- ===== YOUR PHOTOS ===== -->
 
