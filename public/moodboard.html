@@ -4566,7 +4566,7 @@ function autoArrangeMoodboardItems(){
     spiralLayout(hubItems,7000,7000,200,900,rng,allPlaced,{x1:5800,y1:5600,x2:8200,y2:8400});
   }
 
-  // Rule 3: Scatter memes/fun emojis across the ENTIRE canvas
+  // Rule 3: Scatter memes/fun emojis across the ENTIRE canvas with strict anti-overlap
   if(scatterItems.length){
     const shuffled=shuffleWithSeed(scatterItems,rng);
     const gridCols=Math.ceil(Math.sqrt(shuffled.length*2));
@@ -4580,28 +4580,12 @@ function autoArrangeMoodboardItems(){
       const h=sticker.offsetHeight||100;
       let tryLeft=BOUNDARY_PAD+col*cellW+(rng()*cellW*0.7)+cellW*0.1;
       let tryTop=BOUNDARY_PAD+row*cellH+(rng()*cellH*0.7)+cellH*0.1;
-      tryLeft=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN-w,tryLeft));
-      tryTop=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN-h,tryTop));
-      // Rule 12: Anti-overlap nudge for scattered items (20 attempts)
-      for(let attempt=0;attempt<20;attempt++){
-        let overlapping=false;
-        for(const p of allPlaced){
-          if(tryLeft<p.left+p.w+40&&tryLeft+w>p.left-40&&tryTop<p.top+p.h+40&&tryTop+h>p.top-40){
-            overlapping=true;
-            tryLeft+=((rng()-0.3)*Math.max(w,140));
-            tryTop+=((rng()-0.3)*Math.max(h,100));
-            tryLeft=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN-w,tryLeft));
-            tryTop=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN-h,tryTop));
-            break;
-          }
-        }
-        if(!overlapping)break;
-      }
-      let candidate={left:tryLeft,top:tryTop,w,h};
-      sticker.style.left=candidate.left+'px';
-      sticker.style.top=candidate.top+'px';
+      // Rule 12: Strict radial probe for scattered items
+      const resolved=resolveNonOverlapPosition(tryLeft,tryTop,w,h,allPlaced,null,rng);
+      sticker.style.left=resolved.left+'px';
+      sticker.style.top=resolved.top+'px';
       sticker.style.transform='rotate('+((rng()-0.5)*14).toFixed(1)+'deg)';
-      allPlaced.push({left:candidate.left,top:candidate.top,w,h});
+      allPlaced.push({left:resolved.left,top:resolved.top,w,h});
     });
   }
 
