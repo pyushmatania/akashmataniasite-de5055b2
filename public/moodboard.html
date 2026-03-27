@@ -7149,18 +7149,22 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     for(;idx<end;idx++){
       const{d,renderX,renderY,cloneScale,iw,ih}=visibleItems[idx];
       let clone;
-      // Cap rendered clone size to prevent oversized items crashing the map
-      const MAX_CLONE_DIM=250;
-      const cappedW=Math.min(d.w,MAX_CLONE_DIM);
-      const cappedH=Math.min(d.h,MAX_CLONE_DIM);
-      const sizeRatio=cappedW/Math.max(d.w,1);
+      // Cap rendered clone size — use cloneScale directly, cap final pixel size
+      const MAX_CLONE_PX=200;
+      const renderedW=d.w*cloneScale;
+      const renderedH=d.h*cloneScale;
+      let finalScale=cloneScale;
+      // If rendered size exceeds max, shrink further
+      if(renderedW>MAX_CLONE_PX||renderedH>MAX_CLONE_PX){
+        const shrink=Math.min(MAX_CLONE_PX/renderedW,MAX_CLONE_PX/renderedH);
+        finalScale=cloneScale*shrink;
+      }
       if(d.ref){
         clone=d.ref.cloneNode(true);
         clone.classList.add('mi','map-sticker-clone');
         const rot=(d.ref.style.transform||'').match(/rotate\([^)]+\)/);
-        const finalScale=cloneScale/sizeRatio;
         const transform=(rot?rot[0]+' ':'')+'scale('+finalScale+')';
-        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+cappedW+'px;height:'+cappedH+'px;max-width:'+MAX_CLONE_DIM+'px;max-height:'+MAX_CLONE_DIM+'px;transform:'+transform+';transform-origin:0 0;z-index:7;cursor:pointer;animation:none!important;transition:none!important;filter:none;pointer-events:auto;overflow:hidden';
+        clone.style.cssText='position:absolute;left:'+renderX+'px;top:'+renderY+'px;width:'+d.w+'px;height:'+d.h+'px;transform:'+transform+';transform-origin:0 0;z-index:7;cursor:pointer;animation:none!important;transition:none!important;filter:none;pointer-events:auto;overflow:hidden';
         clone.removeAttribute('data-anim');
         clone.removeAttribute('data-splash');
         clone.removeAttribute('data-contra');
