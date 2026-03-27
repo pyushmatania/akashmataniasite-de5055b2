@@ -8992,7 +8992,7 @@ function bootstrapMap(forceRescan){
 }
 
 function ensureIntroCluster(){
-  if(document.querySelector('.intro-card'))return;
+  if(document.querySelector('.intro-card[data-zone="work"]'))return;
   const intro=document.createElement('div');
   intro.className='sticker intro-card';
   intro.dataset.type='photo';
@@ -9001,15 +9001,31 @@ function ensureIntroCluster(){
   intro.style.top='2600px';
   intro.innerHTML='<div class="intro-name">Akash <span class="hl-name">Matania</span></div><div class="intro-tagline">Product Manager · Founder · Dreamer</div><div class="intro-cta">↕ scroll around to explore my world ✨</div>';
   cv.appendChild(intro);
-  const seeds=[['✨',6420,6300],['🚀',7440,6350],['🎬',6480,7420],['💡',7420,7300],['🎧',6280,7150]];
-  seeds.forEach(([emoji,left,top])=>{
-    const el=document.createElement('div');
-    el.className='sticker sticker-emoji big';
-    el.dataset.zone='hub';
-    el.style.left=left+'px';
-    el.style.top=top+'px';
-    el.textContent=emoji;
-    cv.appendChild(el);
+}
+
+function ensureZoneIntroCards(){
+  const fallbackByZone={
+    work:{left:10050,top:2600,title:'WORK',tagline:'This is where I build and ship'},
+    portfolio:{left:2640,top:7600,title:'PORTFOLIO',tagline:'Projects shipped and stories behind them'},
+    origin:{left:2740,top:2400,title:'ORIGIN',tagline:'Where my journey started'},
+    hobby:{left:2990,top:11800,title:'HOBBY',tagline:'What keeps me energized'},
+    fun:{left:10690,top:9800,title:'FUN',tagline:'Memes, vibes, and playful chaos'}
+  };
+  Object.entries(fallbackByZone).forEach(([zone,meta])=>{
+    const existing=document.querySelector('.zone-intro-creative[data-zone="'+zone+'"], .zone-intro-card[data-zone="'+zone+'"], .intro-card[data-zone="'+zone+'"]');
+    if(existing){
+      existing.dataset.zone=zone;
+      if(!existing.dataset.type){existing.dataset.type=(zone==='work'&&existing.classList.contains('intro-card'))?'photo':'introduction';}
+      return;
+    }
+    const card=document.createElement('div');
+    card.className='sticker intro-card';
+    card.dataset.zone=zone;
+    card.dataset.type='introduction';
+    card.style.left=meta.left+'px';
+    card.style.top=meta.top+'px';
+    card.innerHTML='<div class="intro-name">'+meta.title+'</div><div class="intro-tagline">'+meta.tagline+'</div><div class="intro-cta">↕ tap Play to explore this zone</div>';
+    cv.appendChild(card);
   });
 }
 
@@ -9047,6 +9063,7 @@ function ensureIntroCluster(){
 
 setTimeout(()=>{
   ensureIntroCluster();
+  ensureZoneIntroCards();
   bootstrapMap(true);
   // Re-center on intro card AFTER items are rearranged
   scrollToZone(null,'hub');
