@@ -7883,8 +7883,9 @@ function updMap(){
     // EXPANDED: keep click-walk position during walking, otherwise follow viewport center
     if(!walkingInProgress){
       const cL=parseFloat(mapCanvas.style.left)||0;
+      const cT2=parseFloat(mapCanvas.style.top)||0;
       const px=cL+(centerWorld.x-ox)*sc;
-      const py=(centerWorld.y-oy)*sc;
+      const py=cT2+(centerWorld.y-oy)*sc;
       mapPlayer.style.left=px+'px';
       mapPlayer.style.top=py+'px';
     }
