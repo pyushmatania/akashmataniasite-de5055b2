@@ -7952,6 +7952,29 @@ function drawMap(){
       mapCanvas.appendChild(el);
     });
     if(mapCount)mapCount.textContent=count+' items';
+    // Add zone boundary overlay to small map
+    const oldBSvg=mapCanvas.querySelector('.small-map-boundaries');
+    if(oldBSvg)oldBSvg.remove();
+    const bSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    bSvg.setAttribute('class','small-map-boundaries');
+    bSvg.setAttribute('viewBox','0 0 14000 14000');
+    bSvg.setAttribute('preserveAspectRatio','none');
+    bSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:5;overflow:visible';
+    const smStrokes={origin:'rgba(0,188,212,0.4)',work:'rgba(229,57,53,0.4)',portfolio:'rgba(66,165,245,0.4)',hobby:'rgba(255,152,0,0.4)',fun:'rgba(171,71,188,0.4)'};
+    Object.entries(ZONE_BOUNDARY_POLYGONS).forEach(([name,poly])=>{
+      const pts=poly.map(p=>p[0]+','+p[1]);
+      const d='M'+pts[0]+' L'+pts.slice(1).join(' L')+'Z';
+      const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+      p.setAttribute('d',d);
+      p.setAttribute('fill','none');
+      p.setAttribute('stroke',smStrokes[name]||'rgba(255,255,255,0.3)');
+      p.setAttribute('stroke-width','80');
+      p.setAttribute('stroke-linejoin','round');
+      p.setAttribute('stroke-dasharray','300 150');
+      p.setAttribute('stroke-linecap','round');
+      bSvg.appendChild(p);
+    });
+    mapCanvas.appendChild(bSvg);
   }
   updMap();
 }
