@@ -9170,80 +9170,186 @@ function ensureIntroCluster(){
 
 function ensureZoneIntroCards(){
   const zoneMeta={
-    work:{
-      left:10050,top:2600,cls:'zone-work',icon:'🎯',title:'WORK',
-      tagline:'Where ideas become shipped products — strategy, sprints & stakeholders.',
-      tags:['PRDs','Roadmaps','OKRs','Sprints','A/B Tests'],
-      stats:[{val:'8+',label:'Years'},{val:'5K+',label:'Users Scaled'},{val:'12',label:'Products'}]
+    work:{left:10050,top:2600},
+    portfolio:{left:2640,top:7600},
+    origin:{left:2740,top:2400},
+    hobby:{left:2990,top:11800},
+    fun:{left:10690,top:9800}
+  };
+
+  const builders={
+    work:function(){
+      return '<div class="zic-clip"></div>'+
+        '<div class="zic-body" style="position:relative">'+
+          '<div class="zic-red-line"></div>'+
+          '<div class="zic-header"><div class="zic-stamp">W</div><div class="zic-title">WORK ZONE</div></div>'+
+          '<div class="zic-sub">Where ideas become shipped products. 8+ years of strategy, sprints & stakeholders across fintech, edtech, and Web3.</div>'+
+          '<ul class="zic-checklist"><li>Product Strategy & Roadmaps</li><li>Sprint Planning & OKRs</li><li>User Research & A/B Tests</li><li>Cross-functional Leadership</li><li>0→1 Product Launches</li></ul>'+
+          '<div class="zic-stats">'+
+            '<div class="zic-stat"><div class="zic-stat-val">8+</div><div class="zic-stat-label">Years</div></div>'+
+            '<div class="zic-stat"><div class="zic-stat-val">5K+</div><div class="zic-stat-label">Users Scaled</div></div>'+
+            '<div class="zic-stat"><div class="zic-stat-val">12</div><div class="zic-stat-label">Products</div></div>'+
+          '</div>'+
+        '</div>';
     },
-    portfolio:{
-      left:2640,top:7600,cls:'zone-portfolio',icon:'🚀',title:'PORTFOLIO',
-      tagline:'Projects I\'ve built, shipped & iterated on — from zero to one.',
-      tags:['Web3','EdTech','SaaS','FinTech','AI'],
-      stats:[{val:'6',label:'Startups'},{val:'3',label:'Founded'},{val:'∞',label:'Learnings'}]
+    portfolio:function(){
+      return '<div class="zic-screen">'+
+          '<div class="zic-dots"><span class="zic-dot r"></span><span class="zic-dot y"></span><span class="zic-dot g"></span></div>'+
+          '<div class="zic-url-bar"><span class="zic-url-text">akash://portfolio/projects</span></div>'+
+          '<div class="zic-screen-body">'+
+            '<div class="zic-title">$ ls ./projects<span class="zic-blink">_</span></div>'+
+            '<div class="zic-sub">Projects I\'ve built, shipped & iterated on — from zero to one. Each one a lesson in craft.</div>'+
+            '<div class="zic-code-tags">'+
+              '<span class="zic-code-tag">Web3</span><span class="zic-code-tag">EdTech</span>'+
+              '<span class="zic-code-tag">SaaS</span><span class="zic-code-tag">FinTech</span>'+
+              '<span class="zic-code-tag">AI</span>'+
+            '</div>'+
+            '<div class="zic-stats">'+
+              '<div class="zic-stat"><div class="zic-stat-val">6</div><div class="zic-stat-label">Startups</div></div>'+
+              '<div class="zic-stat"><div class="zic-stat-val">3</div><div class="zic-stat-label">Founded</div></div>'+
+              '<div class="zic-stat"><div class="zic-stat-val">∞</div><div class="zic-stat-label">Learnings</div></div>'+
+            '</div>'+
+          '</div>'+
+          '<div class="zic-cursor">🖱️</div>'+
+        '</div>'+
+        '<div class="zic-base"><div></div></div>';
     },
-    origin:{
-      left:2740,top:2400,cls:'zone-origin',icon:'📸',title:'ORIGIN',
-      tagline:'The backstory — engineering roots, curious mind, builder spirit.',
-      tags:['B.Tech CS','Bhubaneswar','Bengaluru','Builder'],
-      stats:[{val:'2016',label:'Started'},{val:'4',label:'Cities'},{val:'1',label:'Mission'}]
+    origin:function(){
+      return '<div class="zic-polaroid-bg1"></div><div class="zic-polaroid-bg2"></div>'+
+        '<div class="zic-tape"></div>'+
+        '<div class="zic-polaroid">'+
+          '<div class="zic-photo-area">'+
+            '<img src="/images/akash-photo.jpeg" alt="Akash">'+
+            '<div class="zic-photo-overlay"></div>'+
+            '<div class="zic-photo-text">📍 Bengaluru, India</div>'+
+          '</div>'+
+          '<div class="zic-caption">'+
+            '<div class="zic-title">This is me ✌️</div>'+
+            '<div class="zic-sub">Engineering roots, curious mind, builder spirit. Started with code, fell in love with product.</div>'+
+            '<div class="zic-tags">'+
+              '<span class="zic-tag">B.Tech CS</span><span class="zic-tag">Bhubaneswar</span>'+
+              '<span class="zic-tag">Bengaluru</span><span class="zic-tag">Builder</span>'+
+            '</div>'+
+          '</div>'+
+        '</div>';
     },
-    hobby:{
-      left:2990,top:11800,cls:'zone-playground',icon:'🎮',title:'HOBBY',
-      tagline:'Off-duty mode — gaming, music, travel & creative experiments.',
-      tags:['Gaming','Music','Travel','Photography','Art'],
-      stats:[{val:'🎵',label:'Beats'},{val:'📷',label:'Shots'},{val:'✈️',label:'Trips'}]
+    hobby:function(){
+      return '<div class="zic-controller">'+
+          '<div class="zic-dpad"><div class="zic-dpad-h"></div><div class="zic-dpad-v"></div></div>'+
+          '<div class="zic-btns">'+
+            '<div class="zic-abtn a">A</div><div class="zic-abtn b">B</div>'+
+            '<div class="zic-abtn x">X</div><div class="zic-abtn y">Y</div>'+
+          '</div>'+
+          '<div class="zic-screen-area">'+
+            '<div class="zic-title">► HOBBY ZONE</div>'+
+            '<div class="zic-sub">Off-duty mode — gaming, music, travel & creative experiments. Press START to explore.</div>'+
+            '<div class="zic-pixel-tags">'+
+              '<span class="zic-pixel-tag">Gaming</span><span class="zic-pixel-tag">Music</span>'+
+              '<span class="zic-pixel-tag">Travel</span><span class="zic-pixel-tag">Photo</span>'+
+              '<span class="zic-pixel-tag">Art</span>'+
+            '</div>'+
+            '<div class="zic-lives">'+
+              '<span class="zic-heart">❤️</span><span class="zic-heart">❤️</span><span class="zic-heart">❤️</span>'+
+            '</div>'+
+          '</div>'+
+          '<div class="zic-led"></div>'+
+        '</div>';
     },
-    fun:{
-      left:10690,top:9800,cls:'zone-meme',icon:'😂',title:'FUN',
-      tagline:'Memes, vibes & unfiltered chaos — the lighter side of building.',
-      tags:['Memes','Hot Takes','Vibes','Easter Eggs'],
-      stats:[{val:'💀',label:'Dead'},{val:'🔥',label:'Takes'},{val:'🤌',label:'Chef\'s Kiss'}]
+    fun:function(){
+      return '<div class="zic-tv">'+
+          '<div class="zic-antenna"><div class="zic-antenna-l"><div class="zic-antenna-tip"></div></div><div class="zic-antenna-r"><div class="zic-antenna-tip"></div></div></div>'+
+          '<div class="zic-tv-screen">'+
+            '<div class="zic-scanlines"></div><div class="zic-static"></div>'+
+            '<div class="zic-tv-content">'+
+              '<div class="zic-title">FUN ZONE 📺</div>'+
+              '<div class="zic-sub">Memes, vibes & unfiltered chaos — the lighter side of building.</div>'+
+              '<div class="zic-emoji-row">'+
+                '<span class="zic-emoji-bounce">💀</span><span class="zic-emoji-bounce">🔥</span>'+
+                '<span class="zic-emoji-bounce">🤌</span><span class="zic-emoji-bounce">😂</span>'+
+              '</div>'+
+              '<div class="zic-neon-tags">'+
+                '<span class="zic-neon-tag">Memes</span><span class="zic-neon-tag">Hot Takes</span>'+
+                '<span class="zic-neon-tag">Vibes</span><span class="zic-neon-tag">Easter Eggs</span>'+
+              '</div>'+
+              '<div class="zic-channel">CH 42</div>'+
+            '</div>'+
+          '</div>'+
+          '<div class="zic-tv-controls"><div class="zic-knob"></div><div class="zic-knob"></div></div>'+
+        '</div>';
     }
   };
+
+  // Zone-specific CSS class mapping
+  const clsMap={work:'zic-work',portfolio:'zic-portfolio',origin:'zic-origin',hobby:'zic-hobby',fun:'zic-fun'};
 
   Object.entries(zoneMeta).forEach(([zone,meta])=>{
     const existing=document.querySelector('.zone-intro-creative[data-zone="'+zone+'"], .zone-intro-card[data-zone="'+zone+'"], .intro-card[data-zone="'+zone+'"]');
     if(existing){
       existing.dataset.zone=zone;
-      if(!existing.dataset.type) existing.dataset.type=(zone==='work'&&existing.classList.contains('intro-card'))?'photo':'introduction';
-      // Upgrade old plain cards to new design
-      if(!existing.querySelector('.zic-inner')){
-        existing.className='sticker zone-intro-card '+meta.cls;
-        existing.innerHTML=buildZoneCardHTML(meta);
+      if(!existing.dataset.type) existing.dataset.type='introduction';
+      // Upgrade old cards to new unique design
+      if(!existing.classList.contains(clsMap[zone])){
+        existing.className='sticker zone-intro-card '+clsMap[zone];
+        existing.innerHTML=builders[zone]();
       }
       return;
     }
     const card=document.createElement('div');
-    card.className='sticker zone-intro-card '+meta.cls;
+    card.className='sticker zone-intro-card '+clsMap[zone];
     card.dataset.zone=zone;
     card.dataset.type='introduction';
     card.style.left=meta.left+'px';
     card.style.top=meta.top+'px';
-    card.innerHTML=buildZoneCardHTML(meta);
+    card.innerHTML=builders[zone]();
     cv.appendChild(card);
+  });
+
+  // Add companion stickers around each zone intro card
+  ensureCompanionStickers();
+}
+
+function ensureCompanionStickers(){
+  if(document.querySelector('.zic-companion'))return; // already placed
+  const companions=[
+    // Work zone companions
+    {left:9500,top:2200,r:'-5deg',html:'<div class="zc-sticky" style="--r:-5deg">📋 Ship it!</div>'},
+    {left:10600,top:2100,r:'8deg',html:'<div class="zc-emoji-float">🚀</div>'},
+    {left:10550,top:3200,r:'-3deg',html:'<div class="zc-mini-card">Sprint #42<br>✅ 12/12 done</div>'},
+    {left:9600,top:3100,r:'6deg',html:'<div class="zc-emoji-float">💼</div>'},
+    // Portfolio companions
+    {left:2100,top:7200,r:'4deg',html:'<div class="zc-emoji-float">💻</div>'},
+    {left:3200,top:7100,r:'-6deg',html:'<div class="zc-sticky" style="--r:-6deg">Built with ❤️</div>'},
+    {left:3250,top:8200,r:'3deg',html:'<div class="zc-mini-card">git commit -m<br>"shipped 🎉"</div>'},
+    {left:2050,top:8100,r:'-4deg',html:'<div class="zc-emoji-float">⚡</div>'},
+    // Origin companions
+    {left:2200,top:1900,r:'-3deg',html:'<div class="zc-emoji-float">📸</div>'},
+    {left:3300,top:1950,r:'7deg',html:'<div class="zc-sticky" style="--r:7deg">Chapter 1</div>'},
+    {left:3350,top:3000,r:'-5deg',html:'<div class="zc-emoji-float">🌱</div>'},
+    {left:2150,top:2950,r:'4deg',html:'<div class="zc-mini-card">B.Tech CS<br>Class of \'20</div>'},
+    // Hobby companions
+    {left:2400,top:11400,r:'5deg',html:'<div class="zc-emoji-float">🎮</div>'},
+    {left:3600,top:11350,r:'-4deg',html:'<div class="zc-sticky" style="--r:-4deg">Player 1<br>Ready!</div>'},
+    {left:3550,top:12500,r:'3deg',html:'<div class="zc-emoji-float">🎵</div>'},
+    {left:2450,top:12400,r:'-6deg',html:'<div class="zc-mini-card">🏆 High Score<br>999,999</div>'},
+    // Fun companions
+    {left:10200,top:9400,r:'-3deg',html:'<div class="zc-emoji-float">😂</div>'},
+    {left:11300,top:9350,r:'6deg',html:'<div class="zc-sticky" style="--r:6deg">lmao 💀</div>'},
+    {left:11250,top:10500,r:'-5deg',html:'<div class="zc-emoji-float">🤡</div>'},
+    {left:10150,top:10400,r:'4deg',html:'<div class="zc-mini-card">Meme level:<br>LEGENDARY</div>'},
+  ];
+
+  companions.forEach(c=>{
+    const el=document.createElement('div');
+    el.className='sticker zic-companion';
+    el.style.left=c.left+'px';
+    el.style.top=c.top+'px';
+    el.innerHTML=c.html;
+    el.style.animationDelay=(Math.random()*3).toFixed(1)+'s';
+    cv.appendChild(el);
   });
 }
 
-function buildZoneCardHTML(meta){
-  const tagsHTML=meta.tags.map(t=>'<span class="zic-tag">'+t+'</span>').join('');
-  const statsHTML=meta.stats.map(s=>'<div class="zic-stat"><div class="zic-stat-val">'+s.val+'</div><div class="zic-stat-label">'+s.label+'</div></div>').join('');
-  return '<div class="zic-accent-bar"></div>'+
-    '<div class="zic-shapes">'+
-      '<div class="zic-shape s1"></div>'+
-      '<div class="zic-shape s2"></div>'+
-      '<div class="zic-shape s3"></div>'+
-      '<div class="zic-shape s4"></div>'+
-    '</div>'+
-    '<div class="zic-inner">'+
-      '<div class="zic-icon-wrap">'+meta.icon+'</div>'+
-      '<div class="zic-title">'+meta.title+'</div>'+
-      '<div class="zic-sub">'+meta.tagline+'</div>'+
-      '<div class="zic-tags">'+tagsHTML+'</div>'+
-      '<div class="zic-stats">'+statsHTML+'</div>'+
-      '<div class="zic-cta">▶ tap Play to continue</div>'+
-    '</div>';
-}
+function buildZoneCardHTML(meta){return '';}
 
 // ===== INTERSECTION OBSERVER: pause animations on off-screen stickers =====
 // Runs once after DOM is ready. Observes all stickers against the scroll viewport.
