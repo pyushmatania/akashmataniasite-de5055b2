@@ -140,7 +140,18 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 /* Glowing intro card on map */
 .map-intro-glow{animation:mapIntroGlow 2.5s ease-in-out infinite;border-radius:12px}
 @keyframes mapIntroGlow{0%,100%{box-shadow:0 0 15px var(--glow-color,rgba(76,175,80,0.6)),0 0 30px var(--glow-color,rgba(76,175,80,0.3))}50%{box-shadow:0 0 25px var(--glow-color,rgba(76,175,80,0.8)),0 0 50px var(--glow-color,rgba(76,175,80,0.4))}}
-.zone-signpost-marker{position:absolute;pointer-events:none;z-index:9;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;min-width:138px;padding:8px 14px;border-radius:10px;font-family:var(--font-fun);font-size:0.75rem;font-weight:800;color:#fff;letter-spacing:0.08em;text-transform:uppercase;text-align:center;border:2px solid rgba(255,255,255,0.32);box-shadow:0 3px 12px rgba(0,0,0,0.22);text-shadow:0 1px 2px rgba(0,0,0,0.35)}
+/* Hollywood Casino-style signpost with 2 poles */
+.hollywood-signpost{position:absolute;pointer-events:none;z-index:15;display:flex;flex-direction:column;align-items:center;transform:translate(-50%,-100%)}
+.hollywood-signpost .hp-board{position:relative;display:flex;align-items:center;justify-content:center;min-width:160px;padding:12px 24px;border-radius:6px;font-family:var(--font-fun);font-size:1.1rem;font-weight:900;color:#fff;letter-spacing:0.12em;text-transform:uppercase;text-align:center;text-shadow:0 2px 4px rgba(0,0,0,0.4);border:3px solid rgba(255,255,255,0.5);box-shadow:0 6px 24px rgba(0,0,0,0.3),inset 0 -3px 8px rgba(0,0,0,0.15),inset 0 3px 8px rgba(255,255,255,0.15);z-index:2}
+.hollywood-signpost .hp-board::before{content:'';position:absolute;inset:3px;border:1px solid rgba(255,255,255,0.25);border-radius:3px;pointer-events:none}
+.hollywood-signpost .hp-bulbs{position:absolute;inset:-6px;border-radius:9px;pointer-events:none;z-index:3}
+.hollywood-signpost .hp-bulb{position:absolute;width:6px;height:6px;border-radius:50%;background:#FFE082;box-shadow:0 0 6px #FFE082,0 0 12px rgba(255,224,130,0.5);animation:bulbFlicker 1.5s ease-in-out infinite alternate}
+@keyframes bulbFlicker{0%{opacity:0.6;box-shadow:0 0 4px #FFE082}100%{opacity:1;box-shadow:0 0 8px #FFE082,0 0 16px rgba(255,224,130,0.6)}}
+.hollywood-signpost .hp-poles{display:flex;gap:80px;justify-content:center;margin-top:-2px;z-index:1}
+.hollywood-signpost .hp-pole{width:10px;height:70px;background:linear-gradient(90deg,#8B6914,#C4A44A 40%,#A07C28 70%,#8B6914);border-radius:2px 2px 4px 4px;box-shadow:2px 3px 8px rgba(0,0,0,0.25);position:relative}
+.hollywood-signpost .hp-pole::before{content:'';position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:14px;height:8px;border-radius:50%;background:linear-gradient(180deg,#C4A44A,#8B6914);box-shadow:0 2px 4px rgba(0,0,0,0.2)}
+.hollywood-signpost .hp-pole::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:18px;height:6px;border-radius:0 0 4px 4px;background:linear-gradient(180deg,#6B5010,#4A3808);box-shadow:0 3px 8px rgba(0,0,0,0.3)}
+.hollywood-signpost .hp-ground{width:100px;height:8px;background:radial-gradient(ellipse,rgba(0,0,0,0.18),transparent 70%);border-radius:50%;margin-top:-2px}
 
 /* ===== PROJECT SHOWCASE CARDS ===== */
 .sticker-project{background:#fff;border-radius:18px;padding:20px;border:2px solid #f0ece6;width:240px;box-shadow:0 4px 24px rgba(0,0,0,0.08);transition:transform 0.2s,box-shadow 0.2s}
@@ -2581,7 +2592,47 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="meme-sub">Salary Roulette</div>
 </div>
 
-<!-- Zone signposts removed -->
+<!-- Hollywood Casino-style signposts with 2 poles -->
+<div class="hollywood-signpost" style="left:3100px;top:2800px">
+  <div class="hp-board" style="background:linear-gradient(135deg,#388E3C,#4CAF50,#66BB6A)">
+    <div class="hp-bulbs"></div>
+    📸 ORIGIN
+  </div>
+  <div class="hp-poles"><div class="hp-pole"></div><div class="hp-pole"></div></div>
+  <div class="hp-ground"></div>
+</div>
+<div class="hollywood-signpost" style="left:10650px;top:2800px">
+  <div class="hp-board" style="background:linear-gradient(135deg,#C62828,#E53935,#EF5350)">
+    <div class="hp-bulbs"></div>
+    🎯 WORK
+  </div>
+  <div class="hp-poles"><div class="hp-pole"></div><div class="hp-pole"></div></div>
+  <div class="hp-ground"></div>
+</div>
+<div class="hollywood-signpost" style="left:3000px;top:7800px">
+  <div class="hp-board" style="background:linear-gradient(135deg,#1565C0,#42A5F5,#64B5F6)">
+    <div class="hp-bulbs"></div>
+    🚀 PORTFOLIO
+  </div>
+  <div class="hp-poles"><div class="hp-pole"></div><div class="hp-pole"></div></div>
+  <div class="hp-ground"></div>
+</div>
+<div class="hollywood-signpost" style="left:3350px;top:11800px">
+  <div class="hp-board" style="background:linear-gradient(135deg,#E65100,#FF9800,#FFB74D)">
+    <div class="hp-bulbs"></div>
+    🎮 HOBBY
+  </div>
+  <div class="hp-poles"><div class="hp-pole"></div><div class="hp-pole"></div></div>
+  <div class="hp-ground"></div>
+</div>
+<div class="hollywood-signpost" style="left:10650px;top:9800px">
+  <div class="hp-board" style="background:linear-gradient(135deg,#7B1FA2,#AB47BC,#CE93D8)">
+    <div class="hp-bulbs"></div>
+    😂 FUN
+  </div>
+  <div class="hp-poles"><div class="hp-pole"></div><div class="hp-pole"></div></div>
+  <div class="hp-ground"></div>
+</div>
 
 
 <!-- ===== HUB: INTRO — CENTER OF CANVAS ===== -->
@@ -4180,11 +4231,32 @@ function shuffleWithSeed(list,rng){
 }
 
 function isOverlappingAny(rect,placed,pad){
+  pad=pad||40;
   for(const p of placed){
     if(rect.left+rect.w+pad<p.left||p.left+p.w+pad<rect.left||rect.top+rect.h+pad<p.top||p.top+p.h+pad<rect.top)continue;
     return true;
   }
   return false;
+}
+
+// Rule 14: Reserved zones where no cards should be placed (ground labels, signposts)
+function getReservedZones(){
+  const labels=[
+    {left:2100,top:2400,w:900,h:280}, // ORIGIN label
+    {left:9200,top:2200,w:700,h:280}, // WORK label
+    {left:1600,top:7400,w:1100,h:260}, // PORTFOLIO label
+    {left:1800,top:11400,w:800,h:260}, // HOBBY label
+    {left:9000,top:9200,w:600,h:280}, // FUN label
+  ];
+  // Signpost positions (near zone centers)
+  const signpostPositions=[
+    {left:2800,top:2650,w:220,h:150},
+    {left:10350,top:2650,w:220,h:150},
+    {left:2700,top:7650,w:220,h:150},
+    {left:3050,top:11650,w:220,h:150},
+    {left:10350,top:9650,w:220,h:150},
+  ];
+  return labels.concat(signpostPositions);
 }
 
 function layoutGroupInGrid(stickers,area){
@@ -4226,12 +4298,12 @@ function layoutGroupInGrid(stickers,area){
     if(row%2===1)left+=cellW*0.16;
     let candidate={left,top,w,h};
     let tries=0;
-    while(isOverlappingAny(candidate,placed,18)&&tries<16){
-      const nudgeX=(tries%2===0?1:-1)*(14+tries*3)*(0.5+rng());
-      const nudgeY=(tries%3===0?1:-1)*(10+tries*2)*(0.45+rng());
-      candidate.left+=nudgeX;
-      candidate.top+=nudgeY;
-      tries++;
+     while(isOverlappingAny(candidate,placed,40)&&tries<30){
+       const nudgeX=(tries%2===0?1:-1)*(20+tries*5)*(0.5+rng());
+       const nudgeY=(tries%3===0?1:-1)*(16+tries*4)*(0.45+rng());
+       candidate.left+=nudgeX;
+       candidate.top+=nudgeY;
+       tries++;
     }
     const clamped=clampStickerToMoodboard(sticker,left,top);
     sticker.style.left=clamped.left+'px';
@@ -4314,6 +4386,8 @@ function placeZoneSignposts(signposts){
 // 11. Ensure all items are categorized (type) and attributed (zone). New category: introduction
 // 12. Anti-overlap: cards are nudged apart so they don't stack on top of each other
 // 13. Organic country-style zone boundaries (SVG curves, not straight lines)
+// 14. Reserved zones: no cards placed on ground labels or signpost areas
+// 15. Hollywood casino-style 2-pole signposts near zone centers (canvas + maps)
 
 const ZONE_DEFS={
   origin:{x1:400,y1:400,x2:5800,y2:5600,center:{x:3100,y:3000},color:'#4CAF50'},
@@ -4375,18 +4449,17 @@ function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
     // Clamp to safe zone
     tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
     tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
-    // Rule 12: Anti-overlap nudge — push away from placed items
-    for(let attempt=0;attempt<12;attempt++){
+    // Rule 12: Anti-overlap nudge — push away from placed items (24 attempts)
+    for(let attempt=0;attempt<24;attempt++){
       let overlapping=false;
       for(const p of placed){
-        const overlapX=tryLeft<p.left+p.w&&tryLeft+w>p.left;
-        const overlapY=tryTop<p.top+p.h&&tryTop+h>p.top;
+        const overlapX=tryLeft<p.left+p.w+40&&tryLeft+w>p.left-40;
+        const overlapY=tryTop<p.top+p.h+40&&tryTop+h>p.top-40;
         if(overlapX&&overlapY){
           overlapping=true;
-          // Nudge in spiral direction
           const nudgeAngle=angle+attempt*0.5;
-          tryLeft+=Math.cos(nudgeAngle)*Math.max(w*0.6,80);
-          tryTop+=Math.sin(nudgeAngle)*Math.max(h*0.6,60);
+          tryLeft+=Math.cos(nudgeAngle)*Math.max(w*0.7,100);
+          tryTop+=Math.sin(nudgeAngle)*Math.max(h*0.7,80);
           tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
           tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
           break;
@@ -4427,6 +4500,10 @@ function autoArrangeMoodboardItems(){
   });
 
   const allPlaced=[];
+  // Rule 14: Reserve ground label and signpost zones — no cards placed there
+  const reserved=getReservedZones();
+  reserved.forEach(r=>allPlaced.push(r));
+
   const rng=seededRandom(42+stickers.length*7);
 
   // Rule 2: Place intro cards at zone centers first
@@ -4489,14 +4566,14 @@ function autoArrangeMoodboardItems(){
       let tryTop=BOUNDARY_PAD+row*cellH+(rng()*cellH*0.7)+cellH*0.1;
       tryLeft=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN-w,tryLeft));
       tryTop=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN-h,tryTop));
-      // Rule 12: Anti-overlap nudge for scattered items
-      for(let attempt=0;attempt<8;attempt++){
+      // Rule 12: Anti-overlap nudge for scattered items (20 attempts)
+      for(let attempt=0;attempt<20;attempt++){
         let overlapping=false;
         for(const p of allPlaced){
-          if(tryLeft<p.left+p.w&&tryLeft+w>p.left&&tryTop<p.top+p.h&&tryTop+h>p.top){
+          if(tryLeft<p.left+p.w+40&&tryLeft+w>p.left-40&&tryTop<p.top+p.h+40&&tryTop+h>p.top-40){
             overlapping=true;
-            tryLeft+=((rng()-0.3)*Math.max(w,120));
-            tryTop+=((rng()-0.3)*Math.max(h,80));
+            tryLeft+=((rng()-0.3)*Math.max(w,140));
+            tryTop+=((rng()-0.3)*Math.max(h,100));
             tryLeft=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN-w,tryLeft));
             tryTop=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN-h,tryTop));
             break;
@@ -6596,6 +6673,8 @@ engine: `
     <tr><td>11</td><td>Attribution</td><td>Every sticker gets a type (category) and zone. New category: <strong>introduction</strong></td></tr>
     <tr><td>12</td><td>Anti-Overlap</td><td>Cards are nudged apart (up to 12 attempts) so they don't stack on top of each other</td></tr>
     <tr><td>13</td><td>Organic Borders</td><td>Zone boundaries use SVG bezier curves — irregular like country/state borders, not straight lines. Synced across canvas, big map, and small map.</td></tr>
+    <tr><td>14</td><td>Reserved Zones</td><td>No cards placed on ground-painted zone labels or signpost areas. These are exclusion zones during auto-rearrange.</td></tr>
+    <tr><td>15</td><td>Hollywood Signposts</td><td>Casino-style 2-pole signposts with gradient boards, wood poles, and ground shadows. Placed near zone centers on canvas, big map, and small map.</td></tr>
   </table>
 </div>
 
@@ -7133,17 +7212,33 @@ function addMapDecorations(cw, ch){
    mapBoundarySvg.appendChild(p4);
    layer.appendChild(mapBoundarySvg);
 
-   // === ZONE SIGNPOST LABELS — positioned at actual zone centers ===
+   // === HOLLYWOOD CASINO-STYLE SIGNPOSTS on big map ===
    const signposts=[
-     {x:23.6,y:22.3,label:'ORIGIN',color:'#4CAF50',bg:'rgba(76,175,80,0.85)'},
-     {x:74.0,y:22.3,label:'WORK',color:'#E53935',bg:'rgba(229,57,53,0.85)'},
-     {x:23.6,y:57.4,label:'PORTFOLIO',color:'#42A5F5',bg:'rgba(66,165,245,0.85)'},
-     {x:25.0,y:83.8,label:'HOBBY',color:'#FF9800',bg:'rgba(255,152,0,0.85)'},
-     {x:74.0,y:70.3,label:'FUN',color:'#AB47BC',bg:'rgba(171,71,188,0.85)'},
+     {x:23.6,y:22.3,label:'📸 ORIGIN',color:'#4CAF50',bg:'linear-gradient(135deg,#388E3C,#4CAF50,#66BB6A)',emoji:'📸'},
+     {x:74.0,y:22.3,label:'🎯 WORK',color:'#E53935',bg:'linear-gradient(135deg,#C62828,#E53935,#EF5350)',emoji:'🎯'},
+     {x:23.6,y:57.4,label:'🚀 PORTFOLIO',color:'#42A5F5',bg:'linear-gradient(135deg,#1565C0,#42A5F5,#64B5F6)',emoji:'🚀'},
+     {x:25.0,y:83.8,label:'🎮 HOBBY',color:'#FF9800',bg:'linear-gradient(135deg,#E65100,#FF9800,#FFB74D)',emoji:'🎮'},
+     {x:74.0,y:70.3,label:'😂 FUN',color:'#AB47BC',bg:'linear-gradient(135deg,#7B1FA2,#AB47BC,#CE93D8)',emoji:'😂'},
    ];
+   const spFS=Math.max(8,cw*0.006);
    signposts.forEach(sp=>{
-     const el=addDiv('map-signpost','left:'+sp.x+'%;top:'+sp.y+'%;transform:translate(-50%,-50%);z-index:10;padding:6px 16px;border-radius:8px;background:'+sp.bg+';color:#fff;font-family:var(--font-fun);font-size:'+Math.max(8,cw*0.006)+'px;font-weight:800;letter-spacing:0.08em;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,0.4);box-shadow:0 3px 12px rgba(0,0,0,0.25),0 0 20px '+sp.color+'60;border:2px solid rgba(255,255,255,0.3)');
-     el.textContent=sp.label;
+     // Signpost container
+     const wrap=document.createElement('div');
+     wrap.className='map-signpost';
+     wrap.style.cssText='position:absolute;left:'+sp.x+'%;top:'+sp.y+'%;transform:translate(-50%,-100%);z-index:10;pointer-events:none;display:flex;flex-direction:column;align-items:center';
+     // Board
+     const board=document.createElement('div');
+     board.style.cssText='padding:'+Math.max(4,spFS*0.6)+'px '+Math.max(8,spFS*1.2)+'px;border-radius:4px;background:'+sp.bg+';color:#fff;font-family:var(--font-fun);font-size:'+spFS+'px;font-weight:900;letter-spacing:0.1em;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.4);box-shadow:0 4px 16px rgba(0,0,0,0.3),inset 0 -2px 6px rgba(0,0,0,0.15)';
+     board.textContent=sp.label;
+     wrap.appendChild(board);
+     // Poles
+     const poles=document.createElement('div');
+     const pH=Math.max(12,spFS*2.5);
+     const pW=Math.max(3,spFS*0.4);
+     poles.style.cssText='display:flex;gap:'+Math.max(20,spFS*3)+'px;justify-content:center;margin-top:-1px';
+     poles.innerHTML='<div style="width:'+pW+'px;height:'+pH+'px;background:linear-gradient(90deg,#8B6914,#C4A44A 40%,#8B6914);border-radius:1px 1px 2px 2px;box-shadow:1px 2px 4px rgba(0,0,0,0.25)"></div><div style="width:'+pW+'px;height:'+pH+'px;background:linear-gradient(90deg,#8B6914,#C4A44A 40%,#8B6914);border-radius:1px 1px 2px 2px;box-shadow:1px 2px 4px rgba(0,0,0,0.25)"></div>';
+     wrap.appendChild(poles);
+     layer.appendChild(wrap);
    });
 
    // === ZONE GROUND LABELS ON MAP — diagonal, centered in zones ===
@@ -8007,8 +8102,11 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
 // Rule: Big map blank area clicks DISABLED — only sticker clicks allowed
 // (prevents character from wandering to empty spaces)
 mapCanvas.addEventListener('click',ev=>{
-  // Do nothing on blank area — only sticker clones trigger navigation
-  ev.stopPropagation();
+  // Only block blank area clicks — let sticker clone clicks through
+  if(ev.target===mapCanvas||ev.target.classList.contains('map-dec-layer')||ev.target.classList.contains('map-terrain')||ev.target.classList.contains('map-zone-tint')||ev.target.classList.contains('map-ground-label')||ev.target.classList.contains('map-signpost')||ev.target.classList.contains('map-beach')){
+    ev.stopPropagation();
+    return;
+  }
 });
 
 
