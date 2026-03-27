@@ -1812,8 +1812,8 @@ body.map-expanded .scroll-counter{display:none!important}
       <div class="theme-label">Matrix ☢️</div>
     </div>
   </div>
-  <button class="rearrange-btn" id="rearrangeBtn" onclick="runItemRearrange(true)">🔄 Sync Map Items</button>
-  <div class="rearrange-note">Syncs new/updated stickers to map cache without full rerenders</div>
+  <button class="rearrange-btn" id="rearrangeBtn" onclick="runItemRearrange(true)">🔄 Auto-Rearrange All</button>
+  <div class="rearrange-note">Rearranges all cards to their zones, syncs maps, places badges on cards</div>
   <div class="board-stats" id="boardStats">
     <div class="stats-total">— <span id="statsTotal">…</span> items on board —</div>
     <div class="stats-cats" id="statsCats"></div>
@@ -4307,34 +4307,256 @@ function placeZoneSignposts(signposts){
   });
 }
 
+// ===== AUTO-REARRANGE ENGINE v2 =====
+// Rules:
+// 1. Spread evenly — no too-dense or too-empty areas
+// 2. Intro card of each zone centered in zone
+// 3. Zone-specific cards stay in their zone; fun/hobby/meme scatter everywhere
+// 4. Dense cluster around intro card center
+// 5. Leave space near boundary (padding)
+// 6. New cards auto-follow these rules
+// 7. Rearrange button resets all to default positions
+// 8. Badges placed on top of another card (top-left, tilted)
+// 9. Sync to big and small map after arrangement
+
+const ZONE_DEFS={
+  origin:{x1:400,y1:400,x2:5800,y2:5600,center:{x:3100,y:3000},color:'#4CAF50'},
+  work:{x1:7700,y1:400,x2:13600,y2:5600,center:{x:10650,y:3000},color:'#E53935'},
+  portfolio:{x1:400,y1:6200,x2:5600,y2:9800,center:{x:3000,y:8000},color:'#42A5F5'},
+  hobby:{x1:400,y1:10400,x2:6300,y2:13600,center:{x:3350,y:12000},color:'#FF9800'},
+  fun:{x1:7700,y1:6400,x2:13600,y2:13600,center:{x:10650,y:10000},color:'#AB47BC'}
+};
+const BOUNDARY_PAD=350; // no cards within this distance of zone edges
+const SCATTER_ZONES=['fun','hobby']; // these also scatter across canvas
+
+function getZoneForSticker(sticker){
+  const zone=sticker.dataset.zone;
+  if(zone&&ZONE_DEFS[zone])return zone;
+  const group=identifyStickerGroup(sticker);
+  if(group==='personal')return 'origin';
+  if(group==='work')return 'work';
+  if(group==='portfolio')return 'portfolio';
+  if(group==='hobby')return 'hobby';
+  if(group==='hub')return null; // center items
+  return 'fun';
+}
+
+function isIntroCard(sticker){
+  return sticker.classList.contains('zone-intro-creative')||sticker.classList.contains('intro-card')||sticker.classList.contains('zone-intro-card');
+}
+
+function isBadgeSticker(sticker){
+  return sticker.classList.contains('sticker-badge')||sticker.classList.contains('sticker-stamp');
+}
+
+function isMemeOrFunEmoji(sticker){
+  return sticker.classList.contains('sticker-meme')||
+    (sticker.classList.contains('sticker-emoji')&&(!sticker.dataset.zone||SCATTER_ZONES.includes(sticker.dataset.zone)||sticker.dataset.zone==='fun'));
+}
+
+function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
+  // Place items in expanding spiral from center, denser near center
+  const sorted=items.slice().sort((a,b)=>(a.offsetWidth*a.offsetHeight)-(b.offsetWidth*b.offsetHeight));
+  const n=sorted.length;
+  if(!n)return;
+  const padX=BOUNDARY_PAD;
+  const padY=BOUNDARY_PAD;
+  const safeX1=zoneBounds?zoneBounds.x1+padX:MOODBOARD_ITEM_SAFE_MARGIN;
+  const safeY1=zoneBounds?zoneBounds.y1+padY:MOODBOARD_ITEM_SAFE_MARGIN;
+  const safeX2=zoneBounds?zoneBounds.x2-padX:MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN;
+  const safeY2=zoneBounds?zoneBounds.y2-padY:MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN;
+
+  sorted.forEach((sticker,i)=>{
+    const w=sticker.offsetWidth||180;
+    const h=sticker.offsetHeight||100;
+    // Spiral parameter: closer items get smaller radius
+    const t=(i+1)/(n+1);
+    const r=innerR+t*(outerR-innerR);
+    const angleStep=2.399963; // golden angle in radians
+    const angle=i*angleStep;
+    let tryLeft=cx+Math.cos(angle)*r-w/2+(rng()-0.5)*60;
+    let tryTop=cy+Math.sin(angle)*r-h/2+(rng()-0.5)*60;
+    // Clamp to safe zone
+    tryLeft=Math.max(safeX1,Math.min(safeX2-w,tryLeft));
+    tryTop=Math.max(safeY1,Math.min(safeY2-h,tryTop));
+    // Anti-overlap nudge
+    let candidate={left:tryLeft,top:tryTop,w,h};
+    let tries=0;
+    while(isOverlappingAny(candidate,placed,20)&&tries<20){
+      candidate.left+=((tries%2===0?1:-1)*(16+tries*4))*(0.5+rng());
+      candidate.top+=((tries%3===0?1:-1)*(12+tries*3))*(0.4+rng());
+      candidate.left=Math.max(safeX1,Math.min(safeX2-w,candidate.left));
+      candidate.top=Math.max(safeY1,Math.min(safeY2-h,candidate.top));
+      tries++;
+    }
+    sticker.style.left=candidate.left+'px';
+    sticker.style.top=candidate.top+'px';
+    sticker.style.transform='rotate('+((rng()-0.5)*12).toFixed(1)+'deg)';
+    placed.push({left:candidate.left,top:candidate.top,w,h});
+  });
+}
+
 function autoArrangeMoodboardItems(){
-  const groups={signpost:[],personal:[],work:[],portfolio:[],hobby:[],hub:[],fun:[]};
   const stickers=getAllStickers();
+  const zoneItems={origin:[],work:[],portfolio:[],hobby:[],fun:[]};
+  const badges=[];
+  const introCards={};
+  const scatterItems=[];
+  const hubItems=[];
+
+  // Categorize all stickers
   stickers.forEach(sticker=>{
-    const group=identifyStickerGroup(sticker);
-    if(groups[group])groups[group].push(sticker);
-    else groups.fun.push(sticker);
+    if(isBadgeSticker(sticker)){badges.push(sticker);return;}
+    if(isIntroCard(sticker)){
+      const zone=sticker.dataset.zone||(sticker.classList.contains('intro-card')?'center':'fun');
+      introCards[zone]=sticker;
+      return;
+    }
+    // Memes and fun emojis scatter across the canvas
+    if(isMemeOrFunEmoji(sticker)){scatterItems.push(sticker);return;}
+    const zone=getZoneForSticker(sticker);
+    if(!zone){hubItems.push(sticker);return;}
+    if(zoneItems[zone])zoneItems[zone].push(sticker);
+    else zoneItems.fun.push(sticker);
   });
 
-  // signposts removed — no placement needed
-  layoutGroupInGrid(groups.personal,{x1:300,y1:400,x2:5800,y2:5600});
-  layoutGroupInGrid(groups.work,{x1:7700,y1:400,x2:13700,y2:5600});
-  layoutGroupInGrid(groups.portfolio,{x1:300,y1:6200,x2:5600,y2:9800});
-  layoutGroupInGrid(groups.hobby,{x1:300,y1:10400,x2:6300,y2:13700});
-  layoutGroupInGrid(groups.hub,{x1:6050,y1:6050,x2:8100,y2:8150});
-  layoutGroupInGrid(groups.fun,{x1:7700,y1:6400,x2:13700,y2:13700});
+  const allPlaced=[];
+  const rng=seededRandom(42+stickers.length*7);
+
+  // Rule 2: Place intro cards at zone centers first
+  Object.entries(ZONE_DEFS).forEach(([zoneKey,zd])=>{
+    const ic=introCards[zoneKey];
+    if(ic){
+      const w=ic.offsetWidth||380;
+      const h=ic.offsetHeight||420;
+      const left=zd.center.x-w/2;
+      const top=zd.center.y-h/2;
+      ic.style.left=left+'px';
+      ic.style.top=top+'px';
+      ic.style.transform='rotate(0deg)';
+      allPlaced.push({left,top,w,h});
+    }
+  });
+
+  // Place center intro card
+  if(introCards.center){
+    const ic=introCards.center;
+    const w=ic.offsetWidth||340;
+    const h=ic.offsetHeight||400;
+    const left=7000-w/2;
+    const top=7000-h/2;
+    ic.style.left=left+'px';
+    ic.style.top=top+'px';
+    ic.style.transform='rotate(0deg)';
+    allPlaced.push({left,top,w,h});
+  }
+
+  // Rule 3+4: Place zone-specific items spiraling from zone center
+  Object.entries(ZONE_DEFS).forEach(([zoneKey,zd])=>{
+    const items=zoneItems[zoneKey];
+    if(!items.length)return;
+    const zoneW=zd.x2-zd.x1;
+    const zoneH=zd.y2-zd.y1;
+    const innerR=Math.min(zoneW,zoneH)*0.08; // dense near center
+    const outerR=Math.min(zoneW,zoneH)*0.42; // but spread to fill
+    spiralLayout(items,zd.center.x,zd.center.y,innerR,outerR,rng,allPlaced,zd);
+  });
+
+  // Hub items near canvas center
+  if(hubItems.length){
+    spiralLayout(hubItems,7000,7000,200,900,rng,allPlaced,{x1:5800,y1:5600,x2:8200,y2:8400});
+  }
+
+  // Rule 3: Scatter memes/fun emojis across the ENTIRE canvas
+  if(scatterItems.length){
+    const shuffled=shuffleWithSeed(scatterItems,rng);
+    const gridCols=Math.ceil(Math.sqrt(shuffled.length*2));
+    const gridRows=Math.ceil(shuffled.length/gridCols);
+    const cellW=(MOODBOARD_WORLD_WIDTH-BOUNDARY_PAD*2)/gridCols;
+    const cellH=(MOODBOARD_WORLD_HEIGHT-BOUNDARY_PAD*2)/gridRows;
+    shuffled.forEach((sticker,i)=>{
+      const col=i%gridCols;
+      const row=Math.floor(i/gridCols);
+      const w=sticker.offsetWidth||160;
+      const h=sticker.offsetHeight||100;
+      let tryLeft=BOUNDARY_PAD+col*cellW+(rng()*cellW*0.7)+cellW*0.1;
+      let tryTop=BOUNDARY_PAD+row*cellH+(rng()*cellH*0.7)+cellH*0.1;
+      tryLeft=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN-w,tryLeft));
+      tryTop=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN-h,tryTop));
+      let candidate={left:tryLeft,top:tryTop,w,h};
+      let tries=0;
+      while(isOverlappingAny(candidate,allPlaced,16)&&tries<12){
+        candidate.left+=(rng()-0.5)*80;
+        candidate.top+=(rng()-0.5)*80;
+        candidate.left=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_WIDTH-MOODBOARD_ITEM_SAFE_MARGIN-w,candidate.left));
+        candidate.top=Math.max(MOODBOARD_ITEM_SAFE_MARGIN,Math.min(MOODBOARD_WORLD_HEIGHT-MOODBOARD_ITEM_SAFE_MARGIN-h,candidate.top));
+        tries++;
+      }
+      sticker.style.left=candidate.left+'px';
+      sticker.style.top=candidate.top+'px';
+      sticker.style.transform='rotate('+((rng()-0.5)*14).toFixed(1)+'deg)';
+      allPlaced.push({left:candidate.left,top:candidate.top,w,h});
+    });
+  }
+
+  // Rule 8: Badges on top of other cards (top-left, tilted)
   positionBadgeBandages();
+
+  // Rule 5: Final boundary clamp
   normalizeAllStickerBounds();
 }
 
+// Rule 6: Place a newly added sticker according to rules
+function placeNewSticker(sticker){
+  if(isBadgeSticker(sticker)){
+    // Find nearest non-badge sticker and place on top
+    const anchors=getAllStickers().filter(s=>s!==sticker&&!isBadgeSticker(s)&&!isIntroCard(s));
+    if(anchors.length){
+      const rng=seededRandom(Date.now()%100000);
+      const anchor=anchors[Math.floor(rng()*anchors.length)];
+      const aL=parseFloat(anchor.style.left)||0;
+      const aT=parseFloat(anchor.style.top)||0;
+      const next=clampStickerToMoodboard(sticker,aL-30+(rng()-0.5)*20,aT-20+(rng()-0.5)*12);
+      sticker.style.left=next.left+'px';
+      sticker.style.top=next.top+'px';
+      sticker.style.transform='rotate('+(-15+rng()*10).toFixed(1)+'deg)';
+      sticker.style.zIndex='68';
+    }
+    return;
+  }
+  const zone=getZoneForSticker(sticker);
+  const zd=zone?ZONE_DEFS[zone]:null;
+  if(zd){
+    const rng=seededRandom(Date.now()%100000);
+    const w=sticker.offsetWidth||180;
+    const h=sticker.offsetHeight||100;
+    const r=Math.min(zd.x2-zd.x1,zd.y2-zd.y1)*0.25;
+    const angle=rng()*Math.PI*2;
+    let left=zd.center.x+Math.cos(angle)*r*(0.3+rng()*0.7)-w/2;
+    let top=zd.center.y+Math.sin(angle)*r*(0.3+rng()*0.7)-h/2;
+    left=Math.max(zd.x1+BOUNDARY_PAD,Math.min(zd.x2-BOUNDARY_PAD-w,left));
+    top=Math.max(zd.y1+BOUNDARY_PAD,Math.min(zd.y2-BOUNDARY_PAD-h,top));
+    const next=clampStickerToMoodboard(sticker,left,top);
+    sticker.style.left=next.left+'px';
+    sticker.style.top=next.top+'px';
+    sticker.style.transform='rotate('+((rng()-0.5)*12).toFixed(1)+'deg)';
+  }
+  // Rule 9: sync maps
+  if(typeof queueMapSync==='function')queueMapSync(true);
+}
+
+// Rule 7: Rearrange button resets all cards to default positions
 function runItemRearrange(triggeredByUser){
-  normalizeAllStickerBounds();
+  autoArrangeMoodboardItems();
+  // Clear visual cache and force full rescan + redraw
+  if(typeof scanStickers==='function')scanStickers();
+  if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
   if(typeof queueMapSync==='function')queueMapSync(true);
   const btn=document.getElementById('rearrangeBtn');
   if(triggeredByUser&&btn){
     const old=btn.textContent;
-    btn.textContent='✅ Map Synced';
-    setTimeout(()=>{btn.textContent=old;},1100);
+    btn.textContent='✅ Rearranged & Synced!';
+    setTimeout(()=>{btn.textContent=old;},1500);
   }
 }
 
@@ -6058,8 +6280,8 @@ stats: `
     <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">🔤 Google Fonts</div></div>
     <div class="stat-card"><div class="stat-num">0</div><div class="stat-label">📦 npm Dependencies</div></div>
     <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">🎉 Confetti Per Tap</div></div>
-    <div class="stat-card"><div class="stat-num">50</div><div class="stat-label">💬 Build Prompts</div></div>
-    <div class="stat-card"><div class="stat-num">43</div><div class="stat-label">🚀 Major Versions</div></div>
+    <div class="stat-card"><div class="stat-num">55</div><div class="stat-label">💬 Build Prompts</div></div>
+    <div class="stat-card"><div class="stat-num">46</div><div class="stat-label">🚀 Major Versions</div></div>
     <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">🥚 Easter Egg</div></div>
     <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">🏙️ Map Zones</div></div>
     <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">🔍 Map Filters</div></div>
@@ -6082,7 +6304,7 @@ stats: `
       <div class="fun-fact">🎨 11 themes × 280 stickers = <strong>3,080 possible sticker-theme combinations</strong> to explore</div>
       <div class="fun-fact">☕ The chai counter has been tapped 0 times on this device... <strong>for now</strong></div>
       <div class="fun-fact">🐛 Bugs fixed counter is also 0. Coincidence? <strong>The bugs disagree.</strong></div>
-      <div class="fun-fact">🏗️ Built in 43 versions over ~2 days — that's an average of <strong>1 version every 66 minutes</strong></div>
+      <div class="fun-fact">🏗️ Built in 46 versions over ~3 days — that's an average of <strong>1 version every 93 minutes</strong></div>
       <div class="fun-fact">📱 The minimap is 85 × 85px showing a 14,000 × 14,000px world — a scale of <strong>1:164</strong></div>
       <div class="fun-fact">🎡 The animated Ferris wheel in the big map has <strong>8 hand-coded SVG gondolas</strong> with individual colors</div>
       <div class="fun-fact">🔥 Every single tap on a sticker triggers <strong>12 confetti emoji particles</strong> radiating in all directions</div>
@@ -6091,6 +6313,11 @@ stats: `
       <div class="fun-fact">👑 The Iron Throne mini-game has <strong>only one correct answer</strong> — can you figure out who actually deserves it?</div>
       <div class="fun-fact">👨‍🍳 The Emoji Kitchen has <strong>28 unique combo recipes</strong> — some are obvious, some are completely unhinged</div>
       <div class="fun-fact">📸 Tap Akash's photo enough times and something <strong>special happens</strong> — it's an easter egg within the easter egg</div>
+      <div class="fun-fact">🔄 The <strong>Auto-Rearrange Engine</strong> uses golden-angle spiral placement to distribute 280+ stickers across 5 zones with density control</div>
+      <div class="fun-fact">📍 <strong>Location mapping</strong> is pixel-perfect — clicking any sticker on the big map walks the bitmoji to the exact world coordinate and then scrolls the moodboard to match</div>
+      <div class="fun-fact">🔗 <strong>Triple sync</strong> — every sticker position is synchronized across the moodboard canvas, small minimap, AND the full big map in real-time</div>
+      <div class="fun-fact">🏷️ Badges auto-place themselves <strong>on top of anchor cards</strong> like bandages — tilted, offset, and z-indexed above their host</div>
+      <div class="fun-fact">🌀 The spiral layout uses the <strong>golden angle (≈137.5°)</strong> — the same pattern sunflowers use to pack seeds efficiently</div>
     </div>
   </div>
 
@@ -6114,6 +6341,12 @@ stats: `
 
   <div class="prompt-block"><div class="prompt-label">Prompt 40 — Zone Ground Labels + Drag Handles + Play Nav</div><div class="prompt-text">"Add zone labels painted on the ground near boundary lines, like road markings. Add drag handle on interactive cards — make card non-draggable except from handle. Play button should cycle through intro cards. Make intro cards taller with more content. Glowing boundaries on intro cards in small/big map."</div></div>
   <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v44.0: Road-marking zone ground labels on moodboard canvas + map (10 labels near every boundary, faded font-weight:900, 0.12 opacity). Drag handle grip pattern on all interactive cards — whole card no longer draggable, only the ⠿ handle. Zone intro cards redesigned: 380px wide, min-height 420px, "Explore Zone" buttons, extra stat lines, 5 tags each, counter-glow easter egg at 5 taps. Play nav button now cycles hub→origin→work→portfolio→hobby→fun with toast. Map clone intro cards get animated glowing borders per zone color. 9 ground labels added to big map too.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 41 — Map Sync Audit + Performance</div><div class="prompt-text">"The location of bigmap, smallmap and moodboard are not accurate. Audit it deeply — if I click an item on bigmap it takes me to some other place. Make this perfect and make sure all items are present on canvas and perfectly synced on big and small map."</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v45.0: Deep coordinate sync audit. Replaced lossy mapClientToWorld click handler with direct world coords from stickerData. Fixed zoom drift by recalculating scale from base fit-scale every step. Fixed asymmetric Y offset bug in updMap. Recalculated all zone boundary line percentages to match actual world coords with 400px map padding.</div></div>
+
+  <div class="prompt-block"><div class="prompt-label">Prompt 42 — Auto-Rearrange Engine</div><div class="prompt-text">"Add auto-rearrange feature to theme settings: 1) Spread evenly on canvas, 2) Intro cards centered in zones, 3) Zone cards stay in zone except fun/memes scatter everywhere, 4) Dense around intro card, 5) No cards near boundaries, 6) New cards auto-follow rules, 7) Rearrange button resets all, 8) Badges placed on top of cards like bandages, 9) Sync to maps after arrangement."</div></div>
+  <div class="prompt-block"><div class="prompt-label">Response</div><div class="prompt-text">v46.0: Complete auto-rearrange engine with 9-rule distribution system. Golden-angle spiral layout for zone items (dense around intro centers). Memes/fun emojis scatter across entire 14K×14K canvas. Badges auto-placed on top-left of anchor cards with tilt. Boundary padding of 350px. New sticker placement API (placeNewSticker). Walk animation uses CSS transition for smooth movement. Map scroll follows walk path. Rearrange button in theme settings triggers full reset + map sync.</div></div>
 </div>
 <div class="inv-section">
   <h3>🧱 Tech Stack</h3>
@@ -7383,6 +7616,9 @@ function centerMoodboardOn(worldX,worldY,behavior){
 }
 
 function walkBitmojiTo(worldX,worldY,stickerRef){
+  // Clamp to valid world coordinates
+  worldX=Math.max(400,Math.min(MOODBOARD_WORLD_WIDTH-400,worldX));
+  worldY=Math.max(400,Math.min(MOODBOARD_WORLD_HEIGHT-400,worldY));
   if(walkingInProgress||!mmExp)return;
   clearTimeout(_walkTimer);
   clearWalkTimers();
@@ -7395,10 +7631,15 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
   const targetMY=(worldY-oy)*sc;
   const startX=parseFloat(mapPlayer.style.left)||0;
   const startY=parseFloat(mapPlayer.style.top)||0;
-  // Start walking
+  // Start walking with smooth CSS transition
   mapPlayer.classList.add('walking');
+  mapPlayer.style.transition='left '+WALK_DURATION+'ms ease-in-out, top '+WALK_DURATION+'ms ease-in-out';
   mapPlayer.style.left=targetMX+'px';
   mapPlayer.style.top=targetMY+'px';
+  // Smooth scroll map view to follow the walk
+  const cL=parseFloat(mapCanvas.style.left)||0;
+  const cT=parseFloat(mapCanvas.style.top)||0;
+  mmInner.scrollTo({left:targetMX+cL-mmInner.clientWidth/2,top:targetMY+cT-mmInner.clientHeight/2,behavior:'smooth'});
   // Destination target marker
   clearActiveDestinationMarker();
   const destMarker=document.createElement('div');
@@ -7454,6 +7695,7 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
   // After walk completes, close map and navigate to exact item
   _walkTimer=setTimeout(()=>{
     mapPlayer.classList.remove('walking');
+    mapPlayer.style.transition='';
     walkingInProgress=false;
     toggleMap();
     setTimeout(()=>{
