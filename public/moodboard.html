@@ -6664,13 +6664,18 @@ function addMapDecorations(cw, ch){
    const zoneLine3=addDiv('map-zone-line','left:48.3%;top:2%;width:0;height:40.6%;border-left:5px dashed rgba(229,57,53,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(229,57,53,0.7)) drop-shadow(0 0 20px rgba(229,57,53,0.4))');
    const zoneLine4=addDiv('map-zone-line','left:48.3%;top:42.6%;width:0;height:56%;border-left:5px dashed rgba(171,71,188,0.9);z-index:5;filter:drop-shadow(0 0 10px rgba(171,71,188,0.7)) drop-shadow(0 0 20px rgba(171,71,188,0.4))');
 
-   // === ZONE SIGNPOST LABELS ===
+   // === ZONE SIGNPOST LABELS — positioned at actual zone centers ===
+   // Origin center: ((400+5800)/2+400)/14800=23.6%, ((400+5600)/2+400)/14800=22.3%
+   // Work center: ((7700+13600)/2+400)/14800=74.0%, same Y as Origin
+   // Portfolio center: ((400+5600)/2+400)/14800=23.6%, ((6200+9800)/2+400)/14800=57.4%
+   // Hobby center: ((400+6300)/2+400)/14800=25.0%, ((10400+13600)/2+400)/14800=83.8%
+   // Fun center: ((7700+13600)/2+400)/14800=74.0%, ((6400+13600)/2+400)/14800=70.3%
    const signposts=[
-     {x:22.3,y:21.6,label:'ORIGIN',color:'#4CAF50',bg:'rgba(76,175,80,0.85)'},
-     {x:73.6,y:21.6,label:'WORK',color:'#E53935',bg:'rgba(229,57,53,0.85)'},
-     {x:22.3,y:56.8,label:'PORTFOLIO',color:'#42A5F5',bg:'rgba(66,165,245,0.85)'},
-     {x:24.0,y:83.8,label:'HOBBY',color:'#FF9800',bg:'rgba(255,152,0,0.85)'},
-     {x:73.6,y:70.3,label:'FUN',color:'#AB47BC',bg:'rgba(171,71,188,0.85)'},
+     {x:23.6,y:22.3,label:'ORIGIN',color:'#4CAF50',bg:'rgba(76,175,80,0.85)'},
+     {x:74.0,y:22.3,label:'WORK',color:'#E53935',bg:'rgba(229,57,53,0.85)'},
+     {x:23.6,y:57.4,label:'PORTFOLIO',color:'#42A5F5',bg:'rgba(66,165,245,0.85)'},
+     {x:25.0,y:83.8,label:'HOBBY',color:'#FF9800',bg:'rgba(255,152,0,0.85)'},
+     {x:74.0,y:70.3,label:'FUN',color:'#AB47BC',bg:'rgba(171,71,188,0.85)'},
    ];
    signposts.forEach(sp=>{
      const el=addDiv('map-signpost','left:'+sp.x+'%;top:'+sp.y+'%;transform:translate(-50%,-50%);z-index:10;padding:6px 16px;border-radius:8px;background:'+sp.bg+';color:#fff;font-family:var(--font-fun);font-size:'+Math.max(8,cw*0.006)+'px;font-weight:800;letter-spacing:0.08em;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,0.4);box-shadow:0 3px 12px rgba(0,0,0,0.25),0 0 20px '+sp.color+'60;border:2px solid rgba(255,255,255,0.3)');
