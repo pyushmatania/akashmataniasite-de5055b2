@@ -3367,13 +3367,14 @@ const MOODBOARD_VIEW_SCALE_NAV=window.innerWidth<=768?0.6:0.72;
 
 // ===== PLAY BUTTON — cycles through intro cards =====
 let _playIntroIdx=-1;
+// Play targets: exact center of each intro card from HTML positions + card dimensions (~380x420)
 const _playIntroTargets=[
   {x:7000,y:7000,label:'Intro Card'},
-  {x:2900,y:2600,label:'Origin'},
-  {x:10850,y:2600,label:'Work'},
-  {x:2800,y:7800,label:'Portfolio'},
-  {x:3150,y:12000,label:'Hobby'},
-  {x:10850,y:10000,label:'Fun'},
+  {x:2740+190,y:2400+210,label:'Origin'},
+  {x:10690+190,y:2400+210,label:'Work'},
+  {x:2640+190,y:7600+210,label:'Portfolio'},
+  {x:2990+190,y:11800+210,label:'Hobby'},
+  {x:10690+190,y:9800+210,label:'Fun'},
 ];
 function cycleIntroCards(e){
   if(e){e.preventDefault();e.stopPropagation();}
@@ -7356,17 +7357,7 @@ function addMapDecorations(cw, ch){
   addDiv('map-terrain-edge','left:88%;top:15%;width:10%;height:35%;border-radius:40% 60% 50% 50%;background:linear-gradient(-90deg,#5a9e3e,#4e9035);z-index:0');
   addDiv('map-terrain-edge','left:15%;top:2%;width:40%;height:8%;border-radius:50% 50% 40% 60%;background:linear-gradient(180deg,#5a9e3e,#4e9035);z-index:0');
   addDiv('map-terrain-edge','left:20%;top:90%;width:50%;height:8%;border-radius:40% 60% 50% 50%;background:linear-gradient(0deg,#5a9e3e,#4e9035);z-index:0');
-   // Zone-colored tints — matched to actual world zone positions
-   // Origin: x[400-5800]→[5.4%-41.9%], y[400-5600]→[5.4%-40.5%]
-   addDiv('map-zone-tint','left:5%;top:5%;width:37%;height:38%;border-radius:30%;background:radial-gradient(ellipse,rgba(0,188,212,0.35),transparent 65%);z-index:0;filter:blur(2px)');
-   // Work: x[7700-13600]→[54.7%-94.6%], y[400-5600]
-   addDiv('map-zone-tint','left:55%;top:5%;width:40%;height:38%;border-radius:30%;background:radial-gradient(ellipse,rgba(229,57,53,0.28),transparent 65%);z-index:0;filter:blur(2px)');
-   // Portfolio: x[400-5600]→[5.4%-40.5%], y[6200-9800]→[44.6%-68.9%]
-   addDiv('map-zone-tint','left:5%;top:44%;width:36%;height:25%;border-radius:30%;background:radial-gradient(ellipse,rgba(66,165,245,0.28),transparent 65%);z-index:0;filter:blur(2px)');
-   // Hobby: x[400-6300]→[5.4%-45.3%], y[10400-13600]→[73%-94.6%]
-   addDiv('map-zone-tint','left:5%;top:73%;width:40%;height:22%;border-radius:30%;background:radial-gradient(ellipse,rgba(255,152,0,0.32),transparent 65%);z-index:0;filter:blur(2px)');
-   // Fun: x[7700-13600]→[54.7%-94.6%], y[6400-13600]→[45.9%-94.6%]
-   addDiv('map-zone-tint','left:55%;top:46%;width:40%;height:49%;border-radius:30%;background:radial-gradient(ellipse,rgba(171,71,188,0.28),transparent 65%);z-index:0;filter:blur(2px)');
+   // Zone-colored tints REMOVED — the curved SVG boundary paths from canvas are the only zone indicators
 
    // === ZONE BOUNDARY OUTLINES — exact canvas curved SVG paths, scaled to map viewBox ===
    const svgNS='http://www.w3.org/2000/svg';
