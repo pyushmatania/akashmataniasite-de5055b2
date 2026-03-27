@@ -140,7 +140,18 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 /* Glowing intro card on map */
 .map-intro-glow{animation:mapIntroGlow 2.5s ease-in-out infinite;border-radius:12px}
 @keyframes mapIntroGlow{0%,100%{box-shadow:0 0 15px var(--glow-color,rgba(76,175,80,0.6)),0 0 30px var(--glow-color,rgba(76,175,80,0.3))}50%{box-shadow:0 0 25px var(--glow-color,rgba(76,175,80,0.8)),0 0 50px var(--glow-color,rgba(76,175,80,0.4))}}
-.zone-signpost-marker{position:absolute;pointer-events:none;z-index:9;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;min-width:138px;padding:8px 14px;border-radius:10px;font-family:var(--font-fun);font-size:0.75rem;font-weight:800;color:#fff;letter-spacing:0.08em;text-transform:uppercase;text-align:center;border:2px solid rgba(255,255,255,0.32);box-shadow:0 3px 12px rgba(0,0,0,0.22);text-shadow:0 1px 2px rgba(0,0,0,0.35)}
+/* Hollywood Casino-style signpost with 2 poles */
+.hollywood-signpost{position:absolute;pointer-events:none;z-index:15;display:flex;flex-direction:column;align-items:center;transform:translate(-50%,-100%)}
+.hollywood-signpost .hp-board{position:relative;display:flex;align-items:center;justify-content:center;min-width:160px;padding:12px 24px;border-radius:6px;font-family:var(--font-fun);font-size:1.1rem;font-weight:900;color:#fff;letter-spacing:0.12em;text-transform:uppercase;text-align:center;text-shadow:0 2px 4px rgba(0,0,0,0.4);border:3px solid rgba(255,255,255,0.5);box-shadow:0 6px 24px rgba(0,0,0,0.3),inset 0 -3px 8px rgba(0,0,0,0.15),inset 0 3px 8px rgba(255,255,255,0.15);z-index:2}
+.hollywood-signpost .hp-board::before{content:'';position:absolute;inset:3px;border:1px solid rgba(255,255,255,0.25);border-radius:3px;pointer-events:none}
+.hollywood-signpost .hp-bulbs{position:absolute;inset:-6px;border-radius:9px;pointer-events:none;z-index:3}
+.hollywood-signpost .hp-bulb{position:absolute;width:6px;height:6px;border-radius:50%;background:#FFE082;box-shadow:0 0 6px #FFE082,0 0 12px rgba(255,224,130,0.5);animation:bulbFlicker 1.5s ease-in-out infinite alternate}
+@keyframes bulbFlicker{0%{opacity:0.6;box-shadow:0 0 4px #FFE082}100%{opacity:1;box-shadow:0 0 8px #FFE082,0 0 16px rgba(255,224,130,0.6)}}
+.hollywood-signpost .hp-poles{display:flex;gap:80px;justify-content:center;margin-top:-2px;z-index:1}
+.hollywood-signpost .hp-pole{width:10px;height:70px;background:linear-gradient(90deg,#8B6914,#C4A44A 40%,#A07C28 70%,#8B6914);border-radius:2px 2px 4px 4px;box-shadow:2px 3px 8px rgba(0,0,0,0.25);position:relative}
+.hollywood-signpost .hp-pole::before{content:'';position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:14px;height:8px;border-radius:50%;background:linear-gradient(180deg,#C4A44A,#8B6914);box-shadow:0 2px 4px rgba(0,0,0,0.2)}
+.hollywood-signpost .hp-pole::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:18px;height:6px;border-radius:0 0 4px 4px;background:linear-gradient(180deg,#6B5010,#4A3808);box-shadow:0 3px 8px rgba(0,0,0,0.3)}
+.hollywood-signpost .hp-ground{width:100px;height:8px;background:radial-gradient(ellipse,rgba(0,0,0,0.18),transparent 70%);border-radius:50%;margin-top:-2px}
 
 /* ===== PROJECT SHOWCASE CARDS ===== */
 .sticker-project{background:#fff;border-radius:18px;padding:20px;border:2px solid #f0ece6;width:240px;box-shadow:0 4px 24px rgba(0,0,0,0.08);transition:transform 0.2s,box-shadow 0.2s}
