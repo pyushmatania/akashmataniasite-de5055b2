@@ -6898,7 +6898,7 @@ function toggleMap(){
             mmContainer.classList.remove('map-opening');
             mmContainer.classList.add('expanded');
             mapTransitioning=false;
-            recenter();
+            window._mapTransitionStart=0;
           },500);
         });
       });
