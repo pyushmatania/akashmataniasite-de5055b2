@@ -2,7 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
 };
 
@@ -16,6 +16,37 @@ function jsonResponse(body: unknown, status = 200) {
       "Content-Type": "application/json",
     },
   });
+}
+
+function stripUnpairedSurrogates(input: string) {
+  let out = "";
+  for (let i = 0; i < input.length; i++) {
+    const code = input.charCodeAt(i);
+    if (code >= 0xd800 && code <= 0xdbff) {
+      const next = input.charCodeAt(i + 1);
+      if (next >= 0xdc00 && next <= 0xdfff) {
+        out += input[i] + input[i + 1];
+        i++;
+      }
+      continue;
+    }
+    if (code >= 0xdc00 && code <= 0xdfff) continue;
+    out += input[i];
+  }
+  return out;
+}
+
+function sanitizeJsonValue(value: unknown): unknown {
+  if (typeof value === "string") return stripUnpairedSurrogates(value);
+  if (Array.isArray(value)) return value.map((v) => sanitizeJsonValue(v));
+  if (value && typeof value === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      out[k] = sanitizeJsonValue(v);
+    }
+    return out;
+  }
+  return value;
 }
 
 Deno.serve(async (req) => {
@@ -62,12 +93,23 @@ Deno.serve(async (req) => {
 
     if (req.method === "POST") {
       const raw = await req.text();
-      const parsed = raw ? JSON.parse(raw) : {};
-      const layoutData = parsed?.layoutData;
+      let parsed: Record<string, unknown> = {};
 
-      if (!Array.isArray(layoutData)) {
+      if (raw) {
+        try {
+          parsed = JSON.parse(raw);
+        } catch {
+          return jsonResponse({ error: "Invalid JSON body" }, 400);
+        }
+      }
+
+      const incomingLayoutData = parsed?.layoutData;
+
+      if (!Array.isArray(incomingLayoutData)) {
         return jsonResponse({ error: "layoutData must be an array" }, 400);
       }
+
+      const layoutData = sanitizeJsonValue(incomingLayoutData);
 
       const { error: saveError } = await db.from("moodboard_layouts").upsert(
         {
