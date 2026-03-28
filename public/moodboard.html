@@ -5018,40 +5018,20 @@ function placeNewSticker(sticker){
   if(typeof queueMapSync==='function')queueMapSync(true);
 }
 
-// Rule 7: Rearrange button resets all cards to default positions (or saved layout if available)
+// Rule 7: Auto-Rearrange always does a fresh layout; saved layout is only used on page load
 async function runItemRearrange(triggeredByUser){
-  // Rule 10: Audit — count items in DOM vs maps, fix duplicates/missing
   const auditResult=auditStickerIntegrity();
-  // Assign stable IDs for reliable matching
   assignStableIds();
-  // Try loading cloud layout fresh each time
-  let usedCloud=false;
-  if(window._savedCloudLayout&&window._savedCloudLayout.length>0){
-    applyLayout(window._savedCloudLayout);
-    usedCloud=true;
-  }else{
-    // Try fetching from cloud
-    try{
-      const loaded=await window.loadSavedLayout();
-      if(loaded&&window._savedCloudLayout&&window._savedCloudLayout.length>0){
-        usedCloud=true;
-      }
-    }catch(e){}
-    if(!usedCloud) autoArrangeMoodboardItems();
-  }
-
-  // Only re-anchor companions if NOT using saved layout
-  if(!usedCloud){
-    if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
-  }
+  // Always do a fresh auto-arrange — ignore saved cloud layout
+  autoArrangeMoodboardItems();
+  if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
   // Clear visual cache and force full rescan + redraw
   if(typeof scanStickers==='function')scanStickers();
   if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
   if(typeof queueMapSync==='function')queueMapSync(true);
   const btn=document.getElementById('rearrangeBtn');
   if(triggeredByUser&&btn){
-    const src=window._savedCloudLayout?'☁️ Restored saved layout!':'✅ Rearranged & Synced!';
-    const msg=auditResult.fixed?src+' Fixed '+auditResult.fixed+' issues':src;
+    const msg=auditResult.fixed?'✅ Rearranged! Fixed '+auditResult.fixed+' issues':'✅ Rearranged!';
     const old=btn.textContent;
     btn.textContent=msg;
     setTimeout(()=>{btn.textContent=old;},2000);
