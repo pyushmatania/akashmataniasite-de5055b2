@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const Index = () => {
   const [loaded, setLoaded] = useState(false);
+  const moodboardSrc = useMemo(() => `/moodboard.html?v=${Date.now()}`, []);
 
   return (
     <div className="w-full h-screen relative">
@@ -13,7 +14,7 @@ const Index = () => {
         </div>
       )}
       <iframe
-        src="/moodboard.html"
+        src={moodboardSrc}
         title="Akash's Moodboard"
         className="w-full h-screen border-0"
         style={{ overflow: "hidden", display: loaded ? "block" : "hidden" }}
