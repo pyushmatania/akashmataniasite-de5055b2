@@ -2050,7 +2050,8 @@ body.map-expanded .scroll-counter{display:none!important}
     <button class="rearrange-btn" id="rearrangeBtn" onclick="runItemRearrange(true)">🔄 Auto-Rearrange</button>
      <button class="save-layout-btn" id="saveLayoutBtn" onclick="window.saveLayout()">💾 Save Layout</button>
   </div>
-  <div class="rearrange-note">Rearrange restores saved layout · Save locks current arrangement</div>
+   <div class="rearrange-note">Rearrange restores saved layout · Save locks current arrangement</div>
+   <div class="rearrange-note" id="layoutSyncStatus" style="opacity:0.7;margin-top:2px;font-size:0.58rem"></div>
   <div class="board-stats" id="boardStats">
     <div class="stats-total">— <span id="statsTotal">…</span> items on board —</div>
     <div class="stats-cats" id="statsCats"></div>
