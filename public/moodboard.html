@@ -11020,6 +11020,8 @@ function ekPick(el,e){
   }else if(!Array.isArray(window._savedCloudLayout)||window._savedCloudLayout.length===0){
     setTimeout(()=>{runDeferredCloudHydration();},0);
   }
+  // Fallback: reveal stickers after 2s even if hydration hasn't completed
+  setTimeout(()=>{document.body.classList.add('stickers-ready');},2000);
 
 })();
 </script>
