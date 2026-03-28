@@ -9162,8 +9162,10 @@ function cycleMapCountMode(){
     mapZones.forEach(z=>zoneCounts[z.name]=0);
     stickerData.forEach(d=>{
       if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
-      for(const z of mapZones){
-        if(d.left>=z.x1&&d.left<=z.x2&&d.top>=z.y1&&d.top<=z.y2){zoneCounts[z.name]++;break;}
+      const zone=pointInZone(d.left,d.top);
+      if(zone){
+        const found=mapZones.find(z=>z.key===zone);
+        if(found)zoneCounts[found.name]++;
       }
     });
     countEl.textContent=Object.entries(zoneCounts).map(([k,v])=>k+':'+v).join(' · ');
