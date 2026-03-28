@@ -4079,14 +4079,53 @@ function runAxeAttackSequence(funCard){
       setTimeout(()=>{
         const scar=document.createElement('div');
         scar.className='fun-scar';
-        scar.innerHTML='<div class="fun-scar-line" style="width:'+scene.scarW+';top:'+scene.scarTop+';left:'+scene.scarLeft+';transform:rotate('+scene.scarAngle+');position:absolute;animation:scarAppear 0.5s ease-out both"></div>';
         scar.style.position='absolute';scar.style.inset='0';
+
+        // Main scar line
+        const line=document.createElement('div');
+        line.className='fun-scar-line';
+        line.style.cssText='width:'+scene.scarW+';top:'+scene.scarTop+';left:'+scene.scarLeft+';transform:rotate('+scene.scarAngle+');position:absolute;animation:scarAppear 0.5s ease-out both';
+        scar.appendChild(line);
+
+        // Blood drips (3-5 drips along the scar)
+        const numDrips=3+Math.floor(Math.random()*3);
+        for(let d=0;d<numDrips;d++){
+          const drip=document.createElement('div');
+          drip.className='fun-scar-drip';
+          const pct=15+d*(60/numDrips)+Math.random()*10;
+          drip.style.left=pct+'%';
+          drip.style.top=scene.scarTop;
+          drip.style.setProperty('--drip-h',(15+Math.random()*25)+'px');
+          drip.style.animationDelay=(0.5+d*0.3)+'s';
+          drip.style.width=(2+Math.random()*2)+'px';
+          scar.appendChild(drip);
+        }
+
+        // Cracks radiating from scar endpoints & middle
+        const crackPositions=[
+          {left:'10%',top:scene.scarTop,angles:[-35,-60,30]},
+          {left:'50%',top:scene.scarTop,angles:[40,-45,70,-70]},
+          {left:'85%',top:scene.scarTop,angles:[25,55,-40]}
+        ];
+        crackPositions.forEach((cp,ci)=>{
+          cp.angles.forEach((angle,ai)=>{
+            const crack=document.createElement('div');
+            crack.className='fun-scar-crack';
+            crack.style.left=cp.left;
+            crack.style.top=cp.top;
+            crack.style.width=(12+Math.random()*18)+'px';
+            crack.style.position='absolute';
+            crack.style.setProperty('--crack-angle',angle+'deg');
+            crack.style.setProperty('--fork-angle',(-20+Math.random()*40)+'deg');
+            crack.style.animationDelay=(0.3+ci*0.15+ai*0.08)+'s';
+            scar.appendChild(crack);
+          });
+        });
+
         tvScreen.appendChild(scar);
-        // Animate in
         requestAnimationFrame(()=>scar.classList.add('visible'));
-        // Add glow pulse to scar line
-        const line=scar.querySelector('.fun-scar-line');
-        if(line) setTimeout(()=>{line.style.animation='scarGlow 2s ease-in-out infinite';},600);
+        // Glow pulse on scar line
+        setTimeout(()=>{line.style.animation='scarGlow 2s ease-in-out infinite';},700);
       },scene.dur*0.55);
 
       // Remove projectile after animation
