@@ -5023,27 +5023,7 @@ function runItemRearrange(triggeredByUser){
 
   // If a saved cloud layout exists, apply it instead of algorithmic rearrange
   if(window._savedCloudLayout&&window._savedCloudLayout.length>0){
-    // Re-apply the saved layout
-    const stickers=Array.from(document.querySelectorAll('#canvas > .sticker'));
-    const used=new Set();
-    window._savedCloudLayout.forEach(d=>{
-      let match=null;
-      if(d.id){match=stickers.find((s,i)=>!used.has(i)&&s.id===d.id);if(match)used.add(stickers.indexOf(match));}
-      if(!match){
-        const idx=stickers.findIndex((s,i)=>{
-          if(used.has(i))return false;
-          const sText=(s.textContent||'').substring(0,60).trim();
-          return s.className===d.classes&&(s.dataset.zone||'')===(d.zone||'')&&sText===d.textSnippet;
-        });
-        if(idx>=0){match=stickers[idx];used.add(idx);}
-      }
-      if(match){
-        if(d.left)match.style.left=d.left;
-        if(d.top)match.style.top=d.top;
-        if(d.transform)match.style.transform=d.transform;
-        if(d.zIndex)match.style.zIndex=d.zIndex;
-      }
-    });
+    applyLayout(window._savedCloudLayout);
   }else{
     autoArrangeMoodboardItems();
   }
