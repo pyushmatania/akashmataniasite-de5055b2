@@ -82,13 +82,10 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-sticker-clone{pointer-events:auto!important}
 .map-sticker-clone *{pointer-events:none!important}
 /* STICKER BASE */
-.sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));touch-action:none}
+.sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1))}
 .sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
 .sticker:active{cursor:grabbing}
 .sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important}
-.sticker.rotating{transition:none!important}
-.sticker.rotating::after{content:'↻';position:absolute;top:-28px;right:-8px;font-size:18px;color:rgba(201,169,110,0.85);animation:rot-hint 0.6s ease-in-out infinite alternate;pointer-events:none;z-index:99999;text-shadow:0 1px 4px rgba(0,0,0,0.2)}
-@keyframes rot-hint{from{transform:rotate(-15deg) scale(0.9)}to{transform:rotate(15deg) scale(1.1)}}
 /* Pause all animations inside off-screen stickers — applied by IntersectionObserver */
 .sticker.paused-offscreen,.sticker.paused-offscreen *{animation-play-state:paused!important}
 
@@ -5203,42 +5200,12 @@ let dragStartScrollLeft=0,dragStartScrollTop=0;
 let isRotating=false, rotStartAngle=0, stickerBaseAngle=0;
 let suppressStickerClickUntil=0;
 const DRAG_CLICK_GUARD_MS=900;
-let lastRotVelocity=0, lastRotTime=0;
 
-function canRotate(el){
-  if(!el||!el.classList||!el.classList.contains('sticker'))return false;
-  // Allow rotation for intro + companion + regular stickers unless explicitly blocked
-  if(el.dataset&&el.dataset.noRotate==='true')return false;
-  return true;
-}
 function getAngle(t1,t2){return Math.atan2(t2.clientY-t1.clientY,t2.clientX-t1.clientX)*180/Math.PI}
 function getCurrentRotation(el){
   const st=el.style.transform||'';
   const m=st.match(/rotate\(([-\d.]+)deg\)/);
   return m?parseFloat(m[1]):0;
-}
-function startRotation(el,touches){
-  if(!canRotate(el))return false;
-  isRotating=true;didMove=true;
-  rotStartAngle=getAngle(touches[0],touches[1]);
-  stickerBaseAngle=getCurrentRotation(el);
-  lastRotVelocity=0;lastRotTime=performance.now();
-  // Keep interactive inners clickable while rotating parent
-  if(!el.classList.contains('has-drag-handle'))el.classList.add('rotating');
-  return true;
-}
-function endRotationWithSpring(el){
-  if(!el)return;
-  el.classList.remove('rotating');
-  // Apply momentum spring — small overshoot then settle
-  const vel=lastRotVelocity;
-  if(Math.abs(vel)<0.5)return;
-  const cur=getCurrentRotation(el);
-  const overshoot=vel*3; // small momentum
-  const target=cur+overshoot;
-  el.style.transition='transform 0.4s cubic-bezier(0.34,1.56,0.64,1)';
-  el.style.transform='rotate('+target+'deg)';
-  setTimeout(()=>{el.style.transition='filter 0.15s,transform 0.15s';},420);
 }
 
 // Prevent accidental click handlers right after drag (stops interactive cards from "disappearing")
@@ -5263,43 +5230,41 @@ cv.addEventListener('touchstart',e=>{
   if(s)sD.call(s,e);
   // If sticker already grabbed & second finger added anywhere → start rotation
   else if(as&&e.touches&&e.touches.length>=2&&!isRotating){
-    if(startRotation(as,e.touches))e.preventDefault();
+    isRotating=true;didMove=true;
+    rotStartAngle=getAngle(e.touches[0],e.touches[1]);
+    stickerBaseAngle=getCurrentRotation(as);
+    e.preventDefault();
   }
 },{passive:false});
 
 // Also listen on document for second finger added anywhere
 document.addEventListener('touchstart',e=>{
   if(as&&!isRotating&&e.touches&&e.touches.length>=2){
-    if(startRotation(as,e.touches))e.preventDefault();
+    isRotating=true;didMove=true;
+    rotStartAngle=getAngle(e.touches[0],e.touches[1]);
+    stickerBaseAngle=getCurrentRotation(as);
+    e.preventDefault();
   }
 },{passive:false});
 
 function sD(e){
-  const isTwoFinger=!!(e.touches&&e.touches.length>=2);
-  // Block 1-finger drag when interacting with internal interactive elements
+  // Block sticker drag when interacting with internal interactive elements
   const noDragTarget=e.target&&e.target.closest('.tlg-move-btn,button,input,textarea,select,a,[data-no-sticker-drag="true"],.tg-char,.tg-throne-target,.ek-ingredient,.ek-bowl,.sb-skill,.sb-stack-zone,.scratch-cover,.sticker-mood input[type=range],.zic-tag,.zic-icon,.zic-counter,.zic-body,.zic-explore-btn,.zic-items-count,.tlg-item,.c-emoji,.c-count');
-  if(noDragTarget&&!isTwoFinger){
-    // Still register this sticker so a second finger can trigger rotation
-    as=this;hz++;as.style.zIndex=hz;
-    tapTime=Date.now();didMove=false;isRotating=false;
-    e.stopPropagation();return;
-  }
-  // For cards with drag handles, keep 1-finger handle-only drag, but allow 2-finger rotate anywhere
+  if(noDragTarget){e.stopPropagation();return;}
+  // For cards with drag handles, only allow dragging from the handle
   const stickerEl=e.target.closest('.sticker');
-  if(stickerEl&&stickerEl.classList.contains('has-drag-handle')&&!isTwoFinger){
+  if(stickerEl&&stickerEl.classList.contains('has-drag-handle')){
     const isHandle=e.target.closest('.sticker-drag-handle');
-    if(!isHandle){
-      // Still register for rotation
-      as=this;hz++;as.style.zIndex=hz;
-      tapTime=Date.now();didMove=false;isRotating=false;
-      e.stopPropagation();return;
-    }
+    if(!isHandle){e.stopPropagation();return;}
   }
   e.stopPropagation();
   // Two-finger rotation start (both on sticker)
   if(e.touches&&e.touches.length===2){
+    isRotating=true;didMove=true;
     as=this;hz++;as.style.zIndex=hz;
-    if(startRotation(as,e.touches)){e.preventDefault();return;}
+    rotStartAngle=getAngle(e.touches[0],e.touches[1]);
+    stickerBaseAngle=getCurrentRotation(as);
+    e.preventDefault();return;
   }
   const cx=e.touches?e.touches[0].clientX:e.clientX;
   const cy=e.touches?e.touches[0].clientY:e.clientY;
@@ -5324,23 +5289,18 @@ function _schedStickerMove(e){
   if(as&&e.touches&&e.touches.length>=2){
     if(!isRotating){
       // Transition into rotation mode mid-drag
-      if(!canRotate(as)){return;}
-      startRotation(as,e.touches);
+      isRotating=true;didMove=true;
+      rotStartAngle=getAngle(e.touches[0],e.touches[1]);
+      stickerBaseAngle=getCurrentRotation(as);
     }
     const curAngle=getAngle(e.touches[0],e.touches[1]);
     const delta=curAngle-rotStartAngle;
-    const newAngle=stickerBaseAngle+delta;
-    // Track velocity for spring release
-    const now=performance.now();
-    if(lastRotTime>0){const dt=Math.max(now-lastRotTime,1);lastRotVelocity=(newAngle-getCurrentRotation(as))/(dt/16);}
-    lastRotTime=now;
-    as.style.transform='rotate('+newAngle+'deg)';
+    as.style.transform='rotate('+(stickerBaseAngle+delta)+'deg)';
     e.preventDefault();return;
   }
   // If was rotating and now back to 1 finger, resume drag
   if(isRotating&&e.touches&&e.touches.length===1){
     isRotating=false;
-    as.classList.remove('rotating');
     const cx=e.touches[0].clientX;
     const cy=e.touches[0].clientY;
     const stickerLeft=parseFloat(as.style.left)||0;
@@ -5380,7 +5340,6 @@ function sU(e){
   if(e.touches&&e.touches.length>=1&&isRotating){
     // Switching from rotation back to drag
     isRotating=false;
-    as.classList.remove('rotating');
     const cx=e.touches[0].clientX;
     const cy=e.touches[0].clientY;
     const stickerLeft=parseFloat(as.style.left)||0;
@@ -5410,7 +5369,7 @@ function sU(e){
     if(typeof scanStickers==='function')scanStickers();
     if(typeof queueMapSync==='function')queueMapSync(true);
   }
-  if(isRotating){isRotating=false;endRotationWithSpring(as);as=null;return;}
+  if(isRotating){isRotating=false;as=null;return;}
   if(!didMove&&(Date.now()-tapTime)<400){
     if(as.dataset.splash)doSplash(as,e);
     if(as.dataset.anim)triggerAnim(as,e);
