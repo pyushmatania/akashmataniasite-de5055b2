@@ -2047,8 +2047,7 @@ body.map-expanded .scroll-counter{display:none!important}
   </div>
   <div class="rearrange-row">
     <button class="rearrange-btn" id="rearrangeBtn" onclick="runItemRearrange(true)">🔄 Auto-Rearrange</button>
-    <button class="save-layout-btn" id="saveLayoutBtn" onclick="promptPinForSave()" style="display:none">💾 Save Layout</button>
-    <button class="save-layout-btn" id="captureLayoutBtn" onclick="captureLayoutToConsole()" style="background:linear-gradient(135deg,#B3E5FC,#81D4FA);color:#01579B;font-size:0.68rem">📋 Capture Layout</button>
+     <button class="save-layout-btn" id="saveLayoutBtn" onclick="window.saveLayout()">💾 Save Layout</button>
   </div>
   <div class="rearrange-note">Rearrange restores saved layout · Save locks current arrangement</div>
   <div class="board-stats" id="boardStats">
@@ -5018,19 +5017,28 @@ function placeNewSticker(sticker){
 }
 
 // Rule 7: Rearrange button resets all cards to default positions (or saved layout if available)
-function runItemRearrange(triggeredByUser){
+async function runItemRearrange(triggeredByUser){
   // Rule 10: Audit — count items in DOM vs maps, fix duplicates/missing
   const auditResult=auditStickerIntegrity();
 
-  // If a saved cloud layout exists, apply it instead of algorithmic rearrange
+  // Try loading cloud layout fresh each time
+  let usedCloud=false;
   if(window._savedCloudLayout&&window._savedCloudLayout.length>0){
     applyLayout(window._savedCloudLayout);
+    usedCloud=true;
   }else{
-    autoArrangeMoodboardItems();
+    // Try fetching from cloud
+    try{
+      const loaded=await window.loadSavedLayout();
+      if(loaded&&window._savedCloudLayout&&window._savedCloudLayout.length>0){
+        usedCloud=true;
+      }
+    }catch(e){}
+    if(!usedCloud) autoArrangeMoodboardItems();
   }
 
-  // Only re-anchor companions if NOT using saved layout (saved layout already has their positions)
-  if(!(window._savedCloudLayout&&window._savedCloudLayout.length>0)){
+  // Only re-anchor companions if NOT using saved layout
+  if(!usedCloud){
     if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
   }
   // Clear visual cache and force full rescan + redraw
@@ -9252,10 +9260,22 @@ function initBoardStats(){
 }
 
 // Scan once on load, then draw + greeting
-function bootstrapMap(forceRescan){
+async function bootstrapMap(forceRescan){
   try{
     if(forceRescan||!hasAutoArranged){
-      autoArrangeMoodboardItems();
+      // Try loading cloud layout FIRST before auto-arranging
+      let cloudLoaded=false;
+      if(window._savedCloudLayout&&window._savedCloudLayout.length>0){
+        applyLayout(window._savedCloudLayout);
+        cloudLoaded=true;
+      }else if(typeof window.loadSavedLayout==='function'){
+        try{
+          cloudLoaded=await window.loadSavedLayout();
+        }catch(e){console.warn('Cloud layout load failed:',e)}
+      }
+      if(!cloudLoaded){
+        autoArrangeMoodboardItems();
+      }
       hasAutoArranged=true;
     }
     // Keep companion stickers attached to intro cards after auto-arrange
@@ -9700,10 +9720,10 @@ function buildZoneCardHTML(meta){return '';}
   });
 })();
 
-setTimeout(()=>{
+setTimeout(async ()=>{
   ensureIntroCluster();
   ensureZoneIntroCards();
-  bootstrapMap(true);
+  await bootstrapMap(true);
   // Re-center on intro card AFTER items are rearranged
   scrollToZone(null,'hub');
   requestAnimationFrame(()=>scrollToZone(null,'hub'));
@@ -10055,14 +10075,6 @@ function ekPick(el,e){
     return data;
   }
 
-  function captureLayoutToConsole(){
-    const data=serializeLayout();
-    console.log('=== CAPTURED LAYOUT ===');
-    console.log(JSON.stringify(data));
-    console.log('=== END LAYOUT (' + data.length + ' items) ===');
-    const btn=document.getElementById('captureLayoutBtn');
-    if(btn){btn.textContent='✅ Copied to Console!';setTimeout(()=>{btn.textContent='📋 Capture Layout'},2000)}
-  }
 
   function applyLayout(data){
     if(!data||!data.length)return;
@@ -10254,18 +10266,6 @@ function ekPick(el,e){
     return false;
   };
 
-  // Load saved layout after bootstrap — wait long enough for companions to be created
-  window._layoutLoadTimeout=setTimeout(async()=>{
-    await new Promise(r=>setTimeout(r,2500));
-    const loaded=await window.loadSavedLayout();
-    if(loaded){
-      window._savedLayoutLoaded=true;
-      // Re-sync maps after applying saved layout
-      if(typeof scanStickers==='function')scanStickers();
-      if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
-      if(typeof queueMapSync==='function')queueMapSync(true);
-    }
-  },200);
 })();
 </script>
 
