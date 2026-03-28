@@ -10042,13 +10042,17 @@ function ekPick(el,e){
 </div>
 
 <script>
-// ===== LAYOUT SAVE/LOAD via Supabase with PIN =====
+// ===== LAYOUT SAVE/LOAD via cloud =====
 (function(){
   const SUPABASE_URL='https://knjqglglznkwlrhuveiw.supabase.co';
   const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuanFnbGdsem5rd2xyaHV2ZWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2NjkzMDksImV4cCI6MjA5MDI0NTMwOX0.ID4dFbLbpa4bTmqo7-zVwxZJoH1c1wpWBKohgiPBW9g';
   const LAYOUT_ROW_ID='11111111-1111-4111-8111-111111111111';
   const PIN_ROW_ID='22222222-2222-4222-8222-222222222222';
-  const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+  const REST_BASE=`${SUPABASE_URL}/rest/v1`;
+  const LOCAL_LAYOUT_KEY='moodboard_layout_backup_v2';
+  const sb=(window.supabase&&typeof window.supabase.createClient==='function')
+    ? window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}})
+    : null;
   window._supabaseLayout=sb;
 
   // Simple hash for PIN (not crypto-grade but sufficient for portfolio)
@@ -10207,31 +10211,138 @@ function ekPick(el,e){
     }
   };
 
+  async function saveLayoutViaCloud(layoutData){
+    const payload={
+      id:LAYOUT_ROW_ID,
+      layout_data:layoutData,
+      updated_at:new Date().toISOString()
+    };
+
+    let lastError=null;
+
+    // Path A: Supabase client (with retries)
+    if(sb){
+      for(let attempt=1;attempt<=3;attempt++){
+        try{
+          const {data,error}=await sb
+            .from('moodboard_layouts')
+            .upsert(payload,{onConflict:'id'})
+            .select('layout_data')
+            .single();
+          if(error)throw error;
+          return data?.layout_data||layoutData;
+        }catch(e){
+          lastError=e;
+          await new Promise(r=>setTimeout(r,attempt*250));
+        }
+      }
+    }
+
+    // Path B: Direct REST fallback (with retries)
+    for(let attempt=1;attempt<=2;attempt++){
+      try{
+        const resp=await fetch(`${REST_BASE}/moodboard_layouts?on_conflict=id&select=layout_data`,{
+          method:'POST',
+          headers:{
+            apikey:SUPABASE_KEY,
+            Authorization:`Bearer ${SUPABASE_KEY}`,
+            'Content-Type':'application/json',
+            Prefer:'resolution=merge-duplicates,return=representation'
+          },
+          body:JSON.stringify([payload])
+        });
+        if(!resp.ok){
+          const text=await resp.text();
+          throw new Error(`REST save failed (${resp.status}): ${text}`);
+        }
+        const rows=await resp.json();
+        if(Array.isArray(rows)&&rows[0]?.layout_data){
+          return rows[0].layout_data;
+        }
+        return layoutData;
+      }catch(e){
+        lastError=e;
+        await new Promise(r=>setTimeout(r,attempt*300));
+      }
+    }
+
+    throw lastError||new Error('Cloud save failed');
+  }
+
+  async function loadLayoutFromCloud(){
+    // Path A: Supabase client
+    if(sb){
+      try{
+        const {data:singleLayout,error:singleError,status:singleStatus}=await sb
+          .from('moodboard_layouts')
+          .select('layout_data')
+          .eq('id',LAYOUT_ROW_ID)
+          .maybeSingle();
+
+        if(singleError&&singleStatus!==406)throw singleError;
+        if(singleLayout&&singleLayout.layout_data)return singleLayout.layout_data;
+
+        const {data:legacy,error:legacyError}=await sb
+          .from('moodboard_layouts')
+          .select('layout_data')
+          .order('updated_at',{ascending:false})
+          .limit(1);
+
+        if(legacyError)throw legacyError;
+        if(legacy&&legacy.length>0&&legacy[0].layout_data)return legacy[0].layout_data;
+      }catch(e){
+        console.warn('Supabase client load failed, trying REST fallback:',e);
+      }
+    }
+
+    // Path B: REST fallback
+    try{
+      const first=await fetch(`${REST_BASE}/moodboard_layouts?id=eq.${LAYOUT_ROW_ID}&select=layout_data&limit=1`,{
+        headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${SUPABASE_KEY}`}
+      });
+      if(first.ok){
+        const rows=await first.json();
+        if(Array.isArray(rows)&&rows[0]?.layout_data)return rows[0].layout_data;
+      }
+
+      const legacyResp=await fetch(`${REST_BASE}/moodboard_layouts?select=layout_data&order=updated_at.desc&limit=1`,{
+        headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${SUPABASE_KEY}`}
+      });
+      if(legacyResp.ok){
+        const legacyRows=await legacyResp.json();
+        if(Array.isArray(legacyRows)&&legacyRows[0]?.layout_data)return legacyRows[0].layout_data;
+      }
+    }catch(e){
+      console.warn('REST load failed:',e);
+    }
+
+    return null;
+  }
+
   async function doSaveLayout(){
     const btn=document.getElementById('saveLayoutBtn');
     const toast=document.getElementById('saveLayoutToast');
     btn.classList.add('saving');btn.innerHTML='⏳ Saving...';
     try{
       const layoutData=serializeLayout();
-      const {error:saveError}=await sb.from('moodboard_layouts').upsert({
-        id:LAYOUT_ROW_ID,
-        layout_data:layoutData,
-        updated_at:new Date().toISOString()
-      },{onConflict:'id'});
-      if(saveError)throw saveError;
+      const savedLayout=await saveLayoutViaCloud(layoutData);
 
-      // Verify persistence before showing success
-      const {data:verifyRow,error:verifyError}=await sb.from('moodboard_layouts').select('layout_data').eq('id',LAYOUT_ROW_ID).single();
-      if(verifyError)throw verifyError;
+      // Device backup (safety net only)
+      try{localStorage.setItem(LOCAL_LAYOUT_KEY,JSON.stringify(savedLayout));}catch(_){ }
 
-      window._savedCloudLayout=verifyRow.layout_data||layoutData;
+      window._savedCloudLayout=savedLayout||layoutData;
       btn.classList.remove('saving');btn.classList.add('saved');btn.innerHTML='✅ Saved!';
-      toast.textContent='Layout saved — Auto-Rearrange will use this layout ☁️';toast.classList.add('show');
+      toast.textContent='Layout saved to cloud ☁️';toast.classList.add('show');
       setTimeout(()=>{btn.classList.remove('saved');btn.innerHTML='💾 Save Layout';toast.classList.remove('show');},2500);
     }catch(e){
-      console.error('Save layout error:',e);
+      console.error('Save layout error (final):',e);
+      // fallback to local only, so user never loses arrangement
+      try{
+        const layoutData=serializeLayout();
+        localStorage.setItem(LOCAL_LAYOUT_KEY,JSON.stringify(layoutData));
+      }catch(_){ }
       btn.classList.remove('saving');btn.innerHTML='❌ Error';
-      toast.textContent='Failed to save — try again';toast.classList.add('show');
+      toast.textContent='Cloud save failed — local backup saved';toast.classList.add('show');
       setTimeout(()=>{btn.innerHTML='💾 Save Layout';toast.classList.remove('show');},2500);
     }
   }
@@ -10240,25 +10351,25 @@ function ekPick(el,e){
 
   window.loadSavedLayout=async function(){
     try{
-      let layoutData=null;
-      const {data:singleLayout,error:singleError,status:singleStatus}=await sb.from('moodboard_layouts').select('layout_data').eq('id',LAYOUT_ROW_ID).maybeSingle();
-      if(singleError&&singleStatus!==406)throw singleError;
-      if(singleLayout&&singleLayout.layout_data){
-        layoutData=singleLayout.layout_data;
-      }else{
-        // Backward compatibility: load latest legacy row if singleton row doesn't exist yet
-        const {data:legacy,error:legacyError}=await sb.from('moodboard_layouts').select('layout_data').order('updated_at',{ascending:false}).limit(1);
-        if(legacyError)throw legacyError;
-        if(legacy&&legacy.length>0&&legacy[0].layout_data){
-          layoutData=legacy[0].layout_data;
-        }
-      }
+      const layoutData=await loadLayoutFromCloud();
 
       if(Array.isArray(layoutData)&&layoutData.length>0){
         applyLayout(layoutData);
         window._savedCloudLayout=layoutData;
         console.log('[Layout] Restored saved layout from cloud ☁️',layoutData.length,'items');
         return true;
+      }
+
+      // Fallback: load last local backup if cloud has nothing
+      const localRaw=localStorage.getItem(LOCAL_LAYOUT_KEY);
+      if(localRaw){
+        const localData=JSON.parse(localRaw);
+        if(Array.isArray(localData)&&localData.length>0){
+          applyLayout(localData);
+          window._savedCloudLayout=localData;
+          console.log('[Layout] Restored local backup layout',localData.length,'items');
+          return true;
+        }
       }
     }catch(e){
       console.error('Load layout error:',e);
