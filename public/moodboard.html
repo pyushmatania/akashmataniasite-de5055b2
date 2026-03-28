@@ -3691,6 +3691,146 @@ function closeContactPanel(){
   document.getElementById('contactBackdrop').classList.remove('open');
   document.body.style.overflow='';
 }
+
+// ── Axe Attack Sequence: cinematic multi-scene attack with camera cuts & permanent scars ──
+function runAxeAttackSequence(funCard){
+  const tvScreen=funCard.querySelector('.zic-tv-screen');
+  if(!tvScreen)return;
+
+  // Find the 🪓 companion sticker
+  const axeCompanion=document.querySelector('#canvas .zic-companion[data-zone="fun"]');
+  let axeEl=null;
+  document.querySelectorAll('#canvas .zic-companion[data-zone="fun"]').forEach(c=>{
+    if(c.textContent.includes('🪓'))axeEl=c;
+  });
+
+  // Create cinema overlay for camera cuts
+  let overlay=document.querySelector('.fun-cinema-overlay');
+  if(!overlay){
+    overlay=document.createElement('div');
+    overlay.className='fun-cinema-overlay';
+    document.body.appendChild(overlay);
+  }
+
+  const cardRect=funCard.getBoundingClientRect();
+  const screenRect=tvScreen.getBoundingClientRect();
+
+  // Scene definitions: each scene is a slash from a different direction
+  const scenes=[
+    {delay:0,   slash:'axeSlash1',dur:800, scarAngle:'-30deg',scarTop:'25%',scarLeft:'10%',scarW:'75%',emoji:'⚔️'},
+    {delay:1100,slash:'axeSlash2',dur:900, scarAngle:'25deg', scarTop:'55%',scarLeft:'15%',scarW:'65%',emoji:'💥'},
+    {delay:2300,slash:'axeSlash3',dur:1000,scarAngle:'-5deg', scarTop:'40%',scarLeft:'5%', scarW:'85%',emoji:'🔥'},
+  ];
+
+  // Hide original axe companion during attack
+  if(axeEl){
+    axeEl.style.transition='opacity 0.3s, transform 0.3s';
+    axeEl.style.opacity='0';
+    axeEl.style.transform='scale(0.3)';
+  }
+
+  scenes.forEach((scene,i)=>{
+    // Camera cut (black flash)
+    if(i>0){
+      setTimeout(()=>{
+        overlay.classList.add('cut');
+        setTimeout(()=>overlay.classList.remove('cut'),120);
+      },scene.delay-150);
+    }
+
+    // Spawn flying axe projectile
+    setTimeout(()=>{
+      const axe=document.createElement('div');
+      axe.className='fun-axe-projectile';
+      axe.textContent='🪓';
+      axe.style.left=(screenRect.left+screenRect.width/2-30)+'px';
+      axe.style.top=(screenRect.top+screenRect.height/2-30)+'px';
+      axe.style.position='fixed';
+      axe.style.animation=scene.slash+' '+scene.dur+'ms cubic-bezier(0.25,0.46,0.45,0.94) both';
+      document.body.appendChild(axe);
+
+      // Screen shake on impact (at ~50% of animation)
+      setTimeout(()=>{
+        funCard.style.animation='axeScreenShake 0.5s ease-out both';
+        if(typeof playSfx==='function')playSfx('pop');
+
+        // Impact ring
+        const ring=document.createElement('div');
+        ring.className='fun-impact-ring';
+        ring.style.left='50%';ring.style.top='50%';
+        tvScreen.style.position='relative';
+        tvScreen.appendChild(ring);
+        setTimeout(()=>ring.remove(),700);
+
+        // Debris particles
+        const debrisEmojis=['💫','✨','🔸','⚡','💢','🔥'];
+        for(let d=0;d<6;d++){
+          const db=document.createElement('div');
+          db.className='fun-debris';
+          db.textContent=debrisEmojis[d%debrisEmojis.length];
+          db.style.left='50%';db.style.top='50%';
+          db.style.setProperty('--dx',(Math.random()*200-100)+'px');
+          db.style.setProperty('--dy',(Math.random()*200-100)+'px');
+          db.style.setProperty('--dr',(Math.random()*360)+'deg');
+          db.style.animationDelay=(d*0.06)+'s';
+          tvScreen.appendChild(db);
+          setTimeout(()=>db.remove(),1000);
+        }
+
+        // Camera zoom pulse
+        const vp=document.getElementById('viewport');
+        if(vp){
+          vp.style.animation='axeCameraZoom 0.4s ease-out both';
+          setTimeout(()=>vp.style.animation='',500);
+        }
+
+        // Reset card shake
+        setTimeout(()=>{funCard.style.animation='';},600);
+      },scene.dur*0.45);
+
+      // Add permanent scar after impact
+      setTimeout(()=>{
+        const scar=document.createElement('div');
+        scar.className='fun-scar';
+        scar.innerHTML='<div class="fun-scar-line" style="width:'+scene.scarW+';top:'+scene.scarTop+';left:'+scene.scarLeft+';transform:rotate('+scene.scarAngle+');position:absolute;animation:scarAppear 0.5s ease-out both"></div>';
+        scar.style.position='absolute';scar.style.inset='0';
+        tvScreen.appendChild(scar);
+        // Animate in
+        requestAnimationFrame(()=>scar.classList.add('visible'));
+        // Add glow pulse to scar line
+        const line=scar.querySelector('.fun-scar-line');
+        if(line) setTimeout(()=>{line.style.animation='scarGlow 2s ease-in-out infinite';},600);
+      },scene.dur*0.55);
+
+      // Remove projectile after animation
+      setTimeout(()=>axe.remove(),scene.dur+200);
+    },scene.delay);
+  });
+
+  // Final scene: big impact flash + bring axe companion back
+  const totalDur=scenes[scenes.length-1].delay+scenes[scenes.length-1].dur+500;
+  setTimeout(()=>{
+    // Final camera cut
+    overlay.classList.add('cut');
+    setTimeout(()=>overlay.classList.remove('cut'),200);
+
+    // Big flash on the card
+    const flash=document.createElement('div');
+    flash.style.cssText='position:absolute;inset:0;border-radius:14px;z-index:10;pointer-events:none;background:radial-gradient(circle,rgba(255,69,0,0.6),transparent 70%);opacity:1;transition:opacity 0.8s';
+    tvScreen.appendChild(flash);
+    setTimeout(()=>{flash.style.opacity='0';setTimeout(()=>flash.remove(),900);},100);
+
+    // Restore axe companion with dramatic return
+    if(axeEl){
+      setTimeout(()=>{
+        axeEl.style.transition='opacity 0.6s, transform 0.6s cubic-bezier(0.34,1.56,0.64,1)';
+        axeEl.style.opacity='1';
+        axeEl.style.transform='scale(1)';
+      },400);
+    }
+  },totalDur);
+}
+
 function toggleWorkPanel(e){
   e.preventDefault();e.stopPropagation();
   document.getElementById('workPanel').classList.add('open');
