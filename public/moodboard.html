@@ -10530,11 +10530,14 @@ function ekPick(el,e){
     : null;
   window._supabaseLayout=sb;
 
-  // Simple hash for PIN (not crypto-grade but sufficient for portfolio)
-  function hashPin(pin){
-    let h=0;
-    for(let i=0;i<pin.length;i++){h=((h<<5)-h)+pin.charCodeAt(i);h|=0;}
-    return 'pin_'+Math.abs(h).toString(36);
+  // PIN verification is now handled server-side via edge function
+  async function verifyPinRemote(pin, action) {
+    const resp = await fetch(SUPABASE_URL + '/functions/v1/verify-pin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+      body: JSON.stringify({ pin, action })
+    });
+    return resp.json();
   }
 
   function stripUnpairedSurrogates(input){
