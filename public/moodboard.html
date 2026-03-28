@@ -10065,6 +10065,39 @@ function ekPick(el,e){
     return 'pin_'+Math.abs(h).toString(36);
   }
 
+  function stripUnpairedSurrogates(input){
+    const str=String(input||'');
+    let out='';
+    for(let i=0;i<str.length;i++){
+      const code=str.charCodeAt(i);
+      if(code>=0xD800&&code<=0xDBFF){
+        const next=str.charCodeAt(i+1);
+        if(next>=0xDC00&&next<=0xDFFF){out+=str[i]+str[i+1];i++;}
+        continue;
+      }
+      if(code>=0xDC00&&code<=0xDFFF)continue;
+      out+=str[i];
+    }
+    return out;
+  }
+
+  function toSafeSnippet(input,maxLen){
+    const cleaned=stripUnpairedSurrogates(input);
+    const chars=Array.from(cleaned);
+    return chars.slice(0,maxLen||60).join('').trim();
+  }
+
+  function sanitizeJsonValue(value){
+    if(typeof value==='string')return stripUnpairedSurrogates(value);
+    if(Array.isArray(value))return value.map(sanitizeJsonValue);
+    if(value&&typeof value==='object'){
+      const out={};
+      for(const [k,v] of Object.entries(value))out[k]=sanitizeJsonValue(v);
+      return out;
+    }
+    return value;
+  }
+
   function serializeLayout(){
     const stickers=document.querySelectorAll('#canvas > .sticker');
     const data=[];
@@ -10076,10 +10109,10 @@ function ekPick(el,e){
       const top=s.style.top;
       const transform=s.style.transform;
       const zIndex=s.style.zIndex;
-      const textSnippet=(s.textContent||'').substring(0,60).trim();
+      const textSnippet=toSafeSnippet(s.textContent,60);
       data.push({id,zone,type,left,top,transform,zIndex,textSnippet});
     });
-    return data;
+    return sanitizeJsonValue(data);
   }
 
 
@@ -10096,10 +10129,11 @@ function ekPick(el,e){
       }
       // 2. Fallback: match by zone + textSnippet (ignore className which can change)
       if(!match&&d.textSnippet){
+        const targetSnippet=toSafeSnippet(d.textSnippet,60);
         const idx=stickers.findIndex((s,i)=>{
           if(used.has(i))return false;
-          const sText=(s.textContent||'').substring(0,60).trim();
-          return (s.dataset.zone||'')===(d.zone||'')&&sText===d.textSnippet;
+          const sText=toSafeSnippet(s.textContent,60);
+          return (s.dataset.zone||'')===(d.zone||'')&&sText===targetSnippet;
         });
         if(idx>=0){match=stickers[idx];used.add(idx);}
       }
@@ -10215,9 +10249,10 @@ function ekPick(el,e){
   };
 
   async function saveLayoutViaCloud(layoutData){
+    const safeLayoutData=sanitizeJsonValue(layoutData);
     const payload={
       id:LAYOUT_ROW_ID,
-      layout_data:layoutData,
+      layout_data:safeLayoutData,
       updated_at:new Date().toISOString()
     };
 
@@ -10233,14 +10268,14 @@ function ekPick(el,e){
             Authorization:`Bearer ${SUPABASE_KEY}`,
             'Content-Type':'application/json'
           },
-          body:JSON.stringify({layoutData})
+          body:JSON.stringify({layoutData:safeLayoutData})
         });
         if(!resp.ok){
           const text=await resp.text();
           throw new Error(`Function save ${resp.status}: ${text}`);
         }
         console.log('[Layout] Cloud save succeeded via function (attempt '+attempt+')');
-        return layoutData;
+        return safeLayoutData;
       }catch(e){
         lastError=e;
         console.warn('[Layout] Function save attempt '+attempt+' failed:',e.message||e);
@@ -10257,7 +10292,7 @@ function ekPick(el,e){
             .upsert(payload,{onConflict:'id'});
           if(error)throw error;
           console.log('[Layout] Cloud save succeeded via client (attempt '+attempt+')');
-          return layoutData;
+          return safeLayoutData;
         }catch(e){
           lastError=e;
           console.warn('[Layout] Client save attempt '+attempt+' failed:',e.message||e);
@@ -10286,7 +10321,7 @@ function ekPick(el,e){
           throw new Error(`REST ${resp.status}: ${text}`);
         }
         console.log('[Layout] Cloud save succeeded via REST (attempt '+attempt+')');
-        return layoutData;
+        return safeLayoutData;
       }catch(e){
         lastError=e;
         console.warn('[Layout] REST save attempt '+attempt+' failed:',e.message||e);
