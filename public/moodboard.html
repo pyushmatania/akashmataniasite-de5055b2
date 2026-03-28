@@ -5283,11 +5283,7 @@ function sD(e){
   const stickerEl=e.target.closest('.sticker');
   if(stickerEl&&stickerEl.classList.contains('has-drag-handle')&&!isTwoFinger){
     const isHandle=e.target.closest('.sticker-drag-handle');
-    if(!isHandle){
-      // Still register as active sticker so 2nd finger can trigger rotation
-      as=stickerEl;hz++;as.style.zIndex=hz;
-      e.stopPropagation();return;
-    }
+    if(!isHandle){e.stopPropagation();return;}
   }
   e.stopPropagation();
   // Two-finger rotation start (both on sticker)
