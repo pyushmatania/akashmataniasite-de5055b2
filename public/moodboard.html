@@ -10055,6 +10055,15 @@ function ekPick(el,e){
     return data;
   }
 
+  function captureLayoutToConsole(){
+    const data=serializeLayout();
+    console.log('=== CAPTURED LAYOUT ===');
+    console.log(JSON.stringify(data));
+    console.log('=== END LAYOUT (' + data.length + ' items) ===');
+    const btn=document.getElementById('captureLayoutBtn');
+    if(btn){btn.textContent='✅ Copied to Console!';setTimeout(()=>{btn.textContent='📋 Capture Layout'},2000)}
+  }
+
   function applyLayout(data){
     if(!data||!data.length)return;
     const stickers=Array.from(document.querySelectorAll('#canvas > .sticker'));
