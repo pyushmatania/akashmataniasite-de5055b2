@@ -1950,7 +1950,30 @@ body.map-expanded .scroll-counter{display:none!important}
 .ek-result{font-size:2.2rem;transition:all 0.4s}
 .ek-result-label{font-family:var(--font-hand);font-size:0.8rem;color:#880E4F;min-height:1.1em}
 .ek-cta{font-size:0.6rem;color:#C2185B;margin-top:5px;opacity:0.65}
+/* Save Layout Button */
+.save-layout-btn{
+  position:fixed;bottom:18px;right:18px;z-index:99990;
+  background:linear-gradient(145deg,#fff,#fdfaf5);color:var(--text);
+  border:2px solid rgba(201,169,110,0.3);border-radius:14px;
+  padding:10px 18px;font-family:var(--font-fun);font-size:0.72rem;font-weight:700;
+  box-shadow:0 4px 18px rgba(0,0,0,0.1);cursor:pointer;
+  display:flex;align-items:center;gap:8px;
+  transition:all 0.2s ease;
+}
+.save-layout-btn:hover{transform:scale(1.05);box-shadow:0 6px 24px rgba(0,0,0,0.15)}
+.save-layout-btn:active{transform:scale(0.95)}
+.save-layout-btn.saving{opacity:0.6;pointer-events:none}
+.save-layout-btn.saved{background:#E8F5E9;border-color:rgba(76,175,80,0.3);color:#2E7D32}
+.save-layout-toast{
+  position:fixed;bottom:70px;right:18px;z-index:99991;
+  background:#fff;border-radius:12px;padding:10px 18px;
+  font-family:var(--font-fun);font-size:0.68rem;font-weight:600;
+  box-shadow:0 4px 20px rgba(0,0,0,0.12);border:1.5px solid rgba(201,169,110,0.15);
+  opacity:0;transform:translateY(8px);transition:all 0.25s ease;pointer-events:none;
+}
+.save-layout-toast.show{opacity:1;transform:translateY(0)}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 <div class="logo">Akash</div>
@@ -9944,5 +9967,115 @@ function ekPick(el,e){
     <!-- Content injected by JS -->
   </div>
 </div>
+
+<button class="save-layout-btn" id="saveLayoutBtn" onclick="saveLayout()">💾 Save Layout</button>
+<div class="save-layout-toast" id="saveLayoutToast"></div>
+
+<script>
+// ===== LAYOUT SAVE/LOAD via Supabase =====
+(function(){
+  const SUPABASE_URL='https://knjqglglznkwlrhuveiw.supabase.co';
+  const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuanFnbGdsem5rd2xyaHV2ZWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2NjkzMDksImV4cCI6MjA5MDI0NTMwOX0.ID4dFbLbpa4bTmqo7-zVwxZJoH1c1wpWBKohgiPBW9g';
+  const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+  function serializeLayout(){
+    const stickers=document.querySelectorAll('#canvas > .sticker');
+    const data=[];
+    stickers.forEach(s=>{
+      const id=s.id||'';
+      const classes=s.className;
+      const zone=s.dataset.zone||'';
+      const type=s.dataset.type||'';
+      const left=s.style.left;
+      const top=s.style.top;
+      const transform=s.style.transform;
+      const zIndex=s.style.zIndex;
+      // Create a fingerprint for matching stickers without IDs
+      const textSnippet=(s.textContent||'').substring(0,60).trim();
+      data.push({id,classes,zone,type,left,top,transform,zIndex,textSnippet});
+    });
+    return data;
+  }
+
+  function applyLayout(data){
+    if(!data||!data.length)return;
+    const stickers=Array.from(document.querySelectorAll('#canvas > .sticker'));
+    const used=new Set();
+    data.forEach(d=>{
+      let match=null;
+      // Match by ID first
+      if(d.id){match=stickers.find((s,i)=>!used.has(i)&&s.id===d.id);if(match)used.add(stickers.indexOf(match));}
+      // Match by class+zone+textSnippet
+      if(!match){
+        const idx=stickers.findIndex((s,i)=>{
+          if(used.has(i))return false;
+          const sText=(s.textContent||'').substring(0,60).trim();
+          return s.className===d.classes&&(s.dataset.zone||'')===(d.zone||'')&&sText===d.textSnippet;
+        });
+        if(idx>=0){match=stickers[idx];used.add(idx);}
+      }
+      if(match){
+        if(d.left)match.style.left=d.left;
+        if(d.top)match.style.top=d.top;
+        if(d.transform)match.style.transform=d.transform;
+        if(d.zIndex)match.style.zIndex=d.zIndex;
+      }
+    });
+  }
+
+  window._supabaseLayout=sb;
+
+  window.saveLayout=async function(){
+    const btn=document.getElementById('saveLayoutBtn');
+    const toast=document.getElementById('saveLayoutToast');
+    btn.classList.add('saving');btn.innerHTML='⏳ Saving...';
+    try{
+      const layoutData=serializeLayout();
+      // Check if a row exists
+      const {data:existing}=await sb.from('moodboard_layouts').select('id').limit(1);
+      if(existing&&existing.length>0){
+        await sb.from('moodboard_layouts').update({layout_data:layoutData}).eq('id',existing[0].id);
+      }else{
+        await sb.from('moodboard_layouts').insert({layout_data:layoutData});
+      }
+      btn.classList.remove('saving');btn.classList.add('saved');btn.innerHTML='✅ Saved!';
+      toast.textContent='Layout saved to cloud ☁️';toast.classList.add('show');
+      setTimeout(()=>{btn.classList.remove('saved');btn.innerHTML='💾 Save Layout';toast.classList.remove('show');},2500);
+    }catch(err){
+      console.error('Save layout error:',err);
+      btn.classList.remove('saving');btn.innerHTML='❌ Error';
+      toast.textContent='Failed to save — try again';toast.classList.add('show');
+      setTimeout(()=>{btn.innerHTML='💾 Save Layout';toast.classList.remove('show');},2500);
+    }
+  };
+
+  window.loadSavedLayout=async function(){
+    try{
+      const {data,error}=await sb.from('moodboard_layouts').select('layout_data').order('updated_at',{ascending:false}).limit(1);
+      if(error)throw error;
+      if(data&&data.length>0&&data[0].layout_data){
+        applyLayout(data[0].layout_data);
+        console.log('[Layout] Restored saved layout from cloud ☁️');
+        return true;
+      }
+    }catch(err){
+      console.error('Load layout error:',err);
+    }
+    return false;
+  };
+
+  // Load saved layout after bootstrap completes
+  const origTimeout=window._layoutLoadTimeout;
+  window._layoutLoadTimeout=setTimeout(async()=>{
+    // Wait for the bootstrap to finish
+    await new Promise(r=>setTimeout(r,1200));
+    const loaded=await window.loadSavedLayout();
+    if(loaded){
+      // Skip auto-rearrange if we have a saved layout
+      window._savedLayoutLoaded=true;
+    }
+  },200);
+})();
+</script>
 
 </body></html>
