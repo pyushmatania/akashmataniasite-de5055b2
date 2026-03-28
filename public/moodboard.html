@@ -9264,6 +9264,7 @@ function initBoardStats(){
 // Scan once on load, then draw + greeting
 async function bootstrapMap(forceRescan){
   try{
+    let didAutoArrange=false;
     if(forceRescan||!hasAutoArranged){
       // Try loading cloud layout FIRST before auto-arranging
       let cloudLoaded=false;
@@ -9274,14 +9275,20 @@ async function bootstrapMap(forceRescan){
         try{
           cloudLoaded=await window.loadSavedLayout();
         }catch(e){console.warn('Cloud layout load failed:',e)}
+      }else{
+        window._pendingCloudHydration=true;
       }
       if(!cloudLoaded){
         autoArrangeMoodboardItems();
+        didAutoArrange=true;
       }
       hasAutoArranged=true;
     }
-    // Keep companion stickers attached to intro cards after auto-arrange
-    if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
+    // Rebuild companions only after fresh auto-arrange; preserve loaded/saved positions otherwise
+    if(typeof ensureCompanionStickers==='function'){
+      if(didAutoArrange) ensureCompanionStickers(true);
+      else ensureCompanionStickers(false);
+    }
     normalizeAllStickerBounds();
     ensureMapData(forceRescan);
     drawMap();
@@ -10098,11 +10105,29 @@ function ekPick(el,e){
     return value;
   }
 
+  function ensureStableStickerIds(stickers){
+    const list=Array.from(stickers||document.querySelectorAll('#canvas > .sticker'));
+    list.forEach((s,index)=>{
+      if(s.dataset.sid)return;
+      if(s.id){
+        s.dataset.sid='id:'+s.id;
+        return;
+      }
+      const zone=s.dataset.zone||'na';
+      const type=s.dataset.type||'other';
+      const snippet=toSafeSnippet(s.textContent,24).replace(/\s+/g,' ').toLowerCase();
+      s.dataset.sid='auto:'+index+':'+zone+':'+type+':'+snippet;
+    });
+    return list;
+  }
+
   function serializeLayout(){
-    const stickers=document.querySelectorAll('#canvas > .sticker');
+    const stickers=ensureStableStickerIds(document.querySelectorAll('#canvas > .sticker'));
     const data=[];
-    stickers.forEach(s=>{
+    stickers.forEach((s,idx)=>{
       const id=s.id||'';
+      const sid=s.dataset.sid||'';
+      const mapId=s.dataset.mapId||'';
       const zone=s.dataset.zone||'';
       const type=s.dataset.type||'';
       const left=s.style.left;
@@ -10110,7 +10135,7 @@ function ekPick(el,e){
       const transform=s.style.transform;
       const zIndex=s.style.zIndex;
       const textSnippet=toSafeSnippet(s.textContent,60);
-      data.push({id,zone,type,left,top,transform,zIndex,textSnippet});
+      data.push({idx,sid,id,mapId,zone,type,left,top,transform,zIndex,textSnippet});
     });
     return sanitizeJsonValue(data);
   }
@@ -10118,38 +10143,60 @@ function ekPick(el,e){
 
   function applyLayout(data){
     if(!data||!data.length)return;
-    const stickers=Array.from(document.querySelectorAll('#canvas > .sticker'));
+    const stickers=ensureStableStickerIds(Array.from(document.querySelectorAll('#canvas > .sticker')));
     const used=new Set();
+
+    function takeMatch(matcher){
+      const idx=stickers.findIndex((s,i)=>!used.has(i)&&matcher(s,i));
+      if(idx<0)return null;
+      used.add(idx);
+      return stickers[idx];
+    }
+
     data.forEach(d=>{
       let match=null;
-      // 1. Match by ID (most reliable)
-      if(d.id){
-        match=stickers.find((s,i)=>!used.has(i)&&s.id===d.id);
-        if(match)used.add(stickers.indexOf(match));
+      // 1) Stable sid
+      if(d.sid){
+        match=takeMatch((s)=>s.dataset.sid===d.sid);
       }
-      // 2. Fallback: match by zone + textSnippet (ignore className which can change)
+      // 2) DOM id
+      if(!match&&d.id){
+        match=takeMatch((s)=>s.id===d.id);
+      }
+      // 3) mapId (if present)
+      if(!match&&d.mapId){
+        match=takeMatch((s)=>s.dataset.mapId===d.mapId);
+      }
+      // 4) zone + type + snippet
       if(!match&&d.textSnippet){
         const targetSnippet=toSafeSnippet(d.textSnippet,60);
-        const idx=stickers.findIndex((s,i)=>{
-          if(used.has(i))return false;
+        match=takeMatch((s)=>{
           const sText=toSafeSnippet(s.textContent,60);
-          return (s.dataset.zone||'')===(d.zone||'')&&sText===targetSnippet;
+          return (s.dataset.zone||'')===(d.zone||'')&&
+                 (s.dataset.type||'')===(d.type||'')&&
+                 sText===targetSnippet;
         });
-        if(idx>=0){match=stickers[idx];used.add(idx);}
       }
-      // 3. Last resort: match by zone + type
+      // 5) zone + type
       if(!match&&d.type){
-        const idx=stickers.findIndex((s,i)=>{
-          if(used.has(i))return false;
+        match=takeMatch((s)=>{
           return (s.dataset.zone||'')===(d.zone||'')&&(s.dataset.type||'')===(d.type||'');
         });
-        if(idx>=0){match=stickers[idx];used.add(idx);}
       }
+      // 6) saved index
+      if(!match&&Number.isInteger(d.idx)){
+        match=takeMatch((_,i)=>i===d.idx);
+      }
+      // 7) final fallback to keep array-order compatibility with legacy saved rows
+      if(!match){
+        match=takeMatch(()=>true);
+      }
+
       if(match){
-        if(d.left)match.style.left=d.left;
-        if(d.top)match.style.top=d.top;
-        if(d.transform)match.style.transform=d.transform;
-        if(d.zIndex)match.style.zIndex=d.zIndex;
+        if(typeof d.left==='string')match.style.left=d.left;
+        if(typeof d.top==='string')match.style.top=d.top;
+        if(typeof d.transform==='string')match.style.transform=d.transform;
+        if(typeof d.zIndex==='string')match.style.zIndex=d.zIndex;
       }
     });
   }
@@ -10480,6 +10527,33 @@ function ekPick(el,e){
     }
     return false;
   };
+
+  async function runDeferredCloudHydration(){
+    if(window._hydratingCloudLayout)return;
+    window._hydratingCloudLayout=true;
+    try{
+      if(Array.isArray(window._savedCloudLayout)&&window._savedCloudLayout.length>0)return;
+      if(typeof window.loadSavedLayout!=='function')return;
+      const loaded=await window.loadSavedLayout();
+      if(!loaded)return;
+      if(typeof normalizeAllStickerBounds==='function')normalizeAllStickerBounds();
+      if(typeof scanStickers==='function')scanStickers();
+      if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
+      if(typeof queueMapSync==='function')queueMapSync(true);
+      if(typeof initBoardStats==='function')initBoardStats();
+    }catch(e){
+      console.warn('Deferred cloud hydration failed:',e);
+    }finally{
+      window._hydratingCloudLayout=false;
+    }
+  }
+
+  if(window._pendingCloudHydration){
+    window._pendingCloudHydration=false;
+    setTimeout(()=>{runDeferredCloudHydration();},0);
+  }else if(!Array.isArray(window._savedCloudLayout)||window._savedCloudLayout.length===0){
+    setTimeout(()=>{runDeferredCloudHydration();},0);
+  }
 
 })();
 </script>
