@@ -1711,50 +1711,32 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-portfolio .zic-base{height:18px;background:linear-gradient(180deg,rgba(126,87,194,0.2),rgba(126,87,194,0.08));border-radius:0 0 6px 6px}
 .zic-portfolio .zic-base::after{content:'';position:absolute;bottom:-6px;left:15%;right:15%;height:6px;background:rgba(126,87,194,0.06);border-radius:0 0 8px 8px}
 
-/* ── ORIGIN: Passport / Travel Journal — Warm Earth Tones ── */
-.zone-intro-creative.zic-origin-card{
-  width:400px;min-height:520px;border-radius:20px;overflow:hidden;
-  background:linear-gradient(160deg,#1a1410,#2a1f17,#1e1812);
-  border:2px solid rgba(201,169,110,0.25);
-  box-shadow:0 16px 56px rgba(0,0,0,0.3),0 0 0 1px rgba(201,169,110,0.1),inset 0 1px 0 rgba(255,255,255,0.05);
-  color:#e8ddd0;position:relative;
+/* ── ORIGIN: Tall Polaroid — Deep Forest Green ── */
+.zic-origin{width:360px;padding:0;transform:rotate(2deg);min-height:480px}
+.zic-origin .zic-polaroid{
+  background:linear-gradient(175deg,#1B3B20,#2E4A33,#1B3B20);padding:16px 16px 40px;border-radius:6px;
+  box-shadow:3px 5px 20px rgba(0,0,0,0.25),0 0 0 1px rgba(76,175,80,0.15);
+  position:relative;z-index:2;min-height:420px;
 }
-.zic-origin-card .zic-passport-header{
-  padding:24px 24px 0;display:flex;align-items:center;gap:14px;
+.zic-origin .zic-polaroid-bg1{position:absolute;top:8px;left:-12px;right:12px;bottom:-8px;background:#1B3B20;border-radius:4px;transform:rotate(-4deg);z-index:0;box-shadow:2px 3px 10px rgba(0,0,0,0.2)}
+.zic-origin .zic-polaroid-bg2{position:absolute;top:4px;left:10px;right:-10px;bottom:-12px;background:#2E4A33;border-radius:4px;transform:rotate(3deg);z-index:1;box-shadow:2px 3px 10px rgba(0,0,0,0.15)}
+.zic-origin .zic-photo-area{
+  background:linear-gradient(135deg,#2E7D32,#388E3C,#43A047);
+  height:180px;border-radius:4px;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
 }
-.zic-origin-card .zic-passport-stamp{
-  width:56px;height:56px;border-radius:50%;border:2.5px solid rgba(201,169,110,0.5);
-  display:flex;align-items:center;justify-content:center;font-size:1.6rem;
-  background:rgba(201,169,110,0.08);flex-shrink:0;
-}
-.zic-origin-card .zic-passport-info{flex:1}
-.zic-origin-card .zic-passport-label{font-family:var(--font-fun);font-size:0.58rem;text-transform:uppercase;letter-spacing:0.12em;color:rgba(201,169,110,0.6);margin-bottom:2px}
-.zic-origin-card .zic-passport-name{font-family:var(--font-fun);font-size:1.6rem;font-weight:700;color:#C9A96E;line-height:1.1}
-.zic-origin-card .zic-journey-line{
-  margin:18px 24px 0;padding:18px 0;border-top:1px solid rgba(201,169,110,0.12);
-  display:flex;align-items:center;gap:0;position:relative;
-}
-.zic-origin-card .zic-stop{text-align:center;flex:1;position:relative;z-index:1}
-.zic-origin-card .zic-stop-dot{width:12px;height:12px;border-radius:50%;margin:0 auto 6px;border:2px solid #C9A96E}
-.zic-origin-card .zic-stop-dot.active{background:#C9A96E;box-shadow:0 0 8px rgba(201,169,110,0.4)}
-.zic-origin-card .zic-stop-city{font-family:var(--font-fun);font-size:0.72rem;font-weight:600;color:#e8ddd0}
-.zic-origin-card .zic-stop-year{font-family:var(--font-hand);font-size:0.7rem;color:rgba(201,169,110,0.5)}
-.zic-origin-card .zic-journey-track{position:absolute;top:24px;left:16%;right:16%;height:2px;background:linear-gradient(90deg,rgba(201,169,110,0.15),rgba(201,169,110,0.4),rgba(201,169,110,0.15));z-index:0}
-.zic-origin-card .zic-origin-details{padding:0 24px;margin-top:16px}
-.zic-origin-card .zic-detail-row{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid rgba(201,169,110,0.06)}
-.zic-origin-card .zic-detail-icon{font-size:1rem;flex-shrink:0;margin-top:1px}
-.zic-origin-card .zic-detail-text{font-family:var(--font-sans);font-size:0.76rem;color:rgba(232,221,208,0.7);line-height:1.5}
-.zic-origin-card .zic-detail-text strong{color:#C9A96E;font-weight:600}
-.zic-origin-card .zic-origin-tags{display:flex;flex-wrap:wrap;gap:6px;padding:14px 24px 0;justify-content:flex-start}
-.zic-origin-card .zic-otag{font-family:var(--font-fun);font-size:0.64rem;font-weight:600;padding:5px 12px;border-radius:14px;background:rgba(201,169,110,0.08);color:#C9A96E;border:1px solid rgba(201,169,110,0.18);cursor:pointer;transition:transform 0.15s,background 0.2s}
-.zic-origin-card .zic-otag:hover{background:rgba(201,169,110,0.15);transform:scale(1.05)}
-.zic-origin-card .zic-origin-quote{
-  margin:16px 24px 0;padding:12px 16px;border-left:3px solid rgba(201,169,110,0.3);
-  background:rgba(201,169,110,0.04);border-radius:0 8px 8px 0;
-}
-.zic-origin-card .zic-origin-quote p{font-family:var(--font-hand);font-size:0.9rem;color:rgba(232,221,208,0.6);line-height:1.5;margin:0}
-.zic-origin-card .zic-origin-footer{padding:16px 24px 22px;display:flex;align-items:center;justify-content:space-between;margin-top:8px}
-.zic-origin-card .zic-explore-btn{background:linear-gradient(135deg,#C9A96E,#D4B97A)!important;color:#1a1410!important;font-weight:700}
+.zic-origin .zic-photo-area img{width:100%;height:100%;object-fit:cover;object-position:top}
+.zic-origin .zic-photo-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(0,0,0,0.4));z-index:1}
+.zic-origin .zic-photo-text{position:absolute;bottom:10px;left:14px;z-index:2;color:#fff;font-family:var(--font-hand);font-size:0.95rem;text-shadow:0 1px 4px rgba(0,0,0,0.5)}
+.zic-origin .zic-caption{padding:14px 4px 0;text-align:center}
+.zic-origin .zic-title{font-family:var(--font-hand);font-size:1.5rem;font-weight:700;color:#81C784;margin-bottom:4px}
+.zic-origin .zic-sub{font-family:var(--font-sans);font-size:0.82rem;color:rgba(255,255,255,0.55);line-height:1.5;margin-bottom:10px}
+.zic-origin .zic-bio-items{list-style:none;padding:0;margin:0 0 12px}
+.zic-origin .zic-bio-items li{font-family:var(--font-sans);font-size:0.78rem;color:rgba(255,255,255,0.6);padding:4px 0;display:flex;align-items:center;gap:8px}
+.zic-origin .zic-bio-items li .bio-icon{font-size:1rem}
+.zic-origin .zic-tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.zic-origin .zic-tag{background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.66rem}
+.zic-origin .zic-tape{position:absolute;top:-14px;left:50%;transform:translateX(-50%) rotate(-2deg);width:80px;height:28px;background:rgba(76,175,80,0.15);z-index:4;box-shadow:0 1px 3px rgba(0,0,0,0.15)}
 
 /* ── HOBBY: Tall Game Controller — Dark Amber/Brown ── */
 .zic-hobby{width:400px;padding:0;min-height:500px}
@@ -2075,70 +2057,31 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <!-- Zone creative intro cards (wrapped as stickers for map sync) -->
 
-<!-- ORIGIN — Personal Story (center: 2900,2800) -->
-<div class="sticker zone-intro-creative zic-origin-card has-drag-handle" data-zone="origin" data-type="interactive" style="left:2740px;top:2400px;transform:rotate(-1deg)">
+<!-- ORIGIN — Personal & About (center: 2900,2800) -->
+<div class="sticker zone-intro-creative has-drag-handle" data-zone="origin" data-type="interactive" style="left:2740px;top:2400px;transform:rotate(-1deg)">
   <div class="sticker-drag-handle" data-no-sticker-drag="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
-  
-  <div class="zic-passport-header">
-    <div class="zic-passport-stamp">🏔️</div>
-    <div class="zic-passport-info">
-      <div class="zic-passport-label">Origin Story</div>
-      <div class="zic-passport-name">Where I'm From</div>
-    </div>
+  <div class="zic-header" style="background:linear-gradient(135deg,rgba(76,175,80,0.15),rgba(200,230,201,0.25))">
+    <div class="zic-icon" style="background:linear-gradient(135deg,#4CAF50,#81C784)" data-no-sticker-drag="true">📸</div>
+    <div class="zic-title" style="color:#2E7D32">ORIGIN STORY</div>
+    <div class="zic-subtitle" style="color:#4E7D52">Where it all began — the person behind the products</div>
   </div>
-
-  <div class="zic-journey-line">
-    <div class="zic-journey-track"></div>
-    <div class="zic-stop">
-      <div class="zic-stop-dot"></div>
-      <div class="zic-stop-city">Jeypore</div>
-      <div class="zic-stop-year">Hometown</div>
+  <div class="zic-body" data-no-sticker-drag="true">
+    <div class="zic-divider"></div>
+    <div class="zic-tags">
+      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎓 B.Tech CS</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📍 Bengaluru</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🌱 Growth</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">💭 Values</span>
+      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🐕 Mr. Puchu</span>
     </div>
-    <div class="zic-stop">
-      <div class="zic-stop-dot"></div>
-      <div class="zic-stop-city">Bhubaneswar</div>
-      <div class="zic-stop-year">College</div>
+    <div class="zic-stat">✦ OUTR Bhubaneswar → Bengaluru</div>
+    <div class="zic-stat">✦ Jeypore → Big city dreams realized</div>
+    <div class="zic-counter">
+      <span>Vibes received:</span>
+      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zone-intro-creative').style.boxShadow='0 0 30px rgba(76,175,80,0.4),0 12px 48px rgba(0,0,0,0.12)'}">👍</button>
+      <span style="font-weight:700;min-width:20px;text-align:center">0</span>
     </div>
-    <div class="zic-stop">
-      <div class="zic-stop-dot active"></div>
-      <div class="zic-stop-city">Bengaluru</div>
-      <div class="zic-stop-year">Now</div>
-    </div>
-  </div>
-
-  <div class="zic-origin-details" data-no-sticker-drag="true">
-    <div class="zic-detail-row">
-      <span class="zic-detail-icon">🏡</span>
-      <span class="zic-detail-text">Born & raised in <strong>Jeypore, Odisha</strong> — a small town with big dreams</span>
-    </div>
-    <div class="zic-detail-row">
-      <span class="zic-detail-icon">🎓</span>
-      <span class="zic-detail-text"><strong>B.Tech in Computer Science</strong> from OUTR (CET), Bhubaneswar</span>
-    </div>
-    <div class="zic-detail-row">
-      <span class="zic-detail-icon">🚀</span>
-      <span class="zic-detail-text">Moved to <strong>Bengaluru</strong> — building products, chasing ideas</span>
-    </div>
-    <div class="zic-detail-row">
-      <span class="zic-detail-icon">🐕</span>
-      <span class="zic-detail-text">Proud dog dad to <strong>Mr. Puchu</strong></span>
-    </div>
-  </div>
-
-  <div class="zic-origin-tags">
-    <span class="zic-otag" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">Small Town Kid</span>
-    <span class="zic-otag" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">Odisha Roots</span>
-    <span class="zic-otag" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">First-Gen Founder</span>
-    <span class="zic-otag" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">Builder at Heart</span>
-  </div>
-
-  <div class="zic-origin-quote">
-    <p>"From a town most people can't find on a map, to building products that reach thousands."</p>
-  </div>
-
-  <div class="zic-origin-footer">
-    <button class="zic-explore-btn" onclick="event.stopPropagation();scrollToZone(null,'origin')">🧭 Explore Origin</button>
-    <span style="font-family:var(--font-hand);font-size:0.75rem;color:rgba(201,169,110,0.4)">📸 Photos · Values · Story</span>
+    <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#4CAF50,#81C784);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'origin')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(76,175,80,0.1);color:#2E7D32">Photos · About · Values</span></div>
   </div>
 </div>
 
