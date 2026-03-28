@@ -9484,11 +9484,11 @@ function ensureCompanionStickers(force){
   }
 
   function meterCard(emoji,label,bg1,bg2){
-    return '<div class="zc-meter" data-count="0" style="background:linear-gradient(145deg,'+bg1+','+bg2+');border-radius:14px;padding:12px 14px;width:155px;box-shadow:0 6px 22px rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.1);cursor:pointer;user-select:none;text-align:center">'+
+    return '<div class="zc-meter" data-count="0" style="background:linear-gradient(145deg,#fff,#fdfaf5);border-radius:14px;padding:12px 14px;width:155px;box-shadow:0 4px 16px rgba(0,0,0,0.07);border:2px solid rgba(201,169,110,0.2);cursor:pointer;user-select:none;text-align:center">'+
       '<div style="font-size:1.4rem;margin-bottom:2px">'+emoji+'</div>'+
-      '<div style="font-family:var(--font-fun);font-size:0.58rem;color:rgba(255,255,255,0.75);font-weight:700">'+label+'</div>'+
-      '<div class="zc-meter-val" style="font-family:var(--font-fun);font-size:1.6rem;font-weight:900;color:#fff">0</div>'+
-      '<div style="background:rgba(255,255,255,0.14);border-radius:4px;height:5px;overflow:hidden"><div class="zc-meter-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#42A5F5,#7E57C2);border-radius:4px;transition:width 0.25s"></div></div></div>';
+      '<div style="font-family:var(--font-fun);font-size:0.58rem;color:var(--text3);font-weight:700">'+label+'</div>'+
+      '<div class="zc-meter-val" style="font-family:var(--font-fun);font-size:1.6rem;font-weight:900;color:var(--text)">0</div>'+
+      '<div style="background:rgba(201,169,110,0.15);border-radius:4px;height:5px;overflow:hidden"><div class="zc-meter-bar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#E8A87C);border-radius:4px;transition:width 0.25s"></div></div></div>';
   }
 
   function flipCard(frontEmoji,frontLabel,backText,bg1,bg2){
