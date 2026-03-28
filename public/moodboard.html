@@ -2222,7 +2222,16 @@ body.map-expanded .scroll-counter{display:none!important}
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
 </div>
 <div class="settings-panel" id="settingsPanel">
-  <h3>🎨 Board Theme</h3>
+  <div class="settings-titlebar">
+    <div class="settings-traffic">
+      <span class="t-red" onclick="event.stopPropagation();document.getElementById('settingsPanel').classList.remove('open')"></span>
+      <span class="t-yellow"></span>
+      <span class="t-green"></span>
+    </div>
+    <div class="settings-title-text">Board Settings</div>
+  </div>
+  <div class="settings-body">
+  <h3>🎨 Theme</h3>
   <div class="settings-theme-grid">
     <div class="theme-option active" onclick="event.stopPropagation();setTheme('grid',this)">
       <div class="theme-preview" style="background:#FAF8F5;background-image:linear-gradient(#E8E4DF 1px,transparent 1px),linear-gradient(90deg,#E8E4DF 1px,transparent 1px);background-size:12px 12px"></div>
@@ -2271,13 +2280,16 @@ body.map-expanded .scroll-counter{display:none!important}
   </div>
   <div class="rearrange-row">
     <button class="rearrange-btn" id="rearrangeBtn" onclick="runItemRearrange(true)">🔄 Auto-Rearrange</button>
-     <button class="save-layout-btn" id="saveLayoutBtn" onclick="window.saveLayout()">💾 Save Layout</button>
+    <button class="save-layout-btn" id="saveLayoutBtn" onclick="window.saveLayout()">💾 Save Layout</button>
   </div>
-   <div class="rearrange-note">Rearrange restores saved layout · Save locks current arrangement</div>
-   <div class="rearrange-note" id="layoutSyncStatus" style="opacity:0.7;margin-top:2px;font-size:0.58rem"></div>
+  <div class="rearrange-note">Save locks current arrangement</div>
+  <div class="rearrange-note" id="layoutSyncStatus" style="opacity:0.7;margin-top:2px;font-size:0.58rem"></div>
   <div class="board-stats" id="boardStats">
     <div class="stats-total">— <span id="statsTotal">…</span> items on board —</div>
     <div class="stats-cats" id="statsCats"></div>
+  </div>
+  </div>
+</div>
   </div>
 </div>
 
