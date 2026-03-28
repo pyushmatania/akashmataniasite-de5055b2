@@ -5018,20 +5018,39 @@ function placeNewSticker(sticker){
   if(typeof queueMapSync==='function')queueMapSync(true);
 }
 
-// Rule 7: Auto-Rearrange always does a fresh layout; saved layout is only used on page load
+// Rule 7: Rearrange button resets all cards to default positions (or saved layout if available)
 async function runItemRearrange(triggeredByUser){
+  // Rule 10: Audit — count items in DOM vs maps, fix duplicates/missing
   const auditResult=auditStickerIntegrity();
-  assignStableIds();
-  // Always do a fresh auto-arrange — ignore saved cloud layout
-  autoArrangeMoodboardItems();
-  if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
+
+  // Try loading cloud layout fresh each time
+  let usedCloud=false;
+  if(window._savedCloudLayout&&window._savedCloudLayout.length>0){
+    applyLayout(window._savedCloudLayout);
+    usedCloud=true;
+  }else{
+    // Try fetching from cloud
+    try{
+      const loaded=await window.loadSavedLayout();
+      if(loaded&&window._savedCloudLayout&&window._savedCloudLayout.length>0){
+        usedCloud=true;
+      }
+    }catch(e){}
+    if(!usedCloud) autoArrangeMoodboardItems();
+  }
+
+  // Only re-anchor companions if NOT using saved layout
+  if(!usedCloud){
+    if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
+  }
   // Clear visual cache and force full rescan + redraw
   if(typeof scanStickers==='function')scanStickers();
   if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
   if(typeof queueMapSync==='function')queueMapSync(true);
   const btn=document.getElementById('rearrangeBtn');
   if(triggeredByUser&&btn){
-    const msg=auditResult.fixed?'✅ Rearranged! Fixed '+auditResult.fixed+' issues':'✅ Rearranged!';
+    const src=window._savedCloudLayout?'☁️ Restored saved layout!':'✅ Rearranged & Synced!';
+    const msg=auditResult.fixed?src+' Fixed '+auditResult.fixed+' issues':src;
     const old=btn.textContent;
     btn.textContent=msg;
     setTimeout(()=>{btn.textContent=old;},2000);
@@ -9245,11 +9264,9 @@ function initBoardStats(){
 // Scan once on load, then draw + greeting
 async function bootstrapMap(forceRescan){
   try{
-    let cloudLoaded=false;
     if(forceRescan||!hasAutoArranged){
-      // Assign stable IDs BEFORE cloud load for reliable matching
-      assignStableIds();
       // Try loading cloud layout FIRST before auto-arranging
+      let cloudLoaded=false;
       if(window._savedCloudLayout&&window._savedCloudLayout.length>0){
         applyLayout(window._savedCloudLayout);
         cloudLoaded=true;
@@ -9263,10 +9280,8 @@ async function bootstrapMap(forceRescan){
       }
       hasAutoArranged=true;
     }
-    // Only recreate companions if NOT using cloud layout (would overwrite saved positions)
-    if(!cloudLoaded){
-      if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
-    }
+    // Keep companion stickers attached to intro cards after auto-arrange
+    if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
     normalizeAllStickerBounds();
     ensureMapData(forceRescan);
     drawMap();
@@ -9275,14 +9290,6 @@ async function bootstrapMap(forceRescan){
   }catch(e){
     console.error('Init error:',e)
   }
-}
-
-// Assign stable DOM-index-based IDs for reliable save/load matching
-function assignStableIds(){
-  const stickers=document.querySelectorAll('#canvas > .sticker');
-  stickers.forEach((s,i)=>{
-    s.dataset.sid='sid-'+i;
-  });
 }
 
 function ensureIntroCluster(){
@@ -10092,13 +10099,10 @@ function ekPick(el,e){
   }
 
   function serializeLayout(){
-    assignStableIds();
     const stickers=document.querySelectorAll('#canvas > .sticker');
     const data=[];
     stickers.forEach(s=>{
       const id=s.id||'';
-      const sid=s.dataset.sid||'';
-      const mapId=s.dataset.mapId||'';
       const zone=s.dataset.zone||'';
       const type=s.dataset.type||'';
       const left=s.style.left;
@@ -10106,7 +10110,7 @@ function ekPick(el,e){
       const transform=s.style.transform;
       const zIndex=s.style.zIndex;
       const textSnippet=toSafeSnippet(s.textContent,60);
-      data.push({id,sid,mapId,zone,type,left,top,transform,zIndex,textSnippet});
+      data.push({id,zone,type,left,top,transform,zIndex,textSnippet});
     });
     return sanitizeJsonValue(data);
   }
@@ -10114,28 +10118,16 @@ function ekPick(el,e){
 
   function applyLayout(data){
     if(!data||!data.length)return;
-    assignStableIds();
     const stickers=Array.from(document.querySelectorAll('#canvas > .sticker'));
     const used=new Set();
-    let matched=0;
     data.forEach(d=>{
       let match=null;
-      // 0. Match by stable DOM-index ID (most reliable across refreshes)
-      if(!match&&d.sid){
-        const idx=stickers.findIndex((s,i)=>!used.has(i)&&s.dataset.sid===d.sid);
-        if(idx>=0){match=stickers[idx];used.add(idx);}
-      }
-      // 1. Match by element ID
-      if(!match&&d.id){
+      // 1. Match by ID (most reliable)
+      if(d.id){
         match=stickers.find((s,i)=>!used.has(i)&&s.id===d.id);
         if(match)used.add(stickers.indexOf(match));
       }
-      // 2. Match by mapId
-      if(!match&&d.mapId){
-        const idx=stickers.findIndex((s,i)=>!used.has(i)&&s.dataset.mapId===d.mapId);
-        if(idx>=0){match=stickers[idx];used.add(idx);}
-      }
-      // 3. Fallback: match by zone + textSnippet
+      // 2. Fallback: match by zone + textSnippet (ignore className which can change)
       if(!match&&d.textSnippet){
         const targetSnippet=toSafeSnippet(d.textSnippet,60);
         const idx=stickers.findIndex((s,i)=>{
@@ -10145,7 +10137,7 @@ function ekPick(el,e){
         });
         if(idx>=0){match=stickers[idx];used.add(idx);}
       }
-      // 4. Last resort: match by zone + type
+      // 3. Last resort: match by zone + type
       if(!match&&d.type){
         const idx=stickers.findIndex((s,i)=>{
           if(used.has(i))return false;
@@ -10158,10 +10150,8 @@ function ekPick(el,e){
         if(d.top)match.style.top=d.top;
         if(d.transform)match.style.transform=d.transform;
         if(d.zIndex)match.style.zIndex=d.zIndex;
-        matched++;
       }
     });
-    console.log('[Layout] Applied',matched,'of',data.length,'items to',stickers.length,'DOM stickers');
   }
 
   // PIN modal management
