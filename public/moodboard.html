@@ -2075,31 +2075,70 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <!-- Zone creative intro cards (wrapped as stickers for map sync) -->
 
-<!-- ORIGIN — Personal & About (center: 2900,2800) -->
-<div class="sticker zone-intro-creative has-drag-handle" data-zone="origin" data-type="interactive" style="left:2740px;top:2400px;transform:rotate(-1deg)">
+<!-- ORIGIN — Personal Story (center: 2900,2800) -->
+<div class="sticker zone-intro-creative zic-origin-card has-drag-handle" data-zone="origin" data-type="interactive" style="left:2740px;top:2400px;transform:rotate(-1deg)">
   <div class="sticker-drag-handle" data-no-sticker-drag="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
-  <div class="zic-header" style="background:linear-gradient(135deg,rgba(76,175,80,0.15),rgba(200,230,201,0.25))">
-    <div class="zic-icon" style="background:linear-gradient(135deg,#4CAF50,#81C784)" data-no-sticker-drag="true">📸</div>
-    <div class="zic-title" style="color:#2E7D32">ORIGIN STORY</div>
-    <div class="zic-subtitle" style="color:#4E7D52">Where it all began — the person behind the products</div>
+  
+  <div class="zic-passport-header">
+    <div class="zic-passport-stamp">🏔️</div>
+    <div class="zic-passport-info">
+      <div class="zic-passport-label">Origin Story</div>
+      <div class="zic-passport-name">Where I'm From</div>
+    </div>
   </div>
-  <div class="zic-body" data-no-sticker-drag="true">
-    <div class="zic-divider"></div>
-    <div class="zic-tags">
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎓 B.Tech CS</span>
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📍 Bengaluru</span>
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🌱 Growth</span>
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">💭 Values</span>
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🐕 Mr. Puchu</span>
+
+  <div class="zic-journey-line">
+    <div class="zic-journey-track"></div>
+    <div class="zic-stop">
+      <div class="zic-stop-dot"></div>
+      <div class="zic-stop-city">Jeypore</div>
+      <div class="zic-stop-year">Hometown</div>
     </div>
-    <div class="zic-stat">✦ OUTR Bhubaneswar → Bengaluru</div>
-    <div class="zic-stat">✦ Jeypore → Big city dreams realized</div>
-    <div class="zic-counter">
-      <span>Vibes received:</span>
-      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zone-intro-creative').style.boxShadow='0 0 30px rgba(76,175,80,0.4),0 12px 48px rgba(0,0,0,0.12)'}">👍</button>
-      <span style="font-weight:700;min-width:20px;text-align:center">0</span>
+    <div class="zic-stop">
+      <div class="zic-stop-dot"></div>
+      <div class="zic-stop-city">Bhubaneswar</div>
+      <div class="zic-stop-year">College</div>
     </div>
-    <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#4CAF50,#81C784);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'origin')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(76,175,80,0.1);color:#2E7D32">Photos · About · Values</span></div>
+    <div class="zic-stop">
+      <div class="zic-stop-dot active"></div>
+      <div class="zic-stop-city">Bengaluru</div>
+      <div class="zic-stop-year">Now</div>
+    </div>
+  </div>
+
+  <div class="zic-origin-details" data-no-sticker-drag="true">
+    <div class="zic-detail-row">
+      <span class="zic-detail-icon">🏡</span>
+      <span class="zic-detail-text">Born & raised in <strong>Jeypore, Odisha</strong> — a small town with big dreams</span>
+    </div>
+    <div class="zic-detail-row">
+      <span class="zic-detail-icon">🎓</span>
+      <span class="zic-detail-text"><strong>B.Tech in Computer Science</strong> from OUTR (CET), Bhubaneswar</span>
+    </div>
+    <div class="zic-detail-row">
+      <span class="zic-detail-icon">🚀</span>
+      <span class="zic-detail-text">Moved to <strong>Bengaluru</strong> — building products, chasing ideas</span>
+    </div>
+    <div class="zic-detail-row">
+      <span class="zic-detail-icon">🐕</span>
+      <span class="zic-detail-text">Proud dog dad to <strong>Mr. Puchu</strong></span>
+    </div>
+  </div>
+
+  <div class="zic-origin-tags">
+    <span class="zic-otag" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">Small Town Kid</span>
+    <span class="zic-otag" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">Odisha Roots</span>
+    <span class="zic-otag" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">First-Gen Founder</span>
+    <span class="zic-otag" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">Builder at Heart</span>
+  </div>
+
+  <div class="zic-origin-quote">
+    <p>"From a town most people can't find on a map, to building products that reach thousands."</p>
+  </div>
+
+  <div class="zic-origin-footer">
+    <button class="zic-explore-btn" onclick="event.stopPropagation();scrollToZone(null,'origin')">🧭 Explore Origin</button>
+    <span style="font-family:var(--font-hand);font-size:0.75rem;color:rgba(201,169,110,0.4)">📸 Photos · Values · Story</span>
   </div>
 </div>
 
