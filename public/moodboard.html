@@ -10366,6 +10366,26 @@ function ekPick(el,e){
     return null;
   }
 
+  function setSyncStatus(type,time){
+    const el=document.getElementById('layoutSyncStatus');
+    if(!el)return;
+    const t=time||new Date();
+    const ts=t.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    if(type==='cloud'){
+      el.innerHTML='☁️ Cloud synced · '+ts;
+      el.style.color='#4CAF50';
+    }else if(type==='local'){
+      el.innerHTML='💾 Local backup only · '+ts;
+      el.style.color='#FF9800';
+    }else if(type==='loaded-cloud'){
+      el.innerHTML='☁️ Loaded from cloud · '+ts;
+      el.style.color='#42A5F5';
+    }else if(type==='loaded-local'){
+      el.innerHTML='💾 Loaded from local · '+ts;
+      el.style.color='#FF9800';
+    }
+  }
+
   async function doSaveLayout(){
     const btn=document.getElementById('saveLayoutBtn');
     const toast=document.getElementById('saveLayoutToast');
@@ -10380,16 +10400,17 @@ function ekPick(el,e){
       window._savedCloudLayout=savedLayout||layoutData;
       btn.classList.remove('saving');btn.classList.add('saved');btn.innerHTML='✅ Saved!';
       toast.textContent='Layout saved to cloud ☁️';toast.classList.add('show');
+      setSyncStatus('cloud');
       setTimeout(()=>{btn.classList.remove('saved');btn.innerHTML='💾 Save Layout';toast.classList.remove('show');},2500);
     }catch(e){
       console.error('Save layout error (final):',e);
-      // fallback to local only, so user never loses arrangement
       try{
         const layoutData=serializeLayout();
         localStorage.setItem(LOCAL_LAYOUT_KEY,JSON.stringify(layoutData));
       }catch(_){ }
       btn.classList.remove('saving');btn.innerHTML='❌ Error';
       toast.textContent='Cloud save failed — local backup saved';toast.classList.add('show');
+      setSyncStatus('local');
       setTimeout(()=>{btn.innerHTML='💾 Save Layout';toast.classList.remove('show');},2500);
     }
   }
@@ -10404,10 +10425,10 @@ function ekPick(el,e){
         applyLayout(layoutData);
         window._savedCloudLayout=layoutData;
         console.log('[Layout] Restored saved layout from cloud ☁️',layoutData.length,'items');
+        setSyncStatus('loaded-cloud');
         return true;
       }
 
-      // Fallback: load last local backup if cloud has nothing
       const localRaw=localStorage.getItem(LOCAL_LAYOUT_KEY);
       if(localRaw){
         const localData=JSON.parse(localRaw);
@@ -10415,6 +10436,7 @@ function ekPick(el,e){
           applyLayout(localData);
           window._savedCloudLayout=localData;
           console.log('[Layout] Restored local backup layout',localData.length,'items');
+          setSyncStatus('loaded-local');
           return true;
         }
       }
