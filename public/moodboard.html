@@ -5206,11 +5206,9 @@ const DRAG_CLICK_GUARD_MS=900;
 let lastRotVelocity=0, lastRotTime=0;
 
 function canRotate(el){
-  if(!el)return false;
-  // Skip interactive stickers (intro cards, counters, flip cards etc.)
-  if(el.dataset.type==='interactive')return false;
-  if(el.classList.contains('has-drag-handle'))return false;
-  if(el.classList.contains('zic-companion')&&el.querySelector('.zc-meter,.zc-flip-card'))return false;
+  if(!el||!el.classList||!el.classList.contains('sticker'))return false;
+  // Allow rotation for intro + companion + regular stickers unless explicitly blocked
+  if(el.dataset&&el.dataset.noRotate==='true')return false;
   return true;
 }
 function getAngle(t1,t2){return Math.atan2(t2.clientY-t1.clientY,t2.clientX-t1.clientX)*180/Math.PI}
@@ -5225,7 +5223,8 @@ function startRotation(el,touches){
   rotStartAngle=getAngle(touches[0],touches[1]);
   stickerBaseAngle=getCurrentRotation(el);
   lastRotVelocity=0;lastRotTime=performance.now();
-  el.classList.add('rotating');
+  // Keep interactive inners clickable while rotating parent
+  if(!el.classList.contains('has-drag-handle'))el.classList.add('rotating');
   return true;
 }
 function endRotationWithSpring(el){
@@ -5276,12 +5275,13 @@ document.addEventListener('touchstart',e=>{
 },{passive:false});
 
 function sD(e){
-  // Block sticker drag when interacting with internal interactive elements
+  const isTwoFinger=!!(e.touches&&e.touches.length>=2);
+  // Block 1-finger drag when interacting with internal interactive elements
   const noDragTarget=e.target&&e.target.closest('.tlg-move-btn,button,input,textarea,select,a,[data-no-sticker-drag="true"],.tg-char,.tg-throne-target,.ek-ingredient,.ek-bowl,.sb-skill,.sb-stack-zone,.scratch-cover,.sticker-mood input[type=range],.zic-tag,.zic-icon,.zic-counter,.zic-body,.zic-explore-btn,.zic-items-count,.tlg-item,.c-emoji,.c-count');
-  if(noDragTarget){e.stopPropagation();return;}
-  // For cards with drag handles, only allow dragging from the handle
+  if(noDragTarget&&!isTwoFinger){e.stopPropagation();return;}
+  // For cards with drag handles, keep 1-finger handle-only drag, but allow 2-finger rotate anywhere
   const stickerEl=e.target.closest('.sticker');
-  if(stickerEl&&stickerEl.classList.contains('has-drag-handle')){
+  if(stickerEl&&stickerEl.classList.contains('has-drag-handle')&&!isTwoFinger){
     const isHandle=e.target.closest('.sticker-drag-handle');
     if(!isHandle){e.stopPropagation();return;}
   }
