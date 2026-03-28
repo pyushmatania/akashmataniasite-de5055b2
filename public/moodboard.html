@@ -1763,9 +1763,9 @@ body.map-expanded .scroll-counter{display:none!important}
 @keyframes originShake{0%,100%{transform:rotate(2deg)}8%{transform:rotate(2deg) translate(-8px,-6px)}16%{transform:rotate(2deg) translate(9px,4px)}24%{transform:rotate(2deg) translate(-5px,8px)}32%{transform:rotate(2deg) translate(7px,-5px)}40%{transform:rotate(2deg) translate(-4px,3px)}50%{transform:rotate(2deg) translate(0,0)}}
 @keyframes originErrorLine{0%{width:0;opacity:1}80%{width:100%;opacity:1}100%{width:100%;opacity:0}}
 .zic-origin.origin-attack{animation:originShake 0.8s cubic-bezier(0.36,0.07,0.19,0.97) both!important}
+.zic-origin.origin-attack .zic-polaroid{animation:originGlitchH 0.6s steps(1) 0.05s both}
+.zic-origin.origin-attack .zic-polaroid::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:20;background:rgba(74,222,128,0.04);animation:originGlitchH 0.6s steps(1) 0.05s both}
 .zic-origin.origin-attack .zic-origin-screen{animation:originBoot 0.6s ease-out both}
-.zic-origin.origin-attack .zic-origin-scanline{animation:originScanSweep 0.5s linear 0.1s both!important;position:absolute!important;left:0!important;right:0!important;height:3px!important;background:linear-gradient(90deg,transparent,rgba(76,175,80,0.8),transparent)!important;opacity:1!important;z-index:10!important}
-.zic-origin.origin-attack .zic-origin-glitch{animation:originGlitchH 0.6s steps(1) 0.05s both;background:rgba(74,222,128,0.04)}
 .zic-origin.origin-attack .zic-origin-boot-line{animation:originDataCorrupt 0.4s cubic-bezier(0.34,1.56,0.64,1) both}
 .zic-origin.origin-attack .zic-origin-boot-line:nth-child(1){animation-delay:0.05s}
 .zic-origin.origin-attack .zic-origin-boot-line:nth-child(2){animation-delay:0.12s}
@@ -2428,8 +2428,6 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="zic-polaroid-bg2"></div>
   <!-- Main polaroid -->
   <div class="zic-polaroid" style="position:relative;z-index:2;background:linear-gradient(160deg,#0A120A,#0F1A0F,#081208);border-radius:4px;padding:0;overflow:hidden;box-shadow:3px 5px 24px rgba(0,0,0,0.5)" data-no-sticker-drag="true">
-    <!-- Glitch layer for cinematic attack -->
-    <div class="zic-origin-glitch" style="position:absolute;inset:0;pointer-events:none;z-index:20"></div>
     <!-- Terminal titlebar -->
     <div style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(76,175,80,0.15)">
       <span style="width:9px;height:9px;border-radius:50%;background:#FF5F57;display:inline-block"></span>
