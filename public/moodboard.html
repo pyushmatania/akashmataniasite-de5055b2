@@ -9275,6 +9275,8 @@ async function bootstrapMap(forceRescan){
         try{
           cloudLoaded=await window.loadSavedLayout();
         }catch(e){console.warn('Cloud layout load failed:',e)}
+      }else{
+        window._pendingCloudHydration=true;
       }
       if(!cloudLoaded){
         autoArrangeMoodboardItems();
@@ -10190,9 +10192,6 @@ function ekPick(el,e){
         match=takeMatch(()=>true);
       }
 
-      if(d.id){
-        // preserve current id logic branch for backward compatibility (no-op if already matched)
-      }
       if(match){
         if(typeof d.left==='string')match.style.left=d.left;
         if(typeof d.top==='string')match.style.top=d.top;
@@ -10528,6 +10527,33 @@ function ekPick(el,e){
     }
     return false;
   };
+
+  async function runDeferredCloudHydration(){
+    if(window._hydratingCloudLayout)return;
+    window._hydratingCloudLayout=true;
+    try{
+      if(Array.isArray(window._savedCloudLayout)&&window._savedCloudLayout.length>0)return;
+      if(typeof window.loadSavedLayout!=='function')return;
+      const loaded=await window.loadSavedLayout();
+      if(!loaded)return;
+      if(typeof normalizeAllStickerBounds==='function')normalizeAllStickerBounds();
+      if(typeof scanStickers==='function')scanStickers();
+      if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
+      if(typeof queueMapSync==='function')queueMapSync(true);
+      if(typeof initBoardStats==='function')initBoardStats();
+    }catch(e){
+      console.warn('Deferred cloud hydration failed:',e);
+    }finally{
+      window._hydratingCloudLayout=false;
+    }
+  }
+
+  if(window._pendingCloudHydration){
+    window._pendingCloudHydration=false;
+    setTimeout(()=>{runDeferredCloudHydration();},0);
+  }else if(!Array.isArray(window._savedCloudLayout)||window._savedCloudLayout.length===0){
+    setTimeout(()=>{runDeferredCloudHydration();},0);
+  }
 
 })();
 </script>
