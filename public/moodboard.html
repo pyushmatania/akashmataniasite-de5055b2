@@ -5400,7 +5400,7 @@ function sU(e){
     if(typeof scanStickers==='function')scanStickers();
     if(typeof queueMapSync==='function')queueMapSync(true);
   }
-  if(isRotating){isRotating=false;as=null;return;}
+  if(isRotating){isRotating=false;endRotationWithSpring(as);as=null;return;}
   if(!didMove&&(Date.now()-tapTime)<400){
     if(as.dataset.splash)doSplash(as,e);
     if(as.dataset.anim)triggerAnim(as,e);
