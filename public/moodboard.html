@@ -5314,18 +5314,23 @@ function _schedStickerMove(e){
   if(as&&e.touches&&e.touches.length>=2){
     if(!isRotating){
       // Transition into rotation mode mid-drag
-      isRotating=true;didMove=true;
-      rotStartAngle=getAngle(e.touches[0],e.touches[1]);
-      stickerBaseAngle=getCurrentRotation(as);
+      if(!canRotate(as)){return;}
+      startRotation(as,e.touches);
     }
     const curAngle=getAngle(e.touches[0],e.touches[1]);
     const delta=curAngle-rotStartAngle;
-    as.style.transform='rotate('+(stickerBaseAngle+delta)+'deg)';
+    const newAngle=stickerBaseAngle+delta;
+    // Track velocity for spring release
+    const now=performance.now();
+    if(lastRotTime>0){const dt=Math.max(now-lastRotTime,1);lastRotVelocity=(newAngle-getCurrentRotation(as))/(dt/16);}
+    lastRotTime=now;
+    as.style.transform='rotate('+newAngle+'deg)';
     e.preventDefault();return;
   }
   // If was rotating and now back to 1 finger, resume drag
   if(isRotating&&e.touches&&e.touches.length===1){
     isRotating=false;
+    as.classList.remove('rotating');
     const cx=e.touches[0].clientX;
     const cy=e.touches[0].clientY;
     const stickerLeft=parseFloat(as.style.left)||0;
