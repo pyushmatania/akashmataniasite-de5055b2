@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
+import viteCompression from "vite-plugin-compression";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -12,7 +13,12 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
   },
-  plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+  plugins: [
+    react(),
+    mode === "development" && componentTagger(),
+    mode === "production" && viteCompression({ algorithm: "brotliCompress", ext: ".br" }),
+    mode === "production" && viteCompression({ algorithm: "gzip", ext: ".gz" }),
+  ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -29,7 +35,8 @@ export default defineConfig(({ mode }) => ({
       output: {
         manualChunks: {
           "react-vendor": ["react", "react-dom", "react-router-dom"],
-          "radix-ui": ["@radix-ui/react-toast", "@radix-ui/react-tooltip"],
+          "framer-motion": ["framer-motion"],
+          "radix-ui": ["@radix-ui/react-tooltip"],
           "ui-utils": ["clsx", "tailwind-merge", "class-variance-authority"],
         },
       },
