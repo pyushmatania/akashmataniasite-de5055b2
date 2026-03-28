@@ -11010,6 +11010,7 @@ function ekPick(el,e){
       console.warn('Deferred cloud hydration failed:',e);
     }finally{
       window._hydratingCloudLayout=false;
+      document.body.classList.add('stickers-ready');
     }
   }
 
