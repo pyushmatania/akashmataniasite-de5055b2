@@ -5288,11 +5288,8 @@ function sD(e){
   e.stopPropagation();
   // Two-finger rotation start (both on sticker)
   if(e.touches&&e.touches.length===2){
-    isRotating=true;didMove=true;
     as=this;hz++;as.style.zIndex=hz;
-    rotStartAngle=getAngle(e.touches[0],e.touches[1]);
-    stickerBaseAngle=getCurrentRotation(as);
-    e.preventDefault();return;
+    if(startRotation(as,e.touches)){e.preventDefault();return;}
   }
   const cx=e.touches?e.touches[0].clientX:e.clientX;
   const cy=e.touches?e.touches[0].clientY:e.clientY;
