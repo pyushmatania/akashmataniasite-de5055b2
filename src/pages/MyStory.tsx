@@ -1,5 +1,14 @@
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Sun, Moon } from "lucide-react";
+import { motion } from "framer-motion";
+import { useTheme } from "next-themes";
+import Typed from "typed.js";
+import Atropos from "atropos/react";
+import "atropos/css";
+import Lenis from "@studio-freight/lenis";
+import confetti from "canvas-confetti";
+import { fadeUp, scaleIn, staggerContainer, pageTransition } from "@/lib/variants";
 
 const akashPhoto = "/images/akash-photo.jpeg";
 
@@ -12,41 +21,144 @@ const skills = [
   { label: "AI-ASSISTED DEVELOPMENT", color: "hsl(0, 78%, 62%)" },
 ];
 
-const stagger = (i: number) => ({ animationDelay: `${i * 0.1}s` });
-
 const MyStory = () => {
   const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
+  const typedRef = useRef<HTMLSpanElement>(null);
+  const lenisRef = useRef<Lenis | null>(null);
+
+  // Lenis smooth scroll
+  useEffect(() => {
+    lenisRef.current = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    const raf = (time: number) => {
+      lenisRef.current?.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+
+    return () => lenisRef.current?.destroy();
+  }, []);
+
+  // Typed.js typewriter on tagline
+  useEffect(() => {
+    if (!typedRef.current) return;
+    const typed = new Typed(typedRef.current, {
+      strings: [
+        "Engineering → Product → Web3 → AI",
+        "0 to 1 builder.",
+        "Craft meets curiosity.",
+      ],
+      typeSpeed: 45,
+      backSpeed: 25,
+      backDelay: 2000,
+      loop: true,
+      showCursor: true,
+      cursorChar: "|",
+    });
+    return () => typed.destroy();
+  }, []);
+
+  // Canvas confetti on mount — subtle, respects reduced motion
+  useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    const timer = setTimeout(() => {
+      confetti({
+        particleCount: 60,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ["#4ade80", "#fbbf24", "#f87171", "#c084fc", "#60a5fa"],
+        scalar: 0.9,
+        ticks: 200,
+      });
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <motion.div
+      className="min-h-screen bg-background"
+      variants={pageTransition}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <div className="max-w-2xl mx-auto px-6 py-8">
-        <button
-          onClick={() => navigate("/")}
-          className="w-12 h-12 rounded-full border border-border flex items-center justify-center mb-8 hover:bg-muted transition-colors animate-fade-in opacity-0 [animation-fill-mode:forwards]"
-          style={stagger(0)}
+        {/* Top bar: back + dark mode toggle */}
+        <motion.div
+          className="flex items-center justify-between mb-8"
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={0}
         >
-          <ArrowLeft className="w-5 h-5 text-foreground" />
-        </button>
+          <motion.button
+            onClick={() => navigate("/")}
+            className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <ArrowLeft className="w-5 h-5 text-foreground" />
+          </motion.button>
 
-        <h1
-          className="text-5xl md:text-6xl font-bold text-foreground tracking-tight mb-10 animate-fade-in opacity-0 [animation-fill-mode:forwards]"
-          style={stagger(1)}
+          <motion.button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            title="Toggle theme"
+          >
+            {theme === "dark" ? (
+              <Sun className="w-5 h-5 text-foreground" />
+            ) : (
+              <Moon className="w-5 h-5 text-foreground" />
+            )}
+          </motion.button>
+        </motion.div>
+
+        {/* Animated gradient headline */}
+        <motion.h1
+          className="text-5xl md:text-6xl font-bold tracking-tight mb-6"
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={1}
+          style={{
+            background:
+              "linear-gradient(135deg, hsl(145,63%,49%), hsl(43,96%,56%), hsl(0,78%,62%), hsl(280,70%,55%))",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
         >
           My story
-        </h1>
+        </motion.h1>
 
-        <p
-          className="text-muted-foreground text-lg mb-8 animate-fade-in opacity-0 [animation-fill-mode:forwards]"
-          style={stagger(2)}
+        {/* Typewriter tagline */}
+        <motion.p
+          className="text-muted-foreground text-lg mb-10 h-7"
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={2}
         >
-          Engineering <span className="mx-1">→</span> Product{" "}
-          <span className="mx-1">→</span> Web3{" "}
-          <span className="mx-1">→</span> AI
-        </p>
+          <span ref={typedRef} />
+        </motion.p>
 
-        <p
-          className="text-muted-foreground text-lg leading-relaxed mb-16 animate-fade-in opacity-0 [animation-fill-mode:forwards]"
-          style={stagger(3)}
+        {/* Bio paragraphs */}
+        <motion.p
+          className="text-muted-foreground text-lg leading-relaxed mb-12"
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={3}
         >
           I started in computer science engineering, moved into product
           management across fintech, edtech, and Web3, and somewhere along the
@@ -54,61 +166,97 @@ const MyStory = () => {
           intersection of product thinking and emerging technology — scaling
           platforms to 5,000+ users, achieving product-market fit, and driving
           teams to ship faster.
-        </p>
+        </motion.p>
 
-        <p
-          className="text-foreground text-2xl md:text-[1.7rem] font-bold leading-snug mb-16 animate-fade-in opacity-0 [animation-fill-mode:forwards]"
-          style={stagger(4)}
+        <motion.p
+          className="text-foreground text-2xl md:text-[1.7rem] font-bold leading-snug mb-12"
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={4}
         >
           I believe the best products happen when craft meets curiosity. I care
           about the details that most people won't notice but everyone will feel
           — the clarity of a user flow, the precision of a roadmap, the moment
           a feature earns its place.
-        </p>
+        </motion.p>
 
-        <p
-          className="text-muted-foreground text-lg leading-relaxed mb-16 animate-fade-in opacity-0 [animation-fill-mode:forwards]"
-          style={stagger(5)}
+        <motion.p
+          className="text-muted-foreground text-lg leading-relaxed mb-14"
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={5}
         >
           I build with AI the way a photographer works with light — it's a
           medium, not a shortcut. The taste, the decisions, the product
           direction? That's still very human. That's still mine.
-        </p>
+        </motion.p>
 
-        <div
-          className="relative p-1.5 rounded-2xl mb-16 animate-fade-in opacity-0 [animation-fill-mode:forwards]"
-          style={{
-            ...stagger(6),
-            background: "linear-gradient(135deg, hsl(145,63%,49%), hsl(43,96%,56%), hsl(0,78%,62%), hsl(280,70%,55%), hsl(200,80%,55%))",
-            boxShadow: "0 8px 32px -8px hsla(280,70%,55%,0.35), 0 4px 16px -4px hsla(0,78%,62%,0.25)",
-          }}
+        {/* Atropos 3D tilt profile image */}
+        <motion.div
+          className="mb-14"
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={6}
         >
-          <div className="rounded-xl overflow-hidden bg-background">
-            <img
-              src={akashPhoto}
-              alt="Akash Matania"
-              className="w-full aspect-[4/3] object-cover object-top"
-              loading="lazy"
-            />
-          </div>
-        </div>
+          <Atropos
+            className="rounded-2xl"
+            activeOffset={24}
+            shadowScale={1.04}
+            highlight={true}
+            rotateXMax={8}
+            rotateYMax={8}
+          >
+            <div
+              className="relative p-1.5 rounded-2xl"
+              style={{
+                background:
+                  "linear-gradient(135deg, hsl(145,63%,49%), hsl(43,96%,56%), hsl(0,78%,62%), hsl(280,70%,55%), hsl(200,80%,55%))",
+                boxShadow:
+                  "0 8px 32px -8px hsla(280,70%,55%,0.35), 0 4px 16px -4px hsla(0,78%,62%,0.25)",
+              }}
+            >
+              <div className="rounded-xl overflow-hidden bg-background" data-atropos-offset="4">
+                <img
+                  src={akashPhoto}
+                  alt="Akash Matania"
+                  className="w-full aspect-[4/3] object-cover object-top"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </Atropos>
+        </motion.div>
 
-        <div
-          className="flex flex-wrap gap-3 pb-16 animate-fade-in opacity-0 [animation-fill-mode:forwards]"
-          style={stagger(7)}
+        {/* Skill badges with stagger + spring hover */}
+        <motion.div
+          className="flex flex-wrap gap-3 pb-16"
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
         >
           {skills.map((skill, i) => (
-            <span
+            <motion.span
               key={skill.label}
-              className="px-5 py-2.5 rounded-full text-sm font-bold tracking-wide text-white animate-scale-in opacity-0 [animation-fill-mode:forwards] active:scale-95 transition-transform"
-              style={{ backgroundColor: skill.color, animationDelay: `${0.7 + i * 0.06}s` }}
+              className="px-5 py-2.5 rounded-full text-sm font-bold tracking-wide text-white cursor-default select-none"
+              variants={scaleIn}
+              custom={i}
+              style={{ backgroundColor: skill.color }}
+              whileHover={{
+                scale: 1.1,
+                boxShadow: `0 4px 20px -4px ${skill.color}99`,
+                transition: { type: "spring", stiffness: 400, damping: 15 },
+              }}
+              whileTap={{ scale: 0.95 }}
             >
               {skill.label}
-            </span>
+            </motion.span>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
