@@ -10079,12 +10079,25 @@ function ekPick(el,e){
     const used=new Set();
     data.forEach(d=>{
       let match=null;
-      if(d.id){match=stickers.find((s,i)=>!used.has(i)&&s.id===d.id);if(match)used.add(stickers.indexOf(match));}
-      if(!match){
+      // 1. Match by ID (most reliable)
+      if(d.id){
+        match=stickers.find((s,i)=>!used.has(i)&&s.id===d.id);
+        if(match)used.add(stickers.indexOf(match));
+      }
+      // 2. Fallback: match by zone + textSnippet (ignore className which can change)
+      if(!match&&d.textSnippet){
         const idx=stickers.findIndex((s,i)=>{
           if(used.has(i))return false;
           const sText=(s.textContent||'').substring(0,60).trim();
-          return s.className===d.classes&&(s.dataset.zone||'')===(d.zone||'')&&sText===d.textSnippet;
+          return (s.dataset.zone||'')===(d.zone||'')&&sText===d.textSnippet;
+        });
+        if(idx>=0){match=stickers[idx];used.add(idx);}
+      }
+      // 3. Last resort: match by zone + type
+      if(!match&&d.type){
+        const idx=stickers.findIndex((s,i)=>{
+          if(used.has(i))return false;
+          return (s.dataset.zone||'')===(d.zone||'')&&(s.dataset.type||'')===(d.type||'');
         });
         if(idx>=0){match=stickers[idx];used.add(idx);}
       }
