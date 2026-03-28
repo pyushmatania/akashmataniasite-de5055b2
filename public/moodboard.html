@@ -5370,6 +5370,7 @@ function sU(e){
   if(e.touches&&e.touches.length>=1&&isRotating){
     // Switching from rotation back to drag
     isRotating=false;
+    as.classList.remove('rotating');
     const cx=e.touches[0].clientX;
     const cy=e.touches[0].clientY;
     const stickerLeft=parseFloat(as.style.left)||0;
