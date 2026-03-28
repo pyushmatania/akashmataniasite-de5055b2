@@ -10230,12 +10230,16 @@ function ekPick(el,e){
     return false;
   };
 
-  // Load saved layout after bootstrap
+  // Load saved layout after bootstrap — wait long enough for companions to be created
   window._layoutLoadTimeout=setTimeout(async()=>{
-    await new Promise(r=>setTimeout(r,1200));
+    await new Promise(r=>setTimeout(r,2500));
     const loaded=await window.loadSavedLayout();
     if(loaded){
       window._savedLayoutLoaded=true;
+      // Re-sync maps after applying saved layout
+      if(typeof scanStickers==='function')scanStickers();
+      if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
+      if(typeof queueMapSync==='function')queueMapSync(true);
     }
   },200);
 })();
