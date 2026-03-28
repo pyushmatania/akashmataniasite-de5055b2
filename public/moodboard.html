@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Akash's Moodboard — Playground</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,7 @@
 }
 html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);background:#FAF8F5;margin:0;padding:0;overscroll-behavior:none}
 *{-webkit-tap-highlight-color:transparent}
-.canvas-viewport{width:100vw;height:100vh;overflow:auto;cursor:grab;position:relative;margin:0;padding:0;background:#FAF8F5;overscroll-behavior:none;will-change:scroll-position}
+.canvas-viewport{width:100vw;height:100vh;height:100dvh;overflow:auto;cursor:grab;position:relative;margin:0;padding:0;background:#FAF8F5;overscroll-behavior:none;will-change:scroll-position}
 .canvas{transform-origin:0 0;overflow:visible}
 @media(max-width:768px){.canvas{transform:scale(0.6)}}
 @media(min-width:769px){.canvas{transform:scale(0.72)}}
@@ -327,68 +327,92 @@ body.stickers-ready .sticker{opacity:1}
 .sticker-swatches .sw{width:40px;height:48px;border-radius:6px}
 .sticker-swatches .sw-label{font-size:0.5rem;text-align:center;color:var(--text3);margin-top:3px;font-weight:600}
 
-/* ===== HERO INTRO CARD ===== */
+/* ===== HERO INTRO CARD — COSMIC IDENTITY EDITION ===== */
+@keyframes introFloatY{0%,100%{translate:0 0}50%{translate:0 -10px}}
+@keyframes auroraRing{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes nameShimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+@keyframes scanLine{0%{transform:translateY(-100%)}100%{transform:translateY(400%)}}
 .intro-card{
   position:absolute;z-index:80;
-  background:linear-gradient(145deg,#fff 0%,#fdfcfa 50%,#f8f5ef 100%);
-  border-radius:28px;padding:48px 44px 40px;
+  background:linear-gradient(160deg,#0C0C12 0%,#111018 45%,#0A0C14 100%);
+  border-radius:28px;padding:36px 36px 32px;
   width:460px;
-  border:3px solid rgba(201,169,110,0.25);
   box-shadow:
-    0 20px 60px rgba(0,0,0,0.12),
-    0 8px 24px rgba(0,0,0,0.06),
-    inset 0 1px 0 rgba(255,255,255,0.9);
-  text-align:center;
+    0 0 0 1px rgba(201,169,110,0.18),
+    0 0 0 3px rgba(201,169,110,0.04),
+    0 24px 80px rgba(0,0,0,0.6),
+    0 8px 24px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  text-align:center;overflow:hidden;
+  animation:introFloatY 4.5s ease-in-out infinite;
+}
+.intro-card::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse at 25% 0%,rgba(201,169,110,0.1) 0%,transparent 55%),
+    radial-gradient(ellipse at 75% 100%,rgba(124,77,255,0.07) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 50%,rgba(76,175,80,0.03) 0%,transparent 70%);
+}
+.intro-card::after{
+  content:'';position:absolute;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,169,110,0.3),transparent);
+  top:0;pointer-events:none;z-index:2;animation:scanLine 8s linear infinite;opacity:0.4;
+}
+.intro-card>*{position:relative;z-index:1}
+/* Aurora border top accent */
+.intro-card .intro-aurora-bar{
+  position:absolute;top:0;left:0;right:0;height:2px;z-index:3;
+  background:linear-gradient(90deg,#4CAF50,#C9A96E,#7C4DFF,#00BCD4,#4CAF50);
+  background-size:300% 100%;animation:auroraRing 5s linear infinite;
 }
 .intro-card .intro-photo-wrap{
-  position:relative;display:inline-block;margin:0 auto 24px;
-  transform:rotate(4deg);transition:transform 0.3s;
+  position:relative;display:inline-block;margin:0 auto 26px;
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
 }
-.intro-card .intro-photo-wrap:hover{transform:rotate(-2deg) scale(1.05)}
+.intro-card .intro-photo-wrap:hover{transform:scale(1.07) rotate(-3deg)}
 .intro-card .intro-photo{
-  width:150px;height:180px;border-radius:8px;object-fit:cover;
-  border:6px solid #fff;
-  box-shadow:0 6px 24px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.05);
+  width:136px;height:136px;border-radius:50%;object-fit:cover;object-position:top;
   display:block;
+  box-shadow:0 0 0 3px rgba(10,10,18,1),0 0 0 5px rgba(201,169,110,0.5),0 0 0 8px rgba(201,169,110,0.08),0 10px 40px rgba(0,0,0,0.5);
 }
 .intro-card .photo-caption{
-  position:absolute;bottom:-14px;left:50%;transform:translateX(-50%) rotate(-3deg);
-  background:#FFF9C4;padding:4px 14px 6px;border-radius:3px;
-  font-family:var(--font-hand);font-size:0.85rem;color:#5C4A1E;
-  box-shadow:1px 2px 0 rgba(0,0,0,0.08);white-space:nowrap;
-  border-bottom:2px solid rgba(201,169,110,0.3);
+  position:absolute;bottom:-10px;left:50%;transform:translateX(-50%) rotate(-2deg);
+  background:rgba(201,169,110,0.12);backdrop-filter:blur(12px);
+  padding:3px 12px 5px;border-radius:20px;
+  font-family:var(--font-hand);font-size:0.78rem;color:rgba(201,169,110,0.85);
+  white-space:nowrap;border:1px solid rgba(201,169,110,0.2);
 }
 .intro-card .intro-name{
-  font-family:var(--font-fun);font-size:2.8rem;font-weight:800;
-  color:var(--text);line-height:1.1;margin-bottom:4px;
+  font-family:var(--font-fun);font-size:2.6rem;font-weight:800;
+  line-height:1.1;margin-bottom:4px;
+  background:linear-gradient(110deg,rgba(255,255,255,0.95) 20%,rgba(201,169,110,0.9) 50%,rgba(255,255,255,0.95) 80%);
+  background-size:200% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:nameShimmer 5s linear infinite;
 }
 .intro-card .intro-name .hl-name{
-  background:linear-gradient(135deg,#FFD54F,#FFB300);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
+  background:linear-gradient(135deg,#FFD54F,#FFA726,#FFD54F);
+  background-size:200% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:nameShimmer 3.5s linear infinite;
 }
 .intro-card .intro-tagline{
-  font-family:var(--font-hand);font-size:1.15rem;
-  color:var(--text2);margin-bottom:18px;line-height:1.5;
+  font-family:var(--font-hand);font-size:1rem;
+  color:rgba(255,255,255,0.38);margin-bottom:16px;line-height:1.5;
 }
 .intro-card .intro-roles{
-  display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;
+  display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;
 }
 .intro-card .intro-role{
-  background:linear-gradient(135deg,rgba(201,169,110,0.12),rgba(201,169,110,0.06));
-  border:1.5px solid rgba(201,169,110,0.25);border-radius:20px;
-  padding:6px 16px;font-family:var(--font-fun);font-size:0.72rem;
-  font-weight:600;color:var(--text2);letter-spacing:0.04em;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.09);border-radius:20px;
+  padding:5px 14px;font-family:var(--font-fun);font-size:0.7rem;
+  font-weight:600;color:rgba(255,255,255,0.55);letter-spacing:0.04em;
+  transition:all 0.2s;
 }
-.intro-card .intro-location{
-  font-size:0.78rem;color:var(--text3);margin-top:8px;
-}
-.intro-card .intro-cta{
-  margin-top:16px;font-family:var(--font-hand);font-size:0.95rem;
-  color:var(--accent);opacity:0.7;
-}
-@keyframes introFloatY{0%,100%{translate:0 0}50%{translate:0 -8px}}
-.intro-card{animation:introFloatY 4s ease-in-out infinite}
+.intro-card .intro-role:hover{background:rgba(201,169,110,0.1);border-color:rgba(201,169,110,0.35);color:rgba(201,169,110,0.9)}
+.intro-card .intro-location{font-size:0.72rem;color:rgba(255,255,255,0.25);margin-top:6px}
+.intro-card .intro-cta{margin-top:14px;font-family:var(--font-hand);font-size:0.9rem;color:rgba(201,169,110,0.55)}
 
 /* Interactive badge overlay — game controller style */
 .interactive-badge{
@@ -419,7 +443,7 @@ body.stickers-ready .sticker{opacity:1}
 .swipe-hint svg{width:20px;height:20px;animation:arrowB 1.5s ease-in-out infinite}
 @keyframes arrowB{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
 @keyframes fadeHint{0%{opacity:1}75%{opacity:1}100%{opacity:0}}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:999;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border-top:1px solid rgba(0,0,0,0.06);display:flex;justify-content:space-around;padding:8px 0 max(8px,env(safe-area-inset-bottom))}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:999;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(0,0,0,0.06);display:flex;justify-content:space-around;padding:8px 0;padding-bottom:max(12px,env(safe-area-inset-bottom,12px))}
 .bottom-nav a{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:0.65rem;color:var(--text3);font-weight:500;text-decoration:none;padding:4px 12px}
 .bottom-nav a.active{color:var(--text)}
 .bottom-nav a svg{width:22px;height:22px}
@@ -1588,19 +1612,19 @@ body.map-expanded .scroll-counter{display:none!important}
 }
 
 /* ===== ENHANCED INTRO CARD — ADDITIONS ===== */
-.intro-card .intro-status{display:inline-flex;align-items:center;gap:6px;background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);border-radius:20px;padding:4px 12px 4px 8px;font-size:0.68rem;color:#2E7D32;font-weight:600;margin-bottom:16px}
-.intro-card .status-dot{width:8px;height:8px;border-radius:50%;background:#4CAF50;box-shadow:0 0 0 3px rgba(76,175,80,0.2);animation:statusPulse 2s ease-in-out infinite;flex-shrink:0}
-@keyframes statusPulse{0%,100%{box-shadow:0 0 0 3px rgba(76,175,80,0.2)}50%{box-shadow:0 0 0 6px rgba(76,175,80,0.06)}}
-.intro-card .intro-currently{background:rgba(201,169,110,0.07);border:1.5px dashed rgba(201,169,110,0.3);border-radius:12px;padding:10px 14px;margin-top:14px;text-align:left}
-.intro-card .curr-label{font-size:0.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px}
-.intro-card .curr-val{font-family:var(--font-hand);font-size:0.9rem;color:var(--text2);cursor:pointer;display:block;transition:color 0.3s}
-.intro-card .curr-val:hover{color:var(--accent)}
-.intro-card .intro-stats-row{display:flex;margin:14px -4px 0;padding-top:14px;border-top:1px solid rgba(0,0,0,0.06)}
-.intro-card .istat{flex:1;text-align:center;border-right:1px solid rgba(0,0,0,0.06);padding:0 4px}
+.intro-card .intro-status{display:inline-flex;align-items:center;gap:6px;background:rgba(76,175,80,0.08);border:1px solid rgba(76,175,80,0.22);border-radius:20px;padding:4px 12px 4px 8px;font-size:0.67rem;color:rgba(76,175,80,0.85);font-weight:700;margin-bottom:16px;letter-spacing:0.03em}
+.intro-card .status-dot{width:7px;height:7px;border-radius:50%;background:#4CAF50;box-shadow:0 0 8px rgba(76,175,80,0.8),0 0 0 3px rgba(76,175,80,0.15);animation:statusPulse 2s ease-in-out infinite;flex-shrink:0}
+@keyframes statusPulse{0%,100%{box-shadow:0 0 8px rgba(76,175,80,0.8),0 0 0 3px rgba(76,175,80,0.15)}50%{box-shadow:0 0 14px rgba(76,175,80,0.5),0 0 0 6px rgba(76,175,80,0.06)}}
+.intro-card .intro-currently{background:rgba(201,169,110,0.05);border:1px dashed rgba(201,169,110,0.2);border-radius:12px;padding:10px 14px;margin-top:12px;text-align:left}
+.intro-card .curr-label{font-size:0.58rem;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px}
+.intro-card .curr-val{font-family:var(--font-hand);font-size:0.88rem;color:rgba(255,255,255,0.58);cursor:pointer;display:block;transition:color 0.3s}
+.intro-card .curr-val:hover{color:rgba(201,169,110,0.9)}
+.intro-card .intro-stats-row{display:flex;margin:12px -4px 0;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06)}
+.intro-card .istat{flex:1;text-align:center;border-right:1px solid rgba(255,255,255,0.06);padding:0 4px}
 .intro-card .istat:last-child{border-right:none}
-.intro-card .istat-num{font-family:var(--font-fun);font-weight:800;font-size:1.1rem;color:var(--accent);display:block}
-.intro-card .istat-label{font-size:0.52rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.04em;display:block;margin-top:2px}
-.intro-card .photo-tap-count{position:absolute;top:-12px;right:-12px;background:linear-gradient(135deg,#FF5252,#E53935);color:#fff;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(229,57,53,0.4);opacity:0;transition:opacity 0.3s,transform 0.3s;transform:scale(0.5);pointer-events:none}
+.intro-card .istat-num{font-family:var(--font-fun);font-weight:900;font-size:1.05rem;color:#C9A96E;display:block}
+.intro-card .istat-label{font-size:0.5rem;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:0.04em;display:block;margin-top:2px}
+.intro-card .photo-tap-count{position:absolute;top:-10px;right:-10px;background:linear-gradient(135deg,#FF5252,#E53935);color:#fff;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(229,57,53,0.5);opacity:0;transition:opacity 0.3s,transform 0.3s;transform:scale(0.5);pointer-events:none}
 .intro-card .photo-tap-count.visible{opacity:1;transform:scale(1)}
 
 /* ===== AUTO-ANIMATED DECORATIVE STICKERS ===== */
@@ -1721,8 +1745,11 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-portfolio .zic-base{height:18px;background:linear-gradient(180deg,rgba(126,87,194,0.2),rgba(126,87,194,0.08));border-radius:0 0 6px 6px}
 .zic-portfolio .zic-base::after{content:'';position:absolute;bottom:-6px;left:15%;right:15%;height:6px;background:rgba(126,87,194,0.06);border-radius:0 0 8px 8px}
 
-/* ── ORIGIN: Tall Polaroid — Deep Forest Green ── */
-.zic-origin{width:360px;padding:0;transform:rotate(2deg);min-height:480px}
+/* ── ORIGIN: Chapter Zero — Cinematic Boot Sequence ── */
+@keyframes termBlink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes bootBar{0%{width:0%}100%{width:100%}}
+@keyframes originGlow{0%,100%{box-shadow:0 0 30px rgba(76,175,80,0.15),0 12px 48px rgba(0,0,0,0.35)}50%{box-shadow:0 0 50px rgba(76,175,80,0.3),0 12px 48px rgba(0,0,0,0.35)}}
+.zic-origin{width:360px;padding:0;transform:rotate(2deg);min-height:480px;animation:originGlow 4s ease-in-out infinite!important}
 .zic-origin .zic-polaroid{
   background:linear-gradient(175deg,#1B3B20,#2E4A33,#1B3B20);padding:16px 16px 40px;border-radius:6px;
   box-shadow:3px 5px 20px rgba(0,0,0,0.25),0 0 0 1px rgba(76,175,80,0.15);
@@ -2333,32 +2360,73 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <!-- Zone creative intro cards (wrapped as stickers for map sync) -->
 
-<!-- ORIGIN — Personal & About (center: 2900,2800) -->
-<div class="sticker zone-intro-creative has-drag-handle" data-zone="origin" data-type="interactive" style="left:2740px;top:2400px;transform:rotate(-1deg)">
-  <div class="sticker-drag-handle" data-no-sticker-drag="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
-  <div class="zic-header" style="background:linear-gradient(135deg,rgba(76,175,80,0.15),rgba(200,230,201,0.25))">
-    <div class="zic-icon" style="background:linear-gradient(135deg,#4CAF50,#81C784)" data-no-sticker-drag="true">📸</div>
-    <div class="zic-title" style="color:#2E7D32">ORIGIN STORY</div>
-    <div class="zic-subtitle" style="color:#4E7D52">Where it all began — the person behind the products</div>
-  </div>
-  <div class="zic-body" data-no-sticker-drag="true">
-    <div class="zic-divider"></div>
-    <div class="zic-tags">
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🎓 B.Tech CS</span>
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">📍 Bengaluru</span>
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🌱 Growth</span>
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">💭 Values</span>
-      <span class="zic-tag" style="background:rgba(76,175,80,0.1);color:#2E7D32" onclick="event.stopPropagation();this.style.transform=this.style.transform==='scale(1.15)'?'scale(1)':'scale(1.15)'">🐕 Mr. Puchu</span>
+<!-- ORIGIN — Chapter Zero: Cinematic Boot Sequence Card -->
+<div class="sticker zic-origin has-drag-handle" data-zone="origin" data-type="interactive" style="left:2740px;top:2400px">
+  <div class="sticker-drag-handle" style="position:absolute;top:8px;right:8px;z-index:10;opacity:0.4;cursor:grab" data-no-sticker-drag="false"><svg viewBox="0 0 24 24" fill="rgba(255,255,255,0.6)" width="18" height="18"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
+  <!-- Polaroid stack background layers -->
+  <div class="zic-polaroid-bg1"></div>
+  <div class="zic-polaroid-bg2"></div>
+  <!-- Main polaroid -->
+  <div class="zic-polaroid" style="position:relative;z-index:2;background:linear-gradient(160deg,#0A120A,#0F1A0F,#081208);border-radius:4px;padding:0;overflow:hidden;box-shadow:3px 5px 24px rgba(0,0,0,0.5)" data-no-sticker-drag="true">
+    <!-- Terminal titlebar -->
+    <div style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(76,175,80,0.15)">
+      <span style="width:9px;height:9px;border-radius:50%;background:#FF5F57;display:inline-block"></span>
+      <span style="width:9px;height:9px;border-radius:50%;background:#FEBC2E;display:inline-block"></span>
+      <span style="width:9px;height:9px;border-radius:50%;background:#28C840;display:inline-block"></span>
+      <span style="font-family:monospace;font-size:0.6rem;color:rgba(76,175,80,0.5);margin-left:6px;flex:1;text-align:center">akash@origin:~</span>
     </div>
-    <div class="zic-stat">✦ OUTR Bhubaneswar → Bengaluru</div>
-    <div class="zic-stat">✦ Jeypore → Big city dreams realized</div>
-    <div class="zic-counter">
-      <span>Vibes received:</span>
-      <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zone-intro-creative').style.boxShadow='0 0 30px rgba(76,175,80,0.4),0 12px 48px rgba(0,0,0,0.12)'}">👍</button>
-      <span style="font-weight:700;min-width:20px;text-align:center">0</span>
+    <!-- Photo zone -->
+    <div class="zic-photo-area" style="position:relative">
+      <img src="/images/akash-photo.webp" alt="Akash" style="width:100%;height:190px;object-fit:cover;object-position:top;display:block;filter:sepia(0.15) contrast(1.05)">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 45%,rgba(0,10,0,0.85));z-index:1"></div>
+      <div style="position:absolute;bottom:10px;left:14px;z-index:2">
+        <div style="font-family:monospace;font-size:0.58rem;color:rgba(76,175,80,0.6);margin-bottom:2px">// SUBJECT IDENTIFIED</div>
+        <div style="font-family:var(--font-fun);font-size:1.1rem;font-weight:800;color:#fff;letter-spacing:0.06em">AKASH MATANIA</div>
+      </div>
+      <!-- Scanline overlay -->
+      <div style="position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);opacity:0.5"></div>
     </div>
-    <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#4CAF50,#81C784);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'origin')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(76,175,80,0.1);color:#2E7D32">Photos · About · Values</span></div>
+    <!-- Terminal body -->
+    <div style="padding:14px 16px 16px;font-family:monospace">
+      <!-- Boot lines -->
+      <div style="font-size:0.62rem;color:rgba(76,175,80,0.55);margin-bottom:10px;line-height:1.6">
+        <div><span style="color:rgba(76,175,80,0.4)">$</span> <span style="color:rgba(76,175,80,0.8)">cat</span> origin.log</div>
+      </div>
+      <!-- Life log entries -->
+      <div style="font-size:0.68rem;line-height:1.8;margin-bottom:12px">
+        <div style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.7)">BORN</span> <span style="color:rgba(255,255,255,0.35)">in Jeypore, Odisha — population small, dreams enormous</span></div>
+        <div style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.7)">AGE 15</span> <span style="color:rgba(255,255,255,0.35)">wrote first program — it could only add. shipped it anyway.</span></div>
+        <div style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.7)">CS GRAD</span> <span style="color:rgba(255,255,255,0.35)">OUTR, Bhubaneswar — left with a degree & a mission</span></div>
+        <div style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.7)">BENGALURU</span> <span style="color:rgba(255,255,255,0.35)">moved to build — never stopped. 3 startups later…</span></div>
+        <div style="color:rgba(76,175,80,0.45)">▸ <span style="color:#4CAF50">STATUS</span> <span style="color:rgba(255,255,255,0.5)">still loading</span> <span style="color:#4CAF50;animation:termBlink 1s step-end infinite">█</span></div>
+      </div>
+      <!-- Load bar -->
+      <div style="margin-bottom:12px">
+        <div style="font-size:0.55rem;color:rgba(76,175,80,0.45);margin-bottom:5px;font-family:monospace">LOADING: passion.exe</div>
+        <div style="background:rgba(76,175,80,0.1);border-radius:2px;height:4px;overflow:hidden;border:1px solid rgba(76,175,80,0.15)">
+          <div style="height:100%;width:83%;background:linear-gradient(90deg,#1B5E20,#4CAF50,#81C784);border-radius:2px;animation:bootBar 2.5s ease-out forwards"></div>
+        </div>
+        <div style="font-size:0.5rem;color:rgba(76,175,80,0.35);margin-top:3px;text-align:right">83% · still building</div>
+      </div>
+    </div>
+    <!-- Caption + tags -->
+    <div class="zic-caption" style="padding:0 14px 16px;text-align:center">
+      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:10px">
+        <span style="background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.62rem">🧠 CS Eng</span>
+        <span style="background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.62rem">🌱 Odisha Roots</span>
+        <span style="background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.62rem">🐕 Mr. Puchu</span>
+        <span style="background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.62rem">☕ Chai Addict</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;justify-content:center">
+        <div style="font-family:monospace;font-size:0.68rem;color:rgba(76,175,80,0.45)">vibes_received:</div>
+        <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zic-origin').style.boxShadow='0 0 40px rgba(76,175,80,0.5),0 12px 48px rgba(0,0,0,0.35)'}" style="background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:0.85rem;color:#4CAF50;font-family:monospace">+1</button>
+        <span style="font-family:var(--font-fun);font-weight:800;color:#4CAF50;min-width:20px;text-align:center;font-size:0.9rem">0</span>
+      </div>
+      <button onclick="event.stopPropagation();scrollToZone(null,'origin')" style="margin-top:12px;background:linear-gradient(135deg,#1B5E20,#4CAF50);color:#fff;border:none;border-radius:20px;padding:8px 20px;font-family:var(--font-fun);font-size:0.7rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 3px 12px rgba(76,175,80,0.3)">🧭 Explore Zone</button>
+    </div>
   </div>
+  <!-- Tape -->
+  <div class="zic-tape" style="position:absolute;top:-14px;left:50%;transform:translateX(-50%) rotate(-2deg);width:80px;height:28px;background:rgba(76,175,80,0.12);z-index:4;box-shadow:0 1px 3px rgba(0,0,0,0.15);border:1px solid rgba(76,175,80,0.08)"></div>
 </div>
 
 <!-- WAR ROOM intro card REMOVED — main Akash intro card serves as Work zone intro -->
@@ -3084,17 +3152,18 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <!-- ===== INTRO CARD — IN WORK ZONE ===== -->
 <div class="sticker intro-card" data-type="photo" data-zone="work" style="left:10050px;top:2600px">
+  <div class="intro-aurora-bar"></div>
   <div class="intro-status">
     <span class="status-dot"></span>
-    Available for cool projects
+    Open to building something wild
   </div>
   <div class="intro-photo-wrap" onclick="introPhotoTap(this,event)" style="cursor:pointer">
     <img class="intro-photo" src="/images/akash-photo.webp" alt="Akash Matania" decoding="async" loading="eager">
-    <div class="photo-caption">yup, this is me 😎</div>
+    <div class="photo-caption">yup, that's me 🙂</div>
     <div class="photo-tap-count" id="photoTapCount">0</div>
   </div>
   <div class="intro-name">Akash <span class="hl-name">Matania</span></div>
-  <div class="intro-tagline">Product Manager · Founder · Dreamer</div>
+  <div class="intro-tagline">PM · Founder · Builder of Things That Didn't Exist</div>
   <div class="intro-roles">
     <span class="intro-role">🚀 0→1 Builder</span>
     <span class="intro-role">📈 Growth PM</span>
@@ -3102,18 +3171,18 @@ body.map-expanded .scroll-counter{display:none!important}
     <span class="intro-role">🧠 AI Native</span>
     <span class="intro-role">🎬 Storyteller</span>
   </div>
-  <div class="intro-location">📍 Bengaluru, India · from Jeypore, Odisha</div>
+  <div class="intro-location">📍 Bengaluru · originally from Jeypore, Odisha</div>
   <div class="intro-currently">
-    <div class="curr-label">🔥 Currently</div>
+    <div class="curr-label">⚡ Currently Shipping</div>
     <span class="curr-val" onclick="rotateCurrently(this,event)" title="tap to rotate">Building an AI-native product OS</span>
   </div>
   <div class="intro-stats-row">
     <div class="istat"><span class="istat-num">8+</span><span class="istat-label">Yrs Exp</span></div>
-    <div class="istat"><span class="istat-num">3</span><span class="istat-label">Startups</span></div>
-    <div class="istat"><span class="istat-num">0→1</span><span class="istat-label">Builder</span></div>
+    <div class="istat"><span class="istat-num">3</span><span class="istat-label">Founded</span></div>
+    <div class="istat"><span class="istat-num">5K+</span><span class="istat-label">Users</span></div>
     <div class="istat"><span class="istat-num">∞</span><span class="istat-label">Chai ☕</span></div>
   </div>
-  <div class="intro-cta">↕ scroll around to explore my world ✨</div>
+  <div class="intro-cta">↕ drag & explore — the whole world is here ✦</div>
 </div>
 
 <!-- ===== Surrounding intro stickers — quirky & fun (all within 450px of intro card) ===== -->
@@ -10069,14 +10138,22 @@ function ensureCompanionStickers(force){
       {dx:-420,dy:-240,html:'<div class="zc-emoji-float" style="font-size:2.5rem">⚡</div>'}
     ],
     origin:[
-      {dx:400,dy:-120,html:polaroidPhoto('/images/akash-photo.webp','chapter zero 📸','-3deg')},
-      {dx:-400,dy:-60,html:'<div class="zc-mini-card" style="background:#F0FFF4;color:#2E7D32;border:1.5px solid rgba(76,175,80,0.15);border-radius:14px;padding:12px 14px;max-width:160px;font-family:var(--font-hand);font-size:0.78rem;line-height:1.4">📍 Jeypore → Bhubaneswar → Bengaluru<br>small town dreams, big city hustle</div>'},
-      {dx:410,dy:220,html:dragHandleSvg+flipCard('🧒','FUN FACT','Wrote first code at 15. It could only add.'),kind:'flip'},
-      {dx:-400,dy:240,html:quoteCard('Started curious, stayed curious.','#life')},
-      {dx:0,dy:-330,html:'<div class="zc-badge" style="background:rgba(76,175,80,0.08);color:#2E7D32;border:1px solid rgba(76,175,80,0.2)">🌱 Odisha roots</div>'},
-      {dx:-390,dy:-240,html:'<div class="zc-sticky" style="--r:5deg;background:#E8F5E9;color:#1B5E20;border-bottom:3px solid rgba(76,175,80,0.2)">Class of \'20 🎓</div>'},
-      {dx:0,dy:340,html:memeCard('FAMILY Q','"what do product managers do?"')},
-      {dx:410,dy:40,html:'<div class="zc-emoji-float" style="font-size:2.5rem">🏡</div>'}
+      // 1. Polaroid photo with chapter-zero caption
+      {dx:420,dy:-130,html:polaroidPhoto('/images/akash-photo.webp','chapter zero 📸','-4deg')},
+      // 2. Journey Route card — Jeypore → BBSR → BLR as a path
+      {dx:-430,dy:-70,html:'<div style="background:linear-gradient(145deg,#F0FFF4,#E8F5E9);border-radius:16px;padding:14px 16px;width:200px;box-shadow:0 4px 18px rgba(76,175,80,0.1);border:1.5px solid rgba(76,175,80,0.15)"><div style="font-family:var(--font-fun);font-size:0.7rem;font-weight:800;color:#1B5E20;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em">🗺️ The Journey</div><div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:1rem">🏡</span><div><div style="font-family:var(--font-fun);font-size:0.62rem;font-weight:700;color:#2E7D32">Jeypore, Odisha</div><div style="font-size:0.55rem;color:rgba(76,175,80,0.6);font-family:var(--font-sans)">where it all began</div></div></div><div style="margin-left:12px;width:1px;height:10px;background:rgba(76,175,80,0.3)"></div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:1rem">🎓</span><div><div style="font-family:var(--font-fun);font-size:0.62rem;font-weight:700;color:#2E7D32">Bhubaneswar</div><div style="font-size:0.55rem;color:rgba(76,175,80,0.6);font-family:var(--font-sans)">CS eng · OUTR · Class of \'20</div></div></div><div style="margin-left:12px;width:1px;height:10px;background:rgba(76,175,80,0.3)"></div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:1rem">🚀</span><div><div style="font-family:var(--font-fun);font-size:0.62rem;font-weight:700;color:#2E7D32">Bengaluru</div><div style="font-size:0.55rem;color:rgba(76,175,80,0.6);font-family:var(--font-sans)">building · shipping · repeating</div></div></div></div></div>'},
+      // 3. Flip card: childhood → first code
+      {dx:430,dy:200,html:dragHandleSvg+flipCard('🧒','TAP TO FLIP','Age 15. Wrote a program that could only add numbers. Showed it to everyone.'),kind:'flip'},
+      // 4. Values card: 3 core principles
+      {dx:-420,dy:220,html:'<div style="background:linear-gradient(145deg,#FFFBF0,#FFF8E8);border-radius:16px;padding:14px 16px;width:195px;box-shadow:0 4px 18px rgba(201,169,110,0.1);border:1.5px solid rgba(201,169,110,0.18)"><div style="font-family:var(--font-fun);font-size:0.7rem;font-weight:800;color:#5C4A1E;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em">⚡ Core Values</div><div style="display:flex;flex-direction:column;gap:6px"><div style="background:rgba(201,169,110,0.1);border-radius:8px;padding:6px 8px;border-left:3px solid #C9A96E"><div style="font-family:var(--font-fun);font-size:0.6rem;font-weight:700;color:#8B6914">CRAFT OVER PERFECTION</div><div style="font-family:var(--font-hand);font-size:0.7rem;color:#5C4A1E">ship it, then make it beautiful</div></div><div style="background:rgba(201,169,110,0.1);border-radius:8px;padding:6px 8px;border-left:3px solid #C9A96E"><div style="font-family:var(--font-fun);font-size:0.6rem;font-weight:700;color:#8B6914">CURIOSITY AS CAPITAL</div><div style="font-family:var(--font-hand);font-size:0.7rem;color:#5C4A1E">the best ideas come from asking why</div></div><div style="background:rgba(201,169,110,0.1);border-radius:8px;padding:6px 8px;border-left:3px solid #C9A96E"><div style="font-family:var(--font-fun);font-size:0.6rem;font-weight:700;color:#8B6914">PEOPLE OVER PRODUCT</div><div style="font-family:var(--font-hand);font-size:0.7rem;color:#5C4A1E">the best feature is a user who stays</div></div></div></div>'},
+      // 5. Mr. Puchu rating card
+      {dx:0,dy:-340,html:'<div style="background:linear-gradient(145deg,#fff,#fef9f0);border-radius:16px;padding:14px 16px;width:185px;box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1.5px solid rgba(201,169,110,0.15);text-align:center"><div style="font-size:2.2rem;margin-bottom:4px">🐕</div><div style="font-family:var(--font-fun);font-size:0.72rem;font-weight:800;color:var(--text);margin-bottom:2px">MR. PUCHU</div><div style="font-family:var(--font-hand);font-size:0.72rem;color:var(--text3);margin-bottom:8px">Chief Vibe Officer · Certified Good Boy</div><div style="font-family:var(--font-fun);font-size:0.58rem;color:var(--text3);margin-bottom:4px">OFFICIAL RATINGS</div><div style="display:flex;flex-direction:column;gap:3px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:0.58rem;color:var(--text3);font-family:var(--font-sans)">Cuddles</span><span style="color:#FFB300;font-size:0.75rem">★★★★★</span></div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:0.58rem;color:var(--text3);font-family:var(--font-sans)">Portfolio approval</span><span style="color:#FFB300;font-size:0.75rem">★★★★★</span></div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:0.58rem;color:var(--text3);font-family:var(--font-sans)">Work distraction</span><span style="color:#FFB300;font-size:0.75rem">★★★★★</span></div></div></div>'},
+      // 6. Sticky: Origin motto
+      {dx:-400,dy:-250,html:'<div class="zc-sticky" style="--r:-6deg;background:#E8F5E9;color:#1B5E20;border-bottom:3px solid rgba(76,175,80,0.2);padding:12px 14px;max-width:145px;line-height:1.45">small town.<br>big curiosity.<br>no shortcuts. 🌱</div>'},
+      // 7. Meme card: the family question
+      {dx:20,dy:345,html:memeCard('EVERY FAMILY DINNER','"so you still haven\'t got a real job?" 😭')},
+      // 8. Floating emoji: route metaphor
+      {dx:420,dy:30,html:'<div class="zc-emoji-float" style="font-size:2.6rem;filter:drop-shadow(0 4px 8px rgba(76,175,80,0.3))">🛤️</div>'}
     ],
     hobby:[
       {dx:-430,dy:-60,html:skillStackCard('Now Playing','🎮',['Elden Ring','Valorant','Civ VI','FIFA','Music','Travel'],['#E53935','#FF5252','#FFB300','#66BB6A','#42A5F5','#8D6E63'])},
