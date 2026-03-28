@@ -413,7 +413,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 }
 
 /* UI ELEMENTS */
-.scroll-counter{position:fixed;bottom:70px;right:20px;z-index:997;font-size:3.5rem;font-weight:200;color:rgba(0,0,0,0.05);font-variant-numeric:tabular-nums;pointer-events:none}
+.scroll-counter{position:fixed;bottom:70px;right:20px;z-index:997;font-size:3.5rem;font-weight:200;color:rgba(0,0,0,0.05);font-variant-numeric:tabular-nums;pointer-events:none;width:64px;height:73px;line-height:73px;text-align:center;contain:layout style}
 .swipe-hint{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:1000;background:#fff;border-radius:28px;padding:10px 24px;box-shadow:0 4px 20px rgba(0,0,0,0.08);display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--text2);font-weight:500;animation:fadeHint 5s forwards;pointer-events:none}
 .swipe-hint svg{width:20px;height:20px;animation:arrowB 1.5s ease-in-out infinite}
 @keyframes arrowB{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
@@ -1647,7 +1647,7 @@ body.map-expanded .scroll-counter{display:none!important}
 .sticker-ribbon .rib-sub{font-size:0.6rem;color:rgba(0,0,0,0.55);margin-top:2px}
 
 /* ===== ZONE INTRO CARDS — UNIQUE PER ZONE ===== */
-.zone-intro-card{position:absolute;z-index:75;cursor:default;animation:introFloatY 4s ease-in-out infinite}
+.zone-intro-card{position:absolute;z-index:75;cursor:default;animation:introFloatY 4s ease-in-out infinite;content-visibility:auto;contain-intrinsic-size:380px 690px}
 @keyframes introFloatY{0%,100%{translate:0 0}50%{translate:0 -8px}}
 @keyframes zicCountUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
