@@ -3783,6 +3783,9 @@ function cycleIntroCards(e){
         funCard.classList.add('fun-attack');
         if(typeof playSfx==='function')playSfx('pop');
         setTimeout(()=>funCard.classList.remove('fun-attack'),2500);
+
+        // ── Phase 2: Axe Companion Attack with camera cuts & scars ──
+        setTimeout(()=>runAxeAttackSequence(funCard),2600);
       }
     },600);
   }
