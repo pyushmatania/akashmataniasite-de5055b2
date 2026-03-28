@@ -5264,20 +5264,14 @@ cv.addEventListener('touchstart',e=>{
   if(s)sD.call(s,e);
   // If sticker already grabbed & second finger added anywhere → start rotation
   else if(as&&e.touches&&e.touches.length>=2&&!isRotating){
-    isRotating=true;didMove=true;
-    rotStartAngle=getAngle(e.touches[0],e.touches[1]);
-    stickerBaseAngle=getCurrentRotation(as);
-    e.preventDefault();
+    if(startRotation(as,e.touches))e.preventDefault();
   }
 },{passive:false});
 
 // Also listen on document for second finger added anywhere
 document.addEventListener('touchstart',e=>{
   if(as&&!isRotating&&e.touches&&e.touches.length>=2){
-    isRotating=true;didMove=true;
-    rotStartAngle=getAngle(e.touches[0],e.touches[1]);
-    stickerBaseAngle=getCurrentRotation(as);
-    e.preventDefault();
+    if(startRotation(as,e.touches))e.preventDefault();
   }
 },{passive:false});
 
