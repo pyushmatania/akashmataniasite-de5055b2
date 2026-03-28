@@ -10534,7 +10534,7 @@ function ekPick(el,e){
   async function verifyPinRemote(pin, action) {
     const resp = await fetch(SUPABASE_URL + '/functions/v1/verify-pin', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
       body: JSON.stringify({ pin, action })
     });
     return resp.json();
