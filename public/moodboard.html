@@ -9260,10 +9260,22 @@ function initBoardStats(){
 }
 
 // Scan once on load, then draw + greeting
-function bootstrapMap(forceRescan){
+async function bootstrapMap(forceRescan){
   try{
     if(forceRescan||!hasAutoArranged){
-      autoArrangeMoodboardItems();
+      // Try loading cloud layout FIRST before auto-arranging
+      let cloudLoaded=false;
+      if(window._savedCloudLayout&&window._savedCloudLayout.length>0){
+        applyLayout(window._savedCloudLayout);
+        cloudLoaded=true;
+      }else if(typeof window.loadSavedLayout==='function'){
+        try{
+          cloudLoaded=await window.loadSavedLayout();
+        }catch(e){console.warn('Cloud layout load failed:',e)}
+      }
+      if(!cloudLoaded){
+        autoArrangeMoodboardItems();
+      }
       hasAutoArranged=true;
     }
     // Keep companion stickers attached to intro cards after auto-arrange
