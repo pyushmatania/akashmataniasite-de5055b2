@@ -1754,6 +1754,27 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-origin .zic-polaroid-bg2{position:absolute;top:4px;left:10px;right:-10px;bottom:-12px;background:#0F1A0F;border-radius:4px;transform:rotate(3deg);z-index:1;box-shadow:2px 3px 10px rgba(0,0,0,0.3)}
 .zic-origin .zic-tape{position:absolute;top:-14px;left:50%;transform:translateX(-50%) rotate(-2deg);width:80px;height:28px;background:rgba(76,175,80,0.12);z-index:4;box-shadow:0 1px 3px rgba(0,0,0,0.2);border:1px solid rgba(76,175,80,0.08)}
 
+/* ── Origin Cinematic Glitch Attack ─────────────────── */
+@keyframes originBoot{0%{opacity:0;transform:scaleY(0.02) scaleX(1.1);filter:brightness(8) blur(4px)}15%{opacity:1;transform:scaleY(1.1) scaleX(1);filter:brightness(3) blur(1px)}25%{transform:scaleY(0.97) scaleX(1.02)}35%{transform:scaleY(1.02) scaleX(0.99)}100%{transform:scaleY(1) scaleX(1);filter:brightness(1)}}
+@keyframes originGlitchH{0%,100%{clip-path:none;transform:none}5%{clip-path:inset(20% 0 70% 0);transform:translateX(-6px)}10%{clip-path:inset(60% 0 10% 0);transform:translateX(8px)}15%{clip-path:inset(40% 0 35% 0);transform:translateX(-4px)}20%{clip-path:none;transform:translateX(0)}}
+@keyframes originScanSweep{0%{top:-100%;opacity:0.9}100%{top:110%;opacity:0}}
+@keyframes originDataCorrupt{0%{opacity:0;transform:translateY(-20px) skewX(-15deg);filter:blur(8px) brightness(4)}40%{opacity:1;transform:translateY(2px) skewX(3deg);filter:blur(0) brightness(2)}60%{transform:translateY(-2px) skewX(-2deg)}100%{transform:translateY(0) skewX(0);filter:brightness(1)}}
+@keyframes originImpactRing{0%{transform:translate(-50%,-50%) scale(0);opacity:1;border-width:4px}100%{transform:translate(-50%,-50%) scale(3.5);opacity:0;border-width:1px}}
+@keyframes originShake{0%,100%{transform:rotate(2deg)}8%{transform:rotate(2deg) translate(-8px,-6px)}16%{transform:rotate(2deg) translate(9px,4px)}24%{transform:rotate(2deg) translate(-5px,8px)}32%{transform:rotate(2deg) translate(7px,-5px)}40%{transform:rotate(2deg) translate(-4px,3px)}50%{transform:rotate(2deg) translate(0,0)}}
+@keyframes originErrorLine{0%{width:0;opacity:1}80%{width:100%;opacity:1}100%{width:100%;opacity:0}}
+.zic-origin.origin-attack{animation:originShake 0.8s cubic-bezier(0.36,0.07,0.19,0.97) both!important}
+.zic-origin.origin-attack .zic-origin-screen{animation:originBoot 0.6s ease-out both}
+.zic-origin.origin-attack .zic-origin-scanline{animation:originScanSweep 0.5s linear 0.1s both!important;position:absolute!important;left:0!important;right:0!important;height:3px!important;background:linear-gradient(90deg,transparent,rgba(76,175,80,0.8),transparent)!important;opacity:1!important;z-index:10!important}
+.zic-origin.origin-attack .zic-origin-glitch{animation:originGlitchH 0.6s steps(1) 0.05s both;background:rgba(74,222,128,0.04)}
+.zic-origin.origin-attack .zic-origin-boot-line{animation:originDataCorrupt 0.4s cubic-bezier(0.34,1.56,0.64,1) both}
+.zic-origin.origin-attack .zic-origin-boot-line:nth-child(1){animation-delay:0.05s}
+.zic-origin.origin-attack .zic-origin-boot-line:nth-child(2){animation-delay:0.12s}
+.zic-origin.origin-attack .zic-origin-boot-line:nth-child(3){animation-delay:0.18s}
+.zic-origin.origin-attack .zic-origin-boot-line:nth-child(4){animation-delay:0.25s}
+.zic-origin.origin-attack .zic-origin-boot-line:nth-child(5){animation-delay:0.32s}
+.zic-origin-impact{position:absolute;top:50%;left:50%;border-radius:50%;border:3px solid #4ade80;pointer-events:none;z-index:30;animation:originImpactRing 0.8s ease-out forwards}
+.zic-origin-error-line{position:absolute;left:0;height:2px;background:linear-gradient(90deg,rgba(248,113,113,0),#f87171,#fbbf24,#f87171,rgba(248,113,113,0));pointer-events:none;z-index:25;animation:originErrorLine 0.6s ease-out forwards}
+
 /* ── HOBBY: Retro CRT TV — Cinema, Cartoons & Vibes ── */
 @keyframes tvFlicker{0%,92%,100%{opacity:1}94%{opacity:0.82}97%{opacity:0.92}}
 @keyframes courageShake{0%,100%{transform:translateX(-50%) rotate(-4deg)}25%{transform:translateX(calc(-50% + 3px)) rotate(3deg)}50%{transform:translateX(-50%) rotate(-3deg)}75%{transform:translateX(calc(-50% - 2px)) rotate(4deg)}}
@@ -1835,6 +1856,23 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-hobby .zic-stat{text-align:center;flex:1}
 .zic-hobby .zic-stat-val{font-family:var(--font-fun);font-size:1.1rem;font-weight:800;color:#FFB74D}
 .zic-hobby .zic-stat-label{font-family:var(--font-sans);font-size:0.48rem;color:rgba(255,255,255,0.3);margin-top:2px}
+
+/* ── Hobby Cinematic Channel Surge ───────────────────── */
+@keyframes hobbySurgeShake{0%,100%{transform:rotate(0.6deg)}6%{transform:rotate(0.6deg) translate(-10px,-8px) scale(1.02)}12%{transform:rotate(0.6deg) translate(12px,6px) scale(0.98)}18%{transform:rotate(0.6deg) translate(-7px,10px)}24%{transform:rotate(0.6deg) translate(9px,-6px)}32%{transform:rotate(0.6deg) translate(0,0)}}
+@keyframes hobbyStaticBurst{0%{opacity:0}20%{opacity:1;background:repeating-linear-gradient(0deg,rgba(0,0,0,0) 0px,rgba(0,0,0,0) 1px,rgba(255,255,255,0.4) 1px,rgba(255,255,255,0.4) 2px)!important}60%{opacity:0.6}100%{opacity:0}}
+@keyframes hobbyChannelFlip{0%{transform:scaleY(0);filter:brightness(8) blur(2px)}15%{transform:scaleY(1.08);filter:brightness(3)}25%{transform:scaleY(0.95)}100%{transform:scaleY(1);filter:brightness(1)}}
+@keyframes hobbyEmojiPop{0%{opacity:0;transform:translate(var(--ex),var(--ey)) scale(0) rotate(var(--er))}40%{opacity:1;transform:translate(0,0) scale(1.3) rotate(0deg)}70%{transform:translate(0,0) scale(0.9)}100%{opacity:1;transform:translate(0,0) scale(1) rotate(0deg)}}
+@keyframes hobbyKnobSpin{0%{transform:rotate(0deg)}100%{transform:rotate(720deg)}}
+@keyframes hobbyAntennaWiggle{0%,100%{transform:rotate(-24deg)}25%{transform:rotate(-65deg)}50%{transform:rotate(20deg)}75%{transform:rotate(-10deg)}}
+.zic-hobby.hobby-surge{animation:hobbySurgeShake 0.9s cubic-bezier(0.36,0.07,0.19,0.97) both!important}
+.zic-hobby.hobby-surge .zic-crt{position:relative}
+.zic-hobby.hobby-surge .zic-crt::after{content:'';position:absolute;inset:0;z-index:16;pointer-events:none;border-radius:10px;background:repeating-linear-gradient(0deg,rgba(0,0,0,0) 0px,rgba(0,0,0,0) 2px,rgba(255,255,255,0.08) 2px,rgba(255,255,255,0.08) 4px);animation:hobbyStaticBurst 0.8s ease-out both}
+.zic-hobby.hobby-surge .zic-cartoon-scene{animation:hobbyChannelFlip 0.5s ease-out 0.1s both}
+.zic-hobby.hobby-surge .zic-knob{animation:hobbyKnobSpin 0.5s ease-out 0.15s both}
+.zic-hobby.hobby-surge .zic-ant-l{animation:hobbyAntennaWiggle 0.6s ease-out 0.05s both}
+.zic-hobby.hobby-surge .zic-ant-r{animation:hobbyAntennaWiggle 0.6s ease-out 0.1s reverse both}
+.zic-hobby-emoji-burst{position:absolute;pointer-events:none;z-index:30;font-size:1.8rem;line-height:1;transform-origin:center;animation:hobbyEmojiPop 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards}
+.zic-hobby-impact{position:absolute;top:40%;left:50%;border-radius:50%;border:3px solid #fbbf24;pointer-events:none;z-index:30;animation:originImpactRing 0.8s ease-out forwards}
 
 /* ── FUN: Dark arcade cabinet — masculine gaming ── */
 .zic-fun{width:380px;padding:0;min-height:520px}
@@ -2390,23 +2428,27 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="zic-polaroid-bg2"></div>
   <!-- Main polaroid -->
   <div class="zic-polaroid" style="position:relative;z-index:2;background:linear-gradient(160deg,#0A120A,#0F1A0F,#081208);border-radius:4px;padding:0;overflow:hidden;box-shadow:3px 5px 24px rgba(0,0,0,0.5)" data-no-sticker-drag="true">
+    <!-- Glitch layer for cinematic attack -->
+    <div class="zic-origin-glitch" style="position:absolute;inset:0;pointer-events:none;z-index:20"></div>
     <!-- Terminal titlebar -->
     <div style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(76,175,80,0.15)">
       <span style="width:9px;height:9px;border-radius:50%;background:#FF5F57;display:inline-block"></span>
       <span style="width:9px;height:9px;border-radius:50%;background:#FEBC2E;display:inline-block"></span>
       <span style="width:9px;height:9px;border-radius:50%;background:#28C840;display:inline-block"></span>
       <span style="font-family:monospace;font-size:0.6rem;color:rgba(76,175,80,0.5);margin-left:6px;flex:1;text-align:center">akash@origin:~</span>
+      <span style="font-family:monospace;font-size:0.46rem;color:rgba(255,69,0,0.6);background:rgba(255,69,0,0.08);padding:1px 5px;border-radius:3px">⚠ LIVE</span>
     </div>
-    <!-- Photo zone -->
-    <div class="zic-photo-area" style="position:relative">
+    <!-- Photo zone — zic-origin-screen class enables boot animation on attack -->
+    <div class="zic-photo-area zic-origin-screen" style="position:relative">
       <img src="/images/akash-photo.webp" alt="Akash" style="width:100%;height:190px;object-fit:cover;object-position:top;display:block;filter:sepia(0.15) contrast(1.05)">
       <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 45%,rgba(0,10,0,0.85));z-index:1"></div>
       <div style="position:absolute;bottom:10px;left:14px;z-index:2">
-        <div style="font-family:monospace;font-size:0.58rem;color:rgba(76,175,80,0.6);margin-bottom:2px">// SUBJECT IDENTIFIED</div>
+        <div style="font-family:monospace;font-size:0.52rem;color:rgba(76,175,80,0.55);margin-bottom:2px;letter-spacing:0.06em">// SUBJECT_IDENTIFIED · ACCESS_GRANTED</div>
         <div style="font-family:var(--font-fun);font-size:1.1rem;font-weight:800;color:#fff;letter-spacing:0.06em">AKASH MATANIA</div>
+        <div style="font-family:monospace;font-size:0.44rem;color:rgba(255,69,0,0.5);margin-top:2px;letter-spacing:0.04em">CLEARANCE: LEVEL ZERO-ONE ● ● ● ● ○</div>
       </div>
-      <!-- Scanline overlay -->
-      <div style="position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);opacity:0.5"></div>
+      <!-- Scan sweep — zic-origin-scanline activates on attack -->
+      <div class="zic-origin-scanline" style="position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);opacity:0.5"></div>
     </div>
     <!-- Terminal body -->
     <div style="padding:14px 16px 16px;font-family:monospace">
@@ -2414,13 +2456,13 @@ body.map-expanded .scroll-counter{display:none!important}
       <div style="font-size:0.62rem;color:rgba(76,175,80,0.55);margin-bottom:10px;line-height:1.6">
         <div><span style="color:rgba(76,175,80,0.4)">$</span> <span style="color:rgba(76,175,80,0.8)">cat</span> origin.log</div>
       </div>
-      <!-- Life log entries -->
-      <div style="font-size:0.68rem;line-height:1.8;margin-bottom:12px">
-        <div style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.7)">BORN</span> <span style="color:rgba(255,255,255,0.35)">in Jeypore, Odisha — population small, dreams enormous</span></div>
-        <div style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.7)">AGE 15</span> <span style="color:rgba(255,255,255,0.35)">wrote first program — it could only add. shipped it anyway.</span></div>
-        <div style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.7)">CS GRAD</span> <span style="color:rgba(255,255,255,0.35)">OUTR, Bhubaneswar — left with a degree & a mission</span></div>
-        <div style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.7)">BENGALURU</span> <span style="color:rgba(255,255,255,0.35)">moved to build — never stopped. 3 startups later…</span></div>
-        <div style="color:rgba(76,175,80,0.45)">▸ <span style="color:#4CAF50">STATUS</span> <span style="color:rgba(255,255,255,0.5)">still loading</span> <span style="color:#4CAF50;animation:termBlink 1s step-end infinite">█</span></div>
+      <!-- Life log entries — zic-origin-boot-line enables corrupt-in animation on attack -->
+      <div style="font-size:0.67rem;line-height:1.75;margin-bottom:12px">
+        <div class="zic-origin-boot-line" style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.75)">BORN</span> <span style="color:rgba(255,255,255,0.32)">Jeypore, Odisha — small town, enormous dreams</span></div>
+        <div class="zic-origin-boot-line" style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.75)">AGE 15</span> <span style="color:rgba(255,255,255,0.32)">first program could only add numbers. shipped it anyway.</span></div>
+        <div class="zic-origin-boot-line" style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.75)">CS GRAD</span> <span style="color:rgba(255,255,255,0.32)">OUTR, Bhubaneswar — degree + mission, only one was useful</span></div>
+        <div class="zic-origin-boot-line" style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.75)">BENGALURU</span> <span style="color:rgba(255,255,255,0.32)">moved to build. never stopped. 3 startups later…</span></div>
+        <div class="zic-origin-boot-line" style="color:rgba(76,175,80,0.45)">▸ <span style="color:#4CAF50;text-shadow:0 0 8px rgba(76,175,80,0.4)">STATUS</span> <span style="color:rgba(255,255,255,0.45)">still loading</span> <span style="color:#4CAF50;animation:termBlink 1s step-end infinite">█</span></div>
       </div>
       <!-- Load bar -->
       <div style="margin-bottom:12px">
@@ -2439,12 +2481,15 @@ body.map-expanded .scroll-counter{display:none!important}
         <span style="background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.62rem">🐕 Mr. Puchu</span>
         <span style="background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.62rem">☕ Chai Addict</span>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;justify-content:center">
-        <div style="font-family:monospace;font-size:0.68rem;color:rgba(76,175,80,0.45)">vibes_received:</div>
-        <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zic-origin').style.boxShadow='0 0 40px rgba(76,175,80,0.5),0 12px 48px rgba(0,0,0,0.35)'}" style="background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:0.85rem;color:#4CAF50;font-family:monospace">+1</button>
+      <div style="display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:10px">
+        <div style="font-family:monospace;font-size:0.62rem;color:rgba(76,175,80,0.4)">vibes_received:</div>
+        <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zic-origin').style.boxShadow='0 0 50px rgba(76,175,80,0.6),0 12px 48px rgba(0,0,0,0.35)'}" style="background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:0.85rem;color:#4CAF50;font-family:monospace">+1</button>
         <span style="font-family:var(--font-fun);font-weight:800;color:#4CAF50;min-width:20px;text-align:center;font-size:0.9rem">0</span>
       </div>
-      <button onclick="event.stopPropagation();scrollToZone(null,'origin')" style="margin-top:12px;background:linear-gradient(135deg,#1B5E20,#4CAF50);color:#fff;border:none;border-radius:20px;padding:8px 20px;font-family:var(--font-fun);font-size:0.7rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 3px 12px rgba(76,175,80,0.3)">🧭 Explore Zone</button>
+      <div style="display:flex;gap:7px;justify-content:center">
+        <button onclick="event.stopPropagation();originAttack(this)" style="background:linear-gradient(135deg,#060E06,#0D200D);color:#4CAF50;border:1px solid rgba(76,175,80,0.35);border-radius:18px;padding:8px 14px;font-family:monospace;font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.06em;box-shadow:0 0 14px rgba(76,175,80,0.12)">⚡ BOOT_SEQUENCE</button>
+        <button onclick="event.stopPropagation();scrollToZone(null,'origin')" style="background:linear-gradient(135deg,#1B5E20,#4CAF50);color:#fff;border:none;border-radius:18px;padding:8px 14px;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 3px 12px rgba(76,175,80,0.3)">🧭 Explore</button>
+      </div>
     </div>
   </div>
   <!-- Tape -->
@@ -2547,20 +2592,25 @@ body.map-expanded .scroll-counter{display:none!important}
   <!-- Content below TV -->
   <div class="zic-content" data-no-sticker-drag="true">
     <div class="zic-title">🎬 THE HOBBY ZONE</div>
-    <div class="zic-sub">cartoons · cars · cinema · drives · games</div>
+    <div class="zic-sub">cinema · drives · games · podcasts · vibe coding · startups</div>
     <ul class="zic-hobby-list">
-      <li>🕷️ MCU marathons — Iron Man start, No Way Home end, repeat</li>
-      <li>🚗 Late night drives, windows down, lo-fi playing</li>
-      <li>🐉 Game of Thrones S1–S7 forever (we skip S8)</li>
-      <li>🎮 Gaming till 3am: Elden Ring &amp; Valorant</li>
-      <li>📺 Courage reruns + any 90s cartoon, no questions</li>
+      <li>🕷️ MCU marathons — Iron Man → No Way Home, no skips allowed</li>
+      <li>🚗 Late night drives, windows down, playlist at max volume</li>
+      <li>🐉 Game of Thrones S1–S7 forever (S8 doesn't exist, moving on)</li>
+      <li>🎮 PlayStation: RDR2 · Elden Ring · God of War · GTA V</li>
+      <li>🎧 Pods: My First Million · Lex Fridman · All-In · YC</li>
+      <li>💻 Vibe coding at 2AM — full Claude, zero docs, just ship it</li>
+      <li>📈 Silicon Valley · Succession · Shark Tank = startup fuel</li>
+      <li>📺 Courage the Cowardly Dog + 90s cartoons, no questions</li>
     </ul>
     <div class="zic-pixel-tags">
       <span class="zic-pixel-tag">🛡️ Avengers</span>
       <span class="zic-pixel-tag">⚔️ GoT</span>
       <span class="zic-pixel-tag">🚗 Drives</span>
-      <span class="zic-pixel-tag">🎵 Lo-Fi</span>
-      <span class="zic-pixel-tag">✈️ Travel</span>
+      <span class="zic-pixel-tag">🎮 PS5</span>
+      <span class="zic-pixel-tag">🎧 Pods</span>
+      <span class="zic-pixel-tag">💻 Vibe</span>
+      <span class="zic-pixel-tag">📈 Startups</span>
       <span class="zic-pixel-tag">☕ Chai</span>
     </div>
     <div class="zic-stats">
@@ -2568,7 +2618,10 @@ body.map-expanded .scroll-counter{display:none!important}
       <div class="zic-stat"><div class="zic-stat-val">15+</div><div class="zic-stat-label">Cities Driven</div></div>
       <div class="zic-stat"><div class="zic-stat-val">∞</div><div class="zic-stat-label">Rewatches</div></div>
     </div>
-    <button onclick="event.stopPropagation();scrollToZone(null,'playground')" style="margin-top:14px;width:100%;background:linear-gradient(135deg,#E65100,#FF9800);color:#fff;border:none;border-radius:12px;padding:10px;font-family:var(--font-fun);font-size:0.7rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 3px 14px rgba(255,152,0,0.3)">🎮 Explore Zone</button>
+    <div style="display:flex;gap:7px;margin-top:13px">
+      <button onclick="event.stopPropagation();hobbyChannelSurge(this)" style="flex:1;background:linear-gradient(135deg,#1A0A00,#3E1A00);color:#FFB74D;border:1px solid rgba(255,152,0,0.3);border-radius:12px;padding:9px 6px;font-family:monospace;font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 0 12px rgba(255,152,0,0.12)">📡 CHANGE CHANNEL</button>
+      <button onclick="event.stopPropagation();scrollToZone(null,'playground')" style="flex:1;background:linear-gradient(135deg,#E65100,#FF9800);color:#fff;border:none;border-radius:12px;padding:9px 6px;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 3px 14px rgba(255,152,0,0.3)">🎮 Explore</button>
+    </div>
   </div>
 </div>
 
@@ -10241,22 +10294,22 @@ function ensureCompanionStickers(force){
       {dx:420,dy:30,html:'<div class="zc-emoji-float" style="font-size:2.6rem;filter:drop-shadow(0 4px 8px rgba(76,175,80,0.3))">🛤️</div>'}
     ],
     hobby:[
-      // 1. Infinity Stones card — 6 glowing collectible stones
-      {dx:-445,dy:-75,html:'<div style="background:linear-gradient(145deg,#08081A,#12102A);border-radius:18px;padding:14px 16px;width:215px;box-shadow:0 4px 24px rgba(0,0,0,0.5),0 0 0 1px rgba(130,80,220,0.15)"><div style="font-family:var(--font-fun);font-size:0.7rem;font-weight:800;color:#CE93D8;margin-bottom:12px;text-align:center;letter-spacing:0.08em;text-transform:uppercase">♾️ Infinity Stones</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px"><div style="aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#90CAF9,#1565C0);box-shadow:0 0 12px #1565C0AA;border:1.5px solid #1565C044"></div><div style="aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#FFF176,#F9A825);box-shadow:0 0 12px #F9A825AA;border:1.5px solid #F9A82544"></div><div style="aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#EF9A9A,#B71C1C);box-shadow:0 0 12px #B71C1CAA;border:1.5px solid #B71C1C44"></div><div style="aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#CE93D8,#6A1B9A);box-shadow:0 0 12px #6A1B9AAA;border:1.5px solid #6A1B9A44"></div><div style="aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#FFCC80,#E65100);box-shadow:0 0 12px #E65100AA;border:1.5px solid #E6510044"></div><div style="aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#A5D6A7,#1B5E20);box-shadow:0 0 12px #1B5E20AA;border:1.5px solid #1B5E2044"></div></div><div style="font-family:monospace;font-size:0.52rem;color:rgba(200,150,255,0.35);text-align:center;letter-spacing:0.04em">MIND · SPACE · REALITY<br>POWER · SOUL · TIME</div></div>'},
+      // 1. Avengers Tier card — S/A/B ranking
+      {dx:-450,dy:-80,html:'<div style="background:linear-gradient(145deg,#0A0818,#14102E);border-radius:16px;padding:14px 16px;width:210px;box-shadow:0 4px 22px rgba(0,0,0,0.55),0 0 0 1px rgba(229,57,53,0.12);text-align:center"><div style="font-size:1.7rem;margin-bottom:4px">🛡️</div><div style="font-family:var(--font-fun);font-size:0.7rem;font-weight:800;color:#EF5350;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">AVENGERS TIER LIST</div><div style="display:flex;flex-direction:column;gap:5px"><div style="background:rgba(229,57,53,0.08);border-radius:6px;padding:5px 8px;display:flex;align-items:center;gap:7px;border-left:3px solid #EF5350"><span style="font-size:0.9rem">🕷️</span><div style="text-align:left"><div style="font-family:var(--font-fun);font-size:0.58rem;font-weight:700;color:#EF5350">S TIER</div><div style="font-family:var(--font-hand);font-size:0.66rem;color:rgba(255,255,255,0.55)">Spider-Man · relatability 100%</div></div></div><div style="background:rgba(255,152,0,0.07);border-radius:6px;padding:5px 8px;display:flex;align-items:center;gap:7px;border-left:3px solid #FFB74D"><span style="font-size:0.9rem">🤖</span><div style="text-align:left"><div style="font-family:var(--font-fun);font-size:0.58rem;font-weight:700;color:#FFB74D">A TIER</div><div style="font-family:var(--font-hand);font-size:0.66rem;color:rgba(255,255,255,0.55)">Iron Man · builder role model</div></div></div><div style="background:rgba(100,180,255,0.07);border-radius:6px;padding:5px 8px;display:flex;align-items:center;gap:7px;border-left:3px solid #90CAF9"><span style="font-size:0.9rem">⚡</span><div style="text-align:left"><div style="font-family:var(--font-fun);font-size:0.58rem;font-weight:700;color:#90CAF9">A TIER</div><div style="font-family:var(--font-hand);font-size:0.66rem;color:rgba(255,255,255,0.55)">Thor · "another!" guy energy</div></div></div><div style="background:rgba(100,220,100,0.06);border-radius:6px;padding:5px 8px;display:flex;align-items:center;gap:7px;border-left:3px solid #81C784"><span style="font-size:0.9rem">🇺🇸</span><div style="text-align:left"><div style="font-family:var(--font-fun);font-size:0.58rem;font-weight:700;color:#81C784">B TIER</div><div style="font-family:var(--font-hand);font-size:0.66rem;color:rgba(255,255,255,0.55)">Cap · good values, no rizz</div></div></div></div></div>'},
       // 2. Game of Thrones flip card
-      {dx:445,dy:-80,html:dragHandleSvg+flipCard('⚔️','GAME OF THRONES','Watched all 8 seasons. We don\'t talk about Season 8. S1-S7 forever. 🐉👑'),kind:'flip'},
-      // 3. Avengers Tier card
-      {dx:-430,dy:245,html:'<div style="background:linear-gradient(145deg,#0C0C1A,#16142A);border-radius:16px;padding:14px 16px;width:205px;box-shadow:0 4px 20px rgba(0,0,0,0.5);border:1.5px solid rgba(229,57,53,0.2);text-align:center"><div style="font-size:1.8rem;margin-bottom:4px">🛡️</div><div style="font-family:var(--font-fun);font-size:0.72rem;font-weight:800;color:#EF5350;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">AVENGERS TIER LIST</div><div style="display:flex;flex-direction:column;gap:5px"><div style="background:rgba(229,57,53,0.08);border-radius:6px;padding:5px 8px;display:flex;align-items:center;gap:7px;border-left:3px solid #EF5350"><span style="font-size:0.9rem">🕷️</span><div style="text-align:left"><div style="font-family:var(--font-fun);font-size:0.6rem;font-weight:700;color:#EF5350">S TIER</div><div style="font-family:var(--font-hand);font-size:0.68rem;color:rgba(255,255,255,0.6)">Spider-Man — relatability 100%</div></div></div><div style="background:rgba(255,152,0,0.07);border-radius:6px;padding:5px 8px;display:flex;align-items:center;gap:7px;border-left:3px solid #FFB74D"><span style="font-size:0.9rem">🤖</span><div style="text-align:left"><div style="font-family:var(--font-fun);font-size:0.6rem;font-weight:700;color:#FFB74D">A TIER</div><div style="font-family:var(--font-hand);font-size:0.68rem;color:rgba(255,255,255,0.6)">Iron Man — builder role model</div></div></div><div style="background:rgba(100,180,255,0.07);border-radius:6px;padding:5px 8px;display:flex;align-items:center;gap:7px;border-left:3px solid #90CAF9"><span style="font-size:0.9rem">⚡</span><div style="text-align:left"><div style="font-family:var(--font-fun);font-size:0.6rem;font-weight:700;color:#90CAF9">A TIER</div><div style="font-family:var(--font-hand);font-size:0.68rem;color:rgba(255,255,255,0.6)">Thor — "another!" guy energy</div></div></div></div></div>'},
-      // 4. Dream Garage flip card
-      {dx:445,dy:245,html:dragHandleSvg+flipCard('🏎️','DREAM GARAGE','Nissan GT-R · Toyota Supra · BMW M3 · Porsche 911. In that order. No negotiation.'),kind:'flip'},
-      // 5. Movie S-tier list card
-      {dx:0,dy:-350,html:'<div style="background:linear-gradient(145deg,#fff,#fef9f0);border-radius:14px;padding:12px 14px;width:195px;box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1.5px solid rgba(201,169,110,0.18)"><div style="font-family:var(--font-fun);font-size:0.7rem;font-weight:800;color:var(--text);margin-bottom:9px;text-align:center;letter-spacing:0.04em;text-transform:uppercase">🎬 Cinema S-Tier</div><div style="display:flex;flex-direction:column;gap:4px"><div style="background:rgba(229,57,53,0.06);border-radius:6px;padding:4px 9px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-hand);font-size:0.72rem;color:var(--text2)">🔲 Inception</span><span style="font-family:var(--font-fun);font-size:0.58rem;font-weight:800;color:#E53935">S+</span></div><div style="background:rgba(229,57,53,0.06);border-radius:6px;padding:4px 9px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-hand);font-size:0.72rem;color:var(--text2)">🌌 Interstellar</span><span style="font-family:var(--font-fun);font-size:0.58rem;font-weight:800;color:#E53935">S+</span></div><div style="background:rgba(229,57,53,0.06);border-radius:6px;padding:4px 9px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-hand);font-size:0.72rem;color:var(--text2)">🕷️ No Way Home</span><span style="font-family:var(--font-fun);font-size:0.58rem;font-weight:800;color:#FF7043">S</span></div><div style="background:rgba(229,57,53,0.06);border-radius:6px;padding:4px 9px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-hand);font-size:0.72rem;color:var(--text2)">⚔️ GOT S1–S7</span><span style="font-family:var(--font-fun);font-size:0.58rem;font-weight:800;color:#FF7043">S</span></div></div></div>'},
-      // 6. Night drive sticky
-      {dx:-415,dy:-252,html:'<div class="zc-sticky" style="--r:-6deg;background:#0A0A1A;color:#90CAF9;border-bottom:3px solid rgba(100,149,255,0.25);padding:12px 14px;max-width:148px;line-height:1.5;box-shadow:3px 4px 12px rgba(0,0,0,0.3)">late night drives &gt;<br>therapy 🚗💨<br><span style="font-size:0.65rem;opacity:0.5">windows down, lo-fi on</span></div>'},
-      // 7. Binge tracker meter
-      {dx:0,dy:350,html:dragHandleSvg+meterCard('📺','EPISODES BINGED'),kind:'meter'},
-      // 8. Floating emoji
-      {dx:430,dy:95,html:'<div class="zc-emoji-float" style="font-size:2.6rem;filter:drop-shadow(0 4px 10px rgba(255,152,0,0.4))">🎬</div>'}
+      {dx:450,dy:-85,html:dragHandleSvg+flipCard('⚔️','GAME OF THRONES','S1–S7 is peak television. S8 was a fever dream. We don\'t talk about it. Valar Morghulis. 🐉👑'),kind:'flip'},
+      // 3. Dream Garage flip card
+      {dx:-435,dy:250,html:dragHandleSvg+flipCard('🏎️','DREAM GARAGE','GT-R Nismo · Toyota Supra A80 · BMW M3 CS · Porsche 911 GT3 RS. When the startup exits. 🔥'),kind:'flip'},
+      // 4. Night drive sticky
+      {dx:440,dy:250,html:'<div class="zc-sticky" style="--r:5deg;background:#06061A;color:#90CAF9;border-bottom:3px solid rgba(100,149,255,0.3);padding:13px 14px;max-width:152px;line-height:1.5;box-shadow:4px 5px 14px rgba(0,0,0,0.4)">2AM. empty road.<br>windows down.<br>volume: MAX 🚗💨<br><span style="font-size:0.6rem;opacity:0.45;font-family:monospace">// therapy mode activated</span></div>'},
+      // 5. Podcast Stack card
+      {dx:0,dy:-360,html:'<div style="background:linear-gradient(145deg,#0E0E1A,#18162E);border-radius:16px;padding:13px 15px;width:200px;box-shadow:0 4px 20px rgba(0,0,0,0.5);border:1.5px solid rgba(130,80,220,0.15)"><div style="font-family:var(--font-fun);font-size:0.68rem;font-weight:800;color:#CE93D8;margin-bottom:10px;text-align:center;letter-spacing:0.06em;text-transform:uppercase">🎧 PODCAST STACK</div><div style="display:flex;flex-direction:column;gap:5px"><div style="background:rgba(130,80,220,0.08);border-radius:7px;padding:5px 9px;display:flex;align-items:center;gap:8px;border-left:2px solid #9575CD"><span style="font-size:0.85rem">🤝</span><div><div style="font-family:var(--font-fun);font-size:0.58rem;font-weight:700;color:#CE93D8">My First Million</div><div style="font-family:var(--font-sans);font-size:0.52rem;color:rgba(255,255,255,0.35)">startup stories + ideas</div></div></div><div style="background:rgba(130,80,220,0.08);border-radius:7px;padding:5px 9px;display:flex;align-items:center;gap:8px;border-left:2px solid #9575CD"><span style="font-size:0.85rem">🧠</span><div><div style="font-family:var(--font-fun);font-size:0.58rem;font-weight:700;color:#CE93D8">Lex Fridman</div><div style="font-family:var(--font-sans);font-size:0.52rem;color:rgba(255,255,255,0.35)">AI · science · humanity</div></div></div><div style="background:rgba(130,80,220,0.08);border-radius:7px;padding:5px 9px;display:flex;align-items:center;gap:8px;border-left:2px solid #9575CD"><span style="font-size:0.85rem">💰</span><div><div style="font-family:var(--font-fun);font-size:0.58rem;font-weight:700;color:#CE93D8">All-In Podcast</div><div style="font-family:var(--font-sans);font-size:0.52rem;color:rgba(255,255,255,0.35)">tech + politics + chaos</div></div></div><div style="background:rgba(130,80,220,0.08);border-radius:7px;padding:5px 9px;display:flex;align-items:center;gap:8px;border-left:2px solid #9575CD"><span style="font-size:0.85rem">🚀</span><div><div style="font-family:var(--font-fun);font-size:0.58rem;font-weight:700;color:#CE93D8">YC Startup School</div><div style="font-family:var(--font-sans);font-size:0.52rem;color:rgba(255,255,255,0.35)">founder fuel on demand</div></div></div></div></div>'},
+      // 6. Vibe coding meme
+      {dx:-420,dy:-255,html:memeCard('2AM VIBE CODING SESSION','"no docs, full Claude, ship it or perish" 💻⚡')},
+      // 7. Startup Shows card
+      {dx:0,dy:360,html:'<div style="background:linear-gradient(145deg,#fff,#fef9f0);border-radius:14px;padding:12px 14px;width:200px;box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1.5px solid rgba(201,169,110,0.18)"><div style="font-family:var(--font-fun);font-size:0.68rem;font-weight:800;color:var(--text);margin-bottom:9px;text-align:center;letter-spacing:0.04em;text-transform:uppercase">📺 STARTUP SHOWS TIER</div><div style="display:flex;flex-direction:column;gap:4px"><div style="background:rgba(229,57,53,0.06);border-radius:6px;padding:4px 9px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-hand);font-size:0.7rem;color:var(--text2)">💻 Silicon Valley</span><span style="font-family:var(--font-fun);font-size:0.56rem;font-weight:800;color:#E53935">S+</span></div><div style="background:rgba(229,57,53,0.06);border-radius:6px;padding:4px 9px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-hand);font-size:0.7rem;color:var(--text2)">💼 Succession</span><span style="font-family:var(--font-fun);font-size:0.56rem;font-weight:800;color:#E53935">S+</span></div><div style="background:rgba(229,57,53,0.06);border-radius:6px;padding:4px 9px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-hand);font-size:0.7rem;color:var(--text2)">🦈 Shark Tank</span><span style="font-family:var(--font-fun);font-size:0.56rem;font-weight:800;color:#FF7043">S</span></div><div style="background:rgba(229,57,53,0.06);border-radius:6px;padding:4px 9px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-hand);font-size:0.7rem;color:var(--text2)">💔 WeCrashed</span><span style="font-family:var(--font-fun);font-size:0.56rem;font-weight:800;color:#FF7043">S</span></div></div></div>'},
+      // 8. PlayStation floating emoji
+      {dx:430,dy:90,html:'<div class="zc-emoji-float" style="font-size:2.8rem;filter:drop-shadow(0 4px 12px rgba(0,80,255,0.4))">🎮</div>'}
     ],
     fun:[
       {dx:-420,dy:-60,html:memeCard('NEW FEATURE IDEA','"quick 5 min change" 💀')},
@@ -11185,6 +11238,90 @@ function ekPick(el,e){
   setTimeout(()=>{document.body.classList.add('stickers-ready');},2000);
 
 })();
+
+/* ── ORIGIN CINEMATIC BOOT ATTACK ────────────────────── */
+function originAttack(btn){
+  const card=btn.closest('.zic-origin');
+  if(!card||card.classList.contains('origin-attack'))return;
+  card.classList.add('origin-attack');
+
+  // Impact rings (expanding green circles)
+  const ringColors=['#4ade80','#fbbf24','#4ade80'];
+  const ringSizes=[70,110,150];
+  ringColors.forEach((color,i)=>{
+    const ring=document.createElement('div');
+    ring.className='zic-origin-impact';
+    ring.style.cssText='top:45%;left:50%;width:'+ringSizes[i]+'px;height:'+ringSizes[i]+'px;border-color:'+color+';animation-delay:'+(i*0.1)+'s';
+    card.appendChild(ring);
+    setTimeout(()=>ring.remove(),1000+i*120);
+  });
+
+  // Error scan lines (horizontal glitch artifacts)
+  const linePositions=[15,38,58,78];
+  linePositions.forEach((top,i)=>{
+    const line=document.createElement('div');
+    line.className='zic-origin-error-line';
+    line.style.cssText='top:'+top+'%;animation-delay:'+(i*0.06)+'s';
+    card.appendChild(line);
+    setTimeout(()=>line.remove(),800+i*80);
+  });
+
+  // Flash the card border
+  const orig=card.style.boxShadow;
+  card.style.boxShadow='0 0 60px rgba(74,222,128,0.7),0 0 120px rgba(74,222,128,0.3),0 12px 48px rgba(0,0,0,0.35)';
+  setTimeout(()=>{card.style.boxShadow=orig;},600);
+
+  // Reset
+  setTimeout(()=>card.classList.remove('origin-attack'),2600);
+}
+window.originAttack=originAttack;
+
+/* ── HOBBY CINEMATIC CHANNEL SURGE ───────────────────── */
+function hobbyChannelSurge(btn){
+  const card=btn.closest('.zic-hobby');
+  if(!card||card.classList.contains('hobby-surge'))return;
+  card.classList.add('hobby-surge');
+
+  // Emoji burst from CRT center
+  const emojis=['🎬','🚗','🎮','🎧','🦸','📺','🔥','⚡','🐉','💻'];
+  const crt=card.querySelector('.zic-crt');
+  if(crt){
+    emojis.forEach((em,i)=>{
+      const angle=(i/emojis.length)*Math.PI*2;
+      const r=75+Math.random()*35;
+      const el=document.createElement('div');
+      el.className='zic-hobby-emoji-burst';
+      el.style.cssText=
+        '--ex:'+Math.round(Math.cos(angle)*r)+'px;'+
+        '--ey:'+Math.round(Math.sin(angle)*r)+'px;'+
+        '--er:'+Math.round((Math.random()-0.5)*50)+'deg;'+
+        'top:50%;left:50%;margin-top:-18px;margin-left:-18px;'+
+        'animation-delay:'+(i*0.04)+'s';
+      el.textContent=em;
+      crt.appendChild(el);
+      setTimeout(()=>el.remove(),1300+i*60);
+    });
+  }
+
+  // Impact rings
+  const impactSizes=[65,115];
+  impactSizes.forEach((size,i)=>{
+    const ring=document.createElement('div');
+    ring.className='zic-hobby-impact';
+    ring.style.cssText='top:38%;left:50%;width:'+size+'px;height:'+size+'px;animation-delay:'+(i*0.1)+'s';
+    card.appendChild(ring);
+    setTimeout(()=>ring.remove(),1000+i*100);
+  });
+
+  // Flash card border orange
+  const orig=card.style.boxShadow;
+  card.style.boxShadow='0 0 50px rgba(255,152,0,0.6),0 0 100px rgba(255,152,0,0.25),0 16px 48px rgba(0,0,0,0.45)';
+  setTimeout(()=>{card.style.boxShadow=orig;},700);
+
+  // Reset
+  setTimeout(()=>card.classList.remove('hobby-surge'),2700);
+}
+window.hobbyChannelSurge=hobbyChannelSurge;
 </script>
 
 </body></html>
