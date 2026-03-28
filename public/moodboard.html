@@ -10222,7 +10222,32 @@ function ekPick(el,e){
 
     let lastError=null;
 
-    // Path A: Supabase client — simple upsert without .select().single() chain
+    // Path 0: Backend function (most reliable on mobile Safari / iframe)
+    for(let attempt=1;attempt<=2;attempt++){
+      try{
+        const resp=await fetch(LAYOUT_FN_URL,{
+          method:'POST',
+          headers:{
+            apikey:SUPABASE_KEY,
+            Authorization:`Bearer ${SUPABASE_KEY}`,
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify({layoutData})
+        });
+        if(!resp.ok){
+          const text=await resp.text();
+          throw new Error(`Function save ${resp.status}: ${text}`);
+        }
+        console.log('[Layout] Cloud save succeeded via function (attempt '+attempt+')');
+        return layoutData;
+      }catch(e){
+        lastError=e;
+        console.warn('[Layout] Function save attempt '+attempt+' failed:',e.message||e);
+        await new Promise(r=>setTimeout(r,attempt*300));
+      }
+    }
+
+    // Path A: Supabase client
     if(sb){
       for(let attempt=1;attempt<=2;attempt++){
         try{
@@ -10272,6 +10297,25 @@ function ekPick(el,e){
   }
 
   async function loadLayoutFromCloud(){
+    // Path 0: Backend function
+    try{
+      const resp=await fetch(LAYOUT_FN_URL,{
+        method:'GET',
+        headers:{
+          apikey:SUPABASE_KEY,
+          Authorization:`Bearer ${SUPABASE_KEY}`
+        }
+      });
+      if(resp.ok){
+        const data=await resp.json();
+        if(Array.isArray(data?.layoutData)&&data.layoutData.length>0){
+          return data.layoutData;
+        }
+      }
+    }catch(e){
+      console.warn('Function load failed, trying client/REST fallback:',e);
+    }
+
     // Path A: Supabase client
     if(sb){
       try{
