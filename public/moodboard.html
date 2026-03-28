@@ -1647,17 +1647,23 @@ body.map-expanded .scroll-counter{display:none!important}
    ═══════════════════════════════════════════════════════════ */
 
 /* ── WORK: "Deploy Sequence" — professional deployment animation ── */
-.zic-work.action-scene .zic-role{opacity:0;animation:workRoleDeploy 0.5s cubic-bezier(0.23,1,0.32,1) both}
-.zic-work.action-scene .zic-role:nth-child(1){animation-delay:0.2s;--deploy-x:-80px}
-.zic-work.action-scene .zic-role:nth-child(2){animation-delay:0.35s;--deploy-x:90px}
-.zic-work.action-scene .zic-role:nth-child(3){animation-delay:0.5s;--deploy-x:-60px}
-.zic-work.action-scene .zic-role:nth-child(4){animation-delay:0.65s;--deploy-x:70px}
-@keyframes workRoleDeploy{
-  0%{opacity:0;transform:translateX(var(--deploy-x,80px)) scale(0.5);filter:blur(6px) brightness(2)}
-  60%{opacity:1;transform:translateX(0) scale(1.1);filter:blur(0) brightness(1.5)}
-  100%{opacity:1;transform:translateX(0) scale(1);filter:brightness(1)}
+.zic-work.action-scene{animation:workCardEntry 0.8s cubic-bezier(0.23,1,0.32,1) both;position:relative;overflow:hidden}
+@keyframes workCardEntry{
+  0%{transform:scale(0.92) rotate(-1deg);filter:brightness(0.6) blur(2px)}
+  40%{transform:scale(1.03) rotate(0.5deg);filter:brightness(1.3) blur(0)}
+  100%{transform:scale(1) rotate(-0.5deg);filter:brightness(1)}
 }
-.zic-work.action-scene .zic-skill{opacity:0;animation:workSkillLoad 0.35s ease-out both}
+.zic-work.action-scene .zic-role{animation:workRoleDeploy 0.5s cubic-bezier(0.23,1,0.32,1) both}
+.zic-work.action-scene .zic-role:nth-child(1){animation-delay:0.2s}
+.zic-work.action-scene .zic-role:nth-child(2){animation-delay:0.35s}
+.zic-work.action-scene .zic-role:nth-child(3){animation-delay:0.5s}
+.zic-work.action-scene .zic-role:nth-child(4){animation-delay:0.65s}
+@keyframes workRoleDeploy{
+  0%{transform:scale(0.8);filter:brightness(2.5)}
+  50%{transform:scale(1.15);filter:brightness(1.5)}
+  100%{transform:scale(1);filter:brightness(1)}
+}
+.zic-work.action-scene .zic-skill{animation:workSkillLoad 0.35s ease-out both}
 .zic-work.action-scene .zic-skill:nth-child(1){animation-delay:0.8s}
 .zic-work.action-scene .zic-skill:nth-child(2){animation-delay:0.88s}
 .zic-work.action-scene .zic-skill:nth-child(3){animation-delay:0.96s}
@@ -1665,20 +1671,9 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-work.action-scene .zic-skill:nth-child(5){animation-delay:1.12s}
 .zic-work.action-scene .zic-skill:nth-child(6){animation-delay:1.2s}
 @keyframes workSkillLoad{
-  0%{opacity:0;transform:translateY(20px) scale(0.8)}
-  60%{opacity:1;transform:translateY(-3px) scale(1.05)}
-  100%{opacity:1;transform:translateY(0) scale(1)}
-}
-/* Holographic scan line sweeping the card */
-.zic-work.action-scene::after{
-  content:'';position:absolute;inset:0;pointer-events:none;z-index:10;border-radius:20px;
-  background:linear-gradient(180deg,transparent 0%,rgba(100,180,255,0.15) 48%,rgba(100,180,255,0.4) 50%,rgba(100,180,255,0.15) 52%,transparent 100%);
-  background-size:100% 30px;
-  animation:workScanLine 1.5s ease-in-out both;
-}
-@keyframes workScanLine{
-  0%{background-position:0 -30px;opacity:1}
-  100%{background-position:0 600px;opacity:0}
+  0%{transform:translateY(8px) scale(0.9);filter:brightness(2)}
+  60%{transform:translateY(-2px) scale(1.05);filter:brightness(1.3)}
+  100%{transform:translateY(0) scale(1);filter:brightness(1)}
 }
 /* Status dot pulse burst */
 .zic-work.action-scene .zic-status-dot{animation:workStatusBurst 0.8s ease-out 0.1s both}
@@ -1694,9 +1689,9 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-work.action-scene .zic-stat:nth-child(2) .zic-stat-val{animation-delay:1.45s}
 .zic-work.action-scene .zic-stat:nth-child(3) .zic-stat-val{animation-delay:1.6s}
 @keyframes workStatSlam{
-  0%{transform:scale(3) translateY(-20px);opacity:0;filter:blur(4px)}
-  60%{transform:scale(1.15) translateY(2px);opacity:1;filter:blur(0)}
-  100%{transform:scale(1) translateY(0)}
+  0%{transform:scale(2) translateY(-10px);filter:blur(2px) brightness(2)}
+  60%{transform:scale(1.1) translateY(2px);filter:blur(0) brightness(1.2)}
+  100%{transform:scale(1) translateY(0);filter:brightness(1)}
 }
 
 /* ── PORTFOLIO: "Boot Sequence" — terminal typing + code deploy ── */
