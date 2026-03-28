@@ -5022,7 +5022,8 @@ function placeNewSticker(sticker){
 async function runItemRearrange(triggeredByUser){
   // Rule 10: Audit — count items in DOM vs maps, fix duplicates/missing
   const auditResult=auditStickerIntegrity();
-
+  // Assign stable IDs for reliable matching
+  assignStableIds();
   // Try loading cloud layout fresh each time
   let usedCloud=false;
   if(window._savedCloudLayout&&window._savedCloudLayout.length>0){
@@ -9264,9 +9265,11 @@ function initBoardStats(){
 // Scan once on load, then draw + greeting
 async function bootstrapMap(forceRescan){
   try{
+    let cloudLoaded=false;
     if(forceRescan||!hasAutoArranged){
+      // Assign stable IDs BEFORE cloud load for reliable matching
+      assignStableIds();
       // Try loading cloud layout FIRST before auto-arranging
-      let cloudLoaded=false;
       if(window._savedCloudLayout&&window._savedCloudLayout.length>0){
         applyLayout(window._savedCloudLayout);
         cloudLoaded=true;
@@ -9280,8 +9283,10 @@ async function bootstrapMap(forceRescan){
       }
       hasAutoArranged=true;
     }
-    // Keep companion stickers attached to intro cards after auto-arrange
-    if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
+    // Only recreate companions if NOT using cloud layout (would overwrite saved positions)
+    if(!cloudLoaded){
+      if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
+    }
     normalizeAllStickerBounds();
     ensureMapData(forceRescan);
     drawMap();
@@ -9290,6 +9295,14 @@ async function bootstrapMap(forceRescan){
   }catch(e){
     console.error('Init error:',e)
   }
+}
+
+// Assign stable DOM-index-based IDs for reliable save/load matching
+function assignStableIds(){
+  const stickers=document.querySelectorAll('#canvas > .sticker');
+  stickers.forEach((s,i)=>{
+    s.dataset.sid='sid-'+i;
+  });
 }
 
 function ensureIntroCluster(){
@@ -10099,10 +10112,13 @@ function ekPick(el,e){
   }
 
   function serializeLayout(){
+    assignStableIds();
     const stickers=document.querySelectorAll('#canvas > .sticker');
     const data=[];
     stickers.forEach(s=>{
       const id=s.id||'';
+      const sid=s.dataset.sid||'';
+      const mapId=s.dataset.mapId||'';
       const zone=s.dataset.zone||'';
       const type=s.dataset.type||'';
       const left=s.style.left;
@@ -10110,7 +10126,7 @@ function ekPick(el,e){
       const transform=s.style.transform;
       const zIndex=s.style.zIndex;
       const textSnippet=toSafeSnippet(s.textContent,60);
-      data.push({id,zone,type,left,top,transform,zIndex,textSnippet});
+      data.push({id,sid,mapId,zone,type,left,top,transform,zIndex,textSnippet});
     });
     return sanitizeJsonValue(data);
   }
@@ -10118,16 +10134,28 @@ function ekPick(el,e){
 
   function applyLayout(data){
     if(!data||!data.length)return;
+    assignStableIds();
     const stickers=Array.from(document.querySelectorAll('#canvas > .sticker'));
     const used=new Set();
+    let matched=0;
     data.forEach(d=>{
       let match=null;
-      // 1. Match by ID (most reliable)
-      if(d.id){
+      // 0. Match by stable DOM-index ID (most reliable across refreshes)
+      if(!match&&d.sid){
+        const idx=stickers.findIndex((s,i)=>!used.has(i)&&s.dataset.sid===d.sid);
+        if(idx>=0){match=stickers[idx];used.add(idx);}
+      }
+      // 1. Match by element ID
+      if(!match&&d.id){
         match=stickers.find((s,i)=>!used.has(i)&&s.id===d.id);
         if(match)used.add(stickers.indexOf(match));
       }
-      // 2. Fallback: match by zone + textSnippet (ignore className which can change)
+      // 2. Match by mapId
+      if(!match&&d.mapId){
+        const idx=stickers.findIndex((s,i)=>!used.has(i)&&s.dataset.mapId===d.mapId);
+        if(idx>=0){match=stickers[idx];used.add(idx);}
+      }
+      // 3. Fallback: match by zone + textSnippet
       if(!match&&d.textSnippet){
         const targetSnippet=toSafeSnippet(d.textSnippet,60);
         const idx=stickers.findIndex((s,i)=>{
@@ -10137,7 +10165,7 @@ function ekPick(el,e){
         });
         if(idx>=0){match=stickers[idx];used.add(idx);}
       }
-      // 3. Last resort: match by zone + type
+      // 4. Last resort: match by zone + type
       if(!match&&d.type){
         const idx=stickers.findIndex((s,i)=>{
           if(used.has(i))return false;
@@ -10150,8 +10178,10 @@ function ekPick(el,e){
         if(d.top)match.style.top=d.top;
         if(d.transform)match.style.transform=d.transform;
         if(d.zIndex)match.style.zIndex=d.zIndex;
+        matched++;
       }
     });
+    console.log('[Layout] Applied',matched,'of',data.length,'items to',stickers.length,'DOM stickers');
   }
 
   // PIN modal management
