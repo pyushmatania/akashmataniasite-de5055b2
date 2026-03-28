@@ -1988,7 +1988,8 @@ body.map-expanded .scroll-counter{display:none!important}
 }
 .save-layout-toast.show{opacity:1;transform:translateY(0)}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
+<script>if(!window.supabase||typeof window.supabase.createClient!=='function'){console.warn('[Layout] Supabase CDN failed to load — will use REST fallback')}</script>
 </head>
 <body>
 <div class="logo">Akash</div>
@@ -10220,49 +10221,49 @@ function ekPick(el,e){
 
     let lastError=null;
 
-    // Path A: Supabase client (with retries)
+    // Path A: Supabase client — simple upsert without .select().single() chain
     if(sb){
-      for(let attempt=1;attempt<=3;attempt++){
+      for(let attempt=1;attempt<=2;attempt++){
         try{
-          const {data,error}=await sb
+          const {error}=await sb
             .from('moodboard_layouts')
-            .upsert(payload,{onConflict:'id'})
-            .select('layout_data')
-            .single();
+            .upsert(payload,{onConflict:'id'});
           if(error)throw error;
-          return data?.layout_data||layoutData;
+          console.log('[Layout] Cloud save succeeded via client (attempt '+attempt+')');
+          return layoutData;
         }catch(e){
           lastError=e;
-          await new Promise(r=>setTimeout(r,attempt*250));
+          console.warn('[Layout] Client save attempt '+attempt+' failed:',e.message||e);
+          await new Promise(r=>setTimeout(r,attempt*300));
         }
       }
+    }else{
+      console.warn('[Layout] Supabase client not available, using REST');
     }
 
-    // Path B: Direct REST fallback (with retries)
+    // Path B: Direct REST fallback
     for(let attempt=1;attempt<=2;attempt++){
       try{
-        const resp=await fetch(`${REST_BASE}/moodboard_layouts?on_conflict=id&select=layout_data`,{
+        const resp=await fetch(`${REST_BASE}/moodboard_layouts?on_conflict=id`,{
           method:'POST',
           headers:{
             apikey:SUPABASE_KEY,
             Authorization:`Bearer ${SUPABASE_KEY}`,
             'Content-Type':'application/json',
-            Prefer:'resolution=merge-duplicates,return=representation'
+            Prefer:'resolution=merge-duplicates'
           },
           body:JSON.stringify([payload])
         });
         if(!resp.ok){
           const text=await resp.text();
-          throw new Error(`REST save failed (${resp.status}): ${text}`);
+          throw new Error(`REST ${resp.status}: ${text}`);
         }
-        const rows=await resp.json();
-        if(Array.isArray(rows)&&rows[0]?.layout_data){
-          return rows[0].layout_data;
-        }
+        console.log('[Layout] Cloud save succeeded via REST (attempt '+attempt+')');
         return layoutData;
       }catch(e){
         lastError=e;
-        await new Promise(r=>setTimeout(r,attempt*300));
+        console.warn('[Layout] REST save attempt '+attempt+' failed:',e.message||e);
+        await new Promise(r=>setTimeout(r,attempt*400));
       }
     }
 
