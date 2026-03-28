@@ -5023,33 +5023,15 @@ function runItemRearrange(triggeredByUser){
 
   // If a saved cloud layout exists, apply it instead of algorithmic rearrange
   if(window._savedCloudLayout&&window._savedCloudLayout.length>0){
-    // Re-apply the saved layout
-    const stickers=Array.from(document.querySelectorAll('#canvas > .sticker'));
-    const used=new Set();
-    window._savedCloudLayout.forEach(d=>{
-      let match=null;
-      if(d.id){match=stickers.find((s,i)=>!used.has(i)&&s.id===d.id);if(match)used.add(stickers.indexOf(match));}
-      if(!match){
-        const idx=stickers.findIndex((s,i)=>{
-          if(used.has(i))return false;
-          const sText=(s.textContent||'').substring(0,60).trim();
-          return s.className===d.classes&&(s.dataset.zone||'')===(d.zone||'')&&sText===d.textSnippet;
-        });
-        if(idx>=0){match=stickers[idx];used.add(idx);}
-      }
-      if(match){
-        if(d.left)match.style.left=d.left;
-        if(d.top)match.style.top=d.top;
-        if(d.transform)match.style.transform=d.transform;
-        if(d.zIndex)match.style.zIndex=d.zIndex;
-      }
-    });
+    applyLayout(window._savedCloudLayout);
   }else{
     autoArrangeMoodboardItems();
   }
 
-  // Re-anchor companion stickers around intro cards after rearrange
-  if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
+  // Only re-anchor companions if NOT using saved layout (saved layout already has their positions)
+  if(!(window._savedCloudLayout&&window._savedCloudLayout.length>0)){
+    if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
+  }
   // Clear visual cache and force full rescan + redraw
   if(typeof scanStickers==='function')scanStickers();
   if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
@@ -9630,12 +9612,15 @@ function ensureCompanionStickers(force){
     document.head.appendChild(st);
   }
 
+  let compIdx=0;
   function addCompanion(zone,item){
     const a=anchors[zone];
     if(!a)return;
     const el=document.createElement('div');
     el.className='sticker zic-companion';
     if(item.kind==='meter'||item.kind==='flip') el.className+=' has-drag-handle';
+    el.id='companion-'+zone+'-'+compIdx;
+    compIdx++;
     el.dataset.zone=zone;
     el.dataset.locked='1';
     el.dataset.type=item.kind==='meter'||item.kind==='flip'?'interactive':'other';
@@ -10074,12 +10059,25 @@ function ekPick(el,e){
     const used=new Set();
     data.forEach(d=>{
       let match=null;
-      if(d.id){match=stickers.find((s,i)=>!used.has(i)&&s.id===d.id);if(match)used.add(stickers.indexOf(match));}
-      if(!match){
+      // 1. Match by ID (most reliable)
+      if(d.id){
+        match=stickers.find((s,i)=>!used.has(i)&&s.id===d.id);
+        if(match)used.add(stickers.indexOf(match));
+      }
+      // 2. Fallback: match by zone + textSnippet (ignore className which can change)
+      if(!match&&d.textSnippet){
         const idx=stickers.findIndex((s,i)=>{
           if(used.has(i))return false;
           const sText=(s.textContent||'').substring(0,60).trim();
-          return s.className===d.classes&&(s.dataset.zone||'')===(d.zone||'')&&sText===d.textSnippet;
+          return (s.dataset.zone||'')===(d.zone||'')&&sText===d.textSnippet;
+        });
+        if(idx>=0){match=stickers[idx];used.add(idx);}
+      }
+      // 3. Last resort: match by zone + type
+      if(!match&&d.type){
+        const idx=stickers.findIndex((s,i)=>{
+          if(used.has(i))return false;
+          return (s.dataset.zone||'')===(d.zone||'')&&(s.dataset.type||'')===(d.type||'');
         });
         if(idx>=0){match=stickers[idx];used.add(idx);}
       }
@@ -10212,12 +10210,16 @@ function ekPick(el,e){
     return false;
   };
 
-  // Load saved layout after bootstrap
+  // Load saved layout after bootstrap — wait long enough for companions to be created
   window._layoutLoadTimeout=setTimeout(async()=>{
-    await new Promise(r=>setTimeout(r,1200));
+    await new Promise(r=>setTimeout(r,2500));
     const loaded=await window.loadSavedLayout();
     if(loaded){
       window._savedLayoutLoaded=true;
+      // Re-sync maps after applying saved layout
+      if(typeof scanStickers==='function')scanStickers();
+      if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
+      if(typeof queueMapSync==='function')queueMapSync(true);
     }
   },200);
 })();
