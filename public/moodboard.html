@@ -9720,10 +9720,10 @@ function buildZoneCardHTML(meta){return '';}
   });
 })();
 
-setTimeout(()=>{
+setTimeout(async ()=>{
   ensureIntroCluster();
   ensureZoneIntroCards();
-  bootstrapMap(true);
+  await bootstrapMap(true);
   // Re-center on intro card AFTER items are rearranged
   scrollToZone(null,'hub');
   requestAnimationFrame(()=>scrollToZone(null,'hub'));
