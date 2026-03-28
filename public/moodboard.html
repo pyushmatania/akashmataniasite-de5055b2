@@ -5203,12 +5203,43 @@ let dragStartScrollLeft=0,dragStartScrollTop=0;
 let isRotating=false, rotStartAngle=0, stickerBaseAngle=0;
 let suppressStickerClickUntil=0;
 const DRAG_CLICK_GUARD_MS=900;
+let lastRotVelocity=0, lastRotTime=0;
 
+function canRotate(el){
+  if(!el)return false;
+  // Skip interactive stickers (intro cards, counters, flip cards etc.)
+  if(el.dataset.type==='interactive')return false;
+  if(el.classList.contains('has-drag-handle'))return false;
+  if(el.classList.contains('zic-companion')&&el.querySelector('.zc-meter,.zc-flip-card'))return false;
+  return true;
+}
 function getAngle(t1,t2){return Math.atan2(t2.clientY-t1.clientY,t2.clientX-t1.clientX)*180/Math.PI}
 function getCurrentRotation(el){
   const st=el.style.transform||'';
   const m=st.match(/rotate\(([-\d.]+)deg\)/);
   return m?parseFloat(m[1]):0;
+}
+function startRotation(el,touches){
+  if(!canRotate(el))return false;
+  isRotating=true;didMove=true;
+  rotStartAngle=getAngle(touches[0],touches[1]);
+  stickerBaseAngle=getCurrentRotation(el);
+  lastRotVelocity=0;lastRotTime=performance.now();
+  el.classList.add('rotating');
+  return true;
+}
+function endRotationWithSpring(el){
+  if(!el)return;
+  el.classList.remove('rotating');
+  // Apply momentum spring — small overshoot then settle
+  const vel=lastRotVelocity;
+  if(Math.abs(vel)<0.5)return;
+  const cur=getCurrentRotation(el);
+  const overshoot=vel*3; // small momentum
+  const target=cur+overshoot;
+  el.style.transition='transform 0.4s cubic-bezier(0.34,1.56,0.64,1)';
+  el.style.transform='rotate('+target+'deg)';
+  setTimeout(()=>{el.style.transition='filter 0.15s,transform 0.15s';},420);
 }
 
 // Prevent accidental click handlers right after drag (stops interactive cards from "disappearing")
