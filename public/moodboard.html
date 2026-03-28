@@ -5206,11 +5206,9 @@ const DRAG_CLICK_GUARD_MS=900;
 let lastRotVelocity=0, lastRotTime=0;
 
 function canRotate(el){
-  if(!el)return false;
-  // Skip interactive stickers (intro cards, counters, flip cards etc.)
-  if(el.dataset.type==='interactive')return false;
-  if(el.classList.contains('has-drag-handle'))return false;
-  if(el.classList.contains('zic-companion')&&el.querySelector('.zc-meter,.zc-flip-card'))return false;
+  if(!el||!el.classList||!el.classList.contains('sticker'))return false;
+  // Allow rotation for intro + companion + regular stickers unless explicitly blocked
+  if(el.dataset&&el.dataset.noRotate==='true')return false;
   return true;
 }
 function getAngle(t1,t2){return Math.atan2(t2.clientY-t1.clientY,t2.clientX-t1.clientX)*180/Math.PI}
