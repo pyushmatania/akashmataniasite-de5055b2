@@ -5048,8 +5048,10 @@ function runItemRearrange(triggeredByUser){
     autoArrangeMoodboardItems();
   }
 
-  // Re-anchor companion stickers around intro cards after rearrange
-  if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
+  // Only re-anchor companions if NOT using saved layout (saved layout already has their positions)
+  if(!(window._savedCloudLayout&&window._savedCloudLayout.length>0)){
+    if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
+  }
   // Clear visual cache and force full rescan + redraw
   if(typeof scanStickers==='function')scanStickers();
   if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
