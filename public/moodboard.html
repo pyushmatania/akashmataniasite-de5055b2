@@ -9494,11 +9494,11 @@ function ensureCompanionStickers(force){
   function flipCard(frontEmoji,frontLabel,backText,bg1,bg2){
     return '<div class="zc-flip-card" style="width:168px;height:98px;perspective:600px;cursor:pointer">'+
       '<div class="zc-flip-inner" style="position:relative;width:100%;height:100%;transition:transform 0.55s;transform-style:preserve-3d">'+
-        '<div style="position:absolute;inset:0;backface-visibility:hidden;background:'+bg1+';border-radius:14px;padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.08)">'+
+        '<div style="position:absolute;inset:0;backface-visibility:hidden;background:linear-gradient(145deg,#fff,#fdfaf5);border-radius:14px;padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1.5px solid rgba(201,169,110,0.15)">'+
           '<div style="font-size:1.4rem">'+frontEmoji+'</div>'+
-          '<div style="font-family:var(--font-fun);font-size:0.58rem;font-weight:700;color:rgba(0,0,0,0.55);margin-top:4px">'+frontLabel+'</div></div>'+
-        '<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);background:'+bg2+';border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.08)">'+
-          '<div style="font-family:var(--font-hand);font-size:0.78rem;color:rgba(0,0,0,0.72);text-align:center;line-height:1.35">'+backText+'</div></div>'+
+          '<div style="font-family:var(--font-fun);font-size:0.58rem;font-weight:700;color:var(--text3);margin-top:4px">'+frontLabel+'</div></div>'+
+        '<div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);background:linear-gradient(145deg,#fef9f0,#fff);border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1.5px solid rgba(201,169,110,0.15)">'+
+          '<div style="font-family:var(--font-hand);font-size:0.78rem;color:var(--text2);text-align:center;line-height:1.35">'+backText+'</div></div>'+
       '</div></div>';
   }
 
