@@ -3834,18 +3834,74 @@ function runAxeAttackSequence(funCard){
         setTimeout(()=>{funCard.style.animation='';},600);
       },scene.dur*0.45);
 
-      // Add permanent scar after impact
+      // Add permanent scar with blood drips + cracks after impact
       setTimeout(()=>{
         const scar=document.createElement('div');
         scar.className='fun-scar';
-        scar.innerHTML='<div class="fun-scar-line" style="width:'+scene.scarW+';top:'+scene.scarTop+';left:'+scene.scarLeft+';transform:rotate('+scene.scarAngle+');position:absolute;animation:scarAppear 0.5s ease-out both"></div>';
         scar.style.position='absolute';scar.style.inset='0';
+
+        // Main scar line
+        const lineEl=document.createElement('div');
+        lineEl.className='fun-scar-line';
+        Object.assign(lineEl.style,{width:scene.scarW,top:scene.scarTop,left:scene.scarLeft,transform:'rotate('+scene.scarAngle+')',position:'absolute',animation:'scarAppear 0.5s ease-out both'});
+        scar.appendChild(lineEl);
+
+        // Parse scar position for drip/crack placement
+        const sTop=parseFloat(scene.scarTop)||30;
+        const sLeft=parseFloat(scene.scarLeft)||20;
+        const sW=parseFloat(scene.scarW)||60;
+        const angle=parseFloat(scene.scarAngle)||0;
+
+        // Blood drips along the scar line
+        const dripCount=2+Math.floor(Math.random()*3);
+        for(let d=0;d<dripCount;d++){
+          const drip=document.createElement('div');
+          drip.className='fun-blood-drip';
+          const pct=0.2+Math.random()*0.6;
+          const dx=sLeft+sW*pct*Math.cos(angle*Math.PI/180);
+          const dy=sTop+sW*pct*Math.sin(angle*Math.PI/180);
+          drip.style.left=dx+'%';drip.style.top=dy+'%';
+          drip.style.setProperty('--drip-dur',(1.8+Math.random()*2)+'s');
+          drip.style.setProperty('--drip-delay',(0.3+Math.random()*0.8)+'s');
+          drip.style.setProperty('--drip-h',(15+Math.random()*20)+'px');
+          drip.style.setProperty('--drip-fall',(3+Math.random()*6)+'px');
+          scar.appendChild(drip);
+        }
+
+        // Radiating cracks from scar endpoints and center
+        const crackPoints=[0.05,0.5,0.95];
+        crackPoints.forEach(function(cp){
+          const cx=sLeft+sW*cp*Math.cos(angle*Math.PI/180);
+          const cy=sTop+sW*cp*Math.sin(angle*Math.PI/180);
+          const numCracks=2+Math.floor(Math.random()*2);
+          for(let c=0;c<numCracks;c++){
+            const crack=document.createElement('div');
+            crack.className='fun-crack';
+            crack.style.left=cx+'%';crack.style.top=cy+'%';
+            const cAngle=angle+(c%2===0?1:-1)*(30+Math.random()*60);
+            crack.style.setProperty('--crack-angle',cAngle+'deg');
+            crack.style.setProperty('--crack-dur',(0.3+Math.random()*0.3)+'s');
+            crack.style.setProperty('--crack-delay',(0.1+Math.random()*0.4)+'s');
+            crack.style.width=(8+Math.random()*18)+'px';
+            scar.appendChild(crack);
+            // Sub-branch
+            if(Math.random()>0.4){
+              const branch=document.createElement('div');
+              branch.className='fun-crack-branch';
+              branch.style.left=cx+'%';branch.style.top=cy+'%';
+              branch.style.setProperty('--crack-angle',(cAngle+(Math.random()>0.5?20:-20))+'deg');
+              branch.style.setProperty('--crack-dur','0.25s');
+              branch.style.setProperty('--crack-delay',(0.3+Math.random()*0.3)+'s');
+              branch.style.width=(5+Math.random()*10)+'px';
+              scar.appendChild(branch);
+            }
+          }
+        });
+
         tvScreen.appendChild(scar);
-        // Animate in
         requestAnimationFrame(()=>scar.classList.add('visible'));
-        // Add glow pulse to scar line
-        const line=scar.querySelector('.fun-scar-line');
-        if(line) setTimeout(()=>{line.style.animation='scarGlow 2s ease-in-out infinite';},600);
+        // Glow pulse on main line
+        setTimeout(()=>{lineEl.style.animation='scarGlow 2s ease-in-out infinite';},600);
       },scene.dur*0.55);
 
       // Remove projectile after animation
