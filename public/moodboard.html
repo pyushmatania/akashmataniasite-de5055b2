@@ -4149,20 +4149,39 @@ function cycleIntroCards(e){
     top:Math.max(0,Math.min(center.y*scale-vp.clientHeight/2,maxY)),
     behavior:'smooth'
   });
-  // Trigger Fun Zone attack animation when navigating to it
-  if(target.zone==='fun'){
+  // ── Trigger zone action scenes when navigating ──
+  const zoneClass=target.zone;
+  const zoneSelectors={work:'.zic-work',portfolio:'.zic-portfolio',origin:'.zic-origin',hobby:'.zic-hobby',fun:'.zic-fun'};
+  const sel=zoneSelectors[zoneClass];
+  if(sel){
     setTimeout(()=>{
-      const funCard=document.querySelector('.zic-fun');
-      if(funCard){
-        funCard.classList.remove('fun-attack');
-        void funCard.offsetWidth;
-        funCard.classList.add('fun-attack');
-        if(typeof playSfx==='function')playSfx('pop');
-        setTimeout(()=>funCard.classList.remove('fun-attack'),2500);
+      const card=document.querySelector(sel);
+      if(!card)return;
 
-        // ── Phase 2: Axe Companion Attack with camera cuts & scars ──
-        setTimeout(()=>runAxeAttackSequence(funCard),2600);
+      // Fun zone keeps its special multi-phase attack
+      if(zoneClass==='fun'){
+        card.classList.remove('fun-attack');
+        void card.offsetWidth;
+        card.classList.add('fun-attack');
+        if(typeof playSfx==='function')playSfx('pop');
+        setTimeout(()=>card.classList.remove('fun-attack'),2500);
+        setTimeout(()=>runAxeAttackSequence(card),2600);
       }
+
+      // All zones get their action-scene class
+      card.classList.remove('action-scene');
+      void card.offsetWidth;
+      card.classList.add('action-scene');
+      if(typeof playSfx==='function')playSfx('pop');
+
+      // Bounce nearby companion stickers for dramatic effect
+      document.querySelectorAll('.zic-companion[data-zone="'+zoneClass+'"]').forEach((comp,i)=>{
+        comp.style.animation='companionBounce 0.6s ease-out '+(0.3+i*0.12)+'s both';
+        setTimeout(()=>{comp.style.animation='';},1500);
+      });
+
+      // Remove action-scene after animations complete
+      setTimeout(()=>card.classList.remove('action-scene'),3500);
     },600);
   }
   const toast=document.createElement('div');
