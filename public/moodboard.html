@@ -10920,7 +10920,7 @@ function ekPick(el,e){
     }
   }
 
-  window.saveLayout=doSaveLayout;
+  window.saveLayout=function(){ window.promptPinForSave(); };
 
   window.loadSavedLayout=async function(){
     try{
