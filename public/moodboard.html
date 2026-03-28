@@ -2047,7 +2047,8 @@ body.map-expanded .scroll-counter{display:none!important}
   </div>
   <div class="rearrange-row">
     <button class="rearrange-btn" id="rearrangeBtn" onclick="runItemRearrange(true)">🔄 Auto-Rearrange</button>
-    <button class="save-layout-btn" id="saveLayoutBtn" onclick="promptPinForSave()">💾 Save Layout</button>
+    <button class="save-layout-btn" id="saveLayoutBtn" onclick="promptPinForSave()" style="display:none">💾 Save Layout</button>
+    <button class="save-layout-btn" id="captureLayoutBtn" onclick="captureLayoutToConsole()" style="background:linear-gradient(135deg,#B3E5FC,#81D4FA);color:#01579B;font-size:0.68rem">📋 Capture Layout</button>
   </div>
   <div class="rearrange-note">Rearrange restores saved layout · Save locks current arrangement</div>
   <div class="board-stats" id="boardStats">
