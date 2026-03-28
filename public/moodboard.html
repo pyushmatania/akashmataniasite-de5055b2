@@ -10728,30 +10728,18 @@ function ekPick(el,e){
     const err=document.getElementById('pinError');
     if(pin.length!==4){err.textContent='Please enter all 4 digits';return;}
 
-    const hashed=hashPin(pin);
+    const result = await verifyPinRemote(pin, _pinMode);
 
     if(_pinMode==='setup'){
-      const {error:pinUpsertError}=await sb.from('moodboard_pins').upsert({
-        id:PIN_ROW_ID,
-        pin_hash:hashed,
-        updated_at:new Date().toISOString()
-      },{onConflict:'id'});
-      if(pinUpsertError){
-        err.textContent='Could not save PIN';
-        console.error('PIN save error:',pinUpsertError);
+      if(result.error){
+        err.textContent=result.error==='PIN already set'?'PIN already exists':('Could not save PIN');
+        console.error('PIN save error:',result.error);
         return;
       }
       closePinModal();
       await doSaveLayout();
     }else{
-      // Verify PIN
-      const {data:pinRow,error:pinVerifyError,status:pinVerifyStatus}=await sb.from('moodboard_pins').select('pin_hash').eq('id',PIN_ROW_ID).maybeSingle();
-      if(pinVerifyError&&pinVerifyStatus!==406){
-        err.textContent='PIN check failed';
-        console.error('PIN verify error:',pinVerifyError);
-        return;
-      }
-      if(pinRow&&pinRow.pin_hash===hashed){
+      if(result.valid){
         closePinModal();
         await doSaveLayout();
       }else{
