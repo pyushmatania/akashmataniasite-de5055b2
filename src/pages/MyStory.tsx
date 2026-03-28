@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import Typed from "typed.js";
 import Atropos from "atropos/react";
+// @ts-ignore - side-effect CSS import
 import "atropos/css";
 import Lenis from "@studio-freight/lenis";
 import confetti from "canvas-confetti";
