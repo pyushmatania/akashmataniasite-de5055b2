@@ -4150,9 +4150,6 @@ function runAxeAttackSequence(funCard){
   // Final scene: big impact flash + bring axe companion back
   const totalDur=scenes[scenes.length-1].delay+scenes[scenes.length-1].dur+500;
   setTimeout(()=>{
-    // Final camera cut
-    overlay.classList.add('cut');
-    setTimeout(()=>overlay.classList.remove('cut'),200);
 
     // Big flash on the card
     const flash=document.createElement('div');
