@@ -2460,7 +2460,7 @@ body.map-expanded .scroll-counter{display:none!important}
       </div>
       <div style="display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:10px">
         <div style="font-family:monospace;font-size:0.62rem;color:rgba(76,175,80,0.4)">vibes_received:</div>
-        <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;if(+c.textContent>=5){this.closest('.zic-origin').style.boxShadow='0 0 50px rgba(76,175,80,0.6),0 12px 48px rgba(0,0,0,0.35)'}" style="background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:0.85rem;color:#4CAF50;font-family:monospace">+1</button>
+        <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;c.style.transform='scale(1.4)';c.style.transition='transform 0.15s';setTimeout(()=>c.style.transform='scale(1)',180);if(+c.textContent>=5){this.closest('.zic-origin').style.boxShadow='0 0 50px rgba(76,175,80,0.6),0 12px 48px rgba(0,0,0,0.35)'}" style="background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:0.85rem;color:#4CAF50;font-family:monospace">+1</button>
         <span style="font-family:var(--font-fun);font-weight:800;color:#4CAF50;min-width:20px;text-align:center;font-size:0.9rem">0</span>
       </div>
       <div style="display:flex;gap:7px;justify-content:center">
