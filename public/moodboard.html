@@ -10619,9 +10619,11 @@ function ensureZoneIntroCards(){
   Object.entries(zoneMeta).forEach(([zone,meta])=>{
     const existing=document.querySelector('.zone-intro-creative[data-zone="'+zone+'"], .zone-intro-card[data-zone="'+zone+'"], .intro-card[data-zone="'+zone+'"]');
     if(existing){
-      // Preserve the hand-authored live cards already in the canvas.
-      // The legacy generator below was silently rewriting Work and Portfolio
-      // after first render, which removed their visible open buttons/hints.
+      existing.dataset.zone=zone;
+      if(!existing.dataset.type) existing.dataset.type='introduction';
+      // Always rebuild to new design
+      existing.className='sticker zone-intro-card '+clsMap[zone];
+      existing.innerHTML=builders[zone]();
       return;
     }
     const card=document.createElement('div');
