@@ -4230,19 +4230,21 @@ const MOODBOARD_VIEW_SCALE_NAV=window.innerWidth<=768?0.6:0.72;
 // ===== PLAY BUTTON — cycles through intro cards =====
 let _playIntroIdx=0;
 const _playIntroSequence=[
+  {zone:'origin',label:'Origin',fallback:{left:1550,top:966,x:1550+190,y:966+210}},
   {zone:'work',label:'Work',fallback:{left:5050,top:966,x:5050+190,y:966+210}},
   {zone:'portfolio',label:'Portfolio',fallback:{left:1550,top:3299,x:1550+190,y:3299+210}},
-  {zone:'origin',label:'Origin',fallback:{left:1550,top:966,x:1550+190,y:966+210}},
   {zone:'hobby',label:'Hobby',fallback:{left:1550,top:5633,x:1550+190,y:5633+210}},
   {zone:'fun',label:'Fun',fallback:{left:5050,top:3299,x:5050+190,y:3299+210}},
 ];
 function getZoneIntroElement(zone){
   return document.querySelector(
-    '.zone-intro-creative[data-zone="'+zone+'"], '+
-    '.zone-intro-card[data-zone="'+zone+'"], '+
-    '.intro-card[data-zone="'+zone+'"], '+
     '.zic-origin[data-zone="'+zone+'"], '+
-    '.zic-hobby[data-zone="'+zone+'"]'
+    '.zic-portfolio[data-zone="'+zone+'"], '+
+    '.zic-hobby[data-zone="'+zone+'"], '+
+    '.zic-fun[data-zone="'+zone+'"], '+
+    '.intro-card[data-zone="'+zone+'"], '+
+    '.zone-intro-creative[data-zone="'+zone+'"], '+
+    '.zone-intro-card[data-zone="'+zone+'"]'
   );
 }
 function getZoneIntroCenter(target){
