@@ -2463,7 +2463,7 @@ body.map-expanded .scroll-counter{display:none!important}
       <span style="font-weight:700;min-width:20px;text-align:center">0</span>
     </div>
     <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#42A5F5,#90CAF9);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'launchpad')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(66,165,245,0.1);color:#1565C0">7 Projects · Cases</span></div>
-    <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('portfolio')" style="margin:14px 0 0;padding:12px 16px;border-radius:16px;border:1px dashed rgba(66,165,245,0.35);background:rgba(66,165,245,0.1);color:#1565C0">
+    <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('portfolio')" style="margin:14px 0 0;padding:14px 16px;border-radius:16px;border:1.5px dashed rgba(66,165,245,0.45);background:rgba(66,165,245,0.12);color:#1565C0;cursor:pointer;z-index:10;position:relative">
       <span class="zth-dot" style="background:#42A5F5"></span>
       TAP TO VIEW ALL PROJECTS
     </div>
@@ -3069,7 +3069,7 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="istat"><span class="istat-num">∞</span><span class="istat-label">Chai ☕</span></div>
   </div>
   <div class="intro-cta">↕ drag & explore — the whole world is here ✦</div>
-  <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('work')" style="margin:14px 0 0;padding:12px 16px;border-radius:16px;border:1px dashed rgba(100,180,255,0.35);background:rgba(100,180,255,0.08);color:rgba(100,180,255,0.85)">
+  <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('work')" style="margin:14px 0 0;padding:14px 16px;border-radius:16px;border:1.5px dashed rgba(100,180,255,0.5);background:rgba(100,180,255,0.12);color:rgba(100,180,255,0.95);cursor:pointer;z-index:10;position:relative">
     <span class="zth-dot" style="background:#64B5F6"></span>
     TAP TO OPEN WORK ZONE
   </div>
@@ -4021,13 +4021,6 @@ function runAxeAttackSequence(funCard){
   }
 
   scenes.forEach((scene,i)=>{
-    // Camera cut (black flash)
-    if(i>0){
-      setTimeout(()=>{
-        overlay.classList.add('cut');
-        setTimeout(()=>overlay.classList.remove('cut'),120);
-      },scene.delay-150);
-    }
 
     // Spawn flying axe projectile
     setTimeout(()=>{
@@ -4157,9 +4150,6 @@ function runAxeAttackSequence(funCard){
   // Final scene: big impact flash + bring axe companion back
   const totalDur=scenes[scenes.length-1].delay+scenes[scenes.length-1].dur+500;
   setTimeout(()=>{
-    // Final camera cut
-    overlay.classList.add('cut');
-    setTimeout(()=>overlay.classList.remove('cut'),200);
 
     // Big flash on the card
     const flash=document.createElement('div');
@@ -4264,19 +4254,31 @@ function cycleIntroCards(e){
   });
   // Trigger Fun Zone attack animation when navigating to it
   if(target.zone==='fun'){
-    setTimeout(()=>{
+    const t1=setTimeout(()=>{
       const funCard=document.querySelector('.zic-fun');
       if(funCard){
         funCard.classList.remove('fun-attack');
         void funCard.offsetWidth;
         funCard.classList.add('fun-attack');
         if(typeof playSfx==='function')playSfx('pop');
-        setTimeout(()=>funCard.classList.remove('fun-attack'),2500);
+        const t2=setTimeout(()=>funCard.classList.remove('fun-attack'),2500);
+        window._funAttackTimers.push(t2);
 
-        // ── Phase 2: Axe Companion Attack with camera cuts & scars ──
-        setTimeout(()=>runAxeAttackSequence(funCard),2600);
+        // ── Phase 2: Axe Companion Attack with scars ──
+        const t3=setTimeout(()=>runAxeAttackSequence(funCard),2600);
+        window._funAttackTimers.push(t3);
       }
     },600);
+    window._funAttackTimers=(window._funAttackTimers||[]);
+    window._funAttackTimers.push(t1);
+  } else {
+    // Cancel any running fun attack when navigating away
+    if(window._funAttackTimers){
+      window._funAttackTimers.forEach(t=>clearTimeout(t));
+      window._funAttackTimers=[];
+    }
+    const funCard=document.querySelector('.zic-fun');
+    if(funCard)funCard.classList.remove('fun-attack');
   }
   const toast=document.createElement('div');
   toast.className='boundary-toast edge-bottom show';
@@ -6423,7 +6425,7 @@ document.addEventListener('touchstart',e=>{
 
 function sD(e){
   // Block sticker drag when interacting with internal interactive elements
-  const noDragTarget=e.target&&e.target.closest('.tlg-move-btn,button,input,textarea,select,a,[data-no-sticker-drag="true"],.tg-char,.tg-throne-target,.ek-ingredient,.ek-bowl,.sb-skill,.sb-stack-zone,.scratch-cover,.sticker-mood input[type=range],.zic-tag,.zic-icon,.zic-counter,.zic-body,.zic-explore-btn,.zic-items-count,.tlg-item,.c-emoji,.c-count');
+  const noDragTarget=e.target&&e.target.closest('.tlg-move-btn,button,input,textarea,select,a,[data-no-sticker-drag="true"],.tg-char,.tg-throne-target,.ek-ingredient,.ek-bowl,.sb-skill,.sb-stack-zone,.scratch-cover,.sticker-mood input[type=range],.zic-tag,.zic-icon,.zic-counter,.zic-body,.zic-explore-btn,.zic-items-count,.tlg-item,.c-emoji,.c-count,.zic-tap-hint');
   if(noDragTarget){e.stopPropagation();return;}
   // For cards with drag handles, only allow dragging from the handle
   const stickerEl=e.target.closest('.sticker');
