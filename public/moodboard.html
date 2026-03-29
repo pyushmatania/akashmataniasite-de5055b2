@@ -6027,8 +6027,8 @@ function autoArrangeMoodboardItems(){
 
   // Categorize all stickers
   stickers.forEach(sticker=>{
-    // Keep companion stickers fixed near intro cards (do NOT auto-rearrange)
-    if(sticker.classList.contains('zic-companion')||sticker.dataset.locked==='1'){
+    // Keep companion stickers and center guidance cluster fixed (do NOT auto-rearrange)
+    if(sticker.classList.contains('zic-companion')||sticker.dataset.locked==='1'||isCenterGuideSticker(sticker)){
       fixedCompanions.push(sticker);
       return;
     }
