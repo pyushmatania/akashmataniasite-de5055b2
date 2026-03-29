@@ -1732,7 +1732,7 @@ body.map-expanded .scroll-counter{display:none!important}
 /* ── Introduction Cinematic Glitch Attack ─────────────────── */
 @keyframes introductionBoot{0%{opacity:0;transform:scaleY(0.02) scaleX(1.1);filter:brightness(8) blur(4px)}15%{opacity:1;transform:scaleY(1.1) scaleX(1);filter:brightness(3) blur(1px)}25%{transform:scaleY(0.97) scaleX(1.02)}35%{transform:scaleY(1.02) scaleX(0.99)}100%{transform:scaleY(1) scaleX(1);filter:brightness(1)}}
 @keyframes introductionGlitchH{0%,100%{clip-path:none;transform:none}5%{clip-path:inset(20% 0 70% 0);transform:translateX(-6px)}10%{clip-path:inset(60% 0 10% 0);transform:translateX(8px)}15%{clip-path:inset(40% 0 35% 0);transform:translateX(-4px)}20%{clip-path:none;transform:translateX(0)}}
-@keyframes originScanSweep{0%{top:-100%;opacity:0.9}100%{top:110%;opacity:0}}
+@keyframes introductionScanSweep{0%{top:-100%;opacity:0.9}100%{top:110%;opacity:0}}
 @keyframes introductionDataCorrupt{0%{opacity:0;transform:translateY(-20px) skewX(-15deg);filter:blur(8px) brightness(4)}40%{opacity:1;transform:translateY(2px) skewX(3deg);filter:blur(0) brightness(2)}60%{transform:translateY(-2px) skewX(-2deg)}100%{transform:translateY(0) skewX(0);filter:brightness(1)}}
 @keyframes introductionImpactRing{0%{transform:translate(-50%,-50%) scale(0);opacity:1;border-width:4px}100%{transform:translate(-50%,-50%) scale(3.5);opacity:0;border-width:1px}}
 @keyframes introductionShake{0%,100%{transform:rotate(2deg)}8%{transform:rotate(2deg) translate(-8px,-6px)}16%{transform:rotate(2deg) translate(9px,4px)}24%{transform:rotate(2deg) translate(-5px,8px)}32%{transform:rotate(2deg) translate(7px,-5px)}40%{transform:rotate(2deg) translate(-4px,3px)}50%{transform:rotate(2deg) translate(0,0)}}
@@ -2393,7 +2393,7 @@ body.map-expanded .scroll-counter{display:none!important}
     <div style="padding:14px 16px 16px;font-family:monospace">
       <!-- Boot lines -->
       <div style="font-size:0.62rem;color:rgba(76,175,80,0.55);margin-bottom:10px;line-height:1.6">
-        <div><span style="color:rgba(76,175,80,0.4)">$</span> <span style="color:rgba(76,175,80,0.8)">cat</span> origin.log</div>
+        <div><span style="color:rgba(76,175,80,0.4)">$</span> <span style="color:rgba(76,175,80,0.8)">cat</span> introduction.log</div>
       </div>
       <!-- Life log entries — zic-introduction-boot-line enables corrupt-in animation on attack -->
       <div style="font-size:0.67rem;line-height:1.75;margin-bottom:12px">
@@ -3687,7 +3687,7 @@ body.map-expanded .scroll-counter{display:none!important}
 .zp-skills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:24px}
 .zp-skill{padding:5px 12px;font-family:var(--font-fun);font-size:0.6rem;font-weight:700;letter-spacing:0.05em;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);color:rgba(255,255,255,0.6)}
 
-/* Contact strip (in origin panel) */
+/* Contact strip (in introduction panel) */
 .zp-contact-strip{padding:22px;margin:0 -28px;background:rgba(255,255,255,0.04);border-top:1px solid rgba(255,255,255,0.08)}
 .zp-contact-email{display:block;font-family:var(--font-fun);font-size:1rem;font-weight:800;color:#fff;margin-bottom:14px;letter-spacing:-0.01em;word-break:break-all}
 .zp-contact-links{display:flex;gap:10px}
@@ -4201,7 +4201,7 @@ function closeWorkPanel(){
 // ===== ZONE NAVIGATION FROM BOTTOM NAV =====
 const zoneTargets={
   hub:{x:3500,y:3500},       // canvas center — hub zone dissolved
-  origin:{x:1750,y:1166},
+  introduction:{x:1750,y:1166},
   work:{x:5250,y:1166},      warroom:{x:5250,y:1166},
   portfolio:{x:1750,y:3499}, launchpad:{x:1750,y:3499},
   hobby:{x:1750,y:5833},     playground:{x:1750,y:5833},
@@ -5663,7 +5663,7 @@ function positionBadgeBandages(){
 
 function placeZoneSignposts(signposts){
   const anchors={
-    origin:{left:1000,top:200},
+    introduction:{left:1000,top:200},
     work:{left:4500,top:200},
     portfolio:{left:1000,top:3250},
     hobby:{left:3200,top:5250},
