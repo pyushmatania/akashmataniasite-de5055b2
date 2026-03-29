@@ -4317,7 +4317,7 @@ function cycleIntroCards(e){
     top:Math.max(0,Math.min(center.y*scale-vp.clientHeight/2,maxY)),
     behavior:'smooth'
   });
-  // Trigger Fun Zone attack animation when navigating to it
+  // Trigger zone-specific animations when navigating
   if(target.zone==='fun'){
     const t1=setTimeout(()=>{
       const funCard=document.querySelector('.zic-fun');
@@ -4328,16 +4328,19 @@ function cycleIntroCards(e){
         if(typeof playSfx==='function')playSfx('pop');
         const t2=setTimeout(()=>funCard.classList.remove('fun-attack'),2500);
         window._funAttackTimers.push(t2);
-
-        // ── Phase 2: Axe Companion Attack with scars ──
         const t3=setTimeout(()=>runAxeAttackSequence(funCard),2600);
         window._funAttackTimers.push(t3);
       }
     },600);
     window._funAttackTimers=(window._funAttackTimers||[]);
     window._funAttackTimers.push(t1);
+  } else if(target.zone==='work'){
+    // Re-trigger stamp slam animation
+    setTimeout(()=>{
+      const stamp=document.querySelector('.zic-work .zic-stamp');
+      if(stamp){stamp.style.animation='none';void stamp.offsetWidth;stamp.style.animation='stampSlam 0.6s cubic-bezier(0.34,1.56,0.64,1) both';}
+    },400);
   } else {
-    // Cancel any running fun attack when navigating away
     if(window._funAttackTimers){
       window._funAttackTimers.forEach(t=>clearTimeout(t));
       window._funAttackTimers=[];
