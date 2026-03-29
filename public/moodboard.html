@@ -6054,7 +6054,7 @@ function autoArrangeMoodboardItems(){
     }
     if(isBadgeSticker(sticker)){badges.push(sticker);return;}
     if(isIntroCard(sticker)){
-      const zone=sticker.dataset.zone||(sticker.classList.contains('intro-card')?'work':'fun');
+      const zone=sticker.dataset.zone||'origin';
       introCards[zone]=sticker;
       return;
     }
