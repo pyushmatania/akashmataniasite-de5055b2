@@ -74,7 +74,7 @@ body.stickers-ready .sticker{opacity:1}
 .zone-boundary-svg{position:absolute;left:0;top:0;width:7000px;height:7000px;pointer-events:none;z-index:2;overflow:visible}
 .zone-boundary-svg path{fill:none;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40 18;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12))}
 /* Zone intro cards — bold card style */
-.zone-intro-creative{width:440px;min-height:420px;border-radius:28px;overflow:hidden;background:#fff;border:2.5px solid #f0ece6;box-shadow:0 12px 48px rgba(0,0,0,0.12),0 4px 12px rgba(0,0,0,0.06);cursor:default;position:relative}
+.zone-intro-creative{width:440px;min-height:340px;border-radius:28px;overflow:hidden;background:#fff;border:2.5px solid #f0ece6;box-shadow:0 12px 48px rgba(0,0,0,0.12),0 4px 12px rgba(0,0,0,0.06);cursor:default;position:relative}
 .zone-intro-creative .zic-header{padding:28px 26px 18px;position:relative;overflow:hidden}
 .zone-intro-creative .zic-icon{width:60px;height:60px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:14px;position:relative;z-index:1;border:2px solid rgba(255,255,255,0.4);box-shadow:0 6px 20px rgba(0,0,0,0.15);transition:transform 0.3s}
 .zone-intro-creative .zic-icon:hover{transform:scale(1.15) rotate(5deg)}
@@ -1654,9 +1654,9 @@ body.map-expanded .scroll-counter{display:none!important}
 /* ── WORK: Bold dark professional card ── */
 .zic-work{
   width:440px;background:linear-gradient(145deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);
-  border-radius:20px;padding:36px 28px 28px;text-align:center;
+  border-radius:20px;padding:28px 24px 22px;text-align:center;
   box-shadow:0 12px 48px rgba(0,0,0,0.3),0 2px 8px rgba(15,52,96,0.2);
-  border:1.5px solid rgba(100,180,255,0.15);min-height:520px;
+  border:1.5px solid rgba(100,180,255,0.15);min-height:380px;
   transform:rotate(-0.5deg);color:#e0e0e0;
 }
 .zic-work .zic-status{display:inline-flex;align-items:center;gap:6px;background:rgba(100,180,255,0.12);border:1px solid rgba(100,180,255,0.3);border-radius:20px;padding:4px 12px 4px 8px;font-size:0.68rem;color:#64B4FF;font-weight:600;margin-bottom:16px}
@@ -1683,11 +1683,11 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-work .zic-stat-label{font-size:0.5rem;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.04em;display:block;margin-top:2px}
 
 /* ── PORTFOLIO: Tall Laptop — Dark Indigo ── */
-.zic-portfolio{width:460px;padding:0;min-height:560px}
+.zic-portfolio{width:440px;padding:0;min-height:400px}
 .zic-portfolio .zic-screen{
   background:linear-gradient(160deg,#1a1a2e,#16213e,#0f3460);
-  border-radius:16px 16px 0 0;border:2px solid rgba(126,87,194,0.25);padding:36px 24px 28px;
-  position:relative;overflow:hidden;min-height:480px;
+  border-radius:16px 16px 0 0;border:2px solid rgba(126,87,194,0.25);padding:28px 22px 22px;
+  position:relative;overflow:hidden;min-height:340px;
   box-shadow:inset 0 0 40px rgba(126,87,194,0.06);
 }
 .zic-portfolio .zic-screen::before{content:'';position:absolute;top:0;left:0;right:0;height:28px;background:rgba(126,87,194,0.12);border-radius:14px 14px 0 0}
@@ -1721,7 +1721,7 @@ body.map-expanded .scroll-counter{display:none!important}
 @keyframes termBlink{0%,100%{opacity:1}50%{opacity:0}}
 @keyframes bootBar{0%{width:0%}100%{width:100%}}
 @keyframes originGlow{0%,100%{box-shadow:0 0 30px rgba(76,175,80,0.15),0 12px 48px rgba(0,0,0,0.35)}50%{box-shadow:0 0 50px rgba(76,175,80,0.3),0 12px 48px rgba(0,0,0,0.35)}}
-.zic-origin{width:360px;padding:0;transform:rotate(2deg);min-height:440px;animation:originGlow 4s ease-in-out infinite!important}
+.zic-origin{width:380px;padding:0;transform:rotate(2deg);min-height:360px;animation:originGlow 4s ease-in-out infinite!important}
 .zic-origin .zic-polaroid-bg1{position:absolute;top:8px;left:-12px;right:12px;bottom:-8px;background:#0A120A;border-radius:4px;transform:rotate(-4deg);z-index:0;box-shadow:2px 3px 10px rgba(0,0,0,0.4)}
 .zic-origin .zic-polaroid-bg2{position:absolute;top:4px;left:10px;right:-10px;bottom:-12px;background:#0F1A0F;border-radius:4px;transform:rotate(3deg);z-index:1;box-shadow:2px 3px 10px rgba(0,0,0,0.3)}
 .zic-origin .zic-tape{position:absolute;top:-14px;left:50%;transform:translateX(-50%) rotate(-2deg);width:80px;height:28px;background:rgba(76,175,80,0.12);z-index:4;box-shadow:0 1px 3px rgba(0,0,0,0.2);border:1px solid rgba(76,175,80,0.08)}
@@ -1762,11 +1762,11 @@ body.map-expanded .scroll-counter{display:none!important}
 /* ── HOBBY: Vinyl Record Player ── */
 @keyframes vinylSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 @keyframes vinylGlow{0%,100%{box-shadow:0 0 30px rgba(255,140,0,0.15),0 12px 48px rgba(0,0,0,0.45)}50%{box-shadow:0 0 55px rgba(255,140,0,0.3),0 12px 48px rgba(0,0,0,0.45)}}
-.zic-hobby{width:360px;padding:0;min-height:480px;animation:vinylGlow 4s ease-in-out infinite!important}
+.zic-hobby{width:380px;padding:0;min-height:380px;animation:vinylGlow 4s ease-in-out infinite!important}
 /* Turntable top section */
-.zic-hobby .zic-turntable{background:linear-gradient(160deg,#0C0818,#170E2A,#0C0818);border-radius:20px 20px 0 0;padding:22px 22px 18px;position:relative;min-height:220px;border:2px solid rgba(255,140,0,0.15);border-bottom:none;overflow:hidden}
+.zic-hobby .zic-turntable{background:linear-gradient(160deg,#0C0818,#170E2A,#0C0818);border-radius:20px 20px 0 0;padding:18px 20px 14px;position:relative;min-height:180px;border:2px solid rgba(255,140,0,0.15);border-bottom:none;overflow:hidden}
 /* Platter (spinning vinyl disc) */
-.zic-hobby .zic-platter{width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,#1A1228 0%,#0A0614 60%,#2A1A3A 100%);box-shadow:0 0 20px rgba(255,140,0,0.12),0 8px 24px rgba(0,0,0,0.5),inset 0 2px 4px rgba(255,255,255,0.04);position:relative;margin:0 auto;animation:vinylSpin 4s linear infinite}
+.zic-hobby .zic-platter{width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,#1A1228 0%,#0A0614 60%,#2A1A3A 100%);box-shadow:0 0 20px rgba(255,140,0,0.12),0 8px 24px rgba(0,0,0,0.5),inset 0 2px 4px rgba(255,255,255,0.04);position:relative;margin:0 auto;animation:vinylSpin 4s linear infinite}
 /* Vinyl groove rings */
 .zic-hobby .zic-platter::before{content:'';position:absolute;inset:6px;border-radius:50%;background:repeating-radial-gradient(circle at center,transparent 0px,transparent 5px,rgba(255,255,255,0.025) 5px,rgba(255,255,255,0.025) 6px);pointer-events:none}
 /* Vinyl center label */
@@ -1806,17 +1806,17 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-hobby-impact{position:absolute;top:40%;left:50%;border-radius:50%;border:3px solid #FF8C00;pointer-events:none;z-index:30;animation:originImpactRing 0.8s ease-out forwards}
 
 /* ── FUN: Dark arcade cabinet — masculine gaming ── */
-.zic-fun{width:440px;padding:0;min-height:520px}
+.zic-fun{width:440px;padding:0;min-height:380px}
 .zic-fun .zic-tv{
   background:linear-gradient(145deg,#1a1a1a,#2d2d2d,#1a1a1a);
-  border-radius:20px;padding:24px;position:relative;
+  border-radius:20px;padding:20px;position:relative;
   box-shadow:6px 8px 30px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.05);
-  border:2px solid rgba(255,69,0,0.25);min-height:460px;
+  border:2px solid rgba(255,69,0,0.25);min-height:340px;
 }
 .zic-fun .zic-tv-screen{
   background:linear-gradient(135deg,#0a0a0a,#1a1a2e,#0a0a0a);
-  border-radius:16px;padding:24px 20px;position:relative;overflow:hidden;
-  box-shadow:inset 0 0 20px rgba(255,69,0,0.08);border:2px solid rgba(255,69,0,0.15);min-height:340px;
+  border-radius:16px;padding:20px 18px;position:relative;overflow:hidden;
+  box-shadow:inset 0 0 20px rgba(255,69,0,0.08);border:2px solid rgba(255,69,0,0.15);min-height:260px;
 }
 .zic-fun .zic-scanlines{position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 2px,rgba(255,69,0,0.02) 2px,rgba(255,69,0,0.02) 4px);z-index:1;pointer-events:none;border-radius:14px}
 .zic-fun .zic-static{position:absolute;inset:0;opacity:0.02;z-index:0}
