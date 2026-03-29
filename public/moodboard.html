@@ -5093,96 +5093,125 @@ function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
 }
 
 const HARDCODED_POSITIONS={
-  's005':{l:210,t:220,r:-3},
-  's006':{l:560,t:200,r:3},
-  's088':{l:960,t:215,r:-2},
-  's059':{l:1730,t:215,r:1},
-  's039':{l:2350,t:220,r:2},
-  's080':{l:2680,t:200,r:-3},
-  's031':{l:210,t:490,r:-4},
-  's032':{l:455,t:520,r:3},
-  's033':{l:710,t:490,r:-2},
-  's034':{l:1000,t:505,r:2},
-  's087':{l:2680,t:490,r:3},
-  's036':{l:210,t:760,r:-4},
-  's037':{l:445,t:795,r:3},
-  's078':{l:700,t:765,r:-3},
-  's076':{l:210,t:1010,r:-3},
-  's077':{l:455,t:1040,r:3},
-  's035':{l:730,t:1010,r:2},
-  's040':{l:2100,t:1000,r:3},
-  's041':{l:2400,t:1015,r:-3},
-  's038':{l:210,t:1540,r:2},
-  's007':{l:3720,t:235,r:2},
-  's008':{l:4000,t:220,r:-3},
-  's009':{l:3720,t:505,r:-3},
-  's010':{l:3960,t:535,r:2},
-  's011':{l:4200,t:505,r:-3},
-  's012':{l:4510,t:220,r:3},
-  's013':{l:4810,t:235,r:-2},
-  's014':{l:4510,t:510,r:3},
-  's015':{l:3720,t:760,r:-2},
-  's016':{l:4010,t:750,r:3},
-  's081':{l:4620,t:750,r:2},
-  's061':{l:5530,t:225,r:2},
-  's073':{l:5850,t:215,r:-3},
-  's074':{l:6100,t:250,r:3},
-  's075':{l:6370,t:220,r:-2},
-  's084':{l:5530,t:500,r:-3},
-  's086':{l:5900,t:490,r:4},
-  's090':{l:3730,t:1060,r:-3},
-  's091':{l:3990,t:1075,r:-15},
-  's055':{l:3730,t:1490,r:-3},
-  's089':{l:6100,t:1470,r:2},
-  's018':{l:220,t:2570,r:-3},
-  's019':{l:460,t:2550,r:3},
-  's020':{l:710,t:2570,r:-2},
-  's021':{l:220,t:2800,r:3},
-  's022':{l:460,t:2815,r:-3},
-  's023':{l:710,t:2800,r:2},
-  's024':{l:220,t:3030,r:-2},
-  's025':{l:460,t:3045,r:3},
-  's026':{l:710,t:3030,r:-3},
-  's027':{l:220,t:3830,r:2},
-  's028':{l:460,t:3845,r:-3},
-  's017':{l:2100,t:2560,r:2},
-  's029':{l:2450,t:2580,r:-15},
-  's030':{l:2100,t:2810,r:-2},
-  's079':{l:2380,t:3060,r:-1},
-  's056':{l:2100,t:3830,r:3},
-  's054':{l:3720,t:2560,r:-2},
-  's057':{l:4010,t:2545,r:1},
-  's060':{l:4310,t:2565,r:3},
-  's062':{l:4570,t:2548,r:-2},
-  's063':{l:5560,t:2565,r:2},
-  's064':{l:5850,t:2548,r:-3},
-  's065':{l:6140,t:2565,r:3},
-  's066':{l:6440,t:2555,r:-2},
-  's067':{l:3720,t:2815,r:3},
-  's068':{l:3970,t:2840,r:-2},
-  's069':{l:4270,t:2800,r:2},
-  's070':{l:4580,t:2820,r:-3},
-  's071':{l:5560,t:2810,r:2},
-  's082':{l:5870,t:2835,r:-3},
-  's083':{l:6170,t:2810,r:2},
-  's085':{l:5560,t:3340,r:3},
-  's094':{l:3720,t:3830,r:2},
-  's095':{l:3990,t:3845,r:-3},
-  's042':{l:210,t:4890,r:-3},
-  's043':{l:660,t:4875,r:3},
-  's044':{l:1120,t:4890,r:-2},
-  's045':{l:1580,t:4875,r:2},
-  's046':{l:2040,t:4890,r:-3},
-  's047':{l:2500,t:4875,r:3},
-  's048':{l:2960,t:4890,r:-3},
-  's049':{l:3420,t:4875,r:2},
-  's050':{l:3880,t:5200,r:-2},
-  's051':{l:4340,t:5230,r:3},
-  's052':{l:4800,t:5200,r:-3},
-  's053':{l:5260,t:5480,r:2},
-  's058':{l:5720,t:5215,r:-2},
-  's092':{l:6180,t:5250,r:3},
-  's093':{l:6500,t:5570,r:-1},
+  // ── ORIGIN ZONE (x:150-3350, y:150-2183) ─────────────────────────────────
+  // Row 1 – top band, 8 cards spread full width (~420px apart)
+  's005':{l:190,t:185,r:-3},
+  's006':{l:610,t:170,r:3},
+  's088':{l:1030,t:185,r:-2},
+  's059':{l:1450,t:175,r:1},
+  's039':{l:1870,t:185,r:2},
+  's080':{l:2290,t:170,r:-3},
+  's087':{l:2710,t:185,r:3},
+  's034':{l:3130,t:185,r:2},
+  // Row 2 – upper-mid, 3 cards left side
+  's031':{l:190,t:545,r:-4},
+  's032':{l:530,t:575,r:3},
+  's033':{l:870,t:545,r:-2},
+  // Row 3 – mid, flanking intro card (intro ~x:1580, y:956)
+  's036':{l:190,t:1085,r:-4},
+  's037':{l:530,t:1115,r:3},
+  's078':{l:870,t:1085,r:-3},
+  's040':{l:2100,t:1085,r:3},
+  's041':{l:2470,t:1100,r:-3},
+  's035':{l:2840,t:1085,r:2},
+  // Row 4 – lower band, 3 cards (fills bottom half of zone)
+  's076':{l:190,t:1760,r:-3},
+  's077':{l:620,t:1790,r:3},
+  's038':{l:1050,t:1760,r:2},
+
+  // ── WORK ZONE (x:3650-6850, y:150-2183) ──────────────────────────────────
+  // Row 1 – top band, 8 cards spread full width (~400px apart)
+  's007':{l:3760,t:190,r:2},
+  's008':{l:4160,t:175,r:-3},
+  's012':{l:4560,t:190,r:3},
+  's013':{l:4960,t:175,r:-2},
+  's061':{l:5360,t:190,r:2},
+  's073':{l:5760,t:175,r:-3},
+  's074':{l:6160,t:190,r:3},
+  's075':{l:6560,t:175,r:-2},
+  // Row 2 – upper-mid, 7 cards full width
+  's009':{l:3760,t:580,r:-3},
+  's010':{l:4190,t:610,r:2},
+  's011':{l:4620,t:580,r:-3},
+  's014':{l:5050,t:595,r:3},
+  's084':{l:5480,t:570,r:-3},
+  's086':{l:5870,t:560,r:4},
+  's081':{l:6260,t:580,r:2},
+  // Row 3 – mid, 4 cards left side (intro ~x:5060, y:956)
+  's015':{l:3760,t:1060,r:-2},
+  's016':{l:4160,t:1045,r:3},
+  's090':{l:4560,t:1060,r:-3},
+  's091':{l:4960,t:1075,r:-15},
+  // Row 4 – lower band, 2 anchor cards in corners
+  's055':{l:3760,t:1760,r:-3},
+  's089':{l:6560,t:1760,r:2},
+
+  // ── PORTFOLIO ZONE (x:150-3350, y:2483-4516) ─────────────────────────────
+  // Row 1 – top band, 5 cards
+  's018':{l:200,t:2540,r:-3},
+  's019':{l:610,t:2525,r:3},
+  's020':{l:1020,t:2540,r:-2},
+  's017':{l:2120,t:2530,r:2},
+  's029':{l:2560,t:2545,r:-15},
+  // Row 2 – upper-mid, 5 cards
+  's021':{l:200,t:2900,r:3},
+  's022':{l:610,t:2920,r:-3},
+  's023':{l:1020,t:2900,r:2},
+  's030':{l:2120,t:2890,r:-2},
+  's079':{l:2560,t:2910,r:-1},
+  // Row 3 – left only, 3 cards (intro ~x:1560, y:3290)
+  's024':{l:200,t:3200,r:-2},
+  's025':{l:610,t:3220,r:3},
+  's026':{l:1020,t:3200,r:-3},
+  // Row 4 – lower band, 3 cards below intro
+  's027':{l:200,t:3970,r:2},
+  's028':{l:610,t:3985,r:-3},
+  's056':{l:2120,t:3970,r:3},
+
+  // ── FUN ZONE (x:3650-6850, y:2483-4516) ──────────────────────────────────
+  // Row 1 – top band, 8 cards spread full width (~405px apart)
+  's054':{l:3720,t:2540,r:-2},
+  's057':{l:4124,t:2525,r:1},
+  's060':{l:4528,t:2540,r:3},
+  's062':{l:4932,t:2525,r:-2},
+  's063':{l:5336,t:2540,r:2},
+  's064':{l:5740,t:2525,r:-3},
+  's065':{l:6144,t:2540,r:3},
+  's066':{l:6548,t:2525,r:-2},
+  // Row 2 – upper-mid, 7 cards
+  's067':{l:3720,t:2910,r:3},
+  's068':{l:4191,t:2930,r:-2},
+  's069':{l:4662,t:2910,r:2},
+  's070':{l:5133,t:2925,r:-3},
+  's071':{l:5604,t:2910,r:2},
+  's082':{l:6075,t:2930,r:-3},
+  's083':{l:6546,t:2910,r:2},
+  // Row 3 – single card right side beside intro (intro ~x:5060, y:3290)
+  's085':{l:5604,t:3600,r:3},
+  // Row 4 – lower band, 2 cards
+  's094':{l:3720,t:3970,r:2},
+  's095':{l:4191,t:3990,r:-3},
+
+  // ── HOBBY ZONE (x:150-6850, y:4816-6850) ─────────────────────────────────
+  // Row 1 – left band, 4 cards (intro ~x:1560, y:5623)
+  's042':{l:190,t:4890,r:-3},
+  's043':{l:680,t:4875,r:3},
+  's044':{l:1170,t:4890,r:-2},
+  's045':{l:1660,t:4875,r:2},
+  // Row 2 – mid-right, 4 cards
+  's046':{l:2150,t:5255,r:-3},
+  's047':{l:2660,t:5275,r:3},
+  's050':{l:3170,t:5255,r:-2},
+  's051':{l:3680,t:5240,r:3},
+  // Row 3 – far right, 4 cards
+  's052':{l:4190,t:5710,r:-3},
+  's053':{l:4700,t:5730,r:2},
+  's058':{l:5210,t:5710,r:-2},
+  's092':{l:5720,t:5700,r:3},
+  // Row 4 – bottom band, 3 cards (fills lower half of hobby zone)
+  's048':{l:3170,t:6360,r:-3},
+  's049':{l:3760,t:6380,r:2},
+  's093':{l:4350,t:6365,r:-1},
 };
 function autoArrangeMoodboardItems(){
   const stickers=getAllStickers();
@@ -5372,10 +5401,11 @@ async function runItemRearrange(triggeredByUser){
 
   // Try loading cloud layout fresh each time
   let usedCloud=false;
-  if(window._savedCloudLayout&&window._savedCloudLayout.length>0){
+  if(window._savedCloudLayout&&window._savedCloudLayout.length>0&&isLayoutVersionCompatible(window._savedCloudLayout)){
     applyLayout(window._savedCloudLayout);
     usedCloud=true;
   }else{
+    window._savedCloudLayout=null; // clear stale cache
     // Try fetching from cloud
     try{
       const loaded=await window.loadSavedLayout();
@@ -9578,7 +9608,7 @@ async function bootstrapMap(forceRescan){
     if(forceRescan||!hasAutoArranged){
       // Try loading cloud layout FIRST before auto-arranging
       let cloudLoaded=false;
-      if(window._savedCloudLayout&&window._savedCloudLayout.length>0){
+      if(window._savedCloudLayout&&window._savedCloudLayout.length>0&&typeof isLayoutVersionCompatible==='function'&&isLayoutVersionCompatible(window._savedCloudLayout)){
         applyLayout(window._savedCloudLayout);
         cloudLoaded=true;
       }else if(typeof window.loadSavedLayout==='function'){
@@ -10385,7 +10415,8 @@ function ekPick(el,e){
   const PIN_ROW_ID='22222222-2222-4222-8222-222222222222';
   const REST_BASE=`${SUPABASE_URL}/rest/v1`;
   const LAYOUT_FN_URL=`${SUPABASE_URL}/functions/v1/moodboard-layout`;
-  const LOCAL_LAYOUT_KEY='moodboard_layout_backup_v2';
+  const LOCAL_LAYOUT_KEY='moodboard_layout_backup_v3';
+  const LAYOUT_VERSION=3; // bump this to force all clients back to default HP positions
   const sb=(window.supabase&&typeof window.supabase.createClient==='function')
     ? window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}})
     : null;
@@ -10452,7 +10483,7 @@ function ekPick(el,e){
 
   function serializeLayout(){
     const stickers=ensureStableStickerIds(document.querySelectorAll('#canvas > .sticker'));
-    const data=[];
+    const data=[{_version:LAYOUT_VERSION}]; // version sentinel at index 0
     stickers.forEach((s,idx)=>{
       const id=s.id||'';
       const sid=s.dataset.sid||'';
@@ -10470,8 +10501,15 @@ function ekPick(el,e){
   }
 
 
+  function isLayoutVersionCompatible(data){
+    if(!Array.isArray(data)||!data.length)return false;
+    return data[0]&&data[0]._version===LAYOUT_VERSION;
+  }
+
   function applyLayout(data){
     if(!data||!data.length)return;
+    // Strip version sentinel before applying
+    if(data[0]&&data[0]._version!==undefined)data=data.slice(1);
     const stickers=ensureStableStickerIds(Array.from(document.querySelectorAll('#canvas > .sticker')));
     const used=new Set();
 
@@ -10821,22 +10859,30 @@ function ekPick(el,e){
       const layoutData=await loadLayoutFromCloud();
 
       if(Array.isArray(layoutData)&&layoutData.length>0){
-        applyLayout(layoutData);
-        window._savedCloudLayout=layoutData;
-        console.log('[Layout] Restored saved layout from cloud ☁️',layoutData.length,'items');
-        setSyncStatus('loaded-cloud');
-        return true;
+        if(!isLayoutVersionCompatible(layoutData)){
+          console.log('[Layout] Cloud layout version mismatch — using fresh HP layout');
+        } else {
+          applyLayout(layoutData);
+          window._savedCloudLayout=layoutData;
+          console.log('[Layout] Restored saved layout from cloud ☁️',layoutData.length,'items');
+          setSyncStatus('loaded-cloud');
+          return true;
+        }
       }
 
       const localRaw=localStorage.getItem(LOCAL_LAYOUT_KEY);
       if(localRaw){
         const localData=JSON.parse(localRaw);
         if(Array.isArray(localData)&&localData.length>0){
-          applyLayout(localData);
-          window._savedCloudLayout=localData;
-          console.log('[Layout] Restored local backup layout',localData.length,'items');
-          setSyncStatus('loaded-local');
-          return true;
+          if(!isLayoutVersionCompatible(localData)){
+            console.log('[Layout] Local layout version mismatch — using fresh HP layout');
+          } else {
+            applyLayout(localData);
+            window._savedCloudLayout=localData;
+            console.log('[Layout] Restored local backup layout',localData.length,'items');
+            setSyncStatus('loaded-local');
+            return true;
+          }
         }
       }
     }catch(e){
