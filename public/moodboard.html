@@ -3835,7 +3835,7 @@ const _playIntroSequence=[
   {zone:'fun',label:'Fun',fallback:{left:5050,top:3299,x:5050+190,y:3299+210}},
 ];
 function getZoneIntroElement(zone){
-  return document.querySelector('.zone-intro-creative[data-zone="'+zone+'"], .zone-intro-card[data-zone="'+zone+'"], .intro-card[data-zone="'+zone+'"]');
+  return document.querySelector('.zone-intro-creative[data-zone="'+zone+'"], .zone-intro-card[data-zone="'+zone+'"], .intro-card[data-zone="'+zone+'"], .zic-'+zone+'[data-zone="'+zone+'"]');
 }
 function getZoneIntroCenter(target){
   const el=getZoneIntroElement(target.zone);
