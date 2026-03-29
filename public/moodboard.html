@@ -4021,13 +4021,6 @@ function runAxeAttackSequence(funCard){
   }
 
   scenes.forEach((scene,i)=>{
-    // Camera cut (black flash)
-    if(i>0){
-      setTimeout(()=>{
-        overlay.classList.add('cut');
-        setTimeout(()=>overlay.classList.remove('cut'),120);
-      },scene.delay-150);
-    }
 
     // Spawn flying axe projectile
     setTimeout(()=>{
