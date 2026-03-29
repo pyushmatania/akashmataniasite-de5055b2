@@ -9819,7 +9819,7 @@ function ensureZoneIntroCards(){
   const clsMap={work:'zic-work',portfolio:'zic-portfolio',origin:'zic-origin',hobby:'zic-hobby',fun:'zic-fun'};
 
   Object.entries(zoneMeta).forEach(([zone,meta])=>{
-    const existing=document.querySelector('.zone-intro-creative[data-zone="'+zone+'"], .zone-intro-card[data-zone="'+zone+'"], .intro-card[data-zone="'+zone+'"]');
+    const existing=document.querySelector('.zone-intro-creative[data-zone="'+zone+'"], .zone-intro-card[data-zone="'+zone+'"], .intro-card[data-zone="'+zone+'"], .zic-'+zone+'[data-zone="'+zone+'"]');
     if(existing){
       existing.dataset.zone=zone;
       if(!existing.dataset.type) existing.dataset.type='introduction';
