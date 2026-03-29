@@ -2426,7 +2426,7 @@ body.map-expanded .scroll-counter{display:none!important}
         <button onclick="event.stopPropagation();originAttack(this)" style="background:linear-gradient(135deg,#060E06,#0D200D);color:#4CAF50;border:1px solid rgba(76,175,80,0.35);border-radius:18px;padding:8px 14px;font-family:monospace;font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.06em;box-shadow:0 0 14px rgba(76,175,80,0.12)">⚡ BOOT_SEQUENCE</button>
         <button onclick="event.stopPropagation();scrollToZone(null,'origin')" style="background:linear-gradient(135deg,#1B5E20,#4CAF50);color:#fff;border:none;border-radius:18px;padding:8px 14px;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 3px 12px rgba(76,175,80,0.3)">🧭 Explore</button>
       </div>
-      <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('origin')" style="margin:12px -14px -16px;border-radius:0;border-left:none;border-right:none;border-bottom:none;border-top-color:rgba(76,175,80,0.2)">
+      <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('origin')" style="margin:12px -14px -16px;border-radius:0;border-left:none;border-right:none;border-bottom:none;border-top-color:rgba(76,175,80,0.2);color:rgba(76,175,80,0.8)">
         <span class="zth-dot" style="background:#4CAF50"></span>
         TAP TO OPEN FULL PROFILE
       </div>
@@ -2516,7 +2516,7 @@ body.map-expanded .scroll-counter{display:none!important}
       <button onclick="event.stopPropagation();hobbyChannelSurge(this)" style="flex:1;background:linear-gradient(135deg,#1A0A00,#3E1A00);color:#FF8C00;border:1px solid rgba(255,140,0,0.3);border-radius:12px;padding:9px 6px;font-family:monospace;font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 0 12px rgba(255,140,0,0.12)">▶ PLAY VINYL</button>
       <button onclick="event.stopPropagation();scrollToZone(null,'playground')" style="flex:1;background:linear-gradient(135deg,#E65100,#FF8C00);color:#fff;border:none;border-radius:12px;padding:9px 6px;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 3px 14px rgba(255,140,0,0.3)">🎮 Explore</button>
     </div>
-    <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('hobby')" style="margin-top:10px;border-radius:0;border-color:rgba(255,140,0,0.2);background:rgba(255,140,0,0.04)">
+    <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('hobby')" style="margin-top:10px;border-radius:0;border-color:rgba(255,140,0,0.2);background:rgba(255,140,0,0.04);color:rgba(255,140,0,0.75)">
       <span class="zth-dot" style="background:#FF8C00"></span>
       TAP TO OPEN HOBBY ZONE
     </div>
@@ -3069,7 +3069,7 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="istat"><span class="istat-num">∞</span><span class="istat-label">Chai ☕</span></div>
   </div>
   <div class="intro-cta">↕ drag & explore — the whole world is here ✦</div>
-  <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('work')" style="margin:10px -36px -32px;border-radius:0 0 28px 28px;border-left:none;border-right:none;border-bottom:none;border-top-color:rgba(100,180,255,0.2);background:rgba(100,180,255,0.04)">
+  <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('work')" style="margin:10px -36px -32px;border-radius:0 0 28px 28px;border-left:none;border-right:none;border-bottom:none;border-top-color:rgba(100,180,255,0.2);background:rgba(100,180,255,0.04);color:rgba(100,180,255,0.75)">
     <span class="zth-dot" style="background:#64B5F6"></span>
     TAP TO OPEN WORK ZONE
   </div>
@@ -3568,15 +3568,15 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-tap-hint{
   display:flex;align-items:center;justify-content:center;gap:6px;
   margin-top:14px;padding:9px 16px;
-  background:rgba(255,255,255,0.06);
-  border:1px dashed rgba(255,255,255,0.2);
+  background:rgba(0,0,0,0.04);
+  border:1px dashed rgba(0,0,0,0.13);
   cursor:pointer;
   font-family:var(--font-fun);font-size:0.62rem;font-weight:700;
-  color:rgba(255,255,255,0.45);letter-spacing:0.08em;text-transform:uppercase;
+  color:rgba(30,30,30,0.6);letter-spacing:0.08em;text-transform:uppercase;
   transition:background 0.2s,color 0.2s;
   animation:hwPulse 2.5s ease-in-out infinite;
 }
-.zic-tap-hint:hover{background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.8)}
+.zic-tap-hint:hover{background:rgba(0,0,0,0.09);color:rgba(0,0,0,0.85)}
 .zic-tap-hint .zth-dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:hwBlink 1.4s ease-in-out infinite}
 
 /* ═══════════════════════════════════════════════
@@ -6312,17 +6312,11 @@ document.querySelectorAll('.sticker-emoji').forEach((s,i)=>{
 function centerOnIntroCard(){
   const vpW=vp.clientWidth||window.innerWidth||390;
   const vpH=vp.clientHeight||window.innerHeight||700;
-  const introEl=document.querySelector('.intro-card');
-  let cx=10240*SCALE, cy=2810*SCALE; // Work zone center (intro card default)
-  if(introEl){
-    var iw=introEl.dataset.cw?parseFloat(introEl.dataset.cw):introEl.offsetWidth||340;
-    var ih=introEl.dataset.ch?parseFloat(introEl.dataset.ch):introEl.offsetHeight||400;
-    if(!introEl.dataset.cw){introEl.dataset.cw=iw;introEl.dataset.ch=ih;}
-    cx=(parseFloat(introEl.style.left)||10050)*SCALE + iw*SCALE/2;
-    cy=(parseFloat(introEl.style.top)||2600)*SCALE + ih*SCALE/2;
-  }
-  const targetLeft=Math.max(0,cx-vpW/2);
-  const targetTop=Math.max(0,cy-vpH/2);
+  // Center on Hub Welcome Cluster (world coords 3500, 3500)
+  const hubX=3500*SCALE;
+  const hubY=3500*SCALE;
+  const targetLeft=Math.max(0,hubX-vpW/2);
+  const targetTop=Math.max(0,hubY-vpH/2);
   vp.scrollLeft=targetLeft;
   vp.scrollTop=targetTop;
 }
