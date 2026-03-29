@@ -2426,6 +2426,10 @@ body.map-expanded .scroll-counter{display:none!important}
         <button onclick="event.stopPropagation();originAttack(this)" style="background:linear-gradient(135deg,#060E06,#0D200D);color:#4CAF50;border:1px solid rgba(76,175,80,0.35);border-radius:18px;padding:8px 14px;font-family:monospace;font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.06em;box-shadow:0 0 14px rgba(76,175,80,0.12)">⚡ BOOT_SEQUENCE</button>
         <button onclick="event.stopPropagation();scrollToZone(null,'origin')" style="background:linear-gradient(135deg,#1B5E20,#4CAF50);color:#fff;border:none;border-radius:18px;padding:8px 14px;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 3px 12px rgba(76,175,80,0.3)">🧭 Explore</button>
       </div>
+      <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('origin')" style="margin:12px -14px -16px;border-radius:0;border-left:none;border-right:none;border-bottom:none;border-top-color:rgba(76,175,80,0.2)">
+        <span class="zth-dot" style="background:#4CAF50"></span>
+        TAP TO OPEN FULL PROFILE
+      </div>
     </div>
   </div>
   <!-- Tape -->
@@ -2459,6 +2463,10 @@ body.map-expanded .scroll-counter{display:none!important}
       <span style="font-weight:700;min-width:20px;text-align:center">0</span>
     </div>
     <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#42A5F5,#90CAF9);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'launchpad')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(66,165,245,0.1);color:#1565C0">7 Projects · Cases</span></div>
+    <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('portfolio')" style="margin:10px -18px -8px;border-radius:0 0 28px 28px;border-left:none;border-right:none;border-bottom:none;border-top-color:rgba(66,165,245,0.18);background:rgba(66,165,245,0.04)">
+      <span class="zth-dot" style="background:#42A5F5"></span>
+      TAP TO VIEW ALL PROJECTS
+    </div>
   </div>
 </div>
 
@@ -2508,6 +2516,10 @@ body.map-expanded .scroll-counter{display:none!important}
       <button onclick="event.stopPropagation();hobbyChannelSurge(this)" style="flex:1;background:linear-gradient(135deg,#1A0A00,#3E1A00);color:#FF8C00;border:1px solid rgba(255,140,0,0.3);border-radius:12px;padding:9px 6px;font-family:monospace;font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 0 12px rgba(255,140,0,0.12)">▶ PLAY VINYL</button>
       <button onclick="event.stopPropagation();scrollToZone(null,'playground')" style="flex:1;background:linear-gradient(135deg,#E65100,#FF8C00);color:#fff;border:none;border-radius:12px;padding:9px 6px;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 3px 14px rgba(255,140,0,0.3)">🎮 Explore</button>
     </div>
+    <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('hobby')" style="margin-top:10px;border-radius:0;border-color:rgba(255,140,0,0.2);background:rgba(255,140,0,0.04)">
+      <span class="zth-dot" style="background:#FF8C00"></span>
+      TAP TO OPEN HOBBY ZONE
+    </div>
   </div>
 </div>
 
@@ -2536,6 +2548,10 @@ body.map-expanded .scroll-counter{display:none!important}
       <span style="font-weight:700;min-width:20px;text-align:center">0</span>
     </div>
     <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#AB47BC,#CE93D8);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'memealley')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(171,71,188,0.1);color:#7B1FA2">Memes · Games · Vibes</span></div>
+    <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('fun')" style="margin:10px -18px -8px;border-radius:0 0 28px 28px;border-left:none;border-right:none;border-bottom:none;border-top-color:rgba(171,71,188,0.2);background:rgba(171,71,188,0.04)">
+      <span class="zth-dot" style="background:#AB47BC"></span>
+      TAP TO OPEN FUN ZONE
+    </div>
   </div>
 </div>
 
@@ -3053,6 +3069,10 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="istat"><span class="istat-num">∞</span><span class="istat-label">Chai ☕</span></div>
   </div>
   <div class="intro-cta">↕ drag & explore — the whole world is here ✦</div>
+  <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('work')" style="margin:10px -36px -32px;border-radius:0 0 28px 28px;border-left:none;border-right:none;border-bottom:none;border-top-color:rgba(100,180,255,0.2);background:rgba(100,180,255,0.04)">
+    <span class="zth-dot" style="background:#64B5F6"></span>
+    TAP TO OPEN WORK ZONE
+  </div>
 </div>
 
 <!-- ===== Surrounding intro stickers — quirky & fun (all within 450px of intro card) ===== -->
@@ -3080,6 +3100,62 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="fc-title">🤯 Akash Facts <span class="fc-num" id="factNum">1/8</span></div>
   <div class="fc-body" id="factBody">Started his career at 19, managing a team of 12 before finishing college</div>
   <div class="fc-footer">tap for next fact →</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HUB WELCOME CLUSTER — scattered magazine cutout stickers
+     Hub center: world (3500, 3500)
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Doodle accents -->
+<div class="sticker hw-doodle hw-star-red" data-type="introduction" data-zone="hub" style="left:3062px;top:3102px" data-sid="s_hd1"></div>
+<div class="sticker hw-doodle hw-star-lime" data-type="introduction" data-zone="hub" style="left:3680px;top:3148px" data-sid="s_hd2"></div>
+<div class="sticker hw-doodle" data-type="introduction" data-zone="hub" style="left:3180px;top:3395px" data-sid="s_hd3">
+  <div class="hw-dot-row"><span></span><span></span><span></span><span></span><span></span></div>
+</div>
+
+<!-- Piece 1: WELCOME -->
+<div class="sticker hw-piece hw-welcome" data-type="introduction" data-zone="hub" style="left:3062px;top:3118px" data-sid="s_hw1">
+  <div class="hw-tape"></div>
+  WELCOME
+</div>
+
+<!-- Piece 2: to Akash's -->
+<div class="sticker hw-piece hw-toname" data-type="introduction" data-zone="hub" style="left:3390px;top:3092px" data-sid="s_hw2">
+  <div class="hw-tape hw-tape-R"></div>
+  <span class="hw-to">to</span>
+  <span class="hw-who">Akash's</span>
+</div>
+
+<!-- Piece 3: PORTFOLIO ✦ -->
+<div class="sticker hw-piece hw-portfolio-piece" data-type="introduction" data-zone="hub" style="left:3185px;top:3262px" data-sid="s_hw3">
+  <div class="hw-tape hw-tape-L"></div>
+  <span class="hw-hl">Portfolio</span> ✦
+  <span class="hw-star-badge">★</span>
+</div>
+
+<!-- Piece 4: Tagline strip -->
+<div class="sticker hw-piece hw-tagline" data-type="introduction" data-zone="hub" style="left:3062px;top:3400px" data-sid="s_hw4">
+  <div class="hw-tape"></div>
+  PM · Builder · Bengaluru · 8+ yrs · 0→1 builds
+</div>
+
+<!-- Piece 5: Play guide -->
+<div class="sticker hw-piece hw-play-guide" data-type="introduction" data-zone="hub" style="left:3330px;top:3478px" data-sid="s_hw5">
+  <div class="hw-play-icon">▶</div>
+  <div>
+    <span>HIT PLAY TO TOUR</span>
+    <span class="hw-pg-sub">explore all 5 zones on the map</span>
+  </div>
+</div>
+
+<!-- Piece 6: Zone pills — clickable zone shortcuts -->
+<div class="sticker hw-piece hw-zones-row" data-type="introduction" data-zone="hub" style="left:3062px;top:3570px" data-sid="s_hw6">
+  <button class="hw-zone-pill hw-zp-origin" onclick="event.stopPropagation();scrollToZone(null,'origin')">🌱 Origin</button>
+  <button class="hw-zone-pill hw-zp-work" onclick="event.stopPropagation();scrollToZone(null,'work')">💼 Work</button>
+  <button class="hw-zone-pill hw-zp-portfolio" onclick="event.stopPropagation();scrollToZone(null,'portfolio')">🚀 Portfolio</button>
+  <button class="hw-zone-pill hw-zp-hobby" onclick="event.stopPropagation();scrollToZone(null,'playground')">🎶 Hobby</button>
+  <button class="hw-zone-pill hw-zp-fun" onclick="event.stopPropagation();scrollToZone(null,'fun')">⚔️ Fun</button>
 </div>
 
 <!-- DNA Bars (below-left of intro card) -->
@@ -3344,11 +3420,420 @@ body.map-expanded .scroll-counter{display:none!important}
 </div>
 
 <nav class="bottom-nav">
-  <a href="#" onclick="scrollToZone(event,'hub')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Home</a>
-  <a href="#" id="workBtn" onclick="toggleWorkPanel(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Work</a>
-  <a href="#" class="active" id="playBtn" onclick="cycleIntroCards(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>Play</a>
-  <a href="#" id="aboutBtn" onclick="toggleAboutPanel(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>About</a>
-  <a href="#" id="contactBtn" onclick="toggleContactPanel(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg>Contact</a>
+
+<style>
+/* ═══════════════════════════════════════════════
+   HUB WELCOME CLUSTER — magazine cutout stickers
+═══════════════════════════════════════════════ */
+@keyframes hwFloat{0%,100%{transform:var(--hw-r) translateY(0)}50%{transform:var(--hw-r) translateY(-9px)}}
+@keyframes hwBlink{0%,100%{opacity:1}50%{opacity:0.35}}
+@keyframes hwPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+.hw-piece{
+  position:absolute;z-index:70;cursor:default;user-select:none;
+  animation:hwFloat 4s ease-in-out infinite;
+}
+.hw-tape{
+  position:absolute;top:-11px;left:50%;
+  transform:translateX(-50%) rotate(-1.5deg);
+  width:64px;height:20px;
+  background:rgba(255,255,255,0.5);
+  box-shadow:0 1px 4px rgba(0,0,0,0.1);
+  z-index:2;
+}
+.hw-tape-L{left:16px;transform:none rotate(-3deg)}
+.hw-tape-R{left:auto;right:16px;transform:rotate(2.5deg)}
+
+/* — WELCOME big title piece — */
+.hw-welcome{
+  --hw-r:rotate(-5deg);
+  background:#FF2B2B;color:#fff;
+  font-family:var(--font-fun);font-size:3rem;font-weight:900;
+  padding:14px 26px 18px;letter-spacing:-0.03em;text-transform:uppercase;line-height:1;
+  box-shadow:6px 8px 0 rgba(0,0,0,0.22),inset 0 -4px 0 rgba(0,0,0,0.18);
+  clip-path:polygon(0 3px,98% 0,100% 96%,2% 100%);
+  animation-duration:4.5s;
+}
+
+/* — "to Akash's" green piece — */
+.hw-toname{
+  --hw-r:rotate(3deg);
+  background:#CAFF00;color:#111;
+  font-family:var(--font-fun);padding:11px 20px 14px;
+  box-shadow:4px 6px 0 rgba(0,0,0,0.18),inset 0 -3px 0 rgba(0,0,0,0.1);
+  clip-path:polygon(1% 0,100% 2%,99% 100%,0 98%);
+  animation-delay:0.3s;animation-duration:3.8s;
+  line-height:1.2;
+}
+.hw-toname .hw-to{display:block;font-family:var(--font-hand);font-size:1rem;color:rgba(0,0,0,0.45)}
+.hw-toname .hw-who{display:block;font-size:1.9rem;font-weight:900;letter-spacing:-0.02em}
+
+/* — PORTFOLIO ✦ blue piece — */
+.hw-portfolio-piece{
+  --hw-r:rotate(-1.5deg);
+  background:linear-gradient(135deg,#0090FF,#0060DD);color:#fff;
+  font-family:var(--font-fun);font-size:2.2rem;font-weight:900;
+  padding:13px 24px 17px;letter-spacing:-0.02em;text-transform:uppercase;
+  box-shadow:5px 7px 0 rgba(0,40,120,0.28),inset 0 -4px 0 rgba(0,0,0,0.15);
+  clip-path:polygon(2% 0,100% 1%,98% 100%,0 99%);
+  animation-delay:0.6s;animation-duration:4.2s;
+  position:relative;
+}
+.hw-portfolio-piece .hw-hl{
+  background:#FFD700;color:#111;
+  padding:0 5px 2px;font-style:italic;
+  display:inline-block;transform:rotate(-1deg);
+  box-shadow:2px 3px 0 rgba(0,0,0,0.18);
+}
+.hw-portfolio-piece .hw-star-badge{
+  position:absolute;top:-14px;right:-10px;
+  font-size:1.6rem;
+  animation:hwBlink 1.6s ease-in-out infinite;
+  filter:drop-shadow(0 0 4px rgba(255,215,0,0.6));
+}
+
+/* — tagline yellow strip — */
+.hw-tagline{
+  --hw-r:rotate(0.8deg);
+  background:#FFD60A;color:#111;
+  font-family:var(--font-fun);font-size:0.78rem;font-weight:800;
+  padding:9px 22px;letter-spacing:0.13em;text-transform:uppercase;
+  box-shadow:3px 4px 0 rgba(0,0,0,0.16);
+  clip-path:polygon(0 1%,100% 0,99.5% 100%,0.5% 99%);
+  animation-delay:0.9s;animation-duration:3.6s;
+  white-space:nowrap;
+}
+.hw-tagline::before,.hw-tagline::after{
+  content:'';position:absolute;top:0;bottom:0;width:7px;background:rgba(0,0,0,0.08);
+}
+.hw-tagline::before{left:0}
+.hw-tagline::after{right:0}
+
+/* — Play guide dark piece — */
+.hw-play-guide{
+  --hw-r:rotate(2deg);
+  background:#111;color:#fff;
+  font-family:var(--font-fun);font-size:0.75rem;font-weight:700;
+  padding:11px 18px 11px 14px;letter-spacing:0.06em;
+  box-shadow:4px 5px 0 rgba(0,0,0,0.25);
+  animation-delay:1.2s;animation-duration:4.5s;
+  display:flex;align-items:center;gap:10px;
+  pointer-events:none;
+}
+.hw-play-guide .hw-play-icon{
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,#FF6B35,#FF4500);
+  display:flex;align-items:center;justify-content:center;font-size:0.75rem;
+  box-shadow:0 0 14px rgba(255,107,53,0.6);
+  animation:hwPulse 1.2s ease-in-out infinite;
+}
+.hw-play-guide .hw-pg-sub{
+  display:block;font-family:var(--font-hand);font-size:0.68rem;
+  color:rgba(255,255,255,0.4);font-weight:400;margin-top:1px;
+}
+
+/* — Zone pills row — */
+.hw-zones-row{
+  --hw-r:rotate(-0.5deg);
+  display:flex;gap:8px;flex-wrap:wrap;
+  padding:0;background:none;box-shadow:none;
+  animation-delay:1.5s;animation-duration:3.2s;
+  pointer-events:all;
+}
+.hw-zone-pill{
+  font-family:var(--font-fun);font-size:0.68rem;font-weight:800;
+  padding:8px 13px;border:none;cursor:pointer;
+  letter-spacing:0.06em;text-transform:uppercase;
+  box-shadow:3px 3px 0 rgba(0,0,0,0.22);
+  transition:transform 0.15s,box-shadow 0.15s;
+  clip-path:polygon(2% 0,100% 1%,98% 100%,0 99%);
+}
+.hw-zone-pill:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 rgba(0,0,0,0.22)}
+.hw-zone-pill:active{transform:translate(1px,1px);box-shadow:1px 1px 0 rgba(0,0,0,0.22)}
+.hw-zp-origin{background:#2E7D32;color:#fff}
+.hw-zp-work{background:#0D47A1;color:#fff}
+.hw-zp-portfolio{background:#6A1B9A;color:#fff}
+.hw-zp-hobby{background:#E65100;color:#fff}
+.hw-zp-fun{background:#B71C1C;color:#fff}
+
+/* — doodle accents — */
+.hw-doodle{position:absolute;z-index:69;pointer-events:none}
+.hw-star-red::before{content:'★';font-size:2.2rem;color:#FF2B2B;display:block;animation:hwBlink 2.2s ease-in-out infinite;filter:drop-shadow(0 0 4px rgba(255,43,43,0.4))}
+.hw-star-lime::before{content:'✦';font-size:1.6rem;color:#CAFF00;display:block;animation:hwBlink 1.8s ease-in-out infinite 0.5s;filter:drop-shadow(0 0 4px rgba(202,255,0,0.4))}
+.hw-squiggle{width:70px;height:14px;border-bottom:3px wavy #111;border-radius:0}
+.hw-dot-row{display:flex;gap:7px}
+.hw-dot-row span{width:8px;height:8px;border-radius:50%;background:#111;display:block;opacity:0.25}
+
+/* — tap-to-open hint badge on zone intro cards — */
+.zic-tap-hint{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  margin-top:14px;padding:9px 16px;
+  background:rgba(255,255,255,0.06);
+  border:1px dashed rgba(255,255,255,0.2);
+  cursor:pointer;
+  font-family:var(--font-fun);font-size:0.62rem;font-weight:700;
+  color:rgba(255,255,255,0.45);letter-spacing:0.08em;text-transform:uppercase;
+  transition:background 0.2s,color 0.2s;
+  animation:hwPulse 2.5s ease-in-out infinite;
+}
+.zic-tap-hint:hover{background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.8)}
+.zic-tap-hint .zth-dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:hwBlink 1.4s ease-in-out infinite}
+
+/* ═══════════════════════════════════════════════
+   ZONE PANEL SYSTEM — full-screen detail sheets
+═══════════════════════════════════════════════ */
+.zp-backdrop{
+  position:fixed;inset:0;z-index:10000;
+  background:rgba(0,0,0,0);pointer-events:none;
+  transition:background 0.4s ease;
+}
+.zp-backdrop.open{background:rgba(0,0,0,0.65);pointer-events:all}
+
+.zone-panel{
+  position:fixed;inset:0;z-index:10001;
+  transform:translateY(105%);
+  transition:transform 0.52s cubic-bezier(0.32,0.72,0,1);
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+}
+.zone-panel.open{transform:translateY(0)}
+
+/* Back button */
+.zp-back-btn{
+  position:sticky;top:0;z-index:10;
+  display:flex;align-items:center;gap:9px;
+  padding:18px 24px 14px;
+  font-family:var(--font-fun);font-size:0.68rem;font-weight:800;
+  letter-spacing:0.08em;text-transform:uppercase;
+  cursor:pointer;border:none;background:transparent;
+  backdrop-filter:blur(20px);
+}
+.zp-back-btn svg{transition:transform 0.2s}
+.zp-back-btn:hover svg{transform:translateX(-3px)}
+
+/* Panel header */
+.zp-header{padding:12px 28px 36px}
+.zp-zone-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--font-fun);font-size:0.62rem;font-weight:800;
+  letter-spacing:0.14em;text-transform:uppercase;
+  padding:4px 12px;margin-bottom:20px;
+  box-shadow:2px 3px 0 rgba(0,0,0,0.18);
+  clip-path:polygon(2% 0,100% 1%,98% 100%,0 99%);
+}
+.zp-title{
+  font-family:var(--font-fun);font-size:2.8rem;font-weight:900;
+  color:#fff;line-height:1.05;margin-bottom:10px;
+}
+.zp-title em{font-style:normal;opacity:0.5}
+.zp-subtitle{
+  font-family:var(--font-hand);font-size:1rem;
+  color:rgba(255,255,255,0.55);line-height:1.55;
+}
+
+/* Body */
+.zp-body{padding:0 28px 28px}
+.zp-section{margin-bottom:28px}
+.zp-sec-label{
+  font-family:var(--font-fun);font-size:0.6rem;font-weight:800;
+  letter-spacing:0.16em;text-transform:uppercase;
+  margin-bottom:14px;opacity:0.5;
+}
+
+/* Stats row */
+.zp-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
+.zp-stat-box{padding:14px 10px;text-align:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08)}
+.zp-stat-num{font-family:var(--font-fun);font-size:1.6rem;font-weight:900;color:#fff;display:block}
+.zp-stat-lbl{font-family:var(--font-sans);font-size:0.52rem;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-top:3px}
+
+/* Bio list */
+.zp-bio-list{list-style:none;padding:0;margin:0 0 24px}
+.zp-bio-list li{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.07);font-family:var(--font-sans);font-size:0.83rem;color:rgba(255,255,255,0.65);line-height:1.5}
+.zp-bio-list .zb-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+
+/* Tag cloud */
+.zp-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:24px}
+.zp-tag{padding:6px 13px;font-family:var(--font-fun);font-size:0.6rem;font-weight:700;letter-spacing:0.05em;cursor:default;transition:transform 0.15s}
+.zp-tag:hover{transform:scale(1.05)}
+
+/* Timeline */
+.zp-timeline{list-style:none;padding:0;margin:0 0 24px;position:relative}
+.zp-timeline::before{content:'';position:absolute;left:20px;top:12px;bottom:12px;width:1.5px;background:rgba(255,255,255,0.12)}
+.zp-tl-item{display:flex;gap:16px;padding:14px 0;position:relative}
+.zp-tl-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;margin-top:5px;position:relative;z-index:1;border:2px solid currentColor;background:transparent}
+.zp-tl-role{font-family:var(--font-fun);font-size:0.82rem;font-weight:700;color:#fff;display:block;margin-bottom:3px}
+.zp-tl-co{font-family:var(--font-sans);font-size:0.7rem;color:rgba(255,255,255,0.42);display:block}
+.zp-tl-yr{font-family:monospace;font-size:0.6rem;color:rgba(255,255,255,0.3);display:block;margin-top:3px}
+
+/* Skills */
+.zp-skills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:24px}
+.zp-skill{padding:5px 12px;font-family:var(--font-fun);font-size:0.6rem;font-weight:700;letter-spacing:0.05em;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);color:rgba(255,255,255,0.6)}
+
+/* Contact strip (in origin panel) */
+.zp-contact-strip{padding:22px;margin:0 -28px;background:rgba(255,255,255,0.04);border-top:1px solid rgba(255,255,255,0.08)}
+.zp-contact-email{display:block;font-family:var(--font-fun);font-size:1rem;font-weight:800;color:#fff;margin-bottom:14px;letter-spacing:-0.01em;word-break:break-all}
+.zp-contact-links{display:flex;gap:10px}
+.zp-contact-link{padding:9px 18px;font-family:var(--font-fun);font-size:0.66rem;font-weight:800;letter-spacing:0.1em;text-decoration:none;border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.65);transition:all 0.2s}
+.zp-contact-link:hover{background:rgba(255,255,255,0.1);color:#fff}
+
+/* ── PORTFOLIO PANEL: project grid ── */
+.zp-projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+@media(max-width:480px){.zp-projects-grid{grid-template-columns:1fr}}
+.zp-proj-card{
+  cursor:pointer;border:1.5px solid rgba(255,255,255,0.08);
+  transition:transform 0.2s,box-shadow 0.2s;
+  position:relative;overflow:hidden;
+  background:rgba(255,255,255,0.03);
+}
+.zp-proj-card:hover{transform:translate(-3px,-3px);border-color:rgba(255,255,255,0.2);box-shadow:5px 5px 0 rgba(0,0,0,0.3)}
+.zp-proj-card:active{transform:translate(0,0)}
+.zp-proj-emoji-area{
+  min-height:90px;display:flex;align-items:center;justify-content:center;
+  font-size:2.6rem;position:relative;overflow:hidden;
+}
+.zp-proj-emoji-area::after{
+  content:'';position:absolute;inset:0;opacity:0.1;
+}
+.zp-proj-info{padding:13px 14px 16px}
+.zp-proj-name{font-family:var(--font-fun);font-size:0.88rem;font-weight:800;color:#fff;display:block;margin-bottom:4px}
+.zp-proj-desc{font-family:var(--font-sans);font-size:0.68rem;color:rgba(255,255,255,0.42);line-height:1.45;margin-bottom:9px}
+.zp-proj-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:9px}
+.zp-proj-tag{font-family:var(--font-fun);font-size:0.54rem;font-weight:700;padding:2px 7px;letter-spacing:0.04em}
+.zp-proj-open-btn{
+  display:flex;align-items:center;gap:4px;
+  font-family:var(--font-fun);font-size:0.6rem;font-weight:700;
+  letter-spacing:0.05em;text-transform:uppercase;
+  color:rgba(255,255,255,0.4);border:none;background:none;cursor:pointer;
+  padding:0;transition:color 0.2s;
+}
+.zp-proj-open-btn:hover{color:#fff}
+
+/* Project detail slide-in */
+.zp-proj-detail{
+  position:fixed;inset:0;z-index:10010;
+  background:#0A0812;
+  transform:translateX(100%);
+  transition:transform 0.4s cubic-bezier(0.32,0.72,0,1);
+  overflow-y:auto;padding:80px 28px 60px;
+}
+.zp-proj-detail.open{transform:translateX(0)}
+.zp-proj-detail-back{
+  position:fixed;top:20px;left:20px;z-index:10011;
+  width:42px;height:42px;border-radius:50%;
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:#fff;font-size:1.1rem;
+  transition:background 0.2s;
+}
+.zp-proj-detail-back:hover{background:rgba(255,255,255,0.18)}
+.zp-proj-detail-emoji{font-size:3.5rem;display:block;margin-bottom:18px}
+.zp-proj-detail-name{font-family:var(--font-fun);font-size:2.2rem;font-weight:900;color:#fff;margin-bottom:10px;line-height:1.1}
+.zp-proj-detail-tagline{font-family:var(--font-hand);font-size:1rem;color:rgba(255,255,255,0.45);margin-bottom:22px;line-height:1.5}
+.zp-proj-detail-body{font-family:var(--font-sans);font-size:0.85rem;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:20px}
+.zp-proj-detail-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:24px}
+.zp-proj-detail-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:24px}
+
+/* ── Footer CTA ── */
+.zp-footer{padding:12px 28px 56px;display:flex;flex-direction:column;gap:10px}
+.zp-explore-cta{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:15px;border:none;cursor:pointer;
+  font-family:var(--font-fun);font-size:0.76rem;font-weight:800;
+  letter-spacing:0.08em;text-transform:uppercase;
+  box-shadow:4px 4px 0 rgba(0,0,0,0.25);
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+.zp-explore-cta:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 rgba(0,0,0,0.25)}
+.zp-close-cta{
+  padding:13px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);
+  cursor:pointer;color:rgba(255,255,255,0.4);font-family:var(--font-fun);font-size:0.68rem;
+  font-weight:700;letter-spacing:0.08em;text-transform:uppercase;transition:background 0.2s;
+}
+.zp-close-cta:hover{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.65)}
+
+/* ── Zone-specific panel themes ── */
+.zp-origin{background:linear-gradient(165deg,#070F07,#0D1E0D,#070F07)}
+.zp-origin .zp-back-btn{color:rgba(76,175,80,0.7)}
+.zp-origin .zp-back-btn svg{stroke:rgba(76,175,80,0.7)}
+.zp-origin .zp-zone-chip{background:#2E7D32;color:#E8F5E9}
+.zp-origin .zp-explore-cta{background:#2E7D32;color:#E8F5E9}
+.zp-origin .zp-stat-box{border-color:rgba(76,175,80,0.15)}
+.zp-origin .zp-stat-num{color:#81C784}
+
+.zp-work{background:linear-gradient(165deg,#070A14,#0A1028,#070A14)}
+.zp-work .zp-back-btn{color:rgba(100,180,255,0.7)}
+.zp-work .zp-back-btn svg{stroke:rgba(100,180,255,0.7)}
+.zp-work .zp-zone-chip{background:#0D47A1;color:#E3F2FD}
+.zp-work .zp-explore-cta{background:#0D47A1;color:#E3F2FD}
+.zp-work .zp-tl-dot{color:#42A5F5}
+.zp-work .zp-stat-num{color:#64B5F6}
+
+.zp-portfolio{background:linear-gradient(165deg,#060510,#0D0A1E,#060510)}
+.zp-portfolio .zp-back-btn{color:rgba(149,117,255,0.7)}
+.zp-portfolio .zp-back-btn svg{stroke:rgba(149,117,255,0.7)}
+.zp-portfolio .zp-zone-chip{background:#6A1B9A;color:#F3E5F5}
+.zp-portfolio .zp-explore-cta{background:#6A1B9A;color:#F3E5F5}
+
+.zp-hobby{background:linear-gradient(165deg,#0C0818,#170E2A,#0C0818)}
+.zp-hobby .zp-back-btn{color:rgba(255,140,0,0.7)}
+.zp-hobby .zp-back-btn svg{stroke:rgba(255,140,0,0.7)}
+.zp-hobby .zp-zone-chip{background:#E65100;color:#FFF3E0}
+.zp-hobby .zp-explore-cta{background:#E65100;color:#FFF3E0}
+.zp-hobby .zp-stat-num{color:#FF8C00}
+
+.zp-fun{background:linear-gradient(165deg,#0A0707,#1A0A0A,#0A0707)}
+.zp-fun .zp-back-btn{color:rgba(255,82,82,0.7)}
+.zp-fun .zp-back-btn svg{stroke:rgba(255,82,82,0.7)}
+.zp-fun .zp-zone-chip{background:#B71C1C;color:#FFEBEE}
+.zp-fun .zp-explore-cta{background:#B71C1C;color:#FFEBEE}
+.zp-fun .zp-stat-num{color:#EF5350}
+
+/* ── Hobby item list ── */
+.zp-hobby-list{list-style:none;padding:0;margin:0 0 24px}
+.zp-hobby-item{display:flex;align-items:center;gap:14px;padding:14px;margin-bottom:8px;background:rgba(255,140,0,0.05);border-left:3px solid rgba(255,140,0,0.25)}
+.zp-hobby-icon{font-size:1.5rem;flex-shrink:0}
+.zp-hobby-title{font-family:var(--font-fun);font-size:0.82rem;font-weight:700;color:#fff;display:block}
+.zp-hobby-desc{font-family:var(--font-sans);font-size:0.7rem;color:rgba(255,255,255,0.42);margin-top:2px;display:block}
+
+/* ── Fun meme list ── */
+.zp-fun-list{list-style:none;padding:0;margin:0 0 24px}
+.zp-fun-item{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;margin-bottom:6px;font-family:var(--font-sans);font-size:0.79rem;color:rgba(255,255,255,0.6);background:rgba(255,82,82,0.04);border-left:3px solid rgba(255,82,82,0.2);line-height:1.45}
+
+/* ── Updated bottom nav — 5 items ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:9990;
+  display:flex;align-items:stretch;
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(24px) saturate(180%);
+  border-top:1px solid rgba(0,0,0,0.07);
+  padding:0 0 env(safe-area-inset-bottom,0);
+  box-shadow:0 -2px 24px rgba(0,0,0,0.09);
+}
+.bottom-nav a{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;padding:10px 4px 12px;
+  font-family:var(--font-fun);font-size:0.55rem;font-weight:700;
+  letter-spacing:0.06em;text-transform:uppercase;
+  color:#999;text-decoration:none;
+  transition:color 0.2s,transform 0.15s;
+  border-top:2px solid transparent;
+  position:relative;
+}
+.bottom-nav a svg{width:22px;height:22px;transition:stroke 0.2s}
+.bottom-nav a.active,.bottom-nav a:hover{color:#111}
+.bottom-nav a.active svg,.bottom-nav a:hover svg{stroke:#111}
+.bottom-nav a:active{transform:scale(0.88)}
+/* zone-tinted active states */
+.bottom-nav a.nav-play{color:#FF6B35}
+.bottom-nav a.nav-play svg{stroke:#FF6B35}
+.bottom-nav a.nav-play::after{content:'';position:absolute;top:-1px;left:20%;right:20%;height:2px;background:linear-gradient(90deg,#FF6B35,#FF4500)}
+</style>
+
+  <a href="#" onclick="scrollToZone(event,'hub')" id="navHome"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Home</a>
+  <a href="#" onclick="scrollToZone(event,'work')" id="navWork"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>Work</a>
+  <a href="#" class="nav-play" id="playBtn" onclick="cycleIntroCards(event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>Play</a>
+  <a href="#" onclick="scrollToZone(event,'portfolio')" id="navPortfolio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Portfolio</a>
+  <a href="#" onclick="scrollToZone(event,'origin')" id="navAbout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>About</a>
 </nav>
 
 <style>
@@ -3896,6 +4381,403 @@ function cycleIntroCards(e){
     </div>
     <div class="contact-sticker c-anim">📍 BENGALURU, INDIA</div>
     <div class="contact-doodle c-anim">✦</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ZONE PANELS — full-screen detail sheets for each zone
+═══════════════════════════════════════════════════════════ -->
+
+<!-- ── ORIGIN PANEL ── -->
+<div class="zp-backdrop" id="zpbd-origin" onclick="closeZonePanel('origin')"></div>
+<div class="zone-panel zp-origin" id="zp-origin">
+  <button class="zp-back-btn" onclick="closeZonePanel('origin')">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Back
+  </button>
+  <div class="zp-header">
+    <div class="zp-zone-chip">🌱 Chapter Zero</div>
+    <div class="zp-title">The <em>Origin</em><br>Story.</div>
+    <div class="zp-subtitle">Engineering roots, curious mind, builder spirit. Started with code — fell in love with product.</div>
+  </div>
+  <div class="zp-body">
+    <div class="zp-stats-row">
+      <div class="zp-stat-box"><span class="zp-stat-num">8+</span><span class="zp-stat-lbl">Yrs Exp</span></div>
+      <div class="zp-stat-box"><span class="zp-stat-num">3×</span><span class="zp-stat-lbl">Founded</span></div>
+      <div class="zp-stat-box"><span class="zp-stat-num">5K+</span><span class="zp-stat-lbl">Users</span></div>
+    </div>
+    <div class="zp-section">
+      <div class="zp-sec-label">About Me</div>
+      <ul class="zp-bio-list">
+        <li><span class="zb-icon">🎓</span>B.Tech CS — OUTR Bhubaneswar. Engineering is how I think, product is how I build.</li>
+        <li><span class="zb-icon">📍</span>Bengaluru, India — originally from Jeypore, Odisha.</li>
+        <li><span class="zb-icon">💼</span>Product Manager · 8+ years across fintech, edtech, Web3 & AI.</li>
+        <li><span class="zb-icon">🚀</span>Co-founded EnterCircles & Recess. Built products from 0 to 1.</li>
+        <li><span class="zb-icon">🧠</span>Sit at the intersection of product thinking and emerging tech.</li>
+        <li><span class="zb-icon">☕</span>Runs on chai, late nights, and the thrill of shipping something real.</li>
+      </ul>
+    </div>
+    <div class="zp-section">
+      <div class="zp-sec-label">My Journey</div>
+      <ul class="zp-timeline">
+        <li class="zp-tl-item"><div class="zp-tl-dot" style="color:#4CAF50"></div><div><span class="zp-tl-role">Founder & Product Lead</span><span class="zp-tl-co">EnterCircles Labs</span><span class="zp-tl-yr">2023 — Present</span></div></li>
+        <li class="zp-tl-item"><div class="zp-tl-dot" style="color:#81C784"></div><div><span class="zp-tl-role">Freelance Product Consultant</span><span class="zp-tl-co">Web3 & SaaS</span><span class="zp-tl-yr">2021 — 2023</span></div></li>
+        <li class="zp-tl-item"><div class="zp-tl-dot" style="color:#A5D6A7"></div><div><span class="zp-tl-role">Co-Founder & PM</span><span class="zp-tl-co">Recess EdTech</span><span class="zp-tl-yr">2019 — 2021</span></div></li>
+        <li class="zp-tl-item"><div class="zp-tl-dot" style="color:#C8E6C9"></div><div><span class="zp-tl-role">Product Analyst</span><span class="zp-tl-co">Freelance SaaS</span><span class="zp-tl-yr">2017 — 2019</span></div></li>
+      </ul>
+    </div>
+    <div class="zp-section">
+      <div class="zp-sec-label">Tags</div>
+      <div class="zp-tags">
+        <span class="zp-tag" style="background:rgba(76,175,80,0.12);color:#66BB6A;border:1.5px solid rgba(76,175,80,0.25)">B.Tech CS</span>
+        <span class="zp-tag" style="background:rgba(76,175,80,0.12);color:#66BB6A;border:1.5px solid rgba(76,175,80,0.25)">Bhubaneswar</span>
+        <span class="zp-tag" style="background:rgba(76,175,80,0.12);color:#66BB6A;border:1.5px solid rgba(76,175,80,0.25)">Bengaluru</span>
+        <span class="zp-tag" style="background:rgba(76,175,80,0.12);color:#66BB6A;border:1.5px solid rgba(76,175,80,0.25)">Builder</span>
+        <span class="zp-tag" style="background:rgba(76,175,80,0.12);color:#66BB6A;border:1.5px solid rgba(76,175,80,0.25)">Dreamer</span>
+        <span class="zp-tag" style="background:rgba(76,175,80,0.12);color:#66BB6A;border:1.5px solid rgba(76,175,80,0.25)">AI Native</span>
+      </div>
+    </div>
+    <div class="zp-section">
+      <div class="zp-sec-label">Philosophy</div>
+      <p style="font-family:var(--font-hand);font-size:1rem;color:rgba(255,255,255,0.55);line-height:1.65;font-style:italic">"I build with AI the way a photographer works with light — it's a medium, not a shortcut. The taste, the decisions, the product direction? That's still very human. That's still mine."</p>
+    </div>
+    <!-- Contact merged in -->
+    <div class="zp-contact-strip">
+      <div class="zp-sec-label" style="margin-bottom:14px">Get in touch</div>
+      <a href="mailto:pyushmatania@gmail.com" class="zp-contact-email">pyushmatania@gmail.com</a>
+      <div class="zp-contact-links">
+        <a href="https://linkedin.com/in/akashmatania" target="_blank" class="zp-contact-link">LinkedIn</a>
+        <a href="https://github.com/akashmatania" target="_blank" class="zp-contact-link">GitHub</a>
+        <span class="zp-contact-link" style="cursor:default">📍 Bengaluru</span>
+      </div>
+    </div>
+  </div>
+  <div class="zp-footer">
+    <button class="zp-explore-cta" onclick="closeZonePanel('origin');scrollToZone(null,'origin')">🌱 Explore Origin Zone →</button>
+    <button class="zp-close-cta" onclick="closeZonePanel('origin')">Close</button>
+  </div>
+</div>
+
+<!-- ── WORK PANEL (zone panel version) ── -->
+<div class="zp-backdrop" id="zpbd-work" onclick="closeZonePanel('work')"></div>
+<div class="zone-panel zp-work" id="zp-work">
+  <button class="zp-back-btn" onclick="closeZonePanel('work')">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Back
+  </button>
+  <div class="zp-header">
+    <div class="zp-zone-chip">💼 Professional</div>
+    <div class="zp-title">Work <em>Zone.</em></div>
+    <div class="zp-subtitle">Product Manager · Builder · Strategist. 8+ years of making products that matter.</div>
+  </div>
+  <div class="zp-body">
+    <div class="zp-stats-row">
+      <div class="zp-stat-box"><span class="zp-stat-num">8+</span><span class="zp-stat-lbl">Yrs Exp</span></div>
+      <div class="zp-stat-box"><span class="zp-stat-num">12+</span><span class="zp-stat-lbl">Products</span></div>
+      <div class="zp-stat-box"><span class="zp-stat-num">4</span><span class="zp-stat-lbl">Startups</span></div>
+    </div>
+    <div class="zp-section">
+      <div class="zp-sec-label">Career Timeline</div>
+      <ul class="zp-timeline">
+        <li class="zp-tl-item"><div class="zp-tl-dot" style="color:#42A5F5"></div><div><span class="zp-tl-role">Founder & Product Lead</span><span class="zp-tl-co">EnterCircles Labs · 2023–Present</span><span class="zp-tl-yr">Building Web3 social platform from 0 → 1</span></div></li>
+        <li class="zp-tl-item"><div class="zp-tl-dot" style="color:#64B5F6"></div><div><span class="zp-tl-role">Freelance Product Consultant</span><span class="zp-tl-co">Web3 & SaaS · 2021–2023</span><span class="zp-tl-yr">Cross-industry product strategy & roadmapping</span></div></li>
+        <li class="zp-tl-item"><div class="zp-tl-dot" style="color:#90CAF9"></div><div><span class="zp-tl-role">Co-Founder & PM</span><span class="zp-tl-co">Recess EdTech · 2019–2021</span><span class="zp-tl-yr">Peer learning platform · 2K+ students</span></div></li>
+        <li class="zp-tl-item"><div class="zp-tl-dot" style="color:#BBDEFB"></div><div><span class="zp-tl-role">Product Analyst</span><span class="zp-tl-co">Freelance SaaS · 2017–2019</span><span class="zp-tl-yr">Data-driven growth & feature experimentation</span></div></li>
+      </ul>
+    </div>
+    <div class="zp-section">
+      <div class="zp-sec-label">Skills</div>
+      <div class="zp-skills">
+        <span class="zp-skill">Product Strategy</span><span class="zp-skill">User Research</span>
+        <span class="zp-skill">Growth Analytics</span><span class="zp-skill">Technical PRDs</span>
+        <span class="zp-skill">Sprint Planning</span><span class="zp-skill">OKRs</span>
+        <span class="zp-skill">A/B Testing</span><span class="zp-skill">Web3</span>
+        <span class="zp-skill">AI-Assisted Dev</span><span class="zp-skill">0→1 Building</span>
+      </div>
+    </div>
+    <div class="zp-section">
+      <div class="zp-sec-label">Currently</div>
+      <p style="font-family:var(--font-hand);font-size:1rem;color:rgba(255,255,255,0.55);line-height:1.6">🔥 Building an AI-native product OS at EnterCircles Labs. Focused on community engagement, token mechanics, and AI-driven personalization.</p>
+    </div>
+  </div>
+  <div class="zp-footer">
+    <button class="zp-explore-cta" onclick="closeZonePanel('work');scrollToZone(null,'work')">💼 Explore Work Zone →</button>
+    <button class="zp-close-cta" onclick="closeZonePanel('work')">Close</button>
+  </div>
+</div>
+
+<!-- ── PORTFOLIO PANEL ── -->
+<div class="zp-backdrop" id="zpbd-portfolio" onclick="closeZonePanel('portfolio')"></div>
+<div class="zone-panel zp-portfolio" id="zp-portfolio">
+  <button class="zp-back-btn" onclick="closeZonePanel('portfolio')">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Back
+  </button>
+  <div class="zp-header">
+    <div class="zp-zone-chip">🚀 Launchpad</div>
+    <div class="zp-title">Products<br><em>I've</em> Built.</div>
+    <div class="zp-subtitle">Shipped, iterated, and learned from. Each one a lesson in craft and resilience.</div>
+  </div>
+  <div class="zp-body">
+    <div class="zp-section">
+      <div class="zp-sec-label">All Projects</div>
+      <div class="zp-projects-grid">
+
+        <!-- EnterCircles -->
+        <div class="zp-proj-card" onclick="openProject('entercircles')" style="border-color:rgba(124,77,255,0.25)">
+          <div class="zp-proj-emoji-area" style="background:linear-gradient(135deg,#2D0059,#4A00A0)">
+            <span>🔗</span>
+          </div>
+          <div class="zp-proj-info">
+            <span class="zp-proj-name">EnterCircles</span>
+            <span class="zp-proj-desc">Web3 social platform for community engagement and token-gated access</span>
+            <div class="zp-proj-tags">
+              <span class="zp-proj-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">Web3</span>
+              <span class="zp-proj-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">Social</span>
+            </div>
+            <button class="zp-proj-open-btn">Open case →</button>
+          </div>
+        </div>
+
+        <!-- Recess -->
+        <div class="zp-proj-card" onclick="openProject('recess')" style="border-color:rgba(66,165,245,0.25)">
+          <div class="zp-proj-emoji-area" style="background:linear-gradient(135deg,#003060,#00508A)">
+            <span>📚</span>
+          </div>
+          <div class="zp-proj-info">
+            <span class="zp-proj-name">Recess</span>
+            <span class="zp-proj-desc">EdTech platform for peer learning, study groups & collaborative sessions</span>
+            <div class="zp-proj-tags">
+              <span class="zp-proj-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9">EdTech</span>
+              <span class="zp-proj-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9">B2C</span>
+            </div>
+            <button class="zp-proj-open-btn">Open case →</button>
+          </div>
+        </div>
+
+        <!-- Hushh -->
+        <div class="zp-proj-card" onclick="openProject('hushh')" style="border-color:rgba(239,83,80,0.25)">
+          <div class="zp-proj-emoji-area" style="background:linear-gradient(135deg,#3A0000,#6A0000)">
+            <span>🤫</span>
+          </div>
+          <div class="zp-proj-info">
+            <span class="zp-proj-name">Hushh</span>
+            <span class="zp-proj-desc">Privacy-first personal data management — your data, your rules</span>
+            <div class="zp-proj-tags">
+              <span class="zp-proj-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A">Privacy</span>
+              <span class="zp-proj-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A">FinTech</span>
+            </div>
+            <button class="zp-proj-open-btn">Open case →</button>
+          </div>
+        </div>
+
+        <!-- SmarBhubaneswar -->
+        <div class="zp-proj-card" onclick="openProject('smarbhubaneswar')" style="border-color:rgba(38,166,154,0.25)">
+          <div class="zp-proj-emoji-area" style="background:linear-gradient(135deg,#00302B,#005048)">
+            <span>🏙️</span>
+          </div>
+          <div class="zp-proj-info">
+            <span class="zp-proj-name">SmarBhubaneswar</span>
+            <span class="zp-proj-desc">Smart city civic tech platform for citizen services and urban governance</span>
+            <div class="zp-proj-tags">
+              <span class="zp-proj-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4">Civic</span>
+              <span class="zp-proj-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4">Gov-Tech</span>
+            </div>
+            <button class="zp-proj-open-btn">Open case →</button>
+          </div>
+        </div>
+
+        <!-- Aribasda — full width -->
+        <div class="zp-proj-card" onclick="openProject('aribasda')" style="border-color:rgba(255,112,67,0.25);grid-column:1/-1">
+          <div style="display:flex;gap:0">
+            <div class="zp-proj-emoji-area" style="background:linear-gradient(135deg,#3A1200,#6A2200);min-width:90px;min-height:90px">
+              <span>📈</span>
+            </div>
+            <div class="zp-proj-info" style="flex:1">
+              <span class="zp-proj-name">Aribasda</span>
+              <span class="zp-proj-desc">Analytics & growth tooling — turning data into decisions, fast</span>
+              <div class="zp-proj-tags">
+                <span class="zp-proj-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91">Analytics</span>
+                <span class="zp-proj-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91">Growth</span>
+                <span class="zp-proj-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91">SaaS</span>
+              </div>
+              <button class="zp-proj-open-btn">Open case →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="zp-footer">
+    <button class="zp-explore-cta" onclick="closeZonePanel('portfolio');scrollToZone(null,'portfolio')">🚀 Explore Portfolio Zone →</button>
+    <button class="zp-close-cta" onclick="closeZonePanel('portfolio')">Close</button>
+  </div>
+</div>
+
+<!-- Project detail overlays -->
+<div class="zp-proj-detail" id="zpd-entercircles">
+  <button class="zp-proj-detail-back" onclick="closeProject('entercircles')">←</button>
+  <span class="zp-proj-detail-emoji">🔗</span>
+  <div class="zp-proj-detail-name">EnterCircles</div>
+  <div class="zp-proj-detail-tagline">Web3 Social Platform · Community Engagement · Token-Gated Access</div>
+  <div class="zp-proj-detail-tags"><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">Web3</span><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">Social</span><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">B2B2C</span></div>
+  <div class="zp-proj-detail-body">EnterCircles is a Web3-native social platform built around community identity, token-gated experiences, and meaningful engagement mechanics. I led the product from concept to launch — defining the core UX, building the token architecture, and iterating based on community feedback. The product sits at the intersection of crypto-native UX and mainstream social behavior.</div>
+  <div class="zp-proj-detail-stats">
+    <div class="zp-stat-box"><span class="zp-stat-num">5K+</span><span class="zp-stat-lbl">Users</span></div>
+    <div class="zp-stat-box"><span class="zp-stat-num">0→1</span><span class="zp-stat-lbl">Built</span></div>
+    <div class="zp-stat-box"><span class="zp-stat-num">2023</span><span class="zp-stat-lbl">Launched</span></div>
+  </div>
+  <div class="zp-skills" style="margin-bottom:0"><span class="zp-skill">Token Economics</span><span class="zp-skill">Community UX</span><span class="zp-skill">Smart Contracts</span><span class="zp-skill">Engagement Loops</span></div>
+</div>
+
+<div class="zp-proj-detail" id="zpd-recess">
+  <button class="zp-proj-detail-back" onclick="closeProject('recess')">←</button>
+  <span class="zp-proj-detail-emoji">📚</span>
+  <div class="zp-proj-detail-name">Recess</div>
+  <div class="zp-proj-detail-tagline">EdTech · Peer Learning · Study Groups · Collaborative Sessions</div>
+  <div class="zp-proj-detail-tags"><span class="zp-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9;border:1.5px solid rgba(66,165,245,0.25)">EdTech</span><span class="zp-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9;border:1.5px solid rgba(66,165,245,0.25)">B2C</span></div>
+  <div class="zp-proj-detail-body">Recess was built to solve the isolation problem in online learning — connecting students in real-time study groups, peer sessions, and collaborative environments. As co-founder and PM, I owned the product roadmap, user research, and growth strategy. We reached 2K+ students before pivoting.</div>
+  <div class="zp-proj-detail-stats">
+    <div class="zp-stat-box"><span class="zp-stat-num">2K+</span><span class="zp-stat-lbl">Students</span></div>
+    <div class="zp-stat-box"><span class="zp-stat-num">Co-</span><span class="zp-stat-lbl">Founded</span></div>
+    <div class="zp-stat-box"><span class="zp-stat-num">2021</span><span class="zp-stat-lbl">Launched</span></div>
+  </div>
+  <div class="zp-skills"><span class="zp-skill">Peer Learning UX</span><span class="zp-skill">Community Growth</span><span class="zp-skill">Retention Design</span></div>
+</div>
+
+<div class="zp-proj-detail" id="zpd-hushh">
+  <button class="zp-proj-detail-back" onclick="closeProject('hushh')">←</button>
+  <span class="zp-proj-detail-emoji">🤫</span>
+  <div class="zp-proj-detail-name">Hushh</div>
+  <div class="zp-proj-detail-tagline">Privacy-First · Personal Data Management · Your Data, Your Rules</div>
+  <div class="zp-proj-detail-tags"><span class="zp-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A;border:1.5px solid rgba(239,83,80,0.25)">Privacy</span><span class="zp-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A;border:1.5px solid rgba(239,83,80,0.25)">FinTech</span></div>
+  <div class="zp-proj-detail-body">Hushh is a privacy-native product that lets users control, monetize, and protect their personal data. I worked on the product strategy and UX — designing flows that make privacy feel empowering rather than restrictive. Core challenge: make complex data concepts feel intuitive for non-technical users.</div>
+  <div class="zp-proj-detail-stats">
+    <div class="zp-stat-box"><span class="zp-stat-num">B2C</span><span class="zp-stat-lbl">Product</span></div>
+    <div class="zp-stat-box"><span class="zp-stat-num">PM</span><span class="zp-stat-lbl">Role</span></div>
+    <div class="zp-stat-box"><span class="zp-stat-num">Web3</span><span class="zp-stat-lbl">Infra</span></div>
+  </div>
+  <div class="zp-skills"><span class="zp-skill">Privacy UX</span><span class="zp-skill">Data Architecture</span><span class="zp-skill">User Trust</span></div>
+</div>
+
+<div class="zp-proj-detail" id="zpd-smarbhubaneswar">
+  <button class="zp-proj-detail-back" onclick="closeProject('smarbhubaneswar')">←</button>
+  <span class="zp-proj-detail-emoji">🏙️</span>
+  <div class="zp-proj-detail-name">SmarBhubaneswar</div>
+  <div class="zp-proj-detail-tagline">Smart City · Civic Tech · Citizen Services · Urban Governance</div>
+  <div class="zp-proj-detail-tags"><span class="zp-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4;border:1.5px solid rgba(38,166,154,0.25)">Civic Tech</span><span class="zp-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4;border:1.5px solid rgba(38,166,154,0.25)">Gov-Tech</span></div>
+  <div class="zp-proj-detail-body">A smart city platform for Bhubaneswar's urban governance layer — connecting citizens to city services, complaint redressal, and civic engagement. I led the product design and stakeholder mapping, navigating the complexity of government-facing tech with citizen-first UX principles.</div>
+  <div class="zp-proj-detail-stats">
+    <div class="zp-stat-box"><span class="zp-stat-num">Gov</span><span class="zp-stat-lbl">Sector</span></div>
+    <div class="zp-stat-box"><span class="zp-stat-num">B2G</span><span class="zp-stat-lbl">Model</span></div>
+    <div class="zp-stat-box"><span class="zp-stat-num">City</span><span class="zp-stat-lbl">Scale</span></div>
+  </div>
+  <div class="zp-skills"><span class="zp-skill">Civic UX</span><span class="zp-skill">Stakeholder Mgmt</span><span class="zp-skill">Service Design</span></div>
+</div>
+
+<div class="zp-proj-detail" id="zpd-aribasda">
+  <button class="zp-proj-detail-back" onclick="closeProject('aribasda')">←</button>
+  <span class="zp-proj-detail-emoji">📈</span>
+  <div class="zp-proj-detail-name">Aribasda</div>
+  <div class="zp-proj-detail-tagline">Analytics & Growth Tooling · Turning Data into Decisions, Fast</div>
+  <div class="zp-proj-detail-tags"><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">Analytics</span><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">Growth</span><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">SaaS</span></div>
+  <div class="zp-proj-detail-body">Aribasda is a growth analytics product built for SaaS teams who need to move fast on data. Designed the core analytics UX, funnel visualization, and cohort analysis features. The core thesis: analytics tools shouldn't require a data scientist to use.</div>
+  <div class="zp-proj-detail-stats">
+    <div class="zp-stat-box"><span class="zp-stat-num">SaaS</span><span class="zp-stat-lbl">Vertical</span></div>
+    <div class="zp-stat-box"><span class="zp-stat-num">B2B</span><span class="zp-stat-lbl">Model</span></div>
+    <div class="zp-stat-box"><span class="zp-stat-num">PM</span><span class="zp-stat-lbl">Role</span></div>
+  </div>
+  <div class="zp-skills"><span class="zp-skill">Analytics UX</span><span class="zp-skill">Funnel Design</span><span class="zp-skill">Growth Loops</span></div>
+</div>
+
+<!-- ── HOBBY PANEL ── -->
+<div class="zp-backdrop" id="zpbd-hobby" onclick="closeZonePanel('hobby')"></div>
+<div class="zone-panel zp-hobby" id="zp-hobby">
+  <button class="zp-back-btn" onclick="closeZonePanel('hobby')">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Back
+  </button>
+  <div class="zp-header">
+    <div class="zp-zone-chip">🎶 Off-Duty</div>
+    <div class="zp-title">Hobby <em>Zone.</em></div>
+    <div class="zp-subtitle">How I unplug, recharge, and stay human between sprints.</div>
+  </div>
+  <div class="zp-body">
+    <div class="zp-stats-row">
+      <div class="zp-stat-box"><span class="zp-stat-num">500+</span><span class="zp-stat-lbl">Hrs Gamed</span></div>
+      <div class="zp-stat-box"><span class="zp-stat-num">15+</span><span class="zp-stat-lbl">Cities Driven</span></div>
+      <div class="zp-stat-box"><span class="zp-stat-num">∞</span><span class="zp-stat-lbl">Rewatches</span></div>
+    </div>
+    <div class="zp-section">
+      <div class="zp-sec-label">My Off-Duty Playlist</div>
+      <ul class="zp-hobby-list">
+        <li class="zp-hobby-item"><span class="zp-hobby-icon">🎮</span><div><span class="zp-hobby-title">Gaming</span><span class="zp-hobby-desc">RDR2 · Elden Ring · God of War · GTA V — PlayStation is therapy</span></div></li>
+        <li class="zp-hobby-item"><span class="zp-hobby-icon">🚗</span><div><span class="zp-hobby-title">Night Drives</span><span class="zp-hobby-desc">Windows down, playlist at max. Bengaluru streets at 1AM hit different</span></div></li>
+        <li class="zp-hobby-item"><span class="zp-hobby-icon">📺</span><div><span class="zp-hobby-title">Movies & Shows</span><span class="zp-hobby-desc">MCU marathons · GoT S1-S7 (S8 doesn't exist) · Succession · Silicon Valley</span></div></li>
+        <li class="zp-hobby-item"><span class="zp-hobby-icon">🎧</span><div><span class="zp-hobby-title">Podcast Loops</span><span class="zp-hobby-desc">My First Million · Lex Fridman · All-In · YC Startup School</span></div></li>
+        <li class="zp-hobby-item"><span class="zp-hobby-icon">💻</span><div><span class="zp-hobby-title">Vibe Coding</span><span class="zp-hobby-desc">2AM, Claude, zero docs, just shipping stuff that shouldn't work but does</span></div></li>
+      </ul>
+    </div>
+    <div class="zp-section">
+      <div class="zp-sec-label">Currently On</div>
+      <div class="zp-tags">
+        <span class="zp-tag" style="background:rgba(255,140,0,0.1);color:#FFB74D;border:1.5px solid rgba(255,140,0,0.22)">🎮 Elden Ring DLC</span>
+        <span class="zp-tag" style="background:rgba(255,140,0,0.1);color:#FFB74D;border:1.5px solid rgba(255,140,0,0.22)">📺 The Bear S3</span>
+        <span class="zp-tag" style="background:rgba(255,140,0,0.1);color:#FFB74D;border:1.5px solid rgba(255,140,0,0.22)">🎧 MFM Binge</span>
+        <span class="zp-tag" style="background:rgba(255,140,0,0.1);color:#FFB74D;border:1.5px solid rgba(255,140,0,0.22)">💻 Vibe Coding</span>
+      </div>
+    </div>
+  </div>
+  <div class="zp-footer">
+    <button class="zp-explore-cta" onclick="closeZonePanel('hobby');scrollToZone(null,'playground')">🎶 Explore Hobby Zone →</button>
+    <button class="zp-close-cta" onclick="closeZonePanel('hobby')">Close</button>
+  </div>
+</div>
+
+<!-- ── FUN PANEL ── -->
+<div class="zp-backdrop" id="zpbd-fun" onclick="closeZonePanel('fun')"></div>
+<div class="zone-panel zp-fun" id="zp-fun">
+  <button class="zp-back-btn" onclick="closeZonePanel('fun')">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Back
+  </button>
+  <div class="zp-header">
+    <div class="zp-zone-chip">⚔️ Chaos Mode</div>
+    <div class="zp-title">Fun <em>Zone.</em></div>
+    <div class="zp-subtitle">Cars, combat, memes, and the chaos that keeps me sane between product sprints.</div>
+  </div>
+  <div class="zp-body">
+    <div class="zp-stats-row">
+      <div class="zp-stat-box"><span class="zp-stat-num">999+</span><span class="zp-stat-lbl">Memes Saved</span></div>
+      <div class="zp-stat-box"><span class="zp-stat-num">42</span><span class="zp-stat-lbl">Boss Fights</span></div>
+      <div class="zp-stat-box"><span class="zp-stat-num">∞</span><span class="zp-stat-lbl">Hot Takes</span></div>
+    </div>
+    <div class="zp-section">
+      <div class="zp-sec-label">Akash's Chaos List</div>
+      <ul class="zp-fun-list">
+        <li class="zp-fun-item">⚔️ God of War energy in every standup. BOY! is a valid project management strategy.</li>
+        <li class="zp-fun-item">🏎️ Cars & racing — gasoline runs in my veins. Someday: track day in a GT3.</li>
+        <li class="zp-fun-item">🥊 Fight Club vibes — first rule of shipping: you talk about shipping. Constantly.</li>
+        <li class="zp-fun-item">🎮 Late night gaming &gt; late night meetings. The ROI is genuinely better.</li>
+        <li class="zp-fun-item">💀 "Works on prod" — my most famous last words, repeated weekly.</li>
+        <li class="zp-fun-item">🐶 Courage the Cowardly Dog + 90s cartoons. No questions. No further context needed.</li>
+        <li class="zp-fun-item">📱 Has an opinion on every startup pitch. Will give it to you unfiltered, unprompted.</li>
+      </ul>
+    </div>
+    <div class="zp-section">
+      <div class="zp-sec-label">Personality Tags</div>
+      <div class="zp-tags">
+        <span class="zp-tag" style="background:rgba(255,82,82,0.1);color:#EF9A9A;border:1.5px solid rgba(255,82,82,0.22)">⚔️ God of War</span>
+        <span class="zp-tag" style="background:rgba(255,82,82,0.1);color:#EF9A9A;border:1.5px solid rgba(255,82,82,0.22)">🏎️ Car Guy</span>
+        <span class="zp-tag" style="background:rgba(255,82,82,0.1);color:#EF9A9A;border:1.5px solid rgba(255,82,82,0.22)">😂 Meme Lord</span>
+        <span class="zp-tag" style="background:rgba(255,82,82,0.1);color:#EF9A9A;border:1.5px solid rgba(255,82,82,0.22)">🌶️ Hot Takes</span>
+        <span class="zp-tag" style="background:rgba(255,82,82,0.1);color:#EF9A9A;border:1.5px solid rgba(255,82,82,0.22)">☕ Chai Addict</span>
+      </div>
+    </div>
+  </div>
+  <div class="zp-footer">
+    <button class="zp-explore-cta" onclick="closeZonePanel('fun');scrollToZone(null,'fun')">⚔️ Explore Fun Zone →</button>
+    <button class="zp-close-cta" onclick="closeZonePanel('fun')">Close</button>
   </div>
 </div>
 
@@ -10329,8 +11211,8 @@ function ekPick(el,e){
   const PIN_ROW_ID='22222222-2222-4222-8222-222222222222';
   const REST_BASE=`${SUPABASE_URL}/rest/v1`;
   const LAYOUT_FN_URL=`${SUPABASE_URL}/functions/v1/moodboard-layout`;
-  const LOCAL_LAYOUT_KEY='moodboard_layout_backup_v4';
-  const LAYOUT_VERSION=4; // bump this to force all clients back to default HP positions
+  const LOCAL_LAYOUT_KEY='moodboard_layout_backup_v5';
+  const LAYOUT_VERSION=5; // bump this to force all clients back to default HP positions
   const sb=(window.supabase&&typeof window.supabase.createClient==='function')
     ? window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}})
     : null;
@@ -10919,6 +11801,80 @@ function hobbyChannelSurge(btn){
   setTimeout(()=>card.classList.remove('hobby-surge'),2700);
 }
 window.hobbyChannelSurge=hobbyChannelSurge;
+
+/* ─── ZONE PANEL SYSTEM ─────────────────────── */
+function openZonePanel(zone){
+  const panel=document.getElementById('zp-'+zone);
+  const bd=document.getElementById('zpbd-'+zone);
+  if(!panel||!bd)return;
+  panel.classList.add('open');
+  bd.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+window.openZonePanel=openZonePanel;
+
+function closeZonePanel(zone){
+  const panel=document.getElementById('zp-'+zone);
+  const bd=document.getElementById('zpbd-'+zone);
+  if(panel)panel.classList.remove('open');
+  if(bd)bd.classList.remove('open');
+  // Close any open project detail inside this panel
+  document.querySelectorAll('.zp-proj-detail.open').forEach(d=>d.classList.remove('open'));
+  document.body.style.overflow='';
+}
+window.closeZonePanel=closeZonePanel;
+
+function openProject(id){
+  const el=document.getElementById('zpd-'+id);
+  if(el)el.classList.add('open');
+}
+window.openProject=openProject;
+
+function closeProject(id){
+  const el=document.getElementById('zpd-'+id);
+  if(el)el.classList.remove('open');
+}
+window.closeProject=closeProject;
+
+/* ─── PLAY BUTTON ZONE COLOR ──────────────────
+   Update play button accent when zone changes   */
+(function(){
+  const zoneColors={
+    origin:'#4CAF50',
+    work:'#42A5F5',
+    portfolio:'#9575CD',
+    hobby:'#FF8C00',
+    fun:'#EF5350',
+    hub:'#FF6B35'
+  };
+  const orig=window.scrollToZone;
+  window.scrollToZone=function(e,zone){
+    if(orig)orig(e,zone);
+    const btn=document.getElementById('playBtn');
+    if(!btn)return;
+    const col=zoneColors[zone]||zoneColors.hub;
+    btn.style.color=col;
+    btn.querySelectorAll('svg').forEach(s=>s.style.stroke=col);
+  };
+  // also track cycleIntroCards zone
+  const origCycle=window.cycleIntroCards;
+  window.cycleIntroCards=function(e){
+    if(origCycle)origCycle(e);
+    setTimeout(()=>{
+      const seq=window._playIntroSequence;
+      const idx=window._playIntroIdx;
+      if(seq&&typeof idx==='number'){
+        const zone=seq[idx]&&seq[idx].zone;
+        const btn=document.getElementById('playBtn');
+        if(btn&&zone){
+          const col=zoneColors[zone]||zoneColors.hub;
+          btn.style.color=col;
+          btn.querySelectorAll('svg').forEach(s=>s.style.stroke=col);
+        }
+      }
+    },100);
+  };
+})();
 </script>
 
 </body></html>
