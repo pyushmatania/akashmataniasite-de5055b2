@@ -5828,7 +5828,7 @@ function polygonBBox(poly){
 // Build ZONE_DEFS from polygon data
 const ZONE_DEFS={};
 (function(){
-  const colors={origin:'#4CAF50',work:'#E53935',portfolio:'#42A5F5',hobby:'#FF9800',fun:'#AB47BC'};
+  const colors={introduction:'#4CAF50',work:'#E53935',portfolio:'#42A5F5',hobby:'#FF9800',fun:'#AB47BC'};
   Object.entries(ZONE_BOUNDARY_POLYGONS).forEach(([name,poly])=>{
     const bb=polygonBBox(poly);
     const c=polygonCentroid(poly);
