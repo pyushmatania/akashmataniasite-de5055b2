@@ -11356,6 +11356,7 @@ function ekPick(el,e){
       }
 
       if(match){
+        if(isCenterGuideSticker(match))return;
         if(typeof d.left==='string')match.style.left=d.left;
         if(typeof d.top==='string')match.style.top=d.top;
         if(typeof d.transform==='string')match.style.transform=d.transform;
