@@ -55,7 +55,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-sticker-clone *{pointer-events:none!important}
 /* STICKER BASE */
 .sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s,opacity 0.3s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));opacity:0;content-visibility:auto;contain-intrinsic-size:auto 300px auto 300px;contain:layout style paint}
-body.stickers-ready .sticker{opacity:1}
+body.stickers-ready .sticker,.sticker.hw-piece,.sticker.hw-doodle{opacity:1}
 .sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
 .sticker:active{cursor:grabbing}
 .sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important}
@@ -2463,9 +2463,8 @@ body.map-expanded .scroll-counter{display:none!important}
       <span style="font-weight:700;min-width:20px;text-align:center">0</span>
     </div>
     <div class="zic-explore"><button class="zic-explore-btn" style="background:linear-gradient(135deg,#42A5F5,#90CAF9);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'launchpad')">🧭 Explore Zone</button><span class="zic-items-count" style="background:rgba(66,165,245,0.1);color:#1565C0">7 Projects · Cases</span></div>
-    <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('portfolio')" style="margin:14px 0 0;padding:14px 16px;border-radius:16px;border:1.5px dashed rgba(66,165,245,0.45);background:rgba(66,165,245,0.12);color:#1565C0;cursor:pointer;z-index:10;position:relative">
-      <span class="zth-dot" style="background:#42A5F5"></span>
-      TAP TO VIEW ALL PROJECTS
+    <div style="margin-top:12px;display:flex;justify-content:center">
+      <button type="button" data-no-sticker-drag="true" onclick="event.stopPropagation();openZonePanel('portfolio')" style="border:none;border-radius:999px;padding:10px 16px;background:linear-gradient(135deg,#1565C0,#42A5F5);color:#fff;font-family:var(--font-fun);font-size:0.72rem;font-weight:800;letter-spacing:0.05em;box-shadow:0 8px 20px rgba(66,165,245,0.28);cursor:pointer">TAP TO OPEN PORTFOLIO</button>
     </div>
   </div>
 </div>
@@ -3068,11 +3067,10 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="istat"><span class="istat-num">5K+</span><span class="istat-label">Users</span></div>
     <div class="istat"><span class="istat-num">∞</span><span class="istat-label">Chai ☕</span></div>
   </div>
-  <div class="intro-cta">↕ drag & explore — the whole world is here ✦</div>
-  <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('work')" style="margin:14px 0 0;padding:14px 16px;border-radius:16px;border:1.5px dashed rgba(100,180,255,0.5);background:rgba(100,180,255,0.12);color:rgba(100,180,255,0.95);cursor:pointer;z-index:10;position:relative">
-    <span class="zth-dot" style="background:#64B5F6"></span>
-    TAP TO OPEN WORK ZONE
+  <div style="margin-top:16px;display:flex;justify-content:center">
+    <button type="button" data-no-sticker-drag="true" onclick="event.stopPropagation();openZonePanel('work')" style="border:none;border-radius:999px;padding:12px 18px;background:linear-gradient(135deg,#64B5F6,#1976D2);color:#fff;font-family:var(--font-fun);font-size:0.74rem;font-weight:800;letter-spacing:0.06em;box-shadow:0 10px 24px rgba(100,180,255,0.28);cursor:pointer">TAP TO OPEN WORK PAGE</button>
   </div>
+  <div class="intro-cta">↕ drag & explore — the whole world is here ✦</div>
 </div>
 
 <!-- ===== Surrounding intro stickers — quirky & fun (all within 450px of intro card) ===== -->
@@ -5781,6 +5779,10 @@ function getZoneForSticker(sticker){
   return 'fun'; // default fallback
 }
 
+function isCenterGuideSticker(sticker){
+  return (sticker.dataset.zone==='hub'&&sticker.dataset.type==='introduction')||sticker.classList.contains('hw-piece')||sticker.classList.contains('hw-doodle');
+}
+
 function isIntroCard(sticker){
   return sticker.classList.contains('zone-intro-creative')||sticker.classList.contains('intro-card')||sticker.classList.contains('zone-intro-card')||sticker.classList.contains('zic-origin')||sticker.classList.contains('zic-hobby');
 }
@@ -6023,8 +6025,8 @@ function autoArrangeMoodboardItems(){
 
   // Categorize all stickers
   stickers.forEach(sticker=>{
-    // Keep companion stickers fixed near intro cards (do NOT auto-rearrange)
-    if(sticker.classList.contains('zic-companion')||sticker.dataset.locked==='1'){
+    // Keep companion stickers and center guidance cluster fixed (do NOT auto-rearrange)
+    if(sticker.classList.contains('zic-companion')||sticker.dataset.locked==='1'||isCenterGuideSticker(sticker)){
       fixedCompanions.push(sticker);
       return;
     }
@@ -11352,6 +11354,7 @@ function ekPick(el,e){
       }
 
       if(match){
+        if(isCenterGuideSticker(match))return;
         if(typeof d.left==='string')match.style.left=d.left;
         if(typeof d.top==='string')match.style.top=d.top;
         if(typeof d.transform==='string')match.style.transform=d.transform;
