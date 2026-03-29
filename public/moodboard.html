@@ -384,7 +384,10 @@ body.stickers-ready .sticker,.sticker.hw-piece,.sticker.hw-doodle{opacity:1}
 }
 .intro-card .intro-role:hover{background:rgba(201,169,110,0.1);border-color:rgba(201,169,110,0.35);color:rgba(201,169,110,0.9)}
 .intro-card .intro-location{font-size:0.72rem;color:rgba(255,255,255,0.25);margin-top:6px}
-.intro-card .intro-cta{margin-top:14px;font-family:var(--font-hand);font-size:0.9rem;color:rgba(201,169,110,0.55)}
+.intro-card .intro-cta{margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:var(--font-hand);font-size:0.9rem;color:rgba(201,169,110,0.55)}
+.intro-card .intro-open-hint{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:220px;padding:11px 18px;border-radius:999px;background:linear-gradient(135deg,rgba(100,181,246,0.18),rgba(25,118,210,0.2));border:1px dashed rgba(100,181,246,0.55);color:rgba(255,255,255,0.94);font-family:var(--font-fun);font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;box-shadow:0 10px 24px rgba(25,118,210,0.18);animation:hwPulse 2.5s ease-in-out infinite}
+.intro-card .intro-open-hint:hover{background:linear-gradient(135deg,rgba(100,181,246,0.26),rgba(25,118,210,0.3))}
+.intro-card .intro-open-hint .zth-dot{width:7px;height:7px;border-radius:50%;background:currentColor;animation:hwBlink 1.4s ease-in-out infinite}
 
 /* Interactive badge overlay — game controller style */
 .interactive-badge{
@@ -2463,7 +2466,12 @@ body.map-expanded .scroll-counter{display:none!important}
     </div>
     <div class="zic-explore" style="margin-top:16px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;align-items:center">
       <button class="zic-explore-btn" style="background:linear-gradient(135deg,#42A5F5,#90CAF9);color:#fff" onclick="event.stopPropagation();scrollToZone(null,'launchpad')">🧭 Explore Zone</button>
-      <button class="zic-explore-btn" type="button" data-no-sticker-drag="true" style="background:linear-gradient(135deg,#1565C0,#42A5F5);color:#fff" onclick="event.stopPropagation();openZonePanel('portfolio')">📂 Open Portfolio</button>
+    </div>
+    <div class="zic-open-hint-row" data-no-sticker-drag="true">
+      <div class="zic-tap-hint" role="button" tabindex="0" data-no-sticker-drag="true" onclick="event.stopPropagation();openZonePanel('portfolio')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();openZonePanel('portfolio')}" style="margin:0;min-width:220px;border-color:rgba(66,165,245,0.28);background:rgba(66,165,245,0.08);color:#1565C0">
+        <span class="zth-dot" style="background:#1565C0"></span>
+        Tap to open portfolio
+      </div>
     </div>
     <div class="zic-items-count" style="display:block;width:max-content;margin:10px auto 0;background:rgba(66,165,245,0.1);color:#1565C0">7 Projects · Cases</div>
   </div>
@@ -3067,9 +3075,12 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="istat"><span class="istat-num">5K+</span><span class="istat-label">Users</span></div>
     <div class="istat"><span class="istat-num">∞</span><span class="istat-label">Chai ☕</span></div>
   </div>
-  <div class="intro-cta" style="margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:10px">
-    <button type="button" data-no-sticker-drag="true" onclick="event.stopPropagation();openZonePanel('work')" style="border:none;border-radius:999px;padding:12px 18px;background:linear-gradient(135deg,#64B5F6,#1976D2);color:#fff;font-family:var(--font-fun);font-size:0.74rem;font-weight:800;letter-spacing:0.06em;box-shadow:0 10px 24px rgba(100,180,255,0.28);cursor:pointer">📂 Open Work</button>
-    <span style="font-family:var(--font-hand);font-size:0.9rem;color:rgba(201,169,110,0.55)">↕ drag & explore — the whole world is here ✦</span>
+  <div class="intro-cta" data-no-sticker-drag="true">
+    <div class="intro-open-hint" role="button" tabindex="0" data-no-sticker-drag="true" onclick="event.stopPropagation();openZonePanel('work')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();openZonePanel('work')}">
+      <span class="zth-dot"></span>
+      Tap to open work
+    </div>
+    <span style="font-family:var(--font-hand);font-size:0.9rem;color:rgba(201,169,110,0.55)">the whole world is here ✦</span>
   </div>
 </div>
 
@@ -3377,7 +3388,7 @@ body.map-expanded .scroll-counter{display:none!important}
       <div class="bar-filters">
         <button class="mc active" onclick="event.stopPropagation();filt('all',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#66BB6A,#43A047)"></div>All</button>
         <button class="mc" onclick="event.stopPropagation();filt('photo',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#64B5F6,#42A5F5)"></div>📸 Photos<span class="mc-counter"></span></button>
-        <button class="mc" onclick="event.stopPropagation();filt('meme',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#CE93D8,#AB47BC)"></div>😂 Memes<span class="mc-counter"></span></button>
+        <button class="mc" onclick="event.stopPropagation();filt('fun',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#CE93D8,#AB47BC)"></div>⚔️ Fun<span class="mc-counter"></span></button>
         <button class="mc" onclick="event.stopPropagation();filt('interactive',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#FF7043,#F4511E)"></div>🎮 Interactive<span class="mc-counter"></span></button>
         <button class="mc" onclick="event.stopPropagation();filt('other',this)"><div class="legend-dot" style="background:linear-gradient(135deg,#90A4AE,#78909C)"></div>📦 Others<span class="mc-counter"></span></button>
       </div>
@@ -3576,6 +3587,7 @@ body.map-expanded .scroll-counter{display:none!important}
 }
 .zic-tap-hint:hover{background:rgba(0,0,0,0.09);color:rgba(0,0,0,0.85)}
 .zic-tap-hint .zth-dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:hwBlink 1.4s ease-in-out infinite}
+.zone-intro-creative .zic-open-hint-row{margin-top:10px;display:flex;justify-content:center}
 
 /* ═══════════════════════════════════════════════
    ZONE PANEL SYSTEM — full-screen detail sheets
@@ -6263,7 +6275,7 @@ function auditStickerIntegrity(){
       let cat='other';
       if(s.classList.contains('zone-intro-creative')||s.classList.contains('zone-intro-card'))cat='introduction';
       else if(s.classList.contains('intro-card'))cat=s.dataset.zone?'introduction':'photo';
-      else if(s.classList.contains('sticker-meme'))cat='meme';
+      else if(s.classList.contains('sticker-meme'))cat='fun';
       else if(s.classList.contains('sticker-emoji'))cat='emoji';
       else if(s.classList.contains('sticker-badge')||s.classList.contains('sticker-stamp'))cat='badge';
       else if(s.classList.contains('sticker-postit'))cat='postit';
@@ -9815,9 +9827,10 @@ function navigateToFilteredItem(cat,idx){
 }
 
 // Filter with cycle-through navigation
-const mainCats=['photo','meme','interactive'];
+const mainCats=['photo','fun','interactive'];
 function matchesFilter(cat,filt){
   if(filt==='all')return true;
+  if(filt==='fun')return cat==='fun'||cat==='meme';
   if(filt==='other')return !mainCats.includes(cat);
   return cat===filt;
 }
@@ -10451,6 +10464,7 @@ function ensureIntroCluster(){
 }
 
 function ensureZoneIntroCards(){
+  if(window.__preserveCurrentZoneCards)return;
   const zoneMeta={
     work:{left:10050,top:2600},
     portfolio:{left:2640,top:7600},
@@ -10882,6 +10896,8 @@ function buildZoneCardHTML(meta){return '';}
     s.insertBefore(handle,s.firstChild);
   });
 })();
+
+window.__preserveCurrentZoneCards=true;
 
 setTimeout(async ()=>{
   ensureIntroCluster();
