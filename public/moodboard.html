@@ -4254,19 +4254,31 @@ function cycleIntroCards(e){
   });
   // Trigger Fun Zone attack animation when navigating to it
   if(target.zone==='fun'){
-    setTimeout(()=>{
+    const t1=setTimeout(()=>{
       const funCard=document.querySelector('.zic-fun');
       if(funCard){
         funCard.classList.remove('fun-attack');
         void funCard.offsetWidth;
         funCard.classList.add('fun-attack');
         if(typeof playSfx==='function')playSfx('pop');
-        setTimeout(()=>funCard.classList.remove('fun-attack'),2500);
+        const t2=setTimeout(()=>funCard.classList.remove('fun-attack'),2500);
+        window._funAttackTimers.push(t2);
 
-        // ── Phase 2: Axe Companion Attack with camera cuts & scars ──
-        setTimeout(()=>runAxeAttackSequence(funCard),2600);
+        // ── Phase 2: Axe Companion Attack with scars ──
+        const t3=setTimeout(()=>runAxeAttackSequence(funCard),2600);
+        window._funAttackTimers.push(t3);
       }
     },600);
+    window._funAttackTimers=(window._funAttackTimers||[]);
+    window._funAttackTimers.push(t1);
+  } else {
+    // Cancel any running fun attack when navigating away
+    if(window._funAttackTimers){
+      window._funAttackTimers.forEach(t=>clearTimeout(t));
+      window._funAttackTimers=[];
+    }
+    const funCard=document.querySelector('.zic-fun');
+    if(funCard)funCard.classList.remove('fun-attack');
   }
   const toast=document.createElement('div');
   toast.className='boundary-toast edge-bottom show';
