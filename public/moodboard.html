@@ -1720,7 +1720,40 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-portfolio .zic-base{height:18px;background:linear-gradient(180deg,rgba(126,87,194,0.2),rgba(126,87,194,0.08));border-radius:0 0 6px 6px}
 .zic-portfolio .zic-base::after{content:'';position:absolute;bottom:-6px;left:15%;right:15%;height:6px;background:rgba(126,87,194,0.06);border-radius:0 0 8px 8px}
 
-/* ── INTRODUCTION: Chapter Zero — Cinematic Boot Sequence ── */
+/* ── WORK: Laptop Terminal — Blue Steel ── */
+.zic-work{width:440px;padding:0;min-height:400px}
+.zic-work .zic-screen{
+  background:linear-gradient(160deg,#0a1628,#0f2440,#0d1f3a);
+  border-radius:16px 16px 0 0;border:2px solid rgba(66,165,245,0.25);padding:28px 22px 22px;
+  position:relative;overflow:hidden;min-height:340px;
+  box-shadow:inset 0 0 40px rgba(66,165,245,0.06);
+}
+.zic-work .zic-screen::before{content:'';position:absolute;top:0;left:0;right:0;height:28px;background:rgba(66,165,245,0.12);border-radius:14px 14px 0 0}
+.zic-work .zic-dots{position:absolute;top:8px;left:14px;display:flex;gap:6px;z-index:2}
+.zic-work .zic-dot{width:10px;height:10px;border-radius:50%}
+.zic-work .zic-dot.r{background:#FF8A80}.zic-work .zic-dot.y{background:#FFD180}.zic-work .zic-dot.g{background:#B9F6CA}
+.zic-work .zic-url-bar{position:absolute;top:5px;left:80px;right:14px;height:18px;background:rgba(66,165,245,0.12);border-radius:4px;z-index:2}
+.zic-work .zic-url-text{color:#64B5F6;font-size:0.55rem;font-family:monospace;line-height:18px;padding:0 8px}
+.zic-work .zic-screen-body{margin-top:14px}
+.zic-work .zic-cursor{position:absolute;bottom:30px;right:40px;font-size:1.4rem;animation:zicCursorBlink 1.2s ease-in-out infinite;z-index:3}
+.zic-work .zic-title{font-family:'Courier New',monospace;font-size:1.4rem;font-weight:700;color:#64B5F6;margin-bottom:4px}
+.zic-work .zic-title .zic-blink{animation:zicTermBlink 1s step-end infinite;color:#90CAF9}
+.zic-work .zic-sub{font-family:var(--font-hand);font-size:0.9rem;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:14px}
+.zic-work .zic-project-list{list-style:none;margin:0 0 14px;padding:0}
+.zic-work .zic-project-list li{font-family:var(--font-sans);font-size:0.78rem;color:rgba(255,255,255,0.65);padding:6px 10px;margin-bottom:4px;background:rgba(66,165,245,0.08);border-radius:8px;border-left:3px solid rgba(66,165,245,0.35);display:flex;align-items:center;gap:8px}
+.zic-work .zic-project-list li .proj-emoji{font-size:1rem}
+.zic-work .zic-project-list li .proj-name{font-weight:700;color:#64B5F6}
+.zic-work .zic-project-list li .proj-desc{font-size:0.7rem;color:rgba(255,255,255,0.4);display:block}
+.zic-work .zic-code-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.zic-work .zic-code-tag{background:rgba(66,165,245,0.1);border:1px solid rgba(66,165,245,0.2);color:#64B5F6;border-radius:6px;padding:4px 10px;font-family:monospace;font-size:0.62rem}
+.zic-work .zic-stats{display:flex;gap:12px;padding-top:12px;border-top:1px solid rgba(66,165,245,0.15)}
+.zic-work .zic-stat-val{font-family:monospace;font-size:1.3rem;font-weight:900;color:#64B5F6}
+.zic-work .zic-stat-label{font-family:var(--font-sans);font-size:0.58rem;color:rgba(255,255,255,0.35);margin-top:2px}
+.zic-work .zic-stat{text-align:center;flex:1}
+.zic-work .zic-base{height:18px;background:linear-gradient(180deg,rgba(66,165,245,0.2),rgba(66,165,245,0.08));border-radius:0 0 6px 6px}
+.zic-work .zic-base::after{content:'';position:absolute;bottom:-6px;left:15%;right:15%;height:6px;background:rgba(66,165,245,0.06);border-radius:0 0 8px 8px}
+
+
 @keyframes termBlink{0%,100%{opacity:1}50%{opacity:0}}
 @keyframes bootBar{0%{width:0%}100%{width:100%}}
 @keyframes introductionGlow{0%,100%{box-shadow:0 0 30px rgba(76,175,80,0.15),0 12px 48px rgba(0,0,0,0.35)}50%{box-shadow:0 0 50px rgba(76,175,80,0.3),0 12px 48px rgba(0,0,0,0.35)}}
