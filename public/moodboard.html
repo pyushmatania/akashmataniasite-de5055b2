@@ -10474,15 +10474,7 @@ async function bootstrapMap(forceRescan){
 }
 
 function ensureIntroCluster(){
-  if(document.querySelector('.intro-card[data-zone="work"]'))return;
-  const intro=document.createElement('div');
-  intro.className='sticker intro-card';
-  intro.dataset.type='photo';
-  intro.dataset.zone='work';
-  intro.style.left='10050px';
-  intro.style.top='2600px';
-  intro.innerHTML='<div class="intro-name">Akash <span class="hl-name">Matania</span></div><div class="intro-tagline">Product Manager · Founder · Dreamer</div><div class="intro-cta">↕ scroll around to explore my world ✨</div>';
-  cv.appendChild(intro);
+  if(document.querySelector('.intro-card[data-zone="hub"]'))return;
 }
 
 function ensureZoneIntroCards(){
