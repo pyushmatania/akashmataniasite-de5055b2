@@ -3051,12 +3051,12 @@ body.map-expanded .scroll-counter{display:none!important}
 </div>
 
 
-<!-- ===== INTRO CARD — IN WORK ZONE ===== -->
-<div class="sticker intro-card" data-type="photo" data-zone="work" data-no-sticker-drag="true" style="left:5060px;top:956px" data-sid="s072">
+<!-- ===== GUIDANCE CARD — CENTER OF CANVAS ===== -->
+<div class="sticker intro-card" data-type="introduction" data-zone="hub" data-no-sticker-drag="true" style="left:3260px;top:3260px" data-sid="s072">
   <div class="intro-aurora-bar"></div>
   <div class="intro-status">
     <span class="status-dot"></span>
-    Open to building something wild
+    Welcome to my world
   </div>
   <div class="intro-photo-wrap" onclick="introPhotoTap(this,event)" style="cursor:pointer">
     <img class="intro-photo" src="/images/akash-photo.webp" alt="Akash Matania" decoding="async" loading="eager">
@@ -3084,12 +3084,44 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="istat"><span class="istat-num">∞</span><span class="istat-label">Chai ☕</span></div>
   </div>
   <div class="intro-cta" data-no-sticker-drag="true">
-    <div class="intro-open-hint" role="button" tabindex="0" data-no-sticker-drag="true" onclick="event.stopPropagation();openZonePanel('work')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();openZonePanel('work')}">
-      <span class="zth-dot"></span>
-      Tap to open work
-    </div>
-    <span style="font-family:var(--font-hand);font-size:0.9rem;color:rgba(201,169,110,0.55)">the whole world is here ✦</span>
+    <span style="font-family:var(--font-hand);font-size:0.9rem;color:rgba(201,169,110,0.55)">hit play to explore my world ✦</span>
   </div>
+</div>
+
+<!-- ===== NEW WORK ZONE INTRO CARD — Blue Terminal ===== -->
+<div class="sticker zic-work" data-zone="work" data-type="interactive" data-no-sticker-drag="true" style="left:5060px;top:956px;transform:rotate(-0.5deg)" data-sid="s072w">
+  <div class="zic-screen" data-no-sticker-drag="true">
+    <div class="zic-dots"><span class="zic-dot r"></span><span class="zic-dot y"></span><span class="zic-dot g"></span></div>
+    <div class="zic-url-bar"><span class="zic-url-text">akash://work/experience</span></div>
+    <div class="zic-screen-body">
+      <div class="zic-title">$ cat ./career<span class="zic-blink">_</span></div>
+      <div class="zic-sub">8+ years of shipping products across fintech, edtech, Web3 & AI — from zero to one, every single time.</div>
+      <ul class="zic-project-list">
+        <li><span class="proj-emoji">🔥</span><div><span class="proj-name">EnterCircles Labs</span><span class="proj-desc">Web3 social · Founder & PM</span></div></li>
+        <li><span class="proj-emoji">📚</span><div><span class="proj-name">Recess EdTech</span><span class="proj-desc">Peer learning · Co-Founder</span></div></li>
+        <li><span class="proj-emoji">💰</span><div><span class="proj-name">Freelance SaaS</span><span class="proj-desc">Growth PM · Multiple clients</span></div></li>
+        <li><span class="proj-emoji">🌐</span><div><span class="proj-name">Freelance Web3</span><span class="proj-desc">Token launches · DAOs · DeFi</span></div></li>
+      </ul>
+      <div class="zic-code-tags">
+        <span class="zic-code-tag">Product Strategy</span><span class="zic-code-tag">Growth</span>
+        <span class="zic-code-tag">0→1</span><span class="zic-code-tag">Web3</span>
+        <span class="zic-code-tag">AI</span><span class="zic-code-tag">FinTech</span>
+      </div>
+      <div class="zic-stats">
+        <div class="zic-stat"><div class="zic-stat-val zic-counter" data-target="8">0</div><div class="zic-stat-label">Years</div></div>
+        <div class="zic-stat"><div class="zic-stat-val zic-counter" data-target="3">0</div><div class="zic-stat-label">Founded</div></div>
+        <div class="zic-stat"><div class="zic-stat-val zic-counter" data-target="5000">0</div><div class="zic-stat-label">Users</div></div>
+      </div>
+      <div class="zic-open-hint-row" data-no-sticker-drag="true">
+        <div class="zic-tap-hint" role="button" tabindex="0" data-no-sticker-drag="true" onclick="event.stopPropagation();openZonePanel('work')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();openZonePanel('work')}" style="margin:12px 0 0;min-width:220px;border-color:rgba(66,165,245,0.28);background:rgba(66,165,245,0.08);color:#64B5F6">
+          <span class="zth-dot" style="background:#64B5F6"></span>
+          Tap to open work
+        </div>
+      </div>
+    </div>
+    <div class="zic-cursor">🖱️</div>
+  </div>
+  <div class="zic-base"><div></div></div>
 </div>
 
 <!-- ===== Surrounding intro stickers — quirky & fun (all within 450px of intro card) ===== -->
