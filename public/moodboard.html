@@ -2362,50 +2362,39 @@ body.map-expanded .scroll-counter{display:none!important}
 <!-- Zone tints REMOVED — curved SVG boundaries are the only zone indicators -->
 <!-- Zone divider lines — single strokes between zones, no doubling -->
 <svg class="zone-boundary-svg" viewBox="0 0 7000 7000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- ═══ VERTICAL DIVIDER x≈3500 (full height, Origin/Portfolio/Hobby ↔ Work/Fun) ═══ -->
-  <path d="M3500,0 C3475,350 3525,700 3495,1050 Q3510,1400 3490,1750 C3515,2100 3485,2333 3500,2333 C3475,2700 3525,3050 3495,3400 Q3510,3700 3490,4050 C3515,4300 3485,4666 3500,4666 C3475,5050 3525,5400 3495,5750 Q3510,6100 3490,6450 C3510,6750 3490,6900 3500,7000"
+  <!-- ═══ VERTICAL DIVIDER x≈3500 (Origin/Portfolio ↔ Work/Fun — stops at y=4666) ═══ -->
+  <path d="M3500,0 C3475,350 3525,700 3495,1050 Q3510,1400 3490,1750 C3515,2100 3485,2333 3500,2333 C3475,2700 3525,3050 3495,3400 Q3510,3700 3490,4050 C3515,4300 3485,4666 3500,4666"
         fill="none" stroke="rgba(201,169,110,0.5)" stroke-width="5" stroke-dasharray="36 16" stroke-linejoin="round" stroke-linecap="round"/>
-  <!-- ═══ HORIZONTAL DIVIDER 1 y≈2333 (Origin/Work row ↔ Portfolio/Fun row) ═══ -->
-  <!-- Left half: Origin ↔ Portfolio (cyan) -->
+  <!-- ═══ HORIZONTAL DIVIDER 1 y≈2333 (Origin/Work ↔ Portfolio/Fun) ═══ -->
   <path d="M0,2333 C350,2308 700,2355 1050,2325 Q1400,2308 1750,2350 C2100,2318 2450,2342 2800,2320 Q3150,2308 3500,2333"
         fill="none" stroke="rgba(0,188,212,0.5)" stroke-width="5" stroke-dasharray="36 16" stroke-linejoin="round" stroke-linecap="round"/>
-  <!-- Right half: Work ↔ Fun (red) -->
   <path d="M3500,2333 C3850,2308 4200,2355 4550,2325 Q4900,2308 5250,2350 C5600,2318 5950,2342 6300,2320 Q6650,2308 7000,2333"
         fill="none" stroke="rgba(229,57,53,0.5)" stroke-width="5" stroke-dasharray="36 16" stroke-linejoin="round" stroke-linecap="round"/>
-  <!-- ═══ HORIZONTAL DIVIDER 2 y≈4666 (Portfolio/Fun row ↔ Hobby row) ═══ -->
-  <!-- Left half: Portfolio ↔ Hobby (blue) -->
-  <path d="M0,4666 C350,4641 700,4688 1050,4658 Q1400,4641 1750,4683 C2100,4651 2450,4675 2800,4653 Q3150,4641 3500,4666"
-        fill="none" stroke="rgba(66,165,245,0.5)" stroke-width="5" stroke-dasharray="36 16" stroke-linejoin="round" stroke-linecap="round"/>
-  <!-- Right half: Fun ↔ (empty bottom-right) (purple) -->
-  <path d="M3500,4666 C3850,4641 4200,4688 4550,4658 Q4900,4641 5250,4683 C5600,4651 5950,4675 6300,4653 Q6650,4641 7000,4666"
-        fill="none" stroke="rgba(171,71,188,0.5)" stroke-width="5" stroke-dasharray="36 16" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- ═══ HORIZONTAL DIVIDER 2 y≈4666 (Portfolio/Fun ↔ Hobby — full width) ═══ -->
+  <path d="M0,4666 C350,4641 700,4688 1050,4658 Q1400,4641 1750,4683 C2100,4651 2450,4675 2800,4653 Q3150,4641 3500,4666 C3850,4641 4200,4688 4550,4658 Q4900,4641 5250,4683 C5600,4651 5950,4675 6300,4653 Q6650,4641 7000,4666"
+        fill="none" stroke="rgba(255,152,0,0.5)" stroke-width="5" stroke-dasharray="36 16" stroke-linejoin="round" stroke-linecap="round"/>
   <!-- ═══ CANVAS PERIMETER — subtle outer edges ═══ -->
-  <!-- Top edge -->
   <path d="M0,0 C700,25 1400,0 2100,20 Q2800,0 3500,15 C4200,0 4900,20 5600,5 Q6300,0 7000,10"
         fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3" stroke-dasharray="28 18" stroke-linecap="round"/>
-  <!-- Left edge -->
   <path d="M0,0 C20,700 0,1400 18,2100 Q0,2800 15,3500 C0,4200 18,4900 5,5600 Q0,6300 10,7000"
         fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3" stroke-dasharray="28 18" stroke-linecap="round"/>
-  <!-- Right edge -->
   <path d="M7000,0 C6980,700 7000,1400 6982,2100 Q7000,2800 6985,3500 C7000,4200 6982,4900 6995,5600 Q7000,6300 6990,7000"
         fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3" stroke-dasharray="28 18" stroke-linecap="round"/>
-  <!-- Bottom edge -->
   <path d="M0,7000 C700,6975 1400,7000 2100,6980 Q2800,7000 3500,6985 C4200,7000 4900,6980 5600,6995 Q6300,7000 7000,6990"
         fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3" stroke-dasharray="28 18" stroke-linecap="round"/>
-  <!-- Zone corner accent dots at grid intersections -->
   <circle cx="3500" cy="2333" r="8" fill="rgba(201,169,110,0.6)"/>
   <circle cx="3500" cy="4666" r="8" fill="rgba(201,169,110,0.6)"/>
   <circle cx="0"    cy="2333" r="5" fill="rgba(0,188,212,0.4)"/>
-  <circle cx="0"    cy="4666" r="5" fill="rgba(66,165,245,0.4)"/>
+  <circle cx="0"    cy="4666" r="5" fill="rgba(255,152,0,0.4)"/>
   <circle cx="7000" cy="2333" r="5" fill="rgba(229,57,53,0.4)"/>
-  <circle cx="7000" cy="4666" r="5" fill="rgba(171,71,188,0.4)"/>
+  <circle cx="7000" cy="4666" r="5" fill="rgba(255,152,0,0.4)"/>
 </svg>
 
 <!-- Zone ground labels — painted diagonally in center of each zone, BIG -->
 <div class="zone-ground-label" style="left:200px;top:1400px;font-size:280px;color:rgba(0,188,212,0.15);transform:rotate(-18deg)">ORIGIN</div>
 <div class="zone-ground-label" style="left:3800px;top:1400px;font-size:280px;color:rgba(229,57,53,0.15);transform:rotate(-18deg)">WORK</div>
 <div class="zone-ground-label" style="left:200px;top:3700px;font-size:260px;color:rgba(66,165,245,0.15);transform:rotate(-18deg)">PORTFOLIO</div>
-<div class="zone-ground-label" style="left:200px;top:6100px;font-size:260px;color:rgba(255,152,0,0.15);transform:rotate(-18deg)">HOBBY</div>
+<div class="zone-ground-label" style="left:2200px;top:6100px;font-size:280px;color:rgba(255,152,0,0.15);transform:rotate(-18deg)">HOBBY</div>
 <div class="zone-ground-label" style="left:3800px;top:3700px;font-size:260px;color:rgba(171,71,188,0.15);transform:rotate(-18deg)">FUN</div>
 
 <!-- Zone creative intro cards (wrapped as stickers for map sync) -->
@@ -4750,7 +4739,7 @@ function getReservedZones(){
     {left:2100,top:2400,w:900,h:280}, // ORIGIN label
     {left:9200,top:2200,w:700,h:280}, // WORK label
     {left:1600,top:7400,w:1100,h:260}, // PORTFOLIO label
-    {left:1800,top:11400,w:800,h:260}, // HOBBY label
+    {left:3200,top:11400,w:800,h:280}, // HOBBY label (centered on full-width zone)
     {left:9000,top:9200,w:600,h:280}, // FUN label
   ];
   // Signpost positions (near zone centers)
@@ -4758,7 +4747,7 @@ function getReservedZones(){
     {left:2800,top:2650,w:220,h:150},
     {left:10350,top:2650,w:220,h:150},
     {left:2700,top:7650,w:220,h:150},
-    {left:3050,top:11650,w:220,h:150},
+    {left:6400,top:11650,w:220,h:150}, // hobby signpost (centered)
     {left:10350,top:9650,w:220,h:150},
   ];
   return labels.concat(signpostPositions);
@@ -4858,7 +4847,7 @@ function placeZoneSignposts(signposts){
     origin:{left:1000,top:200},
     work:{left:4500,top:200},
     portfolio:{left:1000,top:3250},
-    hobby:{left:1000,top:5250},
+    hobby:{left:3200,top:5250},
     fun:{left:4750,top:3500}
   };
 
@@ -4923,7 +4912,9 @@ const ZONE_BOUNDARY_POLYGONS={
   ],
   hobby:[
     [0,4666],[700,4660],[1400,4648],[2100,4665],[2800,4650],[3500,4666],
-    [3520,5100],[3480,5500],[3515,5833],[3485,6200],[3510,6600],[3500,7000],
+    [4200,4650],[4900,4665],[5600,4648],[6300,4660],[7000,4666],
+    [7000,5100],[7000,5500],[7000,5833],[7000,6200],[7000,6600],[7000,7000],
+    [6300,7000],[5600,7000],[4900,7000],[4200,7000],[3500,7000],
     [2800,7000],[2100,7000],[1400,7000],[700,7000],[0,7000],
     [0,6600],[0,6200],[0,5833],[0,5500],[0,5100],[0,4666]
   ]
@@ -5178,20 +5169,20 @@ const HARDCODED_POSITIONS={
   's094':{l:3720,t:3830,r:2},
   's095':{l:3990,t:3845,r:-3},
   's042':{l:210,t:4890,r:-3},
-  's043':{l:460,t:4875,r:3},
-  's044':{l:720,t:4890,r:-2},
-  's045':{l:990,t:4875,r:2},
-  's046':{l:1270,t:4890,r:-3},
-  's047':{l:1520,t:4875,r:3},
-  's048':{l:1780,t:4890,r:-3},
-  's049':{l:2050,t:4875,r:2},
-  's050':{l:210,t:5200,r:-2},
-  's051':{l:490,t:5230,r:3},
-  's052':{l:780,t:5200,r:-3},
-  's053':{l:210,t:5480,r:2},
-  's058':{l:2100,t:5215,r:-2},
-  's092':{l:2380,t:5250,r:3},
-  's093':{l:2070,t:5570,r:-1},
+  's043':{l:660,t:4875,r:3},
+  's044':{l:1120,t:4890,r:-2},
+  's045':{l:1580,t:4875,r:2},
+  's046':{l:2040,t:4890,r:-3},
+  's047':{l:2500,t:4875,r:3},
+  's048':{l:2960,t:4890,r:-3},
+  's049':{l:3420,t:4875,r:2},
+  's050':{l:3880,t:5200,r:-2},
+  's051':{l:4340,t:5230,r:3},
+  's052':{l:4800,t:5200,r:-3},
+  's053':{l:5260,t:5480,r:2},
+  's058':{l:5720,t:5215,r:-2},
+  's092':{l:6180,t:5250,r:3},
+  's093':{l:6500,t:5570,r:-1},
 };
 function autoArrangeMoodboardItems(){
   const stickers=getAllStickers();
@@ -7929,15 +7920,14 @@ function addMapDecorations(cw, ch){
    mapBoundarySvg.setAttribute('preserveAspectRatio','none');
    mapBoundarySvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:5;overflow:visible';
    const mapDividerPaths=[
-     // Vertical divider
+     // Vertical divider (stops at hobby boundary — no longer extends to bottom)
      {d:'M6400,120 C6350,400 6500,900 6350,1300 L6450,1800 C6300,2100 6500,2500 6350,2900 Q6450,3200 6350,3600 C6250,3900 6400,4300 6300,4700 L6400,5100 C6300,5400 6400,5600 6350,5850',stroke:'rgba(0,188,212,0.45)'},
      {d:'M6450,6100 C6500,6400 6400,6800 6350,7100 Q6500,7400 6350,7800 L6450,8200 Q6300,8600 6450,8900 C6400,9200 6350,9500 6450,9850',stroke:'rgba(66,165,245,0.45)'},
-     {d:'M6500,10250 Q6550,10600 6450,11000 C6400,11400 6550,11800 6400,12200 L6500,12600 Q6350,13000 6450,13300 C6400,13600 6300,13800 6200,13900',stroke:'rgba(255,152,0,0.45)'},
-     // Horizontal top divider
+     // Horizontal top divider (full width)
      {d:'M200,5680 C400,5800 800,5700 1300,5850 Q1800,5700 2200,6000 C2700,5900 3200,5750 3700,5950 L4200,5850 Q4600,6050 5100,5800 C5400,5900 5900,6000 6300,5850',stroke:'rgba(0,188,212,0.45)'},
      {d:'M6700,5850 C7100,5750 7500,5850 8000,5700 Q8500,6000 9000,5900 C9500,5750 10000,5900 10500,5800 L11000,5950 Q11500,5650 12000,5750 C12500,5900 13000,5800 13400,5950',stroke:'rgba(229,57,53,0.45)'},
-     // Horizontal bottom divider
-     {d:'M150,10300 C500,10150 1000,10400 1500,10200 L2000,10350 Q2500,10150 3000,10350 C3500,10250 4000,10100 4500,10300 L5000,10200 Q5400,10350 5800,10200 C6100,10150 6300,10350 6500,10250',stroke:'rgba(255,152,0,0.45)'},
+     // Horizontal bottom divider — full width (Portfolio/Fun ↔ Hobby)
+     {d:'M150,10300 C500,10150 1000,10400 1500,10200 L2000,10350 Q2500,10150 3000,10350 C3500,10250 4000,10100 4500,10300 L5000,10200 Q5400,10350 5800,10200 C6100,10150 6300,10350 6500,10250 Q7000,10100 7500,10300 C8000,10150 8500,10350 9000,10200 L9500,10350 Q10000,10150 10500,10300 C11000,10200 11500,10350 12000,10200 Q12500,10100 13000,10350 C13300,10250 13600,10200 13800,10250',stroke:'rgba(255,152,0,0.45)'},
    ];
    mapDividerPaths.forEach(zp=>{
      const p=document.createElementNS(svgNS,'path');
@@ -7959,7 +7949,7 @@ function addMapDecorations(cw, ch){
      {x:16,y:10,label:'📸 ORIGIN',color:'#00BCD4',bg:'linear-gradient(135deg,#00838F,#00BCD4,#4DD0E1)',emoji:'📸'},
      {x:76,y:10,label:'🎯 WORK',color:'#E53935',bg:'linear-gradient(135deg,#C62828,#E53935,#EF5350)',emoji:'🎯'},
      {x:16,y:43,label:'🚀 PORTFOLIO',color:'#42A5F5',bg:'linear-gradient(135deg,#1565C0,#42A5F5,#64B5F6)',emoji:'🚀'},
-     {x:16,y:76,label:'🎮 HOBBY',color:'#FF9800',bg:'linear-gradient(135deg,#E65100,#FF9800,#FFB74D)',emoji:'🎮'},
+     {x:46,y:76,label:'🎮 HOBBY',color:'#FF9800',bg:'linear-gradient(135deg,#E65100,#FF9800,#FFB74D)',emoji:'🎮'},
      {x:76,y:43,label:'😂 FUN',color:'#AB47BC',bg:'linear-gradient(135deg,#7B1FA2,#AB47BC,#CE93D8)',emoji:'😂'},
    ];
    // Fixed signpost sizes — no zoom-dependent scaling
@@ -7986,7 +7976,7 @@ function addMapDecorations(cw, ch){
      {x:14,y:22,label:'ORIGIN',color:'rgba(0,188,212,0.28)',rot:-25},
      {x:64,y:22,label:'WORK',color:'rgba(229,57,53,0.25)',rot:-20},
      {x:14,y:55,label:'PORTFOLIO',color:'rgba(66,165,245,0.24)',rot:-30},
-     {x:14,y:80,label:'HOBBY',color:'rgba(255,152,0,0.25)',rot:-22},
+     {x:38,y:80,label:'HOBBY',color:'rgba(255,152,0,0.25)',rot:-22},
      {x:64,y:55,label:'FUN',color:'rgba(171,71,188,0.25)',rot:-28},
    ];
    const labelFS=window.innerWidth<600?28:38;
@@ -9636,7 +9626,7 @@ function ensureZoneIntroCards(){
     work:{left:10050,top:2600},
     portfolio:{left:2640,top:7600},
     origin:{left:2740,top:2400},
-    hobby:{left:2990,top:11800},
+    hobby:{left:6150,top:11800},
     fun:{left:10690,top:9800}
   };
 
