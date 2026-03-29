@@ -4239,8 +4239,9 @@ function scrollToZone(e,zone){
 const MOODBOARD_VIEW_SCALE_NAV=window.innerWidth<=768?0.6:0.72;
 
 // ===== PLAY BUTTON — cycles through intro cards =====
-let _playIntroIdx=0;
+let _playIntroIdx=-1;
 const _playIntroSequence=[
+  {zone:'hub',label:'Guidance',fallback:{left:3260,top:3260,x:3260+190,y:3260+210}},
   {zone:'introduction',label:'Introduction',fallback:{left:1550,top:966,x:1550+190,y:966+210}},
   {zone:'work',label:'Work',fallback:{left:5050,top:966,x:5050+190,y:966+210}},
   {zone:'portfolio',label:'Portfolio',fallback:{left:1550,top:3299,x:1550+190,y:3299+210}},
