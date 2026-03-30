@@ -7897,8 +7897,11 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
 
   stickerData.forEach(d=>{
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
-    const renderX=(d.left-ox)*sc;
-    const renderY=(d.top-oy)*sc;
+    // Read LIVE position from DOM ref for accurate placement
+    const liveLeft=d.ref&&d.ref.style?parseInt(d.ref.style.left)||d.left:d.left;
+    const liveTop=d.ref&&d.ref.style?parseInt(d.ref.style.top)||d.top:d.top;
+    const renderX=(liveLeft-ox)*sc;
+    const renderY=(liveTop-oy)*sc;
     const baseScale=Math.max(sc,0.01);
     const finalScale=computeCloneScale(d,baseScale);
     const iw=Math.max(d.w*finalScale,2);
