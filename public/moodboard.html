@@ -4142,12 +4142,12 @@ function scrollToZone(e,zone){
   if(!target)return;
   const scale=(typeof MOODBOARD_VIEW_SCALE==='number'?MOODBOARD_VIEW_SCALE:0.5);
   const vp=document.getElementById('viewport');
-  // Try to pan to the actual card center for this zone
+  // Pan to the card's current visual center (skip re-anchoring to avoid measurement drift)
   const el=getZoneIntroElement(zone);
   let panX=target.x, panY=target.y;
   if(el){
-    const anchored=anchorZoneIntroCard(el,zone);
-    if(anchored){ panX=anchored.x; panY=anchored.y; }
+    const vc=_getCardVisualCenter(el);
+    if(vc){ panX=vc.x; panY=vc.y; }
   }
   const worldW=(typeof MOODBOARD_WORLD_WIDTH==='number'?MOODBOARD_WORLD_WIDTH:10000);
   const worldH=(typeof MOODBOARD_WORLD_HEIGHT==='number'?MOODBOARD_WORLD_HEIGHT:10000);
@@ -4198,6 +4198,18 @@ function _getNavOcclusionPx(){
   if(!nav)return 0;
   return nav.offsetHeight||0;
 }
+function _getCardVisualCenter(card){
+  if(!card) return null;
+  var l=parseFloat(card.style.left)||0;
+  var t=parseFloat(card.style.top)||0;
+  var scale=(typeof MOODBOARD_VIEW_SCALE==='number'&&MOODBOARD_VIEW_SCALE>0?MOODBOARD_VIEW_SCALE:0.6);
+  var rect=card.getBoundingClientRect();
+  var w=Math.round(rect.width/scale);
+  var h=Math.round(rect.height/scale);
+  if(w<50) w=card.offsetWidth||380;
+  if(h<50) h=card.offsetHeight||420;
+  return {x:l+w/2, y:t+h/2, w:w, h:h, left:l, top:t};
+}
 function anchorZoneIntroCard(card,zoneOverride){
   if(!card) return null;
   const zone=zoneOverride||card.dataset.zone||'hub';
@@ -4210,7 +4222,6 @@ function anchorZoneIntroCard(card,zoneOverride){
   const w=card.offsetWidth||380;
   const h=card.offsetHeight||420;
   card.style.visibility='';card.style.display='';card.style.transform=prevT;
-  console.log('[ANCHOR-DEBUG] zone='+zone+' w='+w+' h='+h+' center='+JSON.stringify(center));
 
   // Detect top overhang from absolutely-positioned children (e.g. Work card folder tabs)
   let topOverhang=0;
@@ -4229,7 +4240,6 @@ function anchorZoneIntroCard(card,zoneOverride){
   const top=Math.max(0,Math.min(MOODBOARD_WORLD_HEIGHT-h,center.y-visualCenterOffsetY));
   card.style.left=left+'px';
   card.style.top=top+'px';
-  console.log('[ANCHOR-DEBUG] zone='+zone+' topOverhang='+topOverhang+' visualCenterOffsetY='+visualCenterOffsetY+' left='+left+' top='+top+' returnY='+(top+visualCenterOffsetY));
   // Return the visual center in world coords for panning
   return {left,top,w,h:totalVisualH,x:left+w/2,y:top+visualCenterOffsetY};
 }
