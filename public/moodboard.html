@@ -5527,9 +5527,10 @@ function clampViewportPoint(left,top){
    const w=sticker?.offsetWidth||120;
    const h=sticker?.offsetHeight||80;
    // For large zone intro cards, allow them closer to the top edge; otherwise they can feel "blocked" moving up.
-   const isZoneIntro=!!(sticker && (sticker.classList.contains('zic-work') || sticker.classList.contains('zone-intro-card') || sticker.classList.contains('zone-intro-creative')));
+   const isWorkIntro=!!(sticker&&sticker.classList.contains('zic-work'));
+   const isZoneIntro=!!(sticker && (isWorkIntro || sticker.classList.contains('zone-intro-card') || sticker.classList.contains('zone-intro-creative')));
    const minX=MOODBOARD_ITEM_SAFE_MARGIN;
-   const minY=isZoneIntro?Math.max(0,MOODBOARD_ITEM_SAFE_MARGIN-260):MOODBOARD_ITEM_SAFE_MARGIN;
+   const minY=isWorkIntro?0:(isZoneIntro?Math.max(0,MOODBOARD_ITEM_SAFE_MARGIN-260):MOODBOARD_ITEM_SAFE_MARGIN);
    const maxX=Math.max(minX,MOODBOARD_WORLD_WIDTH-w-MOODBOARD_ITEM_SAFE_MARGIN);
    const maxY=Math.max(minY,MOODBOARD_WORLD_HEIGHT-h-MOODBOARD_ITEM_SAFE_MARGIN);
    return {
