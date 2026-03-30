@@ -8131,24 +8131,26 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
     toggleMap();
     setTimeout(()=>{
       // Center viewport on the SIDE of the sticker (not on top)
-      // Position viewport so sticker is visible but bitmoji arrives beside it
       const stickerW=stickerRef?stickerRef.offsetWidth||200:200;
       const stickerH=stickerRef?stickerRef.offsetHeight||150:150;
-      // Navigate to the sticker's left side (offset by sticker width + margin)
-      const sideX=worldX-stickerW/2-100; // left side of sticker
-      const sideY=worldY; // same vertical
-      centerMoodboardOn(worldX,worldY,'smooth');
-      // Multiple resyncs to ensure small map catches the final scroll position
+      const sideX=worldX-stickerW/2-100;
+      const sideY=worldY;
+      // Use 'auto' (instant) scroll to avoid timing issues with smooth scroll
+      centerMoodboardOn(worldX,worldY,'auto');
+      // Aggressive continuous resync: poll until small map is stable
+      let syncCount=0;
+      const syncInterval=setInterval(()=>{
+        syncCount++;
+        if(!mmExp){
+          if(syncCount<=2) ensureMapData(true);
+          drawMap();updMap();
+        }
+        if(syncCount>=8){clearInterval(syncInterval);}
+      },200);
+      // Final forced sync
       setTimeout(()=>{
-        centerMoodboardOn(worldX,worldY,'auto');
         if(!mmExp){ensureMapData(true);drawMap();updMap();}
-      },650);
-      setTimeout(()=>{
-        if(!mmExp){drawMap();updMap();}
-      },1200);
-      setTimeout(()=>{
-        if(!mmExp){updMap();}
-      },1800);
+      },2000);
       
       // Calculate footstep path on moodboard
       const vpCX=vp.scrollLeft+vp.clientWidth/2;
