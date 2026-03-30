@@ -10677,7 +10677,12 @@ function ensureCompanionStickers(force){
       {dx:420,dy:120,html:memeCard('SPRINT REVIEW','"it works on my machine" 🤡')},
       {dx:-400,dy:-240,html:'<div class="zc-sticky" style="--r:-6deg;background:#FFF8E1;color:#E65100;border-bottom:3px solid rgba(255,152,0,0.2)">standup mood:<br>almost done™</div>'},
       {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(201,169,110,0.1);color:var(--accent);border:1px solid rgba(201,169,110,0.25)">⚡ Ships on Fridays</div>'},
-      {dx:-20,dy:360,html:dragHandleSvg+flipCard('💼','TAP TO FLIP','First product crashed every Tuesday. We still shipped.'),kind:'flip'}
+      {dx:-20,dy:360,html:dragHandleSvg+flipCard('💼','TAP TO FLIP','First product crashed every Tuesday. We still shipped.'),kind:'flip'},
+      // Crypto cutouts — Work zone
+      {dx:-380,dy:140,html:'<div class="zc-cutout-wrap" style="transform:rotate(-4deg)"><img class="zc-cutout-img" src="/stickers/bitcoin-cutout.png" alt="Bitcoin" loading="lazy"></div>'},
+      {dx:400,dy:-180,html:'<div class="zc-cutout-wrap" style="transform:rotate(6deg)"><img class="zc-cutout-img" src="/stickers/eth-cutout.png" alt="Ethereum" loading="lazy"></div>'},
+      // HODL Challenge interactive — Work zone
+      {dx:460,dy:400,html:dragHandleSvg+'<div class="zc-hodl"><div class="hodl-title">💎 HODL CHALLENGE</div><div class="hodl-timer">0.0s</div><div class="hodl-label">hold to HODL</div><div class="hodl-record">best: 0.0s</div></div>',kind:'hodl'}
     ],
     portfolio:[
       {dx:-430,dy:-60,html:skillStackCard('Build Stack','💻',['React','TS','Node','Web3','Figma','AI'],['#61DAFB','#3178C6','#339933','#F6851B','#F24E1E','#AB47BC'])},
