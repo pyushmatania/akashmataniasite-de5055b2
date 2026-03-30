@@ -55,7 +55,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-sticker-clone{pointer-events:auto!important}
 .map-sticker-clone *{pointer-events:none!important}
 /* STICKER BASE */
-.sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s,opacity 0.3s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));opacity:1;content-visibility:visible;contain:none}
+.sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;-webkit-touch-callout:none;z-index:10;transition:filter 0.15s,transform 0.15s,opacity 0.3s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));opacity:1;content-visibility:visible;contain:none}
+.sticker *{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 
 .sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
 .sticker:active{cursor:grabbing}
@@ -6288,6 +6289,7 @@ function sD(e){
   sox=cx/SCALE+vp.scrollLeft/SCALE-stickerLeft;
   soy=cy/SCALE+vp.scrollTop/SCALE-stickerTop;
   if(e.touches)e.preventDefault();
+  document.body.style.userSelect='none';document.body.style.webkitUserSelect='none';
 }
 
 let _stickerMoveRAF=null;
@@ -6387,6 +6389,7 @@ function sU(e){
     if(as.onclick)as.onclick(e);
   }
   as=null;
+  document.body.style.userSelect='';document.body.style.webkitUserSelect='';
 }
 
 
