@@ -11802,6 +11802,7 @@ window.openProject=openProject;
   showcase.addEventListener('touchend',function(e){
     if(!swiping)return;
     swiping=false;
+    card.classList.remove('touching');
     const dx=e.changedTouches[0].clientX-touchStartX;
     if(Math.abs(dx)<40){resetCardTilt();return;}
     if(dx<0&&currentIdx<PROJECTS.length-1){
