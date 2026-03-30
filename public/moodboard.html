@@ -8881,6 +8881,7 @@ function ensureIntroCluster(){
 
 function ensureZoneIntroCards(){
   document.querySelectorAll('.zone-intro-card[data-zone="work"], .zone-intro-card[data-zone="portfolio"], .zone-intro-card[data-zone="fun"]').forEach(card=>card.remove());
+  _invalidateStickerCache();
 
   document.querySelectorAll('.zic-counter[data-target]').forEach(el=>{
     if(el.dataset.animated)return;
