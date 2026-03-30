@@ -6378,11 +6378,25 @@ document.querySelectorAll('.sticker-emoji').forEach((s,i)=>{
 function centerOnIntroCard(){
   const vpW=vp.clientWidth||window.innerWidth||390;
   const vpH=vp.clientHeight||window.innerHeight||700;
-  // Center on Hub Welcome Cluster (world coords 3500, 3500)
+  // Center on Hub intro card's actual position for pixel-perfect centering
+  const hubCard=getZoneIntroElement?getZoneIntroElement('hub'):null;
+  const navH=typeof _getNavOcclusionPx==='function'?_getNavOcclusionPx():0;
+  const visibleH=vpH-navH;
+  if(hubCard){
+    const vc=typeof _getCardVisualCenter==='function'?_getCardVisualCenter(hubCard):null;
+    if(vc){
+      const targetLeft=Math.max(0,vc.x*SCALE-vpW/2);
+      const targetTop=Math.max(0,vc.y*SCALE-visibleH/2);
+      vp.scrollLeft=targetLeft;
+      vp.scrollTop=targetTop;
+      return;
+    }
+  }
+  // Fallback to zone center coords
   const hubX=3500*SCALE;
   const hubY=3500*SCALE;
   const targetLeft=Math.max(0,hubX-vpW/2);
-  const targetTop=Math.max(0,hubY-vpH/2);
+  const targetTop=Math.max(0,hubY-visibleH/2);
   vp.scrollLeft=targetLeft;
   vp.scrollTop=targetTop;
 }
