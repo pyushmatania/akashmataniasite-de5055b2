@@ -4238,15 +4238,7 @@ function cycleIntroCards(e){
   const vp=document.getElementById('viewport');
   // Use card's actual rendered center for pixel-perfect viewport centering
   const el=getZoneIntroElement(target.zone);
-  let panX=center.x, panY=center.y;
-  if(el){
-    const w=el.offsetWidth||380;
-    const h=el.offsetHeight||420;
-    const l=parseFloat(el.style.left)||0;
-    const t=parseFloat(el.style.top)||0;
-    panX=l+w/2;
-    panY=t+h/2;
-  }
+  const panX=center.x, panY=center.y;
   const worldW=7000,worldH=7000;
   const maxX=Math.max(0,worldW*scale-vp.clientWidth);
   const maxY=Math.max(0,worldH*scale-vp.clientHeight);
