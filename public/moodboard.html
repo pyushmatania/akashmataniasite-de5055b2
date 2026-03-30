@@ -7843,8 +7843,16 @@ function makeMapCloneNode(d){
   const activateClone=(ev)=>{
     ev.preventDefault();
     ev.stopPropagation();
-    // Use sticker's actual world coordinates directly — avoids lossy mapClientToWorld conversion
-    walkBitmojiTo(d.left + d.w/2, d.top + d.h/2, d.ref);
+    // Read LIVE position from DOM ref — immune to stale cached data
+    if(d.ref&&d.ref.style){
+      const liveLeft=parseInt(d.ref.style.left)||d.left;
+      const liveTop=parseInt(d.ref.style.top)||d.top;
+      const liveW=d.ref.offsetWidth||d.w;
+      const liveH=d.ref.offsetHeight||d.h;
+      walkBitmojiTo(liveLeft + liveW/2, liveTop + liveH/2, d.ref);
+    } else {
+      walkBitmojiTo(d.left + d.w/2, d.top + d.h/2, d.ref);
+    }
   };
   clone.addEventListener('click',activateClone);
   clone.addEventListener('pointerup',activateClone);
