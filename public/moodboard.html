@@ -11023,9 +11023,11 @@ function ensureCompanionStickers(force){
         hc.style.pointerEvents='auto';
         const VALID=[0,1,2,3,4,6];
         const HAND_EMOJI={0:'✊',1:'☝️',2:'✌️',3:'🤟',4:'🖖',6:'👍'};
-        let phase='bat'; // 'bat','bowl','done'
+        // phases: toss_call, toss_num, bat, bowl, done
+        let phase='toss_call';
+        let tossCall=''; // 'odd' or 'even'
         let youScore=0,cpuScore=0,wins=0,losses=0;
-        let target=-1; // target for 2nd innings
+        let target=-1;
         const phaseEl=hc.querySelector('.hc-phase');
         const msgEl=hc.querySelector('.hc-msg');
         const histEl=hc.querySelector('.hc-history');
@@ -11035,8 +11037,21 @@ function ensureCompanionStickers(force){
         const youHandEl=hc.querySelector('.hc-hand.you');
         const cpuHandEl=hc.querySelector('.hc-hand.cpu');
         const btns=hc.querySelectorAll('.hc-btn');
+        const btnsWrap=hc.querySelector('.hc-btns');
 
-        // True randomness using crypto API with fallback
+        // Add toss buttons (odd/even) — hidden by default during game
+        var tossDiv=document.createElement('div');
+        tossDiv.className='hc-toss-btns';
+        tossDiv.style.cssText='display:flex;gap:8px;justify-content:center;margin-bottom:8px';
+        tossDiv.innerHTML='<button class="hc-toss-btn" data-call="odd" style="background:linear-gradient(135deg,#FF9800,#E65100);border:none;color:#fff;font-family:var(--font-fun);font-size:0.7rem;font-weight:800;padding:8px 18px;border-radius:10px;cursor:pointer;text-transform:uppercase;letter-spacing:0.05em;transition:transform 0.15s;box-shadow:0 3px 12px rgba(255,152,0,0.3)">ODD</button><button class="hc-toss-btn" data-call="even" style="background:linear-gradient(135deg,#2196F3,#0D47A1);border:none;color:#fff;font-family:var(--font-fun);font-size:0.7rem;font-weight:800;padding:8px 18px;border-radius:10px;cursor:pointer;text-transform:uppercase;letter-spacing:0.05em;transition:transform 0.15s;box-shadow:0 3px 12px rgba(33,150,243,0.3)">EVEN</button>';
+        btnsWrap.parentNode.insertBefore(tossDiv,btnsWrap);
+        // Hide game buttons initially, show toss
+        btnsWrap.style.display='none';
+
+        // Initial state
+        phaseEl.textContent='⚡ TOSS TIME';
+        msgEl.textContent='call it — odd or even?';
+
         function trueRandom(){
           var arr=new Uint32Array(1);
           if(window.crypto&&window.crypto.getRandomValues){window.crypto.getRandomValues(arr);}
@@ -11051,27 +11066,65 @@ function ensureCompanionStickers(force){
           histEl.appendChild(b);
         }
 
-        function resetGame(){
-          youScore=0;cpuScore=0;target=-1;phase='bat';
+        function startToss(){
+          phase='toss_call';tossCall='';
+          youScore=0;cpuScore=0;target=-1;
           youScoreEl.textContent='0';cpuScoreEl.textContent='0';
-          youScoreEl.classList.add('batting');cpuScoreEl.classList.remove('batting');
-          phaseEl.textContent='you bat first';
-          msgEl.textContent='pick a number to bat!';
+          youScoreEl.classList.remove('batting');cpuScoreEl.classList.remove('batting');
+          phaseEl.textContent='⚡ TOSS TIME';
+          msgEl.textContent='call it — odd or even?';
           msgEl.className='hc-msg';
           histEl.innerHTML='';
           youHandEl.textContent='✊';cpuHandEl.textContent='✊';
           youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';
-          btns.forEach(function(b){b.style.display='';});
+          tossDiv.style.display='flex';
+          btnsWrap.style.display='none';
+        }
+
+        function startBatting(){
+          phase='bat';
+          youScoreEl.classList.add('batting');cpuScoreEl.classList.remove('batting');
+          phaseEl.textContent='you bat';
+          msgEl.textContent='pick a number to bat!';
+          msgEl.className='hc-msg';
+          tossDiv.style.display='none';
+          btnsWrap.style.display='flex';
+          youHandEl.textContent='✊';cpuHandEl.textContent='✊';
+          youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';
+        }
+
+        function startBowling(){
+          phase='bowl';
+          youScoreEl.classList.remove('batting');cpuScoreEl.classList.add('batting');
+          phaseEl.textContent='CPU bats · you bowl';
+          msgEl.textContent='pick to bowl!';
+          msgEl.className='hc-msg';
+          tossDiv.style.display='none';
+          btnsWrap.style.display='flex';
+          youHandEl.textContent='✊';cpuHandEl.textContent='✊';
+          youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';
         }
 
         function switchInnings(){
           target=youScore;
-          phase='bowl';
-          phaseEl.textContent='CPU bats · chase '+target;
+          phaseEl.textContent='CPU bats · chase '+(target+1);
           msgEl.textContent='pick to bowl!';
           msgEl.className='hc-msg';
           histEl.innerHTML='';
+          phase='bowl';
           youScoreEl.classList.remove('batting');cpuScoreEl.classList.add('batting');
+          youHandEl.textContent='✊';cpuHandEl.textContent='✊';
+          youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';
+        }
+
+        function switchInningsBowlFirst(){
+          target=cpuScore;
+          phaseEl.textContent='You bat · chase '+(target+1);
+          msgEl.textContent='pick a number to bat!';
+          msgEl.className='hc-msg';
+          histEl.innerHTML='';
+          phase='bat';
+          youScoreEl.classList.add('batting');cpuScoreEl.classList.remove('batting');
           youHandEl.textContent='✊';cpuHandEl.textContent='✊';
           youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';
         }
@@ -11081,16 +11134,70 @@ function ensureCompanionStickers(force){
           if(won){wins++;msgEl.textContent='🏆 YOU WIN!';msgEl.className='hc-msg win';}
           else{losses++;msgEl.textContent='💀 CPU WINS!';msgEl.className='hc-msg out';}
           recEl.textContent='W:'+wins+' L:'+losses;
-          // Show restart after delay
+          btnsWrap.style.display='none';
           setTimeout(function(){
-            msgEl.textContent+=' · tap any button to play again';
+            msgEl.textContent+=' · tap to play again';
+            tossDiv.style.display='flex';
+            // Repurpose toss buttons as restart
+            tossDiv.innerHTML='<button class="hc-toss-btn" data-call="restart" style="background:linear-gradient(135deg,#4CAF50,#2E7D32);border:none;color:#fff;font-family:var(--font-fun);font-size:0.65rem;font-weight:800;padding:8px 20px;border-radius:10px;cursor:pointer;text-transform:uppercase;letter-spacing:0.06em;box-shadow:0 3px 12px rgba(76,175,80,0.3)">🏏 NEW MATCH</button>';
           },1500);
         }
+
+        // Toss button handlers
+        tossDiv.addEventListener('click',function(ev){
+          ev.stopPropagation();ev.preventDefault();
+          var btn=ev.target.closest('.hc-toss-btn');
+          if(!btn)return;
+          var call=btn.dataset.call;
+          if(call==='restart'){
+            // Restore toss buttons
+            tossDiv.innerHTML='<button class="hc-toss-btn" data-call="odd" style="background:linear-gradient(135deg,#FF9800,#E65100);border:none;color:#fff;font-family:var(--font-fun);font-size:0.7rem;font-weight:800;padding:8px 18px;border-radius:10px;cursor:pointer;text-transform:uppercase;letter-spacing:0.05em;transition:transform 0.15s;box-shadow:0 3px 12px rgba(255,152,0,0.3)">ODD</button><button class="hc-toss-btn" data-call="even" style="background:linear-gradient(135deg,#2196F3,#0D47A1);border:none;color:#fff;font-family:var(--font-fun);font-size:0.7rem;font-weight:800;padding:8px 18px;border-radius:10px;cursor:pointer;text-transform:uppercase;letter-spacing:0.05em;transition:transform 0.15s;box-shadow:0 3px 12px rgba(33,150,243,0.3)">EVEN</button>';
+            startToss();
+            return;
+          }
+          if(phase==='toss_call'){
+            tossCall=call;
+            phase='toss_num';
+            phaseEl.textContent='⚡ TOSS · called '+call.toUpperCase();
+            msgEl.textContent='now pick a number!';
+            tossDiv.style.display='none';
+            btnsWrap.style.display='flex';
+          }
+        });
 
         btns.forEach(function(btn){
           btn.addEventListener('click',function(ev){
             ev.stopPropagation();ev.preventDefault();
-            if(phase==='done'){resetGame();return;}
+
+            var pv=parseInt(this.dataset.v);
+            var cv=trueRandom();
+            youHandEl.textContent=HAND_EMOJI[pv];
+            cpuHandEl.textContent=HAND_EMOJI[cv];
+            youHandEl.className='hc-hand you';
+            cpuHandEl.className='hc-hand cpu';
+
+            // TOSS NUMBER phase
+            if(phase==='toss_num'){
+              var sum=pv+cv;
+              var sumType=(sum%2===0)?'even':'odd';
+              var tossWon=(sumType===tossCall);
+              phaseEl.textContent=pv+' + '+cv+' = '+sum+' ('+sumType+')';
+              if(tossWon){
+                msgEl.textContent='🎉 You won the toss! You bat!';
+                msgEl.className='hc-msg win';
+              }else{
+                msgEl.textContent='CPU won toss! CPU bats first';
+                msgEl.className='hc-msg out';
+              }
+              btnsWrap.style.display='none';
+              setTimeout(function(){
+                if(tossWon){startBatting();}
+                else{startBowling();}
+              },2000);
+              return;
+            }
+
+            if(phase==='done'){startToss();return;}
             var pv=parseInt(this.dataset.v);
             var cv=trueRandom();
             // Animate hands
