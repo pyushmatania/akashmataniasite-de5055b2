@@ -4141,15 +4141,26 @@ function scrollToZone(e,zone){
   const target=zoneTargets[zone];
   if(!target)return;
   const scale=(typeof MOODBOARD_VIEW_SCALE==='number'?MOODBOARD_VIEW_SCALE:0.5);
-  const scaled={x:target.x*scale,y:target.y*scale};
   const vp=document.getElementById('viewport');
+  // Try to pan to the actual card center for this zone
+  const el=getZoneIntroElement(zone);
+  let panX=target.x, panY=target.y;
+  if(el){
+    if(typeof anchorZoneIntroCard==='function') anchorZoneIntroCard(el,zone);
+    const w=el.offsetWidth||380;
+    const h=el.offsetHeight||420;
+    const l=parseFloat(el.style.left)||0;
+    const t=parseFloat(el.style.top)||0;
+    panX=l+w/2;
+    panY=t+h/2;
+  }
   const worldW=(typeof MOODBOARD_WORLD_WIDTH==='number'?MOODBOARD_WORLD_WIDTH:10000);
   const worldH=(typeof MOODBOARD_WORLD_HEIGHT==='number'?MOODBOARD_WORLD_HEIGHT:10000);
   const maxX=Math.max(0,worldW*scale-vp.clientWidth);
   const maxY=Math.max(0,worldH*scale-vp.clientHeight);
   vp.scrollTo({
-    left:Math.max(0,Math.min(scaled.x-vp.clientWidth/2,maxX)),
-    top:Math.max(0,Math.min(scaled.y-vp.clientHeight/2,maxY)),
+    left:Math.max(0,Math.min(panX*scale-vp.clientWidth/2,maxX)),
+    top:Math.max(0,Math.min(panY*scale-vp.clientHeight/2,maxY)),
     behavior:'smooth'
   });
 
