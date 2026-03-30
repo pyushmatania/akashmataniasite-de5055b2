@@ -3607,30 +3607,6 @@ body.map-expanded .scroll-counter{display:none!important}
   100%{opacity:0;transform:translate(var(--tx2,-15px),var(--ty2,-120px)) scale(0.2)}
 }
 
-/* Glare sweep on stat boxes and project cards */
-.zp-stat-box,.zp-proj-card{
-  position:relative;overflow:hidden;
-}
-.zp-stat-box::before,.zp-proj-card::before{
-  content:'';position:absolute;top:-50%;left:-80%;
-  width:40%;height:200%;
-  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.06) 45%,rgba(255,255,255,0.12) 50%,rgba(255,255,255,0.06) 55%,transparent 60%);
-  transform:skewX(-20deg);
-  opacity:0;pointer-events:none;z-index:1;
-}
-.zone-panel.open .zp-stat-box::before{
-  animation:glareSweep 4s ease-in-out 1s infinite;
-}
-.zone-panel.open .zp-proj-card::before{
-  animation:glareSweep 5s ease-in-out 1.5s infinite;
-}
-@keyframes glareSweep{
-  0%{left:-80%;opacity:0}
-  10%{opacity:1}
-  50%{left:180%;opacity:1}
-  60%{opacity:0}
-  100%{left:180%;opacity:0}
-}
 
 /* Ambient glow behind header */
 .zp-header{position:relative}
