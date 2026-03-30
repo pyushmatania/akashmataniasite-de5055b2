@@ -9442,6 +9442,28 @@ window.addEventListener('resize',debounce(()=>{
 },200));
 
 // ===== ENHANCED INTRO CARD =====
+// ===== QUIRKY SWAP ON GUIDANCE CARD =====
+const _gcQuirks=[
+  {emoji:'🐕',text:'Mr. Puchu (my dog) approved this layout.<br>He has veto power on all design decisions.'},
+  {emoji:'☕',text:'This moodboard runs on chai.<br>Approximate cups consumed during building: 47'},
+  {emoji:'🚀',text:'Fun fact: I almost called this "LinkedIn but make it unhinged"'},
+  {emoji:'🎮',text:'Easter egg count on this board: more than you think.<br>Less than I wanted.'},
+  {emoji:'💀',text:'My PM brain wanted a roadmap for this.<br>My creative brain said "just vibe lol"'},
+  {emoji:'🧠',text:'This entire portfolio is a single HTML file.<br>Yes, I know. Yes, I\'m proud.'},
+  {emoji:'🌮',text:'If you\'ve scrolled this far,<br>you deserve a taco. Here: 🌮'}
+];
+let _gcQuirkIdx=0;
+function gcQuirkySwap(el,e){
+  if(typeof isInteractionSuppressed==='function'&&isInteractionSuppressed(e))return;
+  e.stopPropagation();if(typeof playSfx==='function')playSfx('pop');
+  _gcQuirkIdx=(_gcQuirkIdx+1)%_gcQuirks.length;
+  const q=_gcQuirks[_gcQuirkIdx];
+  const em=document.getElementById('gcQuirkyEmoji'),tx=document.getElementById('gcQuirkyText');
+  if(em)em.textContent=q.emoji;
+  if(tx)tx.innerHTML=q.text;
+  if(typeof spawnConfetti==='function')spawnConfetti(e.clientX||0,e.clientY||0);
+}
+
 let _photoTapCount=0;
 const _photoTapMilestones={3:'ok you really like this photo 😅',7:'stalker energy activated 👀',10:'🚨 Mr. Puchu alert: dad\'s being weird',15:'achievement unlocked: photo-tapper 🏆',25:'ok I\'m calling the authorities 📱'};
 function introPhotoTap(el,e){
