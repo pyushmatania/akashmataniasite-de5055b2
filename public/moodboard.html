@@ -6555,8 +6555,9 @@ function sD(e){
 
 let _stickerMoveRAF=null;
 let _smPendingE=null;
-document.addEventListener('mousemove',e=>{if(!as)return;_smPendingE=e;_schedStickerMove(e)});
-document.addEventListener('touchmove',e=>{if(!as)return;_smPendingE=e;_schedStickerMove(e)},{passive:false});
+ // Use capture-phase listeners so no inner element can block drag by calling stopPropagation()
+ document.addEventListener('mousemove',e=>{if(!as)return;_smPendingE=e;_schedStickerMove(e)},true);
+ document.addEventListener('touchmove',e=>{if(!as)return;_smPendingE=e;_schedStickerMove(e)},{passive:false,capture:true});
 
 function _schedStickerMove(e){
   // Two-finger rotation — works anywhere on screen
@@ -6605,8 +6606,9 @@ function _schedStickerMove(e){
   });
 }
 
-document.addEventListener('mouseup',sU);
-document.addEventListener('touchend',sU);
+ document.addEventListener('mouseup',sU,true);
+ document.addEventListener('touchend',sU,true);
+ document.addEventListener('touchcancel',sU,true);
 
 function sU(e){
   if(!as)return;
