@@ -7846,9 +7846,9 @@ function drawMap(){
       const liveLeft=d.ref&&d.ref.style?parseInt(d.ref.style.left)||d.left:d.left;
       const liveTop=d.ref&&d.ref.style?parseInt(d.ref.style.top)||d.top:d.top;
       const dx=(liveLeft-offsetX)*sc, dy=(liveTop-offsetY)*sc;
-      if(dx<-30||dx>canvasW+30||dy<-30||dy>canvasH+30)return;
+      if(dx<-80||dx>canvasW+80||dy<-80||dy>canvasH+80)return;
       count++;
-      const w=Math.max(6,d.w*sc),h=Math.max(5,d.h*sc);
+      const w=Math.max(4,d.w*sc),h=Math.max(3,d.h*sc);
       const el=document.createElement('div');
       el.className='mi';
       // White card base — matches screenshot look
