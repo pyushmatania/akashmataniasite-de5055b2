@@ -7811,12 +7811,9 @@ function drawMapLayout(){
     mapCanvas.style.backgroundImage='none';
     mapCanvas.style.backgroundSize='';
   } else {
-    mapCanvas.style.background='#FAF8F5';
-    mapCanvas.style.backgroundImage=
-      'radial-gradient(circle at 15% 20%,rgba(206,147,216,0.04) 0%,transparent 40%),'+
-      'radial-gradient(circle at 85% 60%,rgba(255,183,77,0.04) 0%,transparent 40%),'+
-      'radial-gradient(circle at 50% 80%,rgba(129,199,132,0.04) 0%,transparent 40%)';
-    mapCanvas.style.backgroundSize='100% 100%,100% 100%,100% 100%';
+    mapCanvas.style.background='linear-gradient(160deg,#1a3a2a 0%,#1e4035 30%,#163828 60%,#122e20 100%)';
+    mapCanvas.style.backgroundImage='none';
+    mapCanvas.style.backgroundSize='';
   }
   if(mmExp){
     const rCW=Math.round(canvasW),rCH=Math.round(canvasH);
