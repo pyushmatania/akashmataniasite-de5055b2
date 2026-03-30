@@ -3655,34 +3655,235 @@ body.map-expanded .scroll-counter{display:none!important}
 .zp-hobby{--zp-glow:rgba(255,140,0,0.5);--zp-glow2:rgba(255,183,77,0.3)}
 .zp-fun{--zp-glow:rgba(239,83,80,0.5);--zp-glow2:rgba(255,138,128,0.3)}
 
-/* Project detail — studio frame glow */
-.zp-proj-detail{position:relative;overflow:hidden}
-.zp-proj-detail::before{
-  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+/* ═══ PROJECT DETAIL — 3D MUSEUM GALLERY ═══ */
+
+/* Gallery room perspective */
+.zp-proj-detail .gallery-room{
+  position:relative;width:100%;min-height:55vh;
+  perspective:900px;perspective-origin:50% 45%;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+
+/* Dark wall with subtle panel grid lines */
+.zp-proj-detail .gallery-wall{
+  position:absolute;inset:0;
   background:
-    radial-gradient(ellipse at 30% 20%,rgba(149,117,205,0.12) 0%,transparent 50%),
-    radial-gradient(ellipse at 70% 80%,rgba(236,64,122,0.08) 0%,transparent 50%),
-    radial-gradient(ellipse at 50% 50%,rgba(255,183,77,0.05) 0%,transparent 60%);
-  opacity:0;transition:opacity 0.6s 0.2s;
-}
-.zp-proj-detail.open::before{opacity:1;animation:projDetailAmbient 8s ease-in-out infinite}
-@keyframes projDetailAmbient{
-  0%,100%{background-position:0% 0%}
-  33%{background-position:5% 3%}
-  66%{background-position:-3% -2%}
+    linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px),
+    linear-gradient(0deg,rgba(255,255,255,0.02) 1px,transparent 1px),
+    linear-gradient(180deg,#080610 0%,#0c0a18 40%,#0e0b1a 100%);
+  background-size:calc(100%/3) calc(100%/3),calc(100%/3) calc(100%/3),100% 100%;
+  transform:rotateX(2deg);transform-origin:center bottom;
 }
 
-/* Project detail emoji — glow aura */
-.zp-proj-detail-emoji{
-  position:relative;display:inline-block;
-  filter:drop-shadow(0 0 20px var(--zp-glow,rgba(149,117,205,0.5)));
+/* Frame container with 3D transform */
+.gallery-frame-wrap{
+  position:relative;z-index:2;
+  transform:rotateX(1deg) translateZ(20px);
+  transition:transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+.zp-proj-detail.open .gallery-frame-wrap{
+  animation:frameReveal 0.8s cubic-bezier(0.22,1,0.36,1) both;
+}
+@keyframes frameReveal{
+  0%{opacity:0;transform:rotateX(8deg) translateZ(-40px) scale(0.85)}
+  100%{opacity:1;transform:rotateX(1deg) translateZ(20px) scale(1)}
 }
 
-/* Stat box subtle gradient border on project detail */
-.zp-proj-detail .zp-stat-box{
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 0 12px rgba(149,117,205,0.08);
+/* The physical frame — thick dark border with metallic edge */
+.gallery-frame{
+  position:relative;padding:6px;
+  background:linear-gradient(135deg,#1a1a2e,#16132b,#0d0b1e);
+  border-radius:4px;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06),
+    0 2px 8px rgba(0,0,0,0.8),
+    0 8px 32px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+/* Inner matte — dark gap between frame and artwork */
+.gallery-frame-inner{
+  position:relative;overflow:hidden;
+  border-radius:2px;
+  background:#050310;
+  width:220px;height:320px;
+}
+
+/* The artwork/project visual inside the frame */
+.gallery-artwork{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+
+/* Animated gradient fill inside the frame — like the reference */
+.gallery-artwork::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 30% 25%,var(--frame-c1,rgba(120,80,220,0.6)) 0%,transparent 55%),
+    radial-gradient(ellipse at 70% 75%,var(--frame-c2,rgba(200,60,150,0.5)) 0%,transparent 55%),
+    radial-gradient(ellipse at 50% 100%,var(--frame-c3,rgba(255,180,60,0.3)) 0%,transparent 40%),
+    radial-gradient(ellipse at 20% 80%,var(--frame-c4,rgba(60,120,255,0.3)) 0%,transparent 45%);
+  opacity:0;
+  animation:none;
+}
+.zp-proj-detail.open .gallery-artwork::before{
+  opacity:1;
+  animation:artworkPulse 6s ease-in-out infinite;
+}
+@keyframes artworkPulse{
+  0%,100%{filter:blur(30px) brightness(0.8);transform:scale(1)}
+  33%{filter:blur(35px) brightness(1);transform:scale(1.05) rotate(1deg)}
+  66%{filter:blur(28px) brightness(0.9);transform:scale(0.98) rotate(-1deg)}
+}
+
+/* Project emoji on the artwork */
+.gallery-artwork-emoji{
+  font-size:3.2rem;position:relative;z-index:2;
+  filter:drop-shadow(0 4px 20px rgba(0,0,0,0.5));
+  margin-bottom:12px;
+}
+
+/* Project name on the artwork */
+.gallery-artwork-label{
+  font-family:var(--font-fun);font-size:1rem;font-weight:800;
+  color:rgba(255,255,255,0.85);letter-spacing:0.02em;
+  text-shadow:0 2px 12px rgba(0,0,0,0.6);
+  position:relative;z-index:2;
+}
+
+/* Frame GLOW — the signature lighting effect */
+.gallery-frame-glow{
+  position:absolute;inset:-12px;z-index:-1;
+  border-radius:8px;
+  background:
+    conic-gradient(from 0deg at 50% 50%,
+      var(--frame-c1,rgba(120,80,220,0.5)),
+      var(--frame-c2,rgba(200,60,150,0.4)),
+      var(--frame-c3,rgba(255,180,60,0.3)),
+      var(--frame-c4,rgba(60,120,255,0.4)),
+      var(--frame-c1,rgba(120,80,220,0.5)));
+  filter:blur(20px);
+  opacity:0;
+}
+.zp-proj-detail.open .gallery-frame-glow{
+  opacity:1;
+  animation:frameGlowRotate 8s linear infinite,frameGlowPulse 4s ease-in-out infinite;
+}
+@keyframes frameGlowRotate{
+  0%{filter:blur(20px) hue-rotate(0deg)}
+  100%{filter:blur(20px) hue-rotate(360deg)}
+}
+@keyframes frameGlowPulse{
+  0%,100%{opacity:0.6;transform:scale(1)}
+  50%{opacity:0.9;transform:scale(1.04)}
+}
+
+/* Floor with reflection */
+.gallery-floor{
+  position:absolute;bottom:0;left:0;right:0;height:25%;
+  background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,0.3) 30%,rgba(0,0,0,0.6) 100%);
+  transform:rotateX(-2deg);transform-origin:center top;
+}
+.gallery-floor::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,
+    var(--frame-c1,rgba(120,80,220,0.08)) 0%,
+    transparent 60%);
+  filter:blur(30px);
+  opacity:0;
+}
+.zp-proj-detail.open .gallery-floor::before{opacity:1}
+
+/* Floating dust particles in the gallery */
+.gallery-dust{
+  position:absolute;border-radius:50%;pointer-events:none;
+  background:rgba(255,255,255,0.3);
+}
+.zp-proj-detail.open .gallery-dust{
+  animation:dustFloat var(--d-dur,8s) ease-in-out var(--d-delay,0s) infinite;
+}
+@keyframes dustFloat{
+  0%{opacity:0;transform:translate(0,0)}
+  20%{opacity:0.6}
+  50%{opacity:0.3;transform:translate(var(--d-tx,15px),var(--d-ty,-40px))}
+  80%{opacity:0.5}
+  100%{opacity:0;transform:translate(var(--d-tx2,-10px),var(--d-ty2,-80px))}
+}
+
+/* Spotlight cone from above */
+.gallery-spotlight{
+  position:absolute;top:-20%;left:50%;transform:translateX(-50%);
+  width:180px;height:70%;
+  background:radial-gradient(ellipse at 50% 0%,
+    rgba(255,255,255,0.04) 0%,
+    rgba(255,255,255,0.01) 40%,
+    transparent 70%);
+  pointer-events:none;z-index:1;
+  clip-path:polygon(35% 0%,65% 0%,100% 100%,0% 100%);
+  opacity:0;
+}
+.zp-proj-detail.open .gallery-spotlight{
+  opacity:1;animation:spotlightBreath 5s ease-in-out infinite;
+}
+@keyframes spotlightBreath{
+  0%,100%{opacity:0.5}
+  50%{opacity:0.8}
+}
+
+/* ── Gallery info section below the frame ── */
+.gallery-info{
+  position:relative;z-index:3;
+  padding:28px 24px 60px;
+  background:linear-gradient(180deg,#0a0812 0%,#0c0a16 100%);
+  border-top:1px solid rgba(255,255,255,0.04);
+}
+
+.gallery-info .gi-name{
+  font-family:var(--font-fun);font-size:2rem;font-weight:900;
+  color:#fff;line-height:1.1;margin-bottom:8px;
+}
+.gallery-info .gi-tagline{
+  font-family:var(--font-hand);font-size:0.95rem;
+  color:rgba(255,255,255,0.4);line-height:1.5;margin-bottom:20px;
+}
+.gallery-info .gi-body{
+  font-family:var(--font-sans);font-size:0.84rem;
+  color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:22px;
+}
+
+/* Stats as gallery placard */
+.gallery-info .gi-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:22px;
+}
+.gallery-info .gi-stat{
+  text-align:center;padding:14px 8px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:2px;
+  position:relative;overflow:hidden;
+}
+.gallery-info .gi-stat::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--frame-c1,rgba(120,80,220,0.4)),var(--frame-c2,rgba(200,60,150,0.3)),transparent);
+}
+.gallery-info .gi-stat-num{
+  font-family:var(--font-fun);font-size:1.5rem;font-weight:900;color:#fff;display:block;
+}
+.gallery-info .gi-stat-lbl{
+  font-family:var(--font-sans);font-size:0.5rem;color:rgba(255,255,255,0.3);
+  text-transform:uppercase;letter-spacing:0.1em;display:block;margin-top:4px;
+}
+
+/* Tags and skills in gallery style */
+.gallery-info .gi-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.gallery-info .gi-skills{display:flex;gap:6px;flex-wrap:wrap}
+.gallery-info .gi-skill{
+  padding:5px 11px;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;
+  letter-spacing:0.04em;background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);
+  border-radius:1px;
 }
 
 /* Tag shimmer effect */
@@ -3809,30 +4010,26 @@ body.map-expanded .scroll-counter{display:none!important}
 }
 .zp-proj-open-btn:hover{color:#fff}
 
-/* Project detail slide-in */
+/* Project detail — 3D gallery overlay */
 .zp-proj-detail{
   position:fixed;inset:0;z-index:10010;
-  background:#0A0812;
+  background:#060412;
   transform:translateX(100%);
-  transition:transform 0.4s cubic-bezier(0.32,0.72,0,1);
-  overflow-y:auto;padding:80px 28px 60px;
+  transition:transform 0.5s cubic-bezier(0.32,0.72,0,1);
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
 }
 .zp-proj-detail.open{transform:translateX(0)}
 .zp-proj-detail-back{
-  position:fixed;top:20px;left:20px;z-index:10011;
-  width:42px;height:42px;border-radius:50%;
-  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);
+  position:fixed;top:16px;left:16px;z-index:10011;
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;color:#fff;font-size:1.1rem;
-  transition:background 0.2s;
+  cursor:pointer;color:rgba(255,255,255,0.7);font-size:1.1rem;
+  transition:all 0.2s;
 }
-.zp-proj-detail-back:hover{background:rgba(255,255,255,0.18)}
-.zp-proj-detail-emoji{font-size:3.5rem;display:block;margin-bottom:18px}
-.zp-proj-detail-name{font-family:var(--font-fun);font-size:2.2rem;font-weight:900;color:#fff;margin-bottom:10px;line-height:1.1}
-.zp-proj-detail-tagline{font-family:var(--font-hand);font-size:1rem;color:rgba(255,255,255,0.45);margin-bottom:22px;line-height:1.5}
-.zp-proj-detail-body{font-family:var(--font-sans);font-size:0.85rem;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:20px}
-.zp-proj-detail-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:24px}
-.zp-proj-detail-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:24px}
+.zp-proj-detail-back:hover{background:rgba(255,255,255,0.12);color:#fff}
 
 /* ── Footer CTA ── */
 .zp-footer{padding:12px 28px 56px;display:flex;flex-direction:column;gap:10px}
@@ -4826,80 +5023,171 @@ function cycleIntroCards(e){
   </div>
 </div>
 
-<!-- Project detail overlays -->
-<div class="zp-proj-detail" id="zpd-entercircles">
+<!-- Project detail overlays — 3D Museum Gallery -->
+
+<!-- EnterCircles -->
+<div class="zp-proj-detail" id="zpd-entercircles" style="--frame-c1:rgba(124,77,255,0.7);--frame-c2:rgba(206,147,216,0.5);--frame-c3:rgba(255,200,100,0.3);--frame-c4:rgba(80,120,255,0.4)">
   <button class="zp-proj-detail-back" onclick="closeProject('entercircles')">←</button>
-  <span class="zp-proj-detail-emoji">🔗</span>
-  <div class="zp-proj-detail-name">EnterCircles</div>
-  <div class="zp-proj-detail-tagline">Web3 Social Platform · Community Engagement · Token-Gated Access</div>
-  <div class="zp-proj-detail-tags"><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">Web3</span><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">Social</span><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">B2B2C</span></div>
-  <div class="zp-proj-detail-body">EnterCircles is a Web3-native social platform built around community identity, token-gated experiences, and meaningful engagement mechanics. I led the product from concept to launch — defining the core UX, building the token architecture, and iterating based on community feedback. The product sits at the intersection of crypto-native UX and mainstream social behavior.</div>
-  <div class="zp-proj-detail-stats">
-    <div class="zp-stat-box"><span class="zp-stat-num">5K+</span><span class="zp-stat-lbl">Users</span></div>
-    <div class="zp-stat-box"><span class="zp-stat-num">0→1</span><span class="zp-stat-lbl">Built</span></div>
-    <div class="zp-stat-box"><span class="zp-stat-num">2023</span><span class="zp-stat-lbl">Launched</span></div>
+  <div class="gallery-room">
+    <div class="gallery-wall"></div>
+    <div class="gallery-spotlight"></div>
+    <div class="gallery-frame-wrap">
+      <div class="gallery-frame-glow"></div>
+      <div class="gallery-frame">
+        <div class="gallery-frame-inner">
+          <div class="gallery-artwork">
+            <span class="gallery-artwork-emoji">🔗</span>
+            <span class="gallery-artwork-label">EnterCircles</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="gallery-floor"></div>
   </div>
-  <div class="zp-skills" style="margin-bottom:0"><span class="zp-skill">Token Economics</span><span class="zp-skill">Community UX</span><span class="zp-skill">Smart Contracts</span><span class="zp-skill">Engagement Loops</span></div>
+  <div class="gallery-info">
+    <div class="gi-tags"><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">Web3</span><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">Social</span><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">B2B2C</span></div>
+    <div class="gi-name">EnterCircles</div>
+    <div class="gi-tagline">Web3 Social Platform · Community Engagement · Token-Gated Access</div>
+    <div class="gi-body">EnterCircles is a Web3-native social platform built around community identity, token-gated experiences, and meaningful engagement mechanics. I led the product from concept to launch — defining the core UX, building the token architecture, and iterating based on community feedback.</div>
+    <div class="gi-stats">
+      <div class="gi-stat"><span class="gi-stat-num">5K+</span><span class="gi-stat-lbl">Users</span></div>
+      <div class="gi-stat"><span class="gi-stat-num">0→1</span><span class="gi-stat-lbl">Built</span></div>
+      <div class="gi-stat"><span class="gi-stat-num">2023</span><span class="gi-stat-lbl">Launched</span></div>
+    </div>
+    <div class="gi-skills"><span class="gi-skill">Token Economics</span><span class="gi-skill">Community UX</span><span class="gi-skill">Smart Contracts</span><span class="gi-skill">Engagement Loops</span></div>
+  </div>
 </div>
 
-<div class="zp-proj-detail" id="zpd-recess">
+<!-- Recess -->
+<div class="zp-proj-detail" id="zpd-recess" style="--frame-c1:rgba(66,165,245,0.7);--frame-c2:rgba(100,181,246,0.5);--frame-c3:rgba(130,220,255,0.3);--frame-c4:rgba(40,80,200,0.4)">
   <button class="zp-proj-detail-back" onclick="closeProject('recess')">←</button>
-  <span class="zp-proj-detail-emoji">📚</span>
-  <div class="zp-proj-detail-name">Recess</div>
-  <div class="zp-proj-detail-tagline">EdTech · Peer Learning · Study Groups · Collaborative Sessions</div>
-  <div class="zp-proj-detail-tags"><span class="zp-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9;border:1.5px solid rgba(66,165,245,0.25)">EdTech</span><span class="zp-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9;border:1.5px solid rgba(66,165,245,0.25)">B2C</span></div>
-  <div class="zp-proj-detail-body">Recess was built to solve the isolation problem in online learning — connecting students in real-time study groups, peer sessions, and collaborative environments. As co-founder and PM, I owned the product roadmap, user research, and growth strategy. We reached 2K+ students before pivoting.</div>
-  <div class="zp-proj-detail-stats">
-    <div class="zp-stat-box"><span class="zp-stat-num">2K+</span><span class="zp-stat-lbl">Students</span></div>
-    <div class="zp-stat-box"><span class="zp-stat-num">Co-</span><span class="zp-stat-lbl">Founded</span></div>
-    <div class="zp-stat-box"><span class="zp-stat-num">2021</span><span class="zp-stat-lbl">Launched</span></div>
+  <div class="gallery-room">
+    <div class="gallery-wall"></div>
+    <div class="gallery-spotlight"></div>
+    <div class="gallery-frame-wrap">
+      <div class="gallery-frame-glow"></div>
+      <div class="gallery-frame">
+        <div class="gallery-frame-inner">
+          <div class="gallery-artwork">
+            <span class="gallery-artwork-emoji">📚</span>
+            <span class="gallery-artwork-label">Recess</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="gallery-floor"></div>
   </div>
-  <div class="zp-skills"><span class="zp-skill">Peer Learning UX</span><span class="zp-skill">Community Growth</span><span class="zp-skill">Retention Design</span></div>
+  <div class="gallery-info">
+    <div class="gi-tags"><span class="zp-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9;border:1.5px solid rgba(66,165,245,0.25)">EdTech</span><span class="zp-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9;border:1.5px solid rgba(66,165,245,0.25)">B2C</span></div>
+    <div class="gi-name">Recess</div>
+    <div class="gi-tagline">EdTech · Peer Learning · Study Groups · Collaborative Sessions</div>
+    <div class="gi-body">Recess was built to solve the isolation problem in online learning — connecting students in real-time study groups, peer sessions, and collaborative environments. As co-founder and PM, I owned the product roadmap, user research, and growth strategy. We reached 2K+ students before pivoting.</div>
+    <div class="gi-stats">
+      <div class="gi-stat"><span class="gi-stat-num">2K+</span><span class="gi-stat-lbl">Students</span></div>
+      <div class="gi-stat"><span class="gi-stat-num">Co-</span><span class="gi-stat-lbl">Founded</span></div>
+      <div class="gi-stat"><span class="gi-stat-num">2021</span><span class="gi-stat-lbl">Launched</span></div>
+    </div>
+    <div class="gi-skills"><span class="gi-skill">Peer Learning UX</span><span class="gi-skill">Community Growth</span><span class="gi-skill">Retention Design</span></div>
+  </div>
 </div>
 
-<div class="zp-proj-detail" id="zpd-hushh">
+<!-- Hushh -->
+<div class="zp-proj-detail" id="zpd-hushh" style="--frame-c1:rgba(239,83,80,0.7);--frame-c2:rgba(255,110,130,0.5);--frame-c3:rgba(255,180,80,0.3);--frame-c4:rgba(180,40,80,0.4)">
   <button class="zp-proj-detail-back" onclick="closeProject('hushh')">←</button>
-  <span class="zp-proj-detail-emoji">🤫</span>
-  <div class="zp-proj-detail-name">Hushh</div>
-  <div class="zp-proj-detail-tagline">Privacy-First · Personal Data Management · Your Data, Your Rules</div>
-  <div class="zp-proj-detail-tags"><span class="zp-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A;border:1.5px solid rgba(239,83,80,0.25)">Privacy</span><span class="zp-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A;border:1.5px solid rgba(239,83,80,0.25)">FinTech</span></div>
-  <div class="zp-proj-detail-body">Hushh is a privacy-native product that lets users control, monetize, and protect their personal data. I worked on the product strategy and UX — designing flows that make privacy feel empowering rather than restrictive. Core challenge: make complex data concepts feel intuitive for non-technical users.</div>
-  <div class="zp-proj-detail-stats">
-    <div class="zp-stat-box"><span class="zp-stat-num">B2C</span><span class="zp-stat-lbl">Product</span></div>
-    <div class="zp-stat-box"><span class="zp-stat-num">PM</span><span class="zp-stat-lbl">Role</span></div>
-    <div class="zp-stat-box"><span class="zp-stat-num">Web3</span><span class="zp-stat-lbl">Infra</span></div>
+  <div class="gallery-room">
+    <div class="gallery-wall"></div>
+    <div class="gallery-spotlight"></div>
+    <div class="gallery-frame-wrap">
+      <div class="gallery-frame-glow"></div>
+      <div class="gallery-frame">
+        <div class="gallery-frame-inner">
+          <div class="gallery-artwork">
+            <span class="gallery-artwork-emoji">🤫</span>
+            <span class="gallery-artwork-label">Hushh</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="gallery-floor"></div>
   </div>
-  <div class="zp-skills"><span class="zp-skill">Privacy UX</span><span class="zp-skill">Data Architecture</span><span class="zp-skill">User Trust</span></div>
+  <div class="gallery-info">
+    <div class="gi-tags"><span class="zp-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A;border:1.5px solid rgba(239,83,80,0.25)">Privacy</span><span class="zp-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A;border:1.5px solid rgba(239,83,80,0.25)">FinTech</span></div>
+    <div class="gi-name">Hushh</div>
+    <div class="gi-tagline">Privacy-First · Personal Data Management · Your Data, Your Rules</div>
+    <div class="gi-body">Hushh is a privacy-native product that lets users control, monetize, and protect their personal data. I worked on the product strategy and UX — designing flows that make privacy feel empowering rather than restrictive. Core challenge: make complex data concepts feel intuitive for non-technical users.</div>
+    <div class="gi-stats">
+      <div class="gi-stat"><span class="gi-stat-num">B2C</span><span class="gi-stat-lbl">Product</span></div>
+      <div class="gi-stat"><span class="gi-stat-num">PM</span><span class="gi-stat-lbl">Role</span></div>
+      <div class="gi-stat"><span class="gi-stat-num">Web3</span><span class="gi-stat-lbl">Infra</span></div>
+    </div>
+    <div class="gi-skills"><span class="gi-skill">Privacy UX</span><span class="gi-skill">Data Architecture</span><span class="gi-skill">User Trust</span></div>
+  </div>
 </div>
 
-<div class="zp-proj-detail" id="zpd-smarbhubaneswar">
+<!-- SmarBhubaneswar -->
+<div class="zp-proj-detail" id="zpd-smarbhubaneswar" style="--frame-c1:rgba(38,166,154,0.7);--frame-c2:rgba(80,200,180,0.5);--frame-c3:rgba(120,255,200,0.3);--frame-c4:rgba(20,100,120,0.4)">
   <button class="zp-proj-detail-back" onclick="closeProject('smarbhubaneswar')">←</button>
-  <span class="zp-proj-detail-emoji">🏙️</span>
-  <div class="zp-proj-detail-name">SmarBhubaneswar</div>
-  <div class="zp-proj-detail-tagline">Smart City · Civic Tech · Citizen Services · Urban Governance</div>
-  <div class="zp-proj-detail-tags"><span class="zp-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4;border:1.5px solid rgba(38,166,154,0.25)">Civic Tech</span><span class="zp-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4;border:1.5px solid rgba(38,166,154,0.25)">Gov-Tech</span></div>
-  <div class="zp-proj-detail-body">A smart city platform for Bhubaneswar's urban governance layer — connecting citizens to city services, complaint redressal, and civic engagement. I led the product design and stakeholder mapping, navigating the complexity of government-facing tech with citizen-first UX principles.</div>
-  <div class="zp-proj-detail-stats">
-    <div class="zp-stat-box"><span class="zp-stat-num">Gov</span><span class="zp-stat-lbl">Sector</span></div>
-    <div class="zp-stat-box"><span class="zp-stat-num">B2G</span><span class="zp-stat-lbl">Model</span></div>
-    <div class="zp-stat-box"><span class="zp-stat-num">City</span><span class="zp-stat-lbl">Scale</span></div>
+  <div class="gallery-room">
+    <div class="gallery-wall"></div>
+    <div class="gallery-spotlight"></div>
+    <div class="gallery-frame-wrap">
+      <div class="gallery-frame-glow"></div>
+      <div class="gallery-frame">
+        <div class="gallery-frame-inner">
+          <div class="gallery-artwork">
+            <span class="gallery-artwork-emoji">🏙️</span>
+            <span class="gallery-artwork-label">SmarBhubaneswar</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="gallery-floor"></div>
   </div>
-  <div class="zp-skills"><span class="zp-skill">Civic UX</span><span class="zp-skill">Stakeholder Mgmt</span><span class="zp-skill">Service Design</span></div>
+  <div class="gallery-info">
+    <div class="gi-tags"><span class="zp-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4;border:1.5px solid rgba(38,166,154,0.25)">Civic Tech</span><span class="zp-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4;border:1.5px solid rgba(38,166,154,0.25)">Gov-Tech</span></div>
+    <div class="gi-name">SmarBhubaneswar</div>
+    <div class="gi-tagline">Smart City · Civic Tech · Citizen Services · Urban Governance</div>
+    <div class="gi-body">A smart city platform for Bhubaneswar's urban governance layer — connecting citizens to city services, complaint redressal, and civic engagement. I led the product design and stakeholder mapping, navigating the complexity of government-facing tech with citizen-first UX principles.</div>
+    <div class="gi-stats">
+      <div class="gi-stat"><span class="gi-stat-num">Gov</span><span class="gi-stat-lbl">Sector</span></div>
+      <div class="gi-stat"><span class="gi-stat-num">B2G</span><span class="gi-stat-lbl">Model</span></div>
+      <div class="gi-stat"><span class="gi-stat-num">City</span><span class="gi-stat-lbl">Scale</span></div>
+    </div>
+    <div class="gi-skills"><span class="gi-skill">Civic UX</span><span class="gi-skill">Stakeholder Mgmt</span><span class="gi-skill">Service Design</span></div>
+  </div>
 </div>
 
-<div class="zp-proj-detail" id="zpd-aribasda">
+<!-- Aribasda -->
+<div class="zp-proj-detail" id="zpd-aribasda" style="--frame-c1:rgba(255,112,67,0.7);--frame-c2:rgba(255,160,100,0.5);--frame-c3:rgba(255,220,120,0.3);--frame-c4:rgba(200,80,30,0.4)">
   <button class="zp-proj-detail-back" onclick="closeProject('aribasda')">←</button>
-  <span class="zp-proj-detail-emoji">📈</span>
-  <div class="zp-proj-detail-name">Aribasda</div>
-  <div class="zp-proj-detail-tagline">Analytics & Growth Tooling · Turning Data into Decisions, Fast</div>
-  <div class="zp-proj-detail-tags"><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">Analytics</span><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">Growth</span><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">SaaS</span></div>
-  <div class="zp-proj-detail-body">Aribasda is a growth analytics product built for SaaS teams who need to move fast on data. Designed the core analytics UX, funnel visualization, and cohort analysis features. The core thesis: analytics tools shouldn't require a data scientist to use.</div>
-  <div class="zp-proj-detail-stats">
-    <div class="zp-stat-box"><span class="zp-stat-num">SaaS</span><span class="zp-stat-lbl">Vertical</span></div>
-    <div class="zp-stat-box"><span class="zp-stat-num">B2B</span><span class="zp-stat-lbl">Model</span></div>
-    <div class="zp-stat-box"><span class="zp-stat-num">PM</span><span class="zp-stat-lbl">Role</span></div>
+  <div class="gallery-room">
+    <div class="gallery-wall"></div>
+    <div class="gallery-spotlight"></div>
+    <div class="gallery-frame-wrap">
+      <div class="gallery-frame-glow"></div>
+      <div class="gallery-frame">
+        <div class="gallery-frame-inner">
+          <div class="gallery-artwork">
+            <span class="gallery-artwork-emoji">📈</span>
+            <span class="gallery-artwork-label">Aribasda</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="gallery-floor"></div>
   </div>
-  <div class="zp-skills"><span class="zp-skill">Analytics UX</span><span class="zp-skill">Funnel Design</span><span class="zp-skill">Growth Loops</span></div>
+  <div class="gallery-info">
+    <div class="gi-tags"><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">Analytics</span><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">Growth</span><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">SaaS</span></div>
+    <div class="gi-name">Aribasda</div>
+    <div class="gi-tagline">Analytics & Growth Tooling · Turning Data into Decisions, Fast</div>
+    <div class="gi-body">Aribasda is a growth analytics product built for SaaS teams who need to move fast on data. Designed the core analytics UX, funnel visualization, and cohort analysis features. The core thesis: analytics tools shouldn't require a data scientist to use.</div>
+    <div class="gi-stats">
+      <div class="gi-stat"><span class="gi-stat-num">SaaS</span><span class="gi-stat-lbl">Vertical</span></div>
+      <div class="gi-stat"><span class="gi-stat-num">B2B</span><span class="gi-stat-lbl">Model</span></div>
+      <div class="gi-stat"><span class="gi-stat-num">PM</span><span class="gi-stat-lbl">Role</span></div>
+    </div>
+    <div class="gi-skills"><span class="gi-skill">Analytics UX</span><span class="gi-skill">Funnel Design</span><span class="gi-skill">Growth Loops</span></div>
+  </div>
 </div>
 
 <!-- ── HOBBY PANEL ── -->
@@ -10752,7 +11040,26 @@ function openProject(id){
   const el=document.getElementById('zpd-'+id);
   if(el){
     el.classList.add('open');
-    _spawnZonePanelParticles(el);
+    // Spawn gallery dust particles
+    const room=el.querySelector('.gallery-room');
+    if(room){
+      for(let i=0;i<12;i++){
+        const d=document.createElement('div');
+        d.className='gallery-dust';
+        const sz=1+Math.random()*2;
+        d.style.cssText=
+          'width:'+sz+'px;height:'+sz+'px;'+
+          'left:'+(10+Math.random()*80)+'%;'+
+          'top:'+(10+Math.random()*70)+'%;'+
+          '--d-dur:'+(5+Math.random()*6)+'s;'+
+          '--d-delay:'+(Math.random()*3)+'s;'+
+          '--d-tx:'+(Math.random()*30-15)+'px;'+
+          '--d-ty:'+(-20-Math.random()*40)+'px;'+
+          '--d-tx2:'+(Math.random()*20-10)+'px;'+
+          '--d-ty2:'+(-50-Math.random()*50)+'px;';
+        room.appendChild(d);
+      }
+    }
   }
 }
 window.openProject=openProject;
@@ -10761,7 +11068,10 @@ function closeProject(id){
   const el=document.getElementById('zpd-'+id);
   if(el){
     el.classList.remove('open');
-    setTimeout(()=>{el.querySelectorAll('.zp-particle').forEach(p=>p.remove())},500);
+    setTimeout(()=>{
+      el.querySelectorAll('.gallery-dust').forEach(p=>p.remove());
+      el.querySelectorAll('.zp-particle').forEach(p=>p.remove());
+    },500);
   }
 }
 window.closeProject=closeProject;
