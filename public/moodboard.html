@@ -391,6 +391,104 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .intro-card .intro-open-hint:hover{background:linear-gradient(135deg,rgba(100,181,246,0.26),rgba(25,118,210,0.3))}
 .intro-card .intro-open-hint .zth-dot{width:7px;height:7px;border-radius:50%;background:currentColor;animation:hwBlink 1.4s ease-in-out infinite}
 
+/* ===== GUIDANCE CARD — REDESIGNED LOWER HALF ===== */
+.intro-card .gc-divider{
+  height:1px;margin:18px 0 14px;position:relative;
+  background:linear-gradient(90deg,transparent,rgba(201,169,110,0.35),rgba(255,167,38,0.3),rgba(201,169,110,0.35),transparent);
+}
+.intro-card .gc-divider::after{
+  content:'✦';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:#0C0C12;padding:0 10px;font-size:0.6rem;color:rgba(201,169,110,0.5);
+}
+.intro-card .gc-location-row{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:0.72rem;color:rgba(255,255,255,0.4);margin-bottom:14px;
+}
+.intro-card .gc-pin-icon{font-size:0.85rem;animation:gcPinBounce 2s ease-in-out infinite}
+@keyframes gcPinBounce{0%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}60%{transform:translateY(0)}}
+.intro-card .gc-loc-text{color:rgba(255,200,120,0.8);font-weight:600;font-family:var(--font-fun);letter-spacing:0.02em}
+.intro-card .gc-loc-dot{color:rgba(255,255,255,0.15)}
+.intro-card .gc-loc-origin{font-family:var(--font-hand);font-size:0.8rem;color:rgba(255,255,255,0.3)}
+
+.intro-card .gc-ticker{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(255,167,38,0.06),rgba(201,169,110,0.08),rgba(255,87,34,0.04));
+  border:1px solid rgba(255,167,38,0.18);border-radius:16px;
+  padding:14px 18px 12px;margin-bottom:14px;cursor:pointer;
+  transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.intro-card .gc-ticker:hover{border-color:rgba(255,167,38,0.4);transform:scale(1.02);box-shadow:0 4px 24px rgba(255,167,38,0.1)}
+.intro-card .gc-ticker:active{transform:scale(0.97)}
+.intro-card .gc-ticker-bar{
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,#FF9800,#FFB74D,#FF7043,#FFA726,#FF9800);
+  background-size:300% 100%;animation:gcTickerBar 3s linear infinite;
+}
+@keyframes gcTickerBar{0%{background-position:0% 0}100%{background-position:300% 0}}
+.intro-card .gc-ticker-label{
+  font-family:var(--font-fun);font-size:0.5rem;font-weight:800;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:rgba(255,167,38,0.65);margin-bottom:6px;
+  display:flex;align-items:center;gap:6px;
+}
+.intro-card .gc-ticker-label::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:#FF9800;box-shadow:0 0 8px rgba(255,152,0,0.7);
+  animation:gcDotPulse 1.5s ease-in-out infinite;
+}
+@keyframes gcDotPulse{0%,100%{opacity:1;box-shadow:0 0 8px rgba(255,152,0,0.7)}50%{opacity:0.5;box-shadow:0 0 14px rgba(255,152,0,0.4)}}
+.intro-card .gc-ticker-text{font-family:var(--font-hand);font-size:0.95rem;color:rgba(255,255,255,0.7);line-height:1.4;transition:opacity 0.3s}
+.intro-card .gc-ticker-hint{font-size:0.5rem;color:rgba(255,167,38,0.35);margin-top:4px;font-family:var(--font-fun);letter-spacing:0.06em}
+
+.intro-card .gc-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.intro-card .gc-stat-card{
+  position:relative;overflow:hidden;border-radius:14px;padding:12px 6px 10px;
+  text-align:center;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);cursor:default;
+}
+.intro-card .gc-stat-card:hover{transform:translateY(-4px) scale(1.05)}
+.intro-card .gc-stat-card:active{transform:scale(0.92)}
+.intro-card .gc-stat-val{font-family:var(--font-fun);font-weight:900;font-size:1.15rem;display:block;line-height:1.2;position:relative;z-index:1}
+.intro-card .gc-stat-lbl{font-size:0.48rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-top:2px;position:relative;z-index:1;opacity:0.7}
+.intro-card .gc-stat-glow{position:absolute;inset:0;opacity:0;border-radius:14px;transition:opacity 0.3s;pointer-events:none}
+.intro-card .gc-stat-card:hover .gc-stat-glow{opacity:1}
+
+.intro-card .gc-stat-amber{background:linear-gradient(145deg,rgba(255,167,38,0.1),rgba(255,143,0,0.06));border:1px solid rgba(255,167,38,0.2)}
+.intro-card .gc-stat-amber .gc-stat-val{color:#FFB74D}
+.intro-card .gc-stat-amber .gc-stat-lbl{color:rgba(255,183,77,0.6)}
+.intro-card .gc-stat-amber .gc-stat-glow{box-shadow:inset 0 0 20px rgba(255,167,38,0.15)}
+
+.intro-card .gc-stat-rose{background:linear-gradient(145deg,rgba(244,67,54,0.08),rgba(233,30,99,0.05));border:1px solid rgba(244,67,54,0.18)}
+.intro-card .gc-stat-rose .gc-stat-val{color:#EF9A9A}
+.intro-card .gc-stat-rose .gc-stat-lbl{color:rgba(239,154,154,0.6)}
+.intro-card .gc-stat-rose .gc-stat-glow{box-shadow:inset 0 0 20px rgba(244,67,54,0.12)}
+
+.intro-card .gc-stat-teal{background:linear-gradient(145deg,rgba(0,188,212,0.08),rgba(0,150,136,0.05));border:1px solid rgba(0,188,212,0.18)}
+.intro-card .gc-stat-teal .gc-stat-val{color:#80DEEA}
+.intro-card .gc-stat-teal .gc-stat-lbl{color:rgba(128,222,234,0.6)}
+.intro-card .gc-stat-teal .gc-stat-glow{box-shadow:inset 0 0 20px rgba(0,188,212,0.12)}
+
+.intro-card .gc-stat-gold{background:linear-gradient(145deg,rgba(201,169,110,0.12),rgba(255,213,79,0.06));border:1px solid rgba(201,169,110,0.22)}
+.intro-card .gc-stat-gold .gc-stat-val{color:#C9A96E}
+.intro-card .gc-stat-gold .gc-stat-lbl{color:rgba(201,169,110,0.6)}
+.intro-card .gc-stat-gold .gc-stat-glow{box-shadow:inset 0 0 20px rgba(201,169,110,0.15)}
+
+.intro-card .gc-cta-wrap{position:relative;text-align:center;padding:8px 0 4px}
+.intro-card .gc-cta-orbs{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.intro-card .gc-orb{position:absolute;border-radius:50%;filter:blur(18px);opacity:0.2}
+.intro-card .gc-orb-1{width:60px;height:60px;background:#FF9800;top:-10px;left:10%;animation:gcOrb1 4s ease-in-out infinite}
+.intro-card .gc-orb-2{width:40px;height:40px;background:#E91E63;bottom:-5px;right:15%;animation:gcOrb2 5s ease-in-out infinite}
+.intro-card .gc-orb-3{width:50px;height:50px;background:#00BCD4;top:0;right:30%;animation:gcOrb3 6s ease-in-out infinite}
+@keyframes gcOrb1{0%,100%{transform:translate(0,0)}50%{transform:translate(15px,-8px)}}
+@keyframes gcOrb2{0%,100%{transform:translate(0,0)}50%{transform:translate(-10px,6px)}}
+@keyframes gcOrb3{0%,100%{transform:translate(0,0)}50%{transform:translate(8px,10px)}}
+.intro-card .gc-cta-text{
+  font-family:var(--font-hand);font-size:0.95rem;position:relative;z-index:1;
+  background:linear-gradient(135deg,rgba(255,167,38,0.7),rgba(201,169,110,0.6),rgba(255,87,34,0.5));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  background-size:200% auto;animation:gcCtaShimmer 4s ease-in-out infinite;
+}
+@keyframes gcCtaShimmer{0%,100%{background-position:0% center}50%{background-position:200% center}}
+
 /* Interactive badge overlay — game controller style */
 .interactive-badge{
   position:absolute;top:-14px;right:-14px;z-index:60;
