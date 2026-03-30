@@ -4202,6 +4202,22 @@ function _getCardVisualCenter(card){
   if(!card) return null;
   var l=parseFloat(card.style.left)||0;
   var t=parseFloat(card.style.top)||0;
+
+  // Targeted fix: Work card has absolutely-positioned “folder tabs” that visually overhang
+  // above the element's own border box, so its visual center differs from its box center.
+  if(card.classList && card.classList.contains('zic-work')){
+    var ww=card.offsetWidth||440;
+    var wh=card.offsetHeight||380;
+    var topOverhang=0;
+    card.querySelectorAll('.zic-folder-tab').forEach(function(tab){
+      var tt=parseFloat(getComputedStyle(tab).top);
+      if(tt<0 && Math.abs(tt)>topOverhang) topOverhang=Math.abs(tt);
+    });
+    var visualCenterOffsetY=(wh/2)-(topOverhang/2);
+    return {x:l+ww/2, y:t+visualCenterOffsetY, w:ww, h:wh+topOverhang, left:l, top:t, _topOverhang:topOverhang};
+  }
+
+  // Default: box center is good enough for other cards
   var scale=(typeof MOODBOARD_VIEW_SCALE==='number'&&MOODBOARD_VIEW_SCALE>0?MOODBOARD_VIEW_SCALE:0.6);
   var rect=card.getBoundingClientRect();
   var w=Math.round(rect.width/scale);
