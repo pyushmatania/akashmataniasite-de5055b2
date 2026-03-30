@@ -11502,6 +11502,7 @@ function ensureCompanionStickers(force){
                   else{commentaryEl.textContent=rndFrom(batComm[pv]||['+'+pv]);commentaryEl.className='hc-commentary';addBall('run',String(pv));}
                 }
                 if(target>=0&&youScore>target){endGame(true);return;}
+                updateChaseProgress();
               } else if(phase==='bowl'){
                 if(cv===0){
                   cpuHandEl.classList.add('noball');sfxNoball();
