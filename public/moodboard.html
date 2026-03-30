@@ -11241,6 +11241,11 @@ function ensureCompanionStickers(force){
                 else{msgEl.textContent='+'+pv+' run'+(pv>1?'s':'');addBall('run',String(pv));}
                 msgEl.className='hc-msg';
               }
+              // Check if player chased target (batting 2nd)
+              if(target>=0&&youScore>target){
+                endGame(true);
+                return;
+              }
             } else if(phase==='bowl'){
               // CPU is batting, player is bowling
               if(cv===0){
