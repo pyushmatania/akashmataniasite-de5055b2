@@ -36,7 +36,6 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           "react-vendor": ["react", "react-dom", "react-router-dom"],
           "framer-motion": ["framer-motion"],
-          "radix-ui": ["@radix-ui/react-tooltip"],
           "ui-utils": ["clsx", "tailwind-merge", "class-variance-authority"],
         },
       },

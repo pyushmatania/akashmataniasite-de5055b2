@@ -1,13 +1,9 @@
 import { lazy, Suspense, Component } from "react";
 import type { ReactNode, ErrorInfo } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { ThemeProvider } from "next-themes";
 import { AnimatePresence } from "framer-motion";
 
 const Index = lazy(() => import("./pages/Index.tsx"));
-const MyStory = lazy(() => import("./pages/MyStory.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 class ErrorBoundary extends Component<
@@ -58,7 +54,6 @@ const AnimatedRoutes = () => {
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Index />} />
           <Route path="/index" element={<Index />} />
-          <Route path="/about" element={<MyStory />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -69,14 +64,9 @@ const AnimatedRoutes = () => {
 
 const App = () => (
   <ErrorBoundary>
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-      <TooltipProvider>
-        <Toaster />
-        <BrowserRouter>
-          <AnimatedRoutes />
-        </BrowserRouter>
-      </TooltipProvider>
-    </ThemeProvider>
+    <BrowserRouter>
+      <AnimatedRoutes />
+    </BrowserRouter>
   </ErrorBoundary>
 );
 
