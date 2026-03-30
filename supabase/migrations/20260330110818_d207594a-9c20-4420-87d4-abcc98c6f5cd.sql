@@ -1,0 +1,1 @@
+CREATE POLICY "Anyone can read pins" ON public.moodboard_pins FOR SELECT TO public USING (true);
