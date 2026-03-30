@@ -8043,9 +8043,9 @@ function addMapDecorations(cw, ch){
     {x:15,y:15,count:8,spread:5},{x:92,y:68,count:6,spread:4},
     {x:72,y:82,count:7,spread:5},{x:42,y:88,count:6,spread:4},
   ];
-  const forestList=IS_MOBILE_MAP?forests.filter((_,i)=>i%2===0):forests;
+  const forestList=IS_MOBILE_MAP?forests.filter((_,i)=>i%3===0):forests;
   forestList.forEach(f=>{
-    const treeCount=IS_MOBILE_MAP?Math.min(f.count,4):f.count;
+    const treeCount=IS_MOBILE_MAP?Math.min(f.count,2):f.count;
     for(let i=0;i<treeCount;i++){
       const tx=f.x+(Math.random()-0.5)*f.spread;
       const ty=f.y+(Math.random()-0.5)*f.spread*0.7;
