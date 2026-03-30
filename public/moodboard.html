@@ -54,8 +54,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-sticker-clone{pointer-events:auto!important}
 .map-sticker-clone *{pointer-events:none!important}
 /* STICKER BASE */
-.sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s,opacity 0.3s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));opacity:0;content-visibility:auto;contain-intrinsic-size:auto 300px auto 300px;contain:layout style paint}
-body.stickers-ready .sticker,.sticker.hw-piece,.sticker.hw-doodle{opacity:1}
+.sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-drag:none;z-index:10;transition:filter 0.15s,transform 0.15s,opacity 0.3s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));opacity:1;content-visibility:visible;contain:none}
+.sticker.hw-piece,.sticker.hw-doodle{opacity:1}
 .sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
 .sticker:active{cursor:grabbing}
 .sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important}
@@ -1647,7 +1647,7 @@ body.map-expanded .scroll-counter{display:none!important}
 .sticker-ribbon .rib-sub{font-size:0.6rem;color:rgba(0,0,0,0.55);margin-top:2px}
 
 /* ===== ZONE INTRO CARDS — UNIQUE PER ZONE ===== */
-.zone-intro-card{position:absolute;z-index:75;cursor:default;animation:introFloatY 4s ease-in-out infinite;content-visibility:auto;contain-intrinsic-size:380px 690px}
+.zone-intro-card{position:absolute;z-index:75;cursor:default;animation:introFloatY 4s ease-in-out infinite;content-visibility:visible;contain:none}
 @keyframes introFloatY{0%,100%{translate:0 0}50%{translate:0 -8px}}
 @keyframes zicCountUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
