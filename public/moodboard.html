@@ -7189,36 +7189,40 @@ function addMapDecorations(cw, ch){
    zoneTintSvg.setAttribute('viewBox','0 0 7000 7000');
    zoneTintSvg.setAttribute('preserveAspectRatio','none');
    zoneTintSvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible';
-   // Use the exact boundary curves to define zone regions as closed polygons
-   // Origin (top-left quadrant)
+   // Map-native zone regions: vertical x=3500, horizontal y=2310 (33%), y=4690 (67%)
+   // Gentle organic curves suited to map scale
+   const VD='C3510,500 3490,1000 3505,1500 Q3495,2000 3500,2310 C3505,2800 3490,3300 3500,3800 Q3510,4200 3500,4690';
+   const H1L='C600,2300 1200,2320 1800,2305 Q2400,2315 3000,2300 C3200,2308 3350,2310 3500,2310';
+   const H1R='C3650,2310 3800,2308 4000,2300 Q4600,2315 5200,2305 C5800,2320 6400,2300 7000,2310';
+   const H2='C600,4680 1200,4700 1800,4685 Q2400,4695 3000,4680 C3300,4688 3500,4690 3700,4688 Q4400,4695 5000,4685 C5600,4700 6200,4680 7000,4690';
    zoneTintSvg.innerHTML=
-     '<path d="M0,0 L3500,0 C3475,350 3525,700 3495,1050 Q3510,1400 3490,1750 C3515,2100 3485,2333 3500,2333 Q3150,2308 2800,2320 C2450,2342 2100,2318 1750,2350 Q1400,2308 1050,2325 C700,2355 350,2308 0,2333 Z" fill="rgba(0,188,212,0.08)"/>'
-     // Work (top-right quadrant)
-     +'<path d="M3500,0 L7000,0 L7000,2333 Q6650,2308 6300,2320 C5950,2342 5600,2318 5250,2350 Q4900,2308 4550,2325 C4200,2355 3850,2308 3500,2333 C3485,2333 3515,2100 3490,1750 Q3510,1400 3495,1050 C3525,700 3475,350 3500,0 Z" fill="rgba(229,57,53,0.07)"/>'
+     // Origin (top-left)
+     '<path d="M0,0 L3500,0 '+VD.split('Q3510,4200 3500,4690')[0]+'Q3495,2000 3500,2310 Q3000,2300 2400,2315 C1800,2305 1200,2320 600,2300 L0,2310 Z" fill="rgba(0,188,212,0.08)"/>'
+     // Work (top-right)
+     +'<path d="M3500,0 L7000,0 L7000,2310 C6400,2300 5800,2320 5200,2305 Q4600,2315 4000,2300 C3800,2308 3650,2310 3500,2310 Q3495,2000 3505,1500 C3490,1000 3510,500 3500,0 Z" fill="rgba(229,57,53,0.07)"/>'
      // Portfolio (mid-left)
-     +'<path d="M0,2333 C350,2308 700,2355 1050,2325 Q1400,2308 1750,2350 C2100,2318 2450,2342 2800,2320 Q3150,2308 3500,2333 C3485,2333 3475,2700 3525,3050 3495,3400 Q3510,3700 3490,4050 C3515,4300 3485,4666 3500,4666 Q3150,4641 2800,4653 C2450,4675 2100,4651 1750,4683 Q1400,4641 1050,4658 C700,4688 350,4641 0,4666 Z" fill="rgba(66,165,245,0.07)"/>'
+     +'<path d="M0,2310 C600,2300 1200,2320 1800,2305 Q2400,2315 3000,2300 C3200,2308 3350,2310 3500,2310 C3505,2800 3490,3300 3500,3800 Q3510,4200 3500,4690 C3300,4688 3000,4680 2400,4695 Q1800,4685 1200,4700 C600,4680 0,4690 0,4690 Z" fill="rgba(66,165,245,0.07)"/>'
      // Fun (mid-right)
-     +'<path d="M3500,2333 C3850,2308 4200,2355 4550,2325 Q4900,2308 5250,2350 C5600,2318 5950,2342 6300,2320 Q6650,2308 7000,2333 L7000,4666 Q6650,4641 6300,4653 C5950,4675 5600,4651 5250,4683 Q4900,4641 4550,4658 C4200,4688 3850,4641 3500,4666 C3485,4666 3515,4300 3490,4050 Q3510,3700 3495,3400 C3525,3050 3475,2700 3500,2333 Z" fill="rgba(171,71,188,0.07)"/>'
+     +'<path d="M3500,2310 C3650,2310 3800,2308 4000,2300 Q4600,2315 5200,2305 C5800,2320 6400,2300 7000,2310 L7000,4690 C6200,4680 5600,4700 5000,4685 Q4400,4695 3700,4688 C3500,4690 3500,4690 3500,4690 Q3510,4200 3500,3800 C3490,3300 3505,2800 3500,2310 Z" fill="rgba(171,71,188,0.07)"/>'
      // Hobby (bottom full width)
-     +'<path d="M0,4666 C350,4641 700,4688 1050,4658 Q1400,4641 1750,4683 C2100,4651 2450,4675 2800,4653 Q3150,4641 3500,4666 C3850,4641 4200,4688 4550,4658 Q4900,4641 5250,4683 C5600,4651 5950,4675 6300,4653 Q6650,4641 7000,4666 L7000,7000 L0,7000 Z" fill="rgba(255,152,0,0.07)"/>';
+     +'<path d="M0,4690 C600,4680 1200,4700 1800,4685 Q2400,4695 3000,4680 C3300,4688 3500,4690 3700,4688 Q4400,4695 5000,4685 C5600,4700 6200,4680 7000,4690 L7000,7000 L0,7000 Z" fill="rgba(255,152,0,0.07)"/>';
    layer.appendChild(zoneTintSvg);
 
-   // === ZONE DIVIDER LINES — single strokes between zones, no doubling ===
+   // === ZONE DIVIDER LINES — map-native proportions ===
    const svgNS='http://www.w3.org/2000/svg';
    const mapBoundarySvg=document.createElementNS(svgNS,'svg');
    mapBoundarySvg.setAttribute('viewBox','0 0 7000 7000');
    mapBoundarySvg.setAttribute('preserveAspectRatio','none');
    mapBoundarySvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:5;overflow:visible';
-   // Exact canvas boundary paths synced from canvas SVG (7000×7000 coordinate space)
    const mapDividerPaths=[
-     // Vertical divider x≈3500 (Origin/Portfolio ↔ Work/Fun — stops at y=4666)
-     {d:'M3500,0 C3475,350 3525,700 3495,1050 Q3510,1400 3490,1750 C3515,2100 3485,2333 3500,2333 C3475,2700 3525,3050 3495,3400 Q3510,3700 3490,4050 C3515,4300 3485,4666 3500,4666',stroke:'rgba(201,169,110,0.45)'},
-     // Horizontal divider 1 y≈2333 left half (Origin ↔ Portfolio)
-     {d:'M0,2333 C350,2308 700,2355 1050,2325 Q1400,2308 1750,2350 C2100,2318 2450,2342 2800,2320 Q3150,2308 3500,2333',stroke:'rgba(0,188,212,0.45)'},
-     // Horizontal divider 1 y≈2333 right half (Work ↔ Fun)
-     {d:'M3500,2333 C3850,2308 4200,2355 4550,2325 Q4900,2308 5250,2350 C5600,2318 5950,2342 6300,2320 Q6650,2308 7000,2333',stroke:'rgba(229,57,53,0.45)'},
-     // Horizontal divider 2 y≈4666 full width (Portfolio/Fun ↔ Hobby)
-     {d:'M0,4666 C350,4641 700,4688 1050,4658 Q1400,4641 1750,4683 C2100,4651 2450,4675 2800,4653 Q3150,4641 3500,4666 C3850,4641 4200,4688 4550,4658 Q4900,4641 5250,4683 C5600,4651 5950,4675 6300,4653 Q6650,4641 7000,4666',stroke:'rgba(255,152,0,0.45)'},
+     // Vertical divider x≈3500 (stops at y=4690)
+     {d:'M3500,0 C3510,500 3490,1000 3505,1500 Q3495,2000 3500,2310 C3505,2800 3490,3300 3500,3800 Q3510,4200 3500,4690',stroke:'rgba(201,169,110,0.45)'},
+     // Horizontal 1 y≈2310 left half
+     {d:'M0,2310 C600,2300 1200,2320 1800,2305 Q2400,2315 3000,2300 C3200,2308 3350,2310 3500,2310',stroke:'rgba(0,188,212,0.45)'},
+     // Horizontal 1 y≈2310 right half
+     {d:'M3500,2310 C3650,2310 3800,2308 4000,2300 Q4600,2315 5200,2305 C5800,2320 6400,2300 7000,2310',stroke:'rgba(229,57,53,0.45)'},
+     // Horizontal 2 y≈4690 full width
+     {d:'M0,4690 C600,4680 1200,4700 1800,4685 Q2400,4695 3000,4680 C3300,4688 3500,4690 3700,4688 Q4400,4695 5000,4685 C5600,4700 6200,4680 7000,4690',stroke:'rgba(255,152,0,0.45)'},
    ];
    mapDividerPaths.forEach(zp=>{
      const p=document.createElementNS(svgNS,'path');
@@ -7230,10 +7234,9 @@ function addMapDecorations(cw, ch){
      p.setAttribute('stroke-dasharray','36 16');
      p.setAttribute('stroke-linecap','round');
      mapBoundarySvg.appendChild(p);
-     // Junction dots at intersection points
    });
-   // Intersection dots matching canvas
-   [['3500','2333','rgba(201,169,110,0.6)'],['3500','4666','rgba(201,169,110,0.6)']].forEach(([cx,cy,fill])=>{
+   // Intersection dots
+   [['3500','2310','rgba(201,169,110,0.6)'],['3500','4690','rgba(201,169,110,0.6)']].forEach(([cx,cy,fill])=>{
      const c=document.createElementNS(svgNS,'circle');
      c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r','30');c.setAttribute('fill',fill);
      mapBoundarySvg.appendChild(c);
