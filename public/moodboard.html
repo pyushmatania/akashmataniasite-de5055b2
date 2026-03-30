@@ -2453,69 +2453,72 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="zic-polaroid-bg1"></div>
   <div class="zic-polaroid-bg2"></div>
   <!-- Main polaroid -->
-  <div class="zic-polaroid" style="position:relative;z-index:2;background:linear-gradient(160deg,#0A120A,#0F1A0F,#081208);border-radius:4px;padding:0;overflow:hidden;box-shadow:3px 5px 24px rgba(0,0,0,0.5);cursor:pointer" data-no-sticker-drag="true" onclick="if(event.target.closest('button'))return;event.stopPropagation();openZonePanel('introduction')">
+  <div class="zic-polaroid" style="position:relative;z-index:2;background:linear-gradient(160deg,#0A140A,#0F1E0F,#081408);border-radius:6px;padding:0;overflow:hidden;box-shadow:3px 5px 24px rgba(0,0,0,0.5);cursor:pointer" data-no-sticker-drag="true" onclick="if(event.target.closest('button'))return;event.stopPropagation();openZonePanel('introduction')">
     <!-- Terminal titlebar -->
-    <div style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(76,175,80,0.15)">
-      <span style="width:9px;height:9px;border-radius:50%;background:#FF5F57;display:inline-block"></span>
-      <span style="width:9px;height:9px;border-radius:50%;background:#FEBC2E;display:inline-block"></span>
-      <span style="width:9px;height:9px;border-radius:50%;background:#28C840;display:inline-block"></span>
-      <span style="font-family:monospace;font-size:0.6rem;color:rgba(76,175,80,0.5);margin-left:6px;flex:1;text-align:center">akash@introduction:~</span>
-      <span style="font-family:monospace;font-size:0.46rem;color:rgba(255,69,0,0.6);background:rgba(255,69,0,0.08);padding:1px 5px;border-radius:3px">⚠ LIVE</span>
+    <div style="display:flex;align-items:center;gap:6px;padding:9px 14px;background:rgba(0,0,0,0.5);border-bottom:1px solid rgba(76,175,80,0.2)">
+      <span style="width:9px;height:9px;border-radius:50%;background:#FF5F57;display:inline-block;cursor:pointer" onclick="event.stopPropagation();this.style.transform='scale(0)';setTimeout(()=>this.style.transform='',500)"></span>
+      <span style="width:9px;height:9px;border-radius:50%;background:#FEBC2E;display:inline-block;cursor:pointer" onclick="event.stopPropagation();this.closest('.zic-polaroid').style.filter='saturate(0)';setTimeout(()=>this.closest('.zic-polaroid').style.filter='',800)"></span>
+      <span style="width:9px;height:9px;border-radius:50%;background:#28C840;display:inline-block;cursor:pointer" onclick="event.stopPropagation();this.closest('.zic-polaroid').style.transform='scale(1.03)';setTimeout(()=>this.closest('.zic-polaroid').style.transform='',500)"></span>
+      <span style="font-family:monospace;font-size:0.62rem;color:rgba(76,175,80,0.65);margin-left:6px;flex:1;text-align:center">akash@introduction:~</span>
+      <span style="font-family:monospace;font-size:0.48rem;color:rgba(76,255,80,0.8);background:rgba(76,175,80,0.12);padding:2px 7px;border-radius:4px;border:1px solid rgba(76,175,80,0.25);animation:opsFlicker 2s ease-in-out infinite">● LIVE</span>
     </div>
-    <!-- Photo zone — zic-introduction-screen class enables boot animation on attack -->
+    <!-- Photo zone -->
     <div class="zic-photo-area zic-introduction-screen" style="position:relative">
-      <img src="/images/akash-photo.webp" alt="Akash" style="width:100%;height:190px;object-fit:cover;object-position:top;display:block;filter:sepia(0.15) contrast(1.05)">
-      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 45%,rgba(0,10,0,0.85));z-index:1"></div>
-      <div style="position:absolute;bottom:10px;left:14px;z-index:2">
-        <div style="font-family:monospace;font-size:0.52rem;color:rgba(76,175,80,0.55);margin-bottom:2px;letter-spacing:0.06em">// SUBJECT_IDENTIFIED · ACCESS_GRANTED</div>
-        <div style="font-family:var(--font-fun);font-size:1.1rem;font-weight:800;color:#fff;letter-spacing:0.06em">AKASH MATANIA</div>
-        <div style="font-family:monospace;font-size:0.44rem;color:rgba(255,69,0,0.5);margin-top:2px;letter-spacing:0.04em">CLEARANCE: LEVEL ZERO-ONE ● ● ● ● ○</div>
+      <img src="/images/akash-photo.webp" alt="Akash" style="width:100%;height:190px;object-fit:cover;object-position:top;display:block;filter:contrast(1.1) brightness(1.05)">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,14,0,0.9));z-index:1"></div>
+      <div style="position:absolute;bottom:12px;left:16px;z-index:2">
+        <div style="font-family:monospace;font-size:0.55rem;color:rgba(76,255,80,0.7);margin-bottom:3px;letter-spacing:0.06em">// SUBJECT_IDENTIFIED · ACCESS_GRANTED</div>
+        <div style="font-family:var(--font-fun);font-size:1.2rem;font-weight:800;color:#fff;letter-spacing:0.06em;text-shadow:0 2px 8px rgba(0,0,0,0.5)">AKASH MATANIA</div>
+        <div style="font-family:monospace;font-size:0.48rem;color:rgba(76,255,80,0.6);margin-top:3px;letter-spacing:0.04em">CLEARANCE: LEVEL ZERO-ONE
+          <span style="display:inline-flex;gap:2px;margin-left:4px">
+            <span style="color:#4CAF50">●</span><span style="color:#4CAF50">●</span><span style="color:#4CAF50">●</span><span style="color:#4CAF50">●</span><span style="color:rgba(76,175,80,0.25)">○</span>
+          </span>
+        </div>
       </div>
-      <!-- Scan sweep — zic-introduction-scanline activates on attack -->
-      <div class="zic-introduction-scanline" style="position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);opacity:0.5"></div>
+      <div class="zic-introduction-scanline" style="position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);opacity:0.4"></div>
     </div>
     <!-- Terminal body -->
-    <div style="padding:14px 16px 16px;font-family:monospace">
-      <!-- Boot lines -->
-      <div style="font-size:0.62rem;color:rgba(76,175,80,0.55);margin-bottom:10px;line-height:1.6">
-        <div><span style="color:rgba(76,175,80,0.4)">$</span> <span style="color:rgba(76,175,80,0.8)">cat</span> introduction.log</div>
+    <div style="padding:16px 18px 18px;font-family:monospace">
+      <!-- Boot command -->
+      <div style="font-size:0.65rem;color:rgba(76,255,80,0.6);margin-bottom:12px;line-height:1.6">
+        <div><span style="color:rgba(76,175,80,0.5)">$</span> <span style="color:rgba(76,255,80,0.9)">cat</span> <span style="color:rgba(255,255,255,0.7)">introduction.log</span></div>
       </div>
-      <!-- Life log entries — zic-introduction-boot-line enables corrupt-in animation on attack -->
-      <div style="font-size:0.67rem;line-height:1.75;margin-bottom:12px">
-        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.75)">BORN</span> <span style="color:rgba(255,255,255,0.32)">Jeypore, Odisha — small town, enormous dreams</span></div>
-        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.75)">AGE 15</span> <span style="color:rgba(255,255,255,0.32)">first program could only add numbers. shipped it anyway.</span></div>
-        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.75)">CS GRAD</span> <span style="color:rgba(255,255,255,0.32)">OUTR, Bhubaneswar — degree + mission, only one was useful</span></div>
-        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.75)">BENGALURU</span> <span style="color:rgba(255,255,255,0.32)">moved to build. never stopped. 3 startups later…</span></div>
-        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.45)">▸ <span style="color:#4CAF50;text-shadow:0 0 8px rgba(76,175,80,0.4)">STATUS</span> <span style="color:rgba(255,255,255,0.45)">still loading</span> <span style="color:#4CAF50;animation:termBlink 1s step-end infinite">█</span></div>
+      <!-- Life log entries — HIGH CONTRAST -->
+      <div style="font-size:0.7rem;line-height:1.8;margin-bottom:14px">
+        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.55);margin-bottom:4px;padding:3px 0;border-radius:4px;transition:background 0.2s;cursor:default" onmouseenter="this.style.background='rgba(76,175,80,0.06)'" onmouseleave="this.style.background=''">▸ <span style="color:#66BB6A;font-weight:700">BORN</span> <span style="color:rgba(255,255,255,0.78)">Jeypore, Odisha — small town, enormous dreams</span></div>
+        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.55);margin-bottom:4px;padding:3px 0;border-radius:4px;transition:background 0.2s;cursor:default" onmouseenter="this.style.background='rgba(76,175,80,0.06)'" onmouseleave="this.style.background=''">▸ <span style="color:#66BB6A;font-weight:700">AGE 15</span> <span style="color:rgba(255,255,255,0.78)">first program could only add numbers. shipped it anyway.</span></div>
+        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.55);margin-bottom:4px;padding:3px 0;border-radius:4px;transition:background 0.2s;cursor:default" onmouseenter="this.style.background='rgba(76,175,80,0.06)'" onmouseleave="this.style.background=''">▸ <span style="color:#66BB6A;font-weight:700">CS GRAD</span> <span style="color:rgba(255,255,255,0.78)">OUTR, Bhubaneswar — degree + mission, only one was useful</span></div>
+        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.55);margin-bottom:4px;padding:3px 0;border-radius:4px;transition:background 0.2s;cursor:default" onmouseenter="this.style.background='rgba(76,175,80,0.06)'" onmouseleave="this.style.background=''">▸ <span style="color:#66BB6A;font-weight:700">BENGALURU</span> <span style="color:rgba(255,255,255,0.78)">moved to build. never stopped. 3 startups later…</span></div>
+        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.55)">▸ <span style="color:#4CAF50;text-shadow:0 0 10px rgba(76,175,80,0.5);font-weight:700">STATUS</span> <span style="color:rgba(255,255,255,0.85)">still loading</span> <span style="color:#4CAF50;animation:termBlink 1s step-end infinite">█</span></div>
       </div>
       <!-- Load bar -->
-      <div style="margin-bottom:12px">
-        <div style="font-size:0.55rem;color:rgba(76,175,80,0.45);margin-bottom:5px;font-family:monospace">LOADING: passion.exe</div>
-        <div style="background:rgba(76,175,80,0.1);border-radius:2px;height:4px;overflow:hidden;border:1px solid rgba(76,175,80,0.15)">
-          <div style="height:100%;width:83%;background:linear-gradient(90deg,#1B5E20,#4CAF50,#81C784);border-radius:2px;animation:bootBar 2.5s ease-out forwards"></div>
+      <div style="margin-bottom:14px">
+        <div style="font-size:0.58rem;color:rgba(76,255,80,0.55);margin-bottom:5px;font-family:monospace">LOADING: passion.exe</div>
+        <div style="background:rgba(76,175,80,0.12);border-radius:3px;height:5px;overflow:hidden;border:1px solid rgba(76,175,80,0.2)">
+          <div style="height:100%;width:83%;background:linear-gradient(90deg,#1B5E20,#4CAF50,#81C784);border-radius:3px;animation:bootBar 2.5s ease-out forwards;box-shadow:0 0 8px rgba(76,175,80,0.3)"></div>
         </div>
-        <div style="font-size:0.5rem;color:rgba(76,175,80,0.35);margin-top:3px;text-align:right">83% · still building</div>
+        <div style="font-size:0.52rem;color:rgba(76,255,80,0.5);margin-top:4px;text-align:right">83% · still building</div>
       </div>
     </div>
     <!-- Caption + tags -->
-    <div class="zic-caption" style="padding:0 14px 16px;text-align:center">
-      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:10px">
-        <span style="background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.62rem">🧠 CS Eng</span>
-        <span style="background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.62rem">🌱 Odisha Roots</span>
-        <span style="background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.62rem">🐕 Mr. Puchu</span>
-        <span style="background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.62rem">☕ Chai Addict</span>
+    <div class="zic-caption" style="padding:0 16px 18px;text-align:center">
+      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:12px">
+        <span onclick="event.stopPropagation();this.style.transform='scale(1.15) rotate(3deg)';setTimeout(()=>this.style.transform='',300)" style="background:rgba(76,175,80,0.12);color:#A5D6A7;border:1px solid rgba(76,175,80,0.25);border-radius:8px;padding:4px 12px;font-family:var(--font-fun);font-size:0.65rem;cursor:pointer;transition:all 0.2s">🧠 CS Eng</span>
+        <span onclick="event.stopPropagation();this.style.transform='scale(1.15) rotate(-3deg)';setTimeout(()=>this.style.transform='',300)" style="background:rgba(76,175,80,0.12);color:#A5D6A7;border:1px solid rgba(76,175,80,0.25);border-radius:8px;padding:4px 12px;font-family:var(--font-fun);font-size:0.65rem;cursor:pointer;transition:all 0.2s">🌱 Odisha Roots</span>
+        <span onclick="event.stopPropagation();this.style.transform='scale(1.15) rotate(2deg)';setTimeout(()=>this.style.transform='',300)" style="background:rgba(76,175,80,0.12);color:#A5D6A7;border:1px solid rgba(76,175,80,0.25);border-radius:8px;padding:4px 12px;font-family:var(--font-fun);font-size:0.65rem;cursor:pointer;transition:all 0.2s">🐕 Mr. Puchu</span>
+        <span onclick="event.stopPropagation();this.style.transform='scale(1.15) rotate(-2deg)';setTimeout(()=>this.style.transform='',300)" style="background:rgba(76,175,80,0.12);color:#A5D6A7;border:1px solid rgba(76,175,80,0.25);border-radius:8px;padding:4px 12px;font-family:var(--font-fun);font-size:0.65rem;cursor:pointer;transition:all 0.2s">☕ Chai Addict</span>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:10px">
-        <div style="font-family:monospace;font-size:0.62rem;color:rgba(76,175,80,0.4)">vibes_received:</div>
-        <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;c.style.transform='scale(1.4)';c.style.transition='transform 0.15s';setTimeout(()=>c.style.transform='scale(1)',180);if(+c.textContent>=5){this.closest('.zic-introduction').style.boxShadow='0 0 50px rgba(76,175,80,0.6),0 12px 48px rgba(0,0,0,0.35)'}" style="background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:0.85rem;color:#4CAF50;font-family:monospace">+1</button>
-        <span style="font-family:var(--font-fun);font-weight:800;color:#4CAF50;min-width:20px;text-align:center;font-size:0.9rem">0</span>
+      <div style="display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:12px">
+        <div style="font-family:monospace;font-size:0.65rem;color:rgba(76,255,80,0.5)">vibes_received:</div>
+        <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;c.style.transform='scale(1.5)';c.style.textShadow='0 0 12px rgba(76,175,80,0.8)';setTimeout(()=>{c.style.transform='scale(1)';c.style.textShadow=''},200);if(+c.textContent>=5){this.closest('.zic-introduction').style.boxShadow='0 0 60px rgba(76,175,80,0.7),0 12px 48px rgba(0,0,0,0.4)'}" style="background:rgba(76,175,80,0.15);border:1px solid rgba(76,175,80,0.4);border-radius:8px;padding:5px 12px;cursor:pointer;font-size:0.9rem;color:#66BB6A;font-family:monospace;transition:all 0.15s" onmouseenter="this.style.background='rgba(76,175,80,0.25)'" onmouseleave="this.style.background='rgba(76,175,80,0.15)'">+1</button>
+        <span style="font-family:var(--font-fun);font-weight:800;color:#66BB6A;min-width:22px;text-align:center;font-size:1rem;transition:all 0.2s">0</span>
       </div>
       <div style="display:flex;gap:7px;justify-content:center">
-        <button onclick="event.stopPropagation();introductionAttack(this)" style="background:linear-gradient(135deg,#060E06,#0D200D);color:#4CAF50;border:1px solid rgba(76,175,80,0.35);border-radius:18px;padding:8px 14px;font-family:monospace;font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.06em;box-shadow:0 0 14px rgba(76,175,80,0.12)">⚡ BOOT_SEQUENCE</button>
-        <button onclick="event.stopPropagation();scrollToZone(null,'introduction')" style="background:linear-gradient(135deg,#1B5E20,#4CAF50);color:#fff;border:none;border-radius:18px;padding:8px 14px;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 3px 12px rgba(76,175,80,0.3)">🧭 Explore</button>
+        <button onclick="event.stopPropagation();introductionAttack(this)" style="background:linear-gradient(135deg,#060E06,#0D200D);color:#66BB6A;border:1px solid rgba(76,175,80,0.4);border-radius:18px;padding:9px 16px;font-family:monospace;font-size:0.6rem;font-weight:700;cursor:pointer;letter-spacing:0.06em;box-shadow:0 0 14px rgba(76,175,80,0.15);transition:all 0.2s" onmouseenter="this.style.boxShadow='0 0 24px rgba(76,175,80,0.3)'" onmouseleave="this.style.boxShadow='0 0 14px rgba(76,175,80,0.15)'">⚡ BOOT_SEQUENCE</button>
+        <button onclick="event.stopPropagation();scrollToZone(null,'introduction')" style="background:linear-gradient(135deg,#2E7D32,#4CAF50);color:#fff;border:none;border-radius:18px;padding:9px 16px;font-family:var(--font-fun);font-size:0.6rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 4px 16px rgba(76,175,80,0.35);transition:all 0.2s" onmouseenter="this.style.transform='translateY(-2px)'" onmouseleave="this.style.transform=''">🧭 Explore</button>
       </div>
-      <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('introduction')" style="margin:12px -14px -16px;border-radius:0;border-left:none;border-right:none;border-bottom:none;border-top-color:rgba(76,175,80,0.2);color:rgba(76,175,80,0.8)">
-        <span class="zth-dot" style="background:#4CAF50"></span>
+      <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('introduction')" style="margin:14px -16px -18px;border-radius:0;border-left:none;border-right:none;border-bottom:none;border-top-color:rgba(76,175,80,0.25);color:rgba(76,255,80,0.85);background:rgba(76,175,80,0.04)">
+        <span class="zth-dot" style="background:#4CAF50;box-shadow:0 0 6px rgba(76,175,80,0.5)"></span>
         TAP TO OPEN FULL PROFILE
       </div>
     </div>
