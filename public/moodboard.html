@@ -7852,10 +7852,11 @@ function drawMap(){
       const w=Math.max(4,d.w*sc),h=Math.max(3,d.h*sc);
       const el=document.createElement('div');
       el.className='mi';
-      // White card base — matches screenshot look
+      // Determine visible bg for small map (transparent items need a fallback on blue bg)
       let bg='rgba(255,255,255,0.92)';
-      // Use actual bg if it's a colored sticker
-      if(d.bg&&d.bg!=='transparent'&&d.bg!=='')bg=d.bg;
+      if(d.bg&&d.bg!=='transparent'&&d.bg!==''&&d.bg!=='rgba(200,200,200,0.5)')bg=d.bg;
+      // If bg is still transparent-ish, force white card look so items are visible on blue
+      if(bg==='transparent'||bg==='rgba(0, 0, 0, 0)'||bg==='none')bg='rgba(255,255,255,0.85)';
       const radius=d.radius||'2px';
       // Thumbnail for image stickers
       let extraStyle='';
@@ -7866,8 +7867,11 @@ function drawMap(){
       if(d._thumbSrc){
         extraStyle='background-image:url('+d._thumbSrc+');background-size:cover;background-position:center;';
       }
+      // Border for visibility
+      const border=d.border||'';
+      const borderStyle=border?'border:'+border+';':'border:1px solid rgba(255,255,255,0.3);';
       el.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;background:'+bg+';border-radius:'+radius+';'+
-        'box-shadow:0 1px 3px rgba(0,0,0,0.25);overflow:hidden;z-index:2;'+extraStyle;
+        borderStyle+'box-shadow:0 1px 3px rgba(0,0,0,0.25);overflow:hidden;z-index:2;'+extraStyle;
       if(d.emoji&&w>7){
         const l=document.createElement('div');
         l.className='mi-emoji-label';
