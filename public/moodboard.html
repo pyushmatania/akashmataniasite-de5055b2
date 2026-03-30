@@ -5415,6 +5415,10 @@ let _walkFootstepTimers=[];
 function clearWalkTimers(){
   _walkFootstepTimers.forEach(id=>clearTimeout(id));
   _walkFootstepTimers=[];
+  // Clean up any leftover footstep/dust DOM
+  if(typeof mapCanvas!=='undefined'&&mapCanvas){
+    mapCanvas.querySelectorAll('[style*="z-index:9998"],[style*="z-index:9997"]').forEach(el=>el.remove());
+  }
 }
 
 // Shared AudioContext — reuse instead of creating new ones (prevents leaks)
