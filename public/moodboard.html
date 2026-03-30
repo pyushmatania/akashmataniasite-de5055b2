@@ -4016,37 +4016,88 @@ body.map-expanded .scroll-counter{display:none!important}
 .zp-contact-link{padding:9px 18px;font-family:var(--font-fun);font-size:0.66rem;font-weight:800;letter-spacing:0.1em;text-decoration:none;border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.65);transition:all 0.2s}
 .zp-contact-link:hover{background:rgba(255,255,255,0.1);color:#fff}
 
-/* ── PORTFOLIO PANEL: project grid ── */
-.zp-projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
-@media(max-width:480px){.zp-projects-grid{grid-template-columns:1fr}}
+/* ── PORTFOLIO PANEL: holographic trading cards ── */
+.zp-projects-grid{display:flex;flex-direction:column;gap:16px;margin-bottom:24px}
+
 .zp-proj-card{
-  cursor:pointer;border:1.5px solid rgba(255,255,255,0.08);
-  transition:transform 0.2s,box-shadow 0.2s;
-  position:relative;overflow:hidden;
-  background:rgba(255,255,255,0.03);
+  cursor:pointer;position:relative;overflow:hidden;
+  border-radius:14px;
+  background:linear-gradient(165deg,rgba(255,255,255,0.04) 0%,rgba(255,255,255,0.01) 100%);
+  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:all 0.35s cubic-bezier(0.22,1,0.36,1);
+  display:flex;flex-direction:row;
+  min-height:120px;
 }
-.zp-proj-card:hover{transform:translate(-3px,-3px);border-color:rgba(255,255,255,0.2);box-shadow:5px 5px 0 rgba(0,0,0,0.3)}
-.zp-proj-card:active{transform:translate(0,0)}
+/* Prismatic shimmer sweep */
+.zp-proj-card::before{
+  content:'';position:absolute;inset:0;border-radius:14px;z-index:0;
+  background:linear-gradient(105deg,
+    transparent 30%,
+    rgba(255,100,200,0.06) 38%,
+    rgba(100,200,255,0.06) 42%,
+    rgba(255,200,100,0.04) 46%,
+    transparent 55%);
+  transform:translateX(-100%);
+  transition:transform 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+.zp-proj-card:active::before,.zp-proj-card:hover::before{
+  transform:translateX(100%);
+}
+/* Border glow on hover */
+.zp-proj-card:hover{
+  border-color:rgba(255,255,255,0.18);
+  box-shadow:0 0 30px var(--card-glow,rgba(120,80,220,0.15)),
+    0 8px 32px rgba(0,0,0,0.4);
+  transform:translateY(-3px);
+}
+.zp-proj-card:active{transform:translateY(0)}
+
+/* Visual area — left side */
 .zp-proj-emoji-area{
-  min-height:90px;display:flex;align-items:center;justify-content:center;
-  font-size:2.6rem;position:relative;overflow:hidden;
+  min-width:100px;width:100px;display:flex;align-items:center;justify-content:center;
+  font-size:2.4rem;position:relative;overflow:hidden;flex-shrink:0;
+  border-radius:14px 0 0 14px;
 }
 .zp-proj-emoji-area::after{
-  content:'';position:absolute;inset:0;opacity:0.1;
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,0.05) 0%,transparent 70%);
 }
-.zp-proj-info{padding:13px 14px 16px}
-.zp-proj-name{font-family:var(--font-fun);font-size:0.88rem;font-weight:800;color:#fff;display:block;margin-bottom:4px}
-.zp-proj-desc{font-family:var(--font-sans);font-size:0.68rem;color:rgba(255,255,255,0.42);line-height:1.45;margin-bottom:9px}
-.zp-proj-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:9px}
-.zp-proj-tag{font-family:var(--font-fun);font-size:0.54rem;font-weight:700;padding:2px 7px;letter-spacing:0.04em}
+
+/* Info area — right side */
+.zp-proj-info{
+  padding:16px 16px 16px 14px;flex:1;position:relative;z-index:1;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.zp-proj-name{
+  font-family:var(--font-fun);font-size:0.95rem;font-weight:900;color:#fff;
+  display:block;margin-bottom:5px;letter-spacing:-0.01em;
+}
+.zp-proj-desc{
+  font-family:var(--font-sans);font-size:0.68rem;color:rgba(255,255,255,0.4);
+  line-height:1.45;margin-bottom:10px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.zp-proj-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.zp-proj-tag{
+  font-family:var(--font-fun);font-size:0.52rem;font-weight:700;
+  padding:3px 8px;letter-spacing:0.05em;border-radius:2px;
+}
 .zp-proj-open-btn{
   display:flex;align-items:center;gap:4px;
   font-family:var(--font-fun);font-size:0.6rem;font-weight:700;
-  letter-spacing:0.05em;text-transform:uppercase;
-  color:rgba(255,255,255,0.4);border:none;background:none;cursor:pointer;
+  letter-spacing:0.06em;text-transform:uppercase;
+  color:rgba(255,255,255,0.35);border:none;background:none;cursor:pointer;
   padding:0;transition:color 0.2s;
 }
 .zp-proj-open-btn:hover{color:#fff}
+
+/* Edition number on cards */
+.zp-proj-edition{
+  position:absolute;top:10px;right:12px;
+  font-family:monospace;font-size:0.5rem;
+  color:rgba(255,255,255,0.15);letter-spacing:0.06em;z-index:2;
+}
 
 /* Project detail — gallery overlay */
 .zp-proj-detail{
