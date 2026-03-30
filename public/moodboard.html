@@ -7841,8 +7841,9 @@ function drawMap(){
   if(mmExp){
     renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
   } else {
-    // SMALL: render actual sticker clones matching canvas appearance
+    // SMALL: render mini sticker previews — simple colored dots at exact canvas positions
     let count=0;
+    const catColors={photo:'#64B5F6',meme:'#CE93D8',badge:'#FFD54F',interactive:'#FF7043',postit:'#81C784',stamp:'#EF5350',emoji:'transparent'};
     const frag=document.createDocumentFragment();
     stickerData.forEach(d=>{
       if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
@@ -7851,44 +7852,14 @@ function drawMap(){
       const dx=(liveLeft-offsetX)*sc, dy=(liveTop-offsetY)*sc;
       if(dx<-30||dx>canvasW+30||dy<-30||dy>canvasH+30)return;
       count++;
-      // Clone the actual sticker for faithful minimap
-      const cloneScale=computeCloneScale(d,sc)*0.9;
-      let clone;
-      if(d.ref){
-        clone=d.ref.cloneNode(true);
-        clone.removeAttribute('onclick');clone.removeAttribute('ondragstart');
-        clone.removeAttribute('draggable');clone.removeAttribute('data-anim');
-        clone.removeAttribute('data-splash');clone.removeAttribute('data-contra');
-        clone.classList.remove('dragging');clone.classList.add('no-anim-children');
-        clone.querySelectorAll('[onclick],[ondblclick],[onmousedown],[onpointerdown],[ontouchstart],[ondragstart],[ondragover],[ondrop]').forEach(el=>{
-          el.removeAttribute('onclick');el.removeAttribute('ondblclick');
-          el.removeAttribute('onmousedown');el.removeAttribute('onpointerdown');
-          el.removeAttribute('ontouchstart');el.removeAttribute('ondragstart');
-          el.removeAttribute('ondragover');el.removeAttribute('ondrop');
-        });
-        clone.querySelectorAll('.sticker-drag-handle').forEach(h=>h.remove());
-      } else {
-        clone=document.createElement('div');
-        clone.style.background=d.bg;
-        clone.style.borderRadius=d.radius;
-        if(d.border)clone.style.border=d.border;
-      }
-      clone.className='mi map-sticker-clone';
-      clone.style.position='absolute';
-      clone.style.left=dx+'px';
-      clone.style.top=dy+'px';
-      clone.style.width=d.w+'px';
-      clone.style.height=d.h+'px';
-      clone.style.transformOrigin='0 0';
-      const rot=(d.ref&&d.ref.style.transform?d.ref.style.transform:'').match(/rotate\([^)]+\)/);
-      clone.style.transform=(rot?rot[0]+' ':'')+'scale('+cloneScale+')';
-      clone.style.zIndex='7';
-      clone.style.animation='none';
-      clone.style.transition='none';
-      clone.style.filter='none';
-      clone.style.overflow='hidden';
-      clone.style.pointerEvents='none';
-      frag.appendChild(clone);
+      const w=Math.max(4,d.w*sc),h=Math.max(3,d.h*sc);
+      const catBorder=catColors[d.cat]||'rgba(0,255,60,0.3)';
+      const el=document.createElement('div');
+      el.className='mi';
+      el.style.cssText='left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;background:'+d.bg+';border-radius:'+d.radius+';'+(d.border?'border:'+d.border+';':'')+(catBorder!=='transparent'?'outline:1px solid '+catBorder+';':'')+
+        'box-shadow:0 0 3px rgba(0,255,60,0.15);';
+      if(d.emoji&&w>3){const l=document.createElement('div');l.className='mi-emoji-label';l.textContent=d.emoji;l.style.fontSize=Math.max(Math.min(w*0.55,20),3)+'px';el.appendChild(l)}
+      frag.appendChild(el);
     });
     mapCanvas.appendChild(frag);
     if(mapCount)mapCount.textContent=count+' items';
