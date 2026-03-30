@@ -9777,9 +9777,7 @@ setTimeout(async ()=>{
   await bootstrapMap(true);
   // Re-center on intro card AFTER items are rearranged
   scrollToZone(null,'hub');
-  requestAnimationFrame(()=>scrollToZone(null,'hub'));
-  setTimeout(()=>{scrollToZone(null,'hub');centerOnIntroCard();},350);
-  setTimeout(()=>{scrollToZone(null,'hub');centerOnIntroCard();},900);
+  setTimeout(()=>{scrollToZone(null,'hub');centerOnIntroCard();},400);
   // Show bitmoji greeting
   const greet=document.createElement('div');
   greet.className='bitmoji-greeting';
