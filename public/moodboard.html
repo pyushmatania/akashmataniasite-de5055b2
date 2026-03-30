@@ -4045,92 +4045,222 @@ body.map-expanded .scroll-counter{display:none!important}
 .zp-contact-link:hover{background:rgba(255,255,255,0.1);color:#fff}
 
 /* ── PORTFOLIO PANEL: project grid ── */
-/* ═══ SWIPABLE HOLOGRAPHIC PROJECT CAROUSEL ═══ */
-.zp-projects-carousel{
-  display:flex;gap:20px;overflow-x:auto;overflow-y:hidden;
-  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
-  padding:0 24px 20px;margin:0 -28px;
-  scrollbar-width:none;
-}
-.zp-projects-carousel::-webkit-scrollbar{display:none}
-
-.zp-proj-card{
-  flex:0 0 280px;scroll-snap-align:center;
-  cursor:pointer;position:relative;overflow:hidden;
-  border-radius:20px;
-  background:linear-gradient(145deg,rgba(15,12,30,0.95),rgba(8,6,20,0.98));
-  border:1.5px solid rgba(255,255,255,0.08);
-  transition:transform 0.4s cubic-bezier(0.22,1,0.36,1),box-shadow 0.4s;
-  box-shadow:0 8px 32px rgba(0,0,0,0.4);
-}
-.zp-proj-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
-.zp-proj-card:active{transform:scale(0.97)}
-
-/* Holographic shimmer overlay */
-.zp-proj-card::before{
-  content:'';position:absolute;inset:0;z-index:3;pointer-events:none;
-  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.06) 45%,rgba(255,255,255,0.12) 50%,rgba(255,255,255,0.06) 55%,transparent 60%);
-  background-size:200% 100%;
-  animation:holoShimmer 4s ease-in-out infinite;
+/* ═══ 3D FLOATING PROJECT SHOWCASE ═══ */
+.zp-showcase{
+  position:relative;width:100%;min-height:520px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;margin-bottom:24px;
+  background:radial-gradient(ellipse at 50% 40%,#0c0a1a 0%,#060412 100%);
   border-radius:20px;
 }
-@keyframes holoShimmer{
-  0%{background-position:200% 0}
-  100%{background-position:-200% 0}
+
+/* Circuit board lines background */
+.zp-showcase::before{
+  content:'';position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px),
+    linear-gradient(0deg,rgba(255,255,255,0.012) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse at 50% 50%,black 30%,transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse at 50% 50%,black 30%,transparent 80%);
 }
 
-/* Glow ring around card */
-.zp-proj-card::after{
-  content:'';position:absolute;inset:-2px;z-index:-1;
+/* Top light beam — dramatic */
+.zp-showcase-beam-top{
+  position:absolute;top:-20px;left:50%;transform:translateX(-50%);
+  width:4px;height:55%;z-index:3;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,0.9) 0%,rgba(255,255,255,0.3) 30%,transparent 100%);
+  filter:blur(2px);
+  animation:beamPulse 3s ease-in-out infinite;
+}
+.zp-showcase-beam-top::before{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:60px;height:100%;
+  background:linear-gradient(180deg,rgba(255,255,255,0.08) 0%,transparent 80%);
+  filter:blur(20px);
+}
+.zp-showcase-beam-top::after{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:180px;height:80%;
+  background:radial-gradient(ellipse at 50% 0%,var(--sc-glow,rgba(149,117,205,0.12)) 0%,transparent 70%);
+  filter:blur(30px);
+  clip-path:polygon(40% 0%,60% 0%,100% 100%,0% 100%);
+}
+
+/* Bottom light beam */
+.zp-showcase-beam-bottom{
+  position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);
+  width:4px;height:35%;z-index:3;pointer-events:none;
+  background:linear-gradient(0deg,rgba(255,255,255,0.6) 0%,rgba(255,255,255,0.15) 30%,transparent 100%);
+  filter:blur(2px);
+  animation:beamPulse 3s ease-in-out infinite 1.5s;
+}
+.zp-showcase-beam-bottom::before{
+  content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:40px;height:100%;
+  background:linear-gradient(0deg,rgba(255,255,255,0.05) 0%,transparent 80%);
+  filter:blur(16px);
+}
+
+@keyframes beamPulse{
+  0%,100%{opacity:0.6}
+  50%{opacity:1}
+}
+
+/* Circuit trace lines */
+.zp-showcase-traces{
+  position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;
+}
+.zp-showcase-trace{
+  position:absolute;height:1px;
+  background:linear-gradient(90deg,transparent,var(--sc-glow,rgba(149,117,205,0.2)),transparent);
+  animation:tracePulse 4s ease-in-out infinite;
+}
+
+@keyframes tracePulse{
+  0%,100%{opacity:0.1;transform:scaleX(0.5)}
+  50%{opacity:0.4;transform:scaleX(1)}
+}
+
+/* The 3D floating card */
+.zp-showcase-card{
+  position:relative;z-index:5;
+  width:280px;min-height:380px;
   border-radius:22px;
-  background:conic-gradient(from var(--card-angle,0deg),var(--card-c1,rgba(124,77,255,0.4)),transparent 30%,var(--card-c2,rgba(200,60,150,0.3)),transparent 60%,var(--card-c1,rgba(124,77,255,0.4)));
-  opacity:0;transition:opacity 0.4s;
-  filter:blur(8px);
+  background:linear-gradient(145deg,rgba(20,16,40,0.95),rgba(12,10,28,0.98));
+  border:1.5px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 20px 60px rgba(0,0,0,0.6),
+    0 8px 24px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  overflow:hidden;
 }
-.zp-proj-card:hover::after{opacity:1}
 
-/* Screenshot image area */
-.zp-proj-img-area{
-  position:relative;height:320px;overflow:hidden;
-  border-radius:18px 18px 0 0;
+/* Card glow ring */
+.zp-showcase-card::before{
+  content:'';position:absolute;inset:-3px;z-index:-1;
+  border-radius:24px;
+  background:conic-gradient(from var(--sc-angle,0deg),var(--sc-c1,rgba(124,77,255,0.4)),transparent 25%,var(--sc-c2,rgba(200,60,150,0.3)),transparent 50%,var(--sc-c1,rgba(124,77,255,0.4)),transparent 75%);
+  filter:blur(12px);
+  animation:cardGlowSpin 10s linear infinite;
 }
-.zp-proj-img-area img{
-  width:100%;height:100%;object-fit:cover;
-  transition:transform 0.6s cubic-bezier(0.22,1,0.36,1);
+@keyframes cardGlowSpin{
+  0%{--sc-angle:0deg;filter:blur(12px)}
+  100%{--sc-angle:360deg;filter:blur(12px)}
 }
-.zp-proj-card:hover .zp-proj-img-area img{transform:scale(1.05)}
 
-/* Role badge on image */
-.zp-proj-role-badge{
-  position:absolute;top:12px;left:12px;z-index:4;
+/* Holographic shimmer */
+.zp-showcase-card::after{
+  content:'';position:absolute;inset:0;z-index:10;pointer-events:none;
+  border-radius:22px;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.04) 45%,rgba(255,255,255,0.08) 50%,rgba(255,255,255,0.04) 55%,transparent 60%);
+  background-size:200% 100%;
+  animation:holoShimmer 5s ease-in-out infinite;
+}
+
+/* Card role badge */
+.zp-sc-badge{
+  position:absolute;top:14px;left:14px;z-index:11;
   padding:5px 14px;border-radius:8px;
-  font-family:var(--font-fun);font-size:0.6rem;font-weight:800;
+  font-family:var(--font-fun);font-size:0.58rem;font-weight:800;
   letter-spacing:0.1em;text-transform:uppercase;
-  background:rgba(0,0,0,0.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.85);
+  background:var(--sc-c1,rgba(124,77,255,0.3));
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);
+}
+
+/* Card emoji center */
+.zp-sc-emoji{
+  display:flex;align-items:center;justify-content:center;
+  height:220px;position:relative;overflow:hidden;
+}
+.zp-sc-emoji::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 30% 25%,var(--sc-c1,rgba(120,80,220,0.5)) 0%,transparent 55%),
+    radial-gradient(ellipse at 70% 75%,var(--sc-c2,rgba(200,60,150,0.4)) 0%,transparent 55%),
+    radial-gradient(ellipse at 50% 100%,rgba(255,180,60,0.2) 0%,transparent 40%);
+  filter:blur(30px);
+  animation:artworkPulse 6s ease-in-out infinite;
+}
+.zp-sc-emoji span{
+  font-size:3.5rem;position:relative;z-index:2;
+  filter:drop-shadow(0 8px 24px rgba(0,0,0,0.5));
+}
+
+/* Card project name */
+.zp-sc-name{
+  font-family:var(--font-fun);font-size:1.3rem;font-weight:900;
+  color:#fff;letter-spacing:0.04em;text-transform:uppercase;
+  text-align:center;padding:0 18px;
+  text-shadow:0 2px 16px rgba(0,0,0,0.5);
 }
 
 /* Card number */
-.zp-proj-num{
-  position:absolute;bottom:12px;right:14px;z-index:4;
+.zp-sc-num{
+  text-align:center;padding:12px 0 16px;
   font-family:var(--font-fun);font-size:0.6rem;font-weight:600;
-  color:rgba(255,255,255,0.35);letter-spacing:0.06em;
+  color:rgba(255,255,255,0.25);letter-spacing:0.08em;
 }
 
-/* Info section */
-.zp-proj-info{padding:16px 18px 20px;position:relative;z-index:2}
-.zp-proj-name{font-family:var(--font-fun);font-size:1.1rem;font-weight:900;color:#fff;display:block;margin-bottom:4px;letter-spacing:-0.01em}
-.zp-proj-desc{font-family:var(--font-sans);font-size:0.7rem;color:rgba(255,255,255,0.4);line-height:1.5;margin-bottom:12px;display:block}
-.zp-proj-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0}
-.zp-proj-tag{font-family:var(--font-fun);font-size:0.56rem;font-weight:700;padding:4px 10px;border-radius:6px;letter-spacing:0.04em}
+/* Card info section */
+.zp-sc-info{
+  padding:0 18px 20px;
+}
+.zp-sc-desc{
+  font-family:var(--font-sans);font-size:0.72rem;
+  color:rgba(255,255,255,0.4);line-height:1.55;text-align:center;
+  margin-bottom:14px;
+}
+.zp-sc-tags{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.zp-sc-tag{
+  font-family:var(--font-fun);font-size:0.54rem;font-weight:700;
+  padding:4px 10px;border-radius:6px;letter-spacing:0.04em;
+}
+.zp-sc-cta{
+  display:block;width:100%;text-align:center;
+  padding:10px;border:none;border-radius:12px;
+  font-family:var(--font-fun);font-size:0.65rem;font-weight:800;
+  letter-spacing:0.08em;text-transform:uppercase;
+  background:linear-gradient(135deg,var(--sc-c1,rgba(124,77,255,0.3)),var(--sc-c2,rgba(200,60,150,0.2)));
+  color:rgba(255,255,255,0.8);cursor:pointer;
+  border:1px solid rgba(255,255,255,0.1);
+  transition:all 0.2s;
+}
+.zp-sc-cta:active{transform:scale(0.95);background:rgba(255,255,255,0.1)}
 
-/* Carousel dots indicator */
+/* Swipe hint */
+.zp-sc-swipe-hint{
+  text-align:center;padding:8px 0;
+  font-family:var(--font-fun);font-size:0.55rem;font-weight:600;
+  color:rgba(255,255,255,0.2);letter-spacing:0.1em;text-transform:uppercase;
+}
+
+/* Floating dust */
+.zp-showcase-dust{
+  position:absolute;border-radius:50%;pointer-events:none;
+  background:rgba(255,255,255,0.3);
+  animation:dustFloat var(--d-dur,8s) ease-in-out var(--d-delay,0s) infinite;
+}
+
+/* Ambient glow behind card */
+.zp-showcase-ambient{
+  position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);
+  width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,var(--sc-glow,rgba(120,80,220,0.12)) 0%,transparent 70%);
+  filter:blur(50px);pointer-events:none;z-index:0;
+  animation:ambientPulse 5s ease-in-out infinite;
+}
+
+/* Carousel dots */
 .zp-carousel-dots{
   display:flex;justify-content:center;gap:6px;padding:8px 0 4px;
 }
 .zp-carousel-dot{
   width:6px;height:6px;border-radius:50%;
-  background:rgba(255,255,255,0.15);transition:all 0.3s;
+  background:rgba(255,255,255,0.15);transition:all 0.3s;cursor:pointer;
 }
 .zp-carousel-dot.active{background:rgba(255,255,255,0.6);width:18px;border-radius:3px}
 
@@ -5053,104 +5183,45 @@ function cycleIntroCards(e){
   </div>
   <div class="zp-body">
     <div class="zp-section">
-      <div class="zp-sec-label">Swipe to Explore</div>
-      <div class="zp-projects-carousel" id="projCarousel">
-
-        <!-- EnterCircles -->
-        <div class="zp-proj-card" onclick="openProject('entercircles')" style="--card-c1:rgba(124,77,255,0.5);--card-c2:rgba(206,147,216,0.4)">
-          <div class="zp-proj-img-area">
-            <img src="images/proj-entercircles.jpg" alt="EnterCircles App" loading="lazy">
-            <span class="zp-proj-role-badge">Lead PM</span>
-            <span class="zp-proj-num">#001 / 005</span>
-          </div>
-          <div class="zp-proj-info">
-            <span class="zp-proj-name">EnterCircles</span>
-            <span class="zp-proj-desc">Web3 social platform for community engagement & token-gated access</span>
-            <div class="zp-proj-tags">
-              <span class="zp-proj-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">Web3</span>
-              <span class="zp-proj-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">Social</span>
-              <span class="zp-proj-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">B2B2C</span>
+      <div class="zp-showcase" id="projShowcase" style="--sc-c1:rgba(124,77,255,0.5);--sc-c2:rgba(206,147,216,0.4);--sc-glow:rgba(124,77,255,0.15)">
+        <div class="zp-showcase-beam-top"></div>
+        <div class="zp-showcase-beam-bottom"></div>
+        <div class="zp-showcase-ambient"></div>
+        <div class="zp-showcase-traces">
+          <div class="zp-showcase-trace" style="top:30%;left:0;width:35%;animation-delay:0s"></div>
+          <div class="zp-showcase-trace" style="top:50%;right:0;width:30%;animation-delay:1.5s"></div>
+          <div class="zp-showcase-trace" style="top:70%;left:5%;width:25%;animation-delay:3s"></div>
+          <div class="zp-showcase-trace" style="top:45%;right:5%;width:20%;animation-delay:0.8s"></div>
+        </div>
+        <div class="zp-showcase-dust" style="width:2px;height:2px;left:15%;top:20%;--d-dur:7s;--d-delay:0s;--d-tx:10px;--d-ty:-30px;--d-tx2:-5px;--d-ty2:-60px"></div>
+        <div class="zp-showcase-dust" style="width:1.5px;height:1.5px;left:75%;top:35%;--d-dur:9s;--d-delay:1s;--d-tx:-15px;--d-ty:-25px;--d-tx2:8px;--d-ty2:-50px"></div>
+        <div class="zp-showcase-dust" style="width:2.5px;height:2.5px;left:25%;top:65%;--d-dur:6s;--d-delay:2s;--d-tx:12px;--d-ty:-35px;--d-tx2:-10px;--d-ty2:-70px"></div>
+        <div class="zp-showcase-dust" style="width:1px;height:1px;left:85%;top:55%;--d-dur:8s;--d-delay:0.5s;--d-tx:-8px;--d-ty:-20px;--d-tx2:6px;--d-ty2:-45px"></div>
+        <div class="zp-showcase-dust" style="width:2px;height:2px;left:40%;top:80%;--d-dur:10s;--d-delay:3s;--d-tx:5px;--d-ty:-40px;--d-tx2:-12px;--d-ty2:-80px"></div>
+        <div class="zp-showcase-card" id="projCard">
+          <div class="zp-sc-badge" id="scBadge">Lead PM</div>
+          <div class="zp-sc-emoji" id="scEmoji"><span>🔗</span></div>
+          <div class="zp-sc-name" id="scName">EnterCircles</div>
+          <div class="zp-sc-num" id="scNum">#001 / 005</div>
+          <div class="zp-sc-info">
+            <div class="zp-sc-desc" id="scDesc">Web3 social platform for community engagement & token-gated access</div>
+            <div class="zp-sc-tags" id="scTags">
+              <span class="zp-sc-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">Web3</span>
+              <span class="zp-sc-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">Social</span>
+              <span class="zp-sc-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">B2B2C</span>
             </div>
+            <button class="zp-sc-cta" id="scCta">View Case Study →</button>
           </div>
         </div>
-
-        <!-- Recess -->
-        <div class="zp-proj-card" onclick="openProject('recess')" style="--card-c1:rgba(66,165,245,0.5);--card-c2:rgba(100,181,246,0.4)">
-          <div class="zp-proj-img-area">
-            <img src="images/proj-recess.jpg" alt="Recess App" loading="lazy">
-            <span class="zp-proj-role-badge">Co-Founded</span>
-            <span class="zp-proj-num">#002 / 005</span>
-          </div>
-          <div class="zp-proj-info">
-            <span class="zp-proj-name">Recess</span>
-            <span class="zp-proj-desc">EdTech platform for peer learning, study groups & collaborative sessions</span>
-            <div class="zp-proj-tags">
-              <span class="zp-proj-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9">EdTech</span>
-              <span class="zp-proj-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9">B2C</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Hushh -->
-        <div class="zp-proj-card" onclick="openProject('hushh')" style="--card-c1:rgba(239,83,80,0.5);--card-c2:rgba(255,110,130,0.4)">
-          <div class="zp-proj-img-area">
-            <img src="images/proj-hushh.jpg" alt="Hushh App" loading="lazy">
-            <span class="zp-proj-role-badge">Product Manager</span>
-            <span class="zp-proj-num">#003 / 005</span>
-          </div>
-          <div class="zp-proj-info">
-            <span class="zp-proj-name">Hushh</span>
-            <span class="zp-proj-desc">Privacy-first personal data management — your data, your rules</span>
-            <div class="zp-proj-tags">
-              <span class="zp-proj-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A">Privacy</span>
-              <span class="zp-proj-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A">FinTech</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- SmarBhubaneswar -->
-        <div class="zp-proj-card" onclick="openProject('smarbhubaneswar')" style="--card-c1:rgba(38,166,154,0.5);--card-c2:rgba(80,200,180,0.4)">
-          <div class="zp-proj-img-area">
-            <img src="images/proj-smarbhubaneswar.jpg" alt="SmarBhubaneswar App" loading="lazy">
-            <span class="zp-proj-role-badge">Product Lead</span>
-            <span class="zp-proj-num">#004 / 005</span>
-          </div>
-          <div class="zp-proj-info">
-            <span class="zp-proj-name">SmarBhubaneswar</span>
-            <span class="zp-proj-desc">Smart city civic tech platform for citizen services & urban governance</span>
-            <div class="zp-proj-tags">
-              <span class="zp-proj-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4">Civic</span>
-              <span class="zp-proj-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4">Gov-Tech</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Aribasda -->
-        <div class="zp-proj-card" onclick="openProject('aribasda')" style="--card-c1:rgba(255,112,67,0.5);--card-c2:rgba(255,160,100,0.4)">
-          <div class="zp-proj-img-area">
-            <img src="images/proj-aribasda.jpg" alt="Aribasda App" loading="lazy">
-            <span class="zp-proj-role-badge">Product Manager</span>
-            <span class="zp-proj-num">#005 / 005</span>
-          </div>
-          <div class="zp-proj-info">
-            <span class="zp-proj-name">Aribasda</span>
-            <span class="zp-proj-desc">Analytics & growth tooling — turning data into decisions, fast</span>
-            <div class="zp-proj-tags">
-              <span class="zp-proj-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91">Analytics</span>
-              <span class="zp-proj-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91">Growth</span>
-              <span class="zp-proj-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91">SaaS</span>
-            </div>
-          </div>
-        </div>
-
       </div>
       <div class="zp-carousel-dots" id="projDots">
-        <div class="zp-carousel-dot active"></div>
-        <div class="zp-carousel-dot"></div>
-        <div class="zp-carousel-dot"></div>
-        <div class="zp-carousel-dot"></div>
-        <div class="zp-carousel-dot"></div>
+        <div class="zp-carousel-dot active" onclick="goToProject(0)"></div>
+        <div class="zp-carousel-dot" onclick="goToProject(1)"></div>
+        <div class="zp-carousel-dot" onclick="goToProject(2)"></div>
+        <div class="zp-carousel-dot" onclick="goToProject(3)"></div>
+        <div class="zp-carousel-dot" onclick="goToProject(4)"></div>
       </div>
+      <div class="zp-sc-swipe-hint">← Swipe to explore →</div>
     </div>
   </div>
   <div class="zp-footer">
@@ -5173,7 +5244,8 @@ function cycleIntroCards(e){
       <div class="gallery-frame">
         <div class="gallery-frame-inner">
           <div class="gallery-artwork">
-            <img src="images/proj-entercircles.jpg" alt="EnterCircles" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">
+            <span class="gallery-artwork-emoji">🔗</span>
+            <span class="gallery-artwork-label">EnterCircles</span>
           </div>
         </div>
       </div>
@@ -5226,7 +5298,8 @@ function cycleIntroCards(e){
       <div class="gallery-frame">
         <div class="gallery-frame-inner">
           <div class="gallery-artwork">
-            <img src="images/proj-recess.jpg" alt="Recess" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">
+            <span class="gallery-artwork-emoji">📚</span>
+            <span class="gallery-artwork-label">Recess</span>
           </div>
         </div>
       </div>
@@ -5279,7 +5352,8 @@ function cycleIntroCards(e){
       <div class="gallery-frame">
         <div class="gallery-frame-inner">
           <div class="gallery-artwork">
-            <img src="images/proj-hushh.jpg" alt="Hushh" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">
+            <span class="gallery-artwork-emoji">🤫</span>
+            <span class="gallery-artwork-label">Hushh</span>
           </div>
         </div>
       </div>
@@ -5332,7 +5406,8 @@ function cycleIntroCards(e){
       <div class="gallery-frame">
         <div class="gallery-frame-inner">
           <div class="gallery-artwork">
-            <img src="images/proj-smarbhubaneswar.jpg" alt="SmarBhubaneswar" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">
+            <span class="gallery-artwork-emoji">🏙️</span>
+            <span class="gallery-artwork-label">SmarBhubaneswar</span>
           </div>
         </div>
       </div>
@@ -5385,7 +5460,8 @@ function cycleIntroCards(e){
       <div class="gallery-frame">
         <div class="gallery-frame-inner">
           <div class="gallery-artwork">
-            <img src="images/proj-aribasda.jpg" alt="Aribasda" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">
+            <span class="gallery-artwork-emoji">📈</span>
+            <span class="gallery-artwork-label">Aribasda</span>
           </div>
         </div>
       </div>
@@ -11301,19 +11377,98 @@ function openProject(id){
 }
 window.openProject=openProject;
 
-// Carousel dot tracker
+// 3D Showcase — swipe between projects
 (function(){
-  const carousel=document.getElementById('projCarousel');
-  const dotsContainer=document.getElementById('projDots');
-  if(!carousel||!dotsContainer)return;
-  const dots=dotsContainer.querySelectorAll('.zp-carousel-dot');
-  carousel.addEventListener('scroll',function(){
-    const cards=carousel.querySelectorAll('.zp-proj-card');
-    const scrollLeft=carousel.scrollLeft;
-    const cardWidth=cards[0]?.offsetWidth||280;
-    const gap=20;
-    const idx=Math.round(scrollLeft/(cardWidth+gap));
-    dots.forEach((d,i)=>{d.classList.toggle('active',i===idx)});
+  const PROJECTS=[
+    {id:'entercircles',emoji:'🔗',name:'EnterCircles',badge:'Lead PM',desc:'Web3 social platform for community engagement & token-gated access',
+     tags:[{text:'Web3',bg:'rgba(124,77,255,0.15)',color:'#CE93D8'},{text:'Social',bg:'rgba(124,77,255,0.15)',color:'#CE93D8'},{text:'B2B2C',bg:'rgba(124,77,255,0.15)',color:'#CE93D8'}],
+     c1:'rgba(124,77,255,0.5)',c2:'rgba(206,147,216,0.4)',glow:'rgba(124,77,255,0.15)'},
+    {id:'recess',emoji:'📚',name:'Recess',badge:'Co-Founded',desc:'EdTech platform for peer learning, study groups & collaborative sessions',
+     tags:[{text:'EdTech',bg:'rgba(66,165,245,0.15)',color:'#90CAF9'},{text:'B2C',bg:'rgba(66,165,245,0.15)',color:'#90CAF9'}],
+     c1:'rgba(66,165,245,0.5)',c2:'rgba(100,181,246,0.4)',glow:'rgba(66,165,245,0.15)'},
+    {id:'hushh',emoji:'🤫',name:'Hushh',badge:'Product Manager',desc:'Privacy-first personal data management — your data, your rules',
+     tags:[{text:'Privacy',bg:'rgba(239,83,80,0.15)',color:'#EF9A9A'},{text:'FinTech',bg:'rgba(239,83,80,0.15)',color:'#EF9A9A'}],
+     c1:'rgba(239,83,80,0.5)',c2:'rgba(255,110,130,0.4)',glow:'rgba(239,83,80,0.15)'},
+    {id:'smarbhubaneswar',emoji:'🏙️',name:'SmarBhubaneswar',badge:'Product Lead',desc:'Smart city civic tech platform for citizen services & urban governance',
+     tags:[{text:'Civic',bg:'rgba(38,166,154,0.15)',color:'#80CBC4'},{text:'Gov-Tech',bg:'rgba(38,166,154,0.15)',color:'#80CBC4'}],
+     c1:'rgba(38,166,154,0.5)',c2:'rgba(80,200,180,0.4)',glow:'rgba(38,166,154,0.15)'},
+    {id:'aribasda',emoji:'📈',name:'Aribasda',badge:'Product Manager',desc:'Analytics & growth tooling — turning data into decisions, fast',
+     tags:[{text:'Analytics',bg:'rgba(255,112,67,0.15)',color:'#FFAB91'},{text:'Growth',bg:'rgba(255,112,67,0.15)',color:'#FFAB91'},{text:'SaaS',bg:'rgba(255,112,67,0.15)',color:'#FFAB91'}],
+     c1:'rgba(255,112,67,0.5)',c2:'rgba(255,160,100,0.4)',glow:'rgba(255,112,67,0.15)'}
+  ];
+  let currentIdx=0;
+  const showcase=document.getElementById('projShowcase');
+  const card=document.getElementById('projCard');
+  const dots=document.querySelectorAll('#projDots .zp-carousel-dot');
+  if(!showcase||!card)return;
+
+  function renderProject(idx,dir){
+    const p=PROJECTS[idx];
+    // Animate out
+    card.style.transition='transform 0.35s cubic-bezier(0.22,1,0.36,1),opacity 0.25s';
+    card.style.opacity='0';
+    card.style.transform=dir>0?'translateX(-60px) scale(0.92)':'translateX(60px) scale(0.92)';
+    setTimeout(()=>{
+      // Update content
+      document.getElementById('scBadge').textContent=p.badge;
+      document.getElementById('scEmoji').innerHTML='<span>'+p.emoji+'</span>';
+      document.getElementById('scName').textContent=p.name;
+      document.getElementById('scNum').textContent='#'+(idx+1).toString().padStart(3,'0')+' / 005';
+      document.getElementById('scDesc').textContent=p.desc;
+      const tagsEl=document.getElementById('scTags');
+      tagsEl.innerHTML=p.tags.map(t=>'<span class="zp-sc-tag" style="background:'+t.bg+';color:'+t.color+'">'+t.text+'</span>').join('');
+      document.getElementById('scCta').onclick=function(){openProject(p.id)};
+      // Update colors
+      showcase.style.setProperty('--sc-c1',p.c1);
+      showcase.style.setProperty('--sc-c2',p.c2);
+      showcase.style.setProperty('--sc-glow',p.glow);
+      // Animate in from opposite side
+      card.style.transform=dir>0?'translateX(60px) scale(0.92)':'translateX(-60px) scale(0.92)';
+      requestAnimationFrame(()=>{
+        card.style.transition='transform 0.5s cubic-bezier(0.22,1,0.36,1),opacity 0.4s';
+        card.style.opacity='1';
+        card.style.transform='translateX(0) scale(1)';
+      });
+      // Update dots
+      dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    },280);
+  }
+
+  // Set initial CTA
+  document.getElementById('scCta').onclick=function(){openProject(PROJECTS[0].id)};
+
+  window.goToProject=function(idx){
+    if(idx===currentIdx)return;
+    const dir=idx>currentIdx?1:-1;
+    currentIdx=idx;
+    renderProject(idx,dir);
+  };
+
+  // Touch swipe
+  let touchStartX=0,touchStartY=0,swiping=false;
+  showcase.addEventListener('touchstart',function(e){
+    touchStartX=e.touches[0].clientX;
+    touchStartY=e.touches[0].clientY;
+    swiping=true;
+  },{passive:true});
+  showcase.addEventListener('touchmove',function(e){
+    if(!swiping)return;
+    const dx=e.touches[0].clientX-touchStartX;
+    const dy=e.touches[0].clientY-touchStartY;
+    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>10){
+      e.preventDefault();
+    }
+  },{passive:false});
+  showcase.addEventListener('touchend',function(e){
+    if(!swiping)return;
+    swiping=false;
+    const dx=e.changedTouches[0].clientX-touchStartX;
+    if(Math.abs(dx)<40)return;
+    if(dx<0&&currentIdx<PROJECTS.length-1){
+      currentIdx++;renderProject(currentIdx,1);
+    }else if(dx>0&&currentIdx>0){
+      currentIdx--;renderProject(currentIdx,-1);
+    }
   },{passive:true});
 })();
 
