@@ -43,19 +43,6 @@ Deno.serve(async (req) => {
     const hashed = await sha256(pin);
 
     if (action === 'setup') {
-      // Check if PIN already exists
-      const { data: existing } = await sb
-        .from('moodboard_pins')
-        .select('id')
-        .eq('id', PIN_ROW_ID)
-        .maybeSingle();
-
-      if (existing) {
-        return new Response(JSON.stringify({ error: 'PIN already set' }), {
-          status: 409,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        });
-      }
 
       const { error } = await sb.from('moodboard_pins').upsert({
         id: PIN_ROW_ID,
