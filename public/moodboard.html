@@ -7840,6 +7840,34 @@ function drawMap(){
   updMap();
 }
 
+// Render all real sticker clones for small map so positions/details match the canvas exactly
+function renderAllSmallMapClones(sc,ox,oy,cw,ch){
+  if(!sc||!mapCanvas)return;
+  const frag=document.createDocumentFragment();
+  let visibleCount=0;
+  stickerData.forEach(d=>{
+    if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
+    const liveLeft=d.ref&&d.ref.style?parseInt(d.ref.style.left)||d.left:d.left;
+    const liveTop=d.ref&&d.ref.style?parseInt(d.ref.style.top)||d.top:d.top;
+    const renderX=(liveLeft-ox)*sc;
+    const renderY=(liveTop-oy)*sc;
+    const cloneId=d.id||(d.left+'-'+d.top+'-'+d.cat);
+    let clone=_mapCloneNodesById.get(cloneId);
+    if(!clone){
+      clone=makeMapCloneNode(d);
+      _mapCloneNodesById.set(cloneId,clone);
+    }
+    const baseScale=Math.max(sc,0.01);
+    const finalScale=computeCloneScale(d,baseScale);
+    applyClonePlacement(clone,d,renderX,renderY,finalScale);
+    clone.style.display='block';
+    frag.appendChild(clone);
+    visibleCount++;
+  });
+  if(frag.childNodes.length)mapCanvas.appendChild(frag);
+  if(mapCount)mapCount.textContent=visibleCount+' items';
+}
+
 // Render real sticker clones for items visible in the map viewport (cached per sticker)
 let _cloneRafId=null;
 let _lastCloneRenderTime=0;
