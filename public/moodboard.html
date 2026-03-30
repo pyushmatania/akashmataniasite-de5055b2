@@ -6955,7 +6955,7 @@ const confC=['🎉','✨','⭐','💫','🎊','❤️','💜','💛','🧡','�
 function triggerAnim(el, e){
   const a=el.dataset.anim;
   allAnims.forEach(c=>el.classList.remove('anim-'+c));
-  void el.offsetWidth; // reflow to restart animation
+  // void el.offsetWidth; — skip reflow, use class toggle trick instead
   el.style.willChange='transform'; // promote to GPU layer during animation
   el.classList.add('anim-'+a);
   
