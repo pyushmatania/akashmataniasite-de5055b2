@@ -7742,11 +7742,9 @@ function drawMapLayout(){
   mapCanvas.style.position='absolute';
   mapCanvas.style.borderRadius=mmExp?'0':'inherit';
   if(mmExp){
-    mapCanvas.style.background='linear-gradient(180deg,#87CEEB 0%,#5baae0 8%,#4a9bd9 100%)';
-    mapCanvas.style.backgroundImage='none';
-    mapCanvas.style.backgroundSize='';
+    mapCanvas.style.background='linear-gradient(180deg,#4a9bd9 0%,#5baae0 30%,#6dbde8 60%,#3d8cc7 100%)';
   } else {
-    mapCanvas.style.background='linear-gradient(160deg,#6db8e4 0%,#5baae0 30%,#4a9bd9 60%,#3d8cc7 100%)';
+    mapCanvas.style.background='linear-gradient(160deg,#1a6fb5 0%,#1e7ec4 25%,#2390d4 50%,#1a6fb5 75%,#145d9e 100%)';
   }
   if(mmExp){
     const rCW=Math.round(canvasW),rCH=Math.round(canvasH);
