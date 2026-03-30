@@ -7763,7 +7763,7 @@ let _decsCW=-1,_decsCH=-1;
 function drawMapLayout(){
   const playerWasInCanvas=mapPlayer.parentElement===mapCanvas;
   if(mmExp){
-    mapCanvas.querySelectorAll('.mi').forEach(el=>el.remove());
+    mapCanvas.querySelectorAll('.mi,.map-sticker-clone').forEach(el=>el.remove());
     if(playerWasInCanvas)mapPlayer.remove();
   } else {
     mapCanvas.innerHTML='';
@@ -7837,9 +7837,8 @@ function drawMap(){
   if(mmExp){
     renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
   } else {
-    // SMALL: render mini sticker previews — simple colored dots at exact canvas positions
+    // SMALL: render real sticker clones scaled down at exact canvas positions
     let count=0;
-    const catColors={photo:'#64B5F6',meme:'#CE93D8',badge:'#FFD54F',interactive:'#FF7043',postit:'#81C784',stamp:'#EF5350',emoji:'transparent'};
     const frag=document.createDocumentFragment();
     stickerData.forEach(d=>{
       if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
@@ -7848,16 +7847,18 @@ function drawMap(){
       const dx=(liveLeft-offsetX)*sc, dy=(liveTop-offsetY)*sc;
       if(dx<-30||dx>canvasW+30||dy<-30||dy>canvasH+30)return;
       count++;
-      const w=Math.max(4,d.w*sc),h=Math.max(3,d.h*sc);
-      const catBorder=catColors[d.cat]||'rgba(255,255,255,0.3)';
-      const el=document.createElement('div');
-      el.className='mi';
-      el.style.cssText='left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;background:'+d.bg+';border-radius:'+d.radius+';'+(d.border?'border:'+d.border+';':'')+(catBorder!=='transparent'?'outline:1px solid '+catBorder+';':'')+
-        'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);';
-      if(d.emoji&&w>3){const l=document.createElement('div');l.className='mi-emoji-label';l.textContent=d.emoji;l.style.fontSize=Math.max(Math.min(w*0.55,20),3)+'px';el.appendChild(l)}
-      frag.appendChild(el);
+      const clone=makeMapCloneNode(d);
+      if(!clone)return;
+      clone.classList.add('map-sticker-clone','no-anim-children');
+      const cloneSc=computeCloneScale(d,sc);
+      const w=d.w*cloneSc, h=d.h*cloneSc;
+      clone.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;pointer-events:none;overflow:hidden;transform-origin:0 0;z-index:10;';
+      frag.appendChild(clone);
     });
     mapCanvas.appendChild(frag);
+    // Re-append grid div so it's visible on top
+    const gridDiv=mapCanvas.querySelector('.map-canvas-grid');
+    if(gridDiv)mapCanvas.appendChild(gridDiv);
     if(mapCount)mapCount.textContent=count+' items';
     // Boundary + decorations overlay on small map
     const oldBSvg=mapCanvas.querySelector('.small-map-boundaries');
