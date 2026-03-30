@@ -371,18 +371,18 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   animation:nameShimmer 3.5s linear infinite;
 }
 .intro-card .intro-tagline{
-  font-family:var(--font-hand);font-size:0.85rem;
-  color:rgba(62,39,35,0.5);margin-bottom:12px;line-height:1.5;
+  font-family:var(--font-hand);font-size:0.88rem;
+  color:rgba(62,39,35,0.7);margin-bottom:12px;line-height:1.5;
 }
 .intro-card .intro-roles{
   display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;
 }
 .intro-card .intro-role{
-  background:rgba(255,152,0,0.08);
-  border:1px solid rgba(201,169,110,0.25);border-radius:20px;
-  padding:4px 11px;font-family:var(--font-fun);font-size:0.62rem;
-  font-weight:600;color:rgba(62,39,35,0.65);letter-spacing:0.04em;
-  transition:all 0.2s;
+  background:rgba(255,152,0,0.1);
+  border:1px solid rgba(201,169,110,0.3);border-radius:20px;
+  padding:4px 11px;font-family:var(--font-fun);font-size:0.64rem;
+  font-weight:700;color:rgba(62,39,35,0.8);letter-spacing:0.04em;
+  transition:all 0.2s;cursor:default;
 }
 .intro-card .intro-role:hover{background:rgba(255,152,0,0.15);border-color:rgba(255,152,0,0.45);color:#E65100}
 
@@ -399,8 +399,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 /* How-to Steps */
 .intro-card .gc-howto{text-align:left;margin-bottom:10px}
 .intro-card .gc-howto-title{
-  font-family:var(--font-fun);font-size:0.55rem;font-weight:800;
-  letter-spacing:0.12em;text-transform:uppercase;color:rgba(62,39,35,0.4);
+  font-family:var(--font-fun);font-size:0.58rem;font-weight:800;
+  letter-spacing:0.12em;text-transform:uppercase;color:rgba(62,39,35,0.55);
   margin-bottom:7px;text-align:center;
 }
 @keyframes gcStepIn{
@@ -411,7 +411,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
   display:flex;align-items:flex-start;gap:8px;margin-bottom:7px;
   padding:6px 10px;border-radius:12px;cursor:pointer;
   transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);
-  background:rgba(255,255,255,0.5);border:1px solid rgba(201,169,110,0.12);
+  background:rgba(255,255,255,0.6);border:1px solid rgba(201,169,110,0.15);
   opacity:0;animation:gcStepIn 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
 }
 .intro-card .gc-step:nth-child(2){animation-delay:0.15s}
@@ -419,24 +419,24 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .intro-card .gc-step:nth-child(4){animation-delay:0.45s}
 .intro-card .gc-step:nth-child(5){animation-delay:0.6s}
 .intro-card .gc-step:hover{
-  background:rgba(255,255,255,0.85);border-color:rgba(255,152,0,0.3);
+  background:rgba(255,255,255,0.9);border-color:rgba(255,152,0,0.35);
   transform:translateX(4px) scale(1.01);
-  box-shadow:0 4px 16px rgba(255,152,0,0.08);
+  box-shadow:0 4px 16px rgba(255,152,0,0.1);
 }
 .intro-card .gc-step:active{transform:scale(0.97)}
 .intro-card .gc-step-icon{
   font-size:1.1rem;flex-shrink:0;width:30px;height:30px;
   display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,rgba(255,167,38,0.12),rgba(255,87,34,0.08));
-  border-radius:10px;border:1px solid rgba(255,167,38,0.2);
+  background:linear-gradient(135deg,rgba(255,167,38,0.15),rgba(255,87,34,0.1));
+  border-radius:10px;border:1px solid rgba(255,167,38,0.25);
 }
 .intro-card .gc-step-text{flex:1}
 .intro-card .gc-step-label{
-  font-family:var(--font-fun);font-size:0.64rem;font-weight:700;
+  font-family:var(--font-fun);font-size:0.67rem;font-weight:700;
   color:#3E2723;display:block;line-height:1.3;
 }
 .intro-card .gc-step-desc{
-  font-family:var(--font-hand);font-size:0.67rem;color:rgba(62,39,35,0.45);
+  font-family:var(--font-hand);font-size:0.7rem;color:rgba(62,39,35,0.62);
   display:block;margin-top:1px;
 }
 
@@ -452,9 +452,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .intro-card .gc-quirky-emoji{font-size:1.15rem;display:block;margin-bottom:3px;animation:gcQuirkyBob 2s ease-in-out infinite}
 @keyframes gcQuirkyBob{0%,100%{transform:translateY(0) rotate(0deg)}25%{transform:translateY(-3px) rotate(-5deg)}75%{transform:translateY(-3px) rotate(5deg)}}
 .intro-card .gc-quirky-text{
-  font-family:var(--font-hand);font-size:0.72rem;color:#5D4037;line-height:1.4;
+  font-family:var(--font-hand);font-size:0.75rem;color:#4E342E;line-height:1.4;
 }
-.intro-card .gc-quirky-sub{font-size:0.5rem;color:rgba(93,64,55,0.4);margin-top:3px;font-family:var(--font-fun);letter-spacing:0.04em}
+.intro-card .gc-quirky-sub{font-size:0.52rem;color:rgba(93,64,55,0.55);margin-top:3px;font-family:var(--font-fun);letter-spacing:0.04em}
 
 /* Progress dots — interactive */
 .intro-card .gc-progress{
@@ -467,7 +467,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 }
 .intro-card .gc-dot:hover{transform:scale(1.4);border-color:#FF9800}
 .intro-card .gc-dot.active{background:linear-gradient(135deg,#FF9800,#FF7043);border-color:transparent;box-shadow:0 0 8px rgba(255,152,0,0.4);transform:scale(1.2)}
-.intro-card .gc-dot-label{font-family:var(--font-hand);font-size:0.52rem;color:rgba(62,39,35,0.3);margin-left:4px}
+.intro-card .gc-dot-label{font-family:var(--font-hand);font-size:0.55rem;color:rgba(62,39,35,0.45);margin-left:4px}
 
 /* CTA bottom */
 .intro-card .gc-cta-wrap{position:relative;text-align:center;padding:4px 0 0}
@@ -495,7 +495,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .intro-card .gc-cta-btn .gc-cta-arrow{display:inline-block;animation:gcCtaArrow 1.5s ease-in-out infinite}
 @keyframes gcCtaArrow{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
 .intro-card .gc-footer-quip{
-  font-family:var(--font-hand);font-size:0.7rem;color:rgba(62,39,35,0.3);
+  font-family:var(--font-hand);font-size:0.72rem;color:rgba(62,39,35,0.45);
   margin-top:10px;font-style:italic;
 }
 
@@ -1700,37 +1700,40 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-work .zic-stat-val{font-family:var(--font-fun);font-size:1.1rem;font-weight:700;color:#64B4FF;display:block}
 .zic-work .zic-stat-label{font-size:0.5rem;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.04em;display:block;margin-top:2px}
 
-/* ── PORTFOLIO: Tall Laptop — Dark Indigo ── */
+/* ── PORTFOLIO: Tall Laptop — Dark Indigo (improved readability) ── */
 .zic-portfolio{width:440px;padding:0;min-height:400px}
 .zic-portfolio .zic-screen{
   background:linear-gradient(160deg,#1a1a2e,#16213e,#0f3460);
-  border-radius:16px 16px 0 0;border:2px solid rgba(126,87,194,0.25);padding:28px 22px 22px;
+  border-radius:16px 16px 0 0;border:2px solid rgba(126,87,194,0.3);padding:28px 22px 22px;
   position:relative;overflow:hidden;min-height:340px;
-  box-shadow:inset 0 0 40px rgba(126,87,194,0.06);
+  box-shadow:inset 0 0 40px rgba(126,87,194,0.08);
 }
-.zic-portfolio .zic-screen::before{content:'';position:absolute;top:0;left:0;right:0;height:28px;background:rgba(126,87,194,0.12);border-radius:14px 14px 0 0}
+.zic-portfolio .zic-screen::before{content:'';position:absolute;top:0;left:0;right:0;height:28px;background:rgba(126,87,194,0.15);border-radius:14px 14px 0 0}
 .zic-portfolio .zic-dots{position:absolute;top:8px;left:14px;display:flex;gap:6px;z-index:2}
-.zic-portfolio .zic-dot{width:10px;height:10px;border-radius:50%}
+.zic-portfolio .zic-dot{width:10px;height:10px;border-radius:50%;cursor:pointer;transition:transform 0.15s}
+.zic-portfolio .zic-dot:hover{transform:scale(1.3)}
 .zic-portfolio .zic-dot.r{background:#FF8A80}.zic-portfolio .zic-dot.y{background:#FFD180}.zic-portfolio .zic-dot.g{background:#B9F6CA}
-.zic-portfolio .zic-url-bar{position:absolute;top:5px;left:80px;right:14px;height:18px;background:rgba(126,87,194,0.12);border-radius:4px;z-index:2}
-.zic-portfolio .zic-url-text{color:#B39DDB;font-size:0.55rem;font-family:monospace;line-height:18px;padding:0 8px}
+.zic-portfolio .zic-url-bar{position:absolute;top:5px;left:80px;right:14px;height:18px;background:rgba(126,87,194,0.15);border-radius:4px;z-index:2}
+.zic-portfolio .zic-url-text{color:#CE93D8;font-size:0.55rem;font-family:monospace;line-height:18px;padding:0 8px}
 .zic-portfolio .zic-screen-body{margin-top:14px}
 .zic-portfolio .zic-cursor{position:absolute;bottom:30px;right:40px;font-size:1.4rem;animation:zicCursorBlink 1.2s ease-in-out infinite;z-index:3}
 @keyframes zicCursorBlink{0%,100%{opacity:1;transform:translate(0,0)}50%{opacity:0.5;transform:translate(-5px,5px)}}
-.zic-portfolio .zic-title{font-family:'Courier New',monospace;font-size:1.4rem;font-weight:700;color:#B39DDB;margin-bottom:4px}
-.zic-portfolio .zic-title .zic-blink{animation:zicTermBlink 1s step-end infinite;color:#CE93D8}
+.zic-portfolio .zic-title{font-family:'Courier New',monospace;font-size:1.4rem;font-weight:700;color:#CE93D8;margin-bottom:4px;text-shadow:0 0 12px rgba(126,87,194,0.3)}
+.zic-portfolio .zic-title .zic-blink{animation:zicTermBlink 1s step-end infinite;color:#E1BEE7}
 @keyframes zicTermBlink{0%,100%{opacity:1}50%{opacity:0}}
-.zic-portfolio .zic-sub{font-family:var(--font-hand);font-size:0.9rem;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:14px}
+.zic-portfolio .zic-sub{font-family:var(--font-hand);font-size:0.92rem;color:rgba(255,255,255,0.75);line-height:1.6;margin-bottom:14px}
 .zic-portfolio .zic-project-list{list-style:none;margin:0 0 14px;padding:0}
-.zic-portfolio .zic-project-list li{font-family:var(--font-sans);font-size:0.78rem;color:rgba(255,255,255,0.65);padding:6px 10px;margin-bottom:4px;background:rgba(126,87,194,0.08);border-radius:8px;border-left:3px solid rgba(126,87,194,0.35);display:flex;align-items:center;gap:8px}
+.zic-portfolio .zic-project-list li{font-family:var(--font-sans);font-size:0.8rem;color:rgba(255,255,255,0.82);padding:7px 12px;margin-bottom:4px;background:rgba(126,87,194,0.1);border-radius:8px;border-left:3px solid rgba(126,87,194,0.45);display:flex;align-items:center;gap:8px;transition:all 0.2s;cursor:default}
+.zic-portfolio .zic-project-list li:hover{background:rgba(126,87,194,0.18);transform:translateX(4px)}
 .zic-portfolio .zic-project-list li .proj-emoji{font-size:1rem}
-.zic-portfolio .zic-project-list li .proj-name{font-weight:700;color:#B39DDB}
-.zic-portfolio .zic-project-list li .proj-desc{font-size:0.7rem;color:rgba(255,255,255,0.4);display:block}
+.zic-portfolio .zic-project-list li .proj-name{font-weight:700;color:#CE93D8}
+.zic-portfolio .zic-project-list li .proj-desc{font-size:0.72rem;color:rgba(255,255,255,0.55);display:block}
 .zic-portfolio .zic-code-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.zic-portfolio .zic-code-tag{background:rgba(126,87,194,0.1);border:1px solid rgba(126,87,194,0.2);color:#B39DDB;border-radius:6px;padding:4px 10px;font-family:monospace;font-size:0.62rem}
-.zic-portfolio .zic-stats{display:flex;gap:12px;padding-top:12px;border-top:1px solid rgba(126,87,194,0.15)}
-.zic-portfolio .zic-stat-val{font-family:monospace;font-size:1.3rem;font-weight:900;color:#B39DDB}
-.zic-portfolio .zic-stat-label{font-family:var(--font-sans);font-size:0.58rem;color:rgba(255,255,255,0.35);margin-top:2px}
+.zic-portfolio .zic-code-tag{background:rgba(126,87,194,0.12);border:1px solid rgba(126,87,194,0.25);color:#CE93D8;border-radius:6px;padding:4px 10px;font-family:monospace;font-size:0.64rem;transition:all 0.2s;cursor:default}
+.zic-portfolio .zic-code-tag:hover{background:rgba(126,87,194,0.22);transform:scale(1.06);box-shadow:0 0 10px rgba(126,87,194,0.15)}
+.zic-portfolio .zic-stats{display:flex;gap:12px;padding-top:12px;border-top:1px solid rgba(126,87,194,0.2)}
+.zic-portfolio .zic-stat-val{font-family:monospace;font-size:1.4rem;font-weight:900;color:#CE93D8;text-shadow:0 0 12px rgba(126,87,194,0.3)}
+.zic-portfolio .zic-stat-label{font-family:var(--font-sans);font-size:0.6rem;color:rgba(255,255,255,0.5);margin-top:2px}
 .zic-portfolio .zic-stat{text-align:center;flex:1}
 .zic-portfolio .zic-base{height:18px;background:linear-gradient(180deg,rgba(126,87,194,0.2),rgba(126,87,194,0.08));border-radius:0 0 6px 6px}
 .zic-portfolio .zic-base::after{content:'';position:absolute;bottom:-6px;left:15%;right:15%;height:6px;background:rgba(126,87,194,0.06);border-radius:0 0 8px 8px}
@@ -1849,19 +1852,21 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-hobby .zic-playing-badge{position:absolute;top:14px;left:16px;background:rgba(255,140,0,0.1);border:1px solid rgba(255,140,0,0.3);border-radius:20px;padding:3px 10px;font-family:monospace;font-size:0.48rem;color:#FF8C00;letter-spacing:0.08em;display:flex;align-items:center;gap:5px}
 .zic-hobby .zic-playing-dot{width:5px;height:5px;border-radius:50%;background:#FF8C00;animation:zicLedBlink 0.8s ease-in-out infinite;flex-shrink:0}
 /* Content section */
-.zic-hobby .zic-content{padding:18px 20px 22px;background:linear-gradient(180deg,#170E2A,#0C0818);border:2px solid rgba(255,140,0,0.15);border-top:none;border-radius:0 0 20px 20px}
-.zic-hobby .zic-title{font-family:var(--font-fun);font-size:1.1rem;font-weight:800;color:#FF8C00;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em}
-.zic-hobby .zic-sub{font-family:var(--font-hand);font-size:0.84rem;color:rgba(255,255,255,0.4);line-height:1.5;margin-bottom:10px}
+.zic-hobby .zic-content{padding:18px 20px 22px;background:linear-gradient(180deg,#170E2A,#0C0818);border:2px solid rgba(255,140,0,0.2);border-top:none;border-radius:0 0 20px 20px}
+.zic-hobby .zic-title{font-family:var(--font-fun);font-size:1.15rem;font-weight:800;color:#FFA726;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em;text-shadow:0 0 12px rgba(255,140,0,0.3)}
+.zic-hobby .zic-sub{font-family:var(--font-hand);font-size:0.88rem;color:rgba(255,255,255,0.72);line-height:1.55;margin-bottom:10px}
 .zic-hobby .zic-emoji-row{display:flex;gap:9px;justify-content:center;margin-bottom:11px;font-size:1.25rem}
 .zic-hobby .zic-tracklist{list-style:none;padding:0;margin:0 0 11px}
-.zic-hobby .zic-tracklist li{font-family:var(--font-sans);font-size:0.72rem;color:rgba(255,255,255,0.6);padding:5px 10px;margin-bottom:3px;background:rgba(255,140,0,0.06);border-radius:8px;display:flex;align-items:center;gap:8px;border-left:2px solid rgba(255,140,0,0.2)}
-.zic-hobby .zic-track-num{font-family:monospace;font-size:0.56rem;color:rgba(255,140,0,0.4);min-width:16px;flex-shrink:0}
+.zic-hobby .zic-tracklist li{font-family:var(--font-sans);font-size:0.75rem;color:rgba(255,255,255,0.8);padding:6px 12px;margin-bottom:3px;background:rgba(255,140,0,0.07);border-radius:8px;display:flex;align-items:center;gap:8px;border-left:2px solid rgba(255,140,0,0.3);transition:all 0.2s;cursor:default}
+.zic-hobby .zic-tracklist li:hover{background:rgba(255,140,0,0.14);transform:translateX(4px)}
+.zic-hobby .zic-track-num{font-family:monospace;font-size:0.58rem;color:rgba(255,140,0,0.6);min-width:16px;flex-shrink:0}
 .zic-hobby .zic-pixel-tags{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:11px}
-.zic-hobby .zic-pixel-tag{background:rgba(255,140,0,0.08);border:1px solid rgba(255,140,0,0.2);color:#FF8C00;border-radius:6px;padding:3px 8px;font-family:var(--font-fun);font-size:0.6rem;font-weight:700}
-.zic-hobby .zic-stats{display:flex;gap:8px;padding-top:11px;border-top:1px dashed rgba(255,140,0,0.15)}
+.zic-hobby .zic-pixel-tag{background:rgba(255,140,0,0.1);border:1px solid rgba(255,140,0,0.25);color:#FFA726;border-radius:6px;padding:3px 8px;font-family:var(--font-fun);font-size:0.62rem;font-weight:700;transition:all 0.2s;cursor:default}
+.zic-hobby .zic-pixel-tag:hover{background:rgba(255,140,0,0.2);transform:scale(1.06)}
+.zic-hobby .zic-stats{display:flex;gap:8px;padding-top:11px;border-top:1px dashed rgba(255,140,0,0.2)}
 .zic-hobby .zic-stat{text-align:center;flex:1}
-.zic-hobby .zic-stat-val{font-family:var(--font-fun);font-size:1.05rem;font-weight:800;color:#FF8C00}
-.zic-hobby .zic-stat-label{font-family:var(--font-sans);font-size:0.46rem;color:rgba(255,255,255,0.28);margin-top:2px}
+.zic-hobby .zic-stat-val{font-family:var(--font-fun);font-size:1.1rem;font-weight:800;color:#FFA726;text-shadow:0 0 10px rgba(255,140,0,0.25)}
+.zic-hobby .zic-stat-label{font-family:var(--font-sans);font-size:0.5rem;color:rgba(255,255,255,0.48);margin-top:2px}
 /* ── Hobby Vinyl Surge ── */
 @keyframes vinylRushSpin{0%{transform:rotate(0deg)}100%{transform:rotate(1440deg)}}
 @keyframes hobbySurgeShake{0%,100%{transform:rotate(0.6deg)}6%{transform:rotate(0.6deg) translate(-10px,-8px) scale(1.02)}12%{transform:rotate(0.6deg) translate(12px,6px) scale(0.98)}18%{transform:rotate(0.6deg) translate(-7px,10px)}24%{transform:rotate(0.6deg) translate(9px,-6deg)}32%{transform:rotate(0.6deg) translate(0,0)}}
@@ -2110,19 +2115,20 @@ body.map-expanded .scroll-counter{display:none!important}
   position:absolute;pointer-events:none;z-index:9;font-size:0.9rem;
   animation:debrisFly 0.8s ease-out both;
 }
-.zic-fun .zic-channel{position:absolute;bottom:12px;right:16px;font-family:monospace;font-size:0.6rem;color:rgba(255,69,0,0.3);z-index:2}
+.zic-fun .zic-channel{position:absolute;bottom:12px;right:16px;font-family:monospace;font-size:0.62rem;color:rgba(255,69,0,0.45);z-index:2}
 .zic-fun .zic-tv-controls{display:flex;gap:12px;align-items:center;justify-content:flex-end;margin-top:14px}
-.zic-fun .zic-knob{width:28px;height:28px;border-radius:50%;background:linear-gradient(145deg,rgba(255,69,0,0.2),rgba(255,69,0,0.08));border:2px solid rgba(255,69,0,0.2);position:relative}
-.zic-fun .zic-knob::after{content:'';position:absolute;top:4px;left:50%;width:2px;height:10px;background:rgba(255,69,0,0.3);transform:translateX(-50%)}
+.zic-fun .zic-knob{width:28px;height:28px;border-radius:50%;background:linear-gradient(145deg,rgba(255,69,0,0.25),rgba(255,69,0,0.1));border:2px solid rgba(255,69,0,0.25);position:relative;cursor:pointer;transition:transform 0.2s}
+.zic-fun .zic-knob:hover{transform:rotate(45deg)}
+.zic-fun .zic-knob::after{content:'';position:absolute;top:4px;left:50%;width:2px;height:10px;background:rgba(255,69,0,0.4);transform:translateX(-50%)}
 .zic-fun .zic-antenna{position:absolute;top:-30px;z-index:4}
-.zic-fun .zic-antenna-l{left:30%;width:3px;height:35px;background:linear-gradient(180deg,rgba(255,69,0,0.4),rgba(255,69,0,0.15));transform:rotate(-20deg);transform-origin:bottom;position:absolute;border-radius:2px}
-.zic-fun .zic-antenna-r{right:30%;width:3px;height:35px;background:linear-gradient(180deg,rgba(255,69,0,0.4),rgba(255,69,0,0.15));transform:rotate(20deg);transform-origin:bottom;position:absolute;border-radius:2px}
-.zic-fun .zic-antenna-tip{width:8px;height:8px;border-radius:50%;background:#FF4500;position:absolute;top:-5px}
+.zic-fun .zic-antenna-l{left:30%;width:3px;height:35px;background:linear-gradient(180deg,rgba(255,69,0,0.5),rgba(255,69,0,0.2));transform:rotate(-20deg);transform-origin:bottom;position:absolute;border-radius:2px}
+.zic-fun .zic-antenna-r{right:30%;width:3px;height:35px;background:linear-gradient(180deg,rgba(255,69,0,0.5),rgba(255,69,0,0.2));transform:rotate(20deg);transform-origin:bottom;position:absolute;border-radius:2px}
+.zic-fun .zic-antenna-tip{width:8px;height:8px;border-radius:50%;background:#FF6347;position:absolute;top:-5px;box-shadow:0 0 8px rgba(255,69,0,0.5)}
 .zic-fun .zic-antenna-l .zic-antenna-tip{left:-3px}.zic-fun .zic-antenna-r .zic-antenna-tip{right:-3px}
-.zic-fun .zic-stats{display:flex;gap:12px;padding-top:12px;border-top:1px dashed rgba(255,69,0,0.15)}
+.zic-fun .zic-stats{display:flex;gap:12px;padding-top:12px;border-top:1px dashed rgba(255,69,0,0.2)}
 .zic-fun .zic-stat{text-align:center;flex:1}
-.zic-fun .zic-stat-val{font-family:var(--font-fun);font-size:1.3rem;font-weight:700;color:#FF4500}
-.zic-fun .zic-stat-label{font-family:var(--font-sans);font-size:0.55rem;color:rgba(255,255,255,0.35);margin-top:2px}
+.zic-fun .zic-stat-val{font-family:var(--font-fun);font-size:1.4rem;font-weight:700;color:#FF6347;text-shadow:0 0 12px rgba(255,69,0,0.3)}
+.zic-fun .zic-stat-label{font-family:var(--font-sans);font-size:0.58rem;color:rgba(255,255,255,0.5);margin-top:2px}
 
 /* ── Zone companion stickers ── */
 .zic-companion{position:absolute;z-index:86;animation:introFloatY 5s ease-in-out infinite}
@@ -2555,8 +2561,8 @@ body.map-expanded .scroll-counter{display:none!important}
         <div class="zic-stat"><div class="zic-stat-val zic-counter" data-target="5000">0</div><div class="zic-stat-label">Users</div></div>
       </div>
       <div class="zic-open-hint-row" data-no-sticker-drag="true">
-        <div class="zic-tap-hint" role="button" tabindex="0" data-no-sticker-drag="true" onclick="event.stopPropagation();openZonePanel('portfolio')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();openZonePanel('portfolio')}" style="margin:12px 0 0;min-width:220px;border-color:rgba(126,87,194,0.28);background:rgba(126,87,194,0.08);color:#B39DDB">
-          <span class="zth-dot" style="background:#B39DDB"></span>
+        <div class="zic-tap-hint" role="button" tabindex="0" data-no-sticker-drag="true" onclick="event.stopPropagation();openZonePanel('portfolio')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();openZonePanel('portfolio')}" style="margin:12px 0 0;min-width:220px;border-color:rgba(126,87,194,0.35);background:rgba(126,87,194,0.1);color:#CE93D8">
+          <span class="zth-dot" style="background:#CE93D8;box-shadow:0 0 6px rgba(126,87,194,0.4)"></span>
           Tap to open portfolio
         </div>
       </div>
@@ -2612,8 +2618,8 @@ body.map-expanded .scroll-counter{display:none!important}
       <button onclick="event.stopPropagation();hobbyChannelSurge(this)" style="flex:1;background:linear-gradient(135deg,#1A0A00,#3E1A00);color:#FF8C00;border:1px solid rgba(255,140,0,0.3);border-radius:12px;padding:9px 6px;font-family:monospace;font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 0 12px rgba(255,140,0,0.12)">▶ PLAY VINYL</button>
       <button onclick="event.stopPropagation();scrollToZone(null,'playground')" style="flex:1;background:linear-gradient(135deg,#E65100,#FF8C00);color:#fff;border:none;border-radius:12px;padding:9px 6px;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 3px 14px rgba(255,140,0,0.3)">🎮 Explore</button>
     </div>
-    <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('hobby')" style="margin-top:10px;border-radius:0;border-color:rgba(255,140,0,0.2);background:rgba(255,140,0,0.04);color:rgba(255,140,0,0.75)">
-      <span class="zth-dot" style="background:#FF8C00"></span>
+    <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('hobby')" style="margin-top:10px;border-radius:0;border-color:rgba(255,140,0,0.25);background:rgba(255,140,0,0.06);color:#FFA726">
+      <span class="zth-dot" style="background:#FFA726;box-shadow:0 0 6px rgba(255,140,0,0.4)"></span>
       TAP TO OPEN HOBBY ZONE
     </div>
   </div>
@@ -2648,8 +2654,8 @@ body.map-expanded .scroll-counter{display:none!important}
           <div class="zic-stat"><div class="zic-stat-val zic-counter" data-target="999">0</div><div class="zic-stat-label">Memes</div></div>
           <div class="zic-stat"><div class="zic-stat-val zic-counter" data-target="42">0</div><div class="zic-stat-label">Boss Fights</div></div>
         </div>
-        <div class="zic-tap-hint" data-no-sticker-drag="true" onclick="event.stopPropagation();openZonePanel('fun')" style="margin:12px 0 0;border-color:rgba(255,69,0,0.25);background:rgba(255,69,0,0.06);color:#FF6347">
-          <span class="zth-dot" style="background:#FF4500"></span>
+        <div class="zic-tap-hint" data-no-sticker-drag="true" onclick="event.stopPropagation();openZonePanel('fun')" style="margin:12px 0 0;border-color:rgba(255,69,0,0.3);background:rgba(255,69,0,0.08);color:#FF7043">
+          <span class="zth-dot" style="background:#FF6347;box-shadow:0 0 6px rgba(255,69,0,0.4)"></span>
           TAP TO OPEN FUN ZONE
         </div>
       </div>
