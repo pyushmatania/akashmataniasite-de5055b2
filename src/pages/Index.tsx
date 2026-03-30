@@ -51,7 +51,7 @@ const Index = () => {
   };
 
   return (
-    <div className="relative h-screen w-full">
+    <div className="relative w-full" style={{ height: '100dvh' }}>
       {!loaded && (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-background">
           <p
@@ -67,8 +67,8 @@ const Index = () => {
         key={attempt}
         src={moodboardSrc}
         title="Akash's Moodboard"
-        className="h-screen w-full border-0"
-        style={{ overflow: "hidden", opacity: loaded ? 1 : 0, transition: "opacity 0.4s" }}
+        className="w-full border-0"
+        style={{ height: '100dvh', overflow: "hidden", opacity: loaded ? 1 : 0, transition: "opacity 0.4s" }}
         onLoad={handleLoad}
         onError={handleError}
         allow="autoplay"
