@@ -5246,21 +5246,34 @@ function cycleIntroCards(e){
   const center=getZoneIntroCenter(target);
   const scale=(typeof MOODBOARD_VIEW_SCALE==='number'?MOODBOARD_VIEW_SCALE:0.5);
   const vp=document.getElementById('viewport');
-  // Use card's actual rendered center for pixel-perfect viewport centering
   const el=getZoneIntroElement(target.zone);
-  const panX=center.x, panY=center.y;
   const worldW=7000,worldH=7000;
   const maxX=Math.max(0,worldW*scale-vp.clientWidth);
   const maxY=Math.max(0,worldH*scale-vp.clientHeight);
-  // Compute visible viewport height above fixed bottom nav
   const navH=_getNavOcclusionPx();
-  const visibleH=vp.clientHeight-navH;
-  const opticalShift=navH*0.5;
-  vp.scrollTo({
-    left:Math.max(0,Math.min(panX*scale-vp.clientWidth/2,maxX)),
-    top:Math.max(0,Math.min(panY*scale-visibleH/2-opticalShift,maxY)),
-    behavior:'smooth'
-  });
+
+  // ── WORK CARD: force-center using actual rendered rect ──
+  if(target.zone==='work' && el){
+    const rect=el.getBoundingClientRect();
+    // Current scroll + card rect center gives the absolute scroll-space center
+    const cardCenterX=vp.scrollLeft + rect.left + rect.width/2;
+    const cardCenterY=vp.scrollTop + rect.top + rect.height/2;
+    // Visible area above the bottom nav
+    const visibleH=vp.clientHeight - navH;
+    const scrollLeft=Math.max(0,Math.min(cardCenterX - vp.clientWidth/2, maxX));
+    const scrollTop=Math.max(0,Math.min(cardCenterY - visibleH/2, maxY));
+    vp.scrollTo({left:scrollLeft, top:scrollTop, behavior:'smooth'});
+  } else {
+    // Generic centering for all other zones
+    const panX=center.x, panY=center.y;
+    const visibleH=vp.clientHeight-navH;
+    const opticalShift=navH*0.5;
+    vp.scrollTo({
+      left:Math.max(0,Math.min(panX*scale-vp.clientWidth/2,maxX)),
+      top:Math.max(0,Math.min(panY*scale-visibleH/2-opticalShift,maxY)),
+      behavior:'smooth'
+    });
+  }
   // Trigger zone-specific animations when navigating
   if(target.zone==='fun'){
     const t1=setTimeout(()=>{
