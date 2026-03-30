@@ -852,9 +852,7 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
   transform-origin:0 0;
   overflow:hidden;
 }
-.minimap-container.expanded .map-canvas{
-  background:linear-gradient(180deg,#4a9bd9 0%,#5baae0 30%,#6dbde8 60%,#3d8cc7 100%) !important;
-}
+/* expanded map bg set by JS drawMapLayout — no CSS override */
 .map-canvas-grid{
   position:absolute;inset:0;pointer-events:none;
   background-image:
@@ -6829,7 +6827,7 @@ function toggleMap(){
     if(_mapOpenRafId){cancelAnimationFrame(_mapOpenRafId);_mapOpenRafId=null;}
     _mapOpenRafId=requestAnimationFrame(()=>{
       try{
-        drawMapLayoutOnly();
+        drawMapLayout();
       }catch(e){console.error('Map layout error:',e);mapTransitioning=false;return;}
 
       // Phase 2: Decorations — use cached layer or build async
@@ -6885,76 +6883,7 @@ function toggleMap(){
   }
 }
 
-// Layout-only version of drawMapLayout — skips decorations
-function drawMapLayoutOnly(){
-  const playerWasInCanvas=mapPlayer.parentElement===mapCanvas;
-  if(mmExp){
-    mapCanvas.querySelectorAll('.mi,.map-sticker-clone,.small-map-boundaries,.small-map-roads,.small-map-labels').forEach(el=>el.remove());
-    if(playerWasInCanvas)mapPlayer.remove();
-  } else {
-    // Preserve grid div, remove everything else
-    const gridEl=mapCanvas.querySelector('.map-canvas-grid');
-    mapCanvas.innerHTML='';
-    if(gridEl)mapCanvas.appendChild(gridEl);
-    else{const g=document.createElement('div');g.className='map-canvas-grid';mapCanvas.appendChild(g);}
-    _decsCW=-1;_decsCH=-1;
-  }
-  if(!stickerData.length)scanStickers();
-  const mr=mmInner.getBoundingClientRect();
-  const mw=mr.width||64,mh=mr.height||64;
-  const contentW=Math.max(cv.scrollWidth||0,cv.offsetWidth||0,MOODBOARD_WORLD_WIDTH);
-  const contentH=Math.max(cv.scrollHeight||0,cv.offsetHeight||0,MOODBOARD_WORLD_HEIGHT);
-  const minL=0, minT=0;
-  let sc,offsetX,offsetY,canvasW,canvasH;
-  if(mmExp){
-    const usableW=mw,usableH=mh;
-    const leftWorldPad=400,rightWorldPad=400,topWorldPad=400,bottomWorldPad=400;
-    const mapContentW=contentW+leftWorldPad+rightWorldPad;
-    const mapContentH=contentH+topWorldPad+bottomWorldPad;
-    const fitScale=Math.max(0.02,Math.max(usableW/mapContentW,usableH/mapContentH));
-    sc=fitScale*mapZoomScale;
-    canvasW=mapContentW*sc;
-    canvasH=mapContentH*sc;
-    offsetX=minL-leftWorldPad;
-    offsetY=minT-topWorldPad;
-    mapCanvas.style.left='0px';
-    mapCanvas.style.top='0px';
-  } else {
-    const zoomFactor=7;
-    const smallPad=800;
-    const paddedW=contentW+smallPad*2;
-    const paddedH=contentH+smallPad*2;
-    sc=mw/(paddedW/zoomFactor);
-    canvasW=paddedW*sc;
-    canvasH=paddedH*sc;
-    offsetX=-smallPad;offsetY=-smallPad;
-    mapCanvas.style.left=smallMapPanX+'px';
-    mapCanvas.style.top=smallMapPanY+'px';
-  }
-  drawMap._sc=sc;drawMap._ox=offsetX;drawMap._oy=offsetY;
-  drawMap._cw=canvasW;drawMap._ch=canvasH;
-  mapCanvas.style.width=canvasW+'px';
-  mapCanvas.style.height=canvasH+'px';
-  mapCanvas.style.position='absolute';
-  mapCanvas.style.borderRadius=mmExp?'0':'inherit';
-  if(mmExp){
-    mapCanvas.style.background='linear-gradient(180deg,#87CEEB 0%,#5baae0 8%,#4a9bd9 100%)';
-    mapCanvas.style.backgroundImage='none';
-    mapCanvas.style.backgroundSize='';
-  } else {
-    mapCanvas.style.background='linear-gradient(160deg,#1a6fb5 0%,#1e7ec4 25%,#2390d4 50%,#1a6fb5 75%,#145d9e 100%)';
-  }
-  if(mmExp){
-    if(playerWasInCanvas||mapPlayer.parentElement!==mapCanvas){
-      mapCanvas.appendChild(mapPlayer);
-    }
-  } else {
-    if(mapPlayer.parentElement!==mm){
-      mm.appendChild(mapPlayer);
-    }
-  }
-  return {sc,offsetX,offsetY,canvasW,canvasH,playerWasInCanvas};
-}
+// drawMapLayoutOnly removed — unified into drawMapLayout
 
 function viewportToWorld(vx,vy){
   return {x:vx/MOODBOARD_VIEW_SCALE,y:vy/MOODBOARD_VIEW_SCALE};
@@ -7813,11 +7742,9 @@ function drawMapLayout(){
   mapCanvas.style.position='absolute';
   mapCanvas.style.borderRadius=mmExp?'0':'inherit';
   if(mmExp){
-    mapCanvas.style.background='linear-gradient(180deg,#87CEEB 0%,#5baae0 8%,#4a9bd9 100%)';
-    mapCanvas.style.backgroundImage='none';
-    mapCanvas.style.backgroundSize='';
+    mapCanvas.style.background='linear-gradient(180deg,#4a9bd9 0%,#5baae0 30%,#6dbde8 60%,#3d8cc7 100%)';
   } else {
-    mapCanvas.style.background='linear-gradient(160deg,#6db8e4 0%,#5baae0 30%,#4a9bd9 60%,#3d8cc7 100%)';
+    mapCanvas.style.background='linear-gradient(160deg,#1a6fb5 0%,#1e7ec4 25%,#2390d4 50%,#1a6fb5 75%,#145d9e 100%)';
   }
   if(mmExp){
     const rCW=Math.round(canvasW),rCH=Math.round(canvasH);
