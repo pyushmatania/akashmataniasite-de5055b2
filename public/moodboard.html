@@ -7763,7 +7763,7 @@ let _decsCW=-1,_decsCH=-1;
 function drawMapLayout(){
   const playerWasInCanvas=mapPlayer.parentElement===mapCanvas;
   if(mmExp){
-    mapCanvas.querySelectorAll('.mi').forEach(el=>el.remove());
+    mapCanvas.querySelectorAll('.mi,.map-sticker-clone').forEach(el=>el.remove());
     if(playerWasInCanvas)mapPlayer.remove();
   } else {
     mapCanvas.innerHTML='';
