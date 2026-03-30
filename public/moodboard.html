@@ -9099,21 +9099,32 @@ function ensureCompanionStickers(force){
 
 function buildZoneCardHTML(meta){return '';}
 
-// ===== INTERSECTION OBSERVER: pause animations on off-screen stickers =====
-// Runs once after DOM is ready. Observes all stickers against the scroll viewport.
-// Off-screen stickers get class 'paused-offscreen' → CSS kills all their animations.
-// rootMargin:400px keeps a 400px lookahead so entering stickers resume before being seen.
+// ===== INTERSECTION OBSERVER: pause + virtualize off-screen stickers =====
+// Two-tier system:
+//   Tier 1 (rootMargin 600px): pause animations → class 'paused-offscreen'
+//   Tier 2 (rootMargin 1800px): virtualize → class 'virtualized' (display:none, saves memory)
 (function(){
   if(!window.IntersectionObserver)return;
-  const obs=new IntersectionObserver(entries=>{
+  const isLow=IS_LOW_POWER_DEVICE;
+  // Tier 1: animation pause (tighter margin on low-power)
+  const pauseObs=new IntersectionObserver(entries=>{
     entries.forEach(e=>{
       if(e.target.classList.contains('dragging'))return;
       e.target.classList.toggle('paused-offscreen',!e.isIntersecting);
     });
-  },{root:vp,rootMargin:'400px',threshold:0});
-  // Observe after a short delay to let DOM settle
+  },{root:vp,rootMargin:isLow?'200px':'400px',threshold:0});
+  // Tier 2: virtualization (hide far-away stickers from DOM rendering entirely)
+  const virtObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.target.classList.contains('dragging')||e.target.classList.contains('intro-card'))return;
+      e.target.classList.toggle('virtualized',!e.isIntersecting);
+    });
+  },{root:vp,rootMargin:isLow?'1200px':'2000px',threshold:0});
   setTimeout(()=>{
-    document.querySelectorAll('#canvas > .sticker').forEach(s=>obs.observe(s));
+    document.querySelectorAll('#canvas > .sticker').forEach(s=>{
+      pauseObs.observe(s);
+      virtObs.observe(s);
+    });
   },500);
 })();
 
