@@ -12380,50 +12380,9 @@ function launchFunPanelCricket(){
   }
   loadHistory();
 
-  // Difficulty system
-  var cpuDifficulty='easy';
-  var diffBtns=hc.querySelectorAll('.hc-diff-btn');
-  diffBtns.forEach(function(db){db.addEventListener('click',function(ev){ev.stopPropagation();ev.preventDefault();diffBtns.forEach(function(b){b.classList.remove('active')});db.classList.add('active');cpuDifficulty=db.dataset.diff;sfxTap();});});
-
   function trueRandom(){var arr=new Uint32Array(1);if(window.crypto&&window.crypto.getRandomValues)window.crypto.getRandomValues(arr);else arr[0]=Math.floor(Math.random()*4294967296);return VALID[arr[0]%VALID.length];}
 
-  // CPU pick based on difficulty — harder = more 4s/6s, smarter matching when bowling
-  function cpuPick(playerVal){
-    if(cpuDifficulty==='easy'){
-      // Easy: uniform random, slight bias toward low numbers
-      var weights=[15,25,25,20,10,5]; // 0,1,2,3,4,6
-      var roll=Math.random()*100,cum=0;
-      for(var i=0;i<VALID.length;i++){cum+=weights[i];if(roll<cum)return VALID[i];}
-      return VALID[0];
-    }
-    if(cpuDifficulty==='hard'){
-      // Hard: when batting, bias toward 4/6; when bowling, try to match player
-      if(phase==='bowl'){
-        // CPU batting aggressively
-        var hw=[2,8,10,15,28,37]; // heavy bias on 4 and 6
-        var r2=Math.random()*100,c2=0;
-        for(var j=0;j<VALID.length;j++){c2+=hw[j];if(r2<c2)return VALID[j];}
-        return 6;
-      } else {
-        // CPU bowling — try to predict/match player (30% chance to copy)
-        if(typeof playerVal==='number'&&Math.random()<0.30)return playerVal;
-        var bw=[5,15,18,22,22,18];
-        var r3=Math.random()*100,c3=0;
-        for(var k=0;k<VALID.length;k++){c3+=bw[k];if(r3<c3)return VALID[k];}
-        return VALID[3];
-      }
-    }
-    // Medium: moderate aggression
-    if(phase==='bowl'){
-      var mw=[5,12,15,20,24,24];
-      var r4=Math.random()*100,c4=0;
-      for(var m=0;m<VALID.length;m++){c4+=mw[m];if(r4<c4)return VALID[m];}
-      return 4;
-    } else {
-      if(typeof playerVal==='number'&&Math.random()<0.15)return playerVal;
-      return trueRandom();
-    }
-  }
+  function cpuPick(playerVal){return trueRandom();}
   function addBall(type,text){var b=document.createElement('span');b.className='hc-ball '+type;b.textContent=text;histEl.appendChild(b);}
   function showFlash(type){flashEl.className='hc-boundary-flash';void flashEl.offsetWidth;flashEl.classList.add(type);}
   function showBoundaryText(text,type){boundaryTextEl.textContent=text;boundaryTextEl.className='hc-boundary-text';void boundaryTextEl.offsetWidth;boundaryTextEl.classList.add(type);}
