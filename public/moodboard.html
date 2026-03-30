@@ -7718,7 +7718,10 @@ function drawMap(){
     const frag=document.createDocumentFragment();
     stickerData.forEach(d=>{
      if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
-      const dx=(d.left-offsetX)*sc, dy=(d.top-offsetY)*sc;
+      // Read LIVE position from DOM ref
+      const liveLeft=d.ref&&d.ref.style?parseInt(d.ref.style.left)||d.left:d.left;
+      const liveTop=d.ref&&d.ref.style?parseInt(d.ref.style.top)||d.top:d.top;
+      const dx=(liveLeft-offsetX)*sc, dy=(liveTop-offsetY)*sc;
       if(dx<-30||dx>canvasW+30||dy<-30||dy>canvasH+30)return;
       count++;
       const w=Math.max(4,d.w*sc),h=Math.max(3,d.h*sc);
@@ -7843,8 +7846,16 @@ function makeMapCloneNode(d){
   const activateClone=(ev)=>{
     ev.preventDefault();
     ev.stopPropagation();
-    // Use sticker's actual world coordinates directly — avoids lossy mapClientToWorld conversion
-    walkBitmojiTo(d.left + d.w/2, d.top + d.h/2, d.ref);
+    // Read LIVE position from DOM ref — immune to stale cached data
+    if(d.ref&&d.ref.style){
+      const liveLeft=parseInt(d.ref.style.left)||d.left;
+      const liveTop=parseInt(d.ref.style.top)||d.top;
+      const liveW=d.ref.offsetWidth||d.w;
+      const liveH=d.ref.offsetHeight||d.h;
+      walkBitmojiTo(liveLeft + liveW/2, liveTop + liveH/2, d.ref);
+    } else {
+      walkBitmojiTo(d.left + d.w/2, d.top + d.h/2, d.ref);
+    }
   };
   clone.addEventListener('click',activateClone);
   clone.addEventListener('pointerup',activateClone);
@@ -7889,8 +7900,11 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
 
   stickerData.forEach(d=>{
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
-    const renderX=(d.left-ox)*sc;
-    const renderY=(d.top-oy)*sc;
+    // Read LIVE position from DOM ref for accurate placement
+    const liveLeft=d.ref&&d.ref.style?parseInt(d.ref.style.left)||d.left:d.left;
+    const liveTop=d.ref&&d.ref.style?parseInt(d.ref.style.top)||d.top:d.top;
+    const renderX=(liveLeft-ox)*sc;
+    const renderY=(liveTop-oy)*sc;
     const baseScale=Math.max(sc,0.01);
     const finalScale=computeCloneScale(d,baseScale);
     const iw=Math.max(d.w*finalScale,2);
@@ -8116,7 +8130,12 @@ mapCanvas.addEventListener('click',ev=>{
     if(d){
       ev.stopPropagation();
       ev.preventDefault();
-      walkBitmojiTo(d.left + d.w/2, d.top + d.h/2, d.ref);
+      // Read LIVE position from DOM ref
+      const liveLeft=d.ref?parseInt(d.ref.style.left)||d.left:d.left;
+      const liveTop=d.ref?parseInt(d.ref.style.top)||d.top:d.top;
+      const liveW=d.ref?d.ref.offsetWidth||d.w:d.w;
+      const liveH=d.ref?d.ref.offsetHeight||d.h:d.h;
+      walkBitmojiTo(liveLeft + liveW/2, liveTop + liveH/2, d.ref);
       return;
     }
   }
