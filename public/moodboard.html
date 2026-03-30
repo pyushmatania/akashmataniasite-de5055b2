@@ -1349,15 +1349,9 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
   width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid #fff;
 }
 
-/* Viewport rect — visible on small map only */
-.map-vp-rect{
-  position:absolute;z-index:12;pointer-events:none;
-  border:1.5px solid rgba(255,255,255,0.6);
-  background:rgba(255,255,255,0.08);
-  border-radius:2px;
-  box-shadow:0 0 6px rgba(255,255,255,0.2);
-}
-.minimap-container.expanded .map-vp-rect{display:none}
+/* Viewport rect removed on minimap to avoid white frame artifact */
+.map-vp-rect{display:none!important}
+.minimap-container.expanded .map-vp-rect{display:none!important}
 
 /* Controls */
 .map-header{
@@ -7769,52 +7763,9 @@ function drawMap(){
   if(mmExp){
     renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
   } else {
-    // SMALL: card-style rendering — ALL items visible on ocean blue bg
-    let count=0;
-    const frag=document.createDocumentFragment();
-    stickerData.forEach(d=>{
-      if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
-      const liveLeft=d.ref&&d.ref.style?parseInt(d.ref.style.left)||d.left:d.left;
-      const liveTop=d.ref&&d.ref.style?parseInt(d.ref.style.top)||d.top:d.top;
-      const dx=(liveLeft-offsetX)*sc, dy=(liveTop-offsetY)*sc;
-      // No culling — render ALL items regardless of position
-      count++;
-      const w=Math.max(6,d.w*sc),h=Math.max(5,d.h*sc);
-      const el=document.createElement('div');
-      el.className='mi';
-      // Force ALL items visible — any transparent/empty/dark bg gets a bright card
-      let bg=d.bg||'';
-      const bgLower=(bg||'').toLowerCase().replace(/\s/g,'');
-      if(!bg||bg==='transparent'||bg==='none'||bgLower==='rgba(0,0,0,0)'||bgLower.includes('rgba(200,200,200')||bgLower.includes('rgba(0,0,0')||bgLower==='#000'||bgLower==='#000000'||bgLower==='black'){
-        bg='rgba(255,255,255,0.92)';
-      }
-      let radius=d.radius||'3px';
-      if(radius==='0'||radius==='0px')radius='2px';
-      // Thumbnail for image stickers
-      let extraStyle='';
-      if(d.ref&&typeof d._thumbSrc==='undefined'){
-        const img=d.ref.querySelector('img');
-        d._thumbSrc=img&&img.src?img.src:'';
-      }
-      if(d._thumbSrc){
-        extraStyle='background-image:url('+d._thumbSrc+');background-size:cover;background-position:center;';
-      }
-      // Zone-tinted border for visual clarity
-      const zoneColors={introduction:'rgba(0,200,220,0.7)',work:'rgba(229,57,53,0.6)',portfolio:'rgba(66,165,245,0.6)',hobby:'rgba(255,152,0,0.6)',fun:'rgba(171,71,188,0.6)',hub:'rgba(255,179,0,0.6)'};
-      const borderColor=zoneColors[d.zone]||'rgba(255,255,255,0.5)';
-      el.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;background:'+bg+';border-radius:'+radius+';'+
-        'border:1.5px solid '+borderColor+';box-shadow:0 1px 4px rgba(0,0,0,0.35),0 0 1px rgba(255,255,255,0.4);overflow:hidden;z-index:2;'+extraStyle;
-      if(d.emoji&&w>6){
-        const l=document.createElement('div');
-        l.className='mi-emoji-label';
-        l.textContent=d.emoji;
-        l.style.fontSize=Math.max(Math.min(w*0.45,14),4)+'px';
-        el.appendChild(l);
-      }
-      frag.appendChild(el);
-    });
-    mapCanvas.appendChild(frag);
-    if(mapCount)mapCount.textContent=count+' items';
+    invalidateMapCloneCache(true);
+    renderAllSmallMapClones(sc,offsetX,offsetY,canvasW,canvasH);
+    if(mapCount)mapCount.textContent=Array.from(stickerData).filter(d=>mFilt==='all'||matchesFilter(d.cat,mFilt)).length+' items';
     // Boundary + decorations overlay on small map
     const oldBSvg=mapCanvas.querySelector('.small-map-boundaries');
     const oldRoads=mapCanvas.querySelector('.small-map-roads');
@@ -7887,6 +7838,34 @@ function drawMap(){
     mapCanvas.appendChild(bSvg);
   }
   updMap();
+}
+
+// Render all real sticker clones for small map so positions/details match the canvas exactly
+function renderAllSmallMapClones(sc,ox,oy,cw,ch){
+  if(!sc||!mapCanvas)return;
+  const frag=document.createDocumentFragment();
+  let visibleCount=0;
+  stickerData.forEach(d=>{
+    if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
+    const liveLeft=d.ref&&d.ref.style?parseInt(d.ref.style.left)||d.left:d.left;
+    const liveTop=d.ref&&d.ref.style?parseInt(d.ref.style.top)||d.top:d.top;
+    const renderX=(liveLeft-ox)*sc;
+    const renderY=(liveTop-oy)*sc;
+    const cloneId=d.id||(d.left+'-'+d.top+'-'+d.cat);
+    let clone=_mapCloneNodesById.get(cloneId);
+    if(!clone){
+      clone=makeMapCloneNode(d);
+      _mapCloneNodesById.set(cloneId,clone);
+    }
+    const baseScale=Math.max(sc,0.01);
+    const finalScale=computeCloneScale(d,baseScale);
+    applyClonePlacement(clone,d,renderX,renderY,finalScale);
+    clone.style.display='block';
+    frag.appendChild(clone);
+    visibleCount++;
+  });
+  if(frag.childNodes.length)mapCanvas.appendChild(frag);
+  if(mapCount)mapCount.textContent=visibleCount+' items';
 }
 
 // Render real sticker clones for items visible in the map viewport (cached per sticker)
