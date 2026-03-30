@@ -7187,63 +7187,57 @@ function addMapDecorations(cw, ch){
   addDiv('map-terrain','left:1%;top:1%;width:98%;height:96%;border-radius:6% 8% 7% 6%;background:linear-gradient(160deg,#5a9e3e 0%,#6bb848 20%,#4e9035 40%,#5da842 60%,#4a8830 80%,#528f38 100%);box-shadow:inset 0 0 60px rgba(0,0,0,0.08),0 0 30px rgba(0,0,0,0.15);z-index:0');
   // Removed terrain stripe texture to eliminate rectangular/diagonal map lines.
 
-   // === ZONE TERRAIN TINTS — subtle colored overlays matching zone colors ===
-   const zoneTintSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-   zoneTintSvg.setAttribute('viewBox','0 0 7000 7000');
-   zoneTintSvg.setAttribute('preserveAspectRatio','none');
-   zoneTintSvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible';
-    // Zone regions synced with canvas: vertical x=3500, horizontal y=2333, y=4666
-    const VD='C3475,350 3525,700 3495,1050 Q3510,1400 3490,1750 C3515,2100 3485,2333 3500,2333 C3475,2700 3525,3050 3495,3400 Q3510,3700 3490,4050 C3515,4300 3485,4666 3500,4666';
-    const H1L='C350,2308 700,2355 1050,2325 Q1400,2308 1750,2350 C2100,2318 2450,2342 2800,2320 Q3150,2308 3500,2333';
-    const H1R='C3850,2308 4200,2355 4550,2325 Q4900,2308 5250,2350 C5600,2318 5950,2342 6300,2320 Q6650,2308 7000,2333';
-    const H2='C350,4641 700,4688 1050,4658 Q1400,4641 1750,4683 C2100,4651 2450,4675 2800,4653 Q3150,4641 3500,4666 C3850,4641 4200,4688 4550,4658 Q4900,4641 5250,4683 C5600,4651 5950,4675 6300,4653 Q6650,4641 7000,4666';
-    zoneTintSvg.innerHTML=
-      // Origin (top-left)
-      '<path d="M0,0 L3500,0 '+VD.split('C3475,2700')[0]+' Q3150,2308 2800,2320 C2450,2342 2100,2318 1750,2350 Q1400,2308 1050,2325 C700,2355 350,2308 0,2333 Z" fill="rgba(0,188,212,0.08)"/>'
-      // Work (top-right)
-      +'<path d="M3500,0 L7000,0 L7000,2333 Q6650,2308 6300,2320 C5950,2342 5600,2318 5250,2350 Q4900,2308 4550,2325 C4200,2355 3850,2308 3500,2333 C3485,2333 3515,2100 3490,1750 Q3510,1400 3495,1050 C3525,700 3475,350 3500,0 Z" fill="rgba(229,57,53,0.07)"/>'
-      // Portfolio (mid-left)
-      +'<path d="M0,2333 C350,2308 700,2355 1050,2325 Q1400,2308 1750,2350 C2100,2318 2450,2342 2800,2320 Q3150,2308 3500,2333 C3475,2700 3525,3050 3495,3400 Q3510,3700 3490,4050 C3515,4300 3485,4666 3500,4666 Q3150,4641 2800,4653 C2450,4675 2100,4651 1750,4683 Q1400,4641 1050,4658 C700,4688 350,4641 0,4666 Z" fill="rgba(66,165,245,0.07)"/>'
-      // Fun (mid-right)
-      +'<path d="M3500,2333 C3850,2308 4200,2355 4550,2325 Q4900,2308 5250,2350 C5600,2318 5950,2342 6300,2320 Q6650,2308 7000,2333 L7000,4666 Q6650,4641 6300,4653 C5950,4675 5600,4651 5250,4683 Q4900,4641 4550,4658 C4200,4688 3850,4641 3500,4666 C3485,4666 3515,4300 3490,4050 Q3510,3700 3495,3400 C3525,3050 3475,2700 3500,2333 Z" fill="rgba(171,71,188,0.07)"/>'
-      // Hobby (bottom full width)
-      +'<path d="M0,4666 C350,4641 700,4688 1050,4658 Q1400,4641 1750,4683 C2100,4651 2450,4675 2800,4653 Q3150,4641 3500,4666 C3850,4641 4200,4688 4550,4658 Q4900,4641 5250,4683 C5600,4651 5950,4675 6300,4653 Q6650,4641 7000,4666 L7000,7000 L0,7000 Z" fill="rgba(255,152,0,0.07)"/>';
-    layer.appendChild(zoneTintSvg);
-
-    // === ZONE DIVIDER LINES — synced with canvas boundaries ===
+    // === ZONE DIVIDER LINES — exact match with canvas boundaries ===
     const svgNS='http://www.w3.org/2000/svg';
     const mapBoundarySvg=document.createElementNS(svgNS,'svg');
     mapBoundarySvg.setAttribute('viewBox','0 0 7000 7000');
     mapBoundarySvg.setAttribute('preserveAspectRatio','none');
     mapBoundarySvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:5;overflow:visible';
     const mapDividerPaths=[
-      // Vertical divider x≈3500 (stops at y=4666) — matches canvas
-      {d:'M3500,0 C3475,350 3525,700 3495,1050 Q3510,1400 3490,1750 C3515,2100 3485,2333 3500,2333 C3475,2700 3525,3050 3495,3400 Q3510,3700 3490,4050 C3515,4300 3485,4666 3500,4666',stroke:'rgba(201,169,110,0.45)'},
+      // Vertical divider x≈3500 (stops at y=4666) — exact canvas path
+      {d:'M3500,0 C3475,350 3525,700 3495,1050 Q3510,1400 3490,1750 C3515,2100 3485,2333 3500,2333 C3475,2700 3525,3050 3495,3400 Q3510,3700 3490,4050 C3515,4300 3485,4666 3500,4666',stroke:'rgba(201,169,110,0.5)'},
       // Horizontal 1 y≈2333 left half
-      {d:'M0,2333 C350,2308 700,2355 1050,2325 Q1400,2308 1750,2350 C2100,2318 2450,2342 2800,2320 Q3150,2308 3500,2333',stroke:'rgba(0,188,212,0.45)'},
+      {d:'M0,2333 C350,2308 700,2355 1050,2325 Q1400,2308 1750,2350 C2100,2318 2450,2342 2800,2320 Q3150,2308 3500,2333',stroke:'rgba(0,188,212,0.5)'},
       // Horizontal 1 y≈2333 right half
-      {d:'M3500,2333 C3850,2308 4200,2355 4550,2325 Q4900,2308 5250,2350 C5600,2318 5950,2342 6300,2320 Q6650,2308 7000,2333',stroke:'rgba(229,57,53,0.45)'},
+      {d:'M3500,2333 C3850,2308 4200,2355 4550,2325 Q4900,2308 5250,2350 C5600,2318 5950,2342 6300,2320 Q6650,2308 7000,2333',stroke:'rgba(229,57,53,0.5)'},
       // Horizontal 2 y≈4666 full width
-      {d:'M0,4666 C350,4641 700,4688 1050,4658 Q1400,4641 1750,4683 C2100,4651 2450,4675 2800,4653 Q3150,4641 3500,4666 C3850,4641 4200,4688 4550,4658 Q4900,4641 5250,4683 C5600,4651 5950,4675 6300,4653 Q6650,4641 7000,4666',stroke:'rgba(255,152,0,0.45)'},
+      {d:'M0,4666 C350,4641 700,4688 1050,4658 Q1400,4641 1750,4683 C2100,4651 2450,4675 2800,4653 Q3150,4641 3500,4666 C3850,4641 4200,4688 4550,4658 Q4900,4641 5250,4683 C5600,4651 5950,4675 6300,4653 Q6650,4641 7000,4666',stroke:'rgba(255,152,0,0.5)'},
     ];
-   mapDividerPaths.forEach(zp=>{
-     const p=document.createElementNS(svgNS,'path');
-     p.setAttribute('d',zp.d);
-     p.setAttribute('fill','none');
-     p.setAttribute('stroke',zp.stroke);
-     p.setAttribute('stroke-width','30');
-     p.setAttribute('stroke-linejoin','round');
-     p.setAttribute('stroke-dasharray','36 16');
-     p.setAttribute('stroke-linecap','round');
-     mapBoundarySvg.appendChild(p);
-   });
-   // Intersection dots
-   [['3500','2333','rgba(201,169,110,0.6)'],['3500','4666','rgba(201,169,110,0.6)']].forEach(([cx,cy,fill])=>{
-     const c=document.createElementNS(svgNS,'circle');
-     c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r','30');c.setAttribute('fill',fill);
-     mapBoundarySvg.appendChild(c);
-   });
-   layer.appendChild(mapBoundarySvg);
+    mapDividerPaths.forEach(zp=>{
+      const p=document.createElementNS(svgNS,'path');
+      p.setAttribute('d',zp.d);
+      p.setAttribute('fill','none');
+      p.setAttribute('stroke',zp.stroke);
+      p.setAttribute('stroke-width','5');
+      p.setAttribute('stroke-linejoin','round');
+      p.setAttribute('stroke-dasharray','36 16');
+      p.setAttribute('stroke-linecap','round');
+      mapBoundarySvg.appendChild(p);
+    });
+    // Canvas perimeter edges — subtle outer edges
+    const perimeterPaths=[
+      {d:'M0,0 C700,25 1400,0 2100,20 Q2800,0 3500,15 C4200,0 4900,20 5600,5 Q6300,0 7000,10'},
+      {d:'M0,0 C20,700 0,1400 18,2100 Q0,2800 15,3500 C0,4200 18,4900 5,5600 Q0,6300 10,7000'},
+      {d:'M7000,0 C6980,700 7000,1400 6982,2100 Q7000,2800 6985,3500 C7000,4200 6982,4900 6995,5600 Q7000,6300 6990,7000'},
+      {d:'M0,7000 C700,6975 1400,7000 2100,6980 Q2800,7000 3500,6985 C4200,7000 4900,6980 5600,6995 Q6300,7000 7000,6990'},
+    ];
+    perimeterPaths.forEach(pp=>{
+      const p=document.createElementNS(svgNS,'path');
+      p.setAttribute('d',pp.d);p.setAttribute('fill','none');
+      p.setAttribute('stroke','rgba(255,255,255,0.08)');p.setAttribute('stroke-width','3');
+      p.setAttribute('stroke-dasharray','28 18');p.setAttribute('stroke-linecap','round');
+      mapBoundarySvg.appendChild(p);
+    });
+    // Intersection & edge dots — exact canvas values
+    [['3500','2333','8','rgba(201,169,110,0.6)'],['3500','4666','8','rgba(201,169,110,0.6)'],
+     ['0','2333','5','rgba(0,188,212,0.4)'],['0','4666','5','rgba(255,152,0,0.4)'],
+     ['7000','2333','5','rgba(229,57,53,0.4)'],['7000','4666','5','rgba(255,152,0,0.4)']
+    ].forEach(([cx,cy,r,fill])=>{
+      const c=document.createElementNS(svgNS,'circle');
+      c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r',r);c.setAttribute('fill',fill);
+      mapBoundarySvg.appendChild(c);
+    });
+    layer.appendChild(mapBoundarySvg);
 
    // === ROADS & PAVEMENTS — winding paths connecting zones ===
    const roadSvg=document.createElementNS(svgNS,'svg');
