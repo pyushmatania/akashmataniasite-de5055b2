@@ -7718,7 +7718,10 @@ function drawMap(){
     const frag=document.createDocumentFragment();
     stickerData.forEach(d=>{
      if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
-      const dx=(d.left-offsetX)*sc, dy=(d.top-offsetY)*sc;
+      // Read LIVE position from DOM ref
+      const liveLeft=d.ref&&d.ref.style?parseInt(d.ref.style.left)||d.left:d.left;
+      const liveTop=d.ref&&d.ref.style?parseInt(d.ref.style.top)||d.top:d.top;
+      const dx=(liveLeft-offsetX)*sc, dy=(liveTop-offsetY)*sc;
       if(dx<-30||dx>canvasW+30||dy<-30||dy>canvasH+30)return;
       count++;
       const w=Math.max(4,d.w*sc),h=Math.max(3,d.h*sc);
