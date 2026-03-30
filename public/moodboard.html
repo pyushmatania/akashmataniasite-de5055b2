@@ -3348,7 +3348,7 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="photo-caption">yup, that's me 🙂</div>
     <div class="photo-tap-count" id="photoTapCount">0</div>
   </div>
-  <div class="intro-name">Akash <span class="hl-name">Matania</span></div>
+  <div class="intro-name" onclick="easterEggTap(event)" style="cursor:pointer">Akash <span class="hl-name">Matania</span></div>
   <div class="intro-tagline">PM · Founder · Builder of Things That Didn't Exist</div>
   <div class="intro-roles">
     <span class="intro-role">🚀 0→1 Builder</span>
@@ -8246,8 +8246,40 @@ function setTheme(name, el){
 
 
 
-// ===== EASTER EGG: TRIPLE-TAP LOGO =====
+// ===== EASTER EGG: TRIPLE-TAP NAME =====
+let _eeTapCount=0,_eeTapTimer=null;
+function easterEggTap(e){
+  e.stopPropagation();
+  _eeTapCount++;
+  clearTimeout(_eeTapTimer);
+  _eeTapTimer=setTimeout(()=>{_eeTapCount=0},600);
+  if(_eeTapCount>=3){
+    _eeTapCount=0;
+    clearTimeout(_eeTapTimer);
+    openBuildSpecs();
+  }
+}
 
+function openBuildSpecs(){
+  const panel=document.getElementById('buildSpecsPanel');
+  if(!panel)return;
+  // Populate live stats
+  const stickerCount=document.querySelectorAll('#canvas > .sticker').length;
+  const zoneCount=document.querySelectorAll('.zone-intro-creative').length;
+  document.getElementById('bsStatStickers').textContent=stickerCount;
+  document.getElementById('bsStatZones').textContent=zoneCount;
+  document.getElementById('bsStatLines').textContent=
+    Math.round(document.documentElement.outerHTML.length/1000)+'K';
+  panel.classList.add('open');
+  panel.style.display='flex';
+  requestAnimationFrame(()=>panel.style.opacity='1');
+}
+function closeBuildSpecs(){
+  const panel=document.getElementById('buildSpecsPanel');
+  if(!panel)return;
+  panel.style.opacity='0';
+  setTimeout(()=>{panel.classList.remove('open');panel.style.display='none'},350);
+}
 
 // ===== MAP v6 — LIGHTWEIGHT =====
 const mc=document.getElementById('mc');
@@ -11705,7 +11737,99 @@ function ekPick(el,e){
 
 </script>
 
-<!-- ===== EASTER EGG: BUILD JOURNAL ===== -->
+<!-- ===== EASTER EGG: BUILD SPECS PANEL ===== -->
+<style>
+.bs-overlay{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;transition:opacity 0.35s ease}
+.bs-panel{width:92%;max-width:420px;max-height:85vh;overflow-y:auto;background:linear-gradient(160deg,#0a0a0f,#111118,#0d0d14);border-radius:20px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 24px 80px rgba(0,0,0,0.6),inset 0 1px 0 rgba(255,255,255,0.05);padding:0;scrollbar-width:none}
+.bs-panel::-webkit-scrollbar{display:none}
+.bs-header{padding:20px 20px 0;position:relative}
+.bs-close{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.5);font-size:0.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.bs-close:hover{background:rgba(255,23,68,0.2);border-color:rgba(255,23,68,0.4);color:#FF1744}
+.bs-title{font-family:var(--font-fun);font-size:1.4rem;font-weight:900;background:linear-gradient(135deg,#4CAF50,#81C784,#A5D6A7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-0.02em}
+.bs-subtitle{font-family:var(--font-sans);font-size:0.6rem;color:rgba(255,255,255,0.3);margin-top:4px;letter-spacing:0.1em;text-transform:uppercase}
+.bs-section{padding:16px 20px}
+.bs-section-title{font-family:var(--font-fun);font-size:0.6rem;font-weight:800;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.bs-section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(255,255,255,0.06),transparent)}
+.bs-feature{display:flex;gap:10px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);margin-bottom:6px;transition:all 0.2s}
+.bs-feature:hover{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.08);transform:translateX(2px)}
+.bs-feature-icon{font-size:1.1rem;flex-shrink:0;width:28px;text-align:center;line-height:1.6}
+.bs-feature-text{flex:1}
+.bs-feature-name{font-family:var(--font-fun);font-size:0.7rem;font-weight:700;color:rgba(255,255,255,0.85)}
+.bs-feature-desc{font-family:var(--font-sans);font-size:0.55rem;color:rgba(255,255,255,0.35);line-height:1.5;margin-top:2px}
+.bs-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 20px 16px}
+.bs-stat{text-align:center;padding:12px 6px;border-radius:14px;background:linear-gradient(160deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.05)}
+.bs-stat-val{font-family:'Space Grotesk',monospace;font-size:1.4rem;font-weight:900;color:#4CAF50;line-height:1}
+.bs-stat-label{font-family:var(--font-fun);font-size:0.45rem;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px}
+.bs-tech{display:flex;flex-wrap:wrap;gap:5px;padding:0 20px 16px}
+.bs-tech-tag{padding:4px 10px;border-radius:8px;font-family:var(--font-fun);font-size:0.5rem;font-weight:700;letter-spacing:0.04em;background:rgba(76,175,80,0.08);color:#81C784;border:1px solid rgba(76,175,80,0.15)}
+.bs-divider{height:1px;margin:0 20px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent)}
+.bs-footer{padding:14px 20px;text-align:center;font-family:var(--font-sans);font-size:0.5rem;color:rgba(255,255,255,0.15);letter-spacing:0.05em}
+</style>
+
+<div class="bs-overlay" id="buildSpecsPanel" onclick="if(event.target===this)closeBuildSpecs()">
+  <div class="bs-panel">
+    <div class="bs-header">
+      <button class="bs-close" onclick="closeBuildSpecs()">✕</button>
+      <div class="bs-title">🔬 Build Specs</div>
+      <div class="bs-subtitle">You found the secret panel · Triple-tap activated</div>
+    </div>
+
+    <div class="bs-divider" style="margin-top:14px"></div>
+
+    <div class="bs-section">
+      <div class="bs-section-title">⚡ Live Stats</div>
+    </div>
+    <div class="bs-stats">
+      <div class="bs-stat"><div class="bs-stat-val" id="bsStatStickers">—</div><div class="bs-stat-label">Stickers</div></div>
+      <div class="bs-stat"><div class="bs-stat-val" id="bsStatZones">—</div><div class="bs-stat-label">Zones</div></div>
+      <div class="bs-stat"><div class="bs-stat-val" id="bsStatLines">—</div><div class="bs-stat-label">Chars</div></div>
+    </div>
+
+    <div class="bs-divider"></div>
+
+    <div class="bs-section">
+      <div class="bs-section-title">🧠 Core Features</div>
+      <div class="bs-feature"><div class="bs-feature-icon">🗺️</div><div class="bs-feature-text"><div class="bs-feature-name">Infinite Canvas + Big Map</div><div class="bs-feature-desc">Pannable, zoomable moodboard with a minimap and full-screen exploration mode with zone boundaries</div></div></div>
+      <div class="bs-feature"><div class="bs-feature-icon">🔐</div><div class="bs-feature-text"><div class="bs-feature-name">PIN-Protected Cloud Save</div><div class="bs-feature-desc">Server-side PIN verification via edge functions. Layout persists across sessions with singleton record architecture</div></div></div>
+      <div class="bs-feature"><div class="bs-feature-icon">🖐️</div><div class="bs-feature-text"><div class="bs-feature-name">Drag & Drop Everywhere</div><div class="bs-feature-desc">Every sticker is draggable with touch/mouse support, drag handles, and position memory</div></div></div>
+      <div class="bs-feature"><div class="bs-feature-icon">🎮</div><div class="bs-feature-text"><div class="bs-feature-name">Hand Cricket Stadium Edition</div><div class="bs-feature-desc">Full game with toss, batting, bowling, defence logic, overs/CRR tracking, boundary animations, and cloud-saved match history</div></div></div>
+      <div class="bs-feature"><div class="bs-feature-icon">🎬</div><div class="bs-feature-text"><div class="bs-feature-name">Cinematic Zone Intros</div><div class="bs-feature-desc">Each zone has a unique animated intro card with glassmorphism, companion stickers, and themed attack animations</div></div></div>
+      <div class="bs-feature"><div class="bs-feature-icon">🧭</div><div class="bs-feature-text"><div class="bs-feature-name">Play Navigation</div><div class="bs-feature-desc">Bottom nav "Play" button cycles through zones starting from Origin with smooth scroll animations</div></div></div>
+    </div>
+
+    <div class="bs-divider"></div>
+
+    <div class="bs-section">
+      <div class="bs-section-title">🔧 Technical Details</div>
+      <div class="bs-feature"><div class="bs-feature-icon">📐</div><div class="bs-feature-text"><div class="bs-feature-name">Organic Zone Boundaries</div><div class="bs-feature-desc">Country-style jagged SVG paths with polygon-based containment (ray-casting) for accurate zone counting</div></div></div>
+      <div class="bs-feature"><div class="bs-feature-icon">🔊</div><div class="bs-feature-text"><div class="bs-feature-name">Web Audio SFX Engine</div><div class="bs-feature-desc">Procedural sound effects using Web Audio API oscillators — no audio files loaded</div></div></div>
+      <div class="bs-feature"><div class="bs-feature-icon">🖼️</div><div class="bs-feature-text"><div class="bs-feature-name">Performance Optimized</div><div class="bs-feature-desc">IntersectionObserver pauses off-screen animations. Lazy loading. CSS containment. Gzip-compressed single file</div></div></div>
+      <div class="bs-feature"><div class="bs-feature-icon">📱</div><div class="bs-feature-text"><div class="bs-feature-name">Responsive + Touch First</div><div class="bs-feature-desc">Mobile-optimized with touch gestures, viewport-aware scaling, and momentum scrolling</div></div></div>
+      <div class="bs-feature"><div class="bs-feature-icon">🎯</div><div class="bs-feature-text"><div class="bs-feature-name">Portfolio Panel System</div><div class="bs-feature-desc">Slide-up panels for About, Portfolio with project case studies, contact — all in-app overlays</div></div></div>
+      <div class="bs-feature"><div class="bs-feature-icon">🎲</div><div class="bs-feature-text"><div class="bs-feature-name">Hidden Easter Eggs</div><div class="bs-feature-desc">Photo tap counter with milestones, confetti spawner, random wisdom quotes, and this panel you just found</div></div></div>
+    </div>
+
+    <div class="bs-divider"></div>
+
+    <div class="bs-section">
+      <div class="bs-section-title">🛠️ Tech Stack</div>
+    </div>
+    <div class="bs-tech">
+      <span class="bs-tech-tag">Vanilla HTML/CSS/JS</span>
+      <span class="bs-tech-tag">Supabase Edge Functions</span>
+      <span class="bs-tech-tag">Web Audio API</span>
+      <span class="bs-tech-tag">SVG Ray-Casting</span>
+      <span class="bs-tech-tag">IntersectionObserver</span>
+      <span class="bs-tech-tag">CSS Containment</span>
+      <span class="bs-tech-tag">Framer Motion (wrapper)</span>
+      <span class="bs-tech-tag">Cloud Persistence</span>
+    </div>
+
+    <div class="bs-divider"></div>
+
+    <div class="bs-footer">built with ☕ chai, 🎧 lofi, and a questionable amount of CSS</div>
+  </div>
+</div>
 
 <div class="save-layout-toast" id="saveLayoutToast"></div>
 

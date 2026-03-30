@@ -1,41 +1,62 @@
+## Akash Matania — Portfolio Moodboard
 
+### Architecture
+- Single-file moodboard (`public/moodboard.html`) served via iframe in a React/Vite wrapper
+- Infinite pannable canvas with drag-and-drop stickers organized into themed zones
+- Bottom nav: Home, Work, Play, About, Contact — all in-app overlays, no routing
+- Cloud persistence via Supabase edge functions with PIN-protected save/load
 
-## Plan: Sync Organic Zone Boundaries to Maps + Enforce Item Containment
+### Zones
+- **Origin** — Intro card with Akash's photo, roles, tutorial
+- **Work** — Professional experience, portfolio panel with case studies (EnterCircles, Recess, Hushh, SmartBhubaneswar, Aribasda)
+- **Fun** — Hand Cricket game, wicket counter, memes, companion stickers
+- **About** — Slide-up panel with skills, education, experience
+- **Contact** — Email, links
 
-### What's happening now
-- The **canvas** has organic country-shaped SVG boundaries (lines 1846-1857) with zone-specific colored dashed lines
-- The **big map** has its own simplified zone boundary paths (lines 7230-7256) that don't match the canvas shapes
-- The **small map** shows no zone boundaries at all
-- Items (stickers) have `data-zone` attributes but their positions are hardcoded — some may fall outside the organic boundary paths
-- Zone containment is checked via rectangular `mapZones` (line 8453-8458), not the organic paths
+### Key Features & Systems
 
-### Changes
+#### Canvas & Navigation
+- Infinite canvas with momentum scrolling and viewport-aware scaling
+- Minimap (small) + expandable Big Map with zone boundaries
+- Organic country-style SVG zone boundaries with ray-casting containment
+- Play button cycles through zones starting from Origin
+- Zone ground labels, zone counters using polygon containment
 
-#### 1. Unify zone boundary definitions
-Create a single `ZONE_BOUNDARY_PATHS` object containing the exact SVG path data from the canvas (lines 1847-1856). Both the canvas SVG and map decoration functions will reference this same data, ensuring identical shapes everywhere.
+#### Drag & Drop
+- All stickers draggable with touch/mouse via drag handles
+- Position memory saved to cloud (singleton record architecture)
+- Auto-arrange with spiral placement constrained to zone boundaries
 
-#### 2. Update big map boundaries
-Replace the current `zonePaths` array in `addMapDecorations()` (lines 7230-7246) with scaled-down versions of the exact canvas paths (canvas uses 0-14000 coords, map uses 0-100 viewBox). Use thinner stroke (`stroke-width: 0.3`) and subtler opacity per user preference.
+#### Hand Cricket Game (Stadium Edition)
+- Full toss system (odd/even call → number reveal → bat/bowl choice)
+- Defence logic: DEF+DEF = OUT, DEF+run = runs scored (for both batting/bowling)
+- Overs, balls, and current run rate (CRR) live tracking
+- Boundary animations (FOUR/SIX flash overlays, fireworks, text pops)
+- Web Audio API procedural SFX (no audio files)
+- Cloud-saved match history via Supabase
 
-#### 3. Add boundaries to small map
-When the small map renders (`drawMapLayoutOnly` / `drawMapLayout`), append an SVG overlay with the same zone boundary paths, using even thinner/subtler strokes for readability at small scale.
+#### Portfolio Panel
+- Slide-up overlay with project cards (glassmorphism, hover effects)
+- Each project has a detail page with case study content
+- Project metrics, tech tags, role badges
 
-#### 4. Point-in-polygon zone containment
-Replace the rectangular `mapZones` check (line 8453) with a point-in-polygon test against the organic SVG paths. Create a `pointInZonePath(x, y, zoneName)` function that parses each zone's SVG path into polygon segments and uses ray-casting to test containment.
+#### Easter Eggs
+- Triple-tap name → Build Specs panel (features, tech stack, live stats)
+- Photo tap counter with milestone messages and confetti
+- Random wisdom quotes
+- Hidden sticker interactions
 
-#### 5. Re-center all items within boundaries
-Add/update the auto-rearrange logic so that on page load (or rearrange trigger), every sticker with a `data-zone` is checked against its zone's organic boundary. Items outside the boundary get repositioned to the zone's centroid area using the existing spiral placement with the polygon boundary as constraint instead of a rectangle.
+#### Performance
+- IntersectionObserver pauses off-screen animations
+- CSS containment on stickers
+- Lazy loading images
+- Gzip compression via vite plugin
+- Single-file architecture for minimal network requests
 
-#### 6. Update `getZoneName()` 
-Change `getZoneName(px, py)` (line 8460) to use the point-in-polygon test instead of rectangular bounds, so the minimap zone label accurately reflects the organic shapes.
-
-### Technical details
-
-- **SVG path parsing**: Extract coordinate pairs from the canvas `d` attribute strings, convert to polygon vertices for ray-casting
-- **Scaling**: Canvas coords (0-14000) → big map viewBox (0-100) = divide by 140; small map uses same viewBox
-- **Stroke styling on maps**: `stroke-width: 0.3`, `stroke-dasharray: 2 1`, opacity reduced by ~30% vs canvas
-- **Performance**: Parse paths once at init, cache polygon arrays; point-in-polygon is O(n) per vertex count (~20-30 vertices per zone)
-
-### Files modified
-- `public/moodboard.html` — all changes in this single file
-
+### Tech Stack
+- Vanilla HTML/CSS/JS (moodboard)
+- React + Vite + Tailwind (wrapper)
+- Supabase Edge Functions (PIN verify, layout CRUD)
+- Web Audio API (procedural SFX)
+- SVG + ray-casting (zone boundaries)
+- Framer Motion (wrapper animations)
