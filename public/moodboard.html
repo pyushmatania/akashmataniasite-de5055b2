@@ -7360,40 +7360,47 @@ function addMapDecorations(cw, ch){
     wrap.appendChild(svg);
   }
 
-  // Scatter buildings across zones
+  // Scatter buildings along roads within correct zones
+  // Zone layout: Origin(0-50%,0-33%) Work(50-100%,0-33%) Portfolio(0-50%,33-67%) Fun(50-100%,33-67%) Hobby(0-100%,67-100%)
+  // Roads: H1 y≈17%, H2 y≈50%, H3 y≈83%, V1 x≈24%, V2 x≈76%
   const allBuildings=[
-    {x:16,y:26,w:28,h:35,c:'#e07850',r:'#c0583a',win:true},
-    {x:19,y:28,w:22,h:28,c:'#d4956a',r:'#b87848',win:true},
-    {x:22,y:24,w:32,h:40,c:'#5c9de8',r:'#4080c8',win:true},
-    {x:50,y:20,w:26,h:32,c:'#e8845c',r:'#c86040',win:true},
-    {x:53,y:22,w:20,h:25,c:'#c4956a',r:'#a87850',win:true},
-    {x:56,y:18,w:30,h:38,c:'#6ba8e0',r:'#4888c0',win:true},
-    {x:78,y:14,w:24,h:30,c:'#e85070',r:'#c03858',win:true},
-    {x:81,y:16,w:18,h:22,c:'#d06888',r:'#b05070',win:true},
-    {x:14,y:42,w:22,h:28,c:'#9c6fd0',r:'#7850b0',win:true},
-    {x:17,y:44,w:18,h:22,c:'#b488e0',r:'#9470c0',win:true},
-    {x:60,y:40,w:26,h:32,c:'#50a860',r:'#389048',win:true},
-    {x:63,y:42,w:20,h:25,c:'#68c080',r:'#50a068',win:true},
-    {x:16,y:60,w:24,h:30,c:'#e8c050',r:'#c8a038',win:true},
-    {x:52,y:60,w:22,h:28,c:'#e07040',r:'#c05830',win:true},
-    {x:55,y:62,w:18,h:22,c:'#f08858',r:'#d07040',win:true},
-    {x:76,y:70,w:20,h:25,c:'#8850b0',r:'#703898',win:true},
-    {x:33,y:72,w:22,h:28,c:'#8B6848',r:'#6B4830',win:true},
-    {x:46,y:30,w:20,h:25,c:'#78909C',r:'#607080',win:true},
-    {x:42,y:48,w:18,h:22,c:'#e8a050',r:'#c88838',win:true},
-    {x:68,y:52,w:20,h:25,c:'#50a878',r:'#389060',win:true},
-    {x:28,y:35,w:16,h:20,c:'#c89060',r:'#a87848',win:true},
-    {x:70,y:28,w:18,h:22,c:'#5890c8',r:'#4078a8',win:true},
-    {x:88,y:30,w:24,h:30,c:'#d06050',r:'#b04838',win:true},
-    {x:10,y:75,w:20,h:26,c:'#5c9de8',r:'#4080c8',win:true},
-    {x:45,y:78,w:22,h:28,c:'#e8845c',r:'#c86040',win:true},
-    {x:72,y:62,w:18,h:22,c:'#9c6fd0',r:'#7850b0',win:true},
-    {x:30,y:82,w:24,h:30,c:'#50a860',r:'#389048',win:true},
-    {x:85,y:48,w:20,h:25,c:'#e8c050',r:'#c8a038',win:true},
-    {x:62,y:76,w:22,h:28,c:'#e85070',r:'#c03858',win:true},
-    {x:8,y:58,w:18,h:22,c:'#6ba8e0',r:'#4888c0',win:true},
-    {x:38,y:65,w:16,h:20,c:'#d4956a',r:'#b87848',win:true},
-    {x:92,y:58,w:20,h:25,c:'#c89060',r:'#a87848',win:true},
+    // === ORIGIN ZONE (top-left) — cyan/teal tinted buildings along roads ===
+    {x:8,y:6,w:26,h:32,c:'#4db6ac',r:'#00897b',win:true},
+    {x:12,y:14,w:22,h:28,c:'#80cbc4',r:'#4db6ac',win:true},
+    {x:20,y:8,w:28,h:35,c:'#26a69a',r:'#00796b',win:true},
+    {x:28,y:15,w:20,h:25,c:'#4dd0e1',r:'#00acc1',win:true},
+    {x:35,y:5,w:24,h:30,c:'#80deea',r:'#4dd0e1',win:true},
+    {x:40,y:18,w:18,h:22,c:'#26c6da',r:'#0097a7',win:true},
+    // === WORK ZONE (top-right) — red/warm tinted buildings ===
+    {x:55,y:7,w:26,h:32,c:'#ef5350',r:'#c62828',win:true},
+    {x:60,y:15,w:22,h:28,c:'#e57373',r:'#ef5350',win:true},
+    {x:68,y:5,w:30,h:38,c:'#f44336',r:'#d32f2f',win:true},
+    {x:75,y:14,w:20,h:25,c:'#ff8a80',r:'#ff5252',win:true},
+    {x:82,y:8,w:24,h:30,c:'#e53935',r:'#c62828',win:true},
+    {x:88,y:18,w:18,h:22,c:'#ef9a9a',r:'#ef5350',win:true},
+    // === PORTFOLIO ZONE (mid-left) — blue tinted buildings ===
+    {x:6,y:38,w:24,h:30,c:'#42a5f5',r:'#1e88e5',win:true},
+    {x:14,y:45,w:22,h:28,c:'#64b5f6',r:'#42a5f5',win:true},
+    {x:22,y:40,w:28,h:35,c:'#1e88e5',r:'#1565c0',win:true},
+    {x:30,y:48,w:20,h:25,c:'#90caf9',r:'#64b5f6',win:true},
+    {x:38,y:36,w:22,h:28,c:'#2196f3',r:'#1976d2',win:true},
+    {x:44,y:46,w:18,h:22,c:'#bbdefb',r:'#90caf9',win:true},
+    // === FUN ZONE (mid-right) — purple/vibrant buildings ===
+    {x:56,y:38,w:26,h:32,c:'#ab47bc',r:'#8e24aa',win:true},
+    {x:62,y:46,w:22,h:28,c:'#ce93d8',r:'#ab47bc',win:true},
+    {x:70,y:36,w:28,h:35,c:'#9c27b0',r:'#7b1fa2',win:true},
+    {x:78,y:44,w:20,h:25,c:'#e1bee7',r:'#ce93d8',win:true},
+    {x:85,y:40,w:24,h:30,c:'#ba68c8',r:'#9c27b0',win:true},
+    {x:90,y:48,w:18,h:22,c:'#ea80fc',r:'#d500f9',win:true},
+    // === HOBBY ZONE (bottom full) — orange/warm buildings ===
+    {x:8,y:72,w:24,h:30,c:'#ffa726',r:'#f57c00',win:true},
+    {x:18,y:78,w:22,h:28,c:'#ffb74d',r:'#ffa726',win:true},
+    {x:28,y:70,w:26,h:32,c:'#ff9800',r:'#e65100',win:true},
+    {x:40,y:80,w:20,h:25,c:'#ffcc80',r:'#ffb74d',win:true},
+    {x:52,y:72,w:28,h:35,c:'#fb8c00',r:'#ef6c00',win:true},
+    {x:64,y:78,w:22,h:28,c:'#ffe0b2',r:'#ffcc80',win:true},
+    {x:74,y:70,w:24,h:30,c:'#ff9800',r:'#f57c00',win:true},
+    {x:86,y:76,w:20,h:25,c:'#ffb74d',r:'#ffa726',win:true},
   ];
   const buildings=IS_MOBILE_MAP?allBuildings.filter((_,i)=>i%2===0):allBuildings;
   buildings.forEach(b=>addIsometricBuilding(b.x,b.y,b.w,b.h,b.c,b.r,b.win));
