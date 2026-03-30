@@ -3655,34 +3655,235 @@ body.map-expanded .scroll-counter{display:none!important}
 .zp-hobby{--zp-glow:rgba(255,140,0,0.5);--zp-glow2:rgba(255,183,77,0.3)}
 .zp-fun{--zp-glow:rgba(239,83,80,0.5);--zp-glow2:rgba(255,138,128,0.3)}
 
-/* Project detail — studio frame glow */
-.zp-proj-detail{position:relative;overflow:hidden}
-.zp-proj-detail::before{
-  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+/* ═══ PROJECT DETAIL — 3D MUSEUM GALLERY ═══ */
+
+/* Gallery room perspective */
+.zp-proj-detail .gallery-room{
+  position:relative;width:100%;min-height:55vh;
+  perspective:900px;perspective-origin:50% 45%;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+
+/* Dark wall with subtle panel grid lines */
+.zp-proj-detail .gallery-wall{
+  position:absolute;inset:0;
   background:
-    radial-gradient(ellipse at 30% 20%,rgba(149,117,205,0.12) 0%,transparent 50%),
-    radial-gradient(ellipse at 70% 80%,rgba(236,64,122,0.08) 0%,transparent 50%),
-    radial-gradient(ellipse at 50% 50%,rgba(255,183,77,0.05) 0%,transparent 60%);
-  opacity:0;transition:opacity 0.6s 0.2s;
-}
-.zp-proj-detail.open::before{opacity:1;animation:projDetailAmbient 8s ease-in-out infinite}
-@keyframes projDetailAmbient{
-  0%,100%{background-position:0% 0%}
-  33%{background-position:5% 3%}
-  66%{background-position:-3% -2%}
+    linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px),
+    linear-gradient(0deg,rgba(255,255,255,0.02) 1px,transparent 1px),
+    linear-gradient(180deg,#080610 0%,#0c0a18 40%,#0e0b1a 100%);
+  background-size:calc(100%/3) calc(100%/3),calc(100%/3) calc(100%/3),100% 100%;
+  transform:rotateX(2deg);transform-origin:center bottom;
 }
 
-/* Project detail emoji — glow aura */
-.zp-proj-detail-emoji{
-  position:relative;display:inline-block;
-  filter:drop-shadow(0 0 20px var(--zp-glow,rgba(149,117,205,0.5)));
+/* Frame container with 3D transform */
+.gallery-frame-wrap{
+  position:relative;z-index:2;
+  transform:rotateX(1deg) translateZ(20px);
+  transition:transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+.zp-proj-detail.open .gallery-frame-wrap{
+  animation:frameReveal 0.8s cubic-bezier(0.22,1,0.36,1) both;
+}
+@keyframes frameReveal{
+  0%{opacity:0;transform:rotateX(8deg) translateZ(-40px) scale(0.85)}
+  100%{opacity:1;transform:rotateX(1deg) translateZ(20px) scale(1)}
 }
 
-/* Stat box subtle gradient border on project detail */
-.zp-proj-detail .zp-stat-box{
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 0 12px rgba(149,117,205,0.08);
+/* The physical frame — thick dark border with metallic edge */
+.gallery-frame{
+  position:relative;padding:6px;
+  background:linear-gradient(135deg,#1a1a2e,#16132b,#0d0b1e);
+  border-radius:4px;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06),
+    0 2px 8px rgba(0,0,0,0.8),
+    0 8px 32px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+/* Inner matte — dark gap between frame and artwork */
+.gallery-frame-inner{
+  position:relative;overflow:hidden;
+  border-radius:2px;
+  background:#050310;
+  width:220px;height:320px;
+}
+
+/* The artwork/project visual inside the frame */
+.gallery-artwork{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+
+/* Animated gradient fill inside the frame — like the reference */
+.gallery-artwork::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 30% 25%,var(--frame-c1,rgba(120,80,220,0.6)) 0%,transparent 55%),
+    radial-gradient(ellipse at 70% 75%,var(--frame-c2,rgba(200,60,150,0.5)) 0%,transparent 55%),
+    radial-gradient(ellipse at 50% 100%,var(--frame-c3,rgba(255,180,60,0.3)) 0%,transparent 40%),
+    radial-gradient(ellipse at 20% 80%,var(--frame-c4,rgba(60,120,255,0.3)) 0%,transparent 45%);
+  opacity:0;
+  animation:none;
+}
+.zp-proj-detail.open .gallery-artwork::before{
+  opacity:1;
+  animation:artworkPulse 6s ease-in-out infinite;
+}
+@keyframes artworkPulse{
+  0%,100%{filter:blur(30px) brightness(0.8);transform:scale(1)}
+  33%{filter:blur(35px) brightness(1);transform:scale(1.05) rotate(1deg)}
+  66%{filter:blur(28px) brightness(0.9);transform:scale(0.98) rotate(-1deg)}
+}
+
+/* Project emoji on the artwork */
+.gallery-artwork-emoji{
+  font-size:3.2rem;position:relative;z-index:2;
+  filter:drop-shadow(0 4px 20px rgba(0,0,0,0.5));
+  margin-bottom:12px;
+}
+
+/* Project name on the artwork */
+.gallery-artwork-label{
+  font-family:var(--font-fun);font-size:1rem;font-weight:800;
+  color:rgba(255,255,255,0.85);letter-spacing:0.02em;
+  text-shadow:0 2px 12px rgba(0,0,0,0.6);
+  position:relative;z-index:2;
+}
+
+/* Frame GLOW — the signature lighting effect */
+.gallery-frame-glow{
+  position:absolute;inset:-12px;z-index:-1;
+  border-radius:8px;
+  background:
+    conic-gradient(from 0deg at 50% 50%,
+      var(--frame-c1,rgba(120,80,220,0.5)),
+      var(--frame-c2,rgba(200,60,150,0.4)),
+      var(--frame-c3,rgba(255,180,60,0.3)),
+      var(--frame-c4,rgba(60,120,255,0.4)),
+      var(--frame-c1,rgba(120,80,220,0.5)));
+  filter:blur(20px);
+  opacity:0;
+}
+.zp-proj-detail.open .gallery-frame-glow{
+  opacity:1;
+  animation:frameGlowRotate 8s linear infinite,frameGlowPulse 4s ease-in-out infinite;
+}
+@keyframes frameGlowRotate{
+  0%{filter:blur(20px) hue-rotate(0deg)}
+  100%{filter:blur(20px) hue-rotate(360deg)}
+}
+@keyframes frameGlowPulse{
+  0%,100%{opacity:0.6;transform:scale(1)}
+  50%{opacity:0.9;transform:scale(1.04)}
+}
+
+/* Floor with reflection */
+.gallery-floor{
+  position:absolute;bottom:0;left:0;right:0;height:25%;
+  background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,0.3) 30%,rgba(0,0,0,0.6) 100%);
+  transform:rotateX(-2deg);transform-origin:center top;
+}
+.gallery-floor::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,
+    var(--frame-c1,rgba(120,80,220,0.08)) 0%,
+    transparent 60%);
+  filter:blur(30px);
+  opacity:0;
+}
+.zp-proj-detail.open .gallery-floor::before{opacity:1}
+
+/* Floating dust particles in the gallery */
+.gallery-dust{
+  position:absolute;border-radius:50%;pointer-events:none;
+  background:rgba(255,255,255,0.3);
+}
+.zp-proj-detail.open .gallery-dust{
+  animation:dustFloat var(--d-dur,8s) ease-in-out var(--d-delay,0s) infinite;
+}
+@keyframes dustFloat{
+  0%{opacity:0;transform:translate(0,0)}
+  20%{opacity:0.6}
+  50%{opacity:0.3;transform:translate(var(--d-tx,15px),var(--d-ty,-40px))}
+  80%{opacity:0.5}
+  100%{opacity:0;transform:translate(var(--d-tx2,-10px),var(--d-ty2,-80px))}
+}
+
+/* Spotlight cone from above */
+.gallery-spotlight{
+  position:absolute;top:-20%;left:50%;transform:translateX(-50%);
+  width:180px;height:70%;
+  background:radial-gradient(ellipse at 50% 0%,
+    rgba(255,255,255,0.04) 0%,
+    rgba(255,255,255,0.01) 40%,
+    transparent 70%);
+  pointer-events:none;z-index:1;
+  clip-path:polygon(35% 0%,65% 0%,100% 100%,0% 100%);
+  opacity:0;
+}
+.zp-proj-detail.open .gallery-spotlight{
+  opacity:1;animation:spotlightBreath 5s ease-in-out infinite;
+}
+@keyframes spotlightBreath{
+  0%,100%{opacity:0.5}
+  50%{opacity:0.8}
+}
+
+/* ── Gallery info section below the frame ── */
+.gallery-info{
+  position:relative;z-index:3;
+  padding:28px 24px 60px;
+  background:linear-gradient(180deg,#0a0812 0%,#0c0a16 100%);
+  border-top:1px solid rgba(255,255,255,0.04);
+}
+
+.gallery-info .gi-name{
+  font-family:var(--font-fun);font-size:2rem;font-weight:900;
+  color:#fff;line-height:1.1;margin-bottom:8px;
+}
+.gallery-info .gi-tagline{
+  font-family:var(--font-hand);font-size:0.95rem;
+  color:rgba(255,255,255,0.4);line-height:1.5;margin-bottom:20px;
+}
+.gallery-info .gi-body{
+  font-family:var(--font-sans);font-size:0.84rem;
+  color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:22px;
+}
+
+/* Stats as gallery placard */
+.gallery-info .gi-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:22px;
+}
+.gallery-info .gi-stat{
+  text-align:center;padding:14px 8px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:2px;
+  position:relative;overflow:hidden;
+}
+.gallery-info .gi-stat::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--frame-c1,rgba(120,80,220,0.4)),var(--frame-c2,rgba(200,60,150,0.3)),transparent);
+}
+.gallery-info .gi-stat-num{
+  font-family:var(--font-fun);font-size:1.5rem;font-weight:900;color:#fff;display:block;
+}
+.gallery-info .gi-stat-lbl{
+  font-family:var(--font-sans);font-size:0.5rem;color:rgba(255,255,255,0.3);
+  text-transform:uppercase;letter-spacing:0.1em;display:block;margin-top:4px;
+}
+
+/* Tags and skills in gallery style */
+.gallery-info .gi-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.gallery-info .gi-skills{display:flex;gap:6px;flex-wrap:wrap}
+.gallery-info .gi-skill{
+  padding:5px 11px;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;
+  letter-spacing:0.04em;background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);
+  border-radius:1px;
 }
 
 /* Tag shimmer effect */
