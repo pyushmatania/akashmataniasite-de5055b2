@@ -9482,14 +9482,15 @@ function buildZoneCardHTML(meta){return '';}
 (function(){
   if(!window.IntersectionObserver)return;
   const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.target.classList.contains('dragging'))return;
+    for(let i=0;i<entries.length;i++){
+      const e=entries[i];
+      if(e.target.classList.contains('dragging'))continue;
       e.target.classList.toggle('paused-offscreen',!e.isIntersecting);
-    });
-  },{root:vp,rootMargin:'400px',threshold:0});
-  // Observe after a short delay to let DOM settle
+    }
+  },{root:vp,rootMargin:'200px',threshold:0});
+  // Observe stickers AND zone intro cards
   setTimeout(()=>{
-    document.querySelectorAll('#canvas > .sticker').forEach(s=>obs.observe(s));
+    document.querySelectorAll('#canvas > .sticker, #canvas .zone-intro-card').forEach(s=>obs.observe(s));
   },500);
 })();
 
