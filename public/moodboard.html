@@ -2995,19 +2995,57 @@ body.map-expanded .scroll-counter{display:none!important}
     <span class="intro-role">🧠 AI Native</span>
     <span class="intro-role">🎬 Storyteller</span>
   </div>
-  <div class="intro-location">📍 Bengaluru · originally from Jeypore, Odisha</div>
-  <div class="intro-currently">
-    <div class="curr-label">⚡ Currently Shipping</div>
-    <span class="curr-val" onclick="rotateCurrently(this,event)" title="tap to rotate">Building an AI-native product OS</span>
+  <!-- ===== REDESIGNED LOWER HALF ===== -->
+  <div class="gc-divider"></div>
+  
+  <!-- Location with warm pin animation -->
+  <div class="gc-location-row">
+    <span class="gc-pin-icon">📍</span>
+    <span class="gc-loc-text">Bengaluru</span>
+    <span class="gc-loc-dot">·</span>
+    <span class="gc-loc-origin">from Jeypore, Odisha</span>
   </div>
-  <div class="intro-stats-row">
-    <div class="istat"><span class="istat-num">8+</span><span class="istat-label">Yrs Exp</span></div>
-    <div class="istat"><span class="istat-num">3</span><span class="istat-label">Founded</span></div>
-    <div class="istat"><span class="istat-num">5K+</span><span class="istat-label">Users</span></div>
-    <div class="istat"><span class="istat-num">∞</span><span class="istat-label">Chai ☕</span></div>
+
+  <!-- Journey Ticker — auto-rotating what I'm up to -->
+  <div class="gc-ticker" onclick="rotateCurrently(this.querySelector('.gc-ticker-text'),event)" data-no-sticker-drag="true">
+    <div class="gc-ticker-bar"></div>
+    <div class="gc-ticker-label">NOW PLAYING</div>
+    <div class="gc-ticker-text">Building an AI-native product OS</div>
+    <div class="gc-ticker-hint">tap to shuffle ↻</div>
   </div>
-  <div class="intro-cta" data-no-sticker-drag="true">
-    <span style="font-family:var(--font-hand);font-size:0.9rem;color:rgba(201,169,110,0.55)">hit play to explore my world ✦</span>
+
+  <!-- Stats — warm glass morphism cards -->
+  <div class="gc-stats-grid">
+    <div class="gc-stat-card gc-stat-amber">
+      <span class="gc-stat-val">8+</span>
+      <span class="gc-stat-lbl">Years</span>
+      <div class="gc-stat-glow"></div>
+    </div>
+    <div class="gc-stat-card gc-stat-rose">
+      <span class="gc-stat-val">3</span>
+      <span class="gc-stat-lbl">Founded</span>
+      <div class="gc-stat-glow"></div>
+    </div>
+    <div class="gc-stat-card gc-stat-teal">
+      <span class="gc-stat-val">5K+</span>
+      <span class="gc-stat-lbl">Users</span>
+      <div class="gc-stat-glow"></div>
+    </div>
+    <div class="gc-stat-card gc-stat-gold">
+      <span class="gc-stat-val">∞</span>
+      <span class="gc-stat-lbl">Chai ☕</span>
+      <div class="gc-stat-glow"></div>
+    </div>
+  </div>
+
+  <!-- CTA — warm pulsing explore button -->
+  <div class="gc-cta-wrap" data-no-sticker-drag="true">
+    <div class="gc-cta-orbs">
+      <span class="gc-orb gc-orb-1"></span>
+      <span class="gc-orb gc-orb-2"></span>
+      <span class="gc-orb gc-orb-3"></span>
+    </div>
+    <span class="gc-cta-text">hit play to explore my world ✦</span>
   </div>
 </div>
 
