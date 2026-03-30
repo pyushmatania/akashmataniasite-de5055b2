@@ -7,7 +7,6 @@ import { ThemeProvider } from "next-themes";
 import { AnimatePresence } from "framer-motion";
 
 const Index = lazy(() => import("./pages/Index.tsx"));
-const MyStory = lazy(() => import("./pages/MyStory.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 class ErrorBoundary extends Component<
