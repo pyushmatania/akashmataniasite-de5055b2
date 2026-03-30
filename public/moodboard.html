@@ -6155,7 +6155,7 @@ setTimeout(centerOnIntroCard,200);
 // ===== UNIFIED SCROLL HANDLER (replaces 3 separate listeners) =====
 let _scrollRAF=null;
 const _scrollCounterEl=document.getElementById('scrollCounter');
-const _settingsPanel=_settingsPanel;
+const _settingsPanel=document.getElementById('settingsPanel');
 vp.addEventListener('scroll',()=>{
   if(_scrollRAF)return;
   _scrollRAF=requestAnimationFrame(()=>{
