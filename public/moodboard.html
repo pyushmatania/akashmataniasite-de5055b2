@@ -11257,10 +11257,15 @@ function ensureCompanionStickers(force){
                 youHandEl.classList.add('match');
                 cpuHandEl.classList.add('match');
                 addBall('out','W');
-                if(cpuScore>=target){
-                  endGame(false);
+                if(target>=0){
+                  // CPU was chasing (player batted first)
+                  if(cpuScore>target){endGame(false);}
+                  else{endGame(true);}
                 }else{
-                  endGame(true);
+                  // CPU batted first — switch to player batting
+                  msgEl.textContent='OUT! CPU scored '+cpuScore;
+                  msgEl.className='hc-msg win';
+                  setTimeout(function(){switchInningsBowlFirst();},1800);
                 }
                 return;
               } else {
