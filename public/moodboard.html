@@ -4210,6 +4210,7 @@ function anchorZoneIntroCard(card,zoneOverride){
   const w=card.offsetWidth||380;
   const h=card.offsetHeight||420;
   card.style.visibility='';card.style.display='';card.style.transform=prevT;
+  console.log('[ANCHOR-DEBUG] zone='+zone+' w='+w+' h='+h+' center='+JSON.stringify(center));
 
   // Detect top overhang from absolutely-positioned children (e.g. Work card folder tabs)
   let topOverhang=0;
@@ -4228,6 +4229,7 @@ function anchorZoneIntroCard(card,zoneOverride){
   const top=Math.max(0,Math.min(MOODBOARD_WORLD_HEIGHT-h,center.y-visualCenterOffsetY));
   card.style.left=left+'px';
   card.style.top=top+'px';
+  console.log('[ANCHOR-DEBUG] zone='+zone+' topOverhang='+topOverhang+' visualCenterOffsetY='+visualCenterOffsetY+' left='+left+' top='+top+' returnY='+(top+visualCenterOffsetY));
   // Return the visual center in world coords for panning
   return {left,top,w,h:totalVisualH,x:left+w/2,y:top+visualCenterOffsetY};
 }
