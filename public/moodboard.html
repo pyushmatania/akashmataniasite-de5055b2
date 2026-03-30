@@ -11102,6 +11102,8 @@ function ensureCompanionStickers(force){
       const hc=el.querySelector('.zc-hcricket');
       if(hc&&coverImg){
         coverImg.addEventListener('click',function(ev){ev.stopPropagation();coverImg.style.display='none';coverLabel.style.display='none';hc.style.display='';});
+        var closeBtn=hc.querySelector('.hc-close-btn');
+        if(closeBtn){closeBtn.addEventListener('click',function(ev){ev.stopPropagation();hc.style.display='none';coverImg.style.display='block';coverLabel.style.display='block';});}
         hc.style.pointerEvents='auto';
         const VALID=[0,1,2,3,4,6];
         const HAND_EMOJI={0:'✊',1:'☝️',2:'✌️',3:'🤟',4:'🖖',6:'👍'};
