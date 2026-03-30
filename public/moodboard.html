@@ -10380,8 +10380,7 @@ function ekPick(el,e){
     }finally{
       window._hydratingCloudLayout=false;
       document.body.classList.add('stickers-ready');
-      // Re-anchor zone intro cards after layout hydration to fix positioning
-      if(typeof anchorAllZoneIntroCards==='function') anchorAllZoneIntroCards();
+      // Do NOT re-anchor after hydration — respect saved positions
     }
   }
 
