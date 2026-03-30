@@ -7761,9 +7761,25 @@ function drawMap(){
     });
     mapCanvas.appendChild(frag);
     if(mapCount)mapCount.textContent=count+' items';
-    // Add zone boundary overlay to small map — exact canvas curved paths
+    // Add zone tints + boundary overlay to small map
+    const oldTint=mapCanvas.querySelector('.small-map-tints');
     const oldBSvg=mapCanvas.querySelector('.small-map-boundaries');
+    if(oldTint)oldTint.remove();
     if(oldBSvg)oldBSvg.remove();
+    // Zone tint fills
+    const tSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    tSvg.setAttribute('class','small-map-tints');
+    tSvg.setAttribute('viewBox','0 0 7000 7000');
+    tSvg.setAttribute('preserveAspectRatio','none');
+    tSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:1;overflow:visible';
+    tSvg.innerHTML=
+      '<path d="M0,0 L3500,0 C3475,350 3525,700 3495,1050 Q3510,1400 3490,1750 C3515,2100 3485,2333 3500,2333 Q3150,2308 2800,2320 C2450,2342 2100,2318 1750,2350 Q1400,2308 1050,2325 C700,2355 350,2308 0,2333 Z" fill="rgba(0,188,212,0.12)"/>'
+      +'<path d="M3500,0 L7000,0 L7000,2333 Q6650,2308 6300,2320 C5950,2342 5600,2318 5250,2350 Q4900,2308 4550,2325 C4200,2355 3850,2308 3500,2333 C3485,2333 3515,2100 3490,1750 Q3510,1400 3495,1050 C3525,700 3475,350 3500,0 Z" fill="rgba(229,57,53,0.10)"/>'
+      +'<path d="M0,2333 C350,2308 700,2355 1050,2325 Q1400,2308 1750,2350 C2100,2318 2450,2342 2800,2320 Q3150,2308 3500,2333 C3475,2700 3525,3050 3495,3400 Q3510,3700 3490,4050 C3515,4300 3485,4666 3500,4666 Q3150,4641 2800,4653 C2450,4675 2100,4651 1750,4683 Q1400,4641 1050,4658 C700,4688 350,4641 0,4666 Z" fill="rgba(66,165,245,0.10)"/>'
+      +'<path d="M3500,2333 C3850,2308 4200,2355 4550,2325 Q4900,2308 5250,2350 C5600,2318 5950,2342 6300,2320 Q6650,2308 7000,2333 L7000,4666 Q6650,4641 6300,4653 C5950,4675 5600,4651 5250,4683 Q4900,4641 4550,4658 C4200,4688 3850,4641 3500,4666 C3485,4666 3515,4300 3490,4050 Q3510,3700 3495,3400 C3525,3050 3475,2700 3500,2333 Z" fill="rgba(171,71,188,0.10)"/>'
+      +'<path d="M0,4666 C350,4641 700,4688 1050,4658 Q1400,4641 1750,4683 C2100,4651 2450,4675 2800,4653 Q3150,4641 3500,4666 C3850,4641 4200,4688 4550,4658 Q4900,4641 5250,4683 C5600,4651 5950,4675 6300,4653 Q6650,4641 7000,4666 L7000,7000 L0,7000 Z" fill="rgba(255,152,0,0.10)"/>';
+    mapCanvas.appendChild(tSvg);
+    // Boundary lines
     const bSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
     bSvg.setAttribute('class','small-map-boundaries');
     bSvg.setAttribute('viewBox','0 0 7000 7000');
