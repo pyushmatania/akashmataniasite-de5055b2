@@ -1201,7 +1201,7 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
 }
 .map-player *{background:none!important;border:none!important;box-shadow:none!important;outline:none!important}
 .map-player .map-arrow-svg{background:none!important;border:none!important;box-shadow:none!important}
-.map-player .map-player-ping{border:2px solid rgba(255,213,79,0.35)!important;background:none!important;box-shadow:none!important}
+.map-player .map-player-ping{display:none!important}
 .map-player .map-arrow-svg{
   transition:transform 0.25s ease-out;
 }
@@ -1220,11 +1220,8 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
 .minimap-container.expanded .map-arrow-head{display:none!important}
 .minimap-container.expanded .map-arrow-full{display:block!important}
 .map-player-ping{
-  position:absolute;inset:-5px;border-radius:50%;
-  border:2px solid rgba(255,213,79,0.35);
-  animation:mping 2s ease-out infinite;pointer-events:none;
+  display:none!important;
 }
-.minimap-container.expanded .map-player-ping{inset:-8px;border-width:2px}
 @keyframes mping{0%{transform:scale(0.6);opacity:1}100%{transform:scale(2);opacity:0}}
 /* Walking animation */
 @keyframes bitmoji-walk{
