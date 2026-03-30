@@ -4378,7 +4378,56 @@ body.map-expanded .scroll-counter{display:none!important}
 
 /* ── PORTFOLIO PANEL: project grid ── */
 /* ═══ 3D FLOATING PROJECT SHOWCASE ═══ */
-.zp-showcase{
+/* ── Project Cards (portfolio panel) ── */
+.zp-project-cards{display:flex;flex-direction:column;gap:14px}
+.zp-proj-card{
+  position:relative;padding:18px;border-radius:16px;cursor:pointer;
+  background:linear-gradient(145deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));
+  border:1.5px solid var(--pc-bc,rgba(149,117,205,0.15));
+  transition:all 0.25s cubic-bezier(0.22,1,0.36,1);
+  overflow:hidden;
+}
+.zp-proj-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--pc-c,rgba(149,117,205,0.5)),transparent);
+  opacity:0.6;transition:opacity 0.25s;
+}
+.zp-proj-card:hover,.zp-proj-card:active{
+  transform:translateY(-2px);border-color:var(--pc-c,rgba(149,117,205,0.35));
+  box-shadow:0 8px 32px rgba(0,0,0,0.3),0 0 20px var(--pc-bc,rgba(149,117,205,0.1));
+}
+.zp-proj-card:hover::before,.zp-proj-card:active::before{opacity:1}
+.zp-proj-card-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.zp-proj-card-emoji{font-size:2rem;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
+.zp-proj-card-meta{display:flex;flex-direction:column;gap:4px}
+.zp-proj-card-badge{
+  display:inline-block;padding:3px 10px;border-radius:6px;
+  font-family:var(--font-fun);font-size:0.52rem;font-weight:800;
+  letter-spacing:0.08em;text-transform:uppercase;width:fit-content;
+}
+.zp-proj-card-yr{
+  font-family:var(--font-sans);font-size:0.6rem;color:rgba(255,255,255,0.3);
+  letter-spacing:0.04em;
+}
+.zp-proj-card-name{
+  font-family:var(--font-fun);font-size:1.1rem;font-weight:900;color:#fff;
+  letter-spacing:0.03em;text-transform:uppercase;margin-bottom:6px;
+}
+.zp-proj-card-desc{
+  font-family:var(--font-sans);font-size:0.72rem;color:rgba(255,255,255,0.45);
+  line-height:1.5;margin-bottom:10px;
+}
+.zp-proj-card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.zp-proj-card-tag{
+  font-family:var(--font-fun);font-size:0.52rem;font-weight:700;
+  padding:3px 8px;border-radius:5px;letter-spacing:0.04em;
+}
+.zp-proj-card-cta{
+  font-family:var(--font-fun);font-size:0.6rem;font-weight:800;
+  color:rgba(255,255,255,0.5);letter-spacing:0.06em;text-transform:uppercase;
+  transition:color 0.2s;
+}
+.zp-proj-card:hover .zp-proj-card-cta{color:rgba(255,255,255,0.8)}
   position:relative;width:100%;min-height:520px;
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;margin-bottom:24px;
