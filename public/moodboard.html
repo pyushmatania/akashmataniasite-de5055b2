@@ -10762,7 +10762,7 @@ function buildZoneCardHTML(meta){return '';}
 
 // ===== Add drag handles to all interactive sticker cards =====
 (function(){
-  const interactiveSelectors='.sticker-throne-game,.sticker-emoji-kitchen,.sticker-tlpuzzle,.sticker-vibecheck,.sticker-skillping,.sticker-startup-rand,.sticker-wheel,.sticker-quiz,.sticker-slots,.sticker-8ball,.sticker-typewriter,.sticker-dice,.sticker-lovemeter,.sticker-scratch,.sticker-mood,.sticker-counter,.sticker-fortune';
+  const interactiveSelectors='.sticker-throne-game,.sticker-emoji-kitchen,.sticker-tlpuzzle,.sticker-vibecheck,.sticker-skillping,.sticker-startup-rand,.sticker-wheel,.sticker-quiz,.sticker-slots,.sticker-8ball,.sticker-typewriter,.sticker-dice,.sticker-lovemeter,.sticker-scratch,.sticker-mood,.sticker-counter,.sticker-fortune,.sticker-progress,.sticker[onclick],.sticker-meme[onclick]';
   document.querySelectorAll(interactiveSelectors).forEach(s=>{
     if(s.classList.contains('has-drag-handle'))return;
     s.classList.add('has-drag-handle');
