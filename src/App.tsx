@@ -1,9 +1,6 @@
 import { lazy, Suspense, Component } from "react";
 import type { ReactNode, ErrorInfo } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { ThemeProvider } from "next-themes";
 import { AnimatePresence } from "framer-motion";
 
 const Index = lazy(() => import("./pages/Index.tsx"));
@@ -67,14 +64,9 @@ const AnimatedRoutes = () => {
 
 const App = () => (
   <ErrorBoundary>
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-      <TooltipProvider>
-        <Toaster />
-        <BrowserRouter>
-          <AnimatedRoutes />
-        </BrowserRouter>
-      </TooltipProvider>
-    </ThemeProvider>
+    <BrowserRouter>
+      <AnimatedRoutes />
+    </BrowserRouter>
   </ErrorBoundary>
 );
 
