@@ -6979,7 +6979,7 @@ function spawnConfetti(x,y){
   const now=performance.now();
   if(now-_lastConfettiTime<CONFETTI_COOLDOWN)return;
   // Cap active confetti DOM elements to prevent memory issues
-  if(document.querySelectorAll('.confetti').length>30)return;
+  if(document.querySelectorAll('.confetti').length>15)return;
   _lastConfettiTime=now;
   const els=[];
   for(let i=0;i<8;i++){
