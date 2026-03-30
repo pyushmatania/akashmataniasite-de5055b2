@@ -7998,7 +7998,7 @@ function addMapDecorations(cw, ch){
     {x:28,y:80,s:42},{x:52,y:72,s:50},{x:90,y:45,s:40},
     {x:5,y:55,s:45},{x:65,y:78,s:52},{x:45,y:85,s:46},
   ];
-  const mountains=IS_MOBILE_MAP?allMountains.filter((_,i)=>i%2===0):allMountains;
+  const mountains=IS_MOBILE_MAP?allMountains.filter((_,i)=>i%3===0):allMountains;
   mountains.forEach(m=>{
     const wrap=addDiv('map-mountain','left:'+m.x+'%;top:'+m.y+'%;width:'+m.s+'px;height:'+(m.s*0.85)+'px');
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
