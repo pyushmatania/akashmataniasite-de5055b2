@@ -4265,10 +4265,6 @@ function anchorAllZoneIntroCards(){
 }
 function getZoneIntroCenter(target){
   const canonicalZone=resolveZoneAlias(target.zone);
-  if(canonicalZone==='work'){
-    const fixedCenter=getCanonicalZoneCenter(canonicalZone);
-    if(fixedCenter)return {x:fixedCenter.x,y:fixedCenter.y,found:true};
-  }
   const el=getZoneIntroElement(canonicalZone);
   const vc=el?_getCardVisualCenter(el):null;
   if(vc)return {x:vc.x,y:vc.y,found:true};
