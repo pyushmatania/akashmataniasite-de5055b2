@@ -7770,7 +7770,11 @@ function drawMapLayout(){
     mapCanvas.querySelectorAll('.mi,.map-sticker-clone').forEach(el=>el.remove());
     if(playerWasInCanvas)mapPlayer.remove();
   } else {
+    // Preserve grid div, remove everything else
+    const gridEl=mapCanvas.querySelector('.map-canvas-grid');
     mapCanvas.innerHTML='';
+    if(gridEl)mapCanvas.appendChild(gridEl);
+    else{const g=document.createElement('div');g.className='map-canvas-grid';mapCanvas.appendChild(g);}
     _decsCW=-1;_decsCH=-1;
   }
   if(!stickerData.length)scanStickers();
