@@ -7662,19 +7662,47 @@ function addMapDecorations(cw, ch){
 
   // Winding paths REMOVED — were creating brown lines across the map
 
-  // === WATER BODIES ===
+  // === WATER BODIES — positioned within zones, away from roads ===
   const waters=[
-    {x:35,y:38,w:8,h:5,r:'45% 55% 50% 50%'},
-    {x:72,y:58,w:5,h:7,r:'50% 45% 55% 50%'},
-    {x:18,y:48,w:4,h:4,r:'50%'},
-    // Extra water for expanded area
-    {x:82,y:72,w:6,h:4,r:'45% 55% 50% 45%'},
-    {x:10,y:82,w:5,h:5,r:'50%'},
-    {x:55,y:78,w:7,h:4,r:'48% 52% 50% 50%'},
-    {x:25,y:68,w:4,h:5,r:'50% 45% 55% 50%'},
+    // Origin zone — "Lake Intro" near center
+    {x:30,y:20,w:7,h:4,r:'48% 52% 45% 55%',label:'Lake Intro'},
+    // Portfolio zone — pond
+    {x:32,y:52,w:5,h:4,r:'50%',label:''},
+    // Fun zone — "Fun Lagoon"
+    {x:82,y:56,w:6,h:5,r:'45% 55% 50% 50%',label:'Fun Lagoon'},
+    // Hobby zone — "Hobby Lake" large central
+    {x:42,y:82,w:10,h:5,r:'48% 52% 46% 54%',label:'Hobby Lake'},
+    // Small ponds scattered
+    {x:12,y:25,w:3,h:3,r:'50%',label:''},
+    {x:88,y:22,w:4,h:3,r:'50%',label:''},
+    {x:15,y:60,w:3,h:4,r:'50% 45% 55% 50%',label:''},
+    {x:70,y:85,w:5,h:3,r:'45% 55% 50% 45%',label:''},
   ];
   waters.forEach(w=>{
     addDiv('map-water','left:'+w.x+'%;top:'+w.y+'%;width:'+w.w+'%;height:'+w.h+'%;border-radius:'+w.r+';background:linear-gradient(135deg,rgba(58,140,199,0.85),rgba(100,181,246,0.8));box-shadow:inset 0 0 12px rgba(30,100,170,0.25),0 0 10px rgba(58,140,199,0.2);z-index:2');
+    if(w.label){
+      const lbl=addDiv('map-zone-marker','left:'+(w.x+w.w/2)+'%;top:'+(w.y+w.h/2+1)+'%;font-size:5px;transform:translate(-50%,-50%);color:rgba(180,220,255,0.8);font-style:italic;z-index:3');
+      lbl.textContent=w.label;
+    }
+  });
+
+  // === PARKS — green areas with trees, benches, pathways ===
+  const parks=[
+    // Origin park
+    {x:18,y:12,w:6,h:4,color:'rgba(100,200,100,0.3)',label:'📸 Intro Park'},
+    // Work park
+    {x:65,y:20,w:5,h:3,color:'rgba(100,200,100,0.25)',label:'🎯 Work Green'},
+    // Portfolio park
+    {x:8,y:50,w:5,h:4,color:'rgba(100,200,100,0.28)',label:'🚀 Dev Garden'},
+    // Fun park — amusement area
+    {x:58,y:50,w:6,h:4,color:'rgba(200,150,255,0.2)',label:'🎡 Fun Park'},
+    // Hobby park
+    {x:50,y:88,w:7,h:4,color:'rgba(200,180,100,0.2)',label:'🎮 Hobby Field'},
+  ];
+  parks.forEach(pk=>{
+    addDiv('map-park','left:'+pk.x+'%;top:'+pk.y+'%;width:'+pk.w+'%;height:'+pk.h+'%;border-radius:40%;background:'+pk.color+';border:1px dashed rgba(100,180,100,0.3);z-index:2');
+    const lbl=addDiv('map-zone-marker','left:'+(pk.x+pk.w/2)+'%;top:'+(pk.y+pk.h/2)+'%;font-size:5px;transform:translate(-50%,-50%);color:rgba(120,180,120,0.9);z-index:3;white-space:nowrap');
+    lbl.textContent=pk.label;
   });
 
   // === SPARKLE PARTICLES (around special areas) ===
