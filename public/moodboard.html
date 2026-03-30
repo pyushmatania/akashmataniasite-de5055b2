@@ -4142,12 +4142,12 @@ function scrollToZone(e,zone){
   if(!target)return;
   const scale=(typeof MOODBOARD_VIEW_SCALE==='number'?MOODBOARD_VIEW_SCALE:0.5);
   const vp=document.getElementById('viewport');
-  // Try to pan to the actual card center for this zone
+  // Pan to the card's current visual center (skip re-anchoring to avoid measurement drift)
   const el=getZoneIntroElement(zone);
   let panX=target.x, panY=target.y;
   if(el){
-    const anchored=anchorZoneIntroCard(el,zone);
-    if(anchored){ panX=anchored.x; panY=anchored.y; }
+    const vc=_getCardVisualCenter(el);
+    if(vc){ panX=vc.x; panY=vc.y; }
   }
   const worldW=(typeof MOODBOARD_WORLD_WIDTH==='number'?MOODBOARD_WORLD_WIDTH:10000);
   const worldH=(typeof MOODBOARD_WORLD_HEIGHT==='number'?MOODBOARD_WORLD_HEIGHT:10000);
@@ -4198,66 +4198,50 @@ function _getNavOcclusionPx(){
   if(!nav)return 0;
   return nav.offsetHeight||0;
 }
-function _measureZoneIntroVisualBounds(card){
+function _getCardVisualCenter(card){
   if(!card) return null;
-  const scale=(typeof MOODBOARD_VIEW_SCALE==='number'&&MOODBOARD_VIEW_SCALE>0?MOODBOARD_VIEW_SCALE:1);
-  const prev={vis:card.style.visibility,disp:card.style.display};
-  card.style.visibility='hidden';
-  card.style.display='';
-  void card.offsetHeight;
-
-  const cardRect=card.getBoundingClientRect();
-  const baseW=card.offsetWidth||Math.round(cardRect.width/scale)||380;
-  const baseH=card.offsetHeight||Math.round(cardRect.height/scale)||420;
-  let minX=0,minY=0,maxX=baseW,maxY=baseH;
-
-  card.querySelectorAll('*').forEach(node=>{
-    if(!(node instanceof HTMLElement)) return;
-    const rect=node.getBoundingClientRect();
-    if(rect.width<=0&&rect.height<=0) return;
-    const localLeft=(rect.left-cardRect.left)/scale;
-    const localTop=(rect.top-cardRect.top)/scale;
-    const localRight=(rect.right-cardRect.left)/scale;
-    const localBottom=(rect.bottom-cardRect.top)/scale;
-    minX=Math.min(minX,localLeft);
-    minY=Math.min(minY,localTop);
-    maxX=Math.max(maxX,localRight);
-    maxY=Math.max(maxY,localBottom);
-  });
-
-  card.style.visibility=prev.vis;
-  card.style.display=prev.disp;
-
-  return {
-    minX,minY,maxX,maxY,
-    w:maxX-minX,
-    h:maxY-minY,
-    centerOffsetX:(minX+maxX)/2,
-    centerOffsetY:(minY+maxY)/2
-  };
+  var l=parseFloat(card.style.left)||0;
+  var t=parseFloat(card.style.top)||0;
+  var scale=(typeof MOODBOARD_VIEW_SCALE==='number'&&MOODBOARD_VIEW_SCALE>0?MOODBOARD_VIEW_SCALE:0.6);
+  var rect=card.getBoundingClientRect();
+  var w=Math.round(rect.width/scale);
+  var h=Math.round(rect.height/scale);
+  if(w<50) w=card.offsetWidth||380;
+  if(h<50) h=card.offsetHeight||420;
+  return {x:l+w/2, y:t+h/2, w:w, h:h, left:l, top:t};
 }
 function anchorZoneIntroCard(card,zoneOverride){
   if(!card) return null;
   const zone=zoneOverride||card.dataset.zone||'hub';
   const center=getCanonicalZoneCenter(zone);
   if(!center) return null;
-  const visualBounds=_measureZoneIntroVisualBounds(card);
-  if(!visualBounds) return null;
-  const maxLeft=Math.max(0,MOODBOARD_WORLD_WIDTH-visualBounds.maxX);
-  const maxTop=Math.max(0,MOODBOARD_WORLD_HEIGHT-visualBounds.maxY);
-  // Position so the full visual bounds center — including overflowed chrome like Work tabs — sits at the zone center
-  const left=Math.max(0,Math.min(center.x-visualBounds.centerOffsetX,maxLeft));
-  const top=Math.max(0,Math.min(center.y-visualBounds.centerOffsetY,maxTop));
+  // Measure card box dimensions
+  const prevT=card.style.transform;
+  card.style.visibility='hidden';card.style.display='';card.style.transform='none';
+  void card.offsetHeight;
+  const w=card.offsetWidth||380;
+  const h=card.offsetHeight||420;
+  card.style.visibility='';card.style.display='';card.style.transform=prevT;
+
+  // Detect top overhang from absolutely-positioned children (e.g. Work card folder tabs)
+  let topOverhang=0;
+  card.querySelectorAll('.zic-folder-tab').forEach(function(tab){
+    var t=parseFloat(getComputedStyle(tab).top);
+    if(t<0&&Math.abs(t)>topOverhang) topOverhang=Math.abs(t);
+  });
+
+  // Total visual height and visual center offset from card's CSS top
+  var totalVisualH=h+topOverhang;
+  // Visual center Y relative to card.style.top = -topOverhang + totalVisualH/2 = h/2 - topOverhang/2
+  var visualCenterOffsetY=h/2-topOverhang/2;
+
+  // Position card so its visual center sits at zone center
+  const left=Math.max(0,Math.min(MOODBOARD_WORLD_WIDTH-w,center.x-w/2));
+  const top=Math.max(0,Math.min(MOODBOARD_WORLD_HEIGHT-h,center.y-visualCenterOffsetY));
   card.style.left=left+'px';
   card.style.top=top+'px';
-  // Return the true visual center of the card in world coords
-  return {
-    left,top,
-    w:visualBounds.w,
-    h:visualBounds.h,
-    x:left+visualBounds.centerOffsetX,
-    y:top+visualBounds.centerOffsetY
-  };
+  // Return the visual center in world coords for panning
+  return {left,top,w,h:totalVisualH,x:left+w/2,y:top+visualCenterOffsetY};
 }
 function anchorAllZoneIntroCards(){
   ['hub','introduction','work','portfolio','hobby','fun'].forEach(zone=>{
@@ -4267,8 +4251,8 @@ function anchorAllZoneIntroCards(){
 }
 function getZoneIntroCenter(target){
   const el=getZoneIntroElement(target.zone);
-  const anchored=el?anchorZoneIntroCard(el,target.zone):null;
-  if(anchored)return {x:anchored.x,y:anchored.y,found:true};
+  const vc=el?_getCardVisualCenter(el):null;
+  if(vc)return {x:vc.x,y:vc.y,found:true};
   const center=getCanonicalZoneCenter(target.zone);
   if(center)return {x:center.x,y:center.y,found:false};
   return {x:target.fallback.x,y:target.fallback.y,found:false};
