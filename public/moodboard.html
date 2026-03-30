@@ -3095,57 +3095,75 @@ body.map-expanded .scroll-counter{display:none!important}
     <span class="intro-role">🧠 AI Native</span>
     <span class="intro-role">🎬 Storyteller</span>
   </div>
-  <!-- ===== REDESIGNED LOWER HALF ===== -->
+  <!-- ===== TUTORIAL LOWER HALF ===== -->
   <div class="gc-divider"></div>
   
-  <!-- Location with warm pin animation -->
-  <div class="gc-location-row">
-    <span class="gc-pin-icon">📍</span>
-    <span class="gc-loc-text">Bengaluru</span>
-    <span class="gc-loc-dot">·</span>
-    <span class="gc-loc-origin">from Jeypore, Odisha</span>
-  </div>
-
-  <!-- Journey Ticker — auto-rotating what I'm up to -->
-  <div class="gc-ticker" onclick="rotateCurrently(this.querySelector('.gc-ticker-text'),event)" data-no-sticker-drag="true">
-    <div class="gc-ticker-bar"></div>
-    <div class="gc-ticker-label">NOW PLAYING</div>
-    <div class="gc-ticker-text">Building an AI-native product OS</div>
-    <div class="gc-ticker-hint">tap to shuffle ↻</div>
-  </div>
-
-  <!-- Stats — warm glass morphism cards -->
-  <div class="gc-stats-grid">
-    <div class="gc-stat-card gc-stat-amber">
-      <span class="gc-stat-val">8+</span>
-      <span class="gc-stat-lbl">Years</span>
-      <div class="gc-stat-glow"></div>
+  <!-- How-to guide steps -->
+  <div class="gc-howto">
+    <div class="gc-howto-title">✨ HOW TO EXPLORE THIS WORLD</div>
+    
+    <div class="gc-step" onclick="this.style.background='rgba(255,213,79,0.25)';setTimeout(()=>this.style.background='',600)">
+      <div class="gc-step-icon">👆</div>
+      <div class="gc-step-text">
+        <span class="gc-step-label">Grab & Drag Anywhere</span>
+        <span class="gc-step-desc">this whole thing is a canvas — scroll around like Google Maps</span>
+      </div>
     </div>
-    <div class="gc-stat-card gc-stat-rose">
-      <span class="gc-stat-val">3</span>
-      <span class="gc-stat-lbl">Founded</span>
-      <div class="gc-stat-glow"></div>
+    
+    <div class="gc-step" onclick="this.style.background='rgba(255,183,77,0.25)';setTimeout(()=>this.style.background='',600)">
+      <div class="gc-step-icon">🗺️</div>
+      <div class="gc-step-text">
+        <span class="gc-step-label">Use the Mini Map</span>
+        <span class="gc-step-desc">bottom-left corner — your GPS for this chaos</span>
+      </div>
     </div>
-    <div class="gc-stat-card gc-stat-teal">
-      <span class="gc-stat-val">5K+</span>
-      <span class="gc-stat-lbl">Users</span>
-      <div class="gc-stat-glow"></div>
+    
+    <div class="gc-step" onclick="this.style.background='rgba(255,138,101,0.25)';setTimeout(()=>this.style.background='',600)">
+      <div class="gc-step-icon">▶️</div>
+      <div class="gc-step-text">
+        <span class="gc-step-label">Hit Play Below</span>
+        <span class="gc-step-desc">auto-tour through all zones — sit back & enjoy the ride</span>
+      </div>
     </div>
-    <div class="gc-stat-card gc-stat-gold">
-      <span class="gc-stat-val">∞</span>
-      <span class="gc-stat-lbl">Chai ☕</span>
-      <div class="gc-stat-glow"></div>
+    
+    <div class="gc-step" onclick="this.style.background='rgba(201,169,110,0.25)';setTimeout(()=>this.style.background='',600)">
+      <div class="gc-step-icon">🃏</div>
+      <div class="gc-step-text">
+        <span class="gc-step-label">Tap Any Card</span>
+        <span class="gc-step-desc">every sticker hides a story — poke around, I dare you</span>
+      </div>
     </div>
   </div>
 
-  <!-- CTA — warm pulsing explore button -->
+  <!-- Quirky callout 1 -->
+  <div class="gc-quirky" onclick="gcQuirkySwap(this,event)" data-no-sticker-drag="true">
+    <div class="gc-quirky-emoji" id="gcQuirkyEmoji">🐕</div>
+    <div class="gc-quirky-text" id="gcQuirkyText">Mr. Puchu (my dog) approved this layout.<br>He has veto power on all design decisions.</div>
+    <div class="gc-quirky-sub">tap for more hot takes</div>
+  </div>
+
+  <!-- Progress dots -->
+  <div class="gc-progress">
+    <span class="gc-dot active" title="You are here"></span>
+    <span class="gc-dot" title="Introduction"></span>
+    <span class="gc-dot" title="Work"></span>
+    <span class="gc-dot" title="Portfolio"></span>
+    <span class="gc-dot" title="Hobby"></span>
+    <span class="gc-dot" title="Fun"></span>
+    <span class="gc-dot-label">your journey</span>
+  </div>
+
+  <!-- CTA button -->
   <div class="gc-cta-wrap" data-no-sticker-drag="true">
     <div class="gc-cta-orbs">
       <span class="gc-orb gc-orb-1"></span>
       <span class="gc-orb gc-orb-2"></span>
       <span class="gc-orb gc-orb-3"></span>
     </div>
-    <span class="gc-cta-text">hit play to explore my world ✦</span>
+    <button class="gc-cta-btn" onclick="event.stopPropagation()">
+      hit play to begin <span class="gc-cta-arrow">→</span>
+    </button>
+    <div class="gc-footer-quip">warning: you might actually enjoy this 😏</div>
   </div>
 </div>
 
