@@ -5073,9 +5073,11 @@ function scrollToZone(e,zone){
   // Compute the visible viewport height (above the fixed bottom nav)
   const navH=_getNavOcclusionPx();
   const visibleH=vp.clientHeight-navH;
+  // Offset upward so card center sits in the optical center of the visible area
+  const opticalShift=navH*0.5;
   vp.scrollTo({
     left:Math.max(0,Math.min(panX*scale-vp.clientWidth/2,maxX)),
-    top:Math.max(0,Math.min(panY*scale-visibleH/2,maxY)),
+    top:Math.max(0,Math.min(panY*scale-visibleH/2-opticalShift,maxY)),
     behavior:'smooth'
   });
 
