@@ -8636,10 +8636,12 @@ function getZoneName(px,py){
 function clampSmallMapPan(rawPx,rawPy,mw,mh,cw,ch){
   let panX=mw/2-rawPx;
   let panY=mh/2-rawPy;
+  // Allow panning to show all content with generous margin
+  const margin=mw*0.15;
   if(cw<=mw)panX=(mw-cw)/2;
-  else panX=Math.max(mw-cw,Math.min(0,panX));
+  else panX=Math.max(mw-cw-margin,Math.min(margin,panX));
   if(ch<=mh)panY=(mh-ch)/2;
-  else panY=Math.max(mh-ch,Math.min(0,panY));
+  else panY=Math.max(mh-ch-margin,Math.min(margin,panY));
   return {panX,panY};
 }
 
