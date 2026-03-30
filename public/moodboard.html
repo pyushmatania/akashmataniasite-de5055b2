@@ -5349,44 +5349,36 @@ function cycleIntroCards(e){
   <div class="zp-body">
     <div class="zp-section">
       <div class="zp-showcase" id="projShowcase" style="--sc-c1:rgba(124,77,255,0.5);--sc-c2:rgba(206,147,216,0.4);--sc-glow:rgba(124,77,255,0.15)">
+        <!-- Layer 1: Ambient Glow -->
+        <div class="zp-beam-ambient"></div>
+        <!-- Layer 2: Beam Bloom -->
+        <div class="zp-beam-bloom"></div>
+        <!-- Layer 3: Beam Core -->
+        <div class="zp-beam-core"></div>
+        <!-- Corona Source -->
         <div class="zp-beam-corona"></div>
-        <div class="zp-showcase-beam-top"></div>
-        <div class="zp-showcase-beam-impact"></div>
-        <div class="zp-beam-ripple" style="--rp-dur:3s;--rp-delay:0s"></div>
-        <div class="zp-beam-ripple rp2" style="--rp-dur:3s;--rp-delay:0.8s"></div>
-        <div class="zp-beam-ripple rp3" style="--rp-dur:3s;--rp-delay:1.6s"></div>
-        <div class="zp-showcase-beam-wrap"></div>
-        <div class="zp-showcase-beam-bottom"></div>
-        <div class="zp-showcase-ambient"></div>
-        <!-- Waterfall corner glows -->
-        <div class="zp-beam-corner-l"></div>
-        <div class="zp-beam-corner-r"></div>
-        <!-- Side waterfall mist -->
-        <div class="zp-beam-side-glow-l"></div>
-        <div class="zp-beam-side-glow-r"></div>
-        <!-- Bottom convergence -->
-        <div class="zp-beam-converge"></div>
-        <!-- Energy particles along beam -->
-        <div class="zp-beam-particle" style="--p-dur:2.2s;--p-delay:0s"></div>
-        <div class="zp-beam-particle" style="--p-dur:2.8s;--p-delay:0.7s"></div>
-        <div class="zp-beam-particle" style="--p-dur:2.0s;--p-delay:1.4s"></div>
-        <div class="zp-beam-particle" style="--p-dur:3.0s;--p-delay:2.1s"></div>
-        <div class="zp-beam-particle" style="--p-dur:2.5s;--p-delay:0.4s"></div>
-        <!-- Side waterfall particles -->
-        <div class="zp-beam-particle-side" style="--ps-dur:3s;--ps-delay:0.3s"></div>
-        <div class="zp-beam-particle-side" style="--ps-dur:3.8s;--ps-delay:1.2s"></div>
-        <div class="zp-beam-particle-side right" style="--ps-dur:3.2s;--ps-delay:0.6s"></div>
-        <div class="zp-beam-particle-side right" style="--ps-dur:3.6s;--ps-delay:1.8s"></div>
+        <!-- Layer 4: Edge Glow -->
+        <div class="zp-beam-edge-glow"></div>
+        <!-- Layer 5: Light Diffusion -->
+        <div class="zp-beam-diffusion"></div>
+        <!-- Particles -->
+        <div class="zp-beam-particle" style="--p-dur:3s;--p-delay:0s"></div>
+        <div class="zp-beam-particle" style="--p-dur:3.5s;--p-delay:0.8s"></div>
+        <div class="zp-beam-particle" style="--p-dur:2.8s;--p-delay:1.6s"></div>
+        <div class="zp-beam-particle" style="--p-dur:3.2s;--p-delay:2.4s"></div>
+        <div class="zp-beam-particle-side" style="--ps-dur:4s;--ps-delay:0.3s"></div>
+        <div class="zp-beam-particle-side" style="--ps-dur:4.5s;--ps-delay:1.5s"></div>
+        <div class="zp-beam-particle-side right" style="--ps-dur:4.2s;--ps-delay:0.8s"></div>
+        <div class="zp-beam-particle-side right" style="--ps-dur:4.8s;--ps-delay:2s"></div>
+        <!-- Circuit traces -->
         <div class="zp-showcase-traces">
           <div class="zp-showcase-trace" style="top:30%;left:0;width:35%;animation-delay:0s"></div>
           <div class="zp-showcase-trace" style="top:50%;right:0;width:30%;animation-delay:1.5s"></div>
           <div class="zp-showcase-trace" style="top:70%;left:5%;width:25%;animation-delay:3s"></div>
-          <div class="zp-showcase-trace" style="top:45%;right:5%;width:20%;animation-delay:0.8s"></div>
         </div>
+        <!-- Dust -->
         <div class="zp-showcase-dust" style="width:2px;height:2px;left:15%;top:20%;--d-dur:7s;--d-delay:0s;--d-tx:10px;--d-ty:-30px;--d-tx2:-5px;--d-ty2:-60px"></div>
         <div class="zp-showcase-dust" style="width:1.5px;height:1.5px;left:75%;top:35%;--d-dur:9s;--d-delay:1s;--d-tx:-15px;--d-ty:-25px;--d-tx2:8px;--d-ty2:-50px"></div>
-        <div class="zp-showcase-dust" style="width:2.5px;height:2.5px;left:25%;top:65%;--d-dur:6s;--d-delay:2s;--d-tx:12px;--d-ty:-35px;--d-tx2:-10px;--d-ty2:-70px"></div>
-        <div class="zp-showcase-dust" style="width:1px;height:1px;left:85%;top:55%;--d-dur:8s;--d-delay:0.5s;--d-tx:-8px;--d-ty:-20px;--d-tx2:6px;--d-ty2:-45px"></div>
         <div class="zp-showcase-dust" style="width:2px;height:2px;left:40%;top:80%;--d-dur:10s;--d-delay:3s;--d-tx:5px;--d-ty:-40px;--d-tx2:-12px;--d-ty2:-80px"></div>
         <div class="zp-showcase-card" id="projCard">
           <div class="zp-sc-badge" id="scBadge">Lead PM</div>
