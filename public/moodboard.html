@@ -1836,6 +1836,46 @@ body.map-expanded .scroll-counter{display:none!important}
 @keyframes stumpFly{0%{transform:rotate(0)}30%{transform:rotate(-25deg) translateY(-8px)}60%{transform:rotate(15deg) translateY(-3px)}100%{transform:rotate(0)}}
 .zc-wicket .wk-count{font-family:'Space Grotesk',monospace;font-size:1.8rem;font-weight:900;color:#fff;margin:4px 0 2px}
 .zc-wicket .wk-label{font-family:var(--font-hand);font-size:0.68rem;color:rgba(255,255,255,0.55)}
+/* ── Hand Cricket Mini-Game ── */
+.zc-hcricket{background:linear-gradient(145deg,#0a1628,#132244);border-radius:18px;padding:16px 14px;width:260px;box-shadow:0 6px 28px rgba(0,0,0,0.45),0 0 0 1px rgba(76,175,80,0.15),inset 0 1px 0 rgba(255,255,255,0.05);text-align:center;user-select:none;position:relative;overflow:hidden}
+.zc-hcricket::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#4CAF50,#FFD700,#FF5722,#4CAF50);background-size:200% 100%;animation:hcStripe 3s linear infinite}
+@keyframes hcStripe{to{background-position:-200% 0}}
+.zc-hcricket .hc-title{font-family:var(--font-fun);font-size:0.72rem;font-weight:900;color:#4CAF50;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;position:relative;z-index:1}
+.zc-hcricket .hc-phase{font-family:var(--font-hand);font-size:0.68rem;color:rgba(255,255,255,0.5);margin-bottom:8px}
+.zc-hcricket .hc-scoreboard{display:flex;justify-content:space-around;margin-bottom:10px;padding:6px 0;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.06)}
+.zc-hcricket .hc-team{text-align:center}
+.zc-hcricket .hc-team-label{font-family:var(--font-fun);font-size:0.5rem;font-weight:800;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.08em}
+.zc-hcricket .hc-team-score{font-family:'Space Grotesk',monospace;font-size:1.3rem;font-weight:900;color:#fff}
+.zc-hcricket .hc-team-score.batting{color:#4CAF50;text-shadow:0 0 12px rgba(76,175,80,0.4)}
+.zc-hcricket .hc-vs{font-family:var(--font-fun);font-size:0.5rem;color:rgba(255,255,255,0.2);align-self:center}
+.zc-hcricket .hc-hands{display:flex;justify-content:center;gap:12px;margin-bottom:10px;min-height:56px;align-items:center}
+.zc-hcricket .hc-hand{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-family:'Courier New',monospace;font-weight:900;border:2px solid rgba(255,255,255,0.1);transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s}
+.zc-hcricket .hc-hand.you{background:rgba(76,175,80,0.12);color:#4CAF50}
+.zc-hcricket .hc-hand.cpu{background:rgba(255,87,34,0.12);color:#FF5722}
+.zc-hcricket .hc-hand.match{border-color:#FF1744!important;box-shadow:0 0 16px rgba(255,23,68,0.4);animation:hcShake 0.4s ease}
+.zc-hcricket .hc-hand.noball{border-color:#FFD700!important;box-shadow:0 0 12px rgba(255,215,0,0.3)}
+@keyframes hcShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.zc-hcricket .hc-msg{font-family:var(--font-hand);font-size:0.82rem;color:rgba(255,255,255,0.7);min-height:1.4em;margin-bottom:8px;transition:opacity 0.15s}
+.zc-hcricket .hc-msg.out{color:#FF1744;font-weight:700;font-size:0.9rem}
+.zc-hcricket .hc-msg.win{color:#FFD700;font-weight:700;font-size:0.9rem}
+.zc-hcricket .hc-msg.noball{color:#FFD700}
+.zc-hcricket .hc-btns{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-bottom:6px}
+.zc-hcricket .hc-btn{width:36px;height:36px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:#fff;font-family:'Courier New',monospace;font-size:0.85rem;font-weight:900;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;position:relative}
+.zc-hcricket .hc-btn:hover{background:rgba(76,175,80,0.15);border-color:rgba(76,175,80,0.4);transform:scale(1.1)}
+.zc-hcricket .hc-btn:active{transform:scale(0.9)}
+.zc-hcricket .hc-btn .hc-pixel{image-rendering:pixelated;width:22px;height:22px}
+.zc-hcricket .hc-btn-label{position:absolute;bottom:-1px;right:2px;font-size:0.4rem;color:rgba(255,255,255,0.3);font-family:var(--font-fun)}
+.zc-hcricket .hc-history{display:flex;gap:3px;justify-content:center;flex-wrap:wrap;margin-top:6px;min-height:16px}
+.zc-hcricket .hc-ball{width:16px;height:16px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.45rem;font-family:var(--font-fun);font-weight:900;animation:hcBallPop 0.3s ease}
+.zc-hcricket .hc-ball.run{background:rgba(76,175,80,0.2);color:#4CAF50}
+.zc-hcricket .hc-ball.six{background:rgba(255,215,0,0.25);color:#FFD700}
+.zc-hcricket .hc-ball.nb{background:rgba(255,215,0,0.15);color:#FFD700;font-size:0.35rem}
+.zc-hcricket .hc-ball.out{background:rgba(255,23,68,0.2);color:#FF1744}
+@keyframes hcBallPop{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+.zc-hcricket .hc-record{font-family:var(--font-fun);font-size:0.48rem;color:rgba(255,255,255,0.25);margin-top:6px;text-transform:uppercase;letter-spacing:0.06em}
+.zc-hcricket .hc-start-btn{background:linear-gradient(135deg,#4CAF50,#2E7D32);border:none;color:#fff;font-family:var(--font-fun);font-size:0.65rem;font-weight:800;padding:8px 20px;border-radius:10px;cursor:pointer;text-transform:uppercase;letter-spacing:0.06em;transition:transform 0.15s,box-shadow 0.15s;box-shadow:0 4px 16px rgba(76,175,80,0.3)}
+.zc-hcricket .hc-start-btn:hover{transform:scale(1.05);box-shadow:0 6px 24px rgba(76,175,80,0.45)}
+.zc-hcricket .hc-start-btn:active{transform:scale(0.95)}
 
 
 @keyframes termBlink{0%,100%{opacity:1}50%{opacity:0}}
