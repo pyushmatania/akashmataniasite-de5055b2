@@ -11497,7 +11497,7 @@ function ensureCompanionStickers(force){
                   return;
                 } else {
                   youScore+=pv;youScoreEl.textContent=String(youScore);popScore(youScoreEl);
-                  if(pv===6){sfxSix();showFlash('six');showBoundaryText('SIX!','show-six');youHandEl.classList.add('six-glow');commentaryEl.textContent=rndFrom(batComm[6]);commentaryEl.className='hc-commentary boundary';addBall('six','6');setTimeout(function(){youHandEl.classList.remove('six-glow');},800);}
+                  if(pv===6){sfxSix();showFlash('six');showBoundaryText('SIX!','show-six');spawnFireworks();youHandEl.classList.add('six-glow');commentaryEl.textContent=rndFrom(batComm[6]);commentaryEl.className='hc-commentary boundary';addBall('six','6');setTimeout(function(){youHandEl.classList.remove('six-glow');},800);}
                   else if(pv===4){sfxFour();showFlash('four');showBoundaryText('FOUR!','show-four');youHandEl.classList.add('boundary-glow');commentaryEl.textContent=rndFrom(batComm[4]);commentaryEl.className='hc-commentary boundary';addBall('four','4');setTimeout(function(){youHandEl.classList.remove('boundary-glow');},600);}
                   else{commentaryEl.textContent=rndFrom(batComm[pv]||['+'+pv]);commentaryEl.className='hc-commentary';addBall('run',String(pv));}
                 }
