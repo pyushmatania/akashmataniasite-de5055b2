@@ -6346,7 +6346,7 @@ vp.addEventListener('scroll',()=>{
     if(typeof updMap==='function'&&typeof mapTransitioning!=='undefined'&&!mapTransitioning){
       updMap();
       if(typeof mmExp!=='undefined'&&!mmExp){
-        clearTimeout(window._mapScrollTimer);window._mapScrollTimer=setTimeout(drawMap,320);
+        clearTimeout(window._mapScrollTimer);window._mapScrollTimer=setTimeout(drawMap,600);
       }
     }
   });
