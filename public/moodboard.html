@@ -8582,6 +8582,12 @@ function mapZoom(dir){
   mapCanvas.style.height=ch+'px';
   mapCanvas.style.transform='none';
   const ox=drawMap._ox,oy=drawMap._oy;
+  // Force redraw decoration layer (boundaries, signposts, zone labels) at new scale
+  _decsCW=-1;_decsCH=-1;
+  const oldDec=mapCanvas.querySelector('.map-dec-layer');
+  if(oldDec)oldDec.remove();
+  addMapDecorations(cw,ch);
+  _decsCW=Math.round(cw);_decsCH=Math.round(ch);
   invalidateMapCloneCache(true);
   renderVisibleClones(newSc,ox,oy,cw,ch);
   updMap();
