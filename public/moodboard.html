@@ -6982,7 +6982,8 @@ function spawnConfetti(x,y){
   if(document.querySelectorAll('.confetti').length>15)return;
   _lastConfettiTime=now;
   const els=[];
-  for(let i=0;i<8;i++){
+  const confettiCount=IS_LOW_POWER_DEVICE?4:8;
+  for(let i=0;i<confettiCount;i++){
     const c=document.createElement('div');
     c.className='confetti';
     c.textContent=confC[Math.floor(Math.random()*confC.length)];
