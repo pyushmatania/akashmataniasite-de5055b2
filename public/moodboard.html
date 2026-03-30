@@ -3547,16 +3547,6 @@ body.map-expanded .scroll-counter{display:none!important}
 }
 .zone-panel.open{transform:translateY(0)}
 
-/* ═══ STUDIO LIGHTING EFFECTS ═══ */
-
-/* Animated gradient glow border on zone panels */
-.zone-panel::before{
-  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
-  opacity:0;transition:opacity 0.8s 0.3s;
-}
-.zone-panel.open::before{opacity:1}
-
-/* Studio effects removed */
 
 /* Project detail basic styles kept, effects removed */
 .zp-proj-detail{position:relative;overflow:hidden}
