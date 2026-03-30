@@ -4188,8 +4188,13 @@ function anchorZoneIntroCard(card,zoneOverride){
   const zone=zoneOverride||card.dataset.zone||'hub';
   const center=getCanonicalZoneCenter(zone);
   if(!center) return null;
+  // Force layout to get accurate dimensions
+  const prevVis=card.style.visibility;
+  const prevDisp=card.style.display;
+  card.style.visibility='hidden';card.style.display='';
   const w=card.offsetWidth||380;
   const h=card.offsetHeight||420;
+  card.style.visibility=prevVis;card.style.display=prevDisp;
   const left=Math.max(0,Math.min(MOODBOARD_WORLD_WIDTH-w,center.x-w/2));
   const top=Math.max(0,Math.min(MOODBOARD_WORLD_HEIGHT-h,center.y-h/2));
   card.style.left=left+'px';
