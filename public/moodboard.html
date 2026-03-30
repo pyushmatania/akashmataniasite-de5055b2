@@ -71,7 +71,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 }
 .sticker *{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 
-.sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
+.sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50;transition:filter 0.15s,transform 0.15s}
 .sticker:active{cursor:grabbing}
 .sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important;will-change:transform,filter}
 /* Pause all animations inside off-screen elements — applied by IntersectionObserver */
