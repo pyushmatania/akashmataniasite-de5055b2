@@ -6395,7 +6395,7 @@ function auditStickerIntegrity(){
 // Add interactive badges to interactive stickers (including onclick-based ones)
 document.querySelectorAll('.sticker-counter,.sticker-mood,.sticker-scratch,.sticker-progress,.sticker-fortune,.sticker[onclick],.sticker-meme[onclick]').forEach(s=>{
   if(s.querySelector('.interactive-badge'))return; // avoid duplicates
-  s.style.position='relative';
+  if(s.style.position==='relative') s.style.position='';
   const badge=document.createElement('div');
   badge.className='interactive-badge';
   badge.textContent='🎮 PLAY';
@@ -10780,7 +10780,7 @@ function buildZoneCardHTML(meta){return '';}
   document.querySelectorAll(interactiveSelectors).forEach(s=>{
     if(s.classList.contains('has-drag-handle'))return;
     s.classList.add('has-drag-handle');
-    s.style.position='relative';
+    if(s.style.position==='relative') s.style.position='';
     const handle=document.createElement('div');
     handle.className='sticker-drag-handle';
     handle.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg>';
