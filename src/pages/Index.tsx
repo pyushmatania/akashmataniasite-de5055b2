@@ -1,45 +1,79 @@
-import { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useMemo, useRef, useState } from "react";
+
+const MOODBOARD_SRC = "/moodboard.html";
+const IFRAME_LOAD_TIMEOUT_MS = 12000;
+const MAX_IFRAME_RETRIES = 1;
 
 const Index = () => {
   const [loaded, setLoaded] = useState(false);
-  const moodboardSrc = useMemo(() => `/moodboard.html?v=${Date.now()}`, []);
+  const [attempt, setAttempt] = useState(0);
+  const loadTimerRef = useRef<number | null>(null);
+
+  const moodboardSrc = useMemo(
+    () => (attempt === 0 ? MOODBOARD_SRC : `${MOODBOARD_SRC}?retry=${attempt}`),
+    [attempt],
+  );
+
+  useEffect(() => {
+    setLoaded(false);
+
+    if (loadTimerRef.current !== null) {
+      window.clearTimeout(loadTimerRef.current);
+    }
+
+    loadTimerRef.current = window.setTimeout(() => {
+      setAttempt((current) => (current < MAX_IFRAME_RETRIES ? current + 1 : current));
+    }, IFRAME_LOAD_TIMEOUT_MS);
+
+    return () => {
+      if (loadTimerRef.current !== null) {
+        window.clearTimeout(loadTimerRef.current);
+      }
+    };
+  }, [attempt]);
+
+  const handleLoad = () => {
+    if (loadTimerRef.current !== null) {
+      window.clearTimeout(loadTimerRef.current);
+      loadTimerRef.current = null;
+    }
+
+    setLoaded(true);
+  };
+
+  const handleError = () => {
+    if (loadTimerRef.current !== null) {
+      window.clearTimeout(loadTimerRef.current);
+      loadTimerRef.current = null;
+    }
+
+    setAttempt((current) => (current < MAX_IFRAME_RETRIES ? current + 1 : current));
+  };
 
   return (
-    <motion.div
-      className="w-full h-screen relative"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
-    >
-      <AnimatePresence>
-        {!loaded && (
-          <motion.div
-            className="absolute inset-0 flex items-center justify-center bg-[#FAF8F5] z-10"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+    <div className="relative h-screen w-full">
+      {!loaded && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-background">
+          <p
+            className="text-sm text-muted-foreground"
+            style={{ fontFamily: "system-ui" }}
           >
-            <motion.p
-              style={{ fontFamily: "system-ui", color: "#8A8A8A", fontSize: 14 }}
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-            >
-              Loading moodboard…
-            </motion.p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            Loading moodboard…
+          </p>
+        </div>
+      )}
+
       <iframe
+        key={attempt}
         src={moodboardSrc}
         title="Akash's Moodboard"
-        className="w-full h-screen border-0"
+        className="h-screen w-full border-0"
         style={{ overflow: "hidden", opacity: loaded ? 1 : 0, transition: "opacity 0.4s" }}
-        onLoad={() => setLoaded(true)}
+        onLoad={handleLoad}
+        onError={handleError}
         allow="autoplay"
       />
-    </motion.div>
+    </div>
   );
 };
 
