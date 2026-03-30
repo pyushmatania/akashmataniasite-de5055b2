@@ -9791,8 +9791,19 @@ function mapZoom(dir){
   _decsCW=Math.round(cw);_decsCH=Math.round(ch);
   invalidateMapCloneCache(true);
   renderVisibleClones(newSc,ox,oy,cw,ch);
+  // Preserve player world position across zoom
+  const oldPlayerLeft=parseFloat(mapPlayer.style.left)||0;
+  const oldPlayerTop=parseFloat(mapPlayer.style.top)||0;
+  const playerWorldX=oldPlayerLeft/factor;
+  const playerWorldY=oldPlayerTop/factor;
+  // Scroll to keep center point stable
+  const newScrollLeft=cx*factor-mmInner.clientWidth/2;
+  const newScrollTop=cy*factor-mmInner.clientHeight/2;
+  mmInner.scrollTo({left:newScrollLeft,top:newScrollTop});
+  // Reposition player at same world coordinate with new scale
+  mapPlayer.style.left=(playerWorldX*factor)+'px';
+  mapPlayer.style.top=(playerWorldY*factor)+'px';
   updMap();
-  mmInner.scrollTo({left:cx*factor-mmInner.clientWidth/2,top:cy*factor-mmInner.clientHeight/2});
 }
 
 function showNav(tx,ty){
