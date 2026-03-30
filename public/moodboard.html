@@ -11059,6 +11059,8 @@ function ensureCompanionStickers(force){
           b.className='hc-ball '+type;
           b.textContent=text;
           histEl.appendChild(b);
+          totalBalls++;
+          updateStats();
         }
 
         // Visual effects
