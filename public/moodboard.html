@@ -3931,7 +3931,55 @@ body.map-expanded .scroll-counter{display:none!important}
 .zp-hobby{--zp-glow:rgba(255,140,0,0.5);--zp-glow2:rgba(255,183,77,0.3)}
 .zp-fun{--zp-glow:rgba(239,83,80,0.5);--zp-glow2:rgba(255,138,128,0.3)}
 
-/* ═══ PROJECT DETAIL — IMMERSIVE GALLERY ═══ */
+/* ═══ ZONE PANEL DOODLES & HIGHLIGHTS ═══ */
+
+/* Brush highlight — colored bar behind text */
+.zp-hl-brush{position:relative;display:inline;padding:2px 6px}
+.zp-hl-brush::before{content:'';position:absolute;left:-4px;right:-4px;bottom:2px;top:45%;z-index:-1;border-radius:4px 12px 6px 14px;transform:rotate(-0.8deg);background:var(--hl-c,rgba(255,255,255,0.2))}
+
+/* Wavy underline */
+.zp-hl-wavy{position:relative;display:inline;padding-bottom:5px}
+.zp-hl-wavy::after{content:'';position:absolute;left:0;right:0;bottom:0;height:6px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 8'%3E%3Cpath d='M0 4 Q5 0 10 4 Q15 8 20 4 Q25 0 30 4 Q35 8 40 4' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' opacity='0.5'/%3E%3C/svg%3E");background-repeat:repeat-x;background-size:40px 6px;opacity:0.6;filter:hue-rotate(0deg)}
+.zone-panel .zp-hl-wavy::after{filter:drop-shadow(0 0 3px var(--hw-c,rgba(255,255,255,0.3)))}
+
+/* Doodle base */
+.zp-doodle{display:inline-block;vertical-align:middle;margin-left:4px;position:relative;top:-2px}
+.zp-doodle svg{overflow:visible}
+
+/* Arrow doodle with draw animation */
+.zp-doodle-arrow{color:var(--dd-c,rgba(255,255,255,0.5))}
+.zp-doodle-arrow svg path{stroke-dasharray:60;stroke-dashoffset:60}
+.zone-panel.open .zp-doodle-arrow svg path{animation:zpDoodleDraw 1s ease-out 0.5s forwards}
+@keyframes zpDoodleDraw{from{stroke-dashoffset:60}to{stroke-dashoffset:0}}
+
+/* Stars doodle with twinkle */
+.zp-doodle-stars polygon:nth-child(1){animation:zpTwinkle1 2.5s ease-in-out infinite}
+.zp-doodle-stars polygon:nth-child(2){animation:zpTwinkle2 3s ease-in-out 0.4s infinite}
+@keyframes zpTwinkle1{0%,100%{opacity:0.5;transform:scale(0.85)}50%{opacity:1;transform:scale(1.12)}}
+@keyframes zpTwinkle2{0%,100%{opacity:0.6;transform:scale(0.9)}50%{opacity:1;transform:scale(1.15)}}
+
+/* Inline doodle (next to section labels) */
+.zp-doodle-inline{display:inline-block;vertical-align:middle;margin-left:6px;opacity:0.7}
+.zp-doodle-spin svg{animation:zpSpin 8s linear infinite}
+@keyframes zpSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* Floating doodle decorations */
+.zp-doodle-float{position:absolute;pointer-events:none;z-index:0;animation:zpFloat 6s ease-in-out infinite}
+@keyframes zpFloat{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-8px) rotate(var(--r,0deg))}}
+
+/* Quote card */
+.zp-quote-card{background:var(--qc-c,rgba(255,255,255,0.06));border:1.5px solid var(--qc-bc,rgba(255,255,255,0.12));border-radius:16px;padding:20px 22px;position:relative}
+.zp-quote-mark{font-size:1.8rem;line-height:1;margin-bottom:8px}
+.zp-quote-text{font-family:var(--font-hand);font-size:1rem;color:rgba(255,255,255,0.55);line-height:1.65;font-style:italic;margin:0}
+
+/* Highlight cards (portfolio) */
+.zp-highlight-cards{display:flex;flex-direction:column;gap:10px}
+.zp-hl-card{background:var(--hlc-c,rgba(255,255,255,0.06));border:1.5px solid var(--hlc-bc,rgba(255,255,255,0.12));border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px;transition:transform 0.2s,border-color 0.2s;cursor:default}
+.zp-hl-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.25)}
+.zp-hl-card-icon{font-size:1.6rem;flex-shrink:0}
+.zp-hl-card-title{font-family:var(--font-fun);font-size:0.85rem;font-weight:700;color:rgba(255,255,255,0.85);display:block}
+.zp-hl-card-stat{font-family:var(--font-sans);font-size:0.7rem;color:rgba(255,255,255,0.4);display:block;margin-top:2px}
+
 
 /* Gallery room — no perspective (iOS iframe compat) */
 .zp-proj-detail .gallery-room{
