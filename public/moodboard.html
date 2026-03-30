@@ -7878,11 +7878,11 @@ function drawMap(){
     lblSvg.setAttribute('preserveAspectRatio','none');
     lblSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:4;overflow:visible';
     const smLabels=[
-      {x:1750,y:1400,text:'INTRO',color:'rgba(0,255,60,0.08)',rot:-18},
-      {x:5250,y:1400,text:'WORK',color:'rgba(0,255,60,0.06)',rot:-15},
-      {x:1750,y:3600,text:'PORTFOLIO',color:'rgba(0,255,60,0.06)',rot:-25},
-      {x:5250,y:3600,text:'FUN',color:'rgba(0,255,60,0.06)',rot:-20},
-      {x:3500,y:5800,text:'HOBBY',color:'rgba(0,255,60,0.06)',rot:-18},
+      {x:1750,y:1400,text:'INTRO',color:'rgba(0,188,212,0.25)',rot:-18},
+      {x:5250,y:1400,text:'WORK',color:'rgba(229,57,53,0.20)',rot:-15},
+      {x:1750,y:3600,text:'PORTFOLIO',color:'rgba(66,165,245,0.20)',rot:-25},
+      {x:5250,y:3600,text:'FUN',color:'rgba(171,71,188,0.20)',rot:-20},
+      {x:3500,y:5800,text:'HOBBY',color:'rgba(255,152,0,0.20)',rot:-18},
     ];
     smLabels.forEach(l=>{
       const t=document.createElementNS('http://www.w3.org/2000/svg','text');
