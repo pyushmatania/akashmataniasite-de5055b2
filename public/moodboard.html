@@ -4378,515 +4378,58 @@ body.map-expanded .scroll-counter{display:none!important}
 
 /* ── PORTFOLIO PANEL: project grid ── */
 /* ═══ 3D FLOATING PROJECT SHOWCASE ═══ */
-.zp-showcase{
-  position:relative;width:100%;min-height:520px;
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;margin-bottom:24px;
-  background:radial-gradient(ellipse at 50% 40%,#0c0a1a 0%,#060412 100%);
-  border-radius:20px;
-}
-
-/* Circuit board lines background */
-.zp-showcase::before{
-  content:'';position:absolute;inset:0;
-  background:
-    linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px),
-    linear-gradient(0deg,rgba(255,255,255,0.012) 1px,transparent 1px);
-  background-size:60px 60px;
-  mask-image:radial-gradient(ellipse at 50% 50%,black 30%,transparent 80%);
-  -webkit-mask-image:radial-gradient(ellipse at 50% 50%,black 30%,transparent 80%);
-}
-
-/* ═══ HERO LIGHT BEAM — Liquid Physics ═══ */
-
-/* ═══ CORONA SOURCE — volumetric light origin ═══ */
-.zp-beam-corona{
-  position:absolute;top:-40px;left:50%;transform:translateX(-50%);
-  width:160px;height:160px;z-index:10;pointer-events:none;
-}
-/* Hot plasma core */
-.zp-beam-corona::before{
-  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:16px;height:16px;border-radius:50%;
-  background:radial-gradient(circle,#fff 0%,rgba(255,255,255,0.95) 30%,rgba(220,210,255,0.7) 55%,rgba(160,140,255,0.3) 80%,transparent 100%);
-  box-shadow:
-    0 0 4px 2px #fff,
-    0 0 10px 5px rgba(255,255,255,0.9),
-    0 0 25px 10px rgba(240,230,255,0.6),
-    0 0 50px 20px rgba(200,180,255,0.35),
-    0 0 80px 35px rgba(160,140,255,0.15),
-    0 0 120px 50px rgba(130,110,255,0.06);
-  animation:coronaPulse 4s ease-in-out infinite;
-}
-/* Anamorphic lens flare — horizontal streak */
-.zp-beam-corona::after{
-  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:260px;height:260px;
-  background:
-    radial-gradient(ellipse 3px 120px at center,rgba(255,255,255,0.5) 0%,rgba(200,180,255,0.15) 35%,transparent 65%),
-    radial-gradient(ellipse 140px 2px at center,rgba(255,255,255,0.3) 0%,rgba(200,180,255,0.08) 45%,transparent 75%),
-    radial-gradient(ellipse 60px 1px at center,rgba(180,160,255,0.15) 0%,transparent 60%);
-  filter:blur(1px);
-  animation:coronaFlare 5s ease-in-out infinite;
-}
-@keyframes coronaPulse{
-  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.9}
-  25%{transform:translate(-50%,-50%) scale(1.15);opacity:1}
-  50%{transform:translate(-50%,-50%) scale(1.05);opacity:0.95}
-  75%{transform:translate(-50%,-50%) scale(1.25);opacity:1}
-}
-@keyframes coronaFlare{
-  0%,100%{transform:translate(-50%,-50%) rotate(0deg) scale(1);opacity:0.5}
-  33%{transform:translate(-50%,-50%) rotate(2deg) scale(1.08);opacity:0.85}
-  66%{transform:translate(-50%,-50%) rotate(-1.5deg) scale(1.02);opacity:0.7}
-}
-
-/* ═══ VOLUMETRIC BEAM — realistic light column ═══ */
-.zp-showcase-beam-top{
-  position:absolute;top:-40px;left:50%;transform:translateX(-50%);
-  width:4px;height:34%;z-index:6;pointer-events:none;
-  background:linear-gradient(180deg,
-    rgba(255,255,255,1) 0%,rgba(255,255,255,0.98) 10%,
-    rgba(255,255,255,0.9) 30%,rgba(245,240,255,0.8) 55%,
-    rgba(230,220,255,0.65) 75%,rgba(200,185,255,0.45) 100%);
-  border-radius:2px;
-  animation:beamCore 3s ease-in-out infinite;
-}
-/* Volumetric scatter — wide atmospheric glow */
-.zp-showcase-beam-top::before{
-  content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);
-  width:90px;height:115%;
-  background:linear-gradient(180deg,
-    rgba(255,255,255,0.25) 0%,rgba(240,235,255,0.18) 15%,
-    rgba(200,185,255,0.1) 40%,rgba(170,150,255,0.05) 70%,
-    rgba(140,120,255,0.02) 100%);
-  filter:blur(20px);
-  animation:beamScatter 3s ease-in-out 0.2s infinite;
-}
-/* Caustic cone — light widens realistically before impact */
-.zp-showcase-beam-top::after{
-  content:'';position:absolute;bottom:-70px;left:50%;transform:translateX(-50%);
-  width:240px;height:130px;
-  background:radial-gradient(ellipse 90% 75% at 50% 0%,
-    rgba(255,255,255,0.3) 0%,rgba(240,235,255,0.18) 18%,
-    rgba(210,200,255,0.08) 40%,rgba(170,155,255,0.03) 65%,transparent 80%);
-  filter:blur(6px);
-  clip-path:polygon(48% 0%,52% 0%,92% 100%,8% 100%);
-  animation:beamCaustic 3s ease-in-out infinite;
-}
-@keyframes beamCore{
-  0%,100%{opacity:0.9;width:4px;filter:blur(0px)}
-  20%{opacity:1;width:5px;filter:blur(0.3px)}
-  50%{opacity:0.85;width:3px;filter:blur(0px)}
-  80%{opacity:1;width:4.5px;filter:blur(0.2px)}
-}
-@keyframes beamScatter{
-  0%,100%{opacity:0.6;width:90px}
-  35%{opacity:1;width:100px}
-  65%{opacity:0.7;width:85px}
-}
-@keyframes beamCaustic{
-  0%,100%{opacity:0.6;transform:translateX(-50%) scaleX(1)}
-  30%{opacity:0.9;transform:translateX(-50%) scaleX(1.05)}
-  60%{opacity:0.7;transform:translateX(-50%) scaleX(0.97)}
-}
-
-/* ═══ IMPACT ZONE — light hitting card surface ═══ */
-.zp-showcase-beam-impact{
-  position:absolute;z-index:8;pointer-events:none;
-  top:calc(50% - 194px);left:50%;transform:translateX(-50%);
-  width:300px;height:45px;
-}
-/* Bright caustic hotspot */
-.zp-showcase-beam-impact::before{
-  content:'';position:absolute;top:-3px;left:50%;transform:translateX(-50%);
-  width:80px;height:14px;border-radius:50%;
-  background:radial-gradient(ellipse,
-    rgba(255,255,255,1) 0%,rgba(255,255,255,0.85) 25%,
-    rgba(240,235,255,0.5) 50%,rgba(210,200,255,0.15) 75%,transparent 100%);
-  filter:blur(2px);
-  animation:impactHot 3.5s ease-in-out infinite;
-}
-/* Diffuse light spread across surface */
-.zp-showcase-beam-impact::after{
-  content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);
-  width:300px;height:35px;border-radius:50%;
-  background:radial-gradient(ellipse 100% 70%,
-    rgba(255,255,255,0.35) 0%,rgba(230,225,255,0.18) 25%,
-    rgba(200,190,255,0.07) 50%,rgba(170,155,255,0.02) 75%,transparent 90%);
-  filter:blur(8px);
-  animation:impactDiffuse 3.5s ease-in-out 0.15s infinite;
-}
-@keyframes impactHot{
-  0%,100%{opacity:0.7;width:80px;height:14px}
-  30%{opacity:1;width:95px;height:17px}
-  60%{opacity:0.8;width:85px;height:13px}
-}
-@keyframes impactDiffuse{
-  0%,100%{opacity:0.45;width:300px}
-  35%{opacity:0.8;width:320px}
-  70%{opacity:0.5;width:290px}
-}
-
-/* ═══ EDGE FLOW — light wrapping card borders ═══ */
-.zp-showcase-beam-wrap{
-  position:absolute;top:calc(50% - 192px);left:50%;transform:translateX(-50%);
-  width:286px;height:388px;z-index:7;pointer-events:none;border-radius:22px;
-}
-/* Left edge — soft light falloff */
-.zp-showcase-beam-wrap::before{
-  content:'';position:absolute;top:-2px;left:-4px;
-  width:5px;height:100%;border-radius:3px;
-  background:linear-gradient(180deg,
-    rgba(255,255,255,0.65) 0%,
-    rgba(255,255,255,0.4) 6%,
-    rgba(230,225,255,0.22) 15%,
-    rgba(200,190,255,0.12) 30%,
-    rgba(170,155,255,0.06) 50%,
-    rgba(140,120,255,0.02) 70%,
-    transparent 88%);
-  filter:blur(1px);
-  animation:edgeFlow 4s ease-in-out infinite;
-}
-/* Right edge */
-.zp-showcase-beam-wrap::after{
-  content:'';position:absolute;top:-2px;right:-4px;
-  width:5px;height:100%;border-radius:3px;
-  background:linear-gradient(180deg,
-    rgba(255,255,255,0.65) 0%,
-    rgba(255,255,255,0.4) 6%,
-    rgba(230,225,255,0.22) 15%,
-    rgba(200,190,255,0.12) 30%,
-    rgba(170,155,255,0.06) 50%,
-    rgba(140,120,255,0.02) 70%,
-    transparent 88%);
-  filter:blur(1px);
-  animation:edgeFlow 4s ease-in-out 0.25s infinite;
-}
-@keyframes edgeFlow{
-  0%,100%{opacity:0.45}
-  30%{opacity:0.9}
-  60%{opacity:0.6}
-}
-
-/* Atmospheric side glow — light scattering */
-.zp-beam-side-glow-l,.zp-beam-side-glow-r{
-  position:absolute;top:calc(50% - 200px);z-index:4;pointer-events:none;
-  width:45px;height:410px;filter:blur(25px);
-  animation:sideScatter 5s ease-in-out infinite;
-}
-.zp-beam-side-glow-l{
-  left:calc(50% - 168px);
-  background:linear-gradient(180deg,rgba(210,200,255,0.15) 0%,rgba(180,165,255,0.06) 35%,rgba(150,130,255,0.02) 65%,transparent 85%);
-}
-.zp-beam-side-glow-r{
-  right:calc(50% - 168px);
-  background:linear-gradient(180deg,rgba(210,200,255,0.15) 0%,rgba(180,165,255,0.06) 35%,rgba(150,130,255,0.02) 65%,transparent 85%);
-  animation-delay:0.35s;
-}
-@keyframes sideScatter{0%,100%{opacity:0.3}40%{opacity:0.65}75%{opacity:0.4}}
-
-/* Corner caustics — light bending around top edges */
-.zp-beam-corner-l,.zp-beam-corner-r{
-  position:absolute;top:calc(50% - 198px);z-index:9;pointer-events:none;width:55px;height:55px;
-}
-.zp-beam-corner-l{
-  left:calc(50% - 150px);
-  background:radial-gradient(circle at 100% 0%,rgba(255,255,255,0.55) 0%,rgba(235,230,255,0.2) 30%,rgba(190,175,255,0.06) 60%,transparent 80%);
-  filter:blur(3px);border-radius:22px 0 0 0;
-  animation:cornerCaustic 4s ease-in-out infinite;
-}
-.zp-beam-corner-r{
-  right:calc(50% - 150px);
-  background:radial-gradient(circle at 0% 0%,rgba(255,255,255,0.55) 0%,rgba(235,230,255,0.2) 30%,rgba(190,175,255,0.06) 60%,transparent 80%);
-  filter:blur(3px);border-radius:0 22px 0 0;
-  animation:cornerCaustic 4s ease-in-out 0.2s infinite;
-}
-@keyframes cornerCaustic{
-  0%,100%{opacity:0.45;transform:scale(1)}
-  35%{opacity:0.9;transform:scale(1.12)}
-  65%{opacity:0.6;transform:scale(1.03)}
-}
-
-/* Bottom convergence — light recollecting */
-.zp-beam-converge{
-  position:absolute;z-index:8;pointer-events:none;
-  top:calc(50% + 196px);left:50%;transform:translateX(-50%);
-  width:70px;height:14px;border-radius:50%;
-  background:radial-gradient(ellipse,
-    rgba(255,255,255,0.5) 0%,rgba(235,230,255,0.25) 30%,
-    rgba(190,175,255,0.08) 60%,transparent 85%);
-  filter:blur(3px);
-  animation:convergeLight 4s ease-in-out 0.3s infinite;
-}
-.zp-beam-converge::before{
-  content:'';position:absolute;top:-5px;left:50%;transform:translateX(-50%);
-  width:180px;height:22px;border-radius:50%;
-  background:radial-gradient(ellipse,rgba(200,190,255,0.08) 0%,transparent 70%);filter:blur(12px);
-}
-@keyframes convergeLight{
-  0%,100%{opacity:0.4;width:70px}
-  35%{opacity:0.85;width:100px}
-  65%{opacity:0.55;width:80px}
-}
-
-/* ═══ BOTTOM BEAM — continuing light column ═══ */
-.zp-showcase-beam-bottom{
-  position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);
-  width:3px;height:28%;z-index:6;pointer-events:none;
-  background:linear-gradient(0deg,
-    rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.85) 15%,
-    rgba(240,235,255,0.6) 40%,rgba(210,200,255,0.3) 70%,transparent 100%);
-  border-radius:2px;
-  animation:beamBottomCore 4s ease-in-out 0.4s infinite;
-}
-.zp-showcase-beam-bottom::before{
-  content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
-  width:50px;height:100%;
-  background:linear-gradient(0deg,rgba(255,255,255,0.08) 0%,rgba(190,175,255,0.04) 50%,transparent 100%);filter:blur(18px);
-}
-/* Bottom caustic cone */
-.zp-showcase-beam-bottom::after{
-  content:'';position:absolute;top:-70px;left:50%;transform:translateX(-50%);
-  width:200px;height:110px;
-  background:radial-gradient(ellipse 90% 75% at 50% 100%,
-    rgba(255,255,255,0.2) 0%,rgba(220,215,255,0.1) 22%,
-    rgba(180,170,255,0.04) 50%,transparent 75%);
-  filter:blur(6px);
-  clip-path:polygon(8% 0%,92% 0%,52% 100%,48% 100%);
-}
-@keyframes beamBottomCore{
-  0%,100%{opacity:0.6;width:3px}
-  30%{opacity:0.9;width:3.5px}
-  60%{opacity:0.7;width:2.5px}
-}
-
-/* ═══ LIGHT PARTICLES — photon physics ═══ */
-.zp-beam-particle{
-  position:absolute;left:50%;width:3px;height:3px;border-radius:50%;
-  background:rgba(255,255,255,0.9);
-  box-shadow:0 0 6px 2px rgba(240,235,255,0.7),0 0 15px 5px rgba(200,190,255,0.25);
-  z-index:9;pointer-events:none;
-  animation:photonFall var(--p-dur,3.2s) cubic-bezier(0.25,0.1,0.25,1) var(--p-delay,0s) infinite;
-}
-@keyframes photonFall{
-  0%{top:-4%;opacity:0;transform:translateX(-50%) scale(0.4);width:3px;height:3px}
-  10%{top:8%;opacity:1;transform:translateX(-50%) scale(1);width:3px;height:5px}
-  20%{top:18%;opacity:0.95;transform:translateX(-50%) scale(0.85);width:2.5px;height:7px}
-  /* Impact — flash and scatter */
-  26%{top:21%;opacity:1;transform:translateX(-50%) scale(1.6);width:8px;height:3px;border-radius:50%}
-  30%{top:22%;opacity:0.6;transform:translateX(-50%) scale(1);width:5px;height:4px}
-  45%{top:22%;opacity:0;transform:translateX(-50%) scale(0.3)}
-  100%{top:22%;opacity:0;transform:translateX(-50%) scale(0)}
-}
-
-/* Side particles — photons along edges */
-.zp-beam-particle-side{
-  position:absolute;width:2.5px;height:2.5px;border-radius:50%;
-  background:rgba(235,230,255,0.85);
-  box-shadow:0 0 4px 1.5px rgba(220,215,255,0.5);
-  z-index:9;pointer-events:none;opacity:0;
-  animation:photonEdgeL var(--ps-dur,3.8s) cubic-bezier(0.4,0,0.6,1) var(--ps-delay,0s) infinite;
-}
-.zp-beam-particle-side.right{
-  animation-name:photonEdgeR;
-}
-@keyframes photonEdgeL{
-  0%{top:calc(50% - 192px);left:calc(50% - 146px);opacity:0;transform:scale(0.3);width:2.5px;height:2.5px}
-  6%{opacity:0.8;transform:scale(1);width:2.5px;height:4px}
-  45%{top:calc(50% + 50px);left:calc(50% - 146px);opacity:0.4;transform:scale(0.6);width:2px;height:5px}
-  80%{top:calc(50% + 170px);left:calc(50% - 146px);opacity:0.1;transform:scale(0.35);width:1.5px;height:3px}
-  100%{top:calc(50% + 196px);opacity:0;transform:scale(0.15)}
-}
-@keyframes photonEdgeR{
-  0%{top:calc(50% - 192px);right:calc(50% - 146px);left:auto;opacity:0;transform:scale(0.3);width:2.5px;height:2.5px}
-  6%{opacity:0.8;transform:scale(1);width:2.5px;height:4px}
-  45%{top:calc(50% + 50px);opacity:0.4;transform:scale(0.6);width:2px;height:5px}
-  80%{top:calc(50% + 170px);opacity:0.1;transform:scale(0.35);width:1.5px;height:3px}
-  100%{top:calc(50% + 196px);opacity:0;transform:scale(0.15)}
-}
-
-/* Circuit trace lines */
-.zp-showcase-traces{
-  position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;
-}
-.zp-showcase-trace{
-  position:absolute;height:1px;
-  background:linear-gradient(90deg,transparent,var(--sc-glow,rgba(149,117,205,0.2)),transparent);
-  animation:tracePulse 4s ease-in-out infinite;
-}
-
-@keyframes tracePulse{
-  0%,100%{opacity:0.1;transform:scaleX(0.5)}
-  50%{opacity:0.4;transform:scaleX(1)}
-}
-
-/* The 3D floating card */
-.zp-showcase-card{
-  position:relative;z-index:5;
-  width:280px;min-height:380px;
-  border-radius:22px;
-  background:linear-gradient(145deg,rgba(20,16,40,0.95),rgba(12,10,28,0.98));
-  border:1.5px solid rgba(255,255,255,0.08);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.04),
-    0 20px 60px rgba(0,0,0,0.6),
-    0 8px 24px rgba(0,0,0,0.4),
-    inset 0 1px 0 rgba(255,255,255,0.08);
-  transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);
+/* ── Project Cards (portfolio panel) ── */
+.zp-project-cards{display:flex;flex-direction:column;gap:14px}
+.zp-proj-card{
+  position:relative;padding:18px;border-radius:16px;cursor:pointer;
+  background:linear-gradient(145deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));
+  border:1.5px solid var(--pc-bc,rgba(149,117,205,0.15));
+  transition:all 0.25s cubic-bezier(0.22,1,0.36,1);
   overflow:hidden;
 }
+.zp-proj-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--pc-c,rgba(149,117,205,0.5)),transparent);
+  opacity:0.6;transition:opacity 0.25s;
+}
+.zp-proj-card:hover,.zp-proj-card:active{
+  transform:translateY(-2px);border-color:var(--pc-c,rgba(149,117,205,0.35));
+  box-shadow:0 8px 32px rgba(0,0,0,0.3),0 0 20px var(--pc-bc,rgba(149,117,205,0.1));
+}
+.zp-proj-card:hover::before,.zp-proj-card:active::before{opacity:1}
+.zp-proj-card-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.zp-proj-card-emoji{font-size:2rem;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
+.zp-proj-card-meta{display:flex;flex-direction:column;gap:4px}
+.zp-proj-card-badge{
+  display:inline-block;padding:3px 10px;border-radius:6px;
+  font-family:var(--font-fun);font-size:0.52rem;font-weight:800;
+  letter-spacing:0.08em;text-transform:uppercase;width:fit-content;
+}
+.zp-proj-card-yr{
+  font-family:var(--font-sans);font-size:0.6rem;color:rgba(255,255,255,0.3);
+  letter-spacing:0.04em;
+}
+.zp-proj-card-name{
+  font-family:var(--font-fun);font-size:1.1rem;font-weight:900;color:#fff;
+  letter-spacing:0.03em;text-transform:uppercase;margin-bottom:6px;
+}
+.zp-proj-card-desc{
+  font-family:var(--font-sans);font-size:0.72rem;color:rgba(255,255,255,0.45);
+  line-height:1.5;margin-bottom:10px;
+}
+.zp-proj-card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.zp-proj-card-tag{
+  font-family:var(--font-fun);font-size:0.52rem;font-weight:700;
+  padding:3px 8px;border-radius:5px;letter-spacing:0.04em;
+}
+.zp-proj-card-cta{
+  font-family:var(--font-fun);font-size:0.6rem;font-weight:800;
+  color:rgba(255,255,255,0.5);letter-spacing:0.06em;text-transform:uppercase;
+  transition:color 0.2s;
+}
+.zp-proj-card:hover .zp-proj-card-cta{color:rgba(255,255,255,0.8)}
 
-/* Prismatic rainbow edge trace */
-.zp-prism-edge{
-  position:absolute;inset:-2px;z-index:12;pointer-events:none;
-  border-radius:23px;
-  background:conic-gradient(from var(--prism-angle,0deg),
-    #ff0000,#ff8800,#ffff00,#00ff44,#00ccff,#8844ff,#ff00cc,#ff0000);
-  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;
-  padding:2px;
-  opacity:0;
-  transition:opacity 0.4s ease;
-  animation:prismSpin 3s linear infinite;
-}
-.zp-showcase-card:hover .zp-prism-edge,
-.zp-showcase-card.touching .zp-prism-edge{
-  opacity:1;
-}
-@property --prism-angle{syntax:'<angle>';initial-value:0deg;inherits:false}
-@keyframes prismSpin{
-  to{--prism-angle:360deg}
-}
 
-/* Card glow ring */
-.zp-showcase-card::before{
-  content:'';position:absolute;inset:-3px;z-index:-1;
-  border-radius:24px;
-  background:conic-gradient(from var(--sc-angle,0deg),var(--sc-c1,rgba(124,77,255,0.4)),transparent 25%,var(--sc-c2,rgba(200,60,150,0.3)),transparent 50%,var(--sc-c1,rgba(124,77,255,0.4)),transparent 75%);
-  filter:blur(12px);
-  animation:cardGlowSpin 10s linear infinite;
-}
-@keyframes cardGlowSpin{
-  0%{--sc-angle:0deg;filter:blur(12px)}
-  100%{--sc-angle:360deg;filter:blur(12px)}
-}
-
-/* Holographic shimmer */
-.zp-showcase-card::after{
-  content:'';position:absolute;inset:0;z-index:10;pointer-events:none;
-  border-radius:22px;
-  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.04) 45%,rgba(255,255,255,0.08) 50%,rgba(255,255,255,0.04) 55%,transparent 60%);
-  background-size:200% 100%;
-  animation:holoShimmer 5s ease-in-out infinite;
-}
-
-/* Card role badge */
-.zp-sc-badge{
-  position:absolute;top:14px;left:14px;z-index:11;
-  padding:5px 14px;border-radius:8px;
-  font-family:var(--font-fun);font-size:0.58rem;font-weight:800;
-  letter-spacing:0.1em;text-transform:uppercase;
-  background:var(--sc-c1,rgba(124,77,255,0.3));
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);
-}
-
-/* Card emoji center */
-.zp-sc-emoji{
-  display:flex;align-items:center;justify-content:center;
-  height:220px;position:relative;overflow:hidden;
-}
-.zp-sc-emoji::before{
-  content:'';position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse at 30% 25%,var(--sc-c1,rgba(120,80,220,0.5)) 0%,transparent 55%),
-    radial-gradient(ellipse at 70% 75%,var(--sc-c2,rgba(200,60,150,0.4)) 0%,transparent 55%),
-    radial-gradient(ellipse at 50% 100%,rgba(255,180,60,0.2) 0%,transparent 40%);
-  filter:blur(30px);
-  animation:artworkPulse 6s ease-in-out infinite;
-}
-.zp-sc-emoji span{
-  font-size:3.5rem;position:relative;z-index:2;
-  filter:drop-shadow(0 8px 24px rgba(0,0,0,0.5));
-}
-
-/* Card project name */
-.zp-sc-name{
-  font-family:var(--font-fun);font-size:1.3rem;font-weight:900;
-  color:#fff;letter-spacing:0.04em;text-transform:uppercase;
-  text-align:center;padding:0 18px;
-  text-shadow:0 2px 16px rgba(0,0,0,0.5);
-}
-
-/* Card number */
-.zp-sc-num{
-  text-align:center;padding:12px 0 16px;
-  font-family:var(--font-fun);font-size:0.6rem;font-weight:600;
-  color:rgba(255,255,255,0.25);letter-spacing:0.08em;
-}
-
-/* Card info section */
-.zp-sc-info{
-  padding:0 18px 20px;
-}
-.zp-sc-desc{
-  font-family:var(--font-sans);font-size:0.72rem;
-  color:rgba(255,255,255,0.4);line-height:1.55;text-align:center;
-  margin-bottom:14px;
-}
-.zp-sc-tags{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
-.zp-sc-tag{
-  font-family:var(--font-fun);font-size:0.54rem;font-weight:700;
-  padding:4px 10px;border-radius:6px;letter-spacing:0.04em;
-}
-.zp-sc-cta{
-  display:block;width:100%;text-align:center;
-  padding:10px;border:none;border-radius:12px;
-  font-family:var(--font-fun);font-size:0.65rem;font-weight:800;
-  letter-spacing:0.08em;text-transform:uppercase;
-  background:linear-gradient(135deg,var(--sc-c1,rgba(124,77,255,0.3)),var(--sc-c2,rgba(200,60,150,0.2)));
-  color:rgba(255,255,255,0.8);cursor:pointer;
-  border:1px solid rgba(255,255,255,0.1);
-  transition:all 0.2s;
-}
-.zp-sc-cta:active{transform:scale(0.95);background:rgba(255,255,255,0.1)}
-
-/* Swipe hint */
-.zp-sc-swipe-hint{
-  text-align:center;padding:8px 0;
-  font-family:var(--font-fun);font-size:0.55rem;font-weight:600;
-  color:rgba(255,255,255,0.2);letter-spacing:0.1em;text-transform:uppercase;
-}
-
-/* Floating dust */
-.zp-showcase-dust{
-  position:absolute;border-radius:50%;pointer-events:none;
-  background:rgba(255,255,255,0.3);
-  animation:dustFloat var(--d-dur,8s) ease-in-out var(--d-delay,0s) infinite;
-}
-
-/* Ambient glow behind card */
-.zp-showcase-ambient{
-  position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);
-  width:320px;height:320px;border-radius:50%;
-  background:radial-gradient(circle,var(--sc-glow,rgba(120,80,220,0.12)) 0%,transparent 70%);
-  filter:blur(50px);pointer-events:none;z-index:0;
-  animation:ambientPulse 5s ease-in-out infinite;
-}
-
-/* Carousel dots */
-.zp-carousel-dots{
-  display:flex;justify-content:center;gap:6px;padding:8px 0 4px;
-}
-.zp-carousel-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:rgba(255,255,255,0.15);transition:all 0.3s;cursor:pointer;
-}
-.zp-carousel-dot.active{background:rgba(255,255,255,0.6);width:18px;border-radius:3px}
-
-/* Project detail — gallery overlay */
 .zp-proj-detail{
   position:fixed;inset:0;z-index:10010;
   background:#060412;
@@ -5840,8 +5383,10 @@ function cycleIntroCards(e){
     <div class="zp-title"><span class="zp-hl-brush" style="--hl-c:rgba(149,117,205,0.3)">Products</span><br><em>I've</em> Built. <span class="zp-doodle zp-doodle-arrow" style="--dd-c:rgba(206,147,216,0.6)"><svg width="36" height="20" viewBox="0 0 28 16" fill="none"><path d="M2 12 Q8 2 16 8 Q20 11 26 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M22 2 L26 4 L23 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></div>
     <div class="zp-subtitle">Shipped, iterated, and learned from. Each one a lesson in <span class="zp-hl-wavy" style="--hw-c:rgba(206,147,216,0.5)">craft</span> and resilience.</div>
   </div>
+  <!-- Floating doodle decorations -->
   <div class="zp-doodle-float" style="top:90px;right:20px;opacity:0.12;transform:rotate(12deg)"><svg width="42" height="42" viewBox="0 0 24 24" fill="none"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z" stroke="rgba(149,117,205,0.5)" stroke-width="1.5" fill="rgba(149,117,205,0.1)"/></svg></div>
   <div class="zp-doodle-float" style="top:500px;left:14px;opacity:0.1"><svg width="36" height="36" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="rgba(206,147,216,0.4)" stroke-width="1.5" stroke-dasharray="5 3"/></svg></div>
+  <div class="zp-doodle-float" style="bottom:280px;right:28px;opacity:0.08;transform:rotate(-15deg)"><svg width="48" height="22" viewBox="0 0 48 22" fill="none"><path d="M2 18 Q12 2 24 11 Q36 20 46 5" stroke="rgba(149,117,205,0.4)" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 4" fill="none"/></svg></div>
   <div class="zp-body">
     <div class="zp-stats-row">
       <div class="zp-stat-box"><span class="zp-stat-num">5</span><span class="zp-stat-lbl">Products</span></div>
@@ -5849,100 +5394,94 @@ function cycleIntroCards(e){
       <div class="zp-stat-box"><span class="zp-stat-num">5K+</span><span class="zp-stat-lbl">Users</span></div>
     </div>
     <div class="zp-section">
-      <div class="zp-sec-label">Showcase <span class="zp-doodle-inline zp-doodle-spin"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="rgba(149,117,205,0.5)" stroke-width="1.5" stroke-dasharray="3 3"/></svg></span></div>
-      <div class="zp-showcase" id="projShowcase" style="--sc-c1:rgba(124,77,255,0.5);--sc-c2:rgba(206,147,216,0.4);--sc-glow:rgba(124,77,255,0.15)">
-        <div class="zp-beam-corona"></div>
-        <div class="zp-showcase-beam-top"></div>
-        <div class="zp-showcase-beam-impact"></div>
-        <div class="zp-beam-ripple" style="--rp-dur:3s;--rp-delay:0s"></div>
-        <div class="zp-beam-ripple rp2" style="--rp-dur:3s;--rp-delay:0.8s"></div>
-        <div class="zp-beam-ripple rp3" style="--rp-dur:3s;--rp-delay:1.6s"></div>
-        <div class="zp-showcase-beam-wrap"></div>
-        <div class="zp-showcase-beam-bottom"></div>
-        <div class="zp-showcase-ambient"></div>
-        <div class="zp-beam-corner-l"></div>
-        <div class="zp-beam-corner-r"></div>
-        <div class="zp-beam-side-glow-l"></div>
-        <div class="zp-beam-side-glow-r"></div>
-        <div class="zp-beam-converge"></div>
-        <div class="zp-beam-particle" style="--p-dur:2.2s;--p-delay:0s"></div>
-        <div class="zp-beam-particle" style="--p-dur:2.8s;--p-delay:0.7s"></div>
-        <div class="zp-beam-particle" style="--p-dur:2.0s;--p-delay:1.4s"></div>
-        <div class="zp-beam-particle" style="--p-dur:3.0s;--p-delay:2.1s"></div>
-        <div class="zp-beam-particle" style="--p-dur:2.5s;--p-delay:0.4s"></div>
-        <div class="zp-beam-particle-side" style="--ps-dur:3s;--ps-delay:0.3s"></div>
-        <div class="zp-beam-particle-side" style="--ps-dur:3.8s;--ps-delay:1.2s"></div>
-        <div class="zp-beam-particle-side right" style="--ps-dur:3.2s;--ps-delay:0.6s"></div>
-        <div class="zp-beam-particle-side right" style="--ps-dur:3.6s;--ps-delay:1.8s"></div>
-        <div class="zp-showcase-traces">
-          <div class="zp-showcase-trace" style="top:30%;left:0;width:35%;animation-delay:0s"></div>
-          <div class="zp-showcase-trace" style="top:50%;right:0;width:30%;animation-delay:1.5s"></div>
-          <div class="zp-showcase-trace" style="top:70%;left:5%;width:25%;animation-delay:3s"></div>
-          <div class="zp-showcase-trace" style="top:45%;right:5%;width:20%;animation-delay:0.8s"></div>
-        </div>
-        <div class="zp-showcase-dust" style="width:2px;height:2px;left:15%;top:20%;--d-dur:7s;--d-delay:0s;--d-tx:10px;--d-ty:-30px;--d-tx2:-5px;--d-ty2:-60px"></div>
-        <div class="zp-showcase-dust" style="width:1.5px;height:1.5px;left:75%;top:35%;--d-dur:9s;--d-delay:1s;--d-tx:-15px;--d-ty:-25px;--d-tx2:8px;--d-ty2:-50px"></div>
-        <div class="zp-showcase-dust" style="width:2.5px;height:2.5px;left:25%;top:65%;--d-dur:6s;--d-delay:2s;--d-tx:12px;--d-ty:-35px;--d-tx2:-10px;--d-ty2:-70px"></div>
-        <div class="zp-showcase-dust" style="width:1px;height:1px;left:85%;top:55%;--d-dur:8s;--d-delay:0.5s;--d-tx:-8px;--d-ty:-20px;--d-tx2:6px;--d-ty2:-45px"></div>
-        <div class="zp-showcase-dust" style="width:2px;height:2px;left:40%;top:80%;--d-dur:10s;--d-delay:3s;--d-tx:5px;--d-ty:-40px;--d-tx2:-12px;--d-ty2:-80px"></div>
-        <div class="zp-showcase-card" id="projCard">
-          <div class="zp-prism-edge"></div>
-          <div class="zp-sc-badge" id="scBadge">Lead PM</div>
-          <div class="zp-sc-emoji" id="scEmoji"><span>🔗</span></div>
-          <div class="zp-sc-name" id="scName">EnterCircles</div>
-          <div class="zp-sc-num" id="scNum">#001 / 005</div>
-          <div class="zp-sc-info">
-            <div class="zp-sc-desc" id="scDesc">Web3 social platform for community engagement & token-gated access</div>
-            <div class="zp-sc-tags" id="scTags">
-              <span class="zp-sc-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">Web3</span>
-              <span class="zp-sc-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">Social</span>
-              <span class="zp-sc-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">B2B2C</span>
+      <div class="zp-sec-label">Products Shipped <span class="zp-doodle-inline zp-doodle-spin"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="rgba(149,117,205,0.5)" stroke-width="1.5" stroke-dasharray="3 3"/></svg></span></div>
+      <div class="zp-project-cards">
+        <div class="zp-proj-card" onclick="openProject('entercircles')" style="--pc-c:rgba(124,77,255,0.5);--pc-bc:rgba(124,77,255,0.2)">
+          <div class="zp-proj-card-header">
+            <span class="zp-proj-card-emoji">🔗</span>
+            <div class="zp-proj-card-meta">
+              <span class="zp-proj-card-badge" style="background:rgba(124,77,255,0.2);color:#CE93D8">Lead PM</span>
+              <span class="zp-proj-card-yr">2023 — Present</span>
             </div>
-            <button class="zp-sc-cta" id="scCta">View Case Study →</button>
           </div>
+          <div class="zp-proj-card-name">EnterCircles</div>
+          <div class="zp-proj-card-desc">Web3 social platform for community engagement & token-gated access</div>
+          <div class="zp-proj-card-tags">
+            <span class="zp-proj-card-tag" style="background:rgba(124,77,255,0.12);color:#CE93D8">Web3</span>
+            <span class="zp-proj-card-tag" style="background:rgba(124,77,255,0.12);color:#CE93D8">Social</span>
+            <span class="zp-proj-card-tag" style="background:rgba(124,77,255,0.12);color:#CE93D8">B2B2C</span>
+          </div>
+          <div class="zp-proj-card-cta">View Case Study →</div>
+        </div>
+        <div class="zp-proj-card" onclick="openProject('recess')" style="--pc-c:rgba(66,165,245,0.5);--pc-bc:rgba(66,165,245,0.2)">
+          <div class="zp-proj-card-header">
+            <span class="zp-proj-card-emoji">📚</span>
+            <div class="zp-proj-card-meta">
+              <span class="zp-proj-card-badge" style="background:rgba(66,165,245,0.2);color:#90CAF9">Co-Founded</span>
+              <span class="zp-proj-card-yr">2019 — 2021</span>
+            </div>
+          </div>
+          <div class="zp-proj-card-name">Recess</div>
+          <div class="zp-proj-card-desc">EdTech platform for peer learning, study groups & collaborative sessions</div>
+          <div class="zp-proj-card-tags">
+            <span class="zp-proj-card-tag" style="background:rgba(66,165,245,0.12);color:#90CAF9">EdTech</span>
+            <span class="zp-proj-card-tag" style="background:rgba(66,165,245,0.12);color:#90CAF9">B2C</span>
+          </div>
+          <div class="zp-proj-card-cta">View Case Study →</div>
+        </div>
+        <div class="zp-proj-card" onclick="openProject('hushh')" style="--pc-c:rgba(239,83,80,0.5);--pc-bc:rgba(239,83,80,0.2)">
+          <div class="zp-proj-card-header">
+            <span class="zp-proj-card-emoji">🤫</span>
+            <div class="zp-proj-card-meta">
+              <span class="zp-proj-card-badge" style="background:rgba(239,83,80,0.2);color:#EF9A9A">Product Manager</span>
+              <span class="zp-proj-card-yr">2022 — 2023</span>
+            </div>
+          </div>
+          <div class="zp-proj-card-name">Hushh</div>
+          <div class="zp-proj-card-desc">Privacy-first personal data management — your data, your rules</div>
+          <div class="zp-proj-card-tags">
+            <span class="zp-proj-card-tag" style="background:rgba(239,83,80,0.12);color:#EF9A9A">Privacy</span>
+            <span class="zp-proj-card-tag" style="background:rgba(239,83,80,0.12);color:#EF9A9A">FinTech</span>
+          </div>
+          <div class="zp-proj-card-cta">View Case Study →</div>
+        </div>
+        <div class="zp-proj-card" onclick="openProject('smarbhubaneswar')" style="--pc-c:rgba(38,166,154,0.5);--pc-bc:rgba(38,166,154,0.2)">
+          <div class="zp-proj-card-header">
+            <span class="zp-proj-card-emoji">🏙️</span>
+            <div class="zp-proj-card-meta">
+              <span class="zp-proj-card-badge" style="background:rgba(38,166,154,0.2);color:#80CBC4">Product Lead</span>
+              <span class="zp-proj-card-yr">2020 — 2021</span>
+            </div>
+          </div>
+          <div class="zp-proj-card-name">SmarBhubaneswar</div>
+          <div class="zp-proj-card-desc">Smart city civic tech platform for citizen services & urban governance</div>
+          <div class="zp-proj-card-tags">
+            <span class="zp-proj-card-tag" style="background:rgba(38,166,154,0.12);color:#80CBC4">Civic</span>
+            <span class="zp-proj-card-tag" style="background:rgba(38,166,154,0.12);color:#80CBC4">Gov-Tech</span>
+          </div>
+          <div class="zp-proj-card-cta">View Case Study →</div>
+        </div>
+        <div class="zp-proj-card" onclick="openProject('aribasda')" style="--pc-c:rgba(255,112,67,0.5);--pc-bc:rgba(255,112,67,0.2)">
+          <div class="zp-proj-card-header">
+            <span class="zp-proj-card-emoji">📈</span>
+            <div class="zp-proj-card-meta">
+              <span class="zp-proj-card-badge" style="background:rgba(255,112,67,0.2);color:#FFAB91">Product Manager</span>
+              <span class="zp-proj-card-yr">2021 — 2022</span>
+            </div>
+          </div>
+          <div class="zp-proj-card-name">Aribasda</div>
+          <div class="zp-proj-card-desc">Analytics & growth tooling — turning data into decisions, fast</div>
+          <div class="zp-proj-card-tags">
+            <span class="zp-proj-card-tag" style="background:rgba(255,112,67,0.12);color:#FFAB91">Analytics</span>
+            <span class="zp-proj-card-tag" style="background:rgba(255,112,67,0.12);color:#FFAB91">Growth</span>
+            <span class="zp-proj-card-tag" style="background:rgba(255,112,67,0.12);color:#FFAB91">SaaS</span>
+          </div>
+          <div class="zp-proj-card-cta">View Case Study →</div>
         </div>
       </div>
-      <div class="zp-carousel-dots" id="projDots">
-        <div class="zp-carousel-dot active" onclick="goToProject(0)"></div>
-        <div class="zp-carousel-dot" onclick="goToProject(1)"></div>
-        <div class="zp-carousel-dot" onclick="goToProject(2)"></div>
-        <div class="zp-carousel-dot" onclick="goToProject(3)"></div>
-        <div class="zp-carousel-dot" onclick="goToProject(4)"></div>
-      </div>
-      <div class="zp-sc-swipe-hint">← Swipe to explore →</div>
     </div>
     <div class="zp-section">
-      <div class="zp-sec-label">Product Highlights <span class="zp-doodle-inline"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 7.2H22l-6 4.8 2.4 7.2L12 16.4l-6.4 4.8 2.4-7.2-6-4.8h7.6z" fill="rgba(149,117,205,0.12)" stroke="rgba(149,117,205,0.45)" stroke-width="1.5"/></svg></span></div>
-      <div class="zp-highlight-cards">
-        <div class="zp-hl-card" style="--hlc-c:rgba(124,77,255,0.15);--hlc-bc:rgba(124,77,255,0.25)">
-          <span class="zp-hl-card-icon">🔗</span>
-          <span class="zp-hl-card-title">EnterCircles</span>
-          <span class="zp-hl-card-stat">5K+ users · Web3 social</span>
-        </div>
-        <div class="zp-hl-card" style="--hlc-c:rgba(66,165,245,0.15);--hlc-bc:rgba(66,165,245,0.25)">
-          <span class="zp-hl-card-icon">📚</span>
-          <span class="zp-hl-card-title">Recess</span>
-          <span class="zp-hl-card-stat">2K+ students · EdTech</span>
-        </div>
-        <div class="zp-hl-card" style="--hlc-c:rgba(239,83,80,0.15);--hlc-bc:rgba(239,83,80,0.25)">
-          <span class="zp-hl-card-icon">🤫</span>
-          <span class="zp-hl-card-title">Hushh</span>
-          <span class="zp-hl-card-stat">Privacy-first · FinTech</span>
-        </div>
-        <div class="zp-hl-card" style="--hlc-c:rgba(38,166,154,0.15);--hlc-bc:rgba(38,166,154,0.25)">
-          <span class="zp-hl-card-icon">🏙️</span>
-          <span class="zp-hl-card-title">SmarBhubaneswar</span>
-          <span class="zp-hl-card-stat">City-scale · Gov-Tech</span>
-        </div>
-        <div class="zp-hl-card" style="--hlc-c:rgba(255,112,67,0.15);--hlc-bc:rgba(255,112,67,0.25)">
-          <span class="zp-hl-card-icon">📈</span>
-          <span class="zp-hl-card-title">Aribasda</span>
-          <span class="zp-hl-card-stat">Growth analytics · SaaS</span>
-        </div>
-      </div>
-    </div>
-    <div class="zp-section">
-      <div class="zp-sec-label">Product DNA</div>
+      <div class="zp-sec-label">Product DNA <span class="zp-doodle-inline"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 7.2H22l-6 4.8 2.4 7.2L12 16.4l-6.4 4.8 2.4-7.2-6-4.8h7.6z" fill="rgba(149,117,205,0.12)" stroke="rgba(149,117,205,0.45)" stroke-width="1.5"/></svg></span></div>
       <div class="zp-tags">
         <span class="zp-tag" style="background:rgba(149,117,205,0.12);color:#CE93D8;border:1.5px solid rgba(149,117,205,0.25)">0→1 Builder</span>
         <span class="zp-tag" style="background:rgba(149,117,205,0.12);color:#CE93D8;border:1.5px solid rgba(149,117,205,0.25)">Web3</span>
@@ -12716,123 +12255,8 @@ function openProject(id){
 }
 window.openProject=openProject;
 
-// 3D Showcase — swipe between projects
-(function(){
-  const PROJECTS=[
-    {id:'entercircles',emoji:'🔗',name:'EnterCircles',badge:'Lead PM',desc:'Web3 social platform for community engagement & token-gated access',
-     tags:[{text:'Web3',bg:'rgba(124,77,255,0.15)',color:'#CE93D8'},{text:'Social',bg:'rgba(124,77,255,0.15)',color:'#CE93D8'},{text:'B2B2C',bg:'rgba(124,77,255,0.15)',color:'#CE93D8'}],
-     c1:'rgba(124,77,255,0.5)',c2:'rgba(206,147,216,0.4)',glow:'rgba(124,77,255,0.15)'},
-    {id:'recess',emoji:'📚',name:'Recess',badge:'Co-Founded',desc:'EdTech platform for peer learning, study groups & collaborative sessions',
-     tags:[{text:'EdTech',bg:'rgba(66,165,245,0.15)',color:'#90CAF9'},{text:'B2C',bg:'rgba(66,165,245,0.15)',color:'#90CAF9'}],
-     c1:'rgba(66,165,245,0.5)',c2:'rgba(100,181,246,0.4)',glow:'rgba(66,165,245,0.15)'},
-    {id:'hushh',emoji:'🤫',name:'Hushh',badge:'Product Manager',desc:'Privacy-first personal data management — your data, your rules',
-     tags:[{text:'Privacy',bg:'rgba(239,83,80,0.15)',color:'#EF9A9A'},{text:'FinTech',bg:'rgba(239,83,80,0.15)',color:'#EF9A9A'}],
-     c1:'rgba(239,83,80,0.5)',c2:'rgba(255,110,130,0.4)',glow:'rgba(239,83,80,0.15)'},
-    {id:'smarbhubaneswar',emoji:'🏙️',name:'SmarBhubaneswar',badge:'Product Lead',desc:'Smart city civic tech platform for citizen services & urban governance',
-     tags:[{text:'Civic',bg:'rgba(38,166,154,0.15)',color:'#80CBC4'},{text:'Gov-Tech',bg:'rgba(38,166,154,0.15)',color:'#80CBC4'}],
-     c1:'rgba(38,166,154,0.5)',c2:'rgba(80,200,180,0.4)',glow:'rgba(38,166,154,0.15)'},
-    {id:'aribasda',emoji:'📈',name:'Aribasda',badge:'Product Manager',desc:'Analytics & growth tooling — turning data into decisions, fast',
-     tags:[{text:'Analytics',bg:'rgba(255,112,67,0.15)',color:'#FFAB91'},{text:'Growth',bg:'rgba(255,112,67,0.15)',color:'#FFAB91'},{text:'SaaS',bg:'rgba(255,112,67,0.15)',color:'#FFAB91'}],
-     c1:'rgba(255,112,67,0.5)',c2:'rgba(255,160,100,0.4)',glow:'rgba(255,112,67,0.15)'}
-  ];
-  let currentIdx=0;
-  const showcase=document.getElementById('projShowcase');
-  const card=document.getElementById('projCard');
-  const dots=document.querySelectorAll('#projDots .zp-carousel-dot');
-  if(!showcase||!card)return;
 
-  function renderProject(idx,dir){
-    const p=PROJECTS[idx];
-    // Animate out
-    card.style.transition='transform 0.35s cubic-bezier(0.22,1,0.36,1),opacity 0.25s';
-    card.style.opacity='0';
-    card.style.transform=dir>0?'translateX(-60px) scale(0.92)':'translateX(60px) scale(0.92)';
-    setTimeout(()=>{
-      // Update content
-      document.getElementById('scBadge').textContent=p.badge;
-      document.getElementById('scEmoji').innerHTML='<span>'+p.emoji+'</span>';
-      document.getElementById('scName').textContent=p.name;
-      document.getElementById('scNum').textContent='#'+(idx+1).toString().padStart(3,'0')+' / 005';
-      document.getElementById('scDesc').textContent=p.desc;
-      const tagsEl=document.getElementById('scTags');
-      tagsEl.innerHTML=p.tags.map(t=>'<span class="zp-sc-tag" style="background:'+t.bg+';color:'+t.color+'">'+t.text+'</span>').join('');
-      document.getElementById('scCta').onclick=function(){openProject(p.id)};
-      // Update colors
-      showcase.style.setProperty('--sc-c1',p.c1);
-      showcase.style.setProperty('--sc-c2',p.c2);
-      showcase.style.setProperty('--sc-glow',p.glow);
-      // Animate in from opposite side
-      card.style.transform=dir>0?'translateX(60px) scale(0.92)':'translateX(-60px) scale(0.92)';
-      requestAnimationFrame(()=>{
-        card.style.transition='transform 0.5s cubic-bezier(0.22,1,0.36,1),opacity 0.4s';
-        card.style.opacity='1';
-        card.style.transform='translateX(0) scale(1)';
-      });
-      // Update dots
-      dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
-    },280);
-  }
 
-  // Set initial CTA
-  document.getElementById('scCta').onclick=function(){openProject(PROJECTS[0].id)};
-
-  window.goToProject=function(idx){
-    if(idx===currentIdx)return;
-    const dir=idx>currentIdx?1:-1;
-    currentIdx=idx;
-    renderProject(idx,dir);
-  };
-
-  // Touch swipe with tilt/parallax
-  let touchStartX=0,touchStartY=0,swiping=false;
-  const MAX_TILT=18; // max degrees of rotation
-  const MAX_SHIFT=30; // max px translateX during drag
-
-  function setCardTilt(dx){
-    const pct=Math.max(-1,Math.min(1,dx/150));
-    const rotY=pct*MAX_TILT;
-    const tx=pct*MAX_SHIFT;
-    const sc=1-Math.abs(pct)*0.04;
-    const shadowX=Math.round(-pct*25);
-    const shadowBlur=20+Math.round(Math.abs(pct)*30);
-    card.style.transition='none';
-    card.style.transform='translateX('+tx+'px) scale('+sc+') perspective(800px) rotateY('+rotY+'deg)';
-    card.style.boxShadow=shadowX+'px 20px '+shadowBlur+'px rgba(0,0,0,0.6), '+Math.round(shadowX*0.4)+'px 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)';
-  }
-  function resetCardTilt(){
-    card.style.transition='transform 0.6s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.6s ease';
-    card.style.transform='translateX(0) scale(1) perspective(800px) rotateY(0deg)';
-    card.style.boxShadow='';
-  }
-
-  showcase.addEventListener('touchstart',function(e){
-    touchStartX=e.touches[0].clientX;
-    touchStartY=e.touches[0].clientY;
-    swiping=true;
-    card.classList.add('touching');
-  },{passive:true});
-  showcase.addEventListener('touchmove',function(e){
-    if(!swiping)return;
-    const dx=e.touches[0].clientX-touchStartX;
-    const dy=e.touches[0].clientY-touchStartY;
-    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>10){
-      e.preventDefault();
-      setCardTilt(dx);
-    }
-  },{passive:false});
-  showcase.addEventListener('touchend',function(e){
-    if(!swiping)return;
-    swiping=false;
-    card.classList.remove('touching');
-    const dx=e.changedTouches[0].clientX-touchStartX;
-    if(Math.abs(dx)<40){resetCardTilt();return;}
-    if(dx<0&&currentIdx<PROJECTS.length-1){
-      currentIdx++;renderProject(currentIdx,1);
-    }else if(dx>0&&currentIdx>0){
-      currentIdx--;renderProject(currentIdx,-1);
-    }else{resetCardTilt();}
-  },{passive:true});
-})();
 
 function closeProject(id){
   const el=document.getElementById('zpd-'+id);
