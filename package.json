@@ -15,7 +15,6 @@
   "dependencies": {
     "@radix-ui/react-toast": "^1.2.14",
     "@radix-ui/react-tooltip": "^1.2.7",
-    "@studio-freight/lenis": "^1.0.42",
     "@supabase/supabase-js": "^2.100.1",
     "atropos": "^2.0.2",
     "canvas-confetti": "^1.9.4",
