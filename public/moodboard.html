@@ -35,7 +35,10 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
     linear-gradient(#E8E4DF 1px, transparent 1px),
     linear-gradient(90deg, #E8E4DF 1px, transparent 1px);
   background-size:100% 100%,100% 100%,100% 100%,40px 40px,40px 40px;
-  contain:size layout;
+  contain:size layout style paint;
+}
+@media (max-width:768px){
+  .canvas{background-image:none;background-color:#FAF8F5}
 }
 .canvas::before{content:none}
 /* Bounce flash overlay */
@@ -55,15 +58,28 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-sticker-clone{pointer-events:auto!important}
 .map-sticker-clone *{pointer-events:none!important}
 /* STICKER BASE */
-.sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;-webkit-touch-callout:none;z-index:10;transition:filter 0.15s,transform 0.15s,opacity 0.3s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));opacity:1;contain:layout style}
+.sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;-webkit-touch-callout:none;z-index:10;transition:opacity 0.3s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));opacity:1;contain:layout style paint;content-visibility:auto;contain-intrinsic-size:auto 200px auto 150px}
+/* Low-power device optimizations — reduce compositing & paint cost */
+@media (max-width:768px),(hover:none){
+  .sticker{filter:drop-shadow(0 2px 4px rgba(0,0,0,0.08))}
+  .sticker:hover{filter:drop-shadow(0 2px 4px rgba(0,0,0,0.08))}
+  .zone-intro-creative{box-shadow:0 8px 24px rgba(0,0,0,0.1)}
+  .map-sparkle,.map-ripple{display:none!important}
+  .map-cloud{animation:none!important}
+  .hollywood-signpost .hp-bulb{animation:none!important}
+  .minimap-radar{animation:none!important}
+  .doodle-sparkle svg,.doodle-stars .star-1,.doodle-stars .star-2,.doodle-stars .star-3{animation:none!important}
+  .zone-boundary-svg path{filter:none}
+  .sticker-project{box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+}
 .sticker *{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 
-.sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
+.sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50;transition:filter 0.15s,transform 0.15s}
 .sticker:active{cursor:grabbing}
 .sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important;will-change:transform,filter}
 /* Pause all animations inside off-screen elements — applied by IntersectionObserver */
-.sticker.paused-offscreen,.sticker.paused-offscreen *,.zone-intro-card.paused-offscreen,.zone-intro-card.paused-offscreen *{animation-play-state:paused!important;transition:none!important}
-.zone-intro-card{will-change:translate}
+.sticker.paused-offscreen,.sticker.paused-offscreen *,.zone-intro-card.paused-offscreen,.zone-intro-card.paused-offscreen *{animation-play-state:paused!important;transition:none!important;content-visibility:hidden}
+.zone-intro-card{will-change:auto}
 
 /* ===== ZONE VISUAL TINTS ===== */
 .zone-tint{position:absolute;pointer-events:none;z-index:1;border-radius:40px;opacity:0.06;transition:opacity 0.3s;contain:strict;content-visibility:auto;contain-intrinsic-size:auto 800px}
@@ -2408,7 +2424,7 @@ body.map-expanded .scroll-counter{display:none!important}
     </div>
     <!-- Photo zone — zic-introduction-screen class enables boot animation on attack -->
     <div class="zic-photo-area zic-introduction-screen" style="position:relative">
-      <img src="/images/akash-photo.webp" alt="Akash" style="width:100%;height:190px;object-fit:cover;object-position:top;display:block;filter:sepia(0.15) contrast(1.05)">
+      <img loading="lazy" src="/images/akash-photo.webp" alt="Akash" style="width:100%;height:190px;object-fit:cover;object-position:top;display:block;filter:sepia(0.15) contrast(1.05)">
       <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 45%,rgba(0,10,0,0.85));z-index:1"></div>
       <div style="position:absolute;bottom:10px;left:14px;z-index:2">
         <div style="font-family:monospace;font-size:0.52rem;color:rgba(76,175,80,0.55);margin-bottom:2px;letter-spacing:0.06em">// SUBJECT_IDENTIFIED · ACCESS_GRANTED</div>
@@ -2605,7 +2621,7 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-hero-photo" data-anim="tada" data-zone="introduction" style="left:250px;top:200px;transform:rotate(3deg);width:252px;background:linear-gradient(135deg,#FFD54F,#FFC107,#FF8F00)" data-sid="s006">
   <div class="corner-deco tl" style="border-color:#FFF"></div><div class="corner-deco tr" style="border-color:#FFF"></div>
   <div class="corner-deco bl" style="border-color:#FFF"></div><div class="corner-deco br" style="border-color:#FFF"></div>
-  <div class="hero-frame"><img src="/images/akash-photo.webp" decoding="async" loading="lazy"><div class="hero-name-tag"><div class="hnt-emoji">🖤</div><div><div class="hnt-name">Akash</div><div class="hnt-sub">main character energy ✨</div></div></div></div>
+  <div class="hero-frame"><img loading="lazy" src="/images/akash-photo.webp" decoding="async" loading="lazy"><div class="hero-name-tag"><div class="hnt-emoji">🖤</div><div><div class="hnt-name">Akash</div><div class="hnt-sub">main character energy ✨</div></div></div></div>
 </div>
 
 
@@ -3446,8 +3462,8 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="map-player" id="mapPlayer">
       <div class="map-player-ping"></div>
       <svg class="map-arrow-svg" width="16" height="16" viewBox="0 0 24 24"><defs><linearGradient id="arrowGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFE082"/><stop offset="100%" stop-color="#FFB300"/></linearGradient></defs><polygon points="12,1 22,22 12,16 2,22" fill="url(#arrowGrad)" stroke="#E65100" stroke-width="1.2" stroke-linejoin="round"/></svg>
-      <img class="map-arrow map-arrow-head" src="/images/bitmoji-head.webp" alt="You" decoding="async" />
-      <img class="map-arrow map-arrow-full" src="/images/bitmoji-full.webp" alt="You" decoding="async" />
+      <img loading="lazy" class="map-arrow map-arrow-head" src="/images/bitmoji-head.webp" alt="You" decoding="async" />
+      <img loading="lazy" class="map-arrow map-arrow-full" src="/images/bitmoji-full.webp" alt="You" decoding="async" />
     </div>
     <div class="map-hint"></div>
     <div class="minimap-radar"></div>
@@ -4046,7 +4062,7 @@ body.map-expanded .scroll-counter{display:none!important}
     <p class="quote anim-item">I believe the best products happen when craft meets curiosity. I care about the details that most people won't notice but everyone will feel — the clarity of a user flow, the precision of a roadmap, the moment a feature earns its place.</p>
     <p class="philosophy anim-item">"I build with AI the way a photographer works with light — it's a medium, not a shortcut. The taste, the decisions, the product direction? That's still very human. That's still mine."</p>
     <div class="photo-frame anim-item">
-      <img src="/images/akash-photo.webp" alt="Akash Matania" decoding="async" loading="lazy" />
+      <img loading="lazy" src="/images/akash-photo.webp" alt="Akash Matania" decoding="async" loading="lazy" />
     </div>
     <div class="skill-tags anim-item">
       <span class="skill-tag" style="background:#eef5ee;color:#5a8a5a;border-color:#d5e8d5">PRODUCT STRATEGY</span>
@@ -5633,9 +5649,9 @@ function batchAppend(parent,elements){
 
 // Confetti/splash cooldown to prevent rapid-fire DOM explosion
 let _lastSplashTime=0;
-const SPLASH_COOLDOWN=IS_LOW_POWER_DEVICE?1500:800;
+const SPLASH_COOLDOWN=IS_LOW_POWER_DEVICE?2500:800;
 let _lastConfettiTime=0;
-const CONFETTI_COOLDOWN=IS_LOW_POWER_DEVICE?1000:500;
+const CONFETTI_COOLDOWN=IS_LOW_POWER_DEVICE?2000:500;
 
 // Cache for getBoundingClientRect during drag
 let _cachedCanvasRect=null;
@@ -6588,7 +6604,6 @@ function centerOnIntroCard(){
   vp.scrollTop=targetTop;
 }
 centerOnIntroCard();
-setTimeout(centerOnIntroCard,50);
 setTimeout(centerOnIntroCard,200);
 
 
@@ -6606,7 +6621,7 @@ vp.addEventListener('scroll',()=>{
     _scrollRAF=null;
     const now=performance.now();
     // 1) Scroll counter — throttle to every 200ms
-    if(now-_lastScrollCounterUpdate>200){
+    if(now-_lastScrollCounterUpdate>500){
       _lastScrollCounterUpdate=now;
       const bounds=getViewportPanBounds();
       const mx=bounds.maxX,my=bounds.maxY;
@@ -6614,12 +6629,12 @@ vp.addEventListener('scroll',()=>{
     }
     // 2) Map update — throttle to every 100ms, redraw every 800ms
     if(typeof updMap==='function'&&typeof mapTransitioning!=='undefined'&&!mapTransitioning){
-      if(now-_lastMapUpdate>100){
+      if(now-_lastMapUpdate>250){
         _lastMapUpdate=now;
         updMap();
       }
       if(typeof mmExp!=='undefined'&&!mmExp){
-        clearTimeout(window._mapScrollTimer);window._mapScrollTimer=setTimeout(drawMap,800);
+        clearTimeout(window._mapScrollTimer);window._mapScrollTimer=setTimeout(drawMap,1200);
       }
     }
   });
@@ -6943,7 +6958,7 @@ const confC=['🎉','✨','⭐','💫','🎊','❤️','💜','💛','🧡','�
 function triggerAnim(el, e){
   const a=el.dataset.anim;
   allAnims.forEach(c=>el.classList.remove('anim-'+c));
-  void el.offsetWidth; // reflow to restart animation
+  // void el.offsetWidth; — skip reflow, use class toggle trick instead
   el.style.willChange='transform'; // promote to GPU layer during animation
   el.classList.add('anim-'+a);
   
@@ -6967,10 +6982,11 @@ function spawnConfetti(x,y){
   const now=performance.now();
   if(now-_lastConfettiTime<CONFETTI_COOLDOWN)return;
   // Cap active confetti DOM elements to prevent memory issues
-  if(document.querySelectorAll('.confetti').length>30)return;
+  if(document.querySelectorAll('.confetti').length>15)return;
   _lastConfettiTime=now;
   const els=[];
-  for(let i=0;i<8;i++){
+  const confettiCount=IS_LOW_POWER_DEVICE?4:8;
+  for(let i=0;i<confettiCount;i++){
     const c=document.createElement('div');
     c.className='confetti';
     c.textContent=confC[Math.floor(Math.random()*confC.length)];
@@ -7805,7 +7821,7 @@ function addMapDecorations(cw, ch){
     {x:74,y:70,w:24,h:30,c:'#ff9800',r:'#f57c00',win:true},
     {x:86,y:76,w:20,h:25,c:'#ffb74d',r:'#ffa726',win:true},
   ];
-  const buildings=IS_MOBILE_MAP?allBuildings.filter((_,i)=>i%2===0):allBuildings;
+  const buildings=IS_MOBILE_MAP?allBuildings.filter((_,i)=>i%3===0):allBuildings;
   buildings.forEach(b=>addIsometricBuilding(b.x,b.y,b.w,b.h,b.c,b.r,b.win));
 
   // === TALL TOWERS — innerHTML batch instead of individual createElementNS calls ===
@@ -7895,7 +7911,7 @@ function addMapDecorations(cw, ch){
     {x:3,y:40,s:22,delay:0},{x:90,y:25,s:20,delay:1.5},{x:5,y:85,s:24,delay:0.8},
     {x:88,y:80,s:18,delay:2},{x:45,y:92,s:22,delay:1},{x:92,y:50,s:20,delay:0.5},
   ];
-  const sailboats=IS_MOBILE_MAP?allSailboats.slice(0,3):allSailboats;
+  const sailboats=IS_MOBILE_MAP?allSailboats.slice(0,2):allSailboats;
   sailboats.forEach(b=>{
     const wrap=addDiv('map-boat','left:'+b.x+'%;top:'+b.y+'%;width:'+b.s+'px;height:'+(b.s*0.7)+'px;animation-delay:'+b.delay+'s');
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
@@ -7985,7 +8001,7 @@ function addMapDecorations(cw, ch){
     {x:28,y:80,s:42},{x:52,y:72,s:50},{x:90,y:45,s:40},
     {x:5,y:55,s:45},{x:65,y:78,s:52},{x:45,y:85,s:46},
   ];
-  const mountains=IS_MOBILE_MAP?allMountains.filter((_,i)=>i%2===0):allMountains;
+  const mountains=IS_MOBILE_MAP?allMountains.filter((_,i)=>i%3===0):allMountains;
   mountains.forEach(m=>{
     const wrap=addDiv('map-mountain','left:'+m.x+'%;top:'+m.y+'%;width:'+m.s+'px;height:'+(m.s*0.85)+'px');
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
@@ -8030,9 +8046,9 @@ function addMapDecorations(cw, ch){
     {x:15,y:15,count:8,spread:5},{x:92,y:68,count:6,spread:4},
     {x:72,y:82,count:7,spread:5},{x:42,y:88,count:6,spread:4},
   ];
-  const forestList=IS_MOBILE_MAP?forests.filter((_,i)=>i%2===0):forests;
+  const forestList=IS_MOBILE_MAP?forests.filter((_,i)=>i%3===0):forests;
   forestList.forEach(f=>{
-    const treeCount=IS_MOBILE_MAP?Math.min(f.count,4):f.count;
+    const treeCount=IS_MOBILE_MAP?Math.min(f.count,2):f.count;
     for(let i=0;i<treeCount;i++){
       const tx=f.x+(Math.random()-0.5)*f.spread;
       const ty=f.y+(Math.random()-0.5)*f.spread*0.7;
@@ -8109,7 +8125,8 @@ function addMapDecorations(cw, ch){
   });
 
   // === SPARKLE PARTICLES (around special areas) ===
-  for(let i=0;i<35;i++){
+  const sparkleCount=IS_MOBILE_MAP?8:35;
+  for(let i=0;i<sparkleCount;i++){
     const x=10+Math.random()*80;
     const y=10+Math.random()*75;
     addDiv('map-sparkle','left:'+x+'%;top:'+y+'%;animation-delay:'+(Math.random()*3)+'s;animation-duration:'+(2+Math.random()*2)+'s;background:rgba(255,255,'+Math.floor(150+Math.random()*105)+',0.8)');
@@ -8378,33 +8395,26 @@ function makeMapCloneNode(d){
   let clone;
   if(d.ref){
     clone=d.ref.cloneNode(true);
-    clone.removeAttribute('onclick');
-    clone.removeAttribute('ondragstart');
-    clone.removeAttribute('ondrop');
-    clone.removeAttribute('ondragover');
-    clone.removeAttribute('draggable');
-    clone.removeAttribute('data-anim');
-    clone.removeAttribute('data-splash');
-    clone.removeAttribute('data-contra');
-    clone.classList.remove('dragging');
     clone.classList.add('no-anim-children');
-    // Strip nested inline handlers so map taps always trigger navigation
-    clone.querySelectorAll('[onclick],[ondblclick],[onmousedown],[onmouseup],[onpointerdown],[onpointerup],[ontouchstart],[ontouchend],[ondragstart],[ondragover],[ondrop]').forEach(el=>{
-      el.removeAttribute('onclick');
-      el.removeAttribute('ondblclick');
-      el.removeAttribute('onmousedown');
-      el.removeAttribute('onmouseup');
-      el.removeAttribute('onpointerdown');
-      el.removeAttribute('onpointerup');
-      el.removeAttribute('ontouchstart');
-      el.removeAttribute('ontouchend');
-      el.removeAttribute('ondragstart');
-      el.removeAttribute('ondragover');
-      el.removeAttribute('ondrop');
-    });
-    clone.querySelectorAll('[draggable="true"]').forEach(el=>el.removeAttribute('draggable'));
+    // Batch attribute cleanup — single querySelectorAll with combined selector
+    const interactiveEls=clone.querySelectorAll('[onclick],[ondblclick],[onmousedown],[ontouchstart],[ondragstart],[draggable="true"]');
+    for(let i=0;i<interactiveEls.length;i++){
+      const el=interactiveEls[i];
+      el.removeAttribute('onclick');el.removeAttribute('ondblclick');
+      el.removeAttribute('onmousedown');el.removeAttribute('onmouseup');
+      el.removeAttribute('onpointerdown');el.removeAttribute('onpointerup');
+      el.removeAttribute('ontouchstart');el.removeAttribute('ontouchend');
+      el.removeAttribute('ondragstart');el.removeAttribute('ondragover');
+      el.removeAttribute('ondrop');el.removeAttribute('draggable');
+    }
+    // Also clean top-level
+    clone.removeAttribute('onclick');clone.removeAttribute('ondragstart');
+    clone.removeAttribute('draggable');clone.removeAttribute('data-anim');
+    clone.removeAttribute('data-splash');clone.removeAttribute('data-contra');
+    clone.classList.remove('dragging');
     // Remove drag handles from map clones
-    clone.querySelectorAll('.sticker-drag-handle').forEach(h=>h.remove());
+    const handles=clone.getElementsByClassName('sticker-drag-handle');
+    while(handles.length)handles[0].remove();
     // Add glowing border for zone intro cards on map
     if(d.ref.classList.contains('zone-intro-creative')){
       const zone=d.ref.dataset.zone;
@@ -9736,7 +9746,7 @@ function buildZoneCardHTML(meta){return '';}
       if(e.target.classList.contains('dragging'))continue;
       e.target.classList.toggle('paused-offscreen',!e.isIntersecting);
     }
-  },{root:vp,rootMargin:'200px',threshold:0});
+  },{root:vp,rootMargin:'600px',threshold:0});
   // Observe stickers AND zone intro cards
   setTimeout(()=>{
     document.querySelectorAll('#canvas > .sticker, #canvas .zone-intro-card').forEach(s=>obs.observe(s));
@@ -9764,9 +9774,7 @@ setTimeout(async ()=>{
   await bootstrapMap(true);
   // Re-center on intro card AFTER items are rearranged
   scrollToZone(null,'hub');
-  requestAnimationFrame(()=>scrollToZone(null,'hub'));
-  setTimeout(()=>{scrollToZone(null,'hub');centerOnIntroCard();},350);
-  setTimeout(()=>{scrollToZone(null,'hub');centerOnIntroCard();},900);
+  setTimeout(()=>{scrollToZone(null,'hub');centerOnIntroCard();},400);
   // Show bitmoji greeting
   const greet=document.createElement('div');
   greet.className='bitmoji-greeting';
