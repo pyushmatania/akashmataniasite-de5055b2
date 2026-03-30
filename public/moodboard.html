@@ -13016,7 +13016,7 @@ function launchFunPanelCricket(){
 
   btns.forEach(function(btn){btn.addEventListener('click',function(ev){
     ev.stopPropagation();ev.preventDefault();sfxTap();
-    var pv=parseInt(this.dataset.v),cv=trueRandom();
+    var pv=parseInt(this.dataset.v),cv=(phase==='toss_num')?trueRandom():cpuPick(pv);
     youHandEl.textContent=HAND_EMOJI[pv];youHandEl.className='hc-hand you';revealHand(youHandEl);
     cpuHandEl.textContent='❓';setTimeout(function(){cpuHandEl.textContent=HAND_EMOJI[cv];cpuHandEl.className='hc-hand cpu';revealHand(cpuHandEl);},200);
     if(phase==='toss_num'){setTimeout(function(){sfxToss();var sum=pv+cv;var sumType=(sum%2===0)?'even':'odd';tossWonByPlayer=(sumType===tossCall);phaseEl.textContent=pv+' + '+cv+' = '+sum+' ('+sumType+')';btnsWrap.style.display='none';if(tossWonByPlayer){commentaryEl.textContent='🎉 You won the toss!';commentaryEl.className='hc-commentary win';setTimeout(function(){phase='toss_choice';commentaryEl.textContent='choose to bat or bowl';commentaryEl.className='hc-commentary';choiceDiv.style.display='flex';},1500);}else{commentaryEl.textContent='CPU won toss! CPU bats first';commentaryEl.className='hc-commentary out';setTimeout(function(){startBowling();},2000);}},250);return;}
