@@ -7138,17 +7138,22 @@ function toggleMap(){
     mmContainer.classList.remove('expanded');
     mmContainer.classList.add('map-closing');
     setTimeout(()=>{
-      mmExp=false;
-      mmContainer.classList.remove('map-closing');
-      mapTransitioning=false;
-      mapZoomScale=1;
-      // Invalidate expanded map clones so small map rebuilds fresh
-      invalidateMapCloneCache(true);
-      _cachedSmallMapSvgW=-1;_cachedSmallMapSvgH=-1;
-      // Redraw as small minimap — no force-rescan (stickers can't move while map is open)
-      ensureMapData(false);
-      drawMap();
-      updMap();
+      try{
+        mmExp=false;
+        mmContainer.classList.remove('map-closing');
+        mapTransitioning=false;
+        mapZoomScale=1;
+        invalidateMapCloneCache(true);
+        _cachedSmallMapSvgW=-1;_cachedSmallMapSvgH=-1;
+        ensureMapData(false);
+        drawMap();
+        updMap();
+      }catch(e){
+        console.error('Map collapse error:',e);
+        mapTransitioning=false;
+        mmExp=false;
+        mmContainer.classList.remove('map-closing');
+      }
     },550);
   }
 }
