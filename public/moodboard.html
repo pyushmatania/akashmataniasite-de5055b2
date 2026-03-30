@@ -11143,12 +11143,19 @@ function ensureCompanionStickers(force){
             // Delay result for CPU hand sync
             setTimeout(function(){
               if(phase==='bat'){
-                if(pv===0){
-                  youHandEl.classList.add('noball');sfxNoball();
+                if(pv===0&&cv===0){
+                  youHandEl.classList.add('match');cpuHandEl.classList.add('match');
+                  sfxOut();showFlash('wicket');showBoundaryText('OUT!','show-out');
+                  commentaryEl.textContent='DEFENCE OUT! You scored '+youScore;
+                  commentaryEl.className='hc-commentary out';
+                  addBall('out','W');
+                  if(target>=0){youScore>target?endGame(true):endGame(false);}
+                  else{setTimeout(function(){switchInnings();},1800);}
+                  return;
+                } else if(pv===0&&cv!==0){
                   youScore+=cv;youScoreEl.textContent=String(youScore);popScore(youScoreEl);
-                  commentaryEl.textContent='No Ball! +'+cv+' free runs!';
-                  commentaryEl.className='hc-commentary noball';
-                  addBall('nb','NB');
+                  commentaryEl.textContent='Defence beaten! +'+cv+' runs';
+                  commentaryEl.className='hc-commentary';addBall('run',String(cv));
                 } else if(pv===cv){
                   youHandEl.classList.add('match');cpuHandEl.classList.add('match');
                   sfxOut();showFlash('wicket');showBoundaryText('OUT!','show-out');
