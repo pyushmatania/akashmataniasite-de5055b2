@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      game_scores: {
+        Row: {
+          game_type: string
+          id: string
+          played_at: string
+          score_data: Json
+        }
+        Insert: {
+          game_type: string
+          id?: string
+          played_at?: string
+          score_data?: Json
+        }
+        Update: {
+          game_type?: string
+          id?: string
+          played_at?: string
+          score_data?: Json
+        }
+        Relationships: []
+      }
       moodboard_layouts: {
         Row: {
           created_at: string
