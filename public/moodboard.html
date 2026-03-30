@@ -3837,44 +3837,57 @@ body.map-expanded .scroll-counter{display:none!important}
 }
 .zp-proj-detail.open .gallery-ambient{opacity:1}
 
-/* ── Gallery info section below the frame ── */
+/* ── Gallery info section below the frame — REDESIGNED ── */
 .gallery-info{
   position:relative;z-index:3;
-  padding:28px 24px 60px;
-  background:linear-gradient(180deg,#0a0812 0%,#0c0a16 100%);
-  border-top:1px solid rgba(255,255,255,0.04);
+  padding:0 24px 80px;
+  background:linear-gradient(180deg,#0a0812 0%,#08061a 100%);
 }
 
+/* Section divider */
+.gi-divider{
+  height:1px;margin:24px 0;
+  background:linear-gradient(90deg,transparent,var(--frame-c1,rgba(120,80,220,0.2)),var(--frame-c2,rgba(200,60,150,0.15)),transparent);
+}
+
+/* Project name area */
 .gallery-info .gi-name{
-  font-family:var(--font-fun);font-size:2rem;font-weight:900;
-  color:#fff;line-height:1.1;margin-bottom:8px;
+  font-family:var(--font-fun);font-size:2.2rem;font-weight:900;
+  color:#fff;line-height:1.05;margin-bottom:6px;
+  background:linear-gradient(135deg,#fff 60%,var(--frame-c1,rgba(200,160,255,0.8)));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
 }
 .gallery-info .gi-tagline{
-  font-family:var(--font-hand);font-size:0.95rem;
-  color:rgba(255,255,255,0.4);line-height:1.5;margin-bottom:20px;
+  font-family:var(--font-fun);font-size:0.65rem;font-weight:700;
+  color:var(--frame-c1,rgba(149,117,205,0.7));
+  letter-spacing:0.16em;text-transform:uppercase;
+  line-height:1.5;margin-bottom:8px;
 }
 .gallery-info .gi-body{
   font-family:var(--font-sans);font-size:0.84rem;
-  color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:22px;
+  color:rgba(255,255,255,0.55);line-height:1.75;margin-bottom:0;
 }
 
 /* Stats as gallery placard */
 .gallery-info .gi-stats{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:22px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:0;
 }
 .gallery-info .gi-stat{
-  text-align:center;padding:14px 8px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.06);
-  border-radius:2px;
+  text-align:center;padding:18px 8px;
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:12px;
   position:relative;overflow:hidden;
+  transition:transform 0.2s,background 0.2s;
 }
+.gallery-info .gi-stat:active{transform:scale(0.95)}
 .gallery-info .gi-stat::before{
   content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
   background:linear-gradient(90deg,var(--frame-c1,rgba(120,80,220,0.4)),var(--frame-c2,rgba(200,60,150,0.3)),transparent);
 }
 .gallery-info .gi-stat-num{
-  font-family:var(--font-fun);font-size:1.5rem;font-weight:900;color:#fff;display:block;
+  font-family:var(--font-fun);font-size:1.6rem;font-weight:900;color:#fff;display:block;
 }
 .gallery-info .gi-stat-lbl{
   font-family:var(--font-sans);font-size:0.5rem;color:rgba(255,255,255,0.3);
@@ -3882,13 +3895,61 @@ body.map-expanded .scroll-counter{display:none!important}
 }
 
 /* Tags and skills */
-.gallery-info .gi-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.gallery-info .gi-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;padding-top:28px}
 .gallery-info .gi-skills{display:flex;gap:6px;flex-wrap:wrap}
 .gallery-info .gi-skill{
-  padding:5px 11px;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;
+  padding:6px 14px;font-family:var(--font-fun);font-size:0.6rem;font-weight:700;
   letter-spacing:0.04em;background:rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);
-  border-radius:1px;
+  border-radius:8px;transition:all 0.2s;
+}
+.gallery-info .gi-skill:active{transform:scale(0.92);background:rgba(255,255,255,0.08)}
+
+/* My Role section */
+.gi-role-section{margin-bottom:0}
+.gi-role-title{
+  font-family:var(--font-fun);font-size:0.6rem;font-weight:800;
+  letter-spacing:0.16em;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);margin-bottom:14px;
+}
+.gi-role-cards{display:flex;flex-direction:column;gap:10px}
+.gi-role-card{
+  padding:16px 18px;
+  background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);
+  border-radius:14px;display:flex;align-items:flex-start;gap:14px;
+  transition:transform 0.2s;
+}
+.gi-role-card:active{transform:scale(0.98)}
+.gi-role-card-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+.gi-role-card-content{flex:1}
+.gi-role-card-label{
+  font-family:var(--font-fun);font-size:0.72rem;font-weight:800;color:#fff;
+  display:block;margin-bottom:4px;
+}
+.gi-role-card-desc{
+  font-family:var(--font-sans);font-size:0.7rem;color:rgba(255,255,255,0.4);line-height:1.55;
+}
+
+/* Timeline / Journey */
+.gi-journey{margin-bottom:0}
+.gi-journey-items{position:relative;padding-left:20px}
+.gi-journey-items::before{
+  content:'';position:absolute;left:5px;top:6px;bottom:6px;width:2px;
+  background:linear-gradient(180deg,var(--frame-c1,rgba(120,80,220,0.3)),var(--frame-c2,rgba(200,60,150,0.2)),transparent);
+}
+.gi-journey-item{position:relative;padding:0 0 18px 18px}
+.gi-journey-item::before{
+  content:'';position:absolute;left:-3px;top:6px;width:8px;height:8px;
+  border-radius:50%;background:var(--frame-c1,rgba(120,80,220,0.6));
+  border:2px solid #0a0812;
+}
+.gi-journey-phase{
+  font-family:var(--font-fun);font-size:0.58rem;font-weight:800;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--frame-c1,rgba(149,117,205,0.7));margin-bottom:4px;
+}
+.gi-journey-text{
+  font-family:var(--font-sans);font-size:0.74rem;color:rgba(255,255,255,0.45);line-height:1.6;
 }
 
 /* Tag shimmer */
