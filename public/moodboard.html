@@ -4146,13 +4146,8 @@ function scrollToZone(e,zone){
   const el=getZoneIntroElement(zone);
   let panX=target.x, panY=target.y;
   if(el){
-    if(typeof anchorZoneIntroCard==='function') anchorZoneIntroCard(el,zone);
-    const w=el.offsetWidth||380;
-    const h=el.offsetHeight||420;
-    const l=parseFloat(el.style.left)||0;
-    const t=parseFloat(el.style.top)||0;
-    panX=l+w/2;
-    panY=t+h/2;
+    const anchored=anchorZoneIntroCard(el,zone);
+    if(anchored){ panX=anchored.x; panY=anchored.y; }
   }
   const worldW=(typeof MOODBOARD_WORLD_WIDTH==='number'?MOODBOARD_WORLD_WIDTH:10000);
   const worldH=(typeof MOODBOARD_WORLD_HEIGHT==='number'?MOODBOARD_WORLD_HEIGHT:10000);
