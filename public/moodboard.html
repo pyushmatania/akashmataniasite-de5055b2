@@ -7839,7 +7839,7 @@ function drawMap(){
   if(mmExp){
     renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
   } else {
-    // SMALL: white card-style rendering matching screenshot aesthetic
+    // SMALL: card-style rendering — all items visible on blue bg
     let count=0;
     const frag=document.createDocumentFragment();
     stickerData.forEach(d=>{
@@ -7847,17 +7847,16 @@ function drawMap(){
       const liveLeft=d.ref&&d.ref.style?parseInt(d.ref.style.left)||d.left:d.left;
       const liveTop=d.ref&&d.ref.style?parseInt(d.ref.style.top)||d.top:d.top;
       const dx=(liveLeft-offsetX)*sc, dy=(liveTop-offsetY)*sc;
-      if(dx<-80||dx>canvasW+80||dy<-80||dy>canvasH+80)return;
+      if(dx<-100||dx>canvasW+100||dy<-100||dy>canvasH+100)return;
       count++;
-      const w=Math.max(4,d.w*sc),h=Math.max(3,d.h*sc);
+      const w=Math.max(5,d.w*sc),h=Math.max(4,d.h*sc);
       const el=document.createElement('div');
       el.className='mi';
-      // Determine visible bg for small map (transparent items need a fallback on blue bg)
-      let bg='rgba(255,255,255,0.92)';
-      if(d.bg&&d.bg!=='transparent'&&d.bg!==''&&d.bg!=='rgba(200,200,200,0.5)')bg=d.bg;
-      // If bg is still transparent-ish, force white card look so items are visible on blue
-      if(bg==='transparent'||bg==='rgba(0, 0, 0, 0)'||bg==='none')bg='rgba(255,255,255,0.85)';
-      const radius=d.radius||'2px';
+      // Force visible bg — transparent/none items get white card on blue canvas
+      let bg=d.bg||'';
+      if(!bg||bg==='transparent'||bg==='none'||bg==='rgba(0, 0, 0, 0)'||bg==='rgba(200,200,200,0.5)')bg='rgba(255,255,255,0.88)';
+      let radius=d.radius||'3px';
+      if(radius==='0'||radius==='0px')radius='2px';
       // Thumbnail for image stickers
       let extraStyle='';
       if(d.ref&&typeof d._thumbSrc==='undefined'){
@@ -7867,12 +7866,9 @@ function drawMap(){
       if(d._thumbSrc){
         extraStyle='background-image:url('+d._thumbSrc+');background-size:cover;background-position:center;';
       }
-      // Border for visibility
-      const border=d.border||'';
-      const borderStyle=border?'border:'+border+';':'border:1px solid rgba(255,255,255,0.3);';
       el.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;background:'+bg+';border-radius:'+radius+';'+
-        borderStyle+'box-shadow:0 1px 3px rgba(0,0,0,0.25);overflow:hidden;z-index:2;'+extraStyle;
-      if(d.emoji&&w>7){
+        'border:1px solid rgba(255,255,255,0.35);box-shadow:0 1px 4px rgba(0,0,0,0.3);overflow:hidden;z-index:2;'+extraStyle;
+      if(d.emoji&&w>8){
         const l=document.createElement('div');
         l.className='mi-emoji-label';
         l.textContent=d.emoji;
@@ -7891,18 +7887,23 @@ function drawMap(){
     if(oldRoads)oldRoads.remove();
     if(oldLabels)oldLabels.remove();
 
+    // SVG viewBox accounts for padding offset (items at world 0,0 map to smallPad in canvas)
+    const smallPad=800;
+    const vbX=-smallPad,vbY=-smallPad,vbW=7000+smallPad*2,vbH=7000+smallPad*2;
+    const vb=vbX+' '+vbY+' '+vbW+' '+vbH;
+
     // Zone name labels on small map
     const lblSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
     lblSvg.setAttribute('class','small-map-labels');
-    lblSvg.setAttribute('viewBox','0 0 7000 7000');
+    lblSvg.setAttribute('viewBox',vb);
     lblSvg.setAttribute('preserveAspectRatio','none');
     lblSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:4;overflow:visible';
     const smLabels=[
-      {x:1750,y:1400,text:'INTRO',color:'rgba(0,188,212,0.25)',rot:-18},
-      {x:5250,y:1400,text:'WORK',color:'rgba(229,57,53,0.20)',rot:-15},
-      {x:1750,y:3600,text:'PORTFOLIO',color:'rgba(66,165,245,0.20)',rot:-25},
-      {x:5250,y:3600,text:'FUN',color:'rgba(171,71,188,0.20)',rot:-20},
-      {x:3500,y:5800,text:'HOBBY',color:'rgba(255,152,0,0.20)',rot:-18},
+      {x:1750,y:1400,text:'INTRO',color:'rgba(0,200,220,0.30)',rot:-18},
+      {x:5250,y:1400,text:'WORK',color:'rgba(229,57,53,0.25)',rot:-15},
+      {x:1750,y:3600,text:'PORTFOLIO',color:'rgba(66,165,245,0.25)',rot:-25},
+      {x:5250,y:3600,text:'FUN',color:'rgba(171,71,188,0.25)',rot:-20},
+      {x:3500,y:5800,text:'HOBBY',color:'rgba(255,152,0,0.25)',rot:-18},
     ];
     smLabels.forEach(l=>{
       const t=document.createElementNS('http://www.w3.org/2000/svg','text');
@@ -7917,10 +7918,10 @@ function drawMap(){
     });
     mapCanvas.appendChild(lblSvg);
 
-    // Boundary lines — radar-styled for dark minimap
+    // Boundary lines
     const bSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
     bSvg.setAttribute('class','small-map-boundaries');
-    bSvg.setAttribute('viewBox','0 0 7000 7000');
+    bSvg.setAttribute('viewBox',vb);
     bSvg.setAttribute('preserveAspectRatio','none');
     bSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:5;overflow:visible';
     const smDividerPaths=[
