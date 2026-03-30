@@ -1786,6 +1786,57 @@ body.map-expanded .scroll-counter{display:none!important}
 /* Coffee stain watermark */
 .zic-coffee-stain{position:absolute;bottom:40px;right:-15px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,rgba(139,69,19,0.06) 30%,transparent 70%);border:2px solid rgba(139,69,19,0.04);pointer-events:none;z-index:0;opacity:0.7}
 
+/* ── Cutout sticker images ── */
+.zc-cutout-img{width:90px;height:90px;object-fit:contain;filter:drop-shadow(2px 3px 6px rgba(0,0,0,0.15));transition:transform 0.3s,filter 0.3s;cursor:pointer;border-radius:6px}
+.zc-cutout-img:hover{transform:scale(1.15) rotate(5deg);filter:drop-shadow(4px 6px 12px rgba(0,0,0,0.25))}
+.zc-cutout-wrap{background:#fff;border-radius:12px;padding:6px;border:2.5px solid #f0ece6;box-shadow:0 4px 16px rgba(0,0,0,0.08);display:inline-block;transition:transform 0.3s}
+.zc-cutout-wrap:hover{transform:rotate(-3deg) scale(1.05)}
+/* ── HODL Challenge ── */
+.zc-hodl{background:linear-gradient(145deg,#1a1a2e,#16213e);border-radius:16px;padding:14px 16px;width:180px;box-shadow:0 4px 20px rgba(0,0,0,0.3),0 0 20px rgba(247,147,26,0.1);border:1.5px solid rgba(247,147,26,0.2);text-align:center;cursor:pointer;user-select:none;position:relative;overflow:hidden}
+.zc-hodl::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent,rgba(247,147,26,0.05),transparent,rgba(247,147,26,0.05));animation:hodlSpin 4s linear infinite}
+@keyframes hodlSpin{to{transform:rotate(360deg)}}
+.zc-hodl .hodl-title{font-family:var(--font-fun);font-size:0.7rem;font-weight:800;color:#F7931A;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;position:relative;z-index:1}
+.zc-hodl .hodl-timer{font-family:'Space Grotesk',monospace;font-size:2rem;font-weight:900;color:#fff;position:relative;z-index:1;text-shadow:0 0 20px rgba(247,147,26,0.4)}
+.zc-hodl .hodl-label{font-family:var(--font-hand);font-size:0.72rem;color:rgba(255,255,255,0.5);margin-top:4px;position:relative;z-index:1}
+.zc-hodl .hodl-record{font-family:var(--font-fun);font-size:0.55rem;color:rgba(247,147,26,0.6);margin-top:6px;position:relative;z-index:1}
+.zc-hodl.holding{box-shadow:0 4px 20px rgba(0,0,0,0.3),0 0 40px rgba(247,147,26,0.3);border-color:rgba(247,147,26,0.5)}
+.zc-hodl.holding .hodl-timer{color:#F7931A;text-shadow:0 0 30px rgba(247,147,26,0.6)}
+/* ── Crypto Slot Machine ── */
+.zc-slot{background:linear-gradient(145deg,#0f0f23,#1a1a3e);border-radius:16px;padding:14px 16px;width:190px;box-shadow:0 4px 22px rgba(0,0,0,0.4),0 0 0 1px rgba(100,100,255,0.15);text-align:center;cursor:pointer;user-select:none}
+.zc-slot .slot-title{font-family:var(--font-fun);font-size:0.65rem;font-weight:800;color:#7C4DFF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px}
+.zc-slot .slot-window{display:flex;gap:6px;justify-content:center;margin-bottom:8px}
+.zc-slot .slot-reel{width:44px;height:44px;background:rgba(255,255,255,0.05);border-radius:8px;border:1.5px solid rgba(124,77,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1.5rem;transition:transform 0.1s}
+.zc-slot .slot-reel.spinning{animation:slotSpin 0.1s linear infinite}
+@keyframes slotSpin{0%{transform:translateY(-4px)}50%{transform:translateY(4px)}100%{transform:translateY(-4px)}}
+.zc-slot .slot-msg{font-family:var(--font-hand);font-size:0.72rem;color:rgba(255,255,255,0.5);min-height:1.2em}
+.zc-slot .slot-msg.win{color:#FFD700;text-shadow:0 0 10px rgba(255,215,0,0.5)}
+.zc-slot .slot-btn{background:linear-gradient(135deg,#7C4DFF,#536DFE);border:none;color:#fff;font-family:var(--font-fun);font-size:0.62rem;font-weight:800;padding:5px 14px;border-radius:8px;cursor:pointer;margin-top:6px;text-transform:uppercase;letter-spacing:0.05em;transition:transform 0.15s,box-shadow 0.15s}
+.zc-slot .slot-btn:hover{transform:scale(1.05);box-shadow:0 0 12px rgba(124,77,255,0.4)}
+.zc-slot .slot-btn:active{transform:scale(0.95)}
+/* ── Cricket Reaction Speed ── */
+.zc-reaction{background:linear-gradient(145deg,#1B5E20,#2E7D32);border-radius:16px;padding:14px 16px;width:175px;box-shadow:0 4px 20px rgba(0,0,0,0.3);border:1.5px solid rgba(255,255,255,0.1);text-align:center;cursor:pointer;user-select:none}
+.zc-reaction .rx-title{font-family:var(--font-fun);font-size:0.65rem;font-weight:800;color:#A5D6A7;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+.zc-reaction .rx-circle{width:60px;height:60px;border-radius:50%;background:#C62828;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;transition:background 0.2s,transform 0.15s,box-shadow 0.2s}
+.zc-reaction .rx-circle.go{background:#4CAF50;box-shadow:0 0 30px rgba(76,175,80,0.6);transform:scale(1.1)}
+.zc-reaction .rx-circle.hit{background:#FFD700;box-shadow:0 0 30px rgba(255,215,0,0.6);animation:rxPulse 0.3s ease}
+@keyframes rxPulse{0%{transform:scale(1.1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+.zc-reaction .rx-time{font-family:'Space Grotesk',monospace;font-size:1.4rem;font-weight:900;color:#fff}
+.zc-reaction .rx-label{font-family:var(--font-hand);font-size:0.68rem;color:rgba(255,255,255,0.55);margin-top:3px}
+/* ── Commentary Generator ── */
+.zc-commentary{background:linear-gradient(145deg,#0D1B2A,#1B2838);border-radius:16px;padding:14px 16px;width:200px;box-shadow:0 4px 20px rgba(0,0,0,0.35);border:1.5px solid rgba(0,150,255,0.15);cursor:pointer;user-select:none}
+.zc-commentary .cm-title{font-family:var(--font-fun);font-size:0.65rem;font-weight:800;color:#64B5F6;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;text-align:center}
+.zc-commentary .cm-text{font-family:var(--font-hand);font-size:0.82rem;color:rgba(255,255,255,0.8);line-height:1.45;text-align:center;min-height:3em;transition:opacity 0.3s}
+.zc-commentary .cm-speaker{font-family:var(--font-fun);font-size:0.52rem;color:rgba(100,181,246,0.5);text-align:right;margin-top:6px}
+.zc-commentary .cm-tap{font-family:var(--font-fun);font-size:0.5rem;color:rgba(255,255,255,0.3);text-align:center;margin-top:6px;text-transform:uppercase;letter-spacing:0.1em}
+/* ── Wicket Counter ── */
+.zc-wicket{background:linear-gradient(145deg,#BF360C,#D84315);border-radius:16px;padding:14px 16px;width:165px;box-shadow:0 4px 20px rgba(0,0,0,0.35);border:1.5px solid rgba(255,255,255,0.1);text-align:center;cursor:pointer;user-select:none}
+.zc-wicket .wk-title{font-family:var(--font-fun);font-size:0.65rem;font-weight:800;color:#FFCCBC;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+.zc-wicket .wk-stumps{font-size:2.2rem;transition:transform 0.3s;display:inline-block}
+.zc-wicket .wk-stumps.hit{animation:stumpFly 0.5s ease-out}
+@keyframes stumpFly{0%{transform:rotate(0)}30%{transform:rotate(-25deg) translateY(-8px)}60%{transform:rotate(15deg) translateY(-3px)}100%{transform:rotate(0)}}
+.zc-wicket .wk-count{font-family:'Space Grotesk',monospace;font-size:1.8rem;font-weight:900;color:#fff;margin:4px 0 2px}
+.zc-wicket .wk-label{font-family:var(--font-hand);font-size:0.68rem;color:rgba(255,255,255,0.55)}
+
 
 @keyframes termBlink{0%,100%{opacity:1}50%{opacity:0}}
 @keyframes bootBar{0%{width:0%}100%{width:100%}}
@@ -10626,7 +10677,12 @@ function ensureCompanionStickers(force){
       {dx:420,dy:120,html:memeCard('SPRINT REVIEW','"it works on my machine" 🤡')},
       {dx:-400,dy:-240,html:'<div class="zc-sticky" style="--r:-6deg;background:#FFF8E1;color:#E65100;border-bottom:3px solid rgba(255,152,0,0.2)">standup mood:<br>almost done™</div>'},
       {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(201,169,110,0.1);color:var(--accent);border:1px solid rgba(201,169,110,0.25)">⚡ Ships on Fridays</div>'},
-      {dx:-20,dy:360,html:dragHandleSvg+flipCard('💼','TAP TO FLIP','First product crashed every Tuesday. We still shipped.'),kind:'flip'}
+      {dx:-20,dy:360,html:dragHandleSvg+flipCard('💼','TAP TO FLIP','First product crashed every Tuesday. We still shipped.'),kind:'flip'},
+      // Crypto cutouts — Work zone
+      {dx:-380,dy:140,html:'<div class="zc-cutout-wrap" style="transform:rotate(-4deg)"><img class="zc-cutout-img" src="/stickers/bitcoin-cutout.png" alt="Bitcoin" loading="lazy"></div>'},
+      {dx:400,dy:-180,html:'<div class="zc-cutout-wrap" style="transform:rotate(6deg)"><img class="zc-cutout-img" src="/stickers/eth-cutout.png" alt="Ethereum" loading="lazy"></div>'},
+      // HODL Challenge interactive — Work zone
+      {dx:460,dy:400,html:dragHandleSvg+'<div class="zc-hodl"><div class="hodl-title">💎 HODL CHALLENGE</div><div class="hodl-timer">0.0s</div><div class="hodl-label">hold to HODL</div><div class="hodl-record">best: 0.0s</div></div>',kind:'hodl'}
     ],
     portfolio:[
       {dx:-430,dy:-60,html:skillStackCard('Build Stack','💻',['React','TS','Node','Web3','Figma','AI'],['#61DAFB','#3178C6','#339933','#F6851B','#F24E1E','#AB47BC'])},
@@ -10636,7 +10692,12 @@ function ensureCompanionStickers(force){
       {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(126,87,194,0.08);color:#7E57C2;border:1px solid rgba(126,87,194,0.2)">🔗 EnterCircles + Recess</div>'},
       {dx:-20,dy:360,html:dragHandleSvg+meterCard('🎯','SHIP COUNT'),kind:'meter'},
       {dx:440,dy:100,html:'<div class="zc-sticky" style="--r:4deg;background:#F3E5F5;color:#6A1B9A;border-bottom:3px solid rgba(126,87,194,0.2)">TODO: ship · iterate · repeat</div>'},
-      {dx:-420,dy:-240,html:'<div class="zc-emoji-float" style="font-size:2.5rem">⚡</div>'}
+      {dx:-420,dy:-240,html:'<div class="zc-emoji-float" style="font-size:2.5rem">⚡</div>'},
+      // Crypto cutouts — Portfolio zone
+      {dx:-440,dy:140,html:'<div class="zc-cutout-wrap" style="transform:rotate(3deg)"><img class="zc-cutout-img" src="/stickers/solana-cutout.png" alt="Solana" loading="lazy"></div>'},
+      {dx:460,dy:400,html:'<div class="zc-cutout-wrap" style="transform:rotate(-5deg)"><img class="zc-cutout-img" src="/stickers/shibainu-cutout.png" alt="Shiba Inu" loading="lazy"></div>'},
+      // Crypto Slot Machine interactive — Portfolio zone
+      {dx:-450,dy:400,html:dragHandleSvg+'<div class="zc-slot"><div class="slot-title">🎰 CRYPTO SLOTS</div><div class="slot-window"><div class="slot-reel">₿</div><div class="slot-reel">◆</div><div class="slot-reel">🐕</div></div><div class="slot-msg">tap SPIN to play</div><div class="slot-btn" style="pointer-events:auto">⚡ SPIN</div></div>',kind:'slot'}
     ],
     introduction:[
       // 1. Polaroid photo with chapter-zero caption
@@ -10672,7 +10733,14 @@ function ensureCompanionStickers(force){
       // 7. Startup Shows card
       {dx:0,dy:360,html:'<div style="background:linear-gradient(145deg,#fff,#fef9f0);border-radius:14px;padding:12px 14px;width:200px;box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1.5px solid rgba(201,169,110,0.18)"><div style="font-family:var(--font-fun);font-size:0.68rem;font-weight:800;color:var(--text);margin-bottom:9px;text-align:center;letter-spacing:0.04em;text-transform:uppercase">📺 STARTUP SHOWS TIER</div><div style="display:flex;flex-direction:column;gap:4px"><div style="background:rgba(229,57,53,0.06);border-radius:6px;padding:4px 9px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-hand);font-size:0.7rem;color:var(--text2)">💻 Silicon Valley</span><span style="font-family:var(--font-fun);font-size:0.56rem;font-weight:800;color:#E53935">S+</span></div><div style="background:rgba(229,57,53,0.06);border-radius:6px;padding:4px 9px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-hand);font-size:0.7rem;color:var(--text2)">💼 Succession</span><span style="font-family:var(--font-fun);font-size:0.56rem;font-weight:800;color:#E53935">S+</span></div><div style="background:rgba(229,57,53,0.06);border-radius:6px;padding:4px 9px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-hand);font-size:0.7rem;color:var(--text2)">🦈 Shark Tank</span><span style="font-family:var(--font-fun);font-size:0.56rem;font-weight:800;color:#FF7043">S</span></div><div style="background:rgba(229,57,53,0.06);border-radius:6px;padding:4px 9px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-hand);font-size:0.7rem;color:var(--text2)">💔 WeCrashed</span><span style="font-family:var(--font-fun);font-size:0.56rem;font-weight:800;color:#FF7043">S</span></div></div></div>'},
       // 8. PlayStation floating emoji
-      {dx:430,dy:90,html:'<div class="zc-emoji-float" style="font-size:2.8rem;filter:drop-shadow(0 4px 12px rgba(0,80,255,0.4))">🎮</div>'}
+      {dx:430,dy:90,html:'<div class="zc-emoji-float" style="font-size:2.8rem;filter:drop-shadow(0 4px 12px rgba(0,80,255,0.4))">🎮</div>'},
+      // Cricket cutouts — Hobby zone
+      {dx:-460,dy:420,html:'<div class="zc-cutout-wrap" style="transform:rotate(-3deg)"><img class="zc-cutout-img" src="/stickers/dhoni-cutout.png" alt="MS Dhoni" loading="lazy"></div>'},
+      {dx:460,dy:-260,html:'<div class="zc-cutout-wrap" style="transform:rotate(5deg)"><img class="zc-cutout-img" src="/stickers/bumrah-cutout.png" alt="Jasprit Bumrah" loading="lazy"></div>'},
+      // Reaction Speed Test interactive — Hobby zone
+      {dx:-470,dy:-320,html:dragHandleSvg+'<div class="zc-reaction"><div class="rx-title">🏏 REACTION SPEED</div><div class="rx-circle">🏏</div><div class="rx-time">—</div><div class="rx-label">tap when green!</div></div>',kind:'reaction'},
+      // Commentary Generator interactive — Hobby zone
+      {dx:470,dy:420,html:dragHandleSvg+'<div class="zc-commentary"><div class="cm-title">🎙️ COMMENTARY BOX</div><div class="cm-text">"And he smashes it over mid-wicket for a massive SIX!"</div><div class="cm-speaker">— Harsha Bhogle</div><div class="cm-tap">tap for next</div></div>',kind:'commentary'}
     ],
     fun:[
       {dx:-420,dy:-60,html:memeCard('NEW FEATURE IDEA','"quick 5 min change" 💀')},
@@ -10682,7 +10750,11 @@ function ensureCompanionStickers(force){
       {dx:0,dy:-340,html:'<div class="zc-badge" style="background:rgba(255,69,0,0.08);color:#E53935;border:1px solid rgba(255,69,0,0.15)">🔥 Meme Lord</div>'},
       {dx:-400,dy:-240,html:'<div class="zc-sticky" style="--r:-5deg;background:#FFEBEE;color:#C62828;border-bottom:3px solid rgba(229,115,115,0.2)">git commit -m "please work" 🙏</div>'},
       {dx:420,dy:100,html:quoteCard('In the darkest times, hope is something you give yourself.','Kratos')},
-      {dx:0,dy:340,html:'<div style="font-size:2.7rem;text-align:center">🪓</div>'}
+      {dx:0,dy:340,html:'<div style="font-size:2.7rem;text-align:center">🪓</div>'},
+      // Cricket cutout — Fun zone
+      {dx:-440,dy:410,html:'<div class="zc-cutout-wrap" style="transform:rotate(4deg)"><img class="zc-cutout-img" src="/stickers/kohli-cutout.png" alt="Virat Kohli" loading="lazy"></div>'},
+      // Wicket Counter interactive — Fun zone
+      {dx:460,dy:410,html:dragHandleSvg+'<div class="zc-wicket"><div class="wk-title">🏏 WICKET COUNTER</div><div class="wk-stumps">🏏</div><div class="wk-count">0</div><div class="wk-label">bowled \'em!</div></div>',kind:'wicket'}
     ]
   };
 
@@ -10699,12 +10771,12 @@ function ensureCompanionStickers(force){
     if(!a)return;
     const el=document.createElement('div');
     el.className='sticker zic-companion';
-    if(item.kind==='meter'||item.kind==='flip') el.className+=' has-drag-handle';
+    if(item.kind==='meter'||item.kind==='flip'||item.kind==='hodl'||item.kind==='slot'||item.kind==='reaction'||item.kind==='commentary'||item.kind==='wicket') el.className+=' has-drag-handle';
     el.id='companion-'+zone+'-'+compIdx;
     compIdx++;
     el.dataset.zone=zone;
     el.dataset.locked='1';
-    el.dataset.type=item.kind==='meter'||item.kind==='flip'?'interactive':'other';
+    el.dataset.type=(item.kind&&item.kind!=='other')?'interactive':'other';
     const cx=a.left+a.w/2;
     const cy=a.top+a.h/2;
     el.style.left=(cx+item.dx)+'px';
@@ -10736,6 +10808,168 @@ function ensureCompanionStickers(force){
         flip.addEventListener('click',function(ev){
           ev.stopPropagation();ev.preventDefault();
           this.classList.toggle('flipped');
+        });
+      }
+    }
+
+    // HODL Challenge — hold as long as you can
+    if(item.kind==='hodl'){
+      const hodl=el.querySelector('.zc-hodl');
+      if(hodl){
+        hodl.style.pointerEvents='auto';
+        let hodlInterval=null,hodlStart=0,hodlBest=0;
+        const timerEl=hodl.querySelector('.hodl-timer');
+        const recordEl=hodl.querySelector('.hodl-record');
+        const startHodl=function(ev){
+          ev.stopPropagation();ev.preventDefault();
+          hodlStart=Date.now();hodl.classList.add('holding');
+          hodlInterval=setInterval(function(){
+            const t=((Date.now()-hodlStart)/1000).toFixed(1);
+            if(timerEl)timerEl.textContent=t+'s';
+          },50);
+        };
+        const endHodl=function(ev){
+          ev.stopPropagation();
+          if(!hodlInterval)return;
+          clearInterval(hodlInterval);hodlInterval=null;
+          hodl.classList.remove('holding');
+          const final=((Date.now()-hodlStart)/1000).toFixed(1);
+          if(timerEl)timerEl.textContent=final+'s';
+          if(parseFloat(final)>hodlBest){
+            hodlBest=parseFloat(final);
+            if(recordEl)recordEl.textContent='best: '+final+'s 🏆';
+            hodl.style.borderColor='rgba(76,175,80,0.5)';
+            setTimeout(function(){hodl.style.borderColor='';},1500);
+          }
+        };
+        hodl.addEventListener('mousedown',startHodl);hodl.addEventListener('touchstart',startHodl,{passive:false});
+        hodl.addEventListener('mouseup',endHodl);hodl.addEventListener('mouseleave',endHodl);hodl.addEventListener('touchend',endHodl);
+      }
+    }
+
+    // Crypto Slot Machine
+    if(item.kind==='slot'){
+      const slot=el.querySelector('.zc-slot');
+      if(slot){
+        slot.style.pointerEvents='auto';
+        const reels=slot.querySelectorAll('.slot-reel');
+        const msgEl=slot.querySelector('.slot-msg');
+        const btn=slot.querySelector('.slot-btn');
+        const symbols=['₿','◆','◎','🐕'];
+        const msgs=['NGMI 😭','Almost! 🤏','Try again 🎲','SO CLOSE 💀'];
+        const winMsgs=['JACKPOT! 🤑','TO THE MOON! 🚀','WAGMI! 💎'];
+        let spinning=false;
+        if(btn)btn.addEventListener('click',function(ev){
+          ev.stopPropagation();ev.preventDefault();
+          if(spinning)return;spinning=true;
+          reels.forEach(function(r){r.classList.add('spinning');});
+          if(msgEl){msgEl.textContent='spinning...';msgEl.classList.remove('win');}
+          let stopped=0;
+          reels.forEach(function(r,i){
+            setTimeout(function(){
+              r.classList.remove('spinning');
+              r.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+              stopped++;
+              if(stopped===reels.length){
+                spinning=false;
+                const vals=[].map.call(reels,function(x){return x.textContent;});
+                if(vals[0]===vals[1]&&vals[1]===vals[2]){
+                  if(msgEl){msgEl.textContent=winMsgs[Math.floor(Math.random()*winMsgs.length)];msgEl.classList.add('win');}
+                  slot.style.boxShadow='0 4px 22px rgba(0,0,0,0.4),0 0 30px rgba(255,215,0,0.4)';
+                  setTimeout(function(){slot.style.boxShadow='';},2000);
+                }else{
+                  if(msgEl){msgEl.textContent=msgs[Math.floor(Math.random()*msgs.length)];msgEl.classList.remove('win');}
+                }
+              }
+            },(i+1)*400+Math.random()*200);
+          });
+        });
+      }
+    }
+
+    // Reaction Speed Test
+    if(item.kind==='reaction'){
+      const rx=el.querySelector('.zc-reaction');
+      if(rx){
+        rx.style.pointerEvents='auto';
+        const circle=rx.querySelector('.rx-circle');
+        const timeEl=rx.querySelector('.rx-time');
+        const labelEl=rx.querySelector('.rx-label');
+        let rxState='idle',rxTimeout=null,rxStart=0;
+        rx.addEventListener('click',function(ev){
+          ev.stopPropagation();ev.preventDefault();
+          if(rxState==='idle'){
+            rxState='waiting';circle.className='rx-circle';circle.textContent='👀';
+            if(labelEl)labelEl.textContent='wait for green...';
+            if(timeEl)timeEl.textContent='—';
+            rxTimeout=setTimeout(function(){
+              rxState='go';circle.className='rx-circle go';circle.textContent='🏏';
+              if(labelEl)labelEl.textContent='TAP NOW!';
+              rxStart=Date.now();
+            },1500+Math.random()*3000);
+          }else if(rxState==='waiting'){
+            clearTimeout(rxTimeout);rxState='idle';
+            circle.className='rx-circle';circle.textContent='❌';
+            if(timeEl)timeEl.textContent='TOO EARLY';
+            if(labelEl)labelEl.textContent='tap to retry';
+            setTimeout(function(){circle.textContent='🏏';},1000);
+          }else if(rxState==='go'){
+            rxState='idle';
+            const ms=Date.now()-rxStart;
+            circle.className='rx-circle hit';circle.textContent='💥';
+            if(timeEl)timeEl.textContent=ms+'ms';
+            if(labelEl)labelEl.textContent=ms<250?'DHONI-LEVEL! 🔥':ms<400?'Good reflexes! 👏':'Keep practicing 💪';
+            setTimeout(function(){circle.className='rx-circle';circle.textContent='🏏';if(labelEl)labelEl.textContent='tap to play again';},2000);
+          }
+        });
+      }
+    }
+
+    // Commentary Generator
+    if(item.kind==='commentary'){
+      const cm=el.querySelector('.zc-commentary');
+      if(cm){
+        cm.style.pointerEvents='auto';
+        const lines=[
+          {text:'"And he smashes it over mid-wicket for a massive SIX!"',speaker:'Harsha Bhogle'},
+          {text:'"That\'s gone all the way! What a shot by Dhoni!"',speaker:'Ravi Shastri'},
+          {text:'"Bumrah steams in... BOWLED HIM! Middle stump cart-wheeling!"',speaker:'Ian Bishop'},
+          {text:'"Kohli drives through covers — FOUR! Classic shot!"',speaker:'Aakash Chopra'},
+          {text:'"What a delivery! Unplayable! The batsman had no clue!"',speaker:'Michael Holding'},
+          {text:'"He finishes off in style! A magnificent strike into the crowd!"',speaker:'Ravi Shastri'},
+          {text:'"Remember the name! This kid is going places!"',speaker:'Danny Morrison'},
+          {text:'"The pitch is doing things. It\'s doing things, I tell you!"',speaker:'Sunil Gavaskar'},
+          {text:'"Helicopter shot! Only one man can play that!"',speaker:'Harsha Bhogle'},
+          {text:'"DROPPED! He\'s dropped the World Cup!"',speaker:'Tony Greig'}
+        ];
+        let cmIdx=0;
+        const textEl=cm.querySelector('.cm-text');
+        const speakerEl=cm.querySelector('.cm-speaker');
+        cm.addEventListener('click',function(ev){
+          ev.stopPropagation();ev.preventDefault();
+          cmIdx=(cmIdx+1)%lines.length;
+          if(textEl){textEl.style.opacity='0';setTimeout(function(){textEl.textContent=lines[cmIdx].text;textEl.style.opacity='1';},200);}
+          if(speakerEl)setTimeout(function(){speakerEl.textContent='— '+lines[cmIdx].speaker;},200);
+        });
+      }
+    }
+
+    // Wicket Counter
+    if(item.kind==='wicket'){
+      const wk=el.querySelector('.zc-wicket');
+      if(wk){
+        wk.style.pointerEvents='auto';
+        let wkCount=0;
+        const stumps=wk.querySelector('.wk-stumps');
+        const countEl=wk.querySelector('.wk-count');
+        const labelEl=wk.querySelector('.wk-label');
+        const wicketMsgs=['bowled \'em!','TIMBER! 🔥','CLEAN BOWLED!','stumps flying!','GONE! 💥','middle stump!'];
+        wk.addEventListener('click',function(ev){
+          ev.stopPropagation();ev.preventDefault();
+          wkCount++;
+          if(countEl)countEl.textContent=String(wkCount);
+          if(stumps){stumps.classList.remove('hit');void stumps.offsetWidth;stumps.classList.add('hit');setTimeout(function(){stumps.classList.remove('hit');},500);}
+          if(labelEl)labelEl.textContent=wicketMsgs[Math.floor(Math.random()*wicketMsgs.length)];
         });
       }
     }
