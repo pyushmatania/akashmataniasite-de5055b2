@@ -7926,6 +7926,78 @@ function drawMapLayout(){
   return {sc,offsetX,offsetY,canvasW,canvasH,playerWasInCanvas};
 }
 
+// Cached SVG overlays for small map — only recreated when canvas dimensions change
+let _cachedSmallMapSvgW=-1, _cachedSmallMapSvgH=-1;
+let _cachedLblSvg=null, _cachedBSvg=null;
+
+function getOrCreateSmallMapSvgs(canvasW,canvasH){
+  const rW=Math.round(canvasW), rH=Math.round(canvasH);
+  if(_cachedLblSvg && _cachedBSvg && _cachedSmallMapSvgW===rW && _cachedSmallMapSvgH===rH){
+    // Just ensure they're in the DOM
+    if(!_cachedLblSvg.parentElement) mapCanvas.appendChild(_cachedLblSvg);
+    if(!_cachedBSvg.parentElement) mapCanvas.appendChild(_cachedBSvg);
+    return;
+  }
+  if(_cachedLblSvg) _cachedLblSvg.remove();
+  if(_cachedBSvg) _cachedBSvg.remove();
+  _cachedSmallMapSvgW=rW; _cachedSmallMapSvgH=rH;
+
+  const smallPad=800;
+  const vbX=-smallPad,vbY=-smallPad,vbW=7000+smallPad*2,vbH=7000+smallPad*2;
+  const vb=vbX+' '+vbY+' '+vbW+' '+vbH;
+
+  // Zone name labels
+  const lblSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  lblSvg.setAttribute('class','small-map-labels');
+  lblSvg.setAttribute('viewBox',vb);
+  lblSvg.setAttribute('preserveAspectRatio','none');
+  lblSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:4;overflow:visible';
+  [{x:1750,y:1400,text:'INTRO',color:'rgba(0,200,220,0.30)',rot:-18},
+   {x:5250,y:1400,text:'WORK',color:'rgba(229,57,53,0.25)',rot:-15},
+   {x:1750,y:3600,text:'PORTFOLIO',color:'rgba(66,165,245,0.25)',rot:-25},
+   {x:5250,y:3600,text:'FUN',color:'rgba(171,71,188,0.25)',rot:-20},
+   {x:3500,y:5800,text:'HOBBY',color:'rgba(255,152,0,0.25)',rot:-18}
+  ].forEach(l=>{
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',''+l.x);t.setAttribute('y',''+l.y);
+    t.setAttribute('text-anchor','middle');t.setAttribute('fill',l.color);
+    t.setAttribute('font-size','280');t.setAttribute('font-weight','900');
+    t.setAttribute('font-family','var(--font-fun),sans-serif');
+    t.setAttribute('letter-spacing','0.2em');
+    t.setAttribute('transform','rotate('+l.rot+' '+l.x+' '+l.y+')');
+    t.textContent=l.text;
+    lblSvg.appendChild(t);
+  });
+  _cachedLblSvg=lblSvg;
+  mapCanvas.appendChild(lblSvg);
+
+  // Boundary lines
+  const bSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  bSvg.setAttribute('class','small-map-boundaries');
+  bSvg.setAttribute('viewBox',vb);
+  bSvg.setAttribute('preserveAspectRatio','none');
+  bSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:5;overflow:visible';
+  [{d:'M3500,0 C3475,350 3525,700 3495,1050 Q3510,1400 3490,1750 C3515,2100 3485,2333 3500,2333 C3475,2700 3525,3050 3495,3400 Q3510,3700 3490,4050 C3515,4300 3485,4666 3500,4666',stroke:'rgba(201,169,110,0.45)'},
+   {d:'M0,2333 C350,2308 700,2355 1050,2325 Q1400,2308 1750,2350 C2100,2318 2450,2342 2800,2320 Q3150,2308 3500,2333',stroke:'rgba(0,188,212,0.45)'},
+   {d:'M3500,2333 C3850,2308 4200,2355 4550,2325 Q4900,2308 5250,2350 C5600,2318 5950,2342 6300,2320 Q6650,2308 7000,2333',stroke:'rgba(229,57,53,0.45)'},
+   {d:'M0,4666 C350,4641 700,4688 1050,4658 Q1400,4641 1750,4683 C2100,4651 2450,4675 2800,4653 Q3150,4641 3500,4666 C3850,4641 4200,4688 4550,4658 Q4900,4641 5250,4683 C5600,4651 5950,4675 6300,4653 Q6650,4641 7000,4666',stroke:'rgba(255,152,0,0.45)'}
+  ].forEach(zp=>{
+    const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d',zp.d);p.setAttribute('fill','none');p.setAttribute('stroke',zp.stroke);
+    p.setAttribute('stroke-width','40');p.setAttribute('stroke-linejoin','round');
+    p.setAttribute('stroke-dasharray','120 60');p.setAttribute('stroke-linecap','round');
+    bSvg.appendChild(p);
+  });
+  [['3500','2333','60','rgba(201,169,110,0.5)'],['3500','4666','60','rgba(201,169,110,0.5)']
+  ].forEach(([cx,cy,r,fill])=>{
+    const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r',r);c.setAttribute('fill',fill);
+    bSvg.appendChild(c);
+  });
+  _cachedBSvg=bSvg;
+  mapCanvas.appendChild(bSvg);
+}
+
 // Full drawMap — for small map and legacy calls
 function drawMap(){
   const params=drawMapLayout();
@@ -7933,79 +8005,14 @@ function drawMap(){
   if(mmExp){
     renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
   } else {
-    invalidateMapCloneCache(true);
+    // Reuse clones — only invalidate when filter changes
+    if(_lastCloneFilter!==mFilt){
+      invalidateMapCloneCache(true);
+    }
     renderAllSmallMapClones(sc,offsetX,offsetY,canvasW,canvasH);
     if(mapCount)mapCount.textContent=Array.from(stickerData).filter(d=>mFilt==='all'||matchesFilter(d.cat,mFilt)).length+' items';
-    // Boundary + decorations overlay on small map
-    const oldBSvg=mapCanvas.querySelector('.small-map-boundaries');
-    const oldRoads=mapCanvas.querySelector('.small-map-roads');
-    const oldLabels=mapCanvas.querySelector('.small-map-labels');
-    if(oldBSvg)oldBSvg.remove();
-    if(oldRoads)oldRoads.remove();
-    if(oldLabels)oldLabels.remove();
-
-    // SVG viewBox accounts for padding offset (items at world 0,0 map to smallPad in canvas)
-    const smallPad=800;
-    const vbX=-smallPad,vbY=-smallPad,vbW=7000+smallPad*2,vbH=7000+smallPad*2;
-    const vb=vbX+' '+vbY+' '+vbW+' '+vbH;
-
-    // Zone name labels on small map
-    const lblSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-    lblSvg.setAttribute('class','small-map-labels');
-    lblSvg.setAttribute('viewBox',vb);
-    lblSvg.setAttribute('preserveAspectRatio','none');
-    lblSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:4;overflow:visible';
-    const smLabels=[
-      {x:1750,y:1400,text:'INTRO',color:'rgba(0,200,220,0.30)',rot:-18},
-      {x:5250,y:1400,text:'WORK',color:'rgba(229,57,53,0.25)',rot:-15},
-      {x:1750,y:3600,text:'PORTFOLIO',color:'rgba(66,165,245,0.25)',rot:-25},
-      {x:5250,y:3600,text:'FUN',color:'rgba(171,71,188,0.25)',rot:-20},
-      {x:3500,y:5800,text:'HOBBY',color:'rgba(255,152,0,0.25)',rot:-18},
-    ];
-    smLabels.forEach(l=>{
-      const t=document.createElementNS('http://www.w3.org/2000/svg','text');
-      t.setAttribute('x',''+l.x);t.setAttribute('y',''+l.y);
-      t.setAttribute('text-anchor','middle');t.setAttribute('fill',l.color);
-      t.setAttribute('font-size','280');t.setAttribute('font-weight','900');
-      t.setAttribute('font-family','var(--font-fun),sans-serif');
-      t.setAttribute('letter-spacing','0.2em');
-      t.setAttribute('transform','rotate('+l.rot+' '+l.x+' '+l.y+')');
-      t.textContent=l.text;
-      lblSvg.appendChild(t);
-    });
-    mapCanvas.appendChild(lblSvg);
-
-    // Boundary lines
-    const bSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-    bSvg.setAttribute('class','small-map-boundaries');
-    bSvg.setAttribute('viewBox',vb);
-    bSvg.setAttribute('preserveAspectRatio','none');
-    bSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:5;overflow:visible';
-    const smDividerPaths=[
-      {d:'M3500,0 C3475,350 3525,700 3495,1050 Q3510,1400 3490,1750 C3515,2100 3485,2333 3500,2333 C3475,2700 3525,3050 3495,3400 Q3510,3700 3490,4050 C3515,4300 3485,4666 3500,4666',stroke:'rgba(201,169,110,0.45)'},
-      {d:'M0,2333 C350,2308 700,2355 1050,2325 Q1400,2308 1750,2350 C2100,2318 2450,2342 2800,2320 Q3150,2308 3500,2333',stroke:'rgba(0,188,212,0.45)'},
-      {d:'M3500,2333 C3850,2308 4200,2355 4550,2325 Q4900,2308 5250,2350 C5600,2318 5950,2342 6300,2320 Q6650,2308 7000,2333',stroke:'rgba(229,57,53,0.45)'},
-      {d:'M0,4666 C350,4641 700,4688 1050,4658 Q1400,4641 1750,4683 C2100,4651 2450,4675 2800,4653 Q3150,4641 3500,4666 C3850,4641 4200,4688 4550,4658 Q4900,4641 5250,4683 C5600,4651 5950,4675 6300,4653 Q6650,4641 7000,4666',stroke:'rgba(255,152,0,0.45)'},
-    ];
-    smDividerPaths.forEach(zp=>{
-      const p=document.createElementNS('http://www.w3.org/2000/svg','path');
-      p.setAttribute('d',zp.d);
-      p.setAttribute('fill','none');
-      p.setAttribute('stroke',zp.stroke);
-      p.setAttribute('stroke-width','40');
-      p.setAttribute('stroke-linejoin','round');
-      p.setAttribute('stroke-dasharray','120 60');
-      p.setAttribute('stroke-linecap','round');
-      bSvg.appendChild(p);
-    });
-    // Intersection dots
-    [['3500','2333','60','rgba(201,169,110,0.5)'],['3500','4666','60','rgba(201,169,110,0.5)']
-    ].forEach(([cx,cy,r,fill])=>{
-      const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
-      c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r',r);c.setAttribute('fill',fill);
-      bSvg.appendChild(c);
-    });
-    mapCanvas.appendChild(bSvg);
+    // Use cached SVG overlays
+    getOrCreateSmallMapSvgs(canvasW,canvasH);
   }
   updMap();
 }
