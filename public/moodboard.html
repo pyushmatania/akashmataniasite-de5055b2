@@ -5109,6 +5109,7 @@ function cycleIntroCards(e){
   var confettiColors=['#a8d8b9','#f5deb3','#d4b8e8','#b8d4f0','#f0b8b8','#f5c842','#7bc49a'];
 
   function burstConfetti(x,y,count){
+    if(IS_LOW_POWER_DEVICE)count=Math.min(count,6); // reduce particles on mobile
     for(var i=0;i<count;i++){
       var el=document.createElement('div');
       el.className='confetti-piece';
