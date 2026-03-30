@@ -4149,7 +4149,7 @@ function scrollToZone(e,zone){
   const scale=(typeof MOODBOARD_VIEW_SCALE==='number'?MOODBOARD_VIEW_SCALE:0.5);
   const vp=document.getElementById('viewport');
   // Work stays on its fixed zone anchor (one-time hardcoded), other zones can use live card center
-  const el=canonicalZone==='work'?null:getZoneIntroElement(canonicalZone);
+  const el=getZoneIntroElement(canonicalZone);
   let panX=target.x, panY=target.y;
   if(el){
     const vc=_getCardVisualCenter(el);
