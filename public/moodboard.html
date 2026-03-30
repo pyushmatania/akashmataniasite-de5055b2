@@ -4067,22 +4067,62 @@ body.map-expanded .scroll-counter{display:none!important}
 
 /* ═══ HERO LIGHT BEAM — Liquid Physics ═══ */
 
+/* ═══ CORONA SOURCE — intense flared origin point ═══ */
+.zp-beam-corona{
+  position:absolute;top:-30px;left:50%;transform:translateX(-50%);
+  width:120px;height:120px;z-index:10;pointer-events:none;
+}
+/* Hot white core */
+.zp-beam-corona::before{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:12px;height:12px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,1) 0%,rgba(255,255,255,0.9) 40%,rgba(240,235,255,0.6) 70%,transparent 100%);
+  box-shadow:
+    0 0 6px 3px rgba(255,255,255,1),
+    0 0 15px 6px rgba(255,255,255,0.7),
+    0 0 35px 12px rgba(220,200,255,0.5),
+    0 0 60px 20px rgba(180,160,255,0.25),
+    0 0 100px 40px rgba(140,120,255,0.1);
+  animation:coronaPulse 3s ease-in-out infinite;
+}
+/* Flared rays — cross-shaped lens flare */
+.zp-beam-corona::after{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:200px;height:200px;
+  background:
+    radial-gradient(ellipse 4px 100px at center,rgba(255,255,255,0.4) 0%,rgba(220,200,255,0.1) 40%,transparent 70%),
+    radial-gradient(ellipse 100px 3px at center,rgba(255,255,255,0.25) 0%,rgba(220,200,255,0.06) 50%,transparent 80%);
+  filter:blur(2px);
+  animation:coronaFlare 4s ease-in-out infinite;
+}
+@keyframes coronaPulse{
+  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.85}
+  30%{transform:translate(-50%,-50%) scale(1.3);opacity:1}
+  60%{transform:translate(-50%,-50%) scale(0.95);opacity:0.9}
+}
+@keyframes coronaFlare{
+  0%,100%{transform:translate(-50%,-50%) rotate(0deg) scale(1);opacity:0.6}
+  25%{transform:translate(-50%,-50%) rotate(3deg) scale(1.1);opacity:0.9}
+  50%{transform:translate(-50%,-50%) rotate(-2deg) scale(1.05);opacity:1}
+  75%{transform:translate(-50%,-50%) rotate(1deg) scale(0.95);opacity:0.7}
+}
+
 /* Top beam — narrow source that widens into liquid funnel */
 .zp-showcase-beam-top{
-  position:absolute;top:-60px;left:50%;transform:translateX(-50%);
-  width:3px;height:30%;z-index:6;pointer-events:none;
+  position:absolute;top:-30px;left:50%;transform:translateX(-50%);
+  width:3px;height:32%;z-index:6;pointer-events:none;
   background:linear-gradient(180deg,
-    rgba(255,255,255,0.95) 0%,rgba(255,255,255,1) 30%,
-    rgba(255,255,255,0.9) 70%,rgba(240,230,255,0.7) 100%);
+    rgba(255,255,255,1) 0%,rgba(255,255,255,1) 15%,
+    rgba(255,255,255,0.95) 40%,rgba(255,255,255,0.85) 70%,rgba(240,230,255,0.6) 100%);
   filter:blur(0px);
   animation:liquidBeamTop 4s ease-in-out infinite;
 }
-/* Soft volumetric glow around beam core */
+/* Soft volumetric glow around beam core — brighter near source */
 .zp-showcase-beam-top::before{
-  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:50px;height:100%;
-  background:linear-gradient(180deg,rgba(255,255,255,0.15) 0%,rgba(200,180,255,0.1) 50%,rgba(160,130,255,0.05) 100%);
-  filter:blur(16px);
+  content:'';position:absolute;top:-20px;left:50%;transform:translateX(-50%);
+  width:70px;height:110%;
+  background:linear-gradient(180deg,rgba(255,255,255,0.3) 0%,rgba(255,255,255,0.15) 15%,rgba(200,180,255,0.08) 50%,rgba(160,130,255,0.03) 100%);
+  filter:blur(18px);
 }
 /* Liquid funnel — widens dramatically before card impact */
 .zp-showcase-beam-top::after{
@@ -4096,8 +4136,8 @@ body.map-expanded .scroll-counter{display:none!important}
   animation:liquidFunnel 4s ease-in-out infinite;
 }
 @keyframes liquidBeamTop{
-  0%,100%{opacity:0.8;width:3px}
-  30%{opacity:1;width:4px}
+  0%,100%{opacity:0.85;width:3px}
+  30%{opacity:1;width:4.5px}
   60%{opacity:0.9;width:2.5px}
 }
 @keyframes liquidFunnel{
