@@ -5284,12 +5284,14 @@ function clampStickerToMoodboard(sticker,left,top){
   };
 }
 
+let _cachedStickers=null,_cachedStickersTime=0;
+function _invalidateStickerCache(){_cachedStickers=null;}
 function getAllStickers(){
-  // Include ALL stickers — isIntroCard() routes zone intro cards to zone centers
-  return Array.from(document.querySelectorAll('#canvas > .sticker'));
+  if(_cachedStickers&&(performance.now()-_cachedStickersTime<500))return _cachedStickers.slice();
+  _cachedStickers=Array.from(document.querySelectorAll('#canvas > .sticker'));_cachedStickersTime=performance.now();return _cachedStickers.slice();
 }
 function getAllStickersIncludingIntro(){
-  return Array.from(document.querySelectorAll('#canvas > .sticker'));
+  return getAllStickers();
 }
 
 function normalizeAllStickerBounds(){
