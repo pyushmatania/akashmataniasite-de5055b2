@@ -3174,7 +3174,7 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="zic-folder-tab">CLASSIFIED</div>
   <div class="zic-folder-tab zic-folder-tab-2">DOSSIER #AM-8</div>
   <!-- Main dossier body -->
-  <div class="zic-dossier" data-no-sticker-drag="true">
+  <div class="zic-dossier">
     <!-- Stamp & header -->
     <div class="zic-dossier-header">
       <div class="zic-stamp">TOP SECRET</div>
@@ -6277,11 +6277,11 @@ async function runItemRearrange(triggeredByUser){
     if(!usedCloud) autoArrangeMoodboardItems();
   }
 
-  // Only re-anchor companions if NOT using saved layout
+  // Only re-anchor companions/intro cards if NOT using saved layout
   if(!usedCloud){
     if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
+    if(typeof anchorAllZoneIntroCards==='function')anchorAllZoneIntroCards();
   }
-  if(typeof anchorAllZoneIntroCards==='function')anchorAllZoneIntroCards();
   // Clear visual cache and force full rescan + redraw
   if(typeof scanStickers==='function')scanStickers();
   if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
@@ -9288,7 +9288,8 @@ async function bootstrapMap(forceRescan){
       if(didAutoArrange) ensureCompanionStickers(true);
       else ensureCompanionStickers(false);
     }
-    if(typeof anchorAllZoneIntroCards==='function')anchorAllZoneIntroCards();
+    // Preserve manually-saved intro-card positions; anchor only after fresh auto-arrange
+    if(didAutoArrange&&typeof anchorAllZoneIntroCards==='function')anchorAllZoneIntroCards();
     normalizeAllStickerBounds();
     ensureMapData(forceRescan);
     drawMap();
@@ -10102,7 +10103,24 @@ function ekPick(el,e){
 
     if(_pinMode==='setup'){
       if(result.error){
-        err.textContent=result.error==='PIN already set'?'PIN already exists':('Could not save PIN');
+        if(result.error==='PIN already set'){
+          // Fallback for stale/setup race: treat as verify flow automatically
+          const verifyResult=await verifyPinRemote(pin,'verify');
+          if(verifyResult&&verifyResult.valid){
+            closePinModal();
+            await doSaveLayout();
+            return;
+          }
+          _pinMode='verify';
+          const title=document.getElementById('pinTitle');
+          const desc=document.getElementById('pinDesc');
+          if(title)title.textContent='🔐 Enter PIN';
+          if(desc)desc.textContent='PIN already exists. Enter it to confirm save';
+          err.textContent='PIN already exists — enter existing PIN';
+          console.error('PIN setup fallback:',result.error);
+          return;
+        }
+        err.textContent='Could not save PIN';
         console.error('PIN save error:',result.error);
         return;
       }
