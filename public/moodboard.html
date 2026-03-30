@@ -5183,104 +5183,45 @@ function cycleIntroCards(e){
   </div>
   <div class="zp-body">
     <div class="zp-section">
-      <div class="zp-sec-label">Swipe to Explore</div>
-      <div class="zp-projects-carousel" id="projCarousel">
-
-        <!-- EnterCircles -->
-        <div class="zp-proj-card" onclick="openProject('entercircles')" style="--card-c1:rgba(124,77,255,0.5);--card-c2:rgba(206,147,216,0.4)">
-          <div class="zp-proj-img-area">
-            <img src="images/proj-entercircles.jpg" alt="EnterCircles App" loading="lazy">
-            <span class="zp-proj-role-badge">Lead PM</span>
-            <span class="zp-proj-num">#001 / 005</span>
-          </div>
-          <div class="zp-proj-info">
-            <span class="zp-proj-name">EnterCircles</span>
-            <span class="zp-proj-desc">Web3 social platform for community engagement & token-gated access</span>
-            <div class="zp-proj-tags">
-              <span class="zp-proj-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">Web3</span>
-              <span class="zp-proj-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">Social</span>
-              <span class="zp-proj-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">B2B2C</span>
+      <div class="zp-showcase" id="projShowcase" style="--sc-c1:rgba(124,77,255,0.5);--sc-c2:rgba(206,147,216,0.4);--sc-glow:rgba(124,77,255,0.15)">
+        <div class="zp-showcase-beam-top"></div>
+        <div class="zp-showcase-beam-bottom"></div>
+        <div class="zp-showcase-ambient"></div>
+        <div class="zp-showcase-traces">
+          <div class="zp-showcase-trace" style="top:30%;left:0;width:35%;animation-delay:0s"></div>
+          <div class="zp-showcase-trace" style="top:50%;right:0;width:30%;animation-delay:1.5s"></div>
+          <div class="zp-showcase-trace" style="top:70%;left:5%;width:25%;animation-delay:3s"></div>
+          <div class="zp-showcase-trace" style="top:45%;right:5%;width:20%;animation-delay:0.8s"></div>
+        </div>
+        <div class="zp-showcase-dust" style="width:2px;height:2px;left:15%;top:20%;--d-dur:7s;--d-delay:0s;--d-tx:10px;--d-ty:-30px;--d-tx2:-5px;--d-ty2:-60px"></div>
+        <div class="zp-showcase-dust" style="width:1.5px;height:1.5px;left:75%;top:35%;--d-dur:9s;--d-delay:1s;--d-tx:-15px;--d-ty:-25px;--d-tx2:8px;--d-ty2:-50px"></div>
+        <div class="zp-showcase-dust" style="width:2.5px;height:2.5px;left:25%;top:65%;--d-dur:6s;--d-delay:2s;--d-tx:12px;--d-ty:-35px;--d-tx2:-10px;--d-ty2:-70px"></div>
+        <div class="zp-showcase-dust" style="width:1px;height:1px;left:85%;top:55%;--d-dur:8s;--d-delay:0.5s;--d-tx:-8px;--d-ty:-20px;--d-tx2:6px;--d-ty2:-45px"></div>
+        <div class="zp-showcase-dust" style="width:2px;height:2px;left:40%;top:80%;--d-dur:10s;--d-delay:3s;--d-tx:5px;--d-ty:-40px;--d-tx2:-12px;--d-ty2:-80px"></div>
+        <div class="zp-showcase-card" id="projCard">
+          <div class="zp-sc-badge" id="scBadge">Lead PM</div>
+          <div class="zp-sc-emoji" id="scEmoji"><span>🔗</span></div>
+          <div class="zp-sc-name" id="scName">EnterCircles</div>
+          <div class="zp-sc-num" id="scNum">#001 / 005</div>
+          <div class="zp-sc-info">
+            <div class="zp-sc-desc" id="scDesc">Web3 social platform for community engagement & token-gated access</div>
+            <div class="zp-sc-tags" id="scTags">
+              <span class="zp-sc-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">Web3</span>
+              <span class="zp-sc-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">Social</span>
+              <span class="zp-sc-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">B2B2C</span>
             </div>
+            <button class="zp-sc-cta" id="scCta">View Case Study →</button>
           </div>
         </div>
-
-        <!-- Recess -->
-        <div class="zp-proj-card" onclick="openProject('recess')" style="--card-c1:rgba(66,165,245,0.5);--card-c2:rgba(100,181,246,0.4)">
-          <div class="zp-proj-img-area">
-            <img src="images/proj-recess.jpg" alt="Recess App" loading="lazy">
-            <span class="zp-proj-role-badge">Co-Founded</span>
-            <span class="zp-proj-num">#002 / 005</span>
-          </div>
-          <div class="zp-proj-info">
-            <span class="zp-proj-name">Recess</span>
-            <span class="zp-proj-desc">EdTech platform for peer learning, study groups & collaborative sessions</span>
-            <div class="zp-proj-tags">
-              <span class="zp-proj-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9">EdTech</span>
-              <span class="zp-proj-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9">B2C</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Hushh -->
-        <div class="zp-proj-card" onclick="openProject('hushh')" style="--card-c1:rgba(239,83,80,0.5);--card-c2:rgba(255,110,130,0.4)">
-          <div class="zp-proj-img-area">
-            <img src="images/proj-hushh.jpg" alt="Hushh App" loading="lazy">
-            <span class="zp-proj-role-badge">Product Manager</span>
-            <span class="zp-proj-num">#003 / 005</span>
-          </div>
-          <div class="zp-proj-info">
-            <span class="zp-proj-name">Hushh</span>
-            <span class="zp-proj-desc">Privacy-first personal data management — your data, your rules</span>
-            <div class="zp-proj-tags">
-              <span class="zp-proj-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A">Privacy</span>
-              <span class="zp-proj-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A">FinTech</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- SmarBhubaneswar -->
-        <div class="zp-proj-card" onclick="openProject('smarbhubaneswar')" style="--card-c1:rgba(38,166,154,0.5);--card-c2:rgba(80,200,180,0.4)">
-          <div class="zp-proj-img-area">
-            <img src="images/proj-smarbhubaneswar.jpg" alt="SmarBhubaneswar App" loading="lazy">
-            <span class="zp-proj-role-badge">Product Lead</span>
-            <span class="zp-proj-num">#004 / 005</span>
-          </div>
-          <div class="zp-proj-info">
-            <span class="zp-proj-name">SmarBhubaneswar</span>
-            <span class="zp-proj-desc">Smart city civic tech platform for citizen services & urban governance</span>
-            <div class="zp-proj-tags">
-              <span class="zp-proj-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4">Civic</span>
-              <span class="zp-proj-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4">Gov-Tech</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Aribasda -->
-        <div class="zp-proj-card" onclick="openProject('aribasda')" style="--card-c1:rgba(255,112,67,0.5);--card-c2:rgba(255,160,100,0.4)">
-          <div class="zp-proj-img-area">
-            <img src="images/proj-aribasda.jpg" alt="Aribasda App" loading="lazy">
-            <span class="zp-proj-role-badge">Product Manager</span>
-            <span class="zp-proj-num">#005 / 005</span>
-          </div>
-          <div class="zp-proj-info">
-            <span class="zp-proj-name">Aribasda</span>
-            <span class="zp-proj-desc">Analytics & growth tooling — turning data into decisions, fast</span>
-            <div class="zp-proj-tags">
-              <span class="zp-proj-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91">Analytics</span>
-              <span class="zp-proj-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91">Growth</span>
-              <span class="zp-proj-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91">SaaS</span>
-            </div>
-          </div>
-        </div>
-
       </div>
       <div class="zp-carousel-dots" id="projDots">
-        <div class="zp-carousel-dot active"></div>
-        <div class="zp-carousel-dot"></div>
-        <div class="zp-carousel-dot"></div>
-        <div class="zp-carousel-dot"></div>
-        <div class="zp-carousel-dot"></div>
+        <div class="zp-carousel-dot active" onclick="goToProject(0)"></div>
+        <div class="zp-carousel-dot" onclick="goToProject(1)"></div>
+        <div class="zp-carousel-dot" onclick="goToProject(2)"></div>
+        <div class="zp-carousel-dot" onclick="goToProject(3)"></div>
+        <div class="zp-carousel-dot" onclick="goToProject(4)"></div>
       </div>
+      <div class="zp-sc-swipe-hint">← Swipe to explore →</div>
     </div>
   </div>
   <div class="zp-footer">
