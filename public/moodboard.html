@@ -7878,11 +7878,11 @@ function drawMap(){
     lblSvg.setAttribute('preserveAspectRatio','none');
     lblSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:4;overflow:visible';
     const smLabels=[
-      {x:1750,y:1400,text:'INTRO',color:'rgba(0,188,212,0.15)',rot:-18},
-      {x:5250,y:1400,text:'WORK',color:'rgba(229,57,53,0.12)',rot:-15},
-      {x:1750,y:3600,text:'PORTFOLIO',color:'rgba(66,165,245,0.12)',rot:-25},
-      {x:5250,y:3600,text:'FUN',color:'rgba(171,71,188,0.12)',rot:-20},
-      {x:3500,y:5800,text:'HOBBY',color:'rgba(255,152,0,0.12)',rot:-18},
+      {x:1750,y:1400,text:'INTRO',color:'rgba(0,255,60,0.08)',rot:-18},
+      {x:5250,y:1400,text:'WORK',color:'rgba(0,255,60,0.06)',rot:-15},
+      {x:1750,y:3600,text:'PORTFOLIO',color:'rgba(0,255,60,0.06)',rot:-25},
+      {x:5250,y:3600,text:'FUN',color:'rgba(0,255,60,0.06)',rot:-20},
+      {x:3500,y:5800,text:'HOBBY',color:'rgba(0,255,60,0.06)',rot:-18},
     ];
     smLabels.forEach(l=>{
       const t=document.createElementNS('http://www.w3.org/2000/svg','text');
@@ -7897,33 +7897,31 @@ function drawMap(){
     });
     mapCanvas.appendChild(lblSvg);
 
-    // Boundary lines — exact canvas match
+    // Boundary lines — radar-styled for dark minimap
     const bSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
     bSvg.setAttribute('class','small-map-boundaries');
     bSvg.setAttribute('viewBox','0 0 7000 7000');
     bSvg.setAttribute('preserveAspectRatio','none');
     bSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:5;overflow:visible';
     const smDividerPaths=[
-      {d:'M3500,0 C3475,350 3525,700 3495,1050 Q3510,1400 3490,1750 C3515,2100 3485,2333 3500,2333 C3475,2700 3525,3050 3495,3400 Q3510,3700 3490,4050 C3515,4300 3485,4666 3500,4666',stroke:'rgba(201,169,110,0.5)'},
-      {d:'M0,2333 C350,2308 700,2355 1050,2325 Q1400,2308 1750,2350 C2100,2318 2450,2342 2800,2320 Q3150,2308 3500,2333',stroke:'rgba(0,188,212,0.5)'},
-      {d:'M3500,2333 C3850,2308 4200,2355 4550,2325 Q4900,2308 5250,2350 C5600,2318 5950,2342 6300,2320 Q6650,2308 7000,2333',stroke:'rgba(229,57,53,0.5)'},
-      {d:'M0,4666 C350,4641 700,4688 1050,4658 Q1400,4641 1750,4683 C2100,4651 2450,4675 2800,4653 Q3150,4641 3500,4666 C3850,4641 4200,4688 4550,4658 Q4900,4641 5250,4683 C5600,4651 5950,4675 6300,4653 Q6650,4641 7000,4666',stroke:'rgba(255,152,0,0.5)'},
+      {d:'M3500,0 C3475,350 3525,700 3495,1050 Q3510,1400 3490,1750 C3515,2100 3485,2333 3500,2333 C3475,2700 3525,3050 3495,3400 Q3510,3700 3490,4050 C3515,4300 3485,4666 3500,4666',stroke:'rgba(0,255,60,0.25)'},
+      {d:'M0,2333 C350,2308 700,2355 1050,2325 Q1400,2308 1750,2350 C2100,2318 2450,2342 2800,2320 Q3150,2308 3500,2333',stroke:'rgba(0,255,60,0.25)'},
+      {d:'M3500,2333 C3850,2308 4200,2355 4550,2325 Q4900,2308 5250,2350 C5600,2318 5950,2342 6300,2320 Q6650,2308 7000,2333',stroke:'rgba(0,255,60,0.25)'},
+      {d:'M0,4666 C350,4641 700,4688 1050,4658 Q1400,4641 1750,4683 C2100,4651 2450,4675 2800,4653 Q3150,4641 3500,4666 C3850,4641 4200,4688 4550,4658 Q4900,4641 5250,4683 C5600,4651 5950,4675 6300,4653 Q6650,4641 7000,4666',stroke:'rgba(0,255,60,0.25)'},
     ];
     smDividerPaths.forEach(zp=>{
       const p=document.createElementNS('http://www.w3.org/2000/svg','path');
       p.setAttribute('d',zp.d);
       p.setAttribute('fill','none');
       p.setAttribute('stroke',zp.stroke);
-      p.setAttribute('stroke-width','5');
+      p.setAttribute('stroke-width','40');
       p.setAttribute('stroke-linejoin','round');
-      p.setAttribute('stroke-dasharray','36 16');
+      p.setAttribute('stroke-dasharray','120 60');
       p.setAttribute('stroke-linecap','round');
       bSvg.appendChild(p);
     });
-    // Intersection & edge dots — exact canvas values
-    [['3500','2333','8','rgba(201,169,110,0.6)'],['3500','4666','8','rgba(201,169,110,0.6)'],
-     ['0','2333','5','rgba(0,188,212,0.4)'],['0','4666','5','rgba(255,152,0,0.4)'],
-     ['7000','2333','5','rgba(229,57,53,0.4)'],['7000','4666','5','rgba(255,152,0,0.4)']
+    // Intersection dots
+    [['3500','2333','60','rgba(0,255,60,0.35)'],['3500','4666','60','rgba(0,255,60,0.35)']
     ].forEach(([cx,cy,r,fill])=>{
       const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
       c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r',r);c.setAttribute('fill',fill);
