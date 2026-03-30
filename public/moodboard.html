@@ -11174,12 +11174,17 @@ function ensureCompanionStickers(force){
                 if(target>=0&&youScore>target){endGame(true);return;}
                 updateChaseProgress();
               } else if(phase==='bowl'){
-                if(cv===0){
-                  cpuHandEl.classList.add('noball');sfxNoball();
+                if(cv===0&&pv===0){
+                  youHandEl.classList.add('match');cpuHandEl.classList.add('match');
+                  sfxOut();showFlash('wicket');showBoundaryText('OUT!','show-out');
+                  addBall('out','W');
+                  if(target>=0){cpuScore>target?endGame(false):endGame(true);}
+                  else{commentaryEl.textContent='DEFENCE OUT! CPU scored '+cpuScore;commentaryEl.className='hc-commentary win';setTimeout(function(){switchInningsBowlFirst();},1800);}
+                  return;
+                } else if(cv===0&&pv!==0){
                   cpuScore+=pv;cpuScoreEl.textContent=String(cpuScore);popScore(cpuScoreEl);
-                  commentaryEl.textContent='CPU No Ball! +'+pv+' free runs!';
-                  commentaryEl.className='hc-commentary noball';
-                  addBall('nb','NB');
+                  commentaryEl.textContent='CPU defence beaten! +'+pv+' runs';
+                  commentaryEl.className='hc-commentary';addBall('run',String(pv));
                 } else if(pv===cv){
                   youHandEl.classList.add('match');cpuHandEl.classList.add('match');
                   sfxOut();showFlash('wicket');showBoundaryText('OUT!','show-out');
