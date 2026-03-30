@@ -308,35 +308,34 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 @keyframes scanLine{0%{transform:translateY(-100%)}100%{transform:translateY(400%)}}
 .intro-card{
   position:absolute;z-index:80;
-  background:linear-gradient(160deg,#0C0C12 0%,#111018 45%,#0A0C14 100%);
+  background:linear-gradient(160deg,#FFF8F0 0%,#FFF3E6 30%,#FFECD2 60%,#FFF0E0 100%);
   border-radius:28px;padding:36px 36px 32px;
   width:500px;
   box-shadow:
-    0 0 0 1px rgba(201,169,110,0.18),
-    0 0 0 3px rgba(201,169,110,0.04),
-    0 24px 80px rgba(0,0,0,0.6),
-    0 8px 24px rgba(0,0,0,0.4),
-    inset 0 1px 0 rgba(255,255,255,0.04);
+    0 0 0 1px rgba(201,169,110,0.25),
+    0 0 0 3px rgba(255,183,77,0.08),
+    0 24px 80px rgba(180,120,60,0.15),
+    0 8px 24px rgba(180,120,60,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.8);
   text-align:center;overflow:visible;
   animation:introFloatY 4.5s ease-in-out infinite;
 }
 .intro-card::before{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:0;border-radius:28px;overflow:hidden;
   background:
-    radial-gradient(ellipse at 25% 0%,rgba(201,169,110,0.1) 0%,transparent 55%),
-    radial-gradient(ellipse at 75% 100%,rgba(124,77,255,0.07) 0%,transparent 50%),
-    radial-gradient(ellipse at 50% 50%,rgba(76,175,80,0.03) 0%,transparent 70%);
+    radial-gradient(ellipse at 25% 0%,rgba(255,183,77,0.15) 0%,transparent 55%),
+    radial-gradient(ellipse at 75% 100%,rgba(255,138,101,0.1) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 50%,rgba(255,213,79,0.06) 0%,transparent 70%);
 }
 .intro-card::after{
   content:'';position:absolute;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(201,169,110,0.3),transparent);
-  top:0;pointer-events:none;z-index:2;animation:scanLine 8s linear infinite;opacity:0.4;
+  background:linear-gradient(90deg,transparent,rgba(201,169,110,0.4),transparent);
+  top:0;pointer-events:none;z-index:2;animation:scanLine 8s linear infinite;opacity:0.3;
 }
 .intro-card>*{position:relative;z-index:1}
-/* Aurora border top accent */
 .intro-card .intro-aurora-bar{
-  position:absolute;top:0;left:0;right:0;height:2px;z-index:3;
-  background:linear-gradient(90deg,#4CAF50,#C9A96E,#7C4DFF,#00BCD4,#4CAF50);
+  position:absolute;top:0;left:0;right:0;height:3px;z-index:3;border-radius:28px 28px 0 0;
+  background:linear-gradient(90deg,#FF9800,#FFB74D,#FF7043,#FFA726,#FFD54F,#FF9800);
   background-size:300% 100%;animation:auroraRing 5s linear infinite;
 }
 .intro-card .intro-photo-wrap{
@@ -347,147 +346,150 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .intro-card .intro-photo{
   width:136px;height:136px;border-radius:50%;object-fit:cover;object-position:top;
   display:block;
-  box-shadow:0 0 0 3px rgba(10,10,18,1),0 0 0 5px rgba(201,169,110,0.5),0 0 0 8px rgba(201,169,110,0.08),0 10px 40px rgba(0,0,0,0.5);
+  box-shadow:0 0 0 3px #FFF8F0,0 0 0 5px rgba(201,169,110,0.6),0 0 0 8px rgba(255,183,77,0.15),0 10px 40px rgba(180,120,60,0.2);
 }
 .intro-card .photo-caption{
   position:absolute;bottom:-10px;left:50%;transform:translateX(-50%) rotate(-2deg);
-  background:rgba(201,169,110,0.12);backdrop-filter:blur(12px);
+  background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);
   padding:3px 12px 5px;border-radius:20px;
-  font-family:var(--font-hand);font-size:0.78rem;color:rgba(201,169,110,0.85);
-  white-space:nowrap;border:1px solid rgba(201,169,110,0.2);
+  font-family:var(--font-hand);font-size:0.78rem;color:#8B6914;
+  white-space:nowrap;border:1px solid rgba(201,169,110,0.3);
 }
 .intro-card .intro-name{
   font-family:var(--font-fun);font-size:2.6rem;font-weight:800;
   line-height:1.1;margin-bottom:4px;
-  background:linear-gradient(110deg,rgba(255,255,255,0.95) 20%,rgba(201,169,110,0.9) 50%,rgba(255,255,255,0.95) 80%);
+  background:linear-gradient(110deg,#3E2723 20%,#8B6914 50%,#3E2723 80%);
   background-size:200% auto;
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   animation:nameShimmer 5s linear infinite;
 }
 .intro-card .intro-name .hl-name{
-  background:linear-gradient(135deg,#FFD54F,#FFA726,#FFD54F);
+  background:linear-gradient(135deg,#E65100,#FF8F00,#E65100);
   background-size:200% auto;
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   animation:nameShimmer 3.5s linear infinite;
 }
 .intro-card .intro-tagline{
   font-family:var(--font-hand);font-size:1rem;
-  color:rgba(255,255,255,0.38);margin-bottom:16px;line-height:1.5;
+  color:rgba(62,39,35,0.5);margin-bottom:16px;line-height:1.5;
 }
 .intro-card .intro-roles{
   display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;
 }
 .intro-card .intro-role{
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.09);border-radius:20px;
+  background:rgba(255,152,0,0.08);
+  border:1px solid rgba(201,169,110,0.25);border-radius:20px;
   padding:5px 14px;font-family:var(--font-fun);font-size:0.7rem;
-  font-weight:600;color:rgba(255,255,255,0.55);letter-spacing:0.04em;
+  font-weight:600;color:rgba(62,39,35,0.65);letter-spacing:0.04em;
   transition:all 0.2s;
 }
-.intro-card .intro-role:hover{background:rgba(201,169,110,0.1);border-color:rgba(201,169,110,0.35);color:rgba(201,169,110,0.9)}
-.intro-card .intro-location{font-size:0.72rem;color:rgba(255,255,255,0.25);margin-top:6px}
-.intro-card .intro-cta{margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:var(--font-hand);font-size:0.9rem;color:rgba(201,169,110,0.55)}
-.intro-card .intro-open-hint{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:220px;padding:11px 18px;border-radius:999px;background:linear-gradient(135deg,rgba(100,181,246,0.18),rgba(25,118,210,0.2));border:1px dashed rgba(100,181,246,0.55);color:rgba(255,255,255,0.94);font-family:var(--font-fun);font-size:0.7rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;box-shadow:0 10px 24px rgba(25,118,210,0.18);animation:hwPulse 2.5s ease-in-out infinite}
-.intro-card .intro-open-hint:hover{background:linear-gradient(135deg,rgba(100,181,246,0.26),rgba(25,118,210,0.3))}
-.intro-card .intro-open-hint .zth-dot{width:7px;height:7px;border-radius:50%;background:currentColor;animation:hwBlink 1.4s ease-in-out infinite}
+.intro-card .intro-role:hover{background:rgba(255,152,0,0.15);border-color:rgba(255,152,0,0.45);color:#E65100}
 
-/* ===== GUIDANCE CARD — REDESIGNED LOWER HALF ===== */
+/* ===== GUIDANCE CARD — TUTORIAL LOWER HALF ===== */
 .intro-card .gc-divider{
-  height:1px;margin:18px 0 14px;position:relative;
-  background:linear-gradient(90deg,transparent,rgba(201,169,110,0.35),rgba(255,167,38,0.3),rgba(201,169,110,0.35),transparent);
+  height:1px;margin:18px 0 16px;position:relative;
+  background:linear-gradient(90deg,transparent,rgba(201,169,110,0.4),rgba(255,167,38,0.35),rgba(201,169,110,0.4),transparent);
 }
 .intro-card .gc-divider::after{
-  content:'✦';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  background:#0C0C12;padding:0 10px;font-size:0.6rem;color:rgba(201,169,110,0.5);
+  content:'🧭';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:#FFF3E6;padding:0 10px;font-size:0.75rem;
 }
-.intro-card .gc-location-row{
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  font-size:0.72rem;color:rgba(255,255,255,0.4);margin-bottom:14px;
-}
-.intro-card .gc-pin-icon{font-size:0.85rem;animation:gcPinBounce 2s ease-in-out infinite}
-@keyframes gcPinBounce{0%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}60%{transform:translateY(0)}}
-.intro-card .gc-loc-text{color:rgba(255,200,120,0.8);font-weight:600;font-family:var(--font-fun);letter-spacing:0.02em}
-.intro-card .gc-loc-dot{color:rgba(255,255,255,0.15)}
-.intro-card .gc-loc-origin{font-family:var(--font-hand);font-size:0.8rem;color:rgba(255,255,255,0.3)}
 
-.intro-card .gc-ticker{
-  position:relative;overflow:hidden;
-  background:linear-gradient(135deg,rgba(255,167,38,0.06),rgba(201,169,110,0.08),rgba(255,87,34,0.04));
-  border:1px solid rgba(255,167,38,0.18);border-radius:16px;
-  padding:14px 18px 12px;margin-bottom:14px;cursor:pointer;
+/* How-to Steps */
+.intro-card .gc-howto{text-align:left;margin-bottom:14px}
+.intro-card .gc-howto-title{
+  font-family:var(--font-fun);font-size:0.62rem;font-weight:800;
+  letter-spacing:0.12em;text-transform:uppercase;color:rgba(62,39,35,0.4);
+  margin-bottom:10px;text-align:center;
+}
+.intro-card .gc-step{
+  display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;
+  padding:8px 12px;border-radius:14px;cursor:pointer;
+  transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  background:rgba(255,255,255,0.5);border:1px solid rgba(201,169,110,0.12);
+}
+.intro-card .gc-step:hover{
+  background:rgba(255,255,255,0.85);border-color:rgba(255,152,0,0.3);
+  transform:translateX(4px) scale(1.01);
+  box-shadow:0 4px 16px rgba(255,152,0,0.08);
+}
+.intro-card .gc-step:active{transform:scale(0.97)}
+.intro-card .gc-step-icon{
+  font-size:1.3rem;flex-shrink:0;width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,rgba(255,167,38,0.12),rgba(255,87,34,0.08));
+  border-radius:12px;border:1px solid rgba(255,167,38,0.2);
+}
+.intro-card .gc-step-text{flex:1}
+.intro-card .gc-step-label{
+  font-family:var(--font-fun);font-size:0.72rem;font-weight:700;
+  color:#3E2723;display:block;line-height:1.3;
+}
+.intro-card .gc-step-desc{
+  font-family:var(--font-hand);font-size:0.75rem;color:rgba(62,39,35,0.45);
+  display:block;margin-top:1px;
+}
+
+/* Quirky callout */
+.intro-card .gc-quirky{
+  background:linear-gradient(135deg,rgba(255,238,88,0.2),rgba(255,213,79,0.15));
+  border:1px dashed rgba(255,179,0,0.35);border-radius:14px;
+  padding:10px 14px;margin-bottom:14px;text-align:center;
+  cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;
+}
+.intro-card .gc-quirky:hover{transform:scale(1.02);border-color:rgba(255,152,0,0.5)}
+.intro-card .gc-quirky:active{transform:scale(0.96)}
+.intro-card .gc-quirky-emoji{font-size:1.4rem;display:block;margin-bottom:4px;animation:gcQuirkyBob 2s ease-in-out infinite}
+@keyframes gcQuirkyBob{0%,100%{transform:translateY(0) rotate(0deg)}25%{transform:translateY(-3px) rotate(-5deg)}75%{transform:translateY(-3px) rotate(5deg)}}
+.intro-card .gc-quirky-text{
+  font-family:var(--font-hand);font-size:0.82rem;color:#5D4037;line-height:1.4;
+}
+.intro-card .gc-quirky-sub{font-size:0.55rem;color:rgba(93,64,55,0.4);margin-top:4px;font-family:var(--font-fun);letter-spacing:0.04em}
+
+/* Progress dots — interactive */
+.intro-card .gc-progress{
+  display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:12px;
+}
+.intro-card .gc-dot{
+  width:10px;height:10px;border-radius:50%;cursor:pointer;
   transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  border:1.5px solid rgba(201,169,110,0.3);background:rgba(255,255,255,0.6);
 }
-.intro-card .gc-ticker:hover{border-color:rgba(255,167,38,0.4);transform:scale(1.02);box-shadow:0 4px 24px rgba(255,167,38,0.1)}
-.intro-card .gc-ticker:active{transform:scale(0.97)}
-.intro-card .gc-ticker-bar{
-  position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,#FF9800,#FFB74D,#FF7043,#FFA726,#FF9800);
-  background-size:300% 100%;animation:gcTickerBar 3s linear infinite;
-}
-@keyframes gcTickerBar{0%{background-position:0% 0}100%{background-position:300% 0}}
-.intro-card .gc-ticker-label{
-  font-family:var(--font-fun);font-size:0.5rem;font-weight:800;
-  letter-spacing:0.14em;text-transform:uppercase;
-  color:rgba(255,167,38,0.65);margin-bottom:6px;
-  display:flex;align-items:center;gap:6px;
-}
-.intro-card .gc-ticker-label::before{
-  content:'';width:6px;height:6px;border-radius:50%;
-  background:#FF9800;box-shadow:0 0 8px rgba(255,152,0,0.7);
-  animation:gcDotPulse 1.5s ease-in-out infinite;
-}
-@keyframes gcDotPulse{0%,100%{opacity:1;box-shadow:0 0 8px rgba(255,152,0,0.7)}50%{opacity:0.5;box-shadow:0 0 14px rgba(255,152,0,0.4)}}
-.intro-card .gc-ticker-text{font-family:var(--font-hand);font-size:0.95rem;color:rgba(255,255,255,0.7);line-height:1.4;transition:opacity 0.3s}
-.intro-card .gc-ticker-hint{font-size:0.5rem;color:rgba(255,167,38,0.35);margin-top:4px;font-family:var(--font-fun);letter-spacing:0.06em}
+.intro-card .gc-dot:hover{transform:scale(1.4);border-color:#FF9800}
+.intro-card .gc-dot.active{background:linear-gradient(135deg,#FF9800,#FF7043);border-color:transparent;box-shadow:0 0 8px rgba(255,152,0,0.4);transform:scale(1.2)}
+.intro-card .gc-dot-label{font-family:var(--font-hand);font-size:0.6rem;color:rgba(62,39,35,0.3);margin-left:4px}
 
-.intro-card .gc-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
-.intro-card .gc-stat-card{
-  position:relative;overflow:hidden;border-radius:14px;padding:12px 6px 10px;
-  text-align:center;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);cursor:default;
-}
-.intro-card .gc-stat-card:hover{transform:translateY(-4px) scale(1.05)}
-.intro-card .gc-stat-card:active{transform:scale(0.92)}
-.intro-card .gc-stat-val{font-family:var(--font-fun);font-weight:900;font-size:1.15rem;display:block;line-height:1.2;position:relative;z-index:1}
-.intro-card .gc-stat-lbl{font-size:0.48rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-top:2px;position:relative;z-index:1;opacity:0.7}
-.intro-card .gc-stat-glow{position:absolute;inset:0;opacity:0;border-radius:14px;transition:opacity 0.3s;pointer-events:none}
-.intro-card .gc-stat-card:hover .gc-stat-glow{opacity:1}
-
-.intro-card .gc-stat-amber{background:linear-gradient(145deg,rgba(255,167,38,0.1),rgba(255,143,0,0.06));border:1px solid rgba(255,167,38,0.2)}
-.intro-card .gc-stat-amber .gc-stat-val{color:#FFB74D}
-.intro-card .gc-stat-amber .gc-stat-lbl{color:rgba(255,183,77,0.6)}
-.intro-card .gc-stat-amber .gc-stat-glow{box-shadow:inset 0 0 20px rgba(255,167,38,0.15)}
-
-.intro-card .gc-stat-rose{background:linear-gradient(145deg,rgba(244,67,54,0.08),rgba(233,30,99,0.05));border:1px solid rgba(244,67,54,0.18)}
-.intro-card .gc-stat-rose .gc-stat-val{color:#EF9A9A}
-.intro-card .gc-stat-rose .gc-stat-lbl{color:rgba(239,154,154,0.6)}
-.intro-card .gc-stat-rose .gc-stat-glow{box-shadow:inset 0 0 20px rgba(244,67,54,0.12)}
-
-.intro-card .gc-stat-teal{background:linear-gradient(145deg,rgba(0,188,212,0.08),rgba(0,150,136,0.05));border:1px solid rgba(0,188,212,0.18)}
-.intro-card .gc-stat-teal .gc-stat-val{color:#80DEEA}
-.intro-card .gc-stat-teal .gc-stat-lbl{color:rgba(128,222,234,0.6)}
-.intro-card .gc-stat-teal .gc-stat-glow{box-shadow:inset 0 0 20px rgba(0,188,212,0.12)}
-
-.intro-card .gc-stat-gold{background:linear-gradient(145deg,rgba(201,169,110,0.12),rgba(255,213,79,0.06));border:1px solid rgba(201,169,110,0.22)}
-.intro-card .gc-stat-gold .gc-stat-val{color:#C9A96E}
-.intro-card .gc-stat-gold .gc-stat-lbl{color:rgba(201,169,110,0.6)}
-.intro-card .gc-stat-gold .gc-stat-glow{box-shadow:inset 0 0 20px rgba(201,169,110,0.15)}
-
-.intro-card .gc-cta-wrap{position:relative;text-align:center;padding:8px 0 4px}
-.intro-card .gc-cta-orbs{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.intro-card .gc-orb{position:absolute;border-radius:50%;filter:blur(18px);opacity:0.2}
+/* CTA bottom */
+.intro-card .gc-cta-wrap{position:relative;text-align:center;padding:4px 0 0}
+.intro-card .gc-cta-orbs{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:16px}
+.intro-card .gc-orb{position:absolute;border-radius:50%;filter:blur(20px);opacity:0.15}
 .intro-card .gc-orb-1{width:60px;height:60px;background:#FF9800;top:-10px;left:10%;animation:gcOrb1 4s ease-in-out infinite}
-.intro-card .gc-orb-2{width:40px;height:40px;background:#E91E63;bottom:-5px;right:15%;animation:gcOrb2 5s ease-in-out infinite}
-.intro-card .gc-orb-3{width:50px;height:50px;background:#00BCD4;top:0;right:30%;animation:gcOrb3 6s ease-in-out infinite}
+.intro-card .gc-orb-2{width:40px;height:40px;background:#FF7043;bottom:-5px;right:15%;animation:gcOrb2 5s ease-in-out infinite}
+.intro-card .gc-orb-3{width:50px;height:50px;background:#FFD54F;top:0;right:30%;animation:gcOrb3 6s ease-in-out infinite}
 @keyframes gcOrb1{0%,100%{transform:translate(0,0)}50%{transform:translate(15px,-8px)}}
 @keyframes gcOrb2{0%,100%{transform:translate(0,0)}50%{transform:translate(-10px,6px)}}
 @keyframes gcOrb3{0%,100%{transform:translate(0,0)}50%{transform:translate(8px,10px)}}
-.intro-card .gc-cta-text{
-  font-family:var(--font-hand);font-size:0.95rem;position:relative;z-index:1;
-  background:linear-gradient(135deg,rgba(255,167,38,0.7),rgba(201,169,110,0.6),rgba(255,87,34,0.5));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  background-size:200% auto;animation:gcCtaShimmer 4s ease-in-out infinite;
+.intro-card .gc-cta-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 22px;border-radius:999px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#FF9800,#FF7043);color:#fff;
+  font-family:var(--font-fun);font-size:0.7rem;font-weight:800;
+  letter-spacing:0.06em;text-transform:uppercase;position:relative;z-index:1;
+  box-shadow:0 6px 20px rgba(255,152,0,0.3);
+  transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  animation:gcCtaPulse 3s ease-in-out infinite;
 }
-@keyframes gcCtaShimmer{0%,100%{background-position:0% center}50%{background-position:200% center}}
+.intro-card .gc-cta-btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 10px 30px rgba(255,152,0,0.4)}
+.intro-card .gc-cta-btn:active{transform:scale(0.94)}
+@keyframes gcCtaPulse{0%,100%{box-shadow:0 6px 20px rgba(255,152,0,0.3)}50%{box-shadow:0 6px 28px rgba(255,152,0,0.5),0 0 0 4px rgba(255,152,0,0.08)}}
+.intro-card .gc-cta-btn .gc-cta-arrow{display:inline-block;animation:gcCtaArrow 1.5s ease-in-out infinite}
+@keyframes gcCtaArrow{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+.intro-card .gc-footer-quip{
+  font-family:var(--font-hand);font-size:0.7rem;color:rgba(62,39,35,0.3);
+  margin-top:10px;font-style:italic;
+}
+
+
 
 /* Interactive badge overlay — game controller style */
 .interactive-badge{
@@ -1568,19 +1570,10 @@ body.map-expanded .scroll-counter{display:none!important}
   text-transform:uppercase;
 }
 
-/* ===== ENHANCED INTRO CARD — ADDITIONS ===== */
-.intro-card .intro-status{display:inline-flex;align-items:center;gap:6px;background:rgba(76,175,80,0.08);border:1px solid rgba(76,175,80,0.22);border-radius:20px;padding:4px 12px 4px 8px;font-size:0.67rem;color:rgba(76,175,80,0.85);font-weight:700;margin-bottom:16px;letter-spacing:0.03em}
+/* ===== ENHANCED INTRO CARD — WARM THEME ===== */
+.intro-card .intro-status{display:inline-flex;align-items:center;gap:6px;background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.28);border-radius:20px;padding:4px 12px 4px 8px;font-size:0.67rem;color:#2E7D32;font-weight:700;margin-bottom:16px;letter-spacing:0.03em}
 .intro-card .status-dot{width:7px;height:7px;border-radius:50%;background:#4CAF50;box-shadow:0 0 8px rgba(76,175,80,0.8),0 0 0 3px rgba(76,175,80,0.15);animation:statusPulse 2s ease-in-out infinite;flex-shrink:0}
 @keyframes statusPulse{0%,100%{box-shadow:0 0 8px rgba(76,175,80,0.8),0 0 0 3px rgba(76,175,80,0.15)}50%{box-shadow:0 0 14px rgba(76,175,80,0.5),0 0 0 6px rgba(76,175,80,0.06)}}
-.intro-card .intro-currently{background:rgba(201,169,110,0.05);border:1px dashed rgba(201,169,110,0.2);border-radius:12px;padding:10px 14px;margin-top:12px;text-align:left}
-.intro-card .curr-label{font-size:0.58rem;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px}
-.intro-card .curr-val{font-family:var(--font-hand);font-size:0.88rem;color:rgba(255,255,255,0.58);cursor:pointer;display:block;transition:color 0.3s}
-.intro-card .curr-val:hover{color:rgba(201,169,110,0.9)}
-.intro-card .intro-stats-row{display:flex;margin:12px -4px 0;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06)}
-.intro-card .istat{flex:1;text-align:center;border-right:1px solid rgba(255,255,255,0.06);padding:0 4px}
-.intro-card .istat:last-child{border-right:none}
-.intro-card .istat-num{font-family:var(--font-fun);font-weight:900;font-size:1.05rem;color:#C9A96E;display:block}
-.intro-card .istat-label{font-size:0.5rem;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:0.04em;display:block;margin-top:2px}
 .intro-card .photo-tap-count{position:absolute;top:-10px;right:-10px;background:linear-gradient(135deg,#FF5252,#E53935);color:#fff;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(229,57,53,0.5);opacity:0;transition:opacity 0.3s,transform 0.3s;transform:scale(0.5);pointer-events:none}
 .intro-card .photo-tap-count.visible{opacity:1;transform:scale(1)}
 
@@ -3093,57 +3086,75 @@ body.map-expanded .scroll-counter{display:none!important}
     <span class="intro-role">🧠 AI Native</span>
     <span class="intro-role">🎬 Storyteller</span>
   </div>
-  <!-- ===== REDESIGNED LOWER HALF ===== -->
+  <!-- ===== TUTORIAL LOWER HALF ===== -->
   <div class="gc-divider"></div>
   
-  <!-- Location with warm pin animation -->
-  <div class="gc-location-row">
-    <span class="gc-pin-icon">📍</span>
-    <span class="gc-loc-text">Bengaluru</span>
-    <span class="gc-loc-dot">·</span>
-    <span class="gc-loc-origin">from Jeypore, Odisha</span>
-  </div>
-
-  <!-- Journey Ticker — auto-rotating what I'm up to -->
-  <div class="gc-ticker" onclick="rotateCurrently(this.querySelector('.gc-ticker-text'),event)" data-no-sticker-drag="true">
-    <div class="gc-ticker-bar"></div>
-    <div class="gc-ticker-label">NOW PLAYING</div>
-    <div class="gc-ticker-text">Building an AI-native product OS</div>
-    <div class="gc-ticker-hint">tap to shuffle ↻</div>
-  </div>
-
-  <!-- Stats — warm glass morphism cards -->
-  <div class="gc-stats-grid">
-    <div class="gc-stat-card gc-stat-amber">
-      <span class="gc-stat-val">8+</span>
-      <span class="gc-stat-lbl">Years</span>
-      <div class="gc-stat-glow"></div>
+  <!-- How-to guide steps -->
+  <div class="gc-howto">
+    <div class="gc-howto-title">✨ HOW TO EXPLORE THIS WORLD</div>
+    
+    <div class="gc-step" onclick="this.style.background='rgba(255,213,79,0.25)';setTimeout(()=>this.style.background='',600)">
+      <div class="gc-step-icon">👆</div>
+      <div class="gc-step-text">
+        <span class="gc-step-label">Grab & Drag Anywhere</span>
+        <span class="gc-step-desc">this whole thing is a canvas — scroll around like Google Maps</span>
+      </div>
     </div>
-    <div class="gc-stat-card gc-stat-rose">
-      <span class="gc-stat-val">3</span>
-      <span class="gc-stat-lbl">Founded</span>
-      <div class="gc-stat-glow"></div>
+    
+    <div class="gc-step" onclick="this.style.background='rgba(255,183,77,0.25)';setTimeout(()=>this.style.background='',600)">
+      <div class="gc-step-icon">🗺️</div>
+      <div class="gc-step-text">
+        <span class="gc-step-label">Use the Mini Map</span>
+        <span class="gc-step-desc">bottom-left corner — your GPS for this chaos</span>
+      </div>
     </div>
-    <div class="gc-stat-card gc-stat-teal">
-      <span class="gc-stat-val">5K+</span>
-      <span class="gc-stat-lbl">Users</span>
-      <div class="gc-stat-glow"></div>
+    
+    <div class="gc-step" onclick="this.style.background='rgba(255,138,101,0.25)';setTimeout(()=>this.style.background='',600)">
+      <div class="gc-step-icon">▶️</div>
+      <div class="gc-step-text">
+        <span class="gc-step-label">Hit Play Below</span>
+        <span class="gc-step-desc">auto-tour through all zones — sit back & enjoy the ride</span>
+      </div>
     </div>
-    <div class="gc-stat-card gc-stat-gold">
-      <span class="gc-stat-val">∞</span>
-      <span class="gc-stat-lbl">Chai ☕</span>
-      <div class="gc-stat-glow"></div>
+    
+    <div class="gc-step" onclick="this.style.background='rgba(201,169,110,0.25)';setTimeout(()=>this.style.background='',600)">
+      <div class="gc-step-icon">🃏</div>
+      <div class="gc-step-text">
+        <span class="gc-step-label">Tap Any Card</span>
+        <span class="gc-step-desc">every sticker hides a story — poke around, I dare you</span>
+      </div>
     </div>
   </div>
 
-  <!-- CTA — warm pulsing explore button -->
+  <!-- Quirky callout 1 -->
+  <div class="gc-quirky" onclick="gcQuirkySwap(this,event)" data-no-sticker-drag="true">
+    <div class="gc-quirky-emoji" id="gcQuirkyEmoji">🐕</div>
+    <div class="gc-quirky-text" id="gcQuirkyText">Mr. Puchu (my dog) approved this layout.<br>He has veto power on all design decisions.</div>
+    <div class="gc-quirky-sub">tap for more hot takes</div>
+  </div>
+
+  <!-- Progress dots -->
+  <div class="gc-progress">
+    <span class="gc-dot active" title="You are here"></span>
+    <span class="gc-dot" title="Introduction"></span>
+    <span class="gc-dot" title="Work"></span>
+    <span class="gc-dot" title="Portfolio"></span>
+    <span class="gc-dot" title="Hobby"></span>
+    <span class="gc-dot" title="Fun"></span>
+    <span class="gc-dot-label">your journey</span>
+  </div>
+
+  <!-- CTA button -->
   <div class="gc-cta-wrap" data-no-sticker-drag="true">
     <div class="gc-cta-orbs">
       <span class="gc-orb gc-orb-1"></span>
       <span class="gc-orb gc-orb-2"></span>
       <span class="gc-orb gc-orb-3"></span>
     </div>
-    <span class="gc-cta-text">hit play to explore my world ✦</span>
+    <button class="gc-cta-btn" onclick="event.stopPropagation()">
+      hit play to begin <span class="gc-cta-arrow">→</span>
+    </button>
+    <div class="gc-footer-quip">warning: you might actually enjoy this 😏</div>
   </div>
 </div>
 
@@ -9422,6 +9433,28 @@ window.addEventListener('resize',debounce(()=>{
 },200));
 
 // ===== ENHANCED INTRO CARD =====
+// ===== QUIRKY SWAP ON GUIDANCE CARD =====
+const _gcQuirks=[
+  {emoji:'🐕',text:'Mr. Puchu (my dog) approved this layout.<br>He has veto power on all design decisions.'},
+  {emoji:'☕',text:'This moodboard runs on chai.<br>Approximate cups consumed during building: 47'},
+  {emoji:'🚀',text:'Fun fact: I almost called this "LinkedIn but make it unhinged"'},
+  {emoji:'🎮',text:'Easter egg count on this board: more than you think.<br>Less than I wanted.'},
+  {emoji:'💀',text:'My PM brain wanted a roadmap for this.<br>My creative brain said "just vibe lol"'},
+  {emoji:'🧠',text:'This entire portfolio is a single HTML file.<br>Yes, I know. Yes, I\'m proud.'},
+  {emoji:'🌮',text:'If you\'ve scrolled this far,<br>you deserve a taco. Here: 🌮'}
+];
+let _gcQuirkIdx=0;
+function gcQuirkySwap(el,e){
+  if(typeof isInteractionSuppressed==='function'&&isInteractionSuppressed(e))return;
+  e.stopPropagation();if(typeof playSfx==='function')playSfx('pop');
+  _gcQuirkIdx=(_gcQuirkIdx+1)%_gcQuirks.length;
+  const q=_gcQuirks[_gcQuirkIdx];
+  const em=document.getElementById('gcQuirkyEmoji'),tx=document.getElementById('gcQuirkyText');
+  if(em)em.textContent=q.emoji;
+  if(tx)tx.innerHTML=q.text;
+  if(typeof spawnConfetti==='function')spawnConfetti(e.clientX||0,e.clientY||0);
+}
+
 let _photoTapCount=0;
 const _photoTapMilestones={3:'ok you really like this photo 😅',7:'stalker energy activated 👀',10:'🚨 Mr. Puchu alert: dad\'s being weird',15:'achievement unlocked: photo-tapper 🏆',25:'ok I\'m calling the authorities 📱'};
 function introPhotoTap(el,e){
