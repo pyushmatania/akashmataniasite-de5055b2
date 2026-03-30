@@ -4411,6 +4411,29 @@ body.map-expanded .scroll-counter{display:none!important}
   overflow:hidden;
 }
 
+/* Prismatic rainbow edge trace */
+.zp-prism-edge{
+  position:absolute;inset:-2px;z-index:12;pointer-events:none;
+  border-radius:23px;
+  background:conic-gradient(from var(--prism-angle,0deg),
+    #ff0000,#ff8800,#ffff00,#00ff44,#00ccff,#8844ff,#ff00cc,#ff0000);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  padding:2px;
+  opacity:0;
+  transition:opacity 0.4s ease;
+  animation:prismSpin 3s linear infinite;
+}
+.zp-showcase-card:hover .zp-prism-edge,
+.zp-showcase-card.touching .zp-prism-edge{
+  opacity:1;
+}
+@property --prism-angle{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes prismSpin{
+  to{--prism-angle:360deg}
+}
+
 /* Card glow ring */
 .zp-showcase-card::before{
   content:'';position:absolute;inset:-3px;z-index:-1;
@@ -5497,6 +5520,7 @@ function cycleIntroCards(e){
         <div class="zp-showcase-dust" style="width:1px;height:1px;left:85%;top:55%;--d-dur:8s;--d-delay:0.5s;--d-tx:-8px;--d-ty:-20px;--d-tx2:6px;--d-ty2:-45px"></div>
         <div class="zp-showcase-dust" style="width:2px;height:2px;left:40%;top:80%;--d-dur:10s;--d-delay:3s;--d-tx:5px;--d-ty:-40px;--d-tx2:-12px;--d-ty2:-80px"></div>
         <div class="zp-showcase-card" id="projCard">
+          <div class="zp-prism-edge"></div>
           <div class="zp-sc-badge" id="scBadge">Lead PM</div>
           <div class="zp-sc-emoji" id="scEmoji"><span>🔗</span></div>
           <div class="zp-sc-name" id="scName">EnterCircles</div>
@@ -11764,6 +11788,7 @@ window.openProject=openProject;
     touchStartX=e.touches[0].clientX;
     touchStartY=e.touches[0].clientY;
     swiping=true;
+    card.classList.add('touching');
   },{passive:true});
   showcase.addEventListener('touchmove',function(e){
     if(!swiping)return;
@@ -11777,6 +11802,7 @@ window.openProject=openProject;
   showcase.addEventListener('touchend',function(e){
     if(!swiping)return;
     swiping=false;
+    card.classList.remove('touching');
     const dx=e.changedTouches[0].clientX-touchStartX;
     if(Math.abs(dx)<40){resetCardTilt();return;}
     if(dx<0&&currentIdx<PROJECTS.length-1){
