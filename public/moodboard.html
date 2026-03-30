@@ -7853,11 +7853,11 @@ function drawMap(){
       if(dx<-30||dx>canvasW+30||dy<-30||dy>canvasH+30)return;
       count++;
       const w=Math.max(4,d.w*sc),h=Math.max(3,d.h*sc);
-      const catBorder=catColors[d.cat]||'rgba(0,255,60,0.3)';
+      const catBorder=catColors[d.cat]||'rgba(255,255,255,0.3)';
       const el=document.createElement('div');
       el.className='mi';
       el.style.cssText='left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;background:'+d.bg+';border-radius:'+d.radius+';'+(d.border?'border:'+d.border+';':'')+(catBorder!=='transparent'?'outline:1px solid '+catBorder+';':'')+
-        'box-shadow:0 0 3px rgba(0,255,60,0.15);';
+        'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);';
       if(d.emoji&&w>3){const l=document.createElement('div');l.className='mi-emoji-label';l.textContent=d.emoji;l.style.fontSize=Math.max(Math.min(w*0.55,20),3)+'px';el.appendChild(l)}
       frag.appendChild(el);
     });
