@@ -9288,7 +9288,8 @@ async function bootstrapMap(forceRescan){
       if(didAutoArrange) ensureCompanionStickers(true);
       else ensureCompanionStickers(false);
     }
-    if(typeof anchorAllZoneIntroCards==='function')anchorAllZoneIntroCards();
+    // Preserve manually-saved intro-card positions; anchor only after fresh auto-arrange
+    if(didAutoArrange&&typeof anchorAllZoneIntroCards==='function')anchorAllZoneIntroCards();
     normalizeAllStickerBounds();
     ensureMapData(forceRescan);
     drawMap();
