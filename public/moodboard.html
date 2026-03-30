@@ -3436,7 +3436,7 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="minimap-cardinal mc-w">W</div>
   <div class="minimap-north-pip"></div>
   <div class="minimap-zone-name" id="minimapZoneName">🗺️ Exploring...</div>
-  <div class="minimap" id="mm" onclick="if(!mmExp){toggleMap();event.stopPropagation()}">
+  <div class="minimap" id="mm" onclick="if(!mmExp){toggleMap();event.stopPropagation()}" ontouchend="if(!mmExp){event.preventDefault();event.stopPropagation();toggleMap()}">
     <div class="minimap-inner" id="mmInner">
       <div class="map-canvas" id="mapCanvas">
         <div class="map-canvas-grid"></div>
@@ -5966,125 +5966,128 @@ function spiralLayout(items,cx,cy,innerR,outerR,rng,placed,zoneBounds){
 }
 
 const HARDCODED_POSITIONS={
-  // ── INTRODUCTION ZONE (x:150-3350, y:150-2183) ─────────────────────────────────
-  // Row 1 – top band, 8 cards spread full width (~420px apart)
-  's005':{l:190,t:185,r:-3},
-  's006':{l:610,t:170,r:3},
-  's088':{l:1030,t:185,r:-2},
-  's059':{l:1450,t:175,r:1},
-  's039':{l:1870,t:185,r:2},
-  's080':{l:2290,t:170,r:-3},
-  's087':{l:2710,t:185,r:3},
-  's034':{l:3130,t:185,r:2},
-  // Row 2 – upper-mid, 3 cards left side
-  's031':{l:190,t:545,r:-4},
-  's032':{l:530,t:575,r:3},
-  's033':{l:870,t:545,r:-2},
-  // Row 3 – mid, flanking intro card (intro ~x:1580, y:956)
-  's036':{l:190,t:1085,r:-4},
-  's037':{l:530,t:1115,r:3},
-  's078':{l:870,t:1085,r:-3},
-  's040':{l:2100,t:1085,r:3},
-  's041':{l:2470,t:1100,r:-3},
-  's035':{l:2840,t:1085,r:2},
-  // Row 4 – lower band, 3 cards (fills bottom half of zone)
-  's076':{l:190,t:1760,r:-3},
-  's077':{l:620,t:1790,r:3},
-  's038':{l:1050,t:1760,r:2},
+  // ── INTRODUCTION ZONE (x:0-3500, y:0-2333) ─────────────────────────────────
+  // Row 1 – top band, 4 cards well-spaced (~750px apart)
+  's005':{l:150,t:180,r:-3},
+  's006':{l:900,t:170,r:3},
+  's088':{l:1650,t:185,r:-2},
+  's034':{l:2400,t:175,r:1},
+  // Row 2 – upper, 3 cards left of intro
+  's031':{l:150,t:560,r:-4},
+  's032':{l:900,t:590,r:3},
+  's033':{l:2400,t:560,r:-2},
+  // Row 3 – flanking intro card (intro ~x:1580, y:956) — 3 left, 3 right
+  's036':{l:150,t:1000,r:-4},
+  's037':{l:150,t:1400,r:3},
+  's078':{l:900,t:1200,r:-3},
+  's040':{l:2400,t:1000,r:3},
+  's041':{l:2400,t:1400,r:-3},
+  's035':{l:3100,t:1200,r:2},
+  // Row 4 – bottom band, 5 cards spread wide
+  's076':{l:150,t:1850,r:-3},
+  's077':{l:900,t:1880,r:3},
+  's038':{l:1650,t:1850,r:2},
+  's059':{l:2400,t:1870,r:-1},
+  's039':{l:3100,t:1850,r:2},
+  // Remaining intro stickers
+  's080':{l:3100,t:560,r:-3},
+  's087':{l:3100,t:180,r:3},
 
-  // ── WORK ZONE (x:3650-6850, y:150-2183) ──────────────────────────────────
-  // Row 1 – top band, 8 cards spread full width (~400px apart)
-  's007':{l:3760,t:190,r:2},
-  's008':{l:4160,t:175,r:-3},
-  's012':{l:4560,t:190,r:3},
-  's013':{l:4960,t:175,r:-2},
-  's061':{l:5360,t:190,r:2},
-  's073':{l:5760,t:175,r:-3},
-  's074':{l:6160,t:190,r:3},
-  's075':{l:6560,t:175,r:-2},
-  // Row 2 – upper-mid, 7 cards full width
-  's009':{l:3760,t:580,r:-3},
-  's010':{l:4190,t:610,r:2},
-  's011':{l:4620,t:580,r:-3},
-  's014':{l:5050,t:595,r:3},
-  's084':{l:5480,t:570,r:-3},
-  's086':{l:5870,t:560,r:4},
-  's081':{l:6260,t:580,r:2},
-  // Row 3 – mid, 4 cards left side (intro ~x:5060, y:956)
-  's015':{l:3760,t:1060,r:-2},
-  's016':{l:4160,t:1045,r:3},
-  's090':{l:4560,t:1060,r:-3},
-  's091':{l:4960,t:1075,r:-15},
-  // Row 4 – lower band, 2 anchor cards in corners
-  's055':{l:3760,t:1760,r:-3},
-  's089':{l:6560,t:1760,r:2},
+  // ── WORK ZONE (x:3500-7000, y:0-2333) ──────────────────────────────────
+  // Row 1 – top band, 4 cards (~800px apart)
+  's007':{l:3700,t:180,r:2},
+  's008':{l:4500,t:170,r:-3},
+  's012':{l:5300,t:185,r:3},
+  's013':{l:6100,t:170,r:-2},
+  // Row 2 – upper-mid, 4 cards
+  's009':{l:3700,t:560,r:-3},
+  's010':{l:4500,t:590,r:2},
+  's011':{l:5300,t:560,r:-3},
+  's014':{l:6100,t:575,r:3},
+  // Row 3 – mid, 4 cards flanking intro (~x:5060, y:956)
+  's015':{l:3700,t:1000,r:-2},
+  's016':{l:3700,t:1400,r:3},
+  's090':{l:6100,t:1000,r:-3},
+  's091':{l:6100,t:1400,r:-2},
+  // Row 4 – lower band, 4 cards
+  's055':{l:3700,t:1850,r:-3},
+  's089':{l:4500,t:1870,r:2},
+  's061':{l:5300,t:1850,r:1},
+  's073':{l:6100,t:1870,r:-2},
+  // Remaining work stickers
+  's074':{l:6700,t:180,r:3},
+  's075':{l:6700,t:560,r:-2},
+  's084':{l:4500,t:1000,r:-1},
+  's086':{l:5300,t:1400,r:4},
+  's081':{l:6700,t:1000,r:2},
 
-  // ── PORTFOLIO ZONE (x:150-3350, y:2483-4516) ─────────────────────────────
-  // Row 1 – top band, 5 cards
-  's018':{l:200,t:2540,r:-3},
-  's019':{l:610,t:2525,r:3},
-  's020':{l:1020,t:2540,r:-2},
-  's017':{l:2120,t:2530,r:2},
-  's029':{l:2560,t:2545,r:-15},
-  // Row 2 – upper-mid, 5 cards
-  's021':{l:200,t:2900,r:3},
-  's022':{l:610,t:2920,r:-3},
-  's023':{l:1020,t:2900,r:2},
-  's030':{l:2120,t:2890,r:-2},
-  's079':{l:2560,t:2910,r:-1},
-  // Row 3 – left only, 3 cards (intro ~x:1560, y:3290)
-  's024':{l:200,t:3200,r:-2},
-  's025':{l:610,t:3220,r:3},
-  's026':{l:1020,t:3200,r:-3},
-  // Row 4 – lower band, 3 cards below intro
-  's027':{l:200,t:3970,r:2},
-  's028':{l:610,t:3985,r:-3},
-  's056':{l:2120,t:3970,r:3},
+  // ── PORTFOLIO ZONE (x:0-3500, y:2333-4666) ─────────────────────────────
+  // Row 1 – top band, 4 cards
+  's018':{l:150,t:2480,r:-3},
+  's019':{l:900,t:2470,r:3},
+  's020':{l:1650,t:2490,r:-2},
+  's017':{l:2400,t:2475,r:2},
+  // Row 2 – upper-mid, 3 cards
+  's021':{l:150,t:2860,r:3},
+  's022':{l:900,t:2880,r:-3},
+  's023':{l:2400,t:2860,r:2},
+  // Row 3 – flanking intro (~x:1560, y:3290), 2 left + 2 right
+  's024':{l:150,t:3200,r:-2},
+  's025':{l:150,t:3600,r:3},
+  's026':{l:2400,t:3200,r:-3},
+  's030':{l:2400,t:3600,r:-2},
+  // Row 4 – lower band, 3 cards
+  's027':{l:150,t:4100,r:2},
+  's028':{l:900,t:4120,r:-3},
+  's056':{l:2400,t:4100,r:3},
+  // Remaining
+  's029':{l:3100,t:2480,r:-1},
+  's079':{l:3100,t:2860,r:-1},
 
-  // ── FUN ZONE (x:3650-6850, y:2483-4516) ──────────────────────────────────
-  // Row 1 – top band, 8 cards spread full width (~405px apart)
-  's054':{l:3720,t:2540,r:-2},
-  's057':{l:4124,t:2525,r:1},
-  's060':{l:4528,t:2540,r:3},
-  's062':{l:4932,t:2525,r:-2},
-  's063':{l:5336,t:2540,r:2},
-  's064':{l:5740,t:2525,r:-3},
-  's065':{l:6144,t:2540,r:3},
-  's066':{l:6548,t:2525,r:-2},
-  // Row 2 – upper-mid, 7 cards
-  's067':{l:3720,t:2910,r:3},
-  's068':{l:4191,t:2930,r:-2},
-  's069':{l:4662,t:2910,r:2},
-  's070':{l:5133,t:2925,r:-3},
-  's071':{l:5604,t:2910,r:2},
-  's082':{l:6075,t:2930,r:-3},
-  's083':{l:6546,t:2910,r:2},
-  // Row 3 – single card right side beside intro (intro ~x:5060, y:3290)
-  's085':{l:5604,t:3600,r:3},
-  // Row 4 – lower band, 2 cards
-  's094':{l:3720,t:3970,r:2},
-  's095':{l:4191,t:3990,r:-3},
+  // ── FUN ZONE (x:3500-7000, y:2333-4666) ──────────────────────────────────
+  // Row 1 – top band, 4 cards (~800px apart)
+  's054':{l:3700,t:2480,r:-2},
+  's057':{l:4500,t:2470,r:1},
+  's060':{l:5300,t:2490,r:3},
+  's062':{l:6100,t:2475,r:-2},
+  // Row 2 – upper-mid, 4 cards
+  's063':{l:3700,t:2860,r:2},
+  's064':{l:4500,t:2880,r:-3},
+  's065':{l:5300,t:2860,r:3},
+  's066':{l:6100,t:2875,r:-2},
+  // Row 3 – mid, 4 cards flanking intro (~x:5060, y:3290)
+  's067':{l:3700,t:3200,r:3},
+  's068':{l:3700,t:3600,r:-2},
+  's069':{l:6100,t:3200,r:2},
+  's070':{l:6100,t:3600,r:-3},
+  // Row 4 – lower band, 4 cards
+  's071':{l:3700,t:4100,r:2},
+  's082':{l:4500,t:4120,r:-3},
+  's083':{l:5300,t:4100,r:2},
+  's085':{l:6100,t:4120,r:3},
+  // Remaining
+  's094':{l:6700,t:2480,r:2},
+  's095':{l:6700,t:2860,r:-3},
 
-  // ── HOBBY ZONE (x:150-6850, y:4816-6850) ─────────────────────────────────
-  // Row 1 – left band, 4 cards (intro ~x:1560, y:5623)
-  's042':{l:190,t:4890,r:-3},
-  's043':{l:680,t:4875,r:3},
-  's044':{l:1170,t:4890,r:-2},
-  's045':{l:1660,t:4875,r:2},
-  // Row 2 – mid-right, 4 cards
-  's046':{l:2150,t:5255,r:-3},
-  's047':{l:2660,t:5275,r:3},
-  's050':{l:3170,t:5255,r:-2},
-  's051':{l:3680,t:5240,r:3},
-  // Row 3 – far right, 4 cards
-  's052':{l:4190,t:5710,r:-3},
-  's053':{l:4700,t:5730,r:2},
-  's058':{l:5210,t:5710,r:-2},
-  's092':{l:5720,t:5700,r:3},
-  // Row 4 – bottom band, 3 cards (fills lower half of hobby zone)
-  's048':{l:3170,t:6360,r:-3},
-  's049':{l:3760,t:6380,r:2},
-  's093':{l:4350,t:6365,r:-1},
+  // ── HOBBY ZONE (x:0-7000, y:4666-7000) ─────────────────────────────────
+  // Row 1 – top band, 7 cards spread across full width (~900px apart)
+  's042':{l:150,t:4800,r:-3},
+  's043':{l:1050,t:4790,r:3},
+  's044':{l:1950,t:4810,r:-2},
+  's045':{l:2850,t:4795,r:2},
+  's046':{l:3750,t:4805,r:-1},
+  's047':{l:4650,t:4790,r:3},
+  's050':{l:5550,t:4810,r:-2},
+  // Row 2 – mid, 5 cards
+  's051':{l:150,t:5300,r:3},
+  's052':{l:1400,t:5320,r:-3},
+  's053':{l:2650,t:5300,r:2},
+  's058':{l:3900,t:5310,r:-2},
+  's092':{l:5150,t:5300,r:3},
+  // Row 3 – lower, 3 cards
+  's048':{l:900,t:5900,r:-3},
+  's049':{l:2650,t:5920,r:2},
+  's093':{l:4400,t:5900,r:-1},
 };
 function autoArrangeMoodboardItems(){
   const stickers=getAllStickers();
