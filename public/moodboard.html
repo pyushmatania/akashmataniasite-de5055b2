@@ -6914,16 +6914,15 @@ function drawMapLayoutOnly(){
     mapCanvas.style.left='0px';
     mapCanvas.style.top='0px';
   } else {
-    const zoomFactor=7;
-    const smallPad=800;
-    const paddedW=contentW+smallPad*2;
-    const paddedH=contentH+smallPad*2;
-    sc=mw/(paddedW/zoomFactor);
+    const smallPad=400;
+    const paddedW=MOODBOARD_WORLD_WIDTH+smallPad*2;
+    const paddedH=MOODBOARD_WORLD_HEIGHT+smallPad*2;
+    sc=Math.min(mw/paddedW,mh/paddedH);
     canvasW=paddedW*sc;
     canvasH=paddedH*sc;
     offsetX=-smallPad;offsetY=-smallPad;
-    mapCanvas.style.left=smallMapPanX+'px';
-    mapCanvas.style.top=smallMapPanY+'px';
+    mapCanvas.style.left=((mw-canvasW)/2)+'px';
+    mapCanvas.style.top=((mh-canvasH)/2)+'px';
   }
   drawMap._sc=sc;drawMap._ox=offsetX;drawMap._oy=offsetY;
   drawMap._cw=canvasW;drawMap._ch=canvasH;
@@ -6936,7 +6935,7 @@ function drawMapLayoutOnly(){
     mapCanvas.style.backgroundImage='none';
     mapCanvas.style.backgroundSize='';
   } else {
-    mapCanvas.style.background='linear-gradient(160deg,#6db8e4 0%,#5baae0 30%,#4a9bd9 60%,#3d8cc7 100%)';
+    mapCanvas.style.background='linear-gradient(160deg,#0a1628 0%,#0d1f3c 40%,#112a4a 80%,#0a1628 100%)';
   }
   if(mmExp){
     if(playerWasInCanvas||mapPlayer.parentElement!==mapCanvas){
