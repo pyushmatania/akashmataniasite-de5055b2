@@ -6391,19 +6391,28 @@ setTimeout(centerOnIntroCard,200);
 let _scrollRAF=null;
 const _scrollCounterEl=document.getElementById('scrollCounter');
 const _settingsPanel=document.getElementById('settingsPanel');
+let _lastScrollCounterUpdate=0;
+let _lastMapUpdate=0;
 vp.addEventListener('scroll',()=>{
   if(_scrollRAF)return;
   _scrollRAF=requestAnimationFrame(()=>{
     _scrollRAF=null;
-    // 1) Scroll counter update
-    const bounds=getViewportPanBounds();
-    const mx=bounds.maxX,my=bounds.maxY;
-    if(mx+my>0&&_scrollCounterEl)_scrollCounterEl.textContent=Math.round(((vp.scrollLeft+vp.scrollTop)/(mx+my))*100);
-    // 3) Map update (was separate listener at bottom of file)
+    const now=performance.now();
+    // 1) Scroll counter — throttle to every 200ms
+    if(now-_lastScrollCounterUpdate>200){
+      _lastScrollCounterUpdate=now;
+      const bounds=getViewportPanBounds();
+      const mx=bounds.maxX,my=bounds.maxY;
+      if(mx+my>0&&_scrollCounterEl)_scrollCounterEl.textContent=Math.round(((vp.scrollLeft+vp.scrollTop)/(mx+my))*100);
+    }
+    // 2) Map update — throttle to every 100ms, redraw every 800ms
     if(typeof updMap==='function'&&typeof mapTransitioning!=='undefined'&&!mapTransitioning){
-      updMap();
+      if(now-_lastMapUpdate>100){
+        _lastMapUpdate=now;
+        updMap();
+      }
       if(typeof mmExp!=='undefined'&&!mmExp){
-        clearTimeout(window._mapScrollTimer);window._mapScrollTimer=setTimeout(drawMap,600);
+        clearTimeout(window._mapScrollTimer);window._mapScrollTimer=setTimeout(drawMap,800);
       }
     }
   });
