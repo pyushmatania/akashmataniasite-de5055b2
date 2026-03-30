@@ -1895,12 +1895,12 @@ body.map-expanded .scroll-counter{display:none!important}
 .zc-hcricket .hc-boundary-text.show-six{opacity:1;color:#FFD700;animation:hcTextPop 1s ease-out forwards}
 .zc-hcricket .hc-boundary-text.show-out{opacity:1;color:#FF1744;animation:hcTextPop 0.6s ease-out forwards}
 @keyframes hcTextPop{0%{transform:translate(-50%,-50%) scale(0.3);opacity:0}30%{transform:translate(-50%,-50%) scale(1.3);opacity:1}100%{transform:translate(-50%,-60%) scale(1);opacity:0}}
-/* Hands area — bigger */
-.zc-hcricket .hc-arena{padding:10px 16px;background:linear-gradient(180deg,rgba(0,20,40,0.6),rgba(0,15,30,0.4));position:relative}
-.zc-hcricket .hc-hands{display:flex;justify-content:center;gap:16px;margin-bottom:8px;min-height:72px;align-items:center}
-.zc-hcricket .hc-hand-wrap{display:flex;flex-direction:column;align-items:center;gap:2px}
-.zc-hcricket .hc-hand-who{font-family:var(--font-fun);font-size:0.42rem;font-weight:800;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em}
-.zc-hcricket .hc-hand{width:62px;height:62px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;border:2.5px solid rgba(255,255,255,0.1);transition:transform 0.15s,box-shadow 0.15s,border-color 0.15s}
+/* Hands area — compact for circle */
+.zc-hcricket .hc-arena{padding:4px 30px 2px;background:transparent;position:relative;z-index:2;flex-shrink:0}
+.zc-hcricket .hc-hands{display:flex;justify-content:center;gap:12px;margin-bottom:4px;min-height:56px;align-items:center}
+.zc-hcricket .hc-hand-wrap{display:flex;flex-direction:column;align-items:center;gap:1px}
+.zc-hcricket .hc-hand-who{font-family:var(--font-fun);font-size:0.38rem;font-weight:800;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em}
+.zc-hcricket .hc-hand{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;border:2px solid rgba(255,255,255,0.1);transition:transform 0.15s,box-shadow 0.15s,border-color 0.15s}
 .zc-hcricket .hc-hand.you{background:linear-gradient(135deg,rgba(76,175,80,0.15),rgba(76,175,80,0.05));color:#4CAF50}
 .zc-hcricket .hc-hand.cpu{background:linear-gradient(135deg,rgba(255,87,34,0.15),rgba(255,87,34,0.05));color:#FF5722}
 .zc-hcricket .hc-hand.reveal{animation:hcHandReveal 0.4s cubic-bezier(0.34,1.56,0.64,1)}
@@ -1911,29 +1911,29 @@ body.map-expanded .scroll-counter{display:none!important}
 .zc-hcricket .hc-hand.boundary-glow{box-shadow:0 0 24px rgba(76,175,80,0.6);border-color:rgba(76,175,80,0.6)!important}
 .zc-hcricket .hc-hand.six-glow{box-shadow:0 0 28px rgba(255,215,0,0.6);border-color:rgba(255,215,0,0.6)!important}
 /* Commentary ticker */
-.zc-hcricket .hc-commentary{font-family:var(--font-hand);font-size:0.78rem;color:rgba(255,255,255,0.65);min-height:1.6em;padding:0 14px;transition:opacity 0.15s}
-.zc-hcricket .hc-commentary.out{color:#FF1744;font-weight:700;font-size:0.88rem}
-.zc-hcricket .hc-commentary.win{color:#FFD700;font-weight:700;font-size:0.88rem}
+.zc-hcricket .hc-commentary{font-family:var(--font-hand);font-size:0.68rem;color:rgba(255,255,255,0.65);min-height:1.2em;padding:0 30px;transition:opacity 0.15s;z-index:2}
+.zc-hcricket .hc-commentary.out{color:#FF1744;font-weight:700;font-size:0.78rem}
+.zc-hcricket .hc-commentary.win{color:#FFD700;font-weight:700;font-size:0.78rem}
 .zc-hcricket .hc-commentary.noball{color:#FFD700}
 .zc-hcricket .hc-commentary.boundary{color:#4CAF50;font-weight:600}
 /* Buttons */
-.zc-hcricket .hc-controls{padding:8px 14px 10px;background:linear-gradient(180deg,rgba(0,15,30,0.3),rgba(10,22,40,0.8))}
-.zc-hcricket .hc-btns{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:6px}
-.zc-hcricket .hc-btn{width:42px;height:42px;border-radius:10px;border:2px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#fff;font-size:1.1rem;cursor:pointer;transition:all 0.15s;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;gap:0}
+.zc-hcricket .hc-controls{padding:4px 36px 4px;background:transparent;z-index:2;position:relative;flex-shrink:0}
+.zc-hcricket .hc-btns{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-bottom:4px}
+.zc-hcricket .hc-btn{width:36px;height:36px;border-radius:8px;border:2px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#fff;font-size:0.95rem;cursor:pointer;transition:all 0.15s;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;gap:0}
 .zc-hcricket .hc-btn:hover{background:rgba(76,175,80,0.2);border-color:rgba(76,175,80,0.5);transform:scale(1.12)}
 .zc-hcricket .hc-btn:active{transform:scale(0.9);background:rgba(76,175,80,0.3)}
-.zc-hcricket .hc-btn-label{font-size:0.38rem;color:rgba(255,255,255,0.35);font-family:var(--font-fun);font-weight:800;line-height:1}
+.zc-hcricket .hc-btn-label{font-size:0.32rem;color:rgba(255,255,255,0.35);font-family:var(--font-fun);font-weight:800;line-height:1}
 /* Ball history */
-.zc-hcricket .hc-history{display:flex;gap:3px;justify-content:center;flex-wrap:wrap;min-height:18px}
-.zc-hcricket .hc-ball{width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:0.48rem;font-family:var(--font-fun);font-weight:900;animation:hcBallPop 0.3s ease}
+.zc-hcricket .hc-history{display:flex;gap:2px;justify-content:center;flex-wrap:wrap;min-height:14px;padding:0 20px}
+.zc-hcricket .hc-ball{width:15px;height:15px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.4rem;font-family:var(--font-fun);font-weight:900;animation:hcBallPop 0.3s ease}
 .zc-hcricket .hc-ball.run{background:rgba(76,175,80,0.2);color:#4CAF50}
 .zc-hcricket .hc-ball.four{background:rgba(76,175,80,0.3);color:#4CAF50;box-shadow:0 0 6px rgba(76,175,80,0.3)}
 .zc-hcricket .hc-ball.six{background:rgba(255,215,0,0.3);color:#FFD700;box-shadow:0 0 8px rgba(255,215,0,0.3)}
-.zc-hcricket .hc-ball.nb{background:rgba(255,215,0,0.15);color:#FFD700;font-size:0.35rem}
+.zc-hcricket .hc-ball.nb{background:rgba(255,215,0,0.15);color:#FFD700;font-size:0.3rem}
 .zc-hcricket .hc-ball.out{background:rgba(255,23,68,0.25);color:#FF1744}
 @keyframes hcBallPop{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
-/* Bottom section */
-.zc-hcricket .hc-footer{padding:6px 14px 12px;background:rgba(0,0,0,0.2);border-radius:0 0 22px 22px}
+/* Bottom section — circular footer */
+.zc-hcricket .hc-footer{padding:2px 40px 16px;background:transparent;border-radius:0 0 50% 50%;z-index:2;position:relative;flex-shrink:0}
 .zc-hcricket .hc-record{font-family:var(--font-fun);font-size:0.5rem;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.06em}
 .zc-hcricket .hc-leaderboard{margin-top:6px;padding-top:4px;border-top:1px solid rgba(255,255,255,0.05);max-height:90px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(76,175,80,0.2) transparent}
 .zc-hcricket .hc-leaderboard::-webkit-scrollbar{width:3px}
