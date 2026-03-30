@@ -1866,6 +1866,14 @@ body.map-expanded .scroll-counter{display:none!important}
 .zc-hcricket .hc-title-bar{display:flex;align-items:center;justify-content:center;gap:10px;position:relative;z-index:2;margin-bottom:8px}
 .zc-hcricket .hc-title{font-family:var(--font-fun);font-size:1rem;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:0.14em;text-shadow:0 2px 12px rgba(0,0,0,0.6),0 0 30px rgba(76,175,80,0.15)}
 .zc-hcricket .hc-live-badge{font-family:var(--font-fun);font-size:0.48rem;font-weight:900;color:#fff;background:linear-gradient(135deg,#FF1744,#D50000);padding:3px 8px;border-radius:5px;letter-spacing:0.08em;animation:hcLivePulse 1.5s ease-in-out infinite;display:none;box-shadow:0 0 12px rgba(255,23,68,0.4)}
+/* Difficulty selector */
+.zc-hcricket .hc-difficulty-bar{display:flex;align-items:center;justify-content:center;gap:6px;position:relative;z-index:2;margin-bottom:10px;padding:0 12px}
+.zc-hcricket .hc-diff-label{font-family:var(--font-fun);font-size:0.55rem;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:0.06em;text-transform:uppercase;margin-right:4px}
+.zc-hcricket .hc-diff-btn{font-family:var(--font-fun);font-size:0.58rem;font-weight:700;padding:5px 12px;border-radius:14px;border:1.5px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.5);cursor:pointer;transition:all 0.2s;letter-spacing:0.03em}
+.zc-hcricket .hc-diff-btn:hover{border-color:rgba(255,255,255,0.25);color:rgba(255,255,255,0.7);transform:translateY(-1px)}
+.zc-hcricket .hc-diff-btn.active[data-diff="easy"]{background:linear-gradient(135deg,rgba(76,175,80,0.25),rgba(76,175,80,0.1));border-color:rgba(76,175,80,0.5);color:#81C784;box-shadow:0 0 12px rgba(76,175,80,0.2)}
+.zc-hcricket .hc-diff-btn.active[data-diff="medium"]{background:linear-gradient(135deg,rgba(255,183,77,0.25),rgba(255,183,77,0.1));border-color:rgba(255,183,77,0.5);color:#FFB74D;box-shadow:0 0 12px rgba(255,183,77,0.2)}
+.zc-hcricket .hc-diff-btn.active[data-diff="hard"]{background:linear-gradient(135deg,rgba(255,23,68,0.25),rgba(255,23,68,0.1));border-color:rgba(255,23,68,0.5);color:#FF5252;box-shadow:0 0 12px rgba(255,23,68,0.2)}
 .zc-hcricket.playing .hc-live-badge{display:inline-block}
 @keyframes hcLivePulse{0%,100%{opacity:1;box-shadow:0 0 12px rgba(255,23,68,0.4)}50%{opacity:0.6;box-shadow:0 0 4px rgba(255,23,68,0.2)}}
 .zc-hcricket .hc-phase{font-family:var(--font-fun);font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.7);position:relative;z-index:2;letter-spacing:0.06em;text-shadow:0 1px 6px rgba(0,0,0,0.4)}
@@ -12887,7 +12895,7 @@ function launchFunPanelCricket(){
   container.style.display='';
 
   // Inject HTML
-  container.innerHTML='<div class="zc-hcricket" style="display:block;position:relative;width:100%"><div class="hc-boundary-flash"></div><div class="hc-boundary-text"></div><div class="hc-stadium"><div class="hc-flood"></div><div class="hc-flood"></div><div class="hc-crowd"></div><div class="hc-pitch"></div><div class="hc-title-bar"><span class="hc-title">✊ HAND CRICKET</span><span class="hc-live-badge">● LIVE</span></div><div class="hc-phase">⚡ toss time</div><div class="hc-scoreboard"><div class="hc-team"><div class="hc-team-label">YOU</div><div class="hc-team-score" data-who="you">0</div></div><div class="hc-vs">VS</div><div class="hc-team"><div class="hc-team-label">CPU</div><div class="hc-team-score" data-who="cpu">0</div></div></div><div class="hc-target-bar"></div><div class="hc-chase-progress"><div class="hc-chase-fill"></div></div></div><div class="hc-arena"><div class="hc-hands"><div class="hc-hand-wrap"><div class="hc-hand-who">YOU</div><div class="hc-hand you">✊</div></div><div class="hc-hand-wrap"><div class="hc-hand-who">CPU</div><div class="hc-hand cpu">✊</div></div></div><div class="hc-commentary">call it — odd or even?</div></div><div class="hc-controls"><div class="hc-btns" style="display:none"><button class="hc-btn" data-v="0">✊<span class="hc-btn-label">NB</span></button><button class="hc-btn" data-v="1">☝️<span class="hc-btn-label">1</span></button><button class="hc-btn" data-v="2">✌️<span class="hc-btn-label">2</span></button><button class="hc-btn" data-v="3">🤟<span class="hc-btn-label">3</span></button><button class="hc-btn" data-v="4">🖖<span class="hc-btn-label">4</span></button><button class="hc-btn" data-v="6">👍<span class="hc-btn-label">6</span></button></div><div class="hc-history"></div></div><div class="hc-footer"><div class="hc-record">W:0 L:0</div><div class="hc-leaderboard"><div class="hc-lb-title">📜 MATCH HISTORY</div></div></div></div>';
+  container.innerHTML='<div class="zc-hcricket" style="display:block;position:relative;width:100%"><div class="hc-boundary-flash"></div><div class="hc-boundary-text"></div><div class="hc-stadium"><div class="hc-flood"></div><div class="hc-flood"></div><div class="hc-crowd"></div><div class="hc-pitch"></div><div class="hc-title-bar"><span class="hc-title">✊ HAND CRICKET</span><span class="hc-live-badge">● LIVE</span></div><div class="hc-difficulty-bar"><span class="hc-diff-label">CPU:</span><button class="hc-diff-btn active" data-diff="easy">😊 Easy</button><button class="hc-diff-btn" data-diff="medium">😤 Medium</button><button class="hc-diff-btn" data-diff="hard">💀 Hard</button></div><div class="hc-phase">⚡ toss time</div><div class="hc-scoreboard"><div class="hc-team"><div class="hc-team-label">YOU</div><div class="hc-team-score" data-who="you">0</div></div><div class="hc-vs">VS</div><div class="hc-team"><div class="hc-team-label">CPU</div><div class="hc-team-score" data-who="cpu">0</div></div></div><div class="hc-target-bar"></div><div class="hc-chase-progress"><div class="hc-chase-fill"></div></div></div><div class="hc-arena"><div class="hc-hands"><div class="hc-hand-wrap"><div class="hc-hand-who">YOU</div><div class="hc-hand you">✊</div></div><div class="hc-hand-wrap"><div class="hc-hand-who">CPU</div><div class="hc-hand cpu">✊</div></div></div><div class="hc-commentary">call it — odd or even?</div></div><div class="hc-controls"><div class="hc-btns" style="display:none"><button class="hc-btn" data-v="0">✊<span class="hc-btn-label">NB</span></button><button class="hc-btn" data-v="1">☝️<span class="hc-btn-label">1</span></button><button class="hc-btn" data-v="2">✌️<span class="hc-btn-label">2</span></button><button class="hc-btn" data-v="3">🤟<span class="hc-btn-label">3</span></button><button class="hc-btn" data-v="4">🖖<span class="hc-btn-label">4</span></button><button class="hc-btn" data-v="6">👍<span class="hc-btn-label">6</span></button></div><div class="hc-history"></div></div><div class="hc-footer"><div class="hc-record">W:0 L:0</div><div class="hc-leaderboard"><div class="hc-lb-title">📜 MATCH HISTORY</div></div></div></div>';
 
   // Init game logic (same as canvas version but scoped to this container)
   var hc=container.querySelector('.zc-hcricket');
@@ -12941,7 +12949,50 @@ function launchFunPanelCricket(){
   }
   loadHistory();
 
+  // Difficulty system
+  var cpuDifficulty='easy';
+  var diffBtns=hc.querySelectorAll('.hc-diff-btn');
+  diffBtns.forEach(function(db){db.addEventListener('click',function(ev){ev.stopPropagation();ev.preventDefault();diffBtns.forEach(function(b){b.classList.remove('active')});db.classList.add('active');cpuDifficulty=db.dataset.diff;sfxTap();});});
+
   function trueRandom(){var arr=new Uint32Array(1);if(window.crypto&&window.crypto.getRandomValues)window.crypto.getRandomValues(arr);else arr[0]=Math.floor(Math.random()*4294967296);return VALID[arr[0]%VALID.length];}
+
+  // CPU pick based on difficulty — harder = more 4s/6s, smarter matching when bowling
+  function cpuPick(playerVal){
+    if(cpuDifficulty==='easy'){
+      // Easy: uniform random, slight bias toward low numbers
+      var weights=[15,25,25,20,10,5]; // 0,1,2,3,4,6
+      var roll=Math.random()*100,cum=0;
+      for(var i=0;i<VALID.length;i++){cum+=weights[i];if(roll<cum)return VALID[i];}
+      return VALID[0];
+    }
+    if(cpuDifficulty==='hard'){
+      // Hard: when batting, bias toward 4/6; when bowling, try to match player
+      if(phase==='bowl'){
+        // CPU batting aggressively
+        var hw=[2,8,10,15,28,37]; // heavy bias on 4 and 6
+        var r2=Math.random()*100,c2=0;
+        for(var j=0;j<VALID.length;j++){c2+=hw[j];if(r2<c2)return VALID[j];}
+        return 6;
+      } else {
+        // CPU bowling — try to predict/match player (30% chance to copy)
+        if(typeof playerVal==='number'&&Math.random()<0.30)return playerVal;
+        var bw=[5,15,18,22,22,18];
+        var r3=Math.random()*100,c3=0;
+        for(var k=0;k<VALID.length;k++){c3+=bw[k];if(r3<c3)return VALID[k];}
+        return VALID[3];
+      }
+    }
+    // Medium: moderate aggression
+    if(phase==='bowl'){
+      var mw=[5,12,15,20,24,24];
+      var r4=Math.random()*100,c4=0;
+      for(var m=0;m<VALID.length;m++){c4+=mw[m];if(r4<c4)return VALID[m];}
+      return 4;
+    } else {
+      if(typeof playerVal==='number'&&Math.random()<0.15)return playerVal;
+      return trueRandom();
+    }
+  }
   function addBall(type,text){var b=document.createElement('span');b.className='hc-ball '+type;b.textContent=text;histEl.appendChild(b);}
   function showFlash(type){flashEl.className='hc-boundary-flash';void flashEl.offsetWidth;flashEl.classList.add(type);}
   function showBoundaryText(text,type){boundaryTextEl.textContent=text;boundaryTextEl.className='hc-boundary-text';void boundaryTextEl.offsetWidth;boundaryTextEl.classList.add(type);}
@@ -12973,7 +13024,7 @@ function launchFunPanelCricket(){
 
   btns.forEach(function(btn){btn.addEventListener('click',function(ev){
     ev.stopPropagation();ev.preventDefault();sfxTap();
-    var pv=parseInt(this.dataset.v),cv=trueRandom();
+    var pv=parseInt(this.dataset.v),cv=(phase==='toss_num')?trueRandom():cpuPick(pv);
     youHandEl.textContent=HAND_EMOJI[pv];youHandEl.className='hc-hand you';revealHand(youHandEl);
     cpuHandEl.textContent='❓';setTimeout(function(){cpuHandEl.textContent=HAND_EMOJI[cv];cpuHandEl.className='hc-hand cpu';revealHand(cpuHandEl);},200);
     if(phase==='toss_num'){setTimeout(function(){sfxToss();var sum=pv+cv;var sumType=(sum%2===0)?'even':'odd';tossWonByPlayer=(sumType===tossCall);phaseEl.textContent=pv+' + '+cv+' = '+sum+' ('+sumType+')';btnsWrap.style.display='none';if(tossWonByPlayer){commentaryEl.textContent='🎉 You won the toss!';commentaryEl.className='hc-commentary win';setTimeout(function(){phase='toss_choice';commentaryEl.textContent='choose to bat or bowl';commentaryEl.className='hc-commentary';choiceDiv.style.display='flex';},1500);}else{commentaryEl.textContent='CPU won toss! CPU bats first';commentaryEl.className='hc-commentary out';setTimeout(function(){startBowling();},2000);}},250);return;}
