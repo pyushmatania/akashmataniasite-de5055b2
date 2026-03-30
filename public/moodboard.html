@@ -6378,9 +6378,10 @@ function auditStickerIntegrity(){
   return result;
 }
 
-// Add interactive badges to interactive stickers (including onclick-based ones)
-document.querySelectorAll('.sticker-counter,.sticker-mood,.sticker-scratch,.sticker-progress,.sticker-fortune,.sticker[onclick],.sticker-meme[onclick]').forEach(s=>{
-  if(s.querySelector('.interactive-badge'))return; // avoid duplicates
+// Add interactive badges to ALL interactive stickers
+const _allInteractive='.sticker-throne-game,.sticker-emoji-kitchen,.sticker-tlpuzzle,.sticker-vibecheck,.sticker-skillping,.sticker-startup-rand,.sticker-wheel,.sticker-quiz,.sticker-slots,.sticker-8ball,.sticker-typewriter,.sticker-dice,.sticker-lovemeter,.sticker-scratch,.sticker-mood,.sticker-counter,.sticker-fortune,.sticker-progress,.sticker[onclick],.sticker-meme[onclick]';
+document.querySelectorAll(_allInteractive).forEach(s=>{
+  if(s.querySelector('.interactive-badge'))return;
   if(s.style.position==='relative') s.style.position='';
   const badge=document.createElement('div');
   badge.className='interactive-badge';
