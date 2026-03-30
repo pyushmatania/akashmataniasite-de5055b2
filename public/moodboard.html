@@ -3606,6 +3606,25 @@ body.map-expanded .scroll-counter{display:none!important}
   100%{opacity:0;transform:translate(var(--tx2,-15px),var(--ty2,-120px)) scale(0.2)}
 }
 
+/* ═══ LIQUID RIPPLES — concentric rings from impact ═══ */
+.zp-beam-ripple{
+  position:absolute;z-index:8;pointer-events:none;
+  top:calc(50% - 194px);left:50%;
+  width:0;height:0;
+  border-radius:50%;
+  border:1.5px solid rgba(255,255,255,0.35);
+  box-shadow:0 0 6px 1px rgba(220,200,255,0.2);
+  transform:translate(-50%,-50%) scaleY(0.35);
+  animation:rippleExpand var(--rp-dur,3s) ease-out var(--rp-delay,0s) infinite;
+}
+.zp-beam-ripple.rp2{border-color:rgba(220,200,255,0.25);box-shadow:0 0 4px 1px rgba(200,180,255,0.15)}
+.zp-beam-ripple.rp3{border-color:rgba(200,180,255,0.18);box-shadow:0 0 3px 1px rgba(180,160,255,0.1)}
+@keyframes rippleExpand{
+  0%{width:0;height:0;opacity:0.8;border-width:1.5px}
+  50%{opacity:0.35;border-width:1px}
+  100%{width:280px;height:280px;opacity:0;border-width:0.5px}
+}
+
 
 /* Ambient glow behind header */
 .zp-header{position:relative}
