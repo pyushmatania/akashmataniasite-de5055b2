@@ -7792,7 +7792,7 @@ function drawMapLayout(){
     mapCanvas.style.left='0px';
     mapCanvas.style.top='0px';
   } else {
-    const zoomFactor=5;
+    const zoomFactor=9;
     sc=mw/(contentW/zoomFactor);
     canvasW=contentW*sc;
     canvasH=contentH*sc;
@@ -7812,8 +7812,6 @@ function drawMapLayout(){
     mapCanvas.style.backgroundSize='';
   } else {
     mapCanvas.style.background='linear-gradient(160deg,#6db8e4 0%,#5baae0 30%,#4a9bd9 60%,#3d8cc7 100%)';
-    mapCanvas.style.backgroundImage='none';
-    mapCanvas.style.backgroundSize='';
   }
   if(mmExp){
     const rCW=Math.round(canvasW),rCH=Math.round(canvasH);
