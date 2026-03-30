@@ -10558,28 +10558,6 @@ function openZonePanel(zone){
 }
 window.openZonePanel=openZonePanel;
 
-function _spawnZonePanelParticles(panel){
-  // Remove old particles first
-  panel.querySelectorAll('.zp-particle').forEach(p=>p.remove());
-  const count=12;
-  for(let i=0;i<count;i++){
-    const p=document.createElement('div');
-    p.className='zp-particle';
-    const size=2+Math.random()*4;
-    p.style.width=size+'px';
-    p.style.height=size+'px';
-    p.style.left=(8+Math.random()*84)+'%';
-    p.style.top=(10+Math.random()*80)+'%';
-    p.style.setProperty('--dur',(4+Math.random()*6).toFixed(1)+'s');
-    p.style.setProperty('--delay',(Math.random()*4).toFixed(1)+'s');
-    p.style.setProperty('--tx',(Math.random()*60-30).toFixed(0)+'px');
-    p.style.setProperty('--ty',(-40-Math.random()*80).toFixed(0)+'px');
-    p.style.setProperty('--tx2',(Math.random()*40-20).toFixed(0)+'px');
-    p.style.setProperty('--ty2',(-60-Math.random()*100).toFixed(0)+'px');
-    panel.appendChild(p);
-  }
-}
-
 function closeZonePanel(zone){
   const panel=document.getElementById('zp-'+zone);
   const bd=document.getElementById('zpbd-'+zone);
