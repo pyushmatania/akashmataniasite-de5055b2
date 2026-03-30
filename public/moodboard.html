@@ -7837,7 +7837,7 @@ function drawMap(){
   if(mmExp){
     renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
   } else {
-    // SMALL: render real sticker clones scaled down at exact canvas positions
+    // SMALL: lightweight low-graphics rendering — colored thumbnails matching canvas items
     let count=0;
     const frag=document.createDocumentFragment();
     stickerData.forEach(d=>{
@@ -7847,18 +7847,41 @@ function drawMap(){
       const dx=(liveLeft-offsetX)*sc, dy=(liveTop-offsetY)*sc;
       if(dx<-30||dx>canvasW+30||dy<-30||dy>canvasH+30)return;
       count++;
-      const clone=makeMapCloneNode(d);
-      if(!clone)return;
-      clone.classList.add('map-sticker-clone','no-anim-children');
-      const cloneSc=computeCloneScale(d,sc);
-      const w=d.w*cloneSc, h=d.h*cloneSc;
-      clone.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;pointer-events:none;overflow:hidden;transform-origin:0 0;z-index:10;';
-      frag.appendChild(clone);
+      const w=Math.max(5,d.w*sc),h=Math.max(4,d.h*sc);
+      const el=document.createElement('div');
+      el.className='mi';
+      // Use actual sticker background or grab computed color from ref
+      let bg=d.bg||'rgba(255,255,255,0.7)';
+      let border=d.border||'';
+      let radius=d.radius||'3px';
+      // For photos/images, try to grab the image src for a tiny thumbnail
+      let thumbSrc='';
+      if(d.ref){
+        const img=d.ref.querySelector('img');
+        if(img&&img.src)thumbSrc=img.src;
+        // Grab computed bg if sticker bg is transparent
+        if(!d.bg||d.bg==='transparent'||d.bg===''){
+          const cs=getComputedStyle(d.ref);
+          if(cs.backgroundColor&&cs.backgroundColor!=='rgba(0, 0, 0, 0)')bg=cs.backgroundColor;
+          else bg='rgba(255,255,255,0.8)';
+        }
+      }
+      let extraStyle='';
+      if(thumbSrc){
+        extraStyle='background-image:url('+thumbSrc+');background-size:cover;background-position:center;';
+      }
+      el.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;background:'+bg+';border-radius:'+radius+';'+(border?'border:'+border+';':'')+
+        'box-shadow:0 0.5px 3px rgba(0,0,0,0.15);overflow:hidden;'+extraStyle;
+      if(d.emoji&&w>4){
+        const l=document.createElement('div');
+        l.className='mi-emoji-label';
+        l.textContent=d.emoji;
+        l.style.fontSize=Math.max(Math.min(w*0.55,20),3)+'px';
+        el.appendChild(l);
+      }
+      frag.appendChild(el);
     });
     mapCanvas.appendChild(frag);
-    // Re-append grid div so it's visible on top
-    const gridDiv=mapCanvas.querySelector('.map-canvas-grid');
-    if(gridDiv)mapCanvas.appendChild(gridDiv);
     if(mapCount)mapCount.textContent=count+' items';
     // Boundary + decorations overlay on small map
     const oldBSvg=mapCanvas.querySelector('.small-map-boundaries');
