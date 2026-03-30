@@ -11301,6 +11301,22 @@ function openProject(id){
 }
 window.openProject=openProject;
 
+// Carousel dot tracker
+(function(){
+  const carousel=document.getElementById('projCarousel');
+  const dotsContainer=document.getElementById('projDots');
+  if(!carousel||!dotsContainer)return;
+  const dots=dotsContainer.querySelectorAll('.zp-carousel-dot');
+  carousel.addEventListener('scroll',function(){
+    const cards=carousel.querySelectorAll('.zp-proj-card');
+    const scrollLeft=carousel.scrollLeft;
+    const cardWidth=cards[0]?.offsetWidth||280;
+    const gap=20;
+    const idx=Math.round(scrollLeft/(cardWidth+gap));
+    dots.forEach((d,i)=>{d.classList.toggle('active',i===idx)});
+  },{passive:true});
+})();
+
 function closeProject(id){
   const el=document.getElementById('zpd-'+id);
   if(el){
