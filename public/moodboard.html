@@ -635,7 +635,7 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
     inset 0 0 12px rgba(0,0,0,0.3);
   position:relative;cursor:pointer;
   transition:none;
-  background:#3d7ab5;
+  background:#0a1628;
 }
 .minimap-container.expanded .minimap{border-radius:0;border:none;box-shadow:none;background:#4a9bd9}
 
@@ -729,7 +729,7 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
 .minimap::after{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:15;
   border-radius:inherit;
-  box-shadow:inset 0 0 18px rgba(0,0,0,0.3),inset 0 0 5px rgba(0,0,0,0.2);
+  box-shadow:inset 0 0 18px rgba(0,0,0,0.5),inset 0 0 5px rgba(0,0,0,0.3);
 }
 .minimap-container.expanded .minimap::after{display:none}
 
@@ -858,9 +858,9 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
 .map-canvas-grid{
   position:absolute;inset:0;pointer-events:none;
   background-image:
-    linear-gradient(rgba(0,200,220,0.18) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,200,220,0.18) 1px, transparent 1px);
-  background-size:22px 22px, 22px 22px;
+    linear-gradient(rgba(100,200,255,0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100,200,255,0.12) 1px, transparent 1px);
+  background-size:18px 18px, 18px 18px;
   z-index:0;
 }
 .minimap-container.expanded .map-canvas-grid{
@@ -6914,16 +6914,15 @@ function drawMapLayoutOnly(){
     mapCanvas.style.left='0px';
     mapCanvas.style.top='0px';
   } else {
-    const zoomFactor=7;
-    const smallPad=800;
-    const paddedW=contentW+smallPad*2;
-    const paddedH=contentH+smallPad*2;
-    sc=mw/(paddedW/zoomFactor);
+    const smallPad=400;
+    const paddedW=MOODBOARD_WORLD_WIDTH+smallPad*2;
+    const paddedH=MOODBOARD_WORLD_HEIGHT+smallPad*2;
+    sc=Math.min(mw/paddedW,mh/paddedH);
     canvasW=paddedW*sc;
     canvasH=paddedH*sc;
     offsetX=-smallPad;offsetY=-smallPad;
-    mapCanvas.style.left=smallMapPanX+'px';
-    mapCanvas.style.top=smallMapPanY+'px';
+    mapCanvas.style.left=((mw-canvasW)/2)+'px';
+    mapCanvas.style.top=((mh-canvasH)/2)+'px';
   }
   drawMap._sc=sc;drawMap._ox=offsetX;drawMap._oy=offsetY;
   drawMap._cw=canvasW;drawMap._ch=canvasH;
@@ -6936,7 +6935,7 @@ function drawMapLayoutOnly(){
     mapCanvas.style.backgroundImage='none';
     mapCanvas.style.backgroundSize='';
   } else {
-    mapCanvas.style.background='linear-gradient(160deg,#6db8e4 0%,#5baae0 30%,#4a9bd9 60%,#3d8cc7 100%)';
+    mapCanvas.style.background='linear-gradient(160deg,#0a1628 0%,#0d1f3c 40%,#112a4a 80%,#0a1628 100%)';
   }
   if(mmExp){
     if(playerWasInCanvas||mapPlayer.parentElement!==mapCanvas){
@@ -7789,16 +7788,17 @@ function drawMapLayout(){
     mapCanvas.style.left='0px';
     mapCanvas.style.top='0px';
   } else {
-    const zoomFactor=7;
-    const smallPad=800;
-    const paddedW=contentW+smallPad*2;
-    const paddedH=contentH+smallPad*2;
-    sc=mw/(paddedW/zoomFactor);
+    // SMALL MAP: fit entire 7000x7000 world into the minimap circle with padding
+    const smallPad=400;
+    const paddedW=MOODBOARD_WORLD_WIDTH+smallPad*2;
+    const paddedH=MOODBOARD_WORLD_HEIGHT+smallPad*2;
+    // Fit the full world into the minimap container
+    sc=Math.min(mw/paddedW,mh/paddedH);
     canvasW=paddedW*sc;
     canvasH=paddedH*sc;
     offsetX=-smallPad;offsetY=-smallPad;
-    mapCanvas.style.left=smallMapPanX+'px';
-    mapCanvas.style.top=smallMapPanY+'px';
+    mapCanvas.style.left=((mw-canvasW)/2)+'px';
+    mapCanvas.style.top=((mh-canvasH)/2)+'px';
   }
   drawMap._sc=sc;drawMap._ox=offsetX;drawMap._oy=offsetY;
   drawMap._cw=canvasW;drawMap._ch=canvasH;
@@ -7811,7 +7811,7 @@ function drawMapLayout(){
     mapCanvas.style.backgroundImage='none';
     mapCanvas.style.backgroundSize='';
   } else {
-    mapCanvas.style.background='linear-gradient(160deg,#6db8e4 0%,#5baae0 30%,#4a9bd9 60%,#3d8cc7 100%)';
+    mapCanvas.style.background='linear-gradient(160deg,#0a1628 0%,#0d1f3c 40%,#112a4a 80%,#0a1628 100%)';
   }
   if(mmExp){
     const rCW=Math.round(canvasW),rCH=Math.round(canvasH);
@@ -7839,7 +7839,14 @@ function drawMap(){
   if(mmExp){
     renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
   } else {
-    // SMALL: card-style rendering — all items visible on blue bg
+    // SMALL MAP: render all items as colored dots/cards on dark blue bg
+    const zoneColors={
+      introduction:'rgba(0,200,220,0.7)',
+      work:'rgba(229,57,53,0.7)',
+      portfolio:'rgba(66,165,245,0.7)',
+      fun:'rgba(171,71,188,0.7)',
+      hobby:'rgba(255,152,0,0.7)'
+    };
     let count=0;
     const frag=document.createDocumentFragment();
     stickerData.forEach(d=>{
@@ -7847,106 +7854,81 @@ function drawMap(){
       const liveLeft=d.ref&&d.ref.style?parseInt(d.ref.style.left)||d.left:d.left;
       const liveTop=d.ref&&d.ref.style?parseInt(d.ref.style.top)||d.top:d.top;
       const dx=(liveLeft-offsetX)*sc, dy=(liveTop-offsetY)*sc;
-      if(dx<-100||dx>canvasW+100||dy<-100||dy>canvasH+100)return;
+      if(dx<-20||dx>canvasW+20||dy<-20||dy>canvasH+20)return;
       count++;
-      const w=Math.max(5,d.w*sc),h=Math.max(4,d.h*sc);
+      const w=Math.max(2,d.w*sc),h=Math.max(2,d.h*sc);
       const el=document.createElement('div');
       el.className='mi';
-      // Force visible bg — transparent/none items get white card on blue canvas
-      let bg=d.bg||'';
-      if(!bg||bg==='transparent'||bg==='none'||bg==='rgba(0, 0, 0, 0)'||bg==='rgba(200,200,200,0.5)')bg='rgba(255,255,255,0.88)';
-      let radius=d.radius||'3px';
-      if(radius==='0'||radius==='0px')radius='2px';
-      // Thumbnail for image stickers
-      let extraStyle='';
-      if(d.ref&&typeof d._thumbSrc==='undefined'){
-        const img=d.ref.querySelector('img');
-        d._thumbSrc=img&&img.src?img.src:'';
+      // Zone-aware coloring
+      const zone=d.cat||'';
+      let bg=zoneColors[zone]||'rgba(255,255,255,0.5)';
+      // For larger items (intro cards etc.), use a brighter fill
+      if(w>4&&h>4){
+        bg=d.bg||'';
+        if(!bg||bg==='transparent'||bg==='none'||bg==='rgba(0, 0, 0, 0)')bg=zoneColors[zone]||'rgba(255,255,255,0.6)';
       }
-      if(d._thumbSrc){
-        extraStyle='background-image:url('+d._thumbSrc+');background-size:cover;background-position:center;';
-      }
+      let radius=Math.min(2,w*0.3)+'px';
       el.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;background:'+bg+';border-radius:'+radius+';'+
-        'border:1px solid rgba(255,255,255,0.35);box-shadow:0 1px 4px rgba(0,0,0,0.3);overflow:hidden;z-index:2;'+extraStyle;
-      if(d.emoji&&w>8){
-        const l=document.createElement('div');
-        l.className='mi-emoji-label';
-        l.textContent=d.emoji;
-        l.style.fontSize=Math.max(Math.min(w*0.45,14),4)+'px';
-        el.appendChild(l);
-      }
+        'box-shadow:0 0 2px rgba(255,255,255,0.15);overflow:hidden;z-index:2;';
       frag.appendChild(el);
     });
     mapCanvas.appendChild(frag);
     if(mapCount)mapCount.textContent=count+' items';
-    // Boundary + decorations overlay on small map
-    const oldBSvg=mapCanvas.querySelector('.small-map-boundaries');
-    const oldRoads=mapCanvas.querySelector('.small-map-roads');
-    const oldLabels=mapCanvas.querySelector('.small-map-labels');
-    if(oldBSvg)oldBSvg.remove();
-    if(oldRoads)oldRoads.remove();
-    if(oldLabels)oldLabels.remove();
 
-    // SVG viewBox accounts for padding offset (items at world 0,0 map to smallPad in canvas)
-    const smallPad=800;
-    const vbX=-smallPad,vbY=-smallPad,vbW=7000+smallPad*2,vbH=7000+smallPad*2;
+    // Clean up old overlays
+    mapCanvas.querySelectorAll('.small-map-boundaries,.small-map-roads,.small-map-labels').forEach(el=>el.remove());
+
+    // SVG viewBox matches the padding offset used in layout
+    const smallPad=400;
+    const vbX=-smallPad,vbY=-smallPad,vbW=MOODBOARD_WORLD_WIDTH+smallPad*2,vbH=MOODBOARD_WORLD_HEIGHT+smallPad*2;
     const vb=vbX+' '+vbY+' '+vbW+' '+vbH;
 
-    // Zone name labels on small map
+    // Zone name labels
     const lblSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
     lblSvg.setAttribute('class','small-map-labels');
     lblSvg.setAttribute('viewBox',vb);
     lblSvg.setAttribute('preserveAspectRatio','none');
-    lblSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:4;overflow:visible';
+    lblSvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible';
     const smLabels=[
-      {x:1750,y:1400,text:'INTRO',color:'rgba(0,200,220,0.30)',rot:-18},
-      {x:5250,y:1400,text:'WORK',color:'rgba(229,57,53,0.25)',rot:-15},
-      {x:1750,y:3600,text:'PORTFOLIO',color:'rgba(66,165,245,0.25)',rot:-25},
-      {x:5250,y:3600,text:'FUN',color:'rgba(171,71,188,0.25)',rot:-20},
-      {x:3500,y:5800,text:'HOBBY',color:'rgba(255,152,0,0.25)',rot:-18},
+      {x:1750,y:1300,text:'📸',color:'rgba(0,200,220,0.5)',size:'400'},
+      {x:5250,y:1300,text:'🎯',color:'rgba(229,57,53,0.4)',size:'400'},
+      {x:1750,y:3500,text:'🚀',color:'rgba(66,165,245,0.4)',size:'400'},
+      {x:5250,y:3500,text:'😂',color:'rgba(171,71,188,0.4)',size:'400'},
+      {x:3500,y:5600,text:'🎮',color:'rgba(255,152,0,0.4)',size:'400'},
     ];
     smLabels.forEach(l=>{
       const t=document.createElementNS('http://www.w3.org/2000/svg','text');
       t.setAttribute('x',''+l.x);t.setAttribute('y',''+l.y);
-      t.setAttribute('text-anchor','middle');t.setAttribute('fill',l.color);
-      t.setAttribute('font-size','280');t.setAttribute('font-weight','900');
-      t.setAttribute('font-family','var(--font-fun),sans-serif');
-      t.setAttribute('letter-spacing','0.2em');
-      t.setAttribute('transform','rotate('+l.rot+' '+l.x+' '+l.y+')');
+      t.setAttribute('text-anchor','middle');t.setAttribute('dominant-baseline','central');
+      t.setAttribute('fill',l.color);
+      t.setAttribute('font-size',l.size);
       t.textContent=l.text;
       lblSvg.appendChild(t);
     });
     mapCanvas.appendChild(lblSvg);
 
-    // Boundary lines
+    // Boundary lines — subtle dashed on dark bg
     const bSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
     bSvg.setAttribute('class','small-map-boundaries');
     bSvg.setAttribute('viewBox',vb);
     bSvg.setAttribute('preserveAspectRatio','none');
-    bSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:5;overflow:visible';
+    bSvg.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:visible';
+    // Vertical divider + horizontal dividers
     const smDividerPaths=[
-      {d:'M3500,0 C3475,350 3525,700 3495,1050 Q3510,1400 3490,1750 C3515,2100 3485,2333 3500,2333 C3475,2700 3525,3050 3495,3400 Q3510,3700 3490,4050 C3515,4300 3485,4666 3500,4666',stroke:'rgba(201,169,110,0.45)'},
-      {d:'M0,2333 C350,2308 700,2355 1050,2325 Q1400,2308 1750,2350 C2100,2318 2450,2342 2800,2320 Q3150,2308 3500,2333',stroke:'rgba(0,188,212,0.45)'},
-      {d:'M3500,2333 C3850,2308 4200,2355 4550,2325 Q4900,2308 5250,2350 C5600,2318 5950,2342 6300,2320 Q6650,2308 7000,2333',stroke:'rgba(229,57,53,0.45)'},
-      {d:'M0,4666 C350,4641 700,4688 1050,4658 Q1400,4641 1750,4683 C2100,4651 2450,4675 2800,4653 Q3150,4641 3500,4666 C3850,4641 4200,4688 4550,4658 Q4900,4641 5250,4683 C5600,4651 5950,4675 6300,4653 Q6650,4641 7000,4666',stroke:'rgba(255,152,0,0.45)'},
+      {d:'M3500,0 L3500,4666',stroke:'rgba(100,180,255,0.2)'},
+      {d:'M0,2333 L3500,2333',stroke:'rgba(0,200,220,0.2)'},
+      {d:'M3500,2333 L7000,2333',stroke:'rgba(229,57,53,0.2)'},
+      {d:'M0,4666 L7000,4666',stroke:'rgba(255,152,0,0.2)'},
     ];
     smDividerPaths.forEach(zp=>{
       const p=document.createElementNS('http://www.w3.org/2000/svg','path');
       p.setAttribute('d',zp.d);
       p.setAttribute('fill','none');
       p.setAttribute('stroke',zp.stroke);
-      p.setAttribute('stroke-width','40');
-      p.setAttribute('stroke-linejoin','round');
-      p.setAttribute('stroke-dasharray','120 60');
+      p.setAttribute('stroke-width','30');
+      p.setAttribute('stroke-dasharray','100 60');
       p.setAttribute('stroke-linecap','round');
       bSvg.appendChild(p);
-    });
-    // Intersection dots
-    [['3500','2333','60','rgba(201,169,110,0.5)'],['3500','4666','60','rgba(201,169,110,0.5)']
-    ].forEach(([cx,cy,r,fill])=>{
-      const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
-      c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r',r);c.setAttribute('fill',fill);
-      bSvg.appendChild(c);
     });
     mapCanvas.appendChild(bSvg);
   }
@@ -8652,21 +8634,18 @@ function updMap(){
   const centerWorld={x:worldTopLeft.x+worldVpW/2,y:worldTopLeft.y+worldVpH/2};
   
   if(!mmExp){
-    // SMALL MAP: deterministic centering + clamped pan (no drift)
+    // SMALL MAP: full world visible, no panning — just position arrow + viewport rect
     const mr=mmInner.getBoundingClientRect();
     const mw=mr.width||64,mh=mr.height||64;
     const cw=drawMap._cw||0,ch=drawMap._ch||0;
+    const cL=parseFloat(mapCanvas.style.left)||((mw-cw)/2);
+    const cT=parseFloat(mapCanvas.style.top)||((mh-ch)/2);
+    // Arrow position — map world center to canvas pixel
     const rawPx=(centerWorld.x-ox)*sc;
     const rawPy=(centerWorld.y-oy)*sc;
-    const pan=clampSmallMapPan(rawPx,rawPy,mw,mh,cw,ch);
-    const cL=pan.panX,cT=pan.panY;
-    smallMapPanX=cL;
-    smallMapPanY=cT;
-    mapCanvas.style.left=cL+'px';
-    mapCanvas.style.top=cT+'px';
     let arrowX=cL+rawPx;
     let arrowY=cT+rawPy;
-    const pad=8;
+    const pad=6;
     arrowX=Math.max(pad,Math.min(mw-pad,arrowX));
     arrowY=Math.max(pad,Math.min(mh-pad,arrowY));
     mapPlayer.style.left=arrowX+'px';
@@ -8679,12 +8658,13 @@ function updMap(){
       const dsx=sx-_lastScrollX;
       const dsy=sy-_lastScrollY;
       if(Math.abs(dsx)>1||Math.abs(dsy)>1){
-        const angle=Math.atan2(dsy,dsx)*(180/Math.PI)+90; // +90 because arrow points up
+        const angle=Math.atan2(dsy,dsx)*(180/Math.PI)+90;
         arrowSvg.style.transform='rotate('+angle+'deg)';
         _lastArrowAngle=angle;
       }
     }
     _lastScrollX=sx;_lastScrollY=sy;
+    // Viewport rectangle
     mapVP.style.left=(cL+(worldTopLeft.x-ox)*sc)+'px';
     mapVP.style.top=(cT+(worldTopLeft.y-oy)*sc)+'px';
     mapVP.style.width=(worldVpW*sc)+'px';
