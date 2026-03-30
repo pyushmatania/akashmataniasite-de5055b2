@@ -10585,8 +10585,6 @@ function closeZonePanel(zone){
   const bd=document.getElementById('zpbd-'+zone);
   if(panel){
     panel.classList.remove('open');
-    // Clean up particles after transition
-    setTimeout(()=>{panel.querySelectorAll('.zp-particle').forEach(p=>p.remove())},600);
   }
   if(bd)bd.classList.remove('open');
   document.querySelectorAll('.zp-proj-detail.open').forEach(d=>d.classList.remove('open'));
