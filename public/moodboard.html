@@ -6627,7 +6627,7 @@ vp.addEventListener('scroll',()=>{
     }
     // 2) Map update — throttle to every 100ms, redraw every 800ms
     if(typeof updMap==='function'&&typeof mapTransitioning!=='undefined'&&!mapTransitioning){
-      if(now-_lastMapUpdate>100){
+      if(now-_lastMapUpdate>250){
         _lastMapUpdate=now;
         updMap();
       }
