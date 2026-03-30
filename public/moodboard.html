@@ -10605,7 +10605,7 @@ function closeProject(id){
   const el=document.getElementById('zpd-'+id);
   if(el){
     el.classList.remove('open');
-    setTimeout(()=>{el.querySelectorAll('.zp-particle').forEach(p=>p.remove())},500);
+    
   }
 }
 window.closeProject=closeProject;
