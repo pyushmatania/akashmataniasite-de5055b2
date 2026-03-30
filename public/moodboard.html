@@ -6829,7 +6829,7 @@ function toggleMap(){
     if(_mapOpenRafId){cancelAnimationFrame(_mapOpenRafId);_mapOpenRafId=null;}
     _mapOpenRafId=requestAnimationFrame(()=>{
       try{
-        drawMapLayoutOnly();
+        drawMapLayout();
       }catch(e){console.error('Map layout error:',e);mapTransitioning=false;return;}
 
       // Phase 2: Decorations — use cached layer or build async
