@@ -4133,7 +4133,7 @@ const zoneTargets={
   introduction:{x:1750,y:1166},
   work:{x:5250,y:1166},      warroom:{x:5250,y:1166},
   portfolio:{x:1750,y:3499}, launchpad:{x:1750,y:3499},
-  hobby:{x:1750,y:5833},     playground:{x:1750,y:5833},
+  hobby:{x:3500,y:5833},     playground:{x:3500,y:5833},
   fun:{x:5250,y:3499},       memealley:{x:5250,y:3499}
 };
 function scrollToZone(e,zone){
@@ -4141,15 +4141,26 @@ function scrollToZone(e,zone){
   const target=zoneTargets[zone];
   if(!target)return;
   const scale=(typeof MOODBOARD_VIEW_SCALE==='number'?MOODBOARD_VIEW_SCALE:0.5);
-  const scaled={x:target.x*scale,y:target.y*scale};
   const vp=document.getElementById('viewport');
+  // Try to pan to the actual card center for this zone
+  const el=getZoneIntroElement(zone);
+  let panX=target.x, panY=target.y;
+  if(el){
+    if(typeof anchorZoneIntroCard==='function') anchorZoneIntroCard(el,zone);
+    const w=el.offsetWidth||380;
+    const h=el.offsetHeight||420;
+    const l=parseFloat(el.style.left)||0;
+    const t=parseFloat(el.style.top)||0;
+    panX=l+w/2;
+    panY=t+h/2;
+  }
   const worldW=(typeof MOODBOARD_WORLD_WIDTH==='number'?MOODBOARD_WORLD_WIDTH:10000);
   const worldH=(typeof MOODBOARD_WORLD_HEIGHT==='number'?MOODBOARD_WORLD_HEIGHT:10000);
   const maxX=Math.max(0,worldW*scale-vp.clientWidth);
   const maxY=Math.max(0,worldH*scale-vp.clientHeight);
   vp.scrollTo({
-    left:Math.max(0,Math.min(scaled.x-vp.clientWidth/2,maxX)),
-    top:Math.max(0,Math.min(scaled.y-vp.clientHeight/2,maxY)),
+    left:Math.max(0,Math.min(panX*scale-vp.clientWidth/2,maxX)),
+    top:Math.max(0,Math.min(panY*scale-vp.clientHeight/2,maxY)),
     behavior:'smooth'
   });
 
@@ -4188,8 +4199,13 @@ function anchorZoneIntroCard(card,zoneOverride){
   const zone=zoneOverride||card.dataset.zone||'hub';
   const center=getCanonicalZoneCenter(zone);
   if(!center) return null;
+  // Force layout to get accurate dimensions
+  const prevVis=card.style.visibility;
+  const prevDisp=card.style.display;
+  card.style.visibility='hidden';card.style.display='';
   const w=card.offsetWidth||380;
   const h=card.offsetHeight||420;
+  card.style.visibility=prevVis;card.style.display=prevDisp;
   const left=Math.max(0,Math.min(MOODBOARD_WORLD_WIDTH-w,center.x-w/2));
   const top=Math.max(0,Math.min(MOODBOARD_WORLD_HEIGHT-h,center.y-h/2));
   card.style.left=left+'px';
@@ -4220,12 +4236,23 @@ function cycleIntroCards(e){
   const center=getZoneIntroCenter(target);
   const scale=(typeof MOODBOARD_VIEW_SCALE==='number'?MOODBOARD_VIEW_SCALE:0.5);
   const vp=document.getElementById('viewport');
+  // Use card's actual rendered center for pixel-perfect viewport centering
+  const el=getZoneIntroElement(target.zone);
+  let panX=center.x, panY=center.y;
+  if(el){
+    const w=el.offsetWidth||380;
+    const h=el.offsetHeight||420;
+    const l=parseFloat(el.style.left)||0;
+    const t=parseFloat(el.style.top)||0;
+    panX=l+w/2;
+    panY=t+h/2;
+  }
   const worldW=7000,worldH=7000;
   const maxX=Math.max(0,worldW*scale-vp.clientWidth);
   const maxY=Math.max(0,worldH*scale-vp.clientHeight);
   vp.scrollTo({
-    left:Math.max(0,Math.min(center.x*scale-vp.clientWidth/2,maxX)),
-    top:Math.max(0,Math.min(center.y*scale-vp.clientHeight/2,maxY)),
+    left:Math.max(0,Math.min(panX*scale-vp.clientWidth/2,maxX)),
+    top:Math.max(0,Math.min(panY*scale-vp.clientHeight/2,maxY)),
     behavior:'smooth'
   });
   // Trigger zone-specific animations when navigating
