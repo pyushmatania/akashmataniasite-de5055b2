@@ -5781,11 +5781,19 @@ function cycleIntroCards(e){
   </button>
   <div class="zp-header">
     <div class="zp-zone-chip">🚀 Launchpad</div>
-    <div class="zp-title">Products<br><em>I've</em> Built.</div>
-    <div class="zp-subtitle">Shipped, iterated, and learned from. Each one a lesson in craft and resilience.</div>
+    <div class="zp-title"><span class="zp-hl-brush" style="--hl-c:rgba(149,117,205,0.3)">Products</span><br><em>I've</em> Built. <span class="zp-doodle zp-doodle-arrow" style="--dd-c:rgba(206,147,216,0.6)"><svg width="36" height="20" viewBox="0 0 28 16" fill="none"><path d="M2 12 Q8 2 16 8 Q20 11 26 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M22 2 L26 4 L23 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></div>
+    <div class="zp-subtitle">Shipped, iterated, and learned from. Each one a lesson in <span class="zp-hl-wavy" style="--hw-c:rgba(206,147,216,0.5)">craft</span> and resilience.</div>
   </div>
+  <div class="zp-doodle-float" style="top:90px;right:20px;opacity:0.12;transform:rotate(12deg)"><svg width="42" height="42" viewBox="0 0 24 24" fill="none"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z" stroke="rgba(149,117,205,0.5)" stroke-width="1.5" fill="rgba(149,117,205,0.1)"/></svg></div>
+  <div class="zp-doodle-float" style="top:500px;left:14px;opacity:0.1"><svg width="36" height="36" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="rgba(206,147,216,0.4)" stroke-width="1.5" stroke-dasharray="5 3"/></svg></div>
   <div class="zp-body">
+    <div class="zp-stats-row">
+      <div class="zp-stat-box"><span class="zp-stat-num">5</span><span class="zp-stat-lbl">Products</span></div>
+      <div class="zp-stat-box"><span class="zp-stat-num">3</span><span class="zp-stat-lbl">Founded</span></div>
+      <div class="zp-stat-box"><span class="zp-stat-num">5K+</span><span class="zp-stat-lbl">Users</span></div>
+    </div>
     <div class="zp-section">
+      <div class="zp-sec-label">Showcase <span class="zp-doodle-inline zp-doodle-spin"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="rgba(149,117,205,0.5)" stroke-width="1.5" stroke-dasharray="3 3"/></svg></span></div>
       <div class="zp-showcase" id="projShowcase" style="--sc-c1:rgba(124,77,255,0.5);--sc-c2:rgba(206,147,216,0.4);--sc-glow:rgba(124,77,255,0.15)">
         <div class="zp-beam-corona"></div>
         <div class="zp-showcase-beam-top"></div>
@@ -5796,21 +5804,16 @@ function cycleIntroCards(e){
         <div class="zp-showcase-beam-wrap"></div>
         <div class="zp-showcase-beam-bottom"></div>
         <div class="zp-showcase-ambient"></div>
-        <!-- Waterfall corner glows -->
         <div class="zp-beam-corner-l"></div>
         <div class="zp-beam-corner-r"></div>
-        <!-- Side waterfall mist -->
         <div class="zp-beam-side-glow-l"></div>
         <div class="zp-beam-side-glow-r"></div>
-        <!-- Bottom convergence -->
         <div class="zp-beam-converge"></div>
-        <!-- Energy particles along beam -->
         <div class="zp-beam-particle" style="--p-dur:2.2s;--p-delay:0s"></div>
         <div class="zp-beam-particle" style="--p-dur:2.8s;--p-delay:0.7s"></div>
         <div class="zp-beam-particle" style="--p-dur:2.0s;--p-delay:1.4s"></div>
         <div class="zp-beam-particle" style="--p-dur:3.0s;--p-delay:2.1s"></div>
         <div class="zp-beam-particle" style="--p-dur:2.5s;--p-delay:0.4s"></div>
-        <!-- Side waterfall particles -->
         <div class="zp-beam-particle-side" style="--ps-dur:3s;--ps-delay:0.3s"></div>
         <div class="zp-beam-particle-side" style="--ps-dur:3.8s;--ps-delay:1.2s"></div>
         <div class="zp-beam-particle-side right" style="--ps-dur:3.2s;--ps-delay:0.6s"></div>
@@ -5831,7 +5834,9 @@ function cycleIntroCards(e){
           <div class="zp-sc-badge" id="scBadge">Lead PM</div>
           <div class="zp-sc-emoji" id="scEmoji"><span>🔗</span></div>
           <div class="zp-sc-name" id="scName">EnterCircles</div>
-          <div class="zp-sc-num" id="scNum">#001 / 005</div>
+          <div class="zp-sc-num" id="scNum"
+
+>#001 / 005</div>
           <div class="zp-sc-info">
             <div class="zp-sc-desc" id="scDesc">Web3 social platform for community engagement & token-gated access</div>
             <div class="zp-sc-tags" id="scTags">
@@ -5851,6 +5856,54 @@ function cycleIntroCards(e){
         <div class="zp-carousel-dot" onclick="goToProject(4)"></div>
       </div>
       <div class="zp-sc-swipe-hint">← Swipe to explore →</div>
+    </div>
+    <div class="zp-section">
+      <div class="zp-sec-label">Product Highlights <span class="zp-doodle-inline"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 7.2H22l-6 4.8 2.4 7.2L12 16.4l-6.4 4.8 2.4-7.2-6-4.8h7.6z" fill="rgba(149,117,205,0.12)" stroke="rgba(149,117,205,0.45)" stroke-width="1.5"/></svg></span></div>
+      <div class="zp-highlight-cards">
+        <div class="zp-hl-card" style="--hlc-c:rgba(124,77,255,0.15);--hlc-bc:rgba(124,77,255,0.25)">
+          <span class="zp-hl-card-icon">🔗</span>
+          <span class="zp-hl-card-title">EnterCircles</span>
+          <span class="zp-hl-card-stat">5K+ users · Web3 social</span>
+        </div>
+        <div class="zp-hl-card" style="--hlc-c:rgba(66,165,245,0.15);--hlc-bc:rgba(66,165,245,0.25)">
+          <span class="zp-hl-card-icon">📚</span>
+          <span class="zp-hl-card-title">Recess</span>
+          <span class="zp-hl-card-stat">2K+ students · EdTech</span>
+        </div>
+        <div class="zp-hl-card" style="--hlc-c:rgba(239,83,80,0.15);--hlc-bc:rgba(239,83,80,0.25)">
+          <span class="zp-hl-card-icon">🤫</span>
+          <span class="zp-hl-card-title">Hushh</span>
+          <span class="zp-hl-card-stat">Privacy-first · FinTech</span>
+        </div>
+        <div class="zp-hl-card" style="--hlc-c:rgba(38,166,154,0.15);--hlc-bc:rgba(38,166,154,0.25)">
+          <span class="zp-hl-card-icon">🏙️</span>
+          <span class="zp-hl-card-title">SmarBhubaneswar</span>
+          <span class="zp-hl-card-stat">City-scale · Gov-Tech</span>
+        </div>
+        <div class="zp-hl-card" style="--hlc-c:rgba(255,112,67,0.15);--hlc-bc:rgba(255,112,67,0.25)">
+          <span class="zp-hl-card-icon">📈</span>
+          <span class="zp-hl-card-title">Aribasda</span>
+          <span class="zp-hl-card-stat">Growth analytics · SaaS</span>
+        </div>
+      </div>
+    </div>
+    <div class="zp-section">
+      <div class="zp-sec-label">Product DNA</div>
+      <div class="zp-tags">
+        <span class="zp-tag" style="background:rgba(149,117,205,0.12);color:#CE93D8;border:1.5px solid rgba(149,117,205,0.25)">0→1 Builder</span>
+        <span class="zp-tag" style="background:rgba(149,117,205,0.12);color:#CE93D8;border:1.5px solid rgba(149,117,205,0.25)">Web3</span>
+        <span class="zp-tag" style="background:rgba(149,117,205,0.12);color:#CE93D8;border:1.5px solid rgba(149,117,205,0.25)">EdTech</span>
+        <span class="zp-tag" style="background:rgba(149,117,205,0.12);color:#CE93D8;border:1.5px solid rgba(149,117,205,0.25)">FinTech</span>
+        <span class="zp-tag" style="background:rgba(149,117,205,0.12);color:#CE93D8;border:1.5px solid rgba(149,117,205,0.25)">Gov-Tech</span>
+        <span class="zp-tag" style="background:rgba(149,117,205,0.12);color:#CE93D8;border:1.5px solid rgba(149,117,205,0.25)">SaaS</span>
+      </div>
+    </div>
+    <div class="zp-section">
+      <div class="zp-sec-label">Builder's Note <span class="zp-doodle-inline"><svg width="20" height="14" viewBox="0 0 20 14" fill="none"><path d="M2 7 Q6 2 10 7 Q14 12 18 7" stroke="rgba(149,117,205,0.4)" stroke-width="2" stroke-linecap="round" fill="none"/></svg></span></div>
+      <div class="zp-quote-card" style="--qc-c:rgba(149,117,205,0.12);--qc-bc:rgba(149,117,205,0.2)">
+        <div class="zp-quote-mark" style="color:rgba(149,117,205,0.3)">✦</div>
+        <p class="zp-quote-text">Every product taught me something different — EnterCircles taught me conviction, Recess taught me humility, Hushh taught me empathy. The best products are autobiographical.</p>
+      </div>
     </div>
   </div>
   <div class="zp-footer">
