@@ -1347,10 +1347,15 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
   width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid #fff;
 }
 
-/* Viewport rect */
+/* Viewport rect — visible on small map only */
 .map-vp-rect{
-  display:none;
+  position:absolute;z-index:12;pointer-events:none;
+  border:1.5px solid rgba(255,255,255,0.6);
+  background:rgba(255,255,255,0.08);
+  border-radius:2px;
+  box-shadow:0 0 6px rgba(255,255,255,0.2);
 }
+.minimap-container.expanded .map-vp-rect{display:none}
 
 /* Controls */
 .map-header{
