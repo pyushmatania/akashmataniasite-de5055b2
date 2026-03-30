@@ -12500,6 +12500,16 @@ function launchFunPanelCricket(){
   var gsHeaders={'Content-Type':'application/json','apikey':GS_KEY,'Authorization':'Bearer '+GS_KEY,'Prefer':'return=representation'};
   var phase='toss_call',tossCall='',tossWonByPlayer=false;
   var youScore=0,cpuScore=0,wins=0,losses=0,target=-1;
+  var totalBalls=0;
+  function updateStats(){
+    var overs=Math.floor(totalBalls/6);var ballsInOver=totalBalls%6;
+    var batScore=(phase==='bat')?youScore:cpuScore;
+    var crr=totalBalls>0?(batScore/(totalBalls/6)).toFixed(2):'0.00';
+    var oversEl=hc.querySelector('[data-stat="overs"]');var ballsEl=hc.querySelector('[data-stat="balls"]');var crrEl=hc.querySelector('[data-stat="crr"]');
+    if(oversEl)oversEl.textContent=overs+'.'+ballsInOver;
+    if(ballsEl)ballsEl.textContent=String(totalBalls);
+    if(crrEl)crrEl.textContent=crr;
+  }
   var phaseEl=hc.querySelector('.hc-phase');
   var commentaryEl=hc.querySelector('.hc-commentary');
   var histEl=hc.querySelector('.hc-history');
