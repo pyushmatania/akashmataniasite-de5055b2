@@ -4457,6 +4457,54 @@ body.map-expanded .scroll-counter{display:none!important}
   content:'';width:5px;height:5px;border-radius:50%;
   background:currentColor;box-shadow:0 0 6px currentColor;
 }
+
+/* ACTIVE live status indicator */
+.zp-proj-active-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 14px 4px 10px;border-radius:20px;width:fit-content;
+  font-family:var(--font-fun);font-size:0.5rem;font-weight:900;
+  letter-spacing:0.12em;text-transform:uppercase;
+  background:rgba(76,175,80,0.15);color:#81C784;
+  border:1px solid rgba(76,175,80,0.25);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  position:relative;overflow:hidden;
+}
+.zp-proj-active-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#4CAF50;box-shadow:0 0 8px #4CAF50,0 0 16px rgba(76,175,80,0.4);
+  animation:pcActivePulse 1.8s ease-in-out infinite;
+  flex-shrink:0;
+}
+@keyframes pcActivePulse{
+  0%,100%{box-shadow:0 0 6px #4CAF50,0 0 12px rgba(76,175,80,0.3);transform:scale(1)}
+  50%{box-shadow:0 0 10px #4CAF50,0 0 24px rgba(76,175,80,0.5);transform:scale(1.25)}
+}
+.zp-proj-active-badge::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(76,175,80,0.08),transparent);
+  animation:pcActiveShimmer 3s ease-in-out infinite;
+}
+@keyframes pcActiveShimmer{
+  0%{transform:translateX(-100%)}50%{transform:translateX(100%)}100%{transform:translateX(100%)}
+}
+
+/* Stats bar for active project */
+.zp-proj-stats-bar{
+  display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;
+}
+.zp-proj-stat-chip{
+  display:flex;align-items:center;gap:4px;
+  padding:4px 10px;border-radius:10px;
+  font-family:var(--font-fun);font-size:0.5rem;font-weight:700;
+  letter-spacing:0.06em;text-transform:uppercase;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.06);
+  color:rgba(255,255,255,0.45);
+}
+.zp-proj-stat-chip .psc-val{
+  color:var(--pc-c,#CE93D8);font-weight:900;font-size:0.58rem;
+}
+.zp-proj-stat-chip .psc-icon{font-size:0.6rem;}
 .zp-proj-card-yr{
   font-family:var(--font-sans);font-size:0.58rem;color:rgba(255,255,255,0.28);
   letter-spacing:0.05em;
@@ -5493,12 +5541,20 @@ function cycleIntroCards(e){
             <div class="zp-proj-card-header">
               <div class="zp-proj-card-orb"><span>🔗</span></div>
               <div class="zp-proj-card-meta">
-                <span class="zp-proj-card-badge" style="background:rgba(124,77,255,0.2);color:#CE93D8">Lead PM</span>
+                <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+                  <span class="zp-proj-card-badge" style="background:rgba(124,77,255,0.2);color:#CE93D8">Lead PM</span>
+                  <span class="zp-proj-active-badge"><span class="zp-proj-active-dot"></span>ACTIVE</span>
+                </div>
                 <span class="zp-proj-card-yr">2023 — Present</span>
               </div>
             </div>
             <div class="zp-proj-card-name">EnterCircles</div>
             <div class="zp-proj-card-desc">Web3 social platform for community engagement & token-gated access</div>
+            <div class="zp-proj-stats-bar">
+              <span class="zp-proj-stat-chip"><span class="psc-icon">🏏</span> <span class="psc-val">12</span> overs</span>
+              <span class="zp-proj-stat-chip"><span class="psc-icon">🎯</span> CRR <span class="psc-val">7.2</span></span>
+              <span class="zp-proj-stat-chip"><span class="psc-icon">⚡</span> <span class="psc-val">86</span> balls</span>
+            </div>
             <div class="zp-proj-card-metrics">
               <div class="zp-proj-card-metric"><span class="pcm-val">5K+</span> users</div>
               <div class="zp-proj-card-metric"><span class="pcm-val">Web3</span> stack</div>
