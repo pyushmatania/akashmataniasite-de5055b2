@@ -4251,8 +4251,8 @@ function anchorAllZoneIntroCards(){
 }
 function getZoneIntroCenter(target){
   const el=getZoneIntroElement(target.zone);
-  const anchored=el?anchorZoneIntroCard(el,target.zone):null;
-  if(anchored)return {x:anchored.x,y:anchored.y,found:true};
+  const vc=el?_getCardVisualCenter(el):null;
+  if(vc)return {x:vc.x,y:vc.y,found:true};
   const center=getCanonicalZoneCenter(target.zone);
   if(center)return {x:center.x,y:center.y,found:false};
   return {x:target.fallback.x,y:target.fallback.y,found:false};
