@@ -635,9 +635,9 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
     inset 0 0 12px rgba(0,0,0,0.3);
   position:relative;cursor:pointer;
   transition:none;
-  background:#3d7ab5;
+  background:#1a6fb5;
 }
-.minimap-container.expanded .minimap{border-radius:0;border:none;box-shadow:none;background:#4a9bd9}
+.minimap-container.expanded .minimap{border-radius:0;border:none;box-shadow:none;background:#1e7ec4}
 
 /* Cardinal direction markers on minimap rim */
 .minimap-cardinal{
@@ -858,9 +858,11 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
 .map-canvas-grid{
   position:absolute;inset:0;pointer-events:none;
   background-image:
-    linear-gradient(rgba(0,200,220,0.18) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,200,220,0.18) 1px, transparent 1px);
-  background-size:22px 22px, 22px 22px;
+    linear-gradient(rgba(0,220,240,0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,220,240,0.22) 1px, transparent 1px),
+    linear-gradient(rgba(0,180,220,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,180,220,0.08) 1px, transparent 1px);
+  background-size:22px 22px, 22px 22px, 5.5px 5.5px, 5.5px 5.5px;
   z-index:0;
 }
 .minimap-container.expanded .map-canvas-grid{
@@ -1197,7 +1199,11 @@ body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5p
   position:absolute;z-index:9999;transform:translate(-50%,-50%);
   pointer-events:none;transition:left 0.15s linear,top 0.15s linear;
   background:none!important;border:none!important;box-shadow:none!important;
+  outline:none!important;padding:0!important;margin:0!important;
 }
+.map-player *{background:none!important;border:none!important;box-shadow:none!important;outline:none!important}
+.map-player .map-arrow-svg{background:none!important;border:none!important;box-shadow:none!important}
+.map-player .map-player-ping{border:2px solid rgba(255,213,79,0.35)!important;background:none!important;box-shadow:none!important}
 .map-player .map-arrow-svg{
   transition:transform 0.25s ease-out;
 }
@@ -6936,7 +6942,7 @@ function drawMapLayoutOnly(){
     mapCanvas.style.backgroundImage='none';
     mapCanvas.style.backgroundSize='';
   } else {
-    mapCanvas.style.background='linear-gradient(160deg,#6db8e4 0%,#5baae0 30%,#4a9bd9 60%,#3d8cc7 100%)';
+    mapCanvas.style.background='linear-gradient(160deg,#1a6fb5 0%,#1e7ec4 25%,#2390d4 50%,#1a6fb5 75%,#145d9e 100%)';
   }
   if(mmExp){
     if(playerWasInCanvas||mapPlayer.parentElement!==mapCanvas){
@@ -7839,7 +7845,7 @@ function drawMap(){
   if(mmExp){
     renderVisibleClones(sc,offsetX,offsetY,canvasW,canvasH);
   } else {
-    // SMALL: card-style rendering — all items visible on blue bg
+    // SMALL: card-style rendering — ALL items visible on ocean blue bg
     let count=0;
     const frag=document.createDocumentFragment();
     stickerData.forEach(d=>{
@@ -7847,14 +7853,17 @@ function drawMap(){
       const liveLeft=d.ref&&d.ref.style?parseInt(d.ref.style.left)||d.left:d.left;
       const liveTop=d.ref&&d.ref.style?parseInt(d.ref.style.top)||d.top:d.top;
       const dx=(liveLeft-offsetX)*sc, dy=(liveTop-offsetY)*sc;
-      if(dx<-100||dx>canvasW+100||dy<-100||dy>canvasH+100)return;
+      // No culling — render ALL items regardless of position
       count++;
-      const w=Math.max(5,d.w*sc),h=Math.max(4,d.h*sc);
+      const w=Math.max(6,d.w*sc),h=Math.max(5,d.h*sc);
       const el=document.createElement('div');
       el.className='mi';
-      // Force visible bg — transparent/none items get white card on blue canvas
+      // Force ALL items visible — any transparent/empty/dark bg gets a bright card
       let bg=d.bg||'';
-      if(!bg||bg==='transparent'||bg==='none'||bg==='rgba(0, 0, 0, 0)'||bg==='rgba(200,200,200,0.5)')bg='rgba(255,255,255,0.88)';
+      const bgLower=(bg||'').toLowerCase().replace(/\s/g,'');
+      if(!bg||bg==='transparent'||bg==='none'||bgLower==='rgba(0,0,0,0)'||bgLower.includes('rgba(200,200,200')||bgLower.includes('rgba(0,0,0')||bgLower==='#000'||bgLower==='#000000'||bgLower==='black'){
+        bg='rgba(255,255,255,0.92)';
+      }
       let radius=d.radius||'3px';
       if(radius==='0'||radius==='0px')radius='2px';
       // Thumbnail for image stickers
@@ -7866,9 +7875,12 @@ function drawMap(){
       if(d._thumbSrc){
         extraStyle='background-image:url('+d._thumbSrc+');background-size:cover;background-position:center;';
       }
+      // Zone-tinted border for visual clarity
+      const zoneColors={introduction:'rgba(0,200,220,0.7)',work:'rgba(229,57,53,0.6)',portfolio:'rgba(66,165,245,0.6)',hobby:'rgba(255,152,0,0.6)',fun:'rgba(171,71,188,0.6)',hub:'rgba(255,179,0,0.6)'};
+      const borderColor=zoneColors[d.zone]||'rgba(255,255,255,0.5)';
       el.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;background:'+bg+';border-radius:'+radius+';'+
-        'border:1px solid rgba(255,255,255,0.35);box-shadow:0 1px 4px rgba(0,0,0,0.3);overflow:hidden;z-index:2;'+extraStyle;
-      if(d.emoji&&w>8){
+        'border:1.5px solid '+borderColor+';box-shadow:0 1px 4px rgba(0,0,0,0.35),0 0 1px rgba(255,255,255,0.4);overflow:hidden;z-index:2;'+extraStyle;
+      if(d.emoji&&w>6){
         const l=document.createElement('div');
         l.className='mi-emoji-label';
         l.textContent=d.emoji;
