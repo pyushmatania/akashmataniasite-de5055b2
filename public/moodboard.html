@@ -28,7 +28,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .canvas-viewport{scrollbar-width:none;-ms-overflow-style:none}
 .canvas{
   width:7000px;height:7000px;position:relative;background-color:#FAF8F5;
-  padding:200px;box-sizing:content-box;
   background-image:
     radial-gradient(circle at 15% 20%,rgba(206,147,216,0.04) 0%,transparent 40%),
     radial-gradient(circle at 85% 60%,rgba(255,183,77,0.04) 0%,transparent 40%),
@@ -3170,7 +3169,7 @@ body.map-expanded .scroll-counter{display:none!important}
 </div>
 
 <!-- ===== WORK ZONE — Mission Dossier Card ===== -->
-<div class="sticker zic-work has-drag-handle" data-zone="work" data-type="interactive" style="left:5040px;top:1166px;transform:rotate(-1deg);cursor:pointer" data-sid="s072w" onclick="if(event.target.closest('button'))return;event.stopPropagation();openZonePanel('work')">
+<div class="sticker zic-work has-drag-handle" data-zone="work" data-type="interactive" style="left:5040px;top:680px;transform:rotate(-1deg);cursor:pointer" data-sid="s072w" onclick="if(event.target.closest('button'))return;event.stopPropagation();openZonePanel('work')">
   <div class="sticker-drag-handle" style="position:absolute;top:4px;right:8px;z-index:100;opacity:0.4;cursor:grab" data-no-sticker-drag="false"><svg viewBox="0 0 24 24" fill="rgba(229,57,53,0.5)" width="18" height="18"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></div>
   <!-- Classified folder tabs -->
   <div class="zic-folder-tab">CLASSIFIED</div>
@@ -4084,192 +4083,301 @@ body.map-expanded .scroll-counter{display:none!important}
   -webkit-mask-image:radial-gradient(ellipse at 50% 50%,black 30%,transparent 80%);
 }
 
-/* ═══ ENERGY BEAM + GLASS CARD + GLOW PHYSICS ═══ */
+/* ═══ HERO LIGHT BEAM — Liquid Physics ═══ */
 
-/* ── LAYER 1: Ambient Glow (behind everything) ── */
-.zp-beam-ambient{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:350px;height:600px;z-index:2;pointer-events:none;
-  background:radial-gradient(ellipse 100% 100% at 50% 50%,
-    rgba(140,90,255,0.15) 0%,rgba(140,90,255,0.06) 35%,transparent 70%);
-  filter:blur(40px);
-  animation:ambientPulse 5s ease-in-out infinite;
-}
-@keyframes ambientPulse{0%,100%{opacity:0.6}50%{opacity:1}}
-
-/* ── LAYER 2: Beam Bloom (wide soft glow) ── */
-.zp-beam-bloom{
-  position:absolute;top:-50%;left:50%;transform:translateX(-50%);
-  width:120px;height:200%;z-index:3;pointer-events:none;
-  background:radial-gradient(ellipse at center,
-    rgba(140,90,255,0.7) 0%,rgba(140,90,255,0.3) 25%,
-    rgba(140,90,255,0.08) 55%,transparent 80%);
-  filter:blur(25px);
-  mix-blend-mode:screen;
-  animation:bloomPulse 4s ease-in-out infinite;
-}
-@keyframes bloomPulse{0%,100%{opacity:0.5}50%{opacity:0.85}}
-
-/* ── LAYER 3: Beam Core (sharp bright center) ── */
-.zp-beam-core{
-  position:absolute;top:-50%;left:50%;transform:translateX(-50%);
-  width:6px;height:200%;z-index:4;pointer-events:none;
-  background:linear-gradient(to bottom,
-    transparent 5%,
-    #c084fc 15%,
-    #e0d0ff 30%,
-    #ffffff 45%,
-    #ffffff 55%,
-    #e0d0ff 70%,
-    #c084fc 85%,
-    transparent 95%);
-  filter:blur(1.5px);
-  animation:corePulse 3s ease-in-out infinite;
-}
-.zp-beam-core::before{
-  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:2px;height:100%;
-  background:linear-gradient(to bottom,
-    transparent 10%,rgba(255,255,255,0.9) 30%,
-    rgba(255,255,255,1) 45%,rgba(255,255,255,1) 55%,
-    rgba(255,255,255,0.9) 70%,transparent 90%);
-  filter:blur(0.5px);
-}
-/* Secondary bloom layer for depth */
-.zp-beam-core::after{
-  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:40px;height:100%;
-  background:linear-gradient(to bottom,
-    transparent 10%,rgba(160,120,255,0.15) 30%,
-    rgba(180,150,255,0.2) 50%,
-    rgba(160,120,255,0.15) 70%,transparent 90%);
-  filter:blur(12px);
-  mix-blend-mode:screen;
-}
-@keyframes corePulse{
-  0%,100%{opacity:0.85;filter:blur(1.5px)}
-  50%{opacity:1;filter:blur(1px)}
-}
-
-/* ── LAYER 4: Edge Glow (light wrapping card) ── */
-.zp-beam-edge-glow{
-  position:absolute;z-index:7;pointer-events:none;
-  top:calc(50% - 195px);left:50%;transform:translateX(-50%);
-  width:290px;height:394px;border-radius:24px;
-}
-/* Top & bottom edge highlight */
-.zp-beam-edge-glow::before{
-  content:'';position:absolute;inset:-3px;border-radius:inherit;
-  background:linear-gradient(180deg,
-    rgba(200,150,255,0.7) 0%,rgba(200,150,255,0.15) 15%,
-    transparent 40%,transparent 60%,
-    rgba(200,150,255,0.12) 85%,rgba(200,150,255,0.5) 100%);
-  filter:blur(8px);
-  animation:edgeGlowPulse 3.5s ease-in-out infinite;
-}
-/* Side edge highlights */
-.zp-beam-edge-glow::after{
-  content:'';position:absolute;inset:-2px;border-radius:inherit;
-  background:linear-gradient(90deg,
-    rgba(180,140,255,0.25) 0%,transparent 20%,transparent 80%,rgba(180,140,255,0.25) 100%);
-  filter:blur(6px);
-  animation:edgeGlowPulse 3.5s ease-in-out 0.5s infinite;
-}
-@keyframes edgeGlowPulse{0%,100%{opacity:0.5}40%{opacity:1}70%{opacity:0.65}}
-
-/* ── LAYER 5: Light Diffusion Inside Card ── */
-.zp-beam-diffusion{
-  position:absolute;z-index:8;pointer-events:none;
-  top:calc(50% - 192px);left:50%;transform:translateX(-50%);
-  width:284px;height:388px;border-radius:22px;overflow:hidden;
-}
-.zp-beam-diffusion::before{
-  content:'';position:absolute;inset:0;border-radius:inherit;
-  background:radial-gradient(circle at 50% 50%,
-    rgba(180,120,255,0.2) 0%,rgba(140,90,255,0.08) 40%,transparent 70%);
-  mix-blend-mode:screen;
-  animation:diffusionPulse 4s ease-in-out infinite;
-}
-.zp-beam-diffusion::after{
-  content:'';position:absolute;inset:0;border-radius:inherit;
-  background:
-    radial-gradient(ellipse 60% 30% at 50% 0%,rgba(255,255,255,0.12) 0%,transparent 100%),
-    radial-gradient(ellipse 60% 30% at 50% 100%,rgba(255,255,255,0.08) 0%,transparent 100%);
-  mix-blend-mode:screen;
-}
-@keyframes diffusionPulse{0%,100%{opacity:0.5}50%{opacity:0.9}}
-
-/* ── Corona Source Point ── */
+/* ═══ CORONA SOURCE — intense flared origin point ═══ */
 .zp-beam-corona{
-  position:absolute;top:6%;left:50%;transform:translateX(-50%);
-  width:140px;height:140px;z-index:10;pointer-events:none;
+  position:absolute;top:-30px;left:50%;transform:translateX(-50%);
+  width:120px;height:120px;z-index:10;pointer-events:none;
 }
+/* Hot white core */
 .zp-beam-corona::before{
   content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:14px;height:14px;border-radius:50%;
-  background:radial-gradient(circle,#fff 0%,rgba(255,255,255,0.8) 40%,rgba(220,200,255,0.4) 70%,transparent 100%);
+  width:12px;height:12px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,1) 0%,rgba(255,255,255,0.9) 40%,rgba(240,235,255,0.6) 70%,transparent 100%);
   box-shadow:
-    0 0 8px 4px rgba(255,255,255,1),
-    0 0 20px 8px rgba(255,255,255,0.7),
-    0 0 40px 16px rgba(200,160,255,0.5),
-    0 0 80px 30px rgba(140,90,255,0.25);
+    0 0 6px 3px rgba(255,255,255,1),
+    0 0 15px 6px rgba(255,255,255,0.7),
+    0 0 35px 12px rgba(220,200,255,0.5),
+    0 0 60px 20px rgba(180,160,255,0.25),
+    0 0 100px 40px rgba(140,120,255,0.1);
   animation:coronaPulse 3s ease-in-out infinite;
 }
+/* Flared rays — cross-shaped lens flare */
 .zp-beam-corona::after{
   content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   width:200px;height:200px;
   background:
-    radial-gradient(ellipse 5px 80px at center,rgba(255,255,255,0.35) 0%,rgba(200,160,255,0.08) 40%,transparent 70%),
-    radial-gradient(ellipse 80px 4px at center,rgba(255,255,255,0.2) 0%,rgba(200,160,255,0.05) 50%,transparent 80%);
+    radial-gradient(ellipse 4px 100px at center,rgba(255,255,255,0.4) 0%,rgba(220,200,255,0.1) 40%,transparent 70%),
+    radial-gradient(ellipse 100px 3px at center,rgba(255,255,255,0.25) 0%,rgba(220,200,255,0.06) 50%,transparent 80%);
   filter:blur(2px);
-  animation:coronaFlare 5s ease-in-out infinite;
+  animation:coronaFlare 4s ease-in-out infinite;
 }
 @keyframes coronaPulse{
-  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.9}
-  40%{transform:translate(-50%,-50%) scale(1.25);opacity:1}
-  70%{transform:translate(-50%,-50%) scale(0.95);opacity:0.85}
+  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.85}
+  30%{transform:translate(-50%,-50%) scale(1.3);opacity:1}
+  60%{transform:translate(-50%,-50%) scale(0.95);opacity:0.9}
 }
 @keyframes coronaFlare{
-  0%,100%{opacity:0.5;transform:translate(-50%,-50%) scale(1)}
-  50%{opacity:0.9;transform:translate(-50%,-50%) scale(1.08)}
+  0%,100%{transform:translate(-50%,-50%) rotate(0deg) scale(1);opacity:0.6}
+  25%{transform:translate(-50%,-50%) rotate(3deg) scale(1.1);opacity:0.9}
+  50%{transform:translate(-50%,-50%) rotate(-2deg) scale(1.05);opacity:1}
+  75%{transform:translate(-50%,-50%) rotate(1deg) scale(0.95);opacity:0.7}
 }
 
-/* ── Floating Particles ── */
+/* Top beam — narrow source that widens into liquid funnel */
+.zp-showcase-beam-top{
+  position:absolute;top:-30px;left:50%;transform:translateX(-50%);
+  width:3px;height:32%;z-index:6;pointer-events:none;
+  background:linear-gradient(180deg,
+    rgba(255,255,255,1) 0%,rgba(255,255,255,1) 15%,
+    rgba(255,255,255,0.95) 40%,rgba(255,255,255,0.85) 70%,rgba(240,230,255,0.6) 100%);
+  filter:blur(0px);
+  animation:liquidBeamTop 4s ease-in-out infinite;
+}
+/* Soft volumetric glow around beam core — brighter near source */
+.zp-showcase-beam-top::before{
+  content:'';position:absolute;top:-20px;left:50%;transform:translateX(-50%);
+  width:70px;height:110%;
+  background:linear-gradient(180deg,rgba(255,255,255,0.3) 0%,rgba(255,255,255,0.15) 15%,rgba(200,180,255,0.08) 50%,rgba(160,130,255,0.03) 100%);
+  filter:blur(18px);
+}
+/* Liquid funnel — widens dramatically before card impact */
+.zp-showcase-beam-top::after{
+  content:'';position:absolute;bottom:-80px;left:50%;transform:translateX(-50%);
+  width:260px;height:140px;
+  background:radial-gradient(ellipse 100% 80% at 50% 0%,
+    rgba(255,255,255,0.35) 0%,rgba(230,220,255,0.2) 20%,
+    rgba(180,160,255,0.08) 50%,transparent 75%);
+  filter:blur(8px);
+  clip-path:polygon(47% 0%,53% 0%,95% 100%,5% 100%);
+  animation:liquidFunnel 4s ease-in-out infinite;
+}
+@keyframes liquidBeamTop{
+  0%,100%{opacity:0.85;width:3px}
+  30%{opacity:1;width:4.5px}
+  60%{opacity:0.9;width:2.5px}
+}
+@keyframes liquidFunnel{
+  0%,100%{opacity:0.7;transform:translateX(-50%) scaleX(1)}
+  40%{opacity:1;transform:translateX(-50%) scaleX(1.08)}
+  70%{opacity:0.85;transform:translateX(-50%) scaleX(0.95)}
+}
+
+/* ═══ LIQUID IMPACT — light pools on card surface ═══ */
+.zp-showcase-beam-impact{
+  position:absolute;z-index:8;pointer-events:none;
+  top:calc(50% - 194px);left:50%;transform:translateX(-50%);
+  width:290px;height:40px;
+}
+/* Hot core splash — bright white pool */
+.zp-showcase-beam-impact::before{
+  content:'';position:absolute;top:-2px;left:50%;transform:translateX(-50%);
+  width:100px;height:18px;border-radius:50%;
+  background:radial-gradient(ellipse,
+    rgba(255,255,255,1) 0%,rgba(255,255,255,0.8) 30%,
+    rgba(230,220,255,0.4) 60%,transparent 85%);
+  filter:blur(3px);
+  animation:liquidPool 3s ease-in-out infinite;
+}
+/* Wide liquid spread — the "pooling" effect */
+.zp-showcase-beam-impact::after{
+  content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+  width:290px;height:30px;border-radius:50%;
+  background:radial-gradient(ellipse 100% 60%,
+    rgba(255,255,255,0.45) 0%,rgba(220,200,255,0.2) 30%,
+    rgba(180,160,255,0.08) 60%,transparent 85%);
+  filter:blur(10px);
+  animation:liquidSpread 3s ease-in-out 0.2s infinite;
+}
+@keyframes liquidPool{
+  0%,100%{opacity:0.7;width:100px;height:18px}
+  35%{opacity:1;width:130px;height:22px}
+  65%{opacity:0.85;width:110px;height:16px}
+}
+@keyframes liquidSpread{
+  0%,100%{opacity:0.5;width:290px}
+  40%{opacity:0.9;width:310px}
+  70%{opacity:0.6;width:280px}
+}
+
+/* ═══ LIQUID OVERFLOW — wraps down card borders ═══ */
+.zp-showcase-beam-wrap{
+  position:absolute;top:calc(50% - 192px);left:50%;transform:translateX(-50%);
+  width:286px;height:388px;z-index:7;pointer-events:none;border-radius:22px;
+}
+/* Left border — liquid trickling down */
+.zp-showcase-beam-wrap::before{
+  content:'';position:absolute;top:-2px;left:-3px;
+  width:6px;height:100%;border-radius:3px;
+  background:linear-gradient(180deg,
+    rgba(255,255,255,0.7) 0%,
+    rgba(255,255,255,0.45) 8%,
+    rgba(220,200,255,0.25) 20%,
+    rgba(180,160,255,0.12) 40%,
+    rgba(140,120,255,0.05) 65%,
+    transparent 90%);
+  filter:blur(1.5px);
+  animation:liquidTrickle 3.5s ease-in-out infinite;
+}
+/* Right border — liquid trickling down */
+.zp-showcase-beam-wrap::after{
+  content:'';position:absolute;top:-2px;right:-3px;
+  width:6px;height:100%;border-radius:3px;
+  background:linear-gradient(180deg,
+    rgba(255,255,255,0.7) 0%,
+    rgba(255,255,255,0.45) 8%,
+    rgba(220,200,255,0.25) 20%,
+    rgba(180,160,255,0.12) 40%,
+    rgba(140,120,255,0.05) 65%,
+    transparent 90%);
+  filter:blur(1.5px);
+  animation:liquidTrickle 3.5s ease-in-out 0.3s infinite;
+}
+@keyframes liquidTrickle{
+  0%,100%{opacity:0.5;filter:blur(1.5px)}
+  40%{opacity:1;filter:blur(0.8px)}
+  70%{opacity:0.7;filter:blur(2px)}
+}
+
+/* Outer liquid mist hugging card sides */
+.zp-beam-side-glow-l,.zp-beam-side-glow-r{
+  position:absolute;top:calc(50% - 200px);z-index:4;pointer-events:none;
+  width:50px;height:410px;filter:blur(22px);
+  animation:liquidMist 5s ease-in-out infinite;
+}
+.zp-beam-side-glow-l{
+  left:calc(50% - 168px);
+  background:linear-gradient(180deg,rgba(220,200,255,0.2) 0%,rgba(180,160,255,0.08) 30%,rgba(140,120,255,0.03) 60%,transparent 85%);
+}
+.zp-beam-side-glow-r{
+  right:calc(50% - 168px);
+  background:linear-gradient(180deg,rgba(220,200,255,0.2) 0%,rgba(180,160,255,0.08) 30%,rgba(140,120,255,0.03) 60%,transparent 85%);
+  animation-delay:0.4s;
+}
+@keyframes liquidMist{0%,100%{opacity:0.3}40%{opacity:0.7}75%{opacity:0.45}}
+
+/* Top corners — liquid pooling and bending around corners */
+.zp-beam-corner-l,.zp-beam-corner-r{
+  position:absolute;top:calc(50% - 198px);z-index:9;pointer-events:none;width:60px;height:60px;
+}
+.zp-beam-corner-l{
+  left:calc(50% - 150px);
+  background:radial-gradient(circle at 100% 0%,rgba(255,255,255,0.6) 0%,rgba(230,220,255,0.25) 30%,rgba(180,160,255,0.08) 60%,transparent 80%);
+  filter:blur(4px);border-radius:22px 0 0 0;
+  animation:liquidCorner 3s ease-in-out infinite;
+}
+.zp-beam-corner-r{
+  right:calc(50% - 150px);
+  background:radial-gradient(circle at 0% 0%,rgba(255,255,255,0.6) 0%,rgba(230,220,255,0.25) 30%,rgba(180,160,255,0.08) 60%,transparent 80%);
+  filter:blur(4px);border-radius:0 22px 0 0;
+  animation:liquidCorner 3s ease-in-out 0.2s infinite;
+}
+@keyframes liquidCorner{
+  0%,100%{opacity:0.5;transform:scale(1)}
+  35%{opacity:1;transform:scale(1.2)}
+  65%{opacity:0.7;transform:scale(1.05)}
+}
+
+/* Bottom convergence — liquid drips merge */
+.zp-beam-converge{
+  position:absolute;z-index:8;pointer-events:none;
+  top:calc(50% + 196px);left:50%;transform:translateX(-50%);
+  width:80px;height:18px;border-radius:50%;
+  background:radial-gradient(ellipse,
+    rgba(255,255,255,0.6) 0%,rgba(230,220,255,0.3) 35%,
+    rgba(180,160,255,0.1) 65%,transparent 85%);
+  filter:blur(4px);
+  animation:liquidConverge 3s ease-in-out 0.5s infinite;
+}
+.zp-beam-converge::before{
+  content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);
+  width:200px;height:24px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(200,180,255,0.1) 0%,transparent 70%);filter:blur(14px);
+}
+@keyframes liquidConverge{
+  0%,100%{opacity:0.5;width:80px}
+  40%{opacity:1;width:120px}
+  70%{opacity:0.65;width:90px}
+}
+
+/* Bottom beam — liquid stream continues */
+.zp-showcase-beam-bottom{
+  position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);
+  width:3px;height:28%;z-index:6;pointer-events:none;
+  background:linear-gradient(0deg,
+    rgba(255,255,255,0.85) 0%,rgba(255,255,255,0.9) 20%,
+    rgba(240,230,255,0.6) 50%,rgba(200,180,255,0.3) 80%,transparent 100%);
+  filter:blur(0px);
+  animation:liquidBeamBottom 4s ease-in-out 0.5s infinite;
+}
+.zp-showcase-beam-bottom::before{
+  content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:50px;height:100%;
+  background:linear-gradient(0deg,rgba(255,255,255,0.1) 0%,rgba(180,160,255,0.05) 50%,transparent 100%);filter:blur(16px);
+}
+/* Bottom funnel — liquid spreads at exit */
+.zp-showcase-beam-bottom::after{
+  content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);
+  width:220px;height:120px;
+  background:radial-gradient(ellipse 100% 80% at 50% 100%,
+    rgba(255,255,255,0.25) 0%,rgba(220,200,255,0.12) 25%,
+    rgba(180,160,255,0.05) 55%,transparent 80%);
+  filter:blur(8px);
+  clip-path:polygon(5% 0%,95% 0%,53% 100%,47% 100%);
+}
+@keyframes liquidBeamBottom{
+  0%,100%{opacity:0.65;width:3px}
+  30%{opacity:1;width:3.5px}
+  60%{opacity:0.8;width:2.5px}
+}
+
+/* ═══ LIQUID PARTICLES — drip physics ═══ */
 .zp-beam-particle{
-  position:absolute;left:50%;width:3px;height:3px;border-radius:50%;
-  background:rgba(200,170,255,0.9);
-  box-shadow:0 0 6px 2px rgba(180,140,255,0.6);
+  position:absolute;left:50%;width:4px;height:4px;border-radius:50%;
+  background:rgba(255,255,255,0.95);
+  box-shadow:0 0 8px 3px rgba(230,220,255,0.8),0 0 20px 6px rgba(180,160,255,0.3);
   z-index:9;pointer-events:none;
-  animation:particleFlow var(--p-dur,3.5s) ease-in-out var(--p-delay,0s) infinite;
+  animation:liquidDrip var(--p-dur,3s) cubic-bezier(0.4,0,0.2,1) var(--p-delay,0s) infinite;
 }
-@keyframes particleFlow{
-  0%{top:5%;opacity:0;transform:translateX(-50%) scale(0.3)}
-  15%{opacity:0.9;transform:translateX(-50%) scale(1)}
-  40%{top:40%;opacity:0.7;transform:translateX(-50%) scale(0.8)}
-  60%{top:55%;opacity:0.5;transform:translateX(-50%) scale(0.6)}
-  85%{top:85%;opacity:0.2;transform:translateX(-50%) scale(0.4)}
-  100%{top:95%;opacity:0;transform:translateX(-50%) scale(0.2)}
+@keyframes liquidDrip{
+  0%{top:-3%;opacity:0;transform:translateX(-50%) scale(0.3);width:4px;height:4px}
+  12%{top:10%;opacity:1;transform:translateX(-50%) scale(1);width:4px;height:6px}
+  /* Accelerating — stretches like liquid */
+  22%{top:20%;opacity:1;transform:translateX(-50%) scale(0.9);width:3px;height:8px}
+  /* Impact — squashes on card surface */
+  28%{top:22%;opacity:1;transform:translateX(-50%) scale(1.8);width:10px;height:3px;border-radius:50%}
+  32%{top:22%;opacity:0.7;transform:translateX(-50%) scale(1.2);width:6px;height:5px}
+  /* Absorbed into side flow */
+  50%{top:22%;opacity:0;transform:translateX(-50%) scale(0.5)}
+  100%{top:22%;opacity:0;transform:translateX(-50%) scale(0)}
 }
 
-/* Side shimmer particles */
+/* Side drip particles — liquid trickling down edges */
 .zp-beam-particle-side{
-  position:absolute;width:2px;height:2px;border-radius:50%;
-  background:rgba(200,170,255,0.7);box-shadow:0 0 4px 1px rgba(180,150,255,0.4);
+  position:absolute;width:3px;height:3px;border-radius:50%;
+  background:rgba(230,220,255,0.9);
+  box-shadow:0 0 5px 2px rgba(210,190,255,0.5);
   z-index:9;pointer-events:none;opacity:0;
-  animation:particleSide var(--ps-dur,4s) ease-in-out var(--ps-delay,0s) infinite;
+  animation:liquidSideL var(--ps-dur,3.5s) cubic-bezier(0.4,0,0.6,1) var(--ps-delay,0s) infinite;
 }
-.zp-beam-particle-side.right{animation-name:particleSideR}
-@keyframes particleSide{
-  0%{top:calc(50% - 195px);left:calc(50% - 145px);opacity:0}
-  10%{opacity:0.7}
-  70%{top:calc(50% + 160px);left:calc(50% - 145px);opacity:0.2}
-  100%{top:calc(50% + 195px);opacity:0}
+.zp-beam-particle-side.right{
+  animation-name:liquidSideR;
 }
-@keyframes particleSideR{
-  0%{top:calc(50% - 195px);right:calc(50% - 145px);left:auto;opacity:0}
-  10%{opacity:0.7}
-  70%{top:calc(50% + 160px);opacity:0.2}
-  100%{top:calc(50% + 195px);opacity:0}
+@keyframes liquidSideL{
+  0%{top:calc(50% - 192px);left:calc(50% - 146px);opacity:0;transform:scale(0.3);width:3px;height:3px}
+  8%{opacity:0.9;transform:scale(1);width:3px;height:5px}
+  /* Drip stretches as it falls */
+  50%{top:calc(50% + 60px);left:calc(50% - 146px);opacity:0.5;transform:scale(0.7);width:2px;height:6px}
+  85%{top:calc(50% + 180px);left:calc(50% - 146px);opacity:0.15;transform:scale(0.4);width:2px;height:4px}
+  100%{top:calc(50% + 200px);opacity:0;transform:scale(0.2)}
+}
+@keyframes liquidSideR{
+  0%{top:calc(50% - 192px);right:calc(50% - 146px);left:auto;opacity:0;transform:scale(0.3);width:3px;height:3px}
+  8%{opacity:0.9;transform:scale(1);width:3px;height:5px}
+  50%{top:calc(50% + 60px);opacity:0.5;transform:scale(0.7);width:2px;height:6px}
+  85%{top:calc(50% + 180px);opacity:0.15;transform:scale(0.4);width:2px;height:4px}
+  100%{top:calc(50% + 200px);opacity:0;transform:scale(0.2)}
 }
 
 /* Circuit trace lines */
@@ -4278,86 +4386,62 @@ body.map-expanded .scroll-counter{display:none!important}
 }
 .zp-showcase-trace{
   position:absolute;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(140,90,255,0.15),transparent);
+  background:linear-gradient(90deg,transparent,var(--sc-glow,rgba(149,117,205,0.2)),transparent);
   animation:tracePulse 4s ease-in-out infinite;
 }
+
 @keyframes tracePulse{
-  0%,100%{opacity:0.08;transform:scaleX(0.5)}
-  50%{opacity:0.3;transform:scaleX(1)}
+  0%,100%{opacity:0.1;transform:scaleX(0.5)}
+  50%{opacity:0.4;transform:scaleX(1)}
 }
 
-/* ── THE CARD (Ultra Premium Glass) ── */
+/* The 3D floating card */
 .zp-showcase-card{
   position:relative;z-index:5;
   width:280px;min-height:380px;
-  border-radius:24px;
-  background:
-    linear-gradient(165deg,
-      rgba(255,255,255,0.12) 0%,
-      rgba(255,255,255,0.05) 20%,
-      rgba(140,100,255,0.06) 40%,
-      rgba(255,255,255,0.03) 60%,
-      rgba(180,140,255,0.04) 80%,
-      rgba(255,255,255,0.08) 100%);
-  backdrop-filter:blur(40px) saturate(1.8);-webkit-backdrop-filter:blur(40px) saturate(1.8);
-  border:1px solid rgba(255,255,255,0.18);
+  border-radius:22px;
+  background:linear-gradient(145deg,rgba(20,16,40,0.95),rgba(12,10,28,0.98));
+  border:1.5px solid rgba(255,255,255,0.08);
   box-shadow:
-    0 0 0 0.5px rgba(255,255,255,0.1),
-    0 1px 0 0 rgba(255,255,255,0.2) inset,
-    0 -1px 0 0 rgba(255,255,255,0.05) inset,
-    1px 0 0 0 rgba(255,255,255,0.06) inset,
-    -1px 0 0 0 rgba(255,255,255,0.06) inset,
-    0 25px 80px -12px rgba(0,0,0,0.7),
-    0 8px 32px rgba(0,0,0,0.4),
-    0 0 100px rgba(140,90,255,0.12),
-    inset 0 0 60px rgba(140,90,255,0.04);
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 20px 60px rgba(0,0,0,0.6),
+    0 8px 24px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.08);
   transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);
   overflow:hidden;
 }
 
-/* Iridescent top highlight — like light catching glass edge */
+/* Card glow ring */
 .zp-showcase-card::before{
-  content:'';position:absolute;top:-1px;left:10%;right:10%;height:1px;z-index:20;
-  background:linear-gradient(90deg,
-    transparent 0%,
-    rgba(255,255,255,0.0) 10%,
-    rgba(255,255,255,0.5) 30%,
-    rgba(255,200,255,0.6) 45%,
-    rgba(200,220,255,0.7) 55%,
-    rgba(255,255,255,0.5) 70%,
-    rgba(255,255,255,0.0) 90%,
-    transparent 100%);
-  filter:blur(0.5px);
-  animation:iridShift 6s ease-in-out infinite;
+  content:'';position:absolute;inset:-3px;z-index:-1;
+  border-radius:24px;
+  background:conic-gradient(from var(--sc-angle,0deg),var(--sc-c1,rgba(124,77,255,0.4)),transparent 25%,var(--sc-c2,rgba(200,60,150,0.3)),transparent 50%,var(--sc-c1,rgba(124,77,255,0.4)),transparent 75%);
+  filter:blur(12px);
+  animation:cardGlowSpin 10s linear infinite;
+}
+@keyframes cardGlowSpin{
+  0%{--sc-angle:0deg;filter:blur(12px)}
+  100%{--sc-angle:360deg;filter:blur(12px)}
 }
 
-/* Internal frosted light refraction */
+/* Holographic shimmer */
 .zp-showcase-card::after{
   content:'';position:absolute;inset:0;z-index:10;pointer-events:none;
-  border-radius:inherit;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% 0%,rgba(255,255,255,0.1) 0%,transparent 60%),
-    radial-gradient(ellipse 60% 40% at 30% 20%,rgba(200,180,255,0.06) 0%,transparent 50%),
-    radial-gradient(ellipse 50% 30% at 70% 80%,rgba(140,120,255,0.04) 0%,transparent 50%),
-    linear-gradient(180deg,rgba(255,255,255,0.06) 0%,transparent 30%,transparent 90%,rgba(255,255,255,0.03) 100%);
-  mix-blend-mode:screen;
+  border-radius:22px;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.04) 45%,rgba(255,255,255,0.08) 50%,rgba(255,255,255,0.04) 55%,transparent 60%);
+  background-size:200% 100%;
+  animation:holoShimmer 5s ease-in-out infinite;
 }
-@keyframes iridShift{
-  0%,100%{opacity:0.6;background-position:0% 0%}
-  50%{opacity:1;background-position:100% 0%}
-}
-@keyframes cardEdgePulse{0%,100%{opacity:0.5}40%{opacity:1}70%{opacity:0.65}}
 
 /* Card role badge */
 .zp-sc-badge{
   position:absolute;top:14px;left:14px;z-index:11;
-  padding:5px 14px;border-radius:10px;
+  padding:5px 14px;border-radius:8px;
   font-family:var(--font-fun);font-size:0.58rem;font-weight:800;
   letter-spacing:0.1em;text-transform:uppercase;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.85);
-  box-shadow:0 2px 12px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.1);
+  background:var(--sc-c1,rgba(124,77,255,0.3));
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);
 }
 
 /* Card emoji center */
@@ -4368,10 +4452,10 @@ body.map-expanded .scroll-counter{display:none!important}
 .zp-sc-emoji::before{
   content:'';position:absolute;inset:0;
   background:
-    radial-gradient(ellipse at 30% 25%,var(--sc-c1,rgba(120,80,220,0.4)) 0%,transparent 55%),
-    radial-gradient(ellipse at 70% 75%,var(--sc-c2,rgba(200,60,150,0.3)) 0%,transparent 55%),
-    radial-gradient(ellipse at 50% 100%,rgba(255,180,60,0.15) 0%,transparent 40%);
-  filter:blur(35px);
+    radial-gradient(ellipse at 30% 25%,var(--sc-c1,rgba(120,80,220,0.5)) 0%,transparent 55%),
+    radial-gradient(ellipse at 70% 75%,var(--sc-c2,rgba(200,60,150,0.4)) 0%,transparent 55%),
+    radial-gradient(ellipse at 50% 100%,rgba(255,180,60,0.2) 0%,transparent 40%);
+  filter:blur(30px);
   animation:artworkPulse 6s ease-in-out infinite;
 }
 .zp-sc-emoji span{
@@ -4391,39 +4475,34 @@ body.map-expanded .scroll-counter{display:none!important}
 .zp-sc-num{
   text-align:center;padding:12px 0 16px;
   font-family:var(--font-fun);font-size:0.6rem;font-weight:600;
-  color:rgba(255,255,255,0.2);letter-spacing:0.08em;
+  color:rgba(255,255,255,0.25);letter-spacing:0.08em;
 }
 
 /* Card info section */
 .zp-sc-info{
   padding:0 18px 20px;
-  border-top:1px solid rgba(255,255,255,0.06);
 }
 .zp-sc-desc{
   font-family:var(--font-sans);font-size:0.72rem;
-  color:rgba(255,255,255,0.45);line-height:1.55;text-align:center;
-  margin:14px 0;
+  color:rgba(255,255,255,0.4);line-height:1.55;text-align:center;
+  margin-bottom:14px;
 }
 .zp-sc-tags{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
 .zp-sc-tag{
   font-family:var(--font-fun);font-size:0.54rem;font-weight:700;
-  padding:4px 10px;border-radius:8px;letter-spacing:0.04em;
-  border:1px solid rgba(255,255,255,0.08);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  padding:4px 10px;border-radius:6px;letter-spacing:0.04em;
 }
 .zp-sc-cta{
   display:block;width:100%;text-align:center;
   padding:10px;border:none;border-radius:12px;
   font-family:var(--font-fun);font-size:0.65rem;font-weight:800;
   letter-spacing:0.08em;text-transform:uppercase;
-  background:rgba(255,255,255,0.06);
-  color:rgba(255,255,255,0.75);cursor:pointer;
-  border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  background:linear-gradient(135deg,var(--sc-c1,rgba(124,77,255,0.3)),var(--sc-c2,rgba(200,60,150,0.2)));
+  color:rgba(255,255,255,0.8);cursor:pointer;
+  border:1px solid rgba(255,255,255,0.1);
   transition:all 0.2s;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
 }
-.zp-sc-cta:active{transform:scale(0.95);background:rgba(255,255,255,0.12)}
+.zp-sc-cta:active{transform:scale(0.95);background:rgba(255,255,255,0.1)}
 
 /* Swipe hint */
 .zp-sc-swipe-hint{
@@ -4929,7 +5008,7 @@ function closeWorkPanel(){
 const zoneTargets={
   hub:{x:3500,y:3500},
   introduction:{x:1610,y:1050},
-  work:{x:5250,y:1166},      warroom:{x:5250,y:1166},
+  work:{x:5250,y:950},      warroom:{x:5250,y:950},
   portfolio:{x:1610,y:3400}, launchpad:{x:1610,y:3400},
   hobby:{x:1610,y:5600},     playground:{x:1610,y:5600},
   fun:{x:5310,y:3400},       memealley:{x:5310,y:3400}
@@ -5378,36 +5457,44 @@ function cycleIntroCards(e){
   <div class="zp-body">
     <div class="zp-section">
       <div class="zp-showcase" id="projShowcase" style="--sc-c1:rgba(124,77,255,0.5);--sc-c2:rgba(206,147,216,0.4);--sc-glow:rgba(124,77,255,0.15)">
-        <!-- Layer 1: Ambient Glow -->
-        <div class="zp-beam-ambient"></div>
-        <!-- Layer 2: Beam Bloom -->
-        <div class="zp-beam-bloom"></div>
-        <!-- Layer 3: Beam Core -->
-        <div class="zp-beam-core"></div>
-        <!-- Corona Source -->
         <div class="zp-beam-corona"></div>
-        <!-- Layer 4: Edge Glow -->
-        <div class="zp-beam-edge-glow"></div>
-        <!-- Layer 5: Light Diffusion -->
-        <div class="zp-beam-diffusion"></div>
-        <!-- Particles -->
-        <div class="zp-beam-particle" style="--p-dur:3s;--p-delay:0s"></div>
-        <div class="zp-beam-particle" style="--p-dur:3.5s;--p-delay:0.8s"></div>
-        <div class="zp-beam-particle" style="--p-dur:2.8s;--p-delay:1.6s"></div>
-        <div class="zp-beam-particle" style="--p-dur:3.2s;--p-delay:2.4s"></div>
-        <div class="zp-beam-particle-side" style="--ps-dur:4s;--ps-delay:0.3s"></div>
-        <div class="zp-beam-particle-side" style="--ps-dur:4.5s;--ps-delay:1.5s"></div>
-        <div class="zp-beam-particle-side right" style="--ps-dur:4.2s;--ps-delay:0.8s"></div>
-        <div class="zp-beam-particle-side right" style="--ps-dur:4.8s;--ps-delay:2s"></div>
-        <!-- Circuit traces -->
+        <div class="zp-showcase-beam-top"></div>
+        <div class="zp-showcase-beam-impact"></div>
+        <div class="zp-beam-ripple" style="--rp-dur:3s;--rp-delay:0s"></div>
+        <div class="zp-beam-ripple rp2" style="--rp-dur:3s;--rp-delay:0.8s"></div>
+        <div class="zp-beam-ripple rp3" style="--rp-dur:3s;--rp-delay:1.6s"></div>
+        <div class="zp-showcase-beam-wrap"></div>
+        <div class="zp-showcase-beam-bottom"></div>
+        <div class="zp-showcase-ambient"></div>
+        <!-- Waterfall corner glows -->
+        <div class="zp-beam-corner-l"></div>
+        <div class="zp-beam-corner-r"></div>
+        <!-- Side waterfall mist -->
+        <div class="zp-beam-side-glow-l"></div>
+        <div class="zp-beam-side-glow-r"></div>
+        <!-- Bottom convergence -->
+        <div class="zp-beam-converge"></div>
+        <!-- Energy particles along beam -->
+        <div class="zp-beam-particle" style="--p-dur:2.2s;--p-delay:0s"></div>
+        <div class="zp-beam-particle" style="--p-dur:2.8s;--p-delay:0.7s"></div>
+        <div class="zp-beam-particle" style="--p-dur:2.0s;--p-delay:1.4s"></div>
+        <div class="zp-beam-particle" style="--p-dur:3.0s;--p-delay:2.1s"></div>
+        <div class="zp-beam-particle" style="--p-dur:2.5s;--p-delay:0.4s"></div>
+        <!-- Side waterfall particles -->
+        <div class="zp-beam-particle-side" style="--ps-dur:3s;--ps-delay:0.3s"></div>
+        <div class="zp-beam-particle-side" style="--ps-dur:3.8s;--ps-delay:1.2s"></div>
+        <div class="zp-beam-particle-side right" style="--ps-dur:3.2s;--ps-delay:0.6s"></div>
+        <div class="zp-beam-particle-side right" style="--ps-dur:3.6s;--ps-delay:1.8s"></div>
         <div class="zp-showcase-traces">
           <div class="zp-showcase-trace" style="top:30%;left:0;width:35%;animation-delay:0s"></div>
           <div class="zp-showcase-trace" style="top:50%;right:0;width:30%;animation-delay:1.5s"></div>
           <div class="zp-showcase-trace" style="top:70%;left:5%;width:25%;animation-delay:3s"></div>
+          <div class="zp-showcase-trace" style="top:45%;right:5%;width:20%;animation-delay:0.8s"></div>
         </div>
-        <!-- Dust -->
         <div class="zp-showcase-dust" style="width:2px;height:2px;left:15%;top:20%;--d-dur:7s;--d-delay:0s;--d-tx:10px;--d-ty:-30px;--d-tx2:-5px;--d-ty2:-60px"></div>
         <div class="zp-showcase-dust" style="width:1.5px;height:1.5px;left:75%;top:35%;--d-dur:9s;--d-delay:1s;--d-tx:-15px;--d-ty:-25px;--d-tx2:8px;--d-ty2:-50px"></div>
+        <div class="zp-showcase-dust" style="width:2.5px;height:2.5px;left:25%;top:65%;--d-dur:6s;--d-delay:2s;--d-tx:12px;--d-ty:-35px;--d-tx2:-10px;--d-ty2:-70px"></div>
+        <div class="zp-showcase-dust" style="width:1px;height:1px;left:85%;top:55%;--d-dur:8s;--d-delay:0.5s;--d-tx:-8px;--d-ty:-20px;--d-tx2:6px;--d-ty2:-45px"></div>
         <div class="zp-showcase-dust" style="width:2px;height:2px;left:40%;top:80%;--d-dur:10s;--d-delay:3s;--d-tx:5px;--d-ty:-40px;--d-tx2:-12px;--d-ty2:-80px"></div>
         <div class="zp-showcase-card" id="projCard">
           <div class="zp-sc-badge" id="scBadge">Lead PM</div>
@@ -9817,19 +9904,8 @@ function mapZoom(dir){
   _decsCW=Math.round(cw);_decsCH=Math.round(ch);
   invalidateMapCloneCache(true);
   renderVisibleClones(newSc,ox,oy,cw,ch);
-  // Preserve player world position across zoom
-  const oldPlayerLeft=parseFloat(mapPlayer.style.left)||0;
-  const oldPlayerTop=parseFloat(mapPlayer.style.top)||0;
-  const playerWorldX=oldPlayerLeft/factor;
-  const playerWorldY=oldPlayerTop/factor;
-  // Scroll to keep center point stable
-  const newScrollLeft=cx*factor-mmInner.clientWidth/2;
-  const newScrollTop=cy*factor-mmInner.clientHeight/2;
-  mmInner.scrollTo({left:newScrollLeft,top:newScrollTop});
-  // Reposition player at same world coordinate with new scale
-  mapPlayer.style.left=(playerWorldX*factor)+'px';
-  mapPlayer.style.top=(playerWorldY*factor)+'px';
   updMap();
+  mmInner.scrollTo({left:cx*factor-mmInner.clientWidth/2,top:cy*factor-mmInner.clientHeight/2});
 }
 
 function showNav(tx,ty){
