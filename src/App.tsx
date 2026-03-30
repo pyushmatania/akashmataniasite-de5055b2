@@ -1,10 +1,7 @@
-import { lazy, Suspense, Component } from "react";
+import { Component } from "react";
 import type { ReactNode, ErrorInfo } from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
-
-const Index = lazy(() => import("./pages/Index.tsx"));
-const NotFound = lazy(() => import("./pages/NotFound.tsx"));
+import Index from "./pages/Index";
+import NotFound from "./pages/NotFound";
 
 class ErrorBoundary extends Component<
   { children: ReactNode },
@@ -42,32 +39,16 @@ class ErrorBoundary extends Component<
         </div>
       );
     }
+
     return this.props.children;
   }
 }
 
-const AnimatedRoutes = () => {
-  const location = useLocation();
-  return (
-    <AnimatePresence mode="wait">
-      <Suspense fallback={null}>
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Index />} />
-          <Route path="/index" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-    </AnimatePresence>
-  );
-};
+const App = () => {
+  const pathname = window.location.pathname;
+  const isKnownRoute = pathname === "/" || pathname === "/index";
 
-const App = () => (
-  <ErrorBoundary>
-    <BrowserRouter>
-      <AnimatedRoutes />
-    </BrowserRouter>
-  </ErrorBoundary>
-);
+  return <ErrorBoundary>{isKnownRoute ? <Index /> : <NotFound />}</ErrorBoundary>;
+};
 
 export default App;
