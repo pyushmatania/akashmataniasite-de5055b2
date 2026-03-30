@@ -5646,9 +5646,9 @@ function batchAppend(parent,elements){
 
 // Confetti/splash cooldown to prevent rapid-fire DOM explosion
 let _lastSplashTime=0;
-const SPLASH_COOLDOWN=IS_LOW_POWER_DEVICE?1500:800;
+const SPLASH_COOLDOWN=IS_LOW_POWER_DEVICE?2500:800;
 let _lastConfettiTime=0;
-const CONFETTI_COOLDOWN=IS_LOW_POWER_DEVICE?1000:500;
+const CONFETTI_COOLDOWN=IS_LOW_POWER_DEVICE?2000:500;
 
 // Cache for getBoundingClientRect during drag
 let _cachedCanvasRect=null;
