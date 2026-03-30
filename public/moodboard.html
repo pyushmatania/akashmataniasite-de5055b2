@@ -8246,8 +8246,40 @@ function setTheme(name, el){
 
 
 
-// ===== EASTER EGG: TRIPLE-TAP LOGO =====
+// ===== EASTER EGG: TRIPLE-TAP NAME =====
+let _eeTapCount=0,_eeTapTimer=null;
+function easterEggTap(e){
+  e.stopPropagation();
+  _eeTapCount++;
+  clearTimeout(_eeTapTimer);
+  _eeTapTimer=setTimeout(()=>{_eeTapCount=0},600);
+  if(_eeTapCount>=3){
+    _eeTapCount=0;
+    clearTimeout(_eeTapTimer);
+    openBuildSpecs();
+  }
+}
 
+function openBuildSpecs(){
+  const panel=document.getElementById('buildSpecsPanel');
+  if(!panel)return;
+  // Populate live stats
+  const stickerCount=document.querySelectorAll('#canvas > .sticker').length;
+  const zoneCount=document.querySelectorAll('.zone-intro-creative').length;
+  document.getElementById('bsStatStickers').textContent=stickerCount;
+  document.getElementById('bsStatZones').textContent=zoneCount;
+  document.getElementById('bsStatLines').textContent=
+    Math.round(document.documentElement.outerHTML.length/1000)+'K';
+  panel.classList.add('open');
+  panel.style.display='flex';
+  requestAnimationFrame(()=>panel.style.opacity='1');
+}
+function closeBuildSpecs(){
+  const panel=document.getElementById('buildSpecsPanel');
+  if(!panel)return;
+  panel.style.opacity='0';
+  setTimeout(()=>{panel.classList.remove('open');panel.style.display='none'},350);
+}
 
 // ===== MAP v6 — LIGHTWEIGHT =====
 const mc=document.getElementById('mc');
