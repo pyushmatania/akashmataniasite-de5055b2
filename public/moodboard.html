@@ -7697,8 +7697,9 @@ function drawMapLayout(){
   if(!stickerData.length)scanStickers();
   const mr=mmInner.getBoundingClientRect();
   const mw=mr.width||64,mh=mr.height||64;
-  const contentW=Math.max(cv.scrollWidth||0,cv.offsetWidth||0,MOODBOARD_WORLD_WIDTH);
-  const contentH=Math.max(cv.scrollHeight||0,cv.offsetHeight||0,MOODBOARD_WORLD_HEIGHT);
+  // Always use fixed world dimensions for consistent map scaling
+  const contentW=MOODBOARD_WORLD_WIDTH;
+  const contentH=MOODBOARD_WORLD_HEIGHT;
   const minL=0, minT=0;
   let sc,offsetX,offsetY,canvasW,canvasH;
   if(mmExp){
