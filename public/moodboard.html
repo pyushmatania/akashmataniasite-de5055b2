@@ -6277,11 +6277,11 @@ async function runItemRearrange(triggeredByUser){
     if(!usedCloud) autoArrangeMoodboardItems();
   }
 
-  // Only re-anchor companions if NOT using saved layout
+  // Only re-anchor companions/intro cards if NOT using saved layout
   if(!usedCloud){
     if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
+    if(typeof anchorAllZoneIntroCards==='function')anchorAllZoneIntroCards();
   }
-  if(typeof anchorAllZoneIntroCards==='function')anchorAllZoneIntroCards();
   // Clear visual cache and force full rescan + redraw
   if(typeof scanStickers==='function')scanStickers();
   if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
