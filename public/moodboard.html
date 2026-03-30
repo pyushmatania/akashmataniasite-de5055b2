@@ -7876,6 +7876,73 @@ function drawMap(){
       +'<path d="M3500,2333 C3850,2308 4200,2355 4550,2325 Q4900,2308 5250,2350 C5600,2318 5950,2342 6300,2320 Q6650,2308 7000,2333 L7000,4666 Q6650,4641 6300,4653 C5950,4675 5600,4651 5250,4683 Q4900,4641 4550,4658 C4200,4688 3850,4641 3500,4666 C3485,4666 3515,4300 3490,4050 Q3510,3700 3495,3400 C3525,3050 3475,2700 3500,2333 Z" fill="rgba(171,71,188,0.10)"/>'
       +'<path d="M0,4666 C350,4641 700,4688 1050,4658 Q1400,4641 1750,4683 C2100,4651 2450,4675 2800,4653 Q3150,4641 3500,4666 C3850,4641 4200,4688 4550,4658 Q4900,4641 5250,4683 C5600,4651 5950,4675 6300,4653 Q6650,4641 7000,4666 L7000,7000 L0,7000 Z" fill="rgba(255,152,0,0.10)"/>';
     mapCanvas.appendChild(tSvg);
+
+    // Roads overlay on small map — simplified version of big map roads
+    const oldRoads=mapCanvas.querySelector('.small-map-roads');
+    if(oldRoads)oldRoads.remove();
+    const rSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    rSvg.setAttribute('class','small-map-roads');
+    rSvg.setAttribute('viewBox','0 0 7000 7000');
+    rSvg.setAttribute('preserveAspectRatio','none');
+    rSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:2;overflow:visible';
+    const smRoads=[
+      // Horizontal roads
+      {d:'M100,1200 C1600,1200 2800,1220 3500,1200 C4400,1180 5600,1200 6900,1200',w:30,c:'rgba(180,170,150,0.4)'},
+      {d:'M100,3500 C1800,3490 3000,3480 3500,3510 C5100,3480 5700,3510 6900,3490',w:25,c:'rgba(180,170,150,0.35)'},
+      {d:'M100,5800 C2100,5790 3500,5780 5600,5810 6900,5800',w:25,c:'rgba(180,170,150,0.3)'},
+      // Vertical roads
+      {d:'M1700,100 C1710,1600 1690,3100 1710,4600 Q1700,5600 1700,6900',w:22,c:'rgba(180,170,150,0.3)'},
+      {d:'M5300,100 C5310,1500 5290,3000 5310,4500 Q5300,5500 5300,6900',w:22,c:'rgba(180,170,150,0.3)'},
+    ];
+    smRoads.forEach(r=>{
+      const edge=document.createElementNS('http://www.w3.org/2000/svg','path');
+      edge.setAttribute('d',r.d);edge.setAttribute('fill','none');
+      edge.setAttribute('stroke','rgba(100,90,70,0.15)');edge.setAttribute('stroke-width',''+(r.w+6));
+      edge.setAttribute('stroke-linejoin','round');edge.setAttribute('stroke-linecap','round');
+      rSvg.appendChild(edge);
+      const road=document.createElementNS('http://www.w3.org/2000/svg','path');
+      road.setAttribute('d',r.d);road.setAttribute('fill','none');
+      road.setAttribute('stroke',r.c);road.setAttribute('stroke-width',''+r.w);
+      road.setAttribute('stroke-linejoin','round');road.setAttribute('stroke-linecap','round');
+      rSvg.appendChild(road);
+    });
+    // Roundabouts at intersections
+    [[1700,1200],[5300,1200],[1700,3500],[5300,3500],[1700,5800],[5300,5800]].forEach(([cx,cy])=>{
+      const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      c.setAttribute('cx',''+cx);c.setAttribute('cy',''+cy);c.setAttribute('r','25');
+      c.setAttribute('fill','rgba(180,170,150,0.35)');c.setAttribute('stroke','rgba(100,90,70,0.15)');c.setAttribute('stroke-width','3');
+      rSvg.appendChild(c);
+    });
+    mapCanvas.appendChild(rSvg);
+
+    // Zone name labels on small map
+    const oldLabels=mapCanvas.querySelector('.small-map-labels');
+    if(oldLabels)oldLabels.remove();
+    const lblSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    lblSvg.setAttribute('class','small-map-labels');
+    lblSvg.setAttribute('viewBox','0 0 7000 7000');
+    lblSvg.setAttribute('preserveAspectRatio','none');
+    lblSvg.style.cssText='position:absolute;left:0;top:0;width:'+canvasW+'px;height:'+canvasH+'px;pointer-events:none;z-index:4;overflow:visible';
+    const smLabels=[
+      {x:1750,y:1400,text:'INTRO',color:'rgba(0,188,212,0.4)',rot:-20},
+      {x:5250,y:1400,text:'WORK',color:'rgba(229,57,53,0.35)',rot:-15},
+      {x:1750,y:3600,text:'PORTFOLIO',color:'rgba(66,165,245,0.35)',rot:-25},
+      {x:5250,y:3600,text:'FUN',color:'rgba(171,71,188,0.35)',rot:-20},
+      {x:3500,y:5800,text:'HOBBY',color:'rgba(255,152,0,0.35)',rot:-18},
+    ];
+    smLabels.forEach(l=>{
+      const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+      t.setAttribute('x',''+l.x);t.setAttribute('y',''+l.y);
+      t.setAttribute('text-anchor','middle');t.setAttribute('fill',l.color);
+      t.setAttribute('font-size','350');t.setAttribute('font-weight','900');
+      t.setAttribute('font-family','var(--font-fun),sans-serif');
+      t.setAttribute('letter-spacing','0.2em');
+      t.setAttribute('transform','rotate('+l.rot+' '+l.x+' '+l.y+')');
+      t.textContent=l.text;
+      lblSvg.appendChild(t);
+    });
+    mapCanvas.appendChild(lblSvg);
+
     // Boundary lines
     const bSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
     bSvg.setAttribute('class','small-map-boundaries');
