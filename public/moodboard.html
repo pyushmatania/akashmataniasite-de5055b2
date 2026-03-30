@@ -3837,44 +3837,57 @@ body.map-expanded .scroll-counter{display:none!important}
 }
 .zp-proj-detail.open .gallery-ambient{opacity:1}
 
-/* ── Gallery info section below the frame ── */
+/* ── Gallery info section below the frame — REDESIGNED ── */
 .gallery-info{
   position:relative;z-index:3;
-  padding:28px 24px 60px;
-  background:linear-gradient(180deg,#0a0812 0%,#0c0a16 100%);
-  border-top:1px solid rgba(255,255,255,0.04);
+  padding:0 24px 80px;
+  background:linear-gradient(180deg,#0a0812 0%,#08061a 100%);
 }
 
+/* Section divider */
+.gi-divider{
+  height:1px;margin:24px 0;
+  background:linear-gradient(90deg,transparent,var(--frame-c1,rgba(120,80,220,0.2)),var(--frame-c2,rgba(200,60,150,0.15)),transparent);
+}
+
+/* Project name area */
 .gallery-info .gi-name{
-  font-family:var(--font-fun);font-size:2rem;font-weight:900;
-  color:#fff;line-height:1.1;margin-bottom:8px;
+  font-family:var(--font-fun);font-size:2.2rem;font-weight:900;
+  color:#fff;line-height:1.05;margin-bottom:6px;
+  background:linear-gradient(135deg,#fff 60%,var(--frame-c1,rgba(200,160,255,0.8)));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
 }
 .gallery-info .gi-tagline{
-  font-family:var(--font-hand);font-size:0.95rem;
-  color:rgba(255,255,255,0.4);line-height:1.5;margin-bottom:20px;
+  font-family:var(--font-fun);font-size:0.65rem;font-weight:700;
+  color:var(--frame-c1,rgba(149,117,205,0.7));
+  letter-spacing:0.16em;text-transform:uppercase;
+  line-height:1.5;margin-bottom:8px;
 }
 .gallery-info .gi-body{
   font-family:var(--font-sans);font-size:0.84rem;
-  color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:22px;
+  color:rgba(255,255,255,0.55);line-height:1.75;margin-bottom:0;
 }
 
 /* Stats as gallery placard */
 .gallery-info .gi-stats{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:22px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:0;
 }
 .gallery-info .gi-stat{
-  text-align:center;padding:14px 8px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.06);
-  border-radius:2px;
+  text-align:center;padding:18px 8px;
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:12px;
   position:relative;overflow:hidden;
+  transition:transform 0.2s,background 0.2s;
 }
+.gallery-info .gi-stat:active{transform:scale(0.95)}
 .gallery-info .gi-stat::before{
   content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
   background:linear-gradient(90deg,var(--frame-c1,rgba(120,80,220,0.4)),var(--frame-c2,rgba(200,60,150,0.3)),transparent);
 }
 .gallery-info .gi-stat-num{
-  font-family:var(--font-fun);font-size:1.5rem;font-weight:900;color:#fff;display:block;
+  font-family:var(--font-fun);font-size:1.6rem;font-weight:900;color:#fff;display:block;
 }
 .gallery-info .gi-stat-lbl{
   font-family:var(--font-sans);font-size:0.5rem;color:rgba(255,255,255,0.3);
@@ -3882,13 +3895,61 @@ body.map-expanded .scroll-counter{display:none!important}
 }
 
 /* Tags and skills */
-.gallery-info .gi-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.gallery-info .gi-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;padding-top:28px}
 .gallery-info .gi-skills{display:flex;gap:6px;flex-wrap:wrap}
 .gallery-info .gi-skill{
-  padding:5px 11px;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;
+  padding:6px 14px;font-family:var(--font-fun);font-size:0.6rem;font-weight:700;
   letter-spacing:0.04em;background:rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);
-  border-radius:1px;
+  border-radius:8px;transition:all 0.2s;
+}
+.gallery-info .gi-skill:active{transform:scale(0.92);background:rgba(255,255,255,0.08)}
+
+/* My Role section */
+.gi-role-section{margin-bottom:0}
+.gi-role-title{
+  font-family:var(--font-fun);font-size:0.6rem;font-weight:800;
+  letter-spacing:0.16em;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);margin-bottom:14px;
+}
+.gi-role-cards{display:flex;flex-direction:column;gap:10px}
+.gi-role-card{
+  padding:16px 18px;
+  background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);
+  border-radius:14px;display:flex;align-items:flex-start;gap:14px;
+  transition:transform 0.2s;
+}
+.gi-role-card:active{transform:scale(0.98)}
+.gi-role-card-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+.gi-role-card-content{flex:1}
+.gi-role-card-label{
+  font-family:var(--font-fun);font-size:0.72rem;font-weight:800;color:#fff;
+  display:block;margin-bottom:4px;
+}
+.gi-role-card-desc{
+  font-family:var(--font-sans);font-size:0.7rem;color:rgba(255,255,255,0.4);line-height:1.55;
+}
+
+/* Timeline / Journey */
+.gi-journey{margin-bottom:0}
+.gi-journey-items{position:relative;padding-left:20px}
+.gi-journey-items::before{
+  content:'';position:absolute;left:5px;top:6px;bottom:6px;width:2px;
+  background:linear-gradient(180deg,var(--frame-c1,rgba(120,80,220,0.3)),var(--frame-c2,rgba(200,60,150,0.2)),transparent);
+}
+.gi-journey-item{position:relative;padding:0 0 18px 18px}
+.gi-journey-item::before{
+  content:'';position:absolute;left:-3px;top:6px;width:8px;height:8px;
+  border-radius:50%;background:var(--frame-c1,rgba(120,80,220,0.6));
+  border:2px solid #0a0812;
+}
+.gi-journey-phase{
+  font-family:var(--font-fun);font-size:0.58rem;font-weight:800;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--frame-c1,rgba(149,117,205,0.7));margin-bottom:4px;
+}
+.gi-journey-text{
+  font-family:var(--font-sans);font-size:0.74rem;color:rgba(255,255,255,0.45);line-height:1.6;
 }
 
 /* Tag shimmer */
@@ -3984,36 +4045,94 @@ body.map-expanded .scroll-counter{display:none!important}
 .zp-contact-link:hover{background:rgba(255,255,255,0.1);color:#fff}
 
 /* ── PORTFOLIO PANEL: project grid ── */
-.zp-projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
-@media(max-width:480px){.zp-projects-grid{grid-template-columns:1fr}}
+/* ═══ SWIPABLE HOLOGRAPHIC PROJECT CAROUSEL ═══ */
+.zp-projects-carousel{
+  display:flex;gap:20px;overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+  padding:0 24px 20px;margin:0 -28px;
+  scrollbar-width:none;
+}
+.zp-projects-carousel::-webkit-scrollbar{display:none}
+
 .zp-proj-card{
-  cursor:pointer;border:1.5px solid rgba(255,255,255,0.08);
-  transition:transform 0.2s,box-shadow 0.2s;
-  position:relative;overflow:hidden;
-  background:rgba(255,255,255,0.03);
+  flex:0 0 280px;scroll-snap-align:center;
+  cursor:pointer;position:relative;overflow:hidden;
+  border-radius:20px;
+  background:linear-gradient(145deg,rgba(15,12,30,0.95),rgba(8,6,20,0.98));
+  border:1.5px solid rgba(255,255,255,0.08);
+  transition:transform 0.4s cubic-bezier(0.22,1,0.36,1),box-shadow 0.4s;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
 }
-.zp-proj-card:hover{transform:translate(-3px,-3px);border-color:rgba(255,255,255,0.2);box-shadow:5px 5px 0 rgba(0,0,0,0.3)}
-.zp-proj-card:active{transform:translate(0,0)}
-.zp-proj-emoji-area{
-  min-height:90px;display:flex;align-items:center;justify-content:center;
-  font-size:2.6rem;position:relative;overflow:hidden;
+.zp-proj-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+.zp-proj-card:active{transform:scale(0.97)}
+
+/* Holographic shimmer overlay */
+.zp-proj-card::before{
+  content:'';position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.06) 45%,rgba(255,255,255,0.12) 50%,rgba(255,255,255,0.06) 55%,transparent 60%);
+  background-size:200% 100%;
+  animation:holoShimmer 4s ease-in-out infinite;
+  border-radius:20px;
 }
-.zp-proj-emoji-area::after{
-  content:'';position:absolute;inset:0;opacity:0.1;
+@keyframes holoShimmer{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
 }
-.zp-proj-info{padding:13px 14px 16px}
-.zp-proj-name{font-family:var(--font-fun);font-size:0.88rem;font-weight:800;color:#fff;display:block;margin-bottom:4px}
-.zp-proj-desc{font-family:var(--font-sans);font-size:0.68rem;color:rgba(255,255,255,0.42);line-height:1.45;margin-bottom:9px}
-.zp-proj-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:9px}
-.zp-proj-tag{font-family:var(--font-fun);font-size:0.54rem;font-weight:700;padding:2px 7px;letter-spacing:0.04em}
-.zp-proj-open-btn{
-  display:flex;align-items:center;gap:4px;
-  font-family:var(--font-fun);font-size:0.6rem;font-weight:700;
-  letter-spacing:0.05em;text-transform:uppercase;
-  color:rgba(255,255,255,0.4);border:none;background:none;cursor:pointer;
-  padding:0;transition:color 0.2s;
+
+/* Glow ring around card */
+.zp-proj-card::after{
+  content:'';position:absolute;inset:-2px;z-index:-1;
+  border-radius:22px;
+  background:conic-gradient(from var(--card-angle,0deg),var(--card-c1,rgba(124,77,255,0.4)),transparent 30%,var(--card-c2,rgba(200,60,150,0.3)),transparent 60%,var(--card-c1,rgba(124,77,255,0.4)));
+  opacity:0;transition:opacity 0.4s;
+  filter:blur(8px);
 }
-.zp-proj-open-btn:hover{color:#fff}
+.zp-proj-card:hover::after{opacity:1}
+
+/* Screenshot image area */
+.zp-proj-img-area{
+  position:relative;height:320px;overflow:hidden;
+  border-radius:18px 18px 0 0;
+}
+.zp-proj-img-area img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+.zp-proj-card:hover .zp-proj-img-area img{transform:scale(1.05)}
+
+/* Role badge on image */
+.zp-proj-role-badge{
+  position:absolute;top:12px;left:12px;z-index:4;
+  padding:5px 14px;border-radius:8px;
+  font-family:var(--font-fun);font-size:0.6rem;font-weight:800;
+  letter-spacing:0.1em;text-transform:uppercase;
+  background:rgba(0,0,0,0.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.85);
+}
+
+/* Card number */
+.zp-proj-num{
+  position:absolute;bottom:12px;right:14px;z-index:4;
+  font-family:var(--font-fun);font-size:0.6rem;font-weight:600;
+  color:rgba(255,255,255,0.35);letter-spacing:0.06em;
+}
+
+/* Info section */
+.zp-proj-info{padding:16px 18px 20px;position:relative;z-index:2}
+.zp-proj-name{font-family:var(--font-fun);font-size:1.1rem;font-weight:900;color:#fff;display:block;margin-bottom:4px;letter-spacing:-0.01em}
+.zp-proj-desc{font-family:var(--font-sans);font-size:0.7rem;color:rgba(255,255,255,0.4);line-height:1.5;margin-bottom:12px;display:block}
+.zp-proj-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0}
+.zp-proj-tag{font-family:var(--font-fun);font-size:0.56rem;font-weight:700;padding:4px 10px;border-radius:6px;letter-spacing:0.04em}
+
+/* Carousel dots indicator */
+.zp-carousel-dots{
+  display:flex;justify-content:center;gap:6px;padding:8px 0 4px;
+}
+.zp-carousel-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,0.15);transition:all 0.3s;
+}
+.zp-carousel-dot.active{background:rgba(255,255,255,0.6);width:18px;border-radius:3px}
 
 /* Project detail — gallery overlay */
 .zp-proj-detail{
@@ -4934,29 +5053,33 @@ function cycleIntroCards(e){
   </div>
   <div class="zp-body">
     <div class="zp-section">
-      <div class="zp-sec-label">All Portfolio</div>
-      <div class="zp-projects-grid">
+      <div class="zp-sec-label">Swipe to Explore</div>
+      <div class="zp-projects-carousel" id="projCarousel">
 
         <!-- EnterCircles -->
-        <div class="zp-proj-card" onclick="openProject('entercircles')" style="border-color:rgba(124,77,255,0.25)">
-          <div class="zp-proj-emoji-area" style="background:linear-gradient(135deg,#2D0059,#4A00A0)">
-            <span>🔗</span>
+        <div class="zp-proj-card" onclick="openProject('entercircles')" style="--card-c1:rgba(124,77,255,0.5);--card-c2:rgba(206,147,216,0.4)">
+          <div class="zp-proj-img-area">
+            <img src="images/proj-entercircles.jpg" alt="EnterCircles App" loading="lazy">
+            <span class="zp-proj-role-badge">Lead PM</span>
+            <span class="zp-proj-num">#001 / 005</span>
           </div>
           <div class="zp-proj-info">
             <span class="zp-proj-name">EnterCircles</span>
-            <span class="zp-proj-desc">Web3 social platform for community engagement and token-gated access</span>
+            <span class="zp-proj-desc">Web3 social platform for community engagement & token-gated access</span>
             <div class="zp-proj-tags">
               <span class="zp-proj-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">Web3</span>
               <span class="zp-proj-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">Social</span>
+              <span class="zp-proj-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8">B2B2C</span>
             </div>
-            <button class="zp-proj-open-btn">Open case →</button>
           </div>
         </div>
 
         <!-- Recess -->
-        <div class="zp-proj-card" onclick="openProject('recess')" style="border-color:rgba(66,165,245,0.25)">
-          <div class="zp-proj-emoji-area" style="background:linear-gradient(135deg,#003060,#00508A)">
-            <span>📚</span>
+        <div class="zp-proj-card" onclick="openProject('recess')" style="--card-c1:rgba(66,165,245,0.5);--card-c2:rgba(100,181,246,0.4)">
+          <div class="zp-proj-img-area">
+            <img src="images/proj-recess.jpg" alt="Recess App" loading="lazy">
+            <span class="zp-proj-role-badge">Co-Founded</span>
+            <span class="zp-proj-num">#002 / 005</span>
           </div>
           <div class="zp-proj-info">
             <span class="zp-proj-name">Recess</span>
@@ -4965,14 +5088,15 @@ function cycleIntroCards(e){
               <span class="zp-proj-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9">EdTech</span>
               <span class="zp-proj-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9">B2C</span>
             </div>
-            <button class="zp-proj-open-btn">Open case →</button>
           </div>
         </div>
 
         <!-- Hushh -->
-        <div class="zp-proj-card" onclick="openProject('hushh')" style="border-color:rgba(239,83,80,0.25)">
-          <div class="zp-proj-emoji-area" style="background:linear-gradient(135deg,#3A0000,#6A0000)">
-            <span>🤫</span>
+        <div class="zp-proj-card" onclick="openProject('hushh')" style="--card-c1:rgba(239,83,80,0.5);--card-c2:rgba(255,110,130,0.4)">
+          <div class="zp-proj-img-area">
+            <img src="images/proj-hushh.jpg" alt="Hushh App" loading="lazy">
+            <span class="zp-proj-role-badge">Product Manager</span>
+            <span class="zp-proj-num">#003 / 005</span>
           </div>
           <div class="zp-proj-info">
             <span class="zp-proj-name">Hushh</span>
@@ -4981,44 +5105,51 @@ function cycleIntroCards(e){
               <span class="zp-proj-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A">Privacy</span>
               <span class="zp-proj-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A">FinTech</span>
             </div>
-            <button class="zp-proj-open-btn">Open case →</button>
           </div>
         </div>
 
         <!-- SmarBhubaneswar -->
-        <div class="zp-proj-card" onclick="openProject('smarbhubaneswar')" style="border-color:rgba(38,166,154,0.25)">
-          <div class="zp-proj-emoji-area" style="background:linear-gradient(135deg,#00302B,#005048)">
-            <span>🏙️</span>
+        <div class="zp-proj-card" onclick="openProject('smarbhubaneswar')" style="--card-c1:rgba(38,166,154,0.5);--card-c2:rgba(80,200,180,0.4)">
+          <div class="zp-proj-img-area">
+            <img src="images/proj-smarbhubaneswar.jpg" alt="SmarBhubaneswar App" loading="lazy">
+            <span class="zp-proj-role-badge">Product Lead</span>
+            <span class="zp-proj-num">#004 / 005</span>
           </div>
           <div class="zp-proj-info">
             <span class="zp-proj-name">SmarBhubaneswar</span>
-            <span class="zp-proj-desc">Smart city civic tech platform for citizen services and urban governance</span>
+            <span class="zp-proj-desc">Smart city civic tech platform for citizen services & urban governance</span>
             <div class="zp-proj-tags">
               <span class="zp-proj-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4">Civic</span>
               <span class="zp-proj-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4">Gov-Tech</span>
             </div>
-            <button class="zp-proj-open-btn">Open case →</button>
           </div>
         </div>
 
-        <!-- Aribasda — full width -->
-        <div class="zp-proj-card" onclick="openProject('aribasda')" style="border-color:rgba(255,112,67,0.25);grid-column:1/-1">
-          <div style="display:flex;gap:0">
-            <div class="zp-proj-emoji-area" style="background:linear-gradient(135deg,#3A1200,#6A2200);min-width:90px;min-height:90px">
-              <span>📈</span>
-            </div>
-            <div class="zp-proj-info" style="flex:1">
-              <span class="zp-proj-name">Aribasda</span>
-              <span class="zp-proj-desc">Analytics & growth tooling — turning data into decisions, fast</span>
-              <div class="zp-proj-tags">
-                <span class="zp-proj-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91">Analytics</span>
-                <span class="zp-proj-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91">Growth</span>
-                <span class="zp-proj-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91">SaaS</span>
-              </div>
-              <button class="zp-proj-open-btn">Open case →</button>
+        <!-- Aribasda -->
+        <div class="zp-proj-card" onclick="openProject('aribasda')" style="--card-c1:rgba(255,112,67,0.5);--card-c2:rgba(255,160,100,0.4)">
+          <div class="zp-proj-img-area">
+            <img src="images/proj-aribasda.jpg" alt="Aribasda App" loading="lazy">
+            <span class="zp-proj-role-badge">Product Manager</span>
+            <span class="zp-proj-num">#005 / 005</span>
+          </div>
+          <div class="zp-proj-info">
+            <span class="zp-proj-name">Aribasda</span>
+            <span class="zp-proj-desc">Analytics & growth tooling — turning data into decisions, fast</span>
+            <div class="zp-proj-tags">
+              <span class="zp-proj-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91">Analytics</span>
+              <span class="zp-proj-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91">Growth</span>
+              <span class="zp-proj-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91">SaaS</span>
             </div>
           </div>
         </div>
+
+      </div>
+      <div class="zp-carousel-dots" id="projDots">
+        <div class="zp-carousel-dot active"></div>
+        <div class="zp-carousel-dot"></div>
+        <div class="zp-carousel-dot"></div>
+        <div class="zp-carousel-dot"></div>
+        <div class="zp-carousel-dot"></div>
       </div>
     </div>
   </div>
@@ -5042,8 +5173,7 @@ function cycleIntroCards(e){
       <div class="gallery-frame">
         <div class="gallery-frame-inner">
           <div class="gallery-artwork">
-            <span class="gallery-artwork-emoji">🔗</span>
-            <span class="gallery-artwork-label">EnterCircles</span>
+            <img src="images/proj-entercircles.jpg" alt="EnterCircles" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">
           </div>
         </div>
       </div>
@@ -5053,14 +5183,34 @@ function cycleIntroCards(e){
   <div class="gallery-info">
     <div class="gi-tags"><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">Web3</span><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">Social</span><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">B2B2C</span></div>
     <div class="gi-name">EnterCircles</div>
-    <div class="gi-tagline">Web3 Social Platform · Community Engagement · Token-Gated Access</div>
+    <div class="gi-tagline">// WEB3 :: COMMUNITY :: TOKEN_GATED_ACCESS</div>
     <div class="gi-body">EnterCircles is a Web3-native social platform built around community identity, token-gated experiences, and meaningful engagement mechanics. I led the product from concept to launch — defining the core UX, building the token architecture, and iterating based on community feedback.</div>
+    <div class="gi-divider"></div>
     <div class="gi-stats">
       <div class="gi-stat"><span class="gi-stat-num">5K+</span><span class="gi-stat-lbl">Users</span></div>
       <div class="gi-stat"><span class="gi-stat-num">0→1</span><span class="gi-stat-lbl">Built</span></div>
       <div class="gi-stat"><span class="gi-stat-num">2023</span><span class="gi-stat-lbl">Launched</span></div>
     </div>
-    <div class="gi-skills"><span class="gi-skill">Token Economics</span><span class="gi-skill">Community UX</span><span class="gi-skill">Smart Contracts</span><span class="gi-skill">Engagement Loops</span></div>
+    <div class="gi-divider"></div>
+    <div class="gi-role-section">
+      <div class="gi-role-title">What I Did</div>
+      <div class="gi-role-cards">
+        <div class="gi-role-card"><span class="gi-role-card-icon">🎯</span><div class="gi-role-card-content"><span class="gi-role-card-label">Product Strategy</span><span class="gi-role-card-desc">Defined the 0→1 roadmap, token economics model, and community growth playbook</span></div></div>
+        <div class="gi-role-card"><span class="gi-role-card-icon">🎨</span><div class="gi-role-card-content"><span class="gi-role-card-label">UX Architecture</span><span class="gi-role-card-desc">Designed token-gated flows, circle creation UX, and engagement loops</span></div></div>
+        <div class="gi-role-card"><span class="gi-role-card-icon">📊</span><div class="gi-role-card-content"><span class="gi-role-card-label">Growth & Analytics</span><span class="gi-role-card-desc">Built analytics dashboard, tracked retention funnels, A/B tested onboarding</span></div></div>
+      </div>
+    </div>
+    <div class="gi-divider"></div>
+    <div class="gi-journey">
+      <div class="gi-role-title">Product Journey</div>
+      <div class="gi-journey-items">
+        <div class="gi-journey-item"><div class="gi-journey-phase">Discovery</div><div class="gi-journey-text">User research across 50+ Web3 communities — identified token-gated engagement as the core differentiator</div></div>
+        <div class="gi-journey-item"><div class="gi-journey-phase">Build</div><div class="gi-journey-text">Shipped MVP in 8 weeks with smart contract integration, social feeds, and community management</div></div>
+        <div class="gi-journey-item"><div class="gi-journey-phase">Scale</div><div class="gi-journey-text">Grew to 5K+ users through community-led growth, influencer partnerships, and viral loops</div></div>
+      </div>
+    </div>
+    <div class="gi-divider"></div>
+    <div class="gi-skills"><span class="gi-skill">Token Economics</span><span class="gi-skill">Community UX</span><span class="gi-skill">Smart Contracts</span><span class="gi-skill">Engagement Loops</span><span class="gi-skill">Web3 Auth</span></div>
   </div>
 </div>
 
@@ -5071,12 +5221,12 @@ function cycleIntroCards(e){
     <div class="gallery-wall"></div>
     <div class="gallery-spotlight"></div>
     <div class="gallery-ambient"></div>
+    <div class="gallery-frame-wrap">
       <div class="gallery-frame-glow"></div>
       <div class="gallery-frame">
         <div class="gallery-frame-inner">
           <div class="gallery-artwork">
-            <span class="gallery-artwork-emoji">📚</span>
-            <span class="gallery-artwork-label">Recess</span>
+            <img src="images/proj-recess.jpg" alt="Recess" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">
           </div>
         </div>
       </div>
@@ -5086,14 +5236,34 @@ function cycleIntroCards(e){
   <div class="gallery-info">
     <div class="gi-tags"><span class="zp-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9;border:1.5px solid rgba(66,165,245,0.25)">EdTech</span><span class="zp-tag" style="background:rgba(66,165,245,0.15);color:#90CAF9;border:1.5px solid rgba(66,165,245,0.25)">B2C</span></div>
     <div class="gi-name">Recess</div>
-    <div class="gi-tagline">EdTech · Peer Learning · Study Groups · Collaborative Sessions</div>
-    <div class="gi-body">Recess was built to solve the isolation problem in online learning — connecting students in real-time study groups, peer sessions, and collaborative environments. As co-founder and PM, I owned the product roadmap, user research, and growth strategy. We reached 2K+ students before pivoting.</div>
+    <div class="gi-tagline">// EDTECH :: PEER_LEARNING :: STUDY_GROUPS</div>
+    <div class="gi-body">Recess was built to solve the isolation problem in online learning — connecting students in real-time study groups, peer sessions, and collaborative environments. As co-founder and PM, I owned the product roadmap, user research, and growth strategy.</div>
+    <div class="gi-divider"></div>
     <div class="gi-stats">
       <div class="gi-stat"><span class="gi-stat-num">2K+</span><span class="gi-stat-lbl">Students</span></div>
       <div class="gi-stat"><span class="gi-stat-num">Co-</span><span class="gi-stat-lbl">Founded</span></div>
       <div class="gi-stat"><span class="gi-stat-num">2021</span><span class="gi-stat-lbl">Launched</span></div>
     </div>
-    <div class="gi-skills"><span class="gi-skill">Peer Learning UX</span><span class="gi-skill">Community Growth</span><span class="gi-skill">Retention Design</span></div>
+    <div class="gi-divider"></div>
+    <div class="gi-role-section">
+      <div class="gi-role-title">What I Did</div>
+      <div class="gi-role-cards">
+        <div class="gi-role-card"><span class="gi-role-card-icon">🚀</span><div class="gi-role-card-content"><span class="gi-role-card-label">Co-Founder & PM</span><span class="gi-role-card-desc">Owned the full product lifecycle from ideation to 2K+ student adoption</span></div></div>
+        <div class="gi-role-card"><span class="gi-role-card-icon">🔬</span><div class="gi-role-card-content"><span class="gi-role-card-label">User Research</span><span class="gi-role-card-desc">Interviewed 100+ students, mapped pain points, designed peer-matching algorithm</span></div></div>
+        <div class="gi-role-card"><span class="gi-role-card-icon">📈</span><div class="gi-role-card-content"><span class="gi-role-card-label">Growth Strategy</span><span class="gi-role-card-desc">Campus ambassador program, referral loops, and viral study group invites</span></div></div>
+      </div>
+    </div>
+    <div class="gi-divider"></div>
+    <div class="gi-journey">
+      <div class="gi-role-title">Product Journey</div>
+      <div class="gi-journey-items">
+        <div class="gi-journey-item"><div class="gi-journey-phase">Problem</div><div class="gi-journey-text">Online learning felt isolating — students needed real-time collaboration</div></div>
+        <div class="gi-journey-item"><div class="gi-journey-phase">Solution</div><div class="gi-journey-text">Built live study rooms with peer matching, shared whiteboards, and session scheduling</div></div>
+        <div class="gi-journey-item"><div class="gi-journey-phase">Outcome</div><div class="gi-journey-text">2K+ students, 85% session completion rate, pivoted to B2B institutional model</div></div>
+      </div>
+    </div>
+    <div class="gi-divider"></div>
+    <div class="gi-skills"><span class="gi-skill">Peer Learning UX</span><span class="gi-skill">Community Growth</span><span class="gi-skill">Retention Design</span><span class="gi-skill">EdTech</span></div>
   </div>
 </div>
 
@@ -5104,12 +5274,12 @@ function cycleIntroCards(e){
     <div class="gallery-wall"></div>
     <div class="gallery-spotlight"></div>
     <div class="gallery-ambient"></div>
+    <div class="gallery-frame-wrap">
       <div class="gallery-frame-glow"></div>
       <div class="gallery-frame">
         <div class="gallery-frame-inner">
           <div class="gallery-artwork">
-            <span class="gallery-artwork-emoji">🤫</span>
-            <span class="gallery-artwork-label">Hushh</span>
+            <img src="images/proj-hushh.jpg" alt="Hushh" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">
           </div>
         </div>
       </div>
@@ -5119,14 +5289,34 @@ function cycleIntroCards(e){
   <div class="gallery-info">
     <div class="gi-tags"><span class="zp-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A;border:1.5px solid rgba(239,83,80,0.25)">Privacy</span><span class="zp-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A;border:1.5px solid rgba(239,83,80,0.25)">FinTech</span></div>
     <div class="gi-name">Hushh</div>
-    <div class="gi-tagline">Privacy-First · Personal Data Management · Your Data, Your Rules</div>
-    <div class="gi-body">Hushh is a privacy-native product that lets users control, monetize, and protect their personal data. I worked on the product strategy and UX — designing flows that make privacy feel empowering rather than restrictive. Core challenge: make complex data concepts feel intuitive for non-technical users.</div>
+    <div class="gi-tagline">// PRIVACY :: PERSONAL_DATA :: YOUR_RULES</div>
+    <div class="gi-body">Hushh is a privacy-native product that lets users control, monetize, and protect their personal data. I worked on the product strategy and UX — designing flows that make privacy feel empowering rather than restrictive.</div>
+    <div class="gi-divider"></div>
     <div class="gi-stats">
       <div class="gi-stat"><span class="gi-stat-num">B2C</span><span class="gi-stat-lbl">Product</span></div>
       <div class="gi-stat"><span class="gi-stat-num">PM</span><span class="gi-stat-lbl">Role</span></div>
       <div class="gi-stat"><span class="gi-stat-num">Web3</span><span class="gi-stat-lbl">Infra</span></div>
     </div>
-    <div class="gi-skills"><span class="gi-skill">Privacy UX</span><span class="gi-skill">Data Architecture</span><span class="gi-skill">User Trust</span></div>
+    <div class="gi-divider"></div>
+    <div class="gi-role-section">
+      <div class="gi-role-title">What I Did</div>
+      <div class="gi-role-cards">
+        <div class="gi-role-card"><span class="gi-role-card-icon">🛡️</span><div class="gi-role-card-content"><span class="gi-role-card-label">Privacy Architecture</span><span class="gi-role-card-desc">Designed the data vault UX, consent management flows, and privacy-first onboarding</span></div></div>
+        <div class="gi-role-card"><span class="gi-role-card-icon">💰</span><div class="gi-role-card-content"><span class="gi-role-card-label">Monetization Design</span><span class="gi-role-card-desc">Created data marketplace UX where users earn from sharing anonymized insights</span></div></div>
+        <div class="gi-role-card"><span class="gi-role-card-icon">🧠</span><div class="gi-role-card-content"><span class="gi-role-card-label">Complex UX Simplification</span><span class="gi-role-card-desc">Made blockchain-level data concepts intuitive for non-technical users</span></div></div>
+      </div>
+    </div>
+    <div class="gi-divider"></div>
+    <div class="gi-journey">
+      <div class="gi-role-title">Product Journey</div>
+      <div class="gi-journey-items">
+        <div class="gi-journey-item"><div class="gi-journey-phase">Research</div><div class="gi-journey-text">Deep dive into GDPR/CCPA — identified user frustration with opaque data practices</div></div>
+        <div class="gi-journey-item"><div class="gi-journey-phase">Design</div><div class="gi-journey-text">Crafted a "Data Vault" metaphor — visual, tangible control over personal data</div></div>
+        <div class="gi-journey-item"><div class="gi-journey-phase">Impact</div><div class="gi-journey-text">Transformed complex privacy controls into 3-tap actions with 92% comprehension rate</div></div>
+      </div>
+    </div>
+    <div class="gi-divider"></div>
+    <div class="gi-skills"><span class="gi-skill">Privacy UX</span><span class="gi-skill">Data Architecture</span><span class="gi-skill">User Trust</span><span class="gi-skill">Web3</span></div>
   </div>
 </div>
 
@@ -5137,12 +5327,12 @@ function cycleIntroCards(e){
     <div class="gallery-wall"></div>
     <div class="gallery-spotlight"></div>
     <div class="gallery-ambient"></div>
+    <div class="gallery-frame-wrap">
       <div class="gallery-frame-glow"></div>
       <div class="gallery-frame">
         <div class="gallery-frame-inner">
           <div class="gallery-artwork">
-            <span class="gallery-artwork-emoji">🏙️</span>
-            <span class="gallery-artwork-label">SmarBhubaneswar</span>
+            <img src="images/proj-smarbhubaneswar.jpg" alt="SmarBhubaneswar" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">
           </div>
         </div>
       </div>
@@ -5152,14 +5342,34 @@ function cycleIntroCards(e){
   <div class="gallery-info">
     <div class="gi-tags"><span class="zp-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4;border:1.5px solid rgba(38,166,154,0.25)">Civic Tech</span><span class="zp-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4;border:1.5px solid rgba(38,166,154,0.25)">Gov-Tech</span></div>
     <div class="gi-name">SmarBhubaneswar</div>
-    <div class="gi-tagline">Smart City · Civic Tech · Citizen Services · Urban Governance</div>
-    <div class="gi-body">A smart city platform for Bhubaneswar's urban governance layer — connecting citizens to city services, complaint redressal, and civic engagement. I led the product design and stakeholder mapping, navigating the complexity of government-facing tech with citizen-first UX principles.</div>
+    <div class="gi-tagline">// SMART_CITY :: CIVIC_TECH :: CITIZEN_SERVICES</div>
+    <div class="gi-body">A smart city platform for Bhubaneswar's urban governance layer — connecting citizens to city services, complaint redressal, and civic engagement. I led the product design and stakeholder mapping.</div>
+    <div class="gi-divider"></div>
     <div class="gi-stats">
       <div class="gi-stat"><span class="gi-stat-num">Gov</span><span class="gi-stat-lbl">Sector</span></div>
       <div class="gi-stat"><span class="gi-stat-num">B2G</span><span class="gi-stat-lbl">Model</span></div>
       <div class="gi-stat"><span class="gi-stat-num">City</span><span class="gi-stat-lbl">Scale</span></div>
     </div>
-    <div class="gi-skills"><span class="gi-skill">Civic UX</span><span class="gi-skill">Stakeholder Mgmt</span><span class="gi-skill">Service Design</span></div>
+    <div class="gi-divider"></div>
+    <div class="gi-role-section">
+      <div class="gi-role-title">What I Did</div>
+      <div class="gi-role-cards">
+        <div class="gi-role-card"><span class="gi-role-card-icon">🏛️</span><div class="gi-role-card-content"><span class="gi-role-card-label">Stakeholder Navigation</span><span class="gi-role-card-desc">Mapped government workflows, aligned 5+ departments, and designed approval flows</span></div></div>
+        <div class="gi-role-card"><span class="gi-role-card-icon">🗺️</span><div class="gi-role-card-content"><span class="gi-role-card-label">Service Design</span><span class="gi-role-card-desc">Designed complaint tracking, city services directory, and civic analytics dashboard</span></div></div>
+        <div class="gi-role-card"><span class="gi-role-card-icon">👥</span><div class="gi-role-card-content"><span class="gi-role-card-label">Citizen UX</span><span class="gi-role-card-desc">Made government tech accessible — multi-language support, offline-first, low-bandwidth</span></div></div>
+      </div>
+    </div>
+    <div class="gi-divider"></div>
+    <div class="gi-journey">
+      <div class="gi-role-title">Product Journey</div>
+      <div class="gi-journey-items">
+        <div class="gi-journey-item"><div class="gi-journey-phase">Challenge</div><div class="gi-journey-text">Government tech was fragmented — citizens had no single pane for city services</div></div>
+        <div class="gi-journey-item"><div class="gi-journey-phase">Approach</div><div class="gi-journey-text">Built unified platform with GIS mapping, real-time complaint tracking, and department routing</div></div>
+        <div class="gi-journey-item"><div class="gi-journey-phase">Result</div><div class="gi-journey-text">Deployed city-wide, reduced complaint resolution time by 40%, used by multiple departments</div></div>
+      </div>
+    </div>
+    <div class="gi-divider"></div>
+    <div class="gi-skills"><span class="gi-skill">Civic UX</span><span class="gi-skill">Stakeholder Mgmt</span><span class="gi-skill">Service Design</span><span class="gi-skill">GIS</span></div>
   </div>
 </div>
 
@@ -5170,12 +5380,12 @@ function cycleIntroCards(e){
     <div class="gallery-wall"></div>
     <div class="gallery-spotlight"></div>
     <div class="gallery-ambient"></div>
+    <div class="gallery-frame-wrap">
       <div class="gallery-frame-glow"></div>
       <div class="gallery-frame">
         <div class="gallery-frame-inner">
           <div class="gallery-artwork">
-            <span class="gallery-artwork-emoji">📈</span>
-            <span class="gallery-artwork-label">Aribasda</span>
+            <img src="images/proj-aribasda.jpg" alt="Aribasda" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">
           </div>
         </div>
       </div>
@@ -5185,16 +5395,37 @@ function cycleIntroCards(e){
   <div class="gallery-info">
     <div class="gi-tags"><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">Analytics</span><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">Growth</span><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">SaaS</span></div>
     <div class="gi-name">Aribasda</div>
-    <div class="gi-tagline">Analytics & Growth Tooling · Turning Data into Decisions, Fast</div>
-    <div class="gi-body">Aribasda is a growth analytics product built for SaaS teams who need to move fast on data. Designed the core analytics UX, funnel visualization, and cohort analysis features. The core thesis: analytics tools shouldn't require a data scientist to use.</div>
+    <div class="gi-tagline">// ANALYTICS :: GROWTH :: DATA_TO_DECISIONS</div>
+    <div class="gi-body">Aribasda is a growth analytics product built for SaaS teams who need to move fast on data. Designed the core analytics UX, funnel visualization, and cohort analysis features. The core thesis: analytics tools shouldn't require a data scientist.</div>
+    <div class="gi-divider"></div>
     <div class="gi-stats">
       <div class="gi-stat"><span class="gi-stat-num">SaaS</span><span class="gi-stat-lbl">Vertical</span></div>
       <div class="gi-stat"><span class="gi-stat-num">B2B</span><span class="gi-stat-lbl">Model</span></div>
       <div class="gi-stat"><span class="gi-stat-num">PM</span><span class="gi-stat-lbl">Role</span></div>
     </div>
-    <div class="gi-skills"><span class="gi-skill">Analytics UX</span><span class="gi-skill">Funnel Design</span><span class="gi-skill">Growth Loops</span></div>
+    <div class="gi-divider"></div>
+    <div class="gi-role-section">
+      <div class="gi-role-title">What I Did</div>
+      <div class="gi-role-cards">
+        <div class="gi-role-card"><span class="gi-role-card-icon">📊</span><div class="gi-role-card-content"><span class="gi-role-card-label">Analytics UX</span><span class="gi-role-card-desc">Designed drag-and-drop funnel builder, cohort tables, and real-time dashboard</span></div></div>
+        <div class="gi-role-card"><span class="gi-role-card-icon">⚡</span><div class="gi-role-card-content"><span class="gi-role-card-label">Performance</span><span class="gi-role-card-desc">Optimized query rendering for 100K+ event datasets with sub-second load</span></div></div>
+        <div class="gi-role-card"><span class="gi-role-card-icon">🔄</span><div class="gi-role-card-content"><span class="gi-role-card-label">Growth Loops</span><span class="gi-role-card-desc">Built self-serve onboarding, in-app guides, and viral team invite flows</span></div></div>
+      </div>
+    </div>
+    <div class="gi-divider"></div>
+    <div class="gi-journey">
+      <div class="gi-role-title">Product Journey</div>
+      <div class="gi-journey-items">
+        <div class="gi-journey-item"><div class="gi-journey-phase">Insight</div><div class="gi-journey-text">Most SaaS teams abandon analytics tools because they're too complex to configure</div></div>
+        <div class="gi-journey-item"><div class="gi-journey-phase">Build</div><div class="gi-journey-text">Created zero-config analytics — auto-detect events, suggest funnels, pre-built templates</div></div>
+        <div class="gi-journey-item"><div class="gi-journey-phase">Impact</div><div class="gi-journey-text">Reduced time-to-first-insight from days to minutes, 3x increase in daily active analysts</div></div>
+      </div>
+    </div>
+    <div class="gi-divider"></div>
+    <div class="gi-skills"><span class="gi-skill">Analytics UX</span><span class="gi-skill">Funnel Design</span><span class="gi-skill">Growth Loops</span><span class="gi-skill">Data Viz</span></div>
   </div>
 </div>
+
 
 <!-- ── HOBBY PANEL ── -->
 <div class="zp-backdrop" id="zpbd-hobby" onclick="closeZonePanel('hobby')"></div>
@@ -11069,6 +11300,22 @@ function openProject(id){
   }
 }
 window.openProject=openProject;
+
+// Carousel dot tracker
+(function(){
+  const carousel=document.getElementById('projCarousel');
+  const dotsContainer=document.getElementById('projDots');
+  if(!carousel||!dotsContainer)return;
+  const dots=dotsContainer.querySelectorAll('.zp-carousel-dot');
+  carousel.addEventListener('scroll',function(){
+    const cards=carousel.querySelectorAll('.zp-proj-card');
+    const scrollLeft=carousel.scrollLeft;
+    const cardWidth=cards[0]?.offsetWidth||280;
+    const gap=20;
+    const idx=Math.round(scrollLeft/(cardWidth+gap));
+    dots.forEach((d,i)=>{d.classList.toggle('active',i===idx)});
+  },{passive:true});
+})();
 
 function closeProject(id){
   const el=document.getElementById('zpd-'+id);
