@@ -35,7 +35,10 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
     linear-gradient(#E8E4DF 1px, transparent 1px),
     linear-gradient(90deg, #E8E4DF 1px, transparent 1px);
   background-size:100% 100%,100% 100%,100% 100%,40px 40px,40px 40px;
-  contain:size layout;
+  contain:size layout style paint;
+}
+@media (max-width:768px){
+  .canvas{background-image:none;background-color:#FAF8F5}
 }
 .canvas::before{content:none}
 /* Bounce flash overlay */
