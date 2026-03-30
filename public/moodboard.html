@@ -2301,7 +2301,7 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="zic-polaroid-bg1"></div>
   <div class="zic-polaroid-bg2"></div>
   <!-- Main polaroid -->
-  <div class="zic-polaroid" style="position:relative;z-index:2;background:linear-gradient(160deg,#0A120A,#0F1A0F,#081208);border-radius:4px;padding:0;overflow:hidden;box-shadow:3px 5px 24px rgba(0,0,0,0.5)" data-no-sticker-drag="true">
+  <div class="zic-polaroid" style="position:relative;z-index:2;background:linear-gradient(160deg,#0A120A,#0F1A0F,#081208);border-radius:4px;padding:0;overflow:hidden;box-shadow:3px 5px 24px rgba(0,0,0,0.5);cursor:pointer" data-no-sticker-drag="true" onclick="if(event.target.closest('button'))return;event.stopPropagation();openZonePanel('introduction')">
     <!-- Terminal titlebar -->
     <div style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(76,175,80,0.15)">
       <span style="width:9px;height:9px;border-radius:50%;background:#FF5F57;display:inline-block"></span>
