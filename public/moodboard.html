@@ -3558,49 +3558,14 @@ body.map-expanded .scroll-counter{display:none!important}
 
 /* Studio effects removed */
 
-/* Project detail — studio frame glow */
+/* Project detail basic styles kept, effects removed */
 .zp-proj-detail{position:relative;overflow:hidden}
-.zp-proj-detail::before{
-  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:
-    radial-gradient(ellipse at 30% 20%,rgba(149,117,205,0.12) 0%,transparent 50%),
-    radial-gradient(ellipse at 70% 80%,rgba(236,64,122,0.08) 0%,transparent 50%),
-    radial-gradient(ellipse at 50% 50%,rgba(255,183,77,0.05) 0%,transparent 60%);
-  opacity:0;transition:opacity 0.6s 0.2s;
-}
-.zp-proj-detail.open::before{opacity:1;animation:projDetailAmbient 8s ease-in-out infinite}
-@keyframes projDetailAmbient{
-  0%,100%{background-position:0% 0%}
-  33%{background-position:5% 3%}
-  66%{background-position:-3% -2%}
-}
-
-/* Project detail emoji — glow aura */
-.zp-proj-detail-emoji{
-  position:relative;display:inline-block;
-  filter:drop-shadow(0 0 20px var(--zp-glow,rgba(149,117,205,0.5)));
-}
-
-/* Stat box subtle gradient border on project detail */
+.zp-proj-detail-emoji{position:relative;display:inline-block}
 .zp-proj-detail .zp-stat-box{
   background:rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 0 12px rgba(149,117,205,0.08);
 }
-
-/* Tag shimmer effect */
 .zp-tag{position:relative;overflow:hidden}
-.zp-tag::after{
-  content:'';position:absolute;top:0;left:-100%;
-  width:60%;height:100%;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);
-  animation:tagShimmer 3s ease-in-out infinite;
-}
-@keyframes tagShimmer{
-  0%{left:-100%}
-  50%{left:200%}
-  100%{left:200%}
-}
 
 /* Back button */
 .zp-back-btn{
