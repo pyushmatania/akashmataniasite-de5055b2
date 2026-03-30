@@ -11034,6 +11034,9 @@ function ensureCompanionStickers(force){
         hc.style.pointerEvents='auto';
         const VALID=[0,1,2,3,4,6];
         const HAND_EMOJI={0:'✊',1:'☝️',2:'✌️',3:'🤟',4:'🖖',6:'👍'};
+        const GS_URL='https://secfpttvtutusedpzefm.supabase.co/rest/v1/game_scores';
+        const GS_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlY2ZwdHR2dHV0dXNlZHB6ZWZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4NTEwMDQsImV4cCI6MjA5MDQyNzAwNH0.zDZDAHi_7sowsltXEVXXzzAKX0fgbKWs4LvC0imWx5M';
+        const gsHeaders={'Content-Type':'application/json','apikey':GS_KEY,'Authorization':'Bearer '+GS_KEY,'Prefer':'return=representation'};
         // phases: toss_call, toss_num, bat, bowl, done
         let phase='toss_call';
         let tossCall=''; // 'odd' or 'even'
@@ -11043,11 +11046,40 @@ function ensureCompanionStickers(force){
         const msgEl=hc.querySelector('.hc-msg');
         const histEl=hc.querySelector('.hc-history');
         const recEl=hc.querySelector('.hc-record');
+        const lbEl=hc.querySelector('.hc-leaderboard');
         const youScoreEl=hc.querySelector('[data-who="you"]');
         const cpuScoreEl=hc.querySelector('[data-who="cpu"]');
         const youHandEl=hc.querySelector('.hc-hand.you');
         const cpuHandEl=hc.querySelector('.hc-hand.cpu');
         const btns=hc.querySelectorAll('.hc-btn');
+
+        // Cloud save/load helpers
+        function saveScore(gameType,data){
+          fetch(GS_URL,{method:'POST',headers:gsHeaders,body:JSON.stringify({game_type:gameType,score_data:data})}).catch(function(){});
+        }
+        function loadHistory(){
+          fetch(GS_URL+'?game_type=eq.hand_cricket&order=played_at.desc&limit=10',{headers:{'apikey':GS_KEY,'Authorization':'Bearer '+GS_KEY}})
+            .then(function(r){return r.json();})
+            .then(function(rows){
+              if(!Array.isArray(rows)||!rows.length){return;}
+              var html='<div class="hc-lb-title">📜 MATCH HISTORY</div>';
+              rows.forEach(function(r){
+                var d=r.score_data||{};
+                var won=d.won;
+                var dt=new Date(r.played_at);
+                var dateStr=dt.toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+                html+='<div class="hc-lb-row"><span class="lb-result '+(won?'win':'loss')+'">'+(won?'W':'L')+'</span><span class="lb-scores">You:'+d.you+' CPU:'+d.cpu+'</span><span class="lb-date">'+dateStr+'</span></div>';
+              });
+              // Update W/L from history
+              var w=rows.filter(function(r){return r.score_data&&r.score_data.won;}).length;
+              var l=rows.filter(function(r){return r.score_data&&!r.score_data.won;}).length;
+              wins=w;losses=l;
+              recEl.textContent='W:'+w+' L:'+l;
+              lbEl.innerHTML=html;
+            }).catch(function(){});
+        }
+        // Load history on init
+        loadHistory();
         const btnsWrap=hc.querySelector('.hc-btns');
 
         // Add toss buttons (odd/even) — hidden by default during game
