@@ -4189,35 +4189,34 @@ function getCanonicalZoneCenter(zone){
   if(ZONE_DEFS[zone]?.center) return ZONE_DEFS[zone].center;
   return null;
 }
+// Helper: get the height of the fixed bottom nav in CSS px
+function _getNavOcclusionPx(){
+  const nav=document.querySelector('.bottom-nav');
+  if(!nav)return 0;
+  return nav.offsetHeight||0;
+}
 function anchorZoneIntroCard(card,zoneOverride){
   if(!card) return null;
   const zone=zoneOverride||card.dataset.zone||'hub';
   const center=getCanonicalZoneCenter(zone);
   if(!center) return null;
-  // Measure real dimensions using getBoundingClientRect for accuracy
-  const scale=(typeof MOODBOARD_VIEW_SCALE==='number'?MOODBOARD_VIEW_SCALE:0.5);
-  const rect=card.getBoundingClientRect();
-  // rect is in screen px; divide by scale to get world px
-  let w=(rect.width>10?rect.width/scale:card.offsetWidth)||380;
-  let h=(rect.height>10?rect.height/scale:card.offsetHeight)||420;
-  // Also account for absolutely-positioned children above the card (folder tabs)
-  const folderTab=card.querySelector('.zic-folder-tab');
-  let tabOverhang=0;
-  if(folderTab){
-    const tabRect=folderTab.getBoundingClientRect();
-    const cardRect=rect;
-    tabOverhang=Math.max(0,(cardRect.top-tabRect.top)/scale);
-    h+=tabOverhang;
-  }
+  // Temporarily make card visible & unstyled to measure true size
+  const prev={pos:card.style.position,vis:card.style.visibility,disp:card.style.display,trans:card.style.transform};
+  card.style.visibility='hidden';card.style.display='';card.style.transform='rotate(0deg)';
+  // Force reflow then measure
+  void card.offsetHeight;
+  const w=card.offsetWidth||380;
+  const h=card.offsetHeight||420;
+  // Restore
+  card.style.visibility=prev.vis;card.style.display=prev.disp;card.style.transform=prev.trans;
+  // Position so the card's DOM center sits at the zone center
   const left=Math.max(0,Math.min(MOODBOARD_WORLD_WIDTH-w,center.x-w/2));
-  const top=Math.max(0,Math.min(MOODBOARD_WORLD_HEIGHT-(h-tabOverhang),center.y-h/2+tabOverhang));
+  const top=Math.max(0,Math.min(MOODBOARD_WORLD_HEIGHT-h,center.y-h/2));
   card.style.left=left+'px';
   card.style.top=top+'px';
   card.style.transform='rotate(0deg)';
-  // Return the visual center of the entire card including tabs
-  const visualCenterX=left+w/2;
-  const visualCenterY=top+(h-tabOverhang)/2;
-  return {left,top,w,h,x:visualCenterX,y:visualCenterY};
+  // Return the true visual center of the card in world coords
+  return {left,top,w,h,x:left+w/2,y:top+h/2};
 }
 function anchorAllZoneIntroCards(){
   ['hub','introduction','work','portfolio','hobby','fun'].forEach(zone=>{
