@@ -8022,6 +8022,7 @@ function renderAllSmallMapClones(sc,ox,oy,cw,ch){
   if(!sc||!mapCanvas)return;
   const frag=document.createDocumentFragment();
   let visibleCount=0;
+  const activeCloneIds=new Set();
   stickerData.forEach(d=>{
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
     const liveLeft=d.ref&&d.ref.style?parseInt(d.ref.style.left)||d.left:d.left;
@@ -8029,6 +8030,7 @@ function renderAllSmallMapClones(sc,ox,oy,cw,ch){
     const renderX=(liveLeft-ox)*sc;
     const renderY=(liveTop-oy)*sc;
     const cloneId=d.id||(d.left+'-'+d.top+'-'+d.cat);
+    activeCloneIds.add(cloneId);
     let clone=_mapCloneNodesById.get(cloneId);
     if(!clone){
       clone=makeMapCloneNode(d);
@@ -8038,10 +8040,16 @@ function renderAllSmallMapClones(sc,ox,oy,cw,ch){
     const finalScale=computeCloneScale(d,baseScale);
     applyClonePlacement(clone,d,renderX,renderY,finalScale);
     clone.style.display='block';
-    frag.appendChild(clone);
+    // Only append if not already in mapCanvas
+    if(clone.parentElement!==mapCanvas) frag.appendChild(clone);
     visibleCount++;
   });
+  // Remove clones no longer needed
+  _mapCloneNodesById.forEach((node,id)=>{
+    if(!activeCloneIds.has(id)){node.remove();_mapCloneNodesById.delete(id);}
+  });
   if(frag.childNodes.length)mapCanvas.appendChild(frag);
+  _lastCloneFilter=mFilt;
   if(mapCount)mapCount.textContent=visibleCount+' items';
 }
 
