@@ -7036,6 +7036,9 @@ function toggleMap(){
       mmContainer.classList.remove('map-closing');
       mapTransitioning=false;
       mapZoomScale=1;
+      // Invalidate expanded map clones so small map rebuilds fresh
+      invalidateMapCloneCache(true);
+      _cachedSmallMapSvgW=-1;_cachedSmallMapSvgH=-1;
       // Redraw as small minimap — no force-rescan (stickers can't move while map is open)
       ensureMapData(false);
       drawMap();
