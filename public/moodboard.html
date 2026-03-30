@@ -7818,7 +7818,7 @@ function addMapDecorations(cw, ch){
     {x:74,y:70,w:24,h:30,c:'#ff9800',r:'#f57c00',win:true},
     {x:86,y:76,w:20,h:25,c:'#ffb74d',r:'#ffa726',win:true},
   ];
-  const buildings=IS_MOBILE_MAP?allBuildings.filter((_,i)=>i%2===0):allBuildings;
+  const buildings=IS_MOBILE_MAP?allBuildings.filter((_,i)=>i%3===0):allBuildings;
   buildings.forEach(b=>addIsometricBuilding(b.x,b.y,b.w,b.h,b.c,b.r,b.win));
 
   // === TALL TOWERS — innerHTML batch instead of individual createElementNS calls ===
