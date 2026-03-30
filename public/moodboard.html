@@ -8652,21 +8652,18 @@ function updMap(){
   const centerWorld={x:worldTopLeft.x+worldVpW/2,y:worldTopLeft.y+worldVpH/2};
   
   if(!mmExp){
-    // SMALL MAP: deterministic centering + clamped pan (no drift)
+    // SMALL MAP: full world visible, no panning — just position arrow + viewport rect
     const mr=mmInner.getBoundingClientRect();
     const mw=mr.width||64,mh=mr.height||64;
     const cw=drawMap._cw||0,ch=drawMap._ch||0;
+    const cL=parseFloat(mapCanvas.style.left)||((mw-cw)/2);
+    const cT=parseFloat(mapCanvas.style.top)||((mh-ch)/2);
+    // Arrow position — map world center to canvas pixel
     const rawPx=(centerWorld.x-ox)*sc;
     const rawPy=(centerWorld.y-oy)*sc;
-    const pan=clampSmallMapPan(rawPx,rawPy,mw,mh,cw,ch);
-    const cL=pan.panX,cT=pan.panY;
-    smallMapPanX=cL;
-    smallMapPanY=cT;
-    mapCanvas.style.left=cL+'px';
-    mapCanvas.style.top=cT+'px';
     let arrowX=cL+rawPx;
     let arrowY=cT+rawPy;
-    const pad=8;
+    const pad=6;
     arrowX=Math.max(pad,Math.min(mw-pad,arrowX));
     arrowY=Math.max(pad,Math.min(mh-pad,arrowY));
     mapPlayer.style.left=arrowX+'px';
@@ -8679,12 +8676,13 @@ function updMap(){
       const dsx=sx-_lastScrollX;
       const dsy=sy-_lastScrollY;
       if(Math.abs(dsx)>1||Math.abs(dsy)>1){
-        const angle=Math.atan2(dsy,dsx)*(180/Math.PI)+90; // +90 because arrow points up
+        const angle=Math.atan2(dsy,dsx)*(180/Math.PI)+90;
         arrowSvg.style.transform='rotate('+angle+'deg)';
         _lastArrowAngle=angle;
       }
     }
     _lastScrollX=sx;_lastScrollY=sy;
+    // Viewport rectangle
     mapVP.style.left=(cL+(worldTopLeft.x-ox)*sc)+'px';
     mapVP.style.top=(cT+(worldTopLeft.y-oy)*sc)+'px';
     mapVP.style.width=(worldVpW*sc)+'px';
