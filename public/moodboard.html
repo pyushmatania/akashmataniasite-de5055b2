@@ -9750,7 +9750,7 @@ function buildZoneCardHTML(meta){return '';}
       if(e.target.classList.contains('dragging'))continue;
       e.target.classList.toggle('paused-offscreen',!e.isIntersecting);
     }
-  },{root:vp,rootMargin:'200px',threshold:0});
+  },{root:vp,rootMargin:'600px',threshold:0});
   // Observe stickers AND zone intro cards
   setTimeout(()=>{
     document.querySelectorAll('#canvas > .sticker, #canvas .zone-intro-card').forEach(s=>obs.observe(s));
