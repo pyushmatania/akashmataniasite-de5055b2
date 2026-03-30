@@ -35,6 +35,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
     linear-gradient(#E8E4DF 1px, transparent 1px),
     linear-gradient(90deg, #E8E4DF 1px, transparent 1px);
   background-size:100% 100%,100% 100%,100% 100%,40px 40px,40px 40px;
+  contain:size layout;
 }
 .canvas::before{content:none}
 /* Bounce flash overlay */
@@ -58,12 +59,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 
 .sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
 .sticker:active{cursor:grabbing}
-.sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important}
+.sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important;will-change:transform,filter}
 /* Pause all animations inside off-screen stickers — applied by IntersectionObserver */
 .sticker.paused-offscreen,.sticker.paused-offscreen *{animation-play-state:paused!important}
 
 /* ===== ZONE VISUAL TINTS ===== */
-.zone-tint{position:absolute;pointer-events:none;z-index:1;border-radius:40px;opacity:0.06;transition:opacity 0.3s}
+.zone-tint{position:absolute;pointer-events:none;z-index:1;border-radius:40px;opacity:0.06;transition:opacity 0.3s;contain:strict;content-visibility:auto;contain-intrinsic-size:auto 800px}
 .zone-tint-introduction{background:radial-gradient(ellipse at center,#4CAF50,transparent 70%)}
 .zone-tint-warroom{background:radial-gradient(ellipse at center,#E53935,transparent 70%)}
 .zone-tint-launchpad{background:radial-gradient(ellipse at center,#42A5F5,transparent 70%)}
@@ -71,7 +72,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .zone-tint-playground{background:radial-gradient(ellipse at center,#FF9800,transparent 70%)}
 .zone-tint-memealley{background:radial-gradient(ellipse at center,#AB47BC,transparent 70%)}
 /* Organic country-style zone boundaries */
-.zone-boundary-svg{position:absolute;left:0;top:0;width:7000px;height:7000px;pointer-events:none;z-index:2;overflow:visible}
+.zone-boundary-svg{position:absolute;left:0;top:0;width:7000px;height:7000px;pointer-events:none;z-index:2;overflow:visible;contain:strict;content-visibility:auto;contain-intrinsic-size:7000px 7000px}
 .zone-boundary-svg path{fill:none;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40 18;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12))}
 /* Zone intro cards — bold card style */
 .zone-intro-creative{width:440px;min-height:340px;border-radius:28px;overflow:visible;background:#fff;border:2.5px solid #f0ece6;box-shadow:0 12px 48px rgba(0,0,0,0.12),0 4px 12px rgba(0,0,0,0.06);cursor:default;position:relative}
@@ -104,12 +105,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker.has-drag-handle{cursor:default!important}
 .sticker.has-drag-handle:active{cursor:default!important}
 /* Zone ground labels — painted diagonally in zone center */
-.zone-ground-label{position:absolute;pointer-events:none;z-index:3;font-family:var(--font-fun);font-weight:900;letter-spacing:0.35em;text-transform:uppercase;opacity:0.18;line-height:1;white-space:nowrap;text-shadow:0 4px 20px rgba(0,0,0,0.08)}
+.zone-ground-label{position:absolute;pointer-events:none;z-index:3;font-family:var(--font-fun);font-weight:900;letter-spacing:0.35em;text-transform:uppercase;opacity:0.18;line-height:1;white-space:nowrap;text-shadow:0 4px 20px rgba(0,0,0,0.08);contain:layout style}
 /* Glowing intro card on map */
 .map-intro-glow{animation:mapIntroGlow 2.5s ease-in-out infinite;border-radius:12px}
 @keyframes mapIntroGlow{0%,100%{box-shadow:0 0 15px var(--glow-color,rgba(76,175,80,0.6)),0 0 30px var(--glow-color,rgba(76,175,80,0.3))}50%{box-shadow:0 0 25px var(--glow-color,rgba(76,175,80,0.8)),0 0 50px var(--glow-color,rgba(76,175,80,0.4))}}
 /* Hollywood Casino-style signpost with 2 poles */
-.hollywood-signpost{position:absolute;pointer-events:none;z-index:15;display:flex;flex-direction:column;align-items:center;transform:translate(-50%,-100%)}
+.hollywood-signpost{position:absolute;pointer-events:none;z-index:15;display:flex;flex-direction:column;align-items:center;transform:translate(-50%,-100%);contain:layout style}
 .hollywood-signpost .hp-board{position:relative;display:flex;align-items:center;justify-content:center;min-width:160px;padding:12px 24px;border-radius:6px;font-family:var(--font-fun);font-size:1.1rem;font-weight:900;color:#fff;letter-spacing:0.12em;text-transform:uppercase;text-align:center;text-shadow:0 2px 4px rgba(0,0,0,0.4);border:3px solid rgba(255,255,255,0.5);box-shadow:0 6px 24px rgba(0,0,0,0.3),inset 0 -3px 8px rgba(0,0,0,0.15),inset 0 3px 8px rgba(255,255,255,0.15);z-index:2}
 .hollywood-signpost .hp-board::before{content:'';position:absolute;inset:3px;border:1px solid rgba(255,255,255,0.25);border-radius:3px;pointer-events:none}
 .hollywood-signpost .hp-bulbs{position:absolute;inset:-6px;border-radius:9px;pointer-events:none;z-index:3}
@@ -122,7 +123,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .hollywood-signpost .hp-ground{width:100px;height:8px;background:radial-gradient(ellipse,rgba(0,0,0,0.18),transparent 70%);border-radius:50%;margin-top:-2px}
 
 /* ===== PROJECT SHOWCASE CARDS ===== */
-.sticker-project{background:#fff;border-radius:18px;padding:20px;border:2px solid #f0ece6;width:240px;box-shadow:0 4px 24px rgba(0,0,0,0.08);transition:transform 0.2s,box-shadow 0.2s}
+.sticker-project{background:#fff;border-radius:18px;padding:20px;border:2px solid #f0ece6;width:240px;box-shadow:0 4px 24px rgba(0,0,0,0.08);transition:transform 0.2s,box-shadow 0.2s;contain:content}
 .sticker-project:hover{transform:translateY(-4px) !important;box-shadow:0 8px 32px rgba(0,0,0,0.12) !important}
 .sticker-project .proj-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .sticker-project .proj-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem}
@@ -2131,7 +2132,7 @@ body.map-expanded .scroll-counter{display:none!important}
 .rearrange-row{display:flex;gap:8px;margin-top:10px;align-items:stretch}
 .rearrange-row .rearrange-btn{display:none}
 /* PIN Modal */
-.pin-overlay{position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.55);display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.pin-overlay{position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.55);display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);contain:layout style}
 .pin-overlay.show{display:flex}
 .pin-modal{background:#fff;border-radius:18px;padding:28px 24px;width:280px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.25);font-family:var(--font-fun)}
 .pin-modal h3{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:6px}
@@ -2168,7 +2169,7 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="settings-panel" id="settingsPanel">
   <div class="settings-titlebar">
     <div class="settings-traffic">
-      <span class="t-red" onclick="event.stopPropagation();document.getElementById('settingsPanel').classList.remove('open')"></span>
+      <span class="t-red" onclick="event.stopPropagation();_settingsPanel.classList.remove('open')"></span>
       <span class="t-yellow"></span>
       <span class="t-green"></span>
     </div>
@@ -4052,6 +4053,7 @@ function getZoneIntroCenter(target){
 function cycleIntroCards(e){
   if(e){e.preventDefault();e.stopPropagation();}
   if(typeof ensureZoneIntroCards==='function')ensureZoneIntroCards();
+  _invalidateStickerCache();
   _playIntroIdx=(_playIntroIdx+1)%_playIntroSequence.length;
   const target=_playIntroSequence[_playIntroIdx];
   const center=getZoneIntroCenter(target);
@@ -5283,12 +5285,14 @@ function clampStickerToMoodboard(sticker,left,top){
   };
 }
 
+let _cachedStickers=null,_cachedStickersTime=0;
+function _invalidateStickerCache(){_cachedStickers=null;}
 function getAllStickers(){
-  // Include ALL stickers — isIntroCard() routes zone intro cards to zone centers
-  return Array.from(document.querySelectorAll('#canvas > .sticker'));
+  if(_cachedStickers&&(performance.now()-_cachedStickersTime<500))return _cachedStickers.slice();
+  _cachedStickers=Array.from(document.querySelectorAll('#canvas > .sticker'));_cachedStickersTime=performance.now();return _cachedStickers.slice();
 }
 function getAllStickersIncludingIntro(){
-  return Array.from(document.querySelectorAll('#canvas > .sticker'));
+  return getAllStickers();
 }
 
 function normalizeAllStickerBounds(){
@@ -6154,6 +6158,7 @@ setTimeout(centerOnIntroCard,200);
 // ===== UNIFIED SCROLL HANDLER (replaces 3 separate listeners) =====
 let _scrollRAF=null;
 const _scrollCounterEl=document.getElementById('scrollCounter');
+const _settingsPanel=document.getElementById('settingsPanel');
 vp.addEventListener('scroll',()=>{
   if(_scrollRAF)return;
   _scrollRAF=requestAnimationFrame(()=>{
@@ -6572,12 +6577,12 @@ function prog(el,e){
 
 // ===== SETTINGS =====
 function toggleSettings(){
-  document.getElementById('settingsPanel').classList.toggle('open');
+  _settingsPanel.classList.toggle('open');
 }
 // Close panel when clicking outside
 document.addEventListener('click',e=>{
   if(!e.target.closest('.settings-panel') && !e.target.closest('.settings-btn')){
-    document.getElementById('settingsPanel').classList.remove('open');
+    _settingsPanel.classList.remove('open');
   }
 });
 
@@ -7709,24 +7714,23 @@ function drawMap(){
   } else {
     // SMALL: render mini sticker previews with actual content
     let count=0;
+    const catColors={photo:'#64B5F6',meme:'#CE93D8',badge:'#FFD54F',interactive:'#FF7043',postit:'#81C784',stamp:'#EF5350',emoji:'transparent'};
+    const frag=document.createDocumentFragment();
     stickerData.forEach(d=>{
      if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
       const dx=(d.left-offsetX)*sc, dy=(d.top-offsetY)*sc;
       if(dx<-30||dx>canvasW+30||dy<-30||dy>canvasH+30)return;
       count++;
       const w=Math.max(4,d.w*sc),h=Math.max(3,d.h*sc);
-      // Category color for minimap border
-      const catColors={photo:'#64B5F6',meme:'#CE93D8',badge:'#FFD54F',interactive:'#FF7043',postit:'#81C784',stamp:'#EF5350',emoji:'transparent'};
       const catBorder=catColors[d.cat]||'rgba(255,255,255,0.3)';
-      // Lightweight colored div — at minimap scale stickers are 4-20px rectangles
-      // Using a div avoids deep cloneNode(true) which was the primary performance bottleneck
       const el=document.createElement('div');
       el.className='mi';
       el.style.cssText='left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;background:'+d.bg+';border-radius:'+d.radius+';'+(d.border?'border:'+d.border+';':'')+(catBorder!=='transparent'?'outline:1px solid '+catBorder+';':'')+
         (d.bg!=='transparent'?'box-shadow:0 0.5px 2px rgba(0,0,0,0.1);':'');
       if(d.emoji&&w>3){const l=document.createElement('div');l.className='mi-emoji-label';l.textContent=d.emoji;l.style.fontSize=Math.max(Math.min(w*0.55,20),3)+'px';el.appendChild(l)}
-      mapCanvas.appendChild(el);
+      frag.appendChild(el);
     });
+    mapCanvas.appendChild(frag);
     if(mapCount)mapCount.textContent=count+' items';
     // Add zone boundary overlay to small map — exact canvas curved paths
     const oldBSvg=mapCanvas.querySelector('.small-map-boundaries');
@@ -8877,6 +8881,7 @@ function ensureIntroCluster(){
 
 function ensureZoneIntroCards(){
   document.querySelectorAll('.zone-intro-card[data-zone="work"], .zone-intro-card[data-zone="portfolio"], .zone-intro-card[data-zone="fun"]').forEach(card=>card.remove());
+  _invalidateStickerCache();
 
   document.querySelectorAll('.zic-counter[data-target]').forEach(el=>{
     if(el.dataset.animated)return;
@@ -9126,6 +9131,7 @@ function buildZoneCardHTML(meta){return '';}
 setTimeout(async ()=>{
   ensureIntroCluster();
   ensureZoneIntroCards();
+  _invalidateStickerCache();
   await bootstrapMap(true);
   // Re-center on intro card AFTER items are rearranged
   scrollToZone(null,'hub');
