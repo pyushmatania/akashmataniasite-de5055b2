@@ -4198,28 +4198,66 @@ function _getNavOcclusionPx(){
   if(!nav)return 0;
   return nav.offsetHeight||0;
 }
+function _measureZoneIntroVisualBounds(card){
+  if(!card) return null;
+  const scale=(typeof MOODBOARD_VIEW_SCALE==='number'&&MOODBOARD_VIEW_SCALE>0?MOODBOARD_VIEW_SCALE:1);
+  const prev={vis:card.style.visibility,disp:card.style.display};
+  card.style.visibility='hidden';
+  card.style.display='';
+  void card.offsetHeight;
+
+  const cardRect=card.getBoundingClientRect();
+  const baseW=card.offsetWidth||Math.round(cardRect.width/scale)||380;
+  const baseH=card.offsetHeight||Math.round(cardRect.height/scale)||420;
+  let minX=0,minY=0,maxX=baseW,maxY=baseH;
+
+  card.querySelectorAll('*').forEach(node=>{
+    if(!(node instanceof HTMLElement)) return;
+    const rect=node.getBoundingClientRect();
+    if(rect.width<=0&&rect.height<=0) return;
+    const localLeft=(rect.left-cardRect.left)/scale;
+    const localTop=(rect.top-cardRect.top)/scale;
+    const localRight=(rect.right-cardRect.left)/scale;
+    const localBottom=(rect.bottom-cardRect.top)/scale;
+    minX=Math.min(minX,localLeft);
+    minY=Math.min(minY,localTop);
+    maxX=Math.max(maxX,localRight);
+    maxY=Math.max(maxY,localBottom);
+  });
+
+  card.style.visibility=prev.vis;
+  card.style.display=prev.disp;
+
+  return {
+    minX,minY,maxX,maxY,
+    w:maxX-minX,
+    h:maxY-minY,
+    centerOffsetX:(minX+maxX)/2,
+    centerOffsetY:(minY+maxY)/2
+  };
+}
 function anchorZoneIntroCard(card,zoneOverride){
   if(!card) return null;
   const zone=zoneOverride||card.dataset.zone||'hub';
   const center=getCanonicalZoneCenter(zone);
   if(!center) return null;
-  // Temporarily make card visible & unstyled to measure true size
-  const prev={pos:card.style.position,vis:card.style.visibility,disp:card.style.display,trans:card.style.transform};
-  card.style.visibility='hidden';card.style.display='';card.style.transform='rotate(0deg)';
-  // Force reflow then measure
-  void card.offsetHeight;
-  const w=card.offsetWidth||380;
-  const h=card.offsetHeight||420;
-  // Restore
-  card.style.visibility=prev.vis;card.style.display=prev.disp;card.style.transform=prev.trans;
-  // Position so the card's DOM center sits at the zone center
-  const left=Math.max(0,Math.min(MOODBOARD_WORLD_WIDTH-w,center.x-w/2));
-  const top=Math.max(0,Math.min(MOODBOARD_WORLD_HEIGHT-h,center.y-h/2));
+  const visualBounds=_measureZoneIntroVisualBounds(card);
+  if(!visualBounds) return null;
+  const maxLeft=Math.max(0,MOODBOARD_WORLD_WIDTH-visualBounds.maxX);
+  const maxTop=Math.max(0,MOODBOARD_WORLD_HEIGHT-visualBounds.maxY);
+  // Position so the full visual bounds center — including overflowed chrome like Work tabs — sits at the zone center
+  const left=Math.max(0,Math.min(center.x-visualBounds.centerOffsetX,maxLeft));
+  const top=Math.max(0,Math.min(center.y-visualBounds.centerOffsetY,maxTop));
   card.style.left=left+'px';
   card.style.top=top+'px';
-  card.style.transform='rotate(0deg)';
   // Return the true visual center of the card in world coords
-  return {left,top,w,h,x:left+w/2,y:top+h/2};
+  return {
+    left,top,
+    w:visualBounds.w,
+    h:visualBounds.h,
+    x:left+visualBounds.centerOffsetX,
+    y:top+visualBounds.centerOffsetY
+  };
 }
 function anchorAllZoneIntroCards(){
   ['hub','introduction','work','portfolio','hobby','fun'].forEach(zone=>{
