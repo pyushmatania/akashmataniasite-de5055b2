@@ -6289,6 +6289,7 @@ function sD(e){
   sox=cx/SCALE+vp.scrollLeft/SCALE-stickerLeft;
   soy=cy/SCALE+vp.scrollTop/SCALE-stickerTop;
   if(e.touches)e.preventDefault();
+  document.body.style.userSelect='none';document.body.style.webkitUserSelect='none';
 }
 
 let _stickerMoveRAF=null;
