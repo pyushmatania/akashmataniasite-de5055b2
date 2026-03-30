@@ -479,10 +479,18 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .rearrange-btn{display:none}
 .rearrange-note{margin-top:6px;text-align:center;font-size:0.6rem;color:rgba(255,255,255,0.35);letter-spacing:0.02em}
 
-/* Mobile crash guard */
+/* Mobile crash guard — aggressive perf mode for low-power devices */
 body.safety-mode .canvas{background-repeat:repeat!important;image-rendering:auto!important}
-body.safety-mode .sticker{filter:drop-shadow(0 2px 6px rgba(0,0,0,0.08))!important}
+body.safety-mode .sticker{filter:drop-shadow(0 2px 6px rgba(0,0,0,0.08))!important;contain:layout style paint!important}
+body.safety-mode .sticker *{animation:none!important;transition:none!important}
 body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5px rgba(0,0,0,0.18)!important}
+body.safety-mode .zone-tint{display:none!important}
+body.safety-mode .zone-boundary-svg{display:none!important}
+body.safety-mode .doodle-accent{display:none!important}
+body.safety-mode .map-player-ping{animation:none!important}
+body.safety-mode .bitmoji-greeting{display:none!important}
+/* Virtualized: completely hidden off-screen stickers (saves layout/paint) */
+.sticker.virtualized{display:none!important}
 
 
 /* Notebook paper extras */
