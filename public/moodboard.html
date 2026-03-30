@@ -7422,14 +7422,15 @@ function addMapDecorations(cw, ch){
     svg.innerHTML=s;
     wrap.appendChild(svg);
   }
-  addTower(48,38,20,40,'#4a9bd9','#3580b8');
-  addTower(24,22,16,32,'#e07850','#c05838');
-  addTower(72,18,18,36,'#e85070','#c83858');
+  // Towers positioned at road intersections, zone-colored
+  addTower(24,10,20,40,'#26a69a','#00897b');   // Origin — at V1/H1 crossing
+  addTower(76,10,18,36,'#e53935','#c62828');    // Work — at V2/H1 crossing
+  addTower(24,42,16,32,'#1e88e5','#1565c0');    // Portfolio — at V1/H2 crossing
   if(!IS_MOBILE_MAP){
-    addTower(85,42,16,32,'#50a878','#389060');
-    addTower(15,72,18,36,'#9c6fd0','#7850b0');
-    addTower(60,75,14,28,'#e8c050','#c8a038');
-    addTower(38,82,16,32,'#5890c8','#4078a8');
+    addTower(76,42,16,32,'#9c27b0','#7b1fa2');  // Fun — at V2/H2 crossing
+    addTower(24,75,18,36,'#ff9800','#e65100');   // Hobby left — at V1/H3
+    addTower(76,75,14,28,'#ffa726','#f57c00');   // Hobby right — at V2/H3
+    addTower(50,25,20,40,'#78909C','#607080');   // Center landmark
   }
 
   // === ANIMATED FERRIS WHEEL ===
