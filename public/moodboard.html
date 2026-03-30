@@ -7847,6 +7847,7 @@ function drawMap(){
   } else {
     // SMALL: lightweight low-graphics rendering — colored thumbnails matching canvas items
     let count=0;
+    const catColors={photo:'#64B5F6',meme:'#CE93D8',badge:'#FFD54F',interactive:'#FF7043',postit:'#81C784',stamp:'#EF5350',emoji:'#90CAF9'};
     const frag=document.createDocumentFragment();
     stickerData.forEach(d=>{
       if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
@@ -7855,36 +7856,32 @@ function drawMap(){
       const dx=(liveLeft-offsetX)*sc, dy=(liveTop-offsetY)*sc;
       if(dx<-30||dx>canvasW+30||dy<-30||dy>canvasH+30)return;
       count++;
-      const w=Math.max(5,d.w*sc),h=Math.max(4,d.h*sc);
+      const w=Math.max(6,d.w*sc),h=Math.max(5,d.h*sc);
       const el=document.createElement('div');
       el.className='mi';
-      // Use actual sticker background or grab computed color from ref
-      let bg=d.bg||'rgba(255,255,255,0.7)';
-      let border=d.border||'';
-      let radius=d.radius||'3px';
-      // For photos/images, try to grab the image src for a tiny thumbnail
-      let thumbSrc='';
-      if(d.ref){
-        const img=d.ref.querySelector('img');
-        if(img&&img.src)thumbSrc=img.src;
-        // Grab computed bg if sticker bg is transparent
-        if(!d.bg||d.bg==='transparent'||d.bg===''){
-          const cs=getComputedStyle(d.ref);
-          if(cs.backgroundColor&&cs.backgroundColor!=='rgba(0, 0, 0, 0)')bg=cs.backgroundColor;
-          else bg='rgba(255,255,255,0.8)';
-        }
-      }
+      // Determine visual appearance
+      let bg=d.bg||catColors[d.cat]||'rgba(255,255,255,0.85)';
+      if(!bg||bg==='transparent'||bg==='')bg=catColors[d.cat]||'rgba(255,255,255,0.85)';
+      const radius=d.radius||'3px';
+      const border=d.border||'';
+      // For images/photos, use cached thumbnail src
       let extraStyle='';
-      if(thumbSrc){
-        extraStyle='background-image:url('+thumbSrc+');background-size:cover;background-position:center;';
+      if(d.ref&&!d._thumbSrc){
+        const img=d.ref.querySelector('img');
+        d._thumbSrc=img&&img.src?img.src:'';
       }
+      if(d._thumbSrc){
+        extraStyle='background-image:url('+d._thumbSrc+');background-size:cover;background-position:center;';
+      }
+      // Category-colored outline for visibility on blue bg
+      const catOutline=catColors[d.cat]||'rgba(255,255,255,0.4)';
       el.style.cssText='position:absolute;left:'+dx+'px;top:'+dy+'px;width:'+w+'px;height:'+h+'px;background:'+bg+';border-radius:'+radius+';'+(border?'border:'+border+';':'')+
-        'box-shadow:0 0.5px 3px rgba(0,0,0,0.15);overflow:hidden;'+extraStyle;
-      if(d.emoji&&w>4){
+        'outline:1px solid '+catOutline+';box-shadow:0 1px 4px rgba(0,0,0,0.2);overflow:hidden;z-index:2;'+extraStyle;
+      if(d.emoji&&w>6){
         const l=document.createElement('div');
         l.className='mi-emoji-label';
         l.textContent=d.emoji;
-        l.style.fontSize=Math.max(Math.min(w*0.55,20),3)+'px';
+        l.style.fontSize=Math.max(Math.min(w*0.5,16),4)+'px';
         el.appendChild(l);
       }
       frag.appendChild(el);
