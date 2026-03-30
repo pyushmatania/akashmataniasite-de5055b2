@@ -11223,7 +11223,14 @@ function ensureCompanionStickers(force){
                 msgEl.textContent='OUT! You scored '+youScore;
                 msgEl.className='hc-msg out';
                 addBall('out','W');
-                setTimeout(function(){switchInnings();},1800);
+                if(target>=0){
+                  // 2nd innings chase — player out before target
+                  if(youScore>target){endGame(true);}
+                  else{endGame(false);}
+                }else{
+                  // 1st innings — switch to CPU batting
+                  setTimeout(function(){switchInnings();},1800);
+                }
                 return;
               } else {
                 // Runs scored = player's number
