@@ -1700,37 +1700,40 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-work .zic-stat-val{font-family:var(--font-fun);font-size:1.1rem;font-weight:700;color:#64B4FF;display:block}
 .zic-work .zic-stat-label{font-size:0.5rem;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.04em;display:block;margin-top:2px}
 
-/* ── PORTFOLIO: Tall Laptop — Dark Indigo ── */
+/* ── PORTFOLIO: Tall Laptop — Dark Indigo (improved readability) ── */
 .zic-portfolio{width:440px;padding:0;min-height:400px}
 .zic-portfolio .zic-screen{
   background:linear-gradient(160deg,#1a1a2e,#16213e,#0f3460);
-  border-radius:16px 16px 0 0;border:2px solid rgba(126,87,194,0.25);padding:28px 22px 22px;
+  border-radius:16px 16px 0 0;border:2px solid rgba(126,87,194,0.3);padding:28px 22px 22px;
   position:relative;overflow:hidden;min-height:340px;
-  box-shadow:inset 0 0 40px rgba(126,87,194,0.06);
+  box-shadow:inset 0 0 40px rgba(126,87,194,0.08);
 }
-.zic-portfolio .zic-screen::before{content:'';position:absolute;top:0;left:0;right:0;height:28px;background:rgba(126,87,194,0.12);border-radius:14px 14px 0 0}
+.zic-portfolio .zic-screen::before{content:'';position:absolute;top:0;left:0;right:0;height:28px;background:rgba(126,87,194,0.15);border-radius:14px 14px 0 0}
 .zic-portfolio .zic-dots{position:absolute;top:8px;left:14px;display:flex;gap:6px;z-index:2}
-.zic-portfolio .zic-dot{width:10px;height:10px;border-radius:50%}
+.zic-portfolio .zic-dot{width:10px;height:10px;border-radius:50%;cursor:pointer;transition:transform 0.15s}
+.zic-portfolio .zic-dot:hover{transform:scale(1.3)}
 .zic-portfolio .zic-dot.r{background:#FF8A80}.zic-portfolio .zic-dot.y{background:#FFD180}.zic-portfolio .zic-dot.g{background:#B9F6CA}
-.zic-portfolio .zic-url-bar{position:absolute;top:5px;left:80px;right:14px;height:18px;background:rgba(126,87,194,0.12);border-radius:4px;z-index:2}
-.zic-portfolio .zic-url-text{color:#B39DDB;font-size:0.55rem;font-family:monospace;line-height:18px;padding:0 8px}
+.zic-portfolio .zic-url-bar{position:absolute;top:5px;left:80px;right:14px;height:18px;background:rgba(126,87,194,0.15);border-radius:4px;z-index:2}
+.zic-portfolio .zic-url-text{color:#CE93D8;font-size:0.55rem;font-family:monospace;line-height:18px;padding:0 8px}
 .zic-portfolio .zic-screen-body{margin-top:14px}
 .zic-portfolio .zic-cursor{position:absolute;bottom:30px;right:40px;font-size:1.4rem;animation:zicCursorBlink 1.2s ease-in-out infinite;z-index:3}
 @keyframes zicCursorBlink{0%,100%{opacity:1;transform:translate(0,0)}50%{opacity:0.5;transform:translate(-5px,5px)}}
-.zic-portfolio .zic-title{font-family:'Courier New',monospace;font-size:1.4rem;font-weight:700;color:#B39DDB;margin-bottom:4px}
-.zic-portfolio .zic-title .zic-blink{animation:zicTermBlink 1s step-end infinite;color:#CE93D8}
+.zic-portfolio .zic-title{font-family:'Courier New',monospace;font-size:1.4rem;font-weight:700;color:#CE93D8;margin-bottom:4px;text-shadow:0 0 12px rgba(126,87,194,0.3)}
+.zic-portfolio .zic-title .zic-blink{animation:zicTermBlink 1s step-end infinite;color:#E1BEE7}
 @keyframes zicTermBlink{0%,100%{opacity:1}50%{opacity:0}}
-.zic-portfolio .zic-sub{font-family:var(--font-hand);font-size:0.9rem;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:14px}
+.zic-portfolio .zic-sub{font-family:var(--font-hand);font-size:0.92rem;color:rgba(255,255,255,0.75);line-height:1.6;margin-bottom:14px}
 .zic-portfolio .zic-project-list{list-style:none;margin:0 0 14px;padding:0}
-.zic-portfolio .zic-project-list li{font-family:var(--font-sans);font-size:0.78rem;color:rgba(255,255,255,0.65);padding:6px 10px;margin-bottom:4px;background:rgba(126,87,194,0.08);border-radius:8px;border-left:3px solid rgba(126,87,194,0.35);display:flex;align-items:center;gap:8px}
+.zic-portfolio .zic-project-list li{font-family:var(--font-sans);font-size:0.8rem;color:rgba(255,255,255,0.82);padding:7px 12px;margin-bottom:4px;background:rgba(126,87,194,0.1);border-radius:8px;border-left:3px solid rgba(126,87,194,0.45);display:flex;align-items:center;gap:8px;transition:all 0.2s;cursor:default}
+.zic-portfolio .zic-project-list li:hover{background:rgba(126,87,194,0.18);transform:translateX(4px)}
 .zic-portfolio .zic-project-list li .proj-emoji{font-size:1rem}
-.zic-portfolio .zic-project-list li .proj-name{font-weight:700;color:#B39DDB}
-.zic-portfolio .zic-project-list li .proj-desc{font-size:0.7rem;color:rgba(255,255,255,0.4);display:block}
+.zic-portfolio .zic-project-list li .proj-name{font-weight:700;color:#CE93D8}
+.zic-portfolio .zic-project-list li .proj-desc{font-size:0.72rem;color:rgba(255,255,255,0.55);display:block}
 .zic-portfolio .zic-code-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.zic-portfolio .zic-code-tag{background:rgba(126,87,194,0.1);border:1px solid rgba(126,87,194,0.2);color:#B39DDB;border-radius:6px;padding:4px 10px;font-family:monospace;font-size:0.62rem}
-.zic-portfolio .zic-stats{display:flex;gap:12px;padding-top:12px;border-top:1px solid rgba(126,87,194,0.15)}
-.zic-portfolio .zic-stat-val{font-family:monospace;font-size:1.3rem;font-weight:900;color:#B39DDB}
-.zic-portfolio .zic-stat-label{font-family:var(--font-sans);font-size:0.58rem;color:rgba(255,255,255,0.35);margin-top:2px}
+.zic-portfolio .zic-code-tag{background:rgba(126,87,194,0.12);border:1px solid rgba(126,87,194,0.25);color:#CE93D8;border-radius:6px;padding:4px 10px;font-family:monospace;font-size:0.64rem;transition:all 0.2s;cursor:default}
+.zic-portfolio .zic-code-tag:hover{background:rgba(126,87,194,0.22);transform:scale(1.06);box-shadow:0 0 10px rgba(126,87,194,0.15)}
+.zic-portfolio .zic-stats{display:flex;gap:12px;padding-top:12px;border-top:1px solid rgba(126,87,194,0.2)}
+.zic-portfolio .zic-stat-val{font-family:monospace;font-size:1.4rem;font-weight:900;color:#CE93D8;text-shadow:0 0 12px rgba(126,87,194,0.3)}
+.zic-portfolio .zic-stat-label{font-family:var(--font-sans);font-size:0.6rem;color:rgba(255,255,255,0.5);margin-top:2px}
 .zic-portfolio .zic-stat{text-align:center;flex:1}
 .zic-portfolio .zic-base{height:18px;background:linear-gradient(180deg,rgba(126,87,194,0.2),rgba(126,87,194,0.08));border-radius:0 0 6px 6px}
 .zic-portfolio .zic-base::after{content:'';position:absolute;bottom:-6px;left:15%;right:15%;height:6px;background:rgba(126,87,194,0.06);border-radius:0 0 8px 8px}
