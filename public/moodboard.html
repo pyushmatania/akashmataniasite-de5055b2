@@ -11788,6 +11788,7 @@ window.openProject=openProject;
     touchStartX=e.touches[0].clientX;
     touchStartY=e.touches[0].clientY;
     swiping=true;
+    card.classList.add('touching');
   },{passive:true});
   showcase.addEventListener('touchmove',function(e){
     if(!swiping)return;
