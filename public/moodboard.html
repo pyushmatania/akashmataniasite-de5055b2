@@ -4286,57 +4286,78 @@ body.map-expanded .scroll-counter{display:none!important}
   50%{opacity:0.3;transform:scaleX(1)}
 }
 
-/* ── THE CARD (Dark Glass — Gallery Style) ── */
+/* ── THE CARD (Ultra Premium Glass) ── */
 .zp-showcase-card{
   position:relative;z-index:5;
   width:280px;min-height:380px;
-  border-radius:22px;
-  background:linear-gradient(145deg,rgba(42,39,64,0.85) 0%,rgba(24,21,42,0.9) 40%,rgba(13,11,30,0.92) 100%);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border:1.5px solid rgba(255,255,255,0.12);
+  border-radius:24px;
+  background:
+    linear-gradient(165deg,
+      rgba(255,255,255,0.12) 0%,
+      rgba(255,255,255,0.05) 20%,
+      rgba(140,100,255,0.06) 40%,
+      rgba(255,255,255,0.03) 60%,
+      rgba(180,140,255,0.04) 80%,
+      rgba(255,255,255,0.08) 100%);
+  backdrop-filter:blur(40px) saturate(1.8);-webkit-backdrop-filter:blur(40px) saturate(1.8);
+  border:1px solid rgba(255,255,255,0.18);
   box-shadow:
-    0 0 0 1px rgba(255,255,255,0.06),
-    0 20px 60px rgba(0,0,0,0.6),
-    0 8px 24px rgba(0,0,0,0.4),
-    0 0 80px rgba(140,90,255,0.15),
-    inset 0 1px 0 rgba(255,255,255,0.15),
-    inset 0 -1px 0 rgba(255,255,255,0.04),
-    inset 0 0 30px rgba(140,90,255,0.06);
+    0 0 0 0.5px rgba(255,255,255,0.1),
+    0 1px 0 0 rgba(255,255,255,0.2) inset,
+    0 -1px 0 0 rgba(255,255,255,0.05) inset,
+    1px 0 0 0 rgba(255,255,255,0.06) inset,
+    -1px 0 0 0 rgba(255,255,255,0.06) inset,
+    0 25px 80px -12px rgba(0,0,0,0.7),
+    0 8px 32px rgba(0,0,0,0.4),
+    0 0 100px rgba(140,90,255,0.12),
+    inset 0 0 60px rgba(140,90,255,0.04);
   transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);
   overflow:hidden;
 }
 
-/* Edge glow — light catching the frame edges */
+/* Iridescent top highlight — like light catching glass edge */
 .zp-showcase-card::before{
-  content:'';position:absolute;inset:-3px;z-index:-1;
-  border-radius:24px;
-  background:linear-gradient(180deg,
-    rgba(200,150,255,0.5) 0%,rgba(200,150,255,0.08) 18%,
-    transparent 35%,transparent 65%,
-    rgba(200,150,255,0.06) 82%,rgba(200,150,255,0.35) 100%);
-  filter:blur(8px);
-  animation:cardEdgePulse 4s ease-in-out infinite;
+  content:'';position:absolute;top:-1px;left:10%;right:10%;height:1px;z-index:20;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.0) 10%,
+    rgba(255,255,255,0.5) 30%,
+    rgba(255,200,255,0.6) 45%,
+    rgba(200,220,255,0.7) 55%,
+    rgba(255,255,255,0.5) 70%,
+    rgba(255,255,255,0.0) 90%,
+    transparent 100%);
+  filter:blur(0.5px);
+  animation:iridShift 6s ease-in-out infinite;
 }
 
-/* Subtle inner light diffusion */
+/* Internal frosted light refraction */
 .zp-showcase-card::after{
   content:'';position:absolute;inset:0;z-index:10;pointer-events:none;
   border-radius:inherit;
-  background:radial-gradient(ellipse at 50% 20%,
-    rgba(180,140,255,0.08) 0%,transparent 60%);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%,rgba(255,255,255,0.1) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 30% 20%,rgba(200,180,255,0.06) 0%,transparent 50%),
+    radial-gradient(ellipse 50% 30% at 70% 80%,rgba(140,120,255,0.04) 0%,transparent 50%),
+    linear-gradient(180deg,rgba(255,255,255,0.06) 0%,transparent 30%,transparent 90%,rgba(255,255,255,0.03) 100%);
   mix-blend-mode:screen;
+}
+@keyframes iridShift{
+  0%,100%{opacity:0.6;background-position:0% 0%}
+  50%{opacity:1;background-position:100% 0%}
 }
 @keyframes cardEdgePulse{0%,100%{opacity:0.5}40%{opacity:1}70%{opacity:0.65}}
 
 /* Card role badge */
 .zp-sc-badge{
   position:absolute;top:14px;left:14px;z-index:11;
-  padding:5px 14px;border-radius:8px;
+  padding:5px 14px;border-radius:10px;
   font-family:var(--font-fun);font-size:0.58rem;font-weight:800;
   letter-spacing:0.1em;text-transform:uppercase;
-  background:var(--sc-c1,rgba(124,77,255,0.3));
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.85);
+  box-shadow:0 2px 12px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
 /* Card emoji center */
@@ -4347,10 +4368,10 @@ body.map-expanded .scroll-counter{display:none!important}
 .zp-sc-emoji::before{
   content:'';position:absolute;inset:0;
   background:
-    radial-gradient(ellipse at 30% 25%,var(--sc-c1,rgba(120,80,220,0.5)) 0%,transparent 55%),
-    radial-gradient(ellipse at 70% 75%,var(--sc-c2,rgba(200,60,150,0.4)) 0%,transparent 55%),
-    radial-gradient(ellipse at 50% 100%,rgba(255,180,60,0.2) 0%,transparent 40%);
-  filter:blur(30px);
+    radial-gradient(ellipse at 30% 25%,var(--sc-c1,rgba(120,80,220,0.4)) 0%,transparent 55%),
+    radial-gradient(ellipse at 70% 75%,var(--sc-c2,rgba(200,60,150,0.3)) 0%,transparent 55%),
+    radial-gradient(ellipse at 50% 100%,rgba(255,180,60,0.15) 0%,transparent 40%);
+  filter:blur(35px);
   animation:artworkPulse 6s ease-in-out infinite;
 }
 .zp-sc-emoji span{
@@ -4370,34 +4391,39 @@ body.map-expanded .scroll-counter{display:none!important}
 .zp-sc-num{
   text-align:center;padding:12px 0 16px;
   font-family:var(--font-fun);font-size:0.6rem;font-weight:600;
-  color:rgba(255,255,255,0.25);letter-spacing:0.08em;
+  color:rgba(255,255,255,0.2);letter-spacing:0.08em;
 }
 
 /* Card info section */
 .zp-sc-info{
   padding:0 18px 20px;
+  border-top:1px solid rgba(255,255,255,0.06);
 }
 .zp-sc-desc{
   font-family:var(--font-sans);font-size:0.72rem;
-  color:rgba(255,255,255,0.4);line-height:1.55;text-align:center;
-  margin-bottom:14px;
+  color:rgba(255,255,255,0.45);line-height:1.55;text-align:center;
+  margin:14px 0;
 }
 .zp-sc-tags{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
 .zp-sc-tag{
   font-family:var(--font-fun);font-size:0.54rem;font-weight:700;
-  padding:4px 10px;border-radius:6px;letter-spacing:0.04em;
+  padding:4px 10px;border-radius:8px;letter-spacing:0.04em;
+  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
 }
 .zp-sc-cta{
   display:block;width:100%;text-align:center;
   padding:10px;border:none;border-radius:12px;
   font-family:var(--font-fun);font-size:0.65rem;font-weight:800;
   letter-spacing:0.08em;text-transform:uppercase;
-  background:linear-gradient(135deg,var(--sc-c1,rgba(124,77,255,0.3)),var(--sc-c2,rgba(200,60,150,0.2)));
-  color:rgba(255,255,255,0.8);cursor:pointer;
-  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.06);
+  color:rgba(255,255,255,0.75);cursor:pointer;
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   transition:all 0.2s;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
 }
-.zp-sc-cta:active{transform:scale(0.95);background:rgba(255,255,255,0.1)}
+.zp-sc-cta:active{transform:scale(0.95);background:rgba(255,255,255,0.12)}
 
 /* Swipe hint */
 .zp-sc-swipe-hint{
