@@ -7333,21 +7333,7 @@ function addMapDecorations(cw, ch){
      layer.appendChild(wrap);
    });
 
-   // === ZONE GROUND LABELS ON MAP — diagonal, centered in zones ===
-   // Canvas ground labels: Origin(1800,2200), Work(8800,2000), Portfolio(1200,7200), Hobby(1400,11200), Fun(8600,9000)
-   // Convert to % of 14000
-   const mapGroundLabels=[
-     {x:20,y:18,label:'INTRODUCTION',color:'rgba(0,188,212,0.28)',rot:-25},
-     {x:62,y:18,label:'WORK',color:'rgba(229,57,53,0.25)',rot:-20},
-     {x:16,y:50,label:'PORTFOLIO',color:'rgba(66,165,245,0.24)',rot:-30},
-     {x:38,y:82,label:'HOBBY',color:'rgba(255,152,0,0.25)',rot:-22},
-     {x:62,y:50,label:'FUN',color:'rgba(171,71,188,0.25)',rot:-28},
-   ];
-   const labelFS=window.innerWidth<600?28:38;
-   mapGroundLabels.forEach(gl=>{
-     const el=addDiv('map-ground-label','left:'+gl.x+'%;top:'+gl.y+'%;z-index:4;font-family:var(--font-fun);font-weight:900;font-size:'+labelFS+'px;color:'+gl.color+';letter-spacing:0.35em;text-transform:uppercase;transform:rotate('+gl.rot+'deg);white-space:nowrap;text-shadow:0 2px 6px rgba(0,0,0,0.08)');
-     el.textContent=gl.label;
-   });
+   // Zone ground labels REMOVED from big map — signposts already label each zone clearly
 
   // Beaches REMOVED — were creating visible rectangular lines on the map
 
