@@ -1735,46 +1735,50 @@ body.map-expanded .scroll-counter{display:none!important}
 .zic-portfolio .zic-base{height:18px;background:linear-gradient(180deg,rgba(126,87,194,0.2),rgba(126,87,194,0.08));border-radius:0 0 6px 6px}
 .zic-portfolio .zic-base::after{content:'';position:absolute;bottom:-6px;left:15%;right:15%;height:6px;background:rgba(126,87,194,0.06);border-radius:0 0 8px 8px}
 
-/* ── WORK: Mission Dossier — Classified File ── */
+/* ── WORK: Mission Dossier — Classified File (redesigned) ── */
 @keyframes stampSlam{0%{transform:rotate(-12deg) scale(2.5);opacity:0}40%{transform:rotate(-12deg) scale(0.9);opacity:1}60%{transform:rotate(-12deg) scale(1.05)}100%{transform:rotate(-12deg) scale(1)}}
-@keyframes workGlow{0%,100%{box-shadow:0 8px 40px rgba(229,57,53,0.12),0 2px 8px rgba(0,0,0,0.3)}50%{box-shadow:0 8px 50px rgba(229,57,53,0.22),0 2px 8px rgba(0,0,0,0.3)}}
+@keyframes workGlow{0%,100%{box-shadow:0 8px 40px rgba(229,57,53,0.18),0 2px 8px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.03)}50%{box-shadow:0 8px 55px rgba(229,57,53,0.32),0 2px 8px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.03)}}
+@keyframes workPulseTag{0%,100%{border-color:rgba(229,57,53,0.2)}50%{border-color:rgba(229,57,53,0.5)}}
+@keyframes opsFlicker{0%,90%,100%{opacity:1}95%{opacity:0.7}}
 .zic-work{width:420px;padding:0;min-height:380px;position:relative;animation:workGlow 5s ease-in-out infinite}
 /* Folder tabs */
-.zic-folder-tab{position:absolute;top:-22px;left:20px;background:#2A1A1A;color:rgba(229,57,53,0.7);font-family:monospace;font-size:0.55rem;font-weight:700;letter-spacing:0.12em;padding:5px 14px;border-radius:6px 6px 0 0;border:1.5px solid rgba(229,57,53,0.2);border-bottom:none;z-index:1}
-.zic-folder-tab-2{left:auto;right:20px;background:#1E1212;color:rgba(229,57,53,0.45);font-size:0.5rem}
+.zic-folder-tab{position:absolute;top:-22px;left:20px;background:#2A1A1A;color:rgba(229,57,53,0.85);font-family:monospace;font-size:0.55rem;font-weight:700;letter-spacing:0.12em;padding:5px 14px;border-radius:6px 6px 0 0;border:1.5px solid rgba(229,57,53,0.25);border-bottom:none;z-index:1}
+.zic-folder-tab-2{left:auto;right:20px;background:#1E1212;color:rgba(229,57,53,0.6);font-size:0.5rem}
 /* Main dossier body */
-.zic-dossier{background:linear-gradient(170deg,#1A0E0E 0%,#140A0A 40%,#1E1010 100%);border:2px solid rgba(229,57,53,0.2);border-radius:4px;padding:22px 20px 18px;position:relative;overflow:hidden;min-height:360px}
-.zic-dossier::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(229,57,53,0.03) 28px,rgba(229,57,53,0.03) 29px);pointer-events:none;z-index:0}
-.zic-dossier::after{content:'';position:absolute;top:0;left:60px;bottom:0;width:1px;background:rgba(229,57,53,0.08);pointer-events:none}
+.zic-dossier{background:linear-gradient(170deg,#1C0F0F 0%,#150909 40%,#1F1111 100%);border:2px solid rgba(229,57,53,0.25);border-radius:6px;padding:24px 22px 20px;position:relative;overflow:hidden;min-height:360px}
+.zic-dossier::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(229,57,53,0.04) 28px,rgba(229,57,53,0.04) 29px);pointer-events:none;z-index:0}
+.zic-dossier::after{content:'';position:absolute;top:0;left:60px;bottom:0;width:1px;background:rgba(229,57,53,0.1);pointer-events:none}
 .zic-dossier>*{position:relative;z-index:1}
 /* Classified stamp */
-.zic-stamp{position:absolute;top:16px;right:14px;font-family:var(--font-fun);font-size:0.7rem;font-weight:900;color:rgba(229,57,53,0.65);border:2.5px solid rgba(229,57,53,0.5);border-radius:4px;padding:3px 10px;transform:rotate(-12deg);letter-spacing:0.15em;z-index:2;animation:stampSlam 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.3s both}
+.zic-stamp{position:absolute;top:16px;right:14px;font-family:var(--font-fun);font-size:0.7rem;font-weight:900;color:rgba(229,57,53,0.8);border:2.5px solid rgba(229,57,53,0.6);border-radius:4px;padding:3px 10px;transform:rotate(-12deg);letter-spacing:0.15em;z-index:2;animation:stampSlam 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.3s both;text-shadow:0 0 6px rgba(229,57,53,0.3)}
 /* Header */
-.zic-dossier-header{margin-bottom:16px;padding-bottom:14px;border-bottom:1px dashed rgba(229,57,53,0.15)}
+.zic-dossier-header{margin-bottom:16px;padding-bottom:14px;border-bottom:1px dashed rgba(229,57,53,0.2)}
 .zic-dossier-id{margin-top:4px}
 /* Mission briefing */
-.zic-briefing{margin-bottom:14px;padding:10px 12px;background:rgba(229,57,53,0.04);border-left:3px solid rgba(229,57,53,0.3);border-radius:0 6px 6px 0}
-.zic-briefing-label{font-family:monospace;font-size:0.52rem;color:rgba(229,57,53,0.6);letter-spacing:0.1em;margin-bottom:4px;font-weight:700}
-.zic-briefing-text{font-family:var(--font-hand);font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.6}
+.zic-briefing{margin-bottom:14px;padding:12px 14px;background:rgba(229,57,53,0.06);border-left:3px solid rgba(229,57,53,0.45);border-radius:0 8px 8px 0;transition:background 0.3s}
+.zic-briefing:hover{background:rgba(229,57,53,0.1)}
+.zic-briefing-label{font-family:monospace;font-size:0.55rem;color:rgba(229,57,53,0.8);letter-spacing:0.1em;margin-bottom:5px;font-weight:700}
+.zic-briefing-text{font-family:var(--font-hand);font-size:0.88rem;color:rgba(255,255,255,0.82);line-height:1.65}
 /* Operations list */
 .zic-ops-list{margin-bottom:14px}
-.zic-ops-item{display:flex;align-items:center;gap:10px;padding:7px 10px;margin-bottom:3px;background:rgba(229,57,53,0.03);border-radius:6px;transition:background 0.2s}
-.zic-ops-item:hover{background:rgba(229,57,53,0.08)}
-.zic-ops-status{width:8px;height:8px;border-radius:50%;background:rgba(229,57,53,0.2);border:1.5px solid rgba(229,57,53,0.3);flex-shrink:0}
-.zic-ops-status.active{background:#E53935;box-shadow:0 0 8px rgba(229,57,53,0.5)}
-.zic-ops-name{font-family:var(--font-fun);font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.75);display:block}
-.zic-ops-role{font-family:var(--font-sans);font-size:0.65rem;color:rgba(255,255,255,0.35);display:block}
+.zic-ops-item{display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:4px;background:rgba(229,57,53,0.04);border-radius:8px;transition:all 0.25s;cursor:default;border:1px solid transparent}
+.zic-ops-item:hover{background:rgba(229,57,53,0.1);border-color:rgba(229,57,53,0.15);transform:translateX(4px)}
+.zic-ops-status{width:8px;height:8px;border-radius:50%;background:rgba(229,57,53,0.25);border:1.5px solid rgba(229,57,53,0.35);flex-shrink:0;transition:all 0.3s}
+.zic-ops-status.active{background:#E53935;box-shadow:0 0 10px rgba(229,57,53,0.6);animation:opsFlicker 3s ease-in-out infinite}
+.zic-ops-name{font-family:var(--font-fun);font-size:0.8rem;font-weight:700;color:rgba(255,255,255,0.92);display:block}
+.zic-ops-role{font-family:var(--font-sans);font-size:0.66rem;color:rgba(255,255,255,0.55);display:block;margin-top:1px}
 /* Arsenal tags */
-.zic-arsenal{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
-.zic-arsenal-tag{font-family:monospace;font-size:0.58rem;color:rgba(229,57,53,0.7);background:rgba(229,57,53,0.06);border:1px solid rgba(229,57,53,0.15);border-radius:3px;padding:3px 8px;letter-spacing:0.04em}
+.zic-arsenal{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.zic-arsenal-tag{font-family:monospace;font-size:0.6rem;color:rgba(229,57,53,0.9);background:rgba(229,57,53,0.08);border:1px solid rgba(229,57,53,0.2);border-radius:4px;padding:4px 10px;letter-spacing:0.04em;transition:all 0.25s;cursor:default;animation:workPulseTag 4s ease-in-out infinite}
+.zic-arsenal-tag:hover{background:rgba(229,57,53,0.18);transform:scale(1.06);box-shadow:0 0 12px rgba(229,57,53,0.15)}
 /* Mission stats */
-.zic-mission-stats{display:flex;gap:8px;padding:12px 0;border-top:1px dashed rgba(229,57,53,0.12);border-bottom:1px dashed rgba(229,57,53,0.12);margin-bottom:10px}
+.zic-mission-stats{display:flex;gap:8px;padding:14px 0;border-top:1px dashed rgba(229,57,53,0.18);border-bottom:1px dashed rgba(229,57,53,0.18);margin-bottom:10px}
 .zic-ms{text-align:center;flex:1}
-.zic-ms-val{font-family:var(--font-fun);font-size:1.3rem;font-weight:900;color:#E53935;text-shadow:0 0 12px rgba(229,57,53,0.3)}
-.zic-ms-label{font-family:monospace;font-size:0.48rem;color:rgba(229,57,53,0.4);letter-spacing:0.08em;margin-top:2px}
+.zic-ms-val{font-family:var(--font-fun);font-size:1.4rem;font-weight:900;color:#EF5350;text-shadow:0 0 16px rgba(229,57,53,0.35)}
+.zic-ms-label{font-family:monospace;font-size:0.5rem;color:rgba(229,57,53,0.55);letter-spacing:0.08em;margin-top:3px}
 /* Redacted bar */
 .zic-redacted-bar{display:flex;align-items:center;gap:6px;margin-bottom:4px}
-.zic-redacted-block{height:10px;flex:1;background:rgba(229,57,53,0.12);border-radius:2px}
+.zic-redacted-block{height:10px;flex:1;background:rgba(229,57,53,0.15);border-radius:2px}
 .zic-redacted-block.short{flex:0.4}
 /* Coffee stain watermark */
 .zic-coffee-stain{position:absolute;bottom:40px;right:-15px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,rgba(139,69,19,0.06) 30%,transparent 70%);border:2px solid rgba(139,69,19,0.04);pointer-events:none;z-index:0;opacity:0.7}
@@ -1782,8 +1786,8 @@ body.map-expanded .scroll-counter{display:none!important}
 
 @keyframes termBlink{0%,100%{opacity:1}50%{opacity:0}}
 @keyframes bootBar{0%{width:0%}100%{width:100%}}
-@keyframes introductionGlow{0%,100%{box-shadow:0 0 30px rgba(76,175,80,0.15),0 12px 48px rgba(0,0,0,0.35)}50%{box-shadow:0 0 50px rgba(76,175,80,0.3),0 12px 48px rgba(0,0,0,0.35)}}
-.zic-introduction{width:380px;padding:0;transform:rotate(2deg);min-height:360px;animation:introductionGlow 4s ease-in-out infinite!important}
+@keyframes introductionGlow{0%,100%{box-shadow:0 0 30px rgba(76,175,80,0.2),0 12px 48px rgba(0,0,0,0.4)}50%{box-shadow:0 0 55px rgba(76,175,80,0.4),0 12px 48px rgba(0,0,0,0.4)}}
+.zic-introduction{width:400px;padding:0;transform:rotate(2deg);min-height:360px;animation:introductionGlow 4s ease-in-out infinite!important}
 .zic-introduction .zic-polaroid-bg1{position:absolute;top:8px;left:-12px;right:12px;bottom:-8px;background:#0A120A;border-radius:4px;transform:rotate(-4deg);z-index:0;box-shadow:2px 3px 10px rgba(0,0,0,0.4)}
 .zic-introduction .zic-polaroid-bg2{position:absolute;top:4px;left:10px;right:-10px;bottom:-12px;background:#0F1A0F;border-radius:4px;transform:rotate(3deg);z-index:1;box-shadow:2px 3px 10px rgba(0,0,0,0.3)}
 .zic-introduction .zic-tape{position:absolute;top:-14px;left:50%;transform:translateX(-50%) rotate(-2deg);width:80px;height:28px;background:rgba(76,175,80,0.12);z-index:4;box-shadow:0 1px 3px rgba(0,0,0,0.2);border:1px solid rgba(76,175,80,0.08)}
@@ -2449,69 +2453,72 @@ body.map-expanded .scroll-counter{display:none!important}
   <div class="zic-polaroid-bg1"></div>
   <div class="zic-polaroid-bg2"></div>
   <!-- Main polaroid -->
-  <div class="zic-polaroid" style="position:relative;z-index:2;background:linear-gradient(160deg,#0A120A,#0F1A0F,#081208);border-radius:4px;padding:0;overflow:hidden;box-shadow:3px 5px 24px rgba(0,0,0,0.5);cursor:pointer" data-no-sticker-drag="true" onclick="if(event.target.closest('button'))return;event.stopPropagation();openZonePanel('introduction')">
+  <div class="zic-polaroid" style="position:relative;z-index:2;background:linear-gradient(160deg,#0A140A,#0F1E0F,#081408);border-radius:6px;padding:0;overflow:hidden;box-shadow:3px 5px 24px rgba(0,0,0,0.5);cursor:pointer" data-no-sticker-drag="true" onclick="if(event.target.closest('button'))return;event.stopPropagation();openZonePanel('introduction')">
     <!-- Terminal titlebar -->
-    <div style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(76,175,80,0.15)">
-      <span style="width:9px;height:9px;border-radius:50%;background:#FF5F57;display:inline-block"></span>
-      <span style="width:9px;height:9px;border-radius:50%;background:#FEBC2E;display:inline-block"></span>
-      <span style="width:9px;height:9px;border-radius:50%;background:#28C840;display:inline-block"></span>
-      <span style="font-family:monospace;font-size:0.6rem;color:rgba(76,175,80,0.5);margin-left:6px;flex:1;text-align:center">akash@introduction:~</span>
-      <span style="font-family:monospace;font-size:0.46rem;color:rgba(255,69,0,0.6);background:rgba(255,69,0,0.08);padding:1px 5px;border-radius:3px">⚠ LIVE</span>
+    <div style="display:flex;align-items:center;gap:6px;padding:9px 14px;background:rgba(0,0,0,0.5);border-bottom:1px solid rgba(76,175,80,0.2)">
+      <span style="width:9px;height:9px;border-radius:50%;background:#FF5F57;display:inline-block;cursor:pointer" onclick="event.stopPropagation();this.style.transform='scale(0)';setTimeout(()=>this.style.transform='',500)"></span>
+      <span style="width:9px;height:9px;border-radius:50%;background:#FEBC2E;display:inline-block;cursor:pointer" onclick="event.stopPropagation();this.closest('.zic-polaroid').style.filter='saturate(0)';setTimeout(()=>this.closest('.zic-polaroid').style.filter='',800)"></span>
+      <span style="width:9px;height:9px;border-radius:50%;background:#28C840;display:inline-block;cursor:pointer" onclick="event.stopPropagation();this.closest('.zic-polaroid').style.transform='scale(1.03)';setTimeout(()=>this.closest('.zic-polaroid').style.transform='',500)"></span>
+      <span style="font-family:monospace;font-size:0.62rem;color:rgba(76,175,80,0.65);margin-left:6px;flex:1;text-align:center">akash@introduction:~</span>
+      <span style="font-family:monospace;font-size:0.48rem;color:rgba(76,255,80,0.8);background:rgba(76,175,80,0.12);padding:2px 7px;border-radius:4px;border:1px solid rgba(76,175,80,0.25);animation:opsFlicker 2s ease-in-out infinite">● LIVE</span>
     </div>
-    <!-- Photo zone — zic-introduction-screen class enables boot animation on attack -->
+    <!-- Photo zone -->
     <div class="zic-photo-area zic-introduction-screen" style="position:relative">
-      <img src="/images/akash-photo.webp" alt="Akash" style="width:100%;height:190px;object-fit:cover;object-position:top;display:block;filter:sepia(0.15) contrast(1.05)">
-      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 45%,rgba(0,10,0,0.85));z-index:1"></div>
-      <div style="position:absolute;bottom:10px;left:14px;z-index:2">
-        <div style="font-family:monospace;font-size:0.52rem;color:rgba(76,175,80,0.55);margin-bottom:2px;letter-spacing:0.06em">// SUBJECT_IDENTIFIED · ACCESS_GRANTED</div>
-        <div style="font-family:var(--font-fun);font-size:1.1rem;font-weight:800;color:#fff;letter-spacing:0.06em">AKASH MATANIA</div>
-        <div style="font-family:monospace;font-size:0.44rem;color:rgba(255,69,0,0.5);margin-top:2px;letter-spacing:0.04em">CLEARANCE: LEVEL ZERO-ONE ● ● ● ● ○</div>
+      <img src="/images/akash-photo.webp" alt="Akash" style="width:100%;height:190px;object-fit:cover;object-position:top;display:block;filter:contrast(1.1) brightness(1.05)">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,14,0,0.9));z-index:1"></div>
+      <div style="position:absolute;bottom:12px;left:16px;z-index:2">
+        <div style="font-family:monospace;font-size:0.55rem;color:rgba(76,255,80,0.7);margin-bottom:3px;letter-spacing:0.06em">// SUBJECT_IDENTIFIED · ACCESS_GRANTED</div>
+        <div style="font-family:var(--font-fun);font-size:1.2rem;font-weight:800;color:#fff;letter-spacing:0.06em;text-shadow:0 2px 8px rgba(0,0,0,0.5)">AKASH MATANIA</div>
+        <div style="font-family:monospace;font-size:0.48rem;color:rgba(76,255,80,0.6);margin-top:3px;letter-spacing:0.04em">CLEARANCE: LEVEL ZERO-ONE
+          <span style="display:inline-flex;gap:2px;margin-left:4px">
+            <span style="color:#4CAF50">●</span><span style="color:#4CAF50">●</span><span style="color:#4CAF50">●</span><span style="color:#4CAF50">●</span><span style="color:rgba(76,175,80,0.25)">○</span>
+          </span>
+        </div>
       </div>
-      <!-- Scan sweep — zic-introduction-scanline activates on attack -->
-      <div class="zic-introduction-scanline" style="position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);opacity:0.5"></div>
+      <div class="zic-introduction-scanline" style="position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);opacity:0.4"></div>
     </div>
     <!-- Terminal body -->
-    <div style="padding:14px 16px 16px;font-family:monospace">
-      <!-- Boot lines -->
-      <div style="font-size:0.62rem;color:rgba(76,175,80,0.55);margin-bottom:10px;line-height:1.6">
-        <div><span style="color:rgba(76,175,80,0.4)">$</span> <span style="color:rgba(76,175,80,0.8)">cat</span> introduction.log</div>
+    <div style="padding:16px 18px 18px;font-family:monospace">
+      <!-- Boot command -->
+      <div style="font-size:0.65rem;color:rgba(76,255,80,0.6);margin-bottom:12px;line-height:1.6">
+        <div><span style="color:rgba(76,175,80,0.5)">$</span> <span style="color:rgba(76,255,80,0.9)">cat</span> <span style="color:rgba(255,255,255,0.7)">introduction.log</span></div>
       </div>
-      <!-- Life log entries — zic-introduction-boot-line enables corrupt-in animation on attack -->
-      <div style="font-size:0.67rem;line-height:1.75;margin-bottom:12px">
-        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.75)">BORN</span> <span style="color:rgba(255,255,255,0.32)">Jeypore, Odisha — small town, enormous dreams</span></div>
-        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.75)">AGE 15</span> <span style="color:rgba(255,255,255,0.32)">first program could only add numbers. shipped it anyway.</span></div>
-        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.75)">CS GRAD</span> <span style="color:rgba(255,255,255,0.32)">OUTR, Bhubaneswar — degree + mission, only one was useful</span></div>
-        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.45);margin-bottom:3px">▸ <span style="color:rgba(76,175,80,0.75)">BENGALURU</span> <span style="color:rgba(255,255,255,0.32)">moved to build. never stopped. 3 startups later…</span></div>
-        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.45)">▸ <span style="color:#4CAF50;text-shadow:0 0 8px rgba(76,175,80,0.4)">STATUS</span> <span style="color:rgba(255,255,255,0.45)">still loading</span> <span style="color:#4CAF50;animation:termBlink 1s step-end infinite">█</span></div>
+      <!-- Life log entries — HIGH CONTRAST -->
+      <div style="font-size:0.7rem;line-height:1.8;margin-bottom:14px">
+        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.55);margin-bottom:4px;padding:3px 0;border-radius:4px;transition:background 0.2s;cursor:default" onmouseenter="this.style.background='rgba(76,175,80,0.06)'" onmouseleave="this.style.background=''">▸ <span style="color:#66BB6A;font-weight:700">BORN</span> <span style="color:rgba(255,255,255,0.78)">Jeypore, Odisha — small town, enormous dreams</span></div>
+        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.55);margin-bottom:4px;padding:3px 0;border-radius:4px;transition:background 0.2s;cursor:default" onmouseenter="this.style.background='rgba(76,175,80,0.06)'" onmouseleave="this.style.background=''">▸ <span style="color:#66BB6A;font-weight:700">AGE 15</span> <span style="color:rgba(255,255,255,0.78)">first program could only add numbers. shipped it anyway.</span></div>
+        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.55);margin-bottom:4px;padding:3px 0;border-radius:4px;transition:background 0.2s;cursor:default" onmouseenter="this.style.background='rgba(76,175,80,0.06)'" onmouseleave="this.style.background=''">▸ <span style="color:#66BB6A;font-weight:700">CS GRAD</span> <span style="color:rgba(255,255,255,0.78)">OUTR, Bhubaneswar — degree + mission, only one was useful</span></div>
+        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.55);margin-bottom:4px;padding:3px 0;border-radius:4px;transition:background 0.2s;cursor:default" onmouseenter="this.style.background='rgba(76,175,80,0.06)'" onmouseleave="this.style.background=''">▸ <span style="color:#66BB6A;font-weight:700">BENGALURU</span> <span style="color:rgba(255,255,255,0.78)">moved to build. never stopped. 3 startups later…</span></div>
+        <div class="zic-introduction-boot-line" style="color:rgba(76,175,80,0.55)">▸ <span style="color:#4CAF50;text-shadow:0 0 10px rgba(76,175,80,0.5);font-weight:700">STATUS</span> <span style="color:rgba(255,255,255,0.85)">still loading</span> <span style="color:#4CAF50;animation:termBlink 1s step-end infinite">█</span></div>
       </div>
       <!-- Load bar -->
-      <div style="margin-bottom:12px">
-        <div style="font-size:0.55rem;color:rgba(76,175,80,0.45);margin-bottom:5px;font-family:monospace">LOADING: passion.exe</div>
-        <div style="background:rgba(76,175,80,0.1);border-radius:2px;height:4px;overflow:hidden;border:1px solid rgba(76,175,80,0.15)">
-          <div style="height:100%;width:83%;background:linear-gradient(90deg,#1B5E20,#4CAF50,#81C784);border-radius:2px;animation:bootBar 2.5s ease-out forwards"></div>
+      <div style="margin-bottom:14px">
+        <div style="font-size:0.58rem;color:rgba(76,255,80,0.55);margin-bottom:5px;font-family:monospace">LOADING: passion.exe</div>
+        <div style="background:rgba(76,175,80,0.12);border-radius:3px;height:5px;overflow:hidden;border:1px solid rgba(76,175,80,0.2)">
+          <div style="height:100%;width:83%;background:linear-gradient(90deg,#1B5E20,#4CAF50,#81C784);border-radius:3px;animation:bootBar 2.5s ease-out forwards;box-shadow:0 0 8px rgba(76,175,80,0.3)"></div>
         </div>
-        <div style="font-size:0.5rem;color:rgba(76,175,80,0.35);margin-top:3px;text-align:right">83% · still building</div>
+        <div style="font-size:0.52rem;color:rgba(76,255,80,0.5);margin-top:4px;text-align:right">83% · still building</div>
       </div>
     </div>
     <!-- Caption + tags -->
-    <div class="zic-caption" style="padding:0 14px 16px;text-align:center">
-      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:10px">
-        <span style="background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.62rem">🧠 CS Eng</span>
-        <span style="background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.62rem">🌱 Odisha Roots</span>
-        <span style="background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.62rem">🐕 Mr. Puchu</span>
-        <span style="background:rgba(76,175,80,0.1);color:#81C784;border:1px solid rgba(76,175,80,0.2);border-radius:6px;padding:3px 10px;font-family:var(--font-fun);font-size:0.62rem">☕ Chai Addict</span>
+    <div class="zic-caption" style="padding:0 16px 18px;text-align:center">
+      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:12px">
+        <span onclick="event.stopPropagation();this.style.transform='scale(1.15) rotate(3deg)';setTimeout(()=>this.style.transform='',300)" style="background:rgba(76,175,80,0.12);color:#A5D6A7;border:1px solid rgba(76,175,80,0.25);border-radius:8px;padding:4px 12px;font-family:var(--font-fun);font-size:0.65rem;cursor:pointer;transition:all 0.2s">🧠 CS Eng</span>
+        <span onclick="event.stopPropagation();this.style.transform='scale(1.15) rotate(-3deg)';setTimeout(()=>this.style.transform='',300)" style="background:rgba(76,175,80,0.12);color:#A5D6A7;border:1px solid rgba(76,175,80,0.25);border-radius:8px;padding:4px 12px;font-family:var(--font-fun);font-size:0.65rem;cursor:pointer;transition:all 0.2s">🌱 Odisha Roots</span>
+        <span onclick="event.stopPropagation();this.style.transform='scale(1.15) rotate(2deg)';setTimeout(()=>this.style.transform='',300)" style="background:rgba(76,175,80,0.12);color:#A5D6A7;border:1px solid rgba(76,175,80,0.25);border-radius:8px;padding:4px 12px;font-family:var(--font-fun);font-size:0.65rem;cursor:pointer;transition:all 0.2s">🐕 Mr. Puchu</span>
+        <span onclick="event.stopPropagation();this.style.transform='scale(1.15) rotate(-2deg)';setTimeout(()=>this.style.transform='',300)" style="background:rgba(76,175,80,0.12);color:#A5D6A7;border:1px solid rgba(76,175,80,0.25);border-radius:8px;padding:4px 12px;font-family:var(--font-fun);font-size:0.65rem;cursor:pointer;transition:all 0.2s">☕ Chai Addict</span>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:10px">
-        <div style="font-family:monospace;font-size:0.62rem;color:rgba(76,175,80,0.4)">vibes_received:</div>
-        <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;c.style.transform='scale(1.4)';c.style.transition='transform 0.15s';setTimeout(()=>c.style.transform='scale(1)',180);if(+c.textContent>=5){this.closest('.zic-introduction').style.boxShadow='0 0 50px rgba(76,175,80,0.6),0 12px 48px rgba(0,0,0,0.35)'}" style="background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:0.85rem;color:#4CAF50;font-family:monospace">+1</button>
-        <span style="font-family:var(--font-fun);font-weight:800;color:#4CAF50;min-width:20px;text-align:center;font-size:0.9rem">0</span>
+      <div style="display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:12px">
+        <div style="font-family:monospace;font-size:0.65rem;color:rgba(76,255,80,0.5)">vibes_received:</div>
+        <button onclick="event.stopPropagation();const c=this.nextElementSibling;c.textContent=+c.textContent+1;c.style.transform='scale(1.5)';c.style.textShadow='0 0 12px rgba(76,175,80,0.8)';setTimeout(()=>{c.style.transform='scale(1)';c.style.textShadow=''},200);if(+c.textContent>=5){this.closest('.zic-introduction').style.boxShadow='0 0 60px rgba(76,175,80,0.7),0 12px 48px rgba(0,0,0,0.4)'}" style="background:rgba(76,175,80,0.15);border:1px solid rgba(76,175,80,0.4);border-radius:8px;padding:5px 12px;cursor:pointer;font-size:0.9rem;color:#66BB6A;font-family:monospace;transition:all 0.15s" onmouseenter="this.style.background='rgba(76,175,80,0.25)'" onmouseleave="this.style.background='rgba(76,175,80,0.15)'">+1</button>
+        <span style="font-family:var(--font-fun);font-weight:800;color:#66BB6A;min-width:22px;text-align:center;font-size:1rem;transition:all 0.2s">0</span>
       </div>
       <div style="display:flex;gap:7px;justify-content:center">
-        <button onclick="event.stopPropagation();introductionAttack(this)" style="background:linear-gradient(135deg,#060E06,#0D200D);color:#4CAF50;border:1px solid rgba(76,175,80,0.35);border-radius:18px;padding:8px 14px;font-family:monospace;font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.06em;box-shadow:0 0 14px rgba(76,175,80,0.12)">⚡ BOOT_SEQUENCE</button>
-        <button onclick="event.stopPropagation();scrollToZone(null,'introduction')" style="background:linear-gradient(135deg,#1B5E20,#4CAF50);color:#fff;border:none;border-radius:18px;padding:8px 14px;font-family:var(--font-fun);font-size:0.58rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 3px 12px rgba(76,175,80,0.3)">🧭 Explore</button>
+        <button onclick="event.stopPropagation();introductionAttack(this)" style="background:linear-gradient(135deg,#060E06,#0D200D);color:#66BB6A;border:1px solid rgba(76,175,80,0.4);border-radius:18px;padding:9px 16px;font-family:monospace;font-size:0.6rem;font-weight:700;cursor:pointer;letter-spacing:0.06em;box-shadow:0 0 14px rgba(76,175,80,0.15);transition:all 0.2s" onmouseenter="this.style.boxShadow='0 0 24px rgba(76,175,80,0.3)'" onmouseleave="this.style.boxShadow='0 0 14px rgba(76,175,80,0.15)'">⚡ BOOT_SEQUENCE</button>
+        <button onclick="event.stopPropagation();scrollToZone(null,'introduction')" style="background:linear-gradient(135deg,#2E7D32,#4CAF50);color:#fff;border:none;border-radius:18px;padding:9px 16px;font-family:var(--font-fun);font-size:0.6rem;font-weight:700;cursor:pointer;letter-spacing:0.04em;box-shadow:0 4px 16px rgba(76,175,80,0.35);transition:all 0.2s" onmouseenter="this.style.transform='translateY(-2px)'" onmouseleave="this.style.transform=''">🧭 Explore</button>
       </div>
-      <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('introduction')" style="margin:12px -14px -16px;border-radius:0;border-left:none;border-right:none;border-bottom:none;border-top-color:rgba(76,175,80,0.2);color:rgba(76,175,80,0.8)">
-        <span class="zth-dot" style="background:#4CAF50"></span>
+      <div class="zic-tap-hint" onclick="event.stopPropagation();openZonePanel('introduction')" style="margin:14px -16px -18px;border-radius:0;border-left:none;border-right:none;border-bottom:none;border-top-color:rgba(76,175,80,0.25);color:rgba(76,255,80,0.85);background:rgba(76,175,80,0.04)">
+        <span class="zth-dot" style="background:#4CAF50;box-shadow:0 0 6px rgba(76,175,80,0.5)"></span>
         TAP TO OPEN FULL PROFILE
       </div>
     </div>
@@ -3232,9 +3239,9 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="zic-dossier-header">
       <div class="zic-stamp">TOP SECRET</div>
       <div class="zic-dossier-id">
-        <div style="font-family:monospace;font-size:0.5rem;color:rgba(229,57,53,0.4);letter-spacing:0.1em">FIELD AGENT</div>
-        <div style="font-family:var(--font-fun);font-size:1.3rem;font-weight:900;color:#E53935;letter-spacing:0.06em">AKASH MATANIA</div>
-        <div style="font-family:monospace;font-size:0.5rem;color:rgba(229,57,53,0.5);margin-top:2px">CODENAME: THE BUILDER · CLEARANCE LVL 8</div>
+        <div style="font-family:monospace;font-size:0.52rem;color:rgba(229,57,53,0.6);letter-spacing:0.1em">FIELD AGENT</div>
+        <div style="font-family:var(--font-fun);font-size:1.3rem;font-weight:900;color:#EF5350;letter-spacing:0.06em;text-shadow:0 0 20px rgba(229,57,53,0.3)">AKASH MATANIA</div>
+        <div style="font-family:monospace;font-size:0.52rem;color:rgba(229,57,53,0.65);margin-top:2px">CODENAME: THE BUILDER · CLEARANCE LVL 8</div>
       </div>
     </div>
     <!-- Mission briefing lines -->
