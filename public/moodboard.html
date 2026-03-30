@@ -19,7 +19,7 @@
 }
 html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);background:#FAF8F5;margin:0;padding:0;overscroll-behavior:none}
 *{-webkit-tap-highlight-color:transparent}
-.canvas-viewport{width:100vw;height:100vh;height:100dvh;overflow:auto;cursor:grab;position:relative;margin:0;padding:0;background:#FAF8F5;overscroll-behavior:none;will-change:scroll-position}
+.canvas-viewport{width:100vw;height:100vh;height:100dvh;overflow:auto;cursor:grab;position:relative;margin:0;padding:0;background:#FAF8F5;overscroll-behavior:none}
 .canvas{transform-origin:0 0;overflow:visible}
 @media(max-width:768px){.canvas{transform:scale(0.6)}}
 @media(min-width:769px){.canvas{transform:scale(0.72)}}
@@ -5356,27 +5356,26 @@ function cycleIntroCards(e){
   style.textContent='@keyframes confetti-burst{0%{opacity:1;transform:translate(0,0) rotate(0deg) scale(1)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) rotate('+Math.random()*720+'deg) scale(0.2)}}';
   document.head.appendChild(style);
 
-  // Stat pill tap → confetti + pop
-  document.querySelectorAll('.stat-pill').forEach(function(pill){
-    pill.addEventListener('click',function(e){
+  // Delegate taps (reduces many per-node listeners)
+  document.addEventListener('click',function(e){
+    var pill=e.target&&e.target.closest?e.target.closest('.stat-pill'):null;
+    if(pill){
       var r=pill.getBoundingClientRect();
       burstConfetti(r.left+r.width/2, r.top+r.height/2, 18);
       pill.classList.remove('popped');
       void pill.offsetWidth;
       pill.classList.add('popped');
       setTimeout(function(){pill.classList.remove('popped')},500);
-    });
-  });
-
-  // Tool chip tap → bounce
-  document.querySelectorAll('.tool-chip').forEach(function(chip){
-    chip.addEventListener('click',function(){
+      return;
+    }
+    var chip=e.target&&e.target.closest?e.target.closest('.tool-chip'):null;
+    if(chip){
       chip.classList.remove('bounced');
       void chip.offsetWidth;
       chip.classList.add('bounced');
       setTimeout(function(){chip.classList.remove('bounced')},600);
-    });
-  });
+    }
+  },{passive:true});
 })();
 
 // Fun fact toggle
@@ -5425,6 +5424,21 @@ function safeTimeout(fn,ms){
 }
 function cancelAllTimers(){_activeTimers.forEach(id=>clearTimeout(id));_activeTimers.clear()}
 
+// Pause background work when tab/app is hidden (prevents crashy timer build-up on mobile)
+(function(){
+  let wasHidden=false;
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){
+      wasHidden=true;
+      try{ if(window._mapScrollTimer){ clearTimeout(window._mapScrollTimer); window._mapScrollTimer=null; } }catch(e){}
+      try{ if(window._walkSyncTimers){ window._walkSyncTimers.forEach(clearTimeout); window._walkSyncTimers=[]; } }catch(e){}
+    }else if(wasHidden){
+      wasHidden=false;
+      try{ if(typeof updMap==='function') updMap(); }catch(e){}
+    }
+  },{passive:true});
+})();
+
 // RAF-throttled function wrapper
 function rafThrottle(fn){
   let id=null;
@@ -5469,6 +5483,7 @@ let _walkFootstepTimers=[];
 function clearWalkTimers(){
   _walkFootstepTimers.forEach(id=>clearTimeout(id));
   _walkFootstepTimers=[];
+  if(window._walkSyncTimers){window._walkSyncTimers.forEach(clearTimeout);window._walkSyncTimers=[];}
   // Clean up any leftover footstep/dust DOM
   if(typeof mapCanvas!=='undefined'&&mapCanvas){
     mapCanvas.querySelectorAll('[style*="z-index:9998"],[style*="z-index:9997"]').forEach(el=>el.remove());
@@ -8392,20 +8407,23 @@ function walkBitmojiTo(worldX,worldY,stickerRef){
       const sideY=worldY;
       // Use 'auto' (instant) scroll to avoid timing issues with smooth scroll
       centerMoodboardOn(worldX,worldY,'auto');
-      // Aggressive continuous resync: poll until small map is stable
-      let syncCount=0;
-      const syncInterval=setInterval(()=>{
-        syncCount++;
-        if(!mmExp){
-          if(syncCount<=2) ensureMapData(true);
-          drawMap();updMap();
-        }
-        if(syncCount>=8){clearInterval(syncInterval);}
-      },200);
-      // Final forced sync
-      setTimeout(()=>{
-        if(!mmExp){ensureMapData(true);drawMap();updMap();}
-      },2000);
+      // Bounded resync (avoids leaking intervals / CPU spikes on mobile)
+      try{
+        if(!window._walkSyncTimers) window._walkSyncTimers=[];
+        window._walkSyncTimers.forEach(clearTimeout);
+        window._walkSyncTimers=[];
+        const resync=function(force){
+          if(!mmExp){
+            if(force) ensureMapData(true);
+            drawMap();
+            updMap();
+          }
+        };
+        window._walkSyncTimers.push(setTimeout(function(){resync(true)},150));
+        window._walkSyncTimers.push(setTimeout(function(){resync(false)},450));
+        window._walkSyncTimers.push(setTimeout(function(){resync(false)},900));
+        window._walkSyncTimers.push(setTimeout(function(){resync(true)},1800));
+      }catch(e){}
       
       // Calculate footstep path on moodboard
       const vpCX=vp.scrollLeft+vp.clientWidth/2;
