@@ -3984,36 +3984,94 @@ body.map-expanded .scroll-counter{display:none!important}
 .zp-contact-link:hover{background:rgba(255,255,255,0.1);color:#fff}
 
 /* ── PORTFOLIO PANEL: project grid ── */
-.zp-projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
-@media(max-width:480px){.zp-projects-grid{grid-template-columns:1fr}}
+/* ═══ SWIPABLE HOLOGRAPHIC PROJECT CAROUSEL ═══ */
+.zp-projects-carousel{
+  display:flex;gap:20px;overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+  padding:0 24px 20px;margin:0 -28px;
+  scrollbar-width:none;
+}
+.zp-projects-carousel::-webkit-scrollbar{display:none}
+
 .zp-proj-card{
-  cursor:pointer;border:1.5px solid rgba(255,255,255,0.08);
-  transition:transform 0.2s,box-shadow 0.2s;
-  position:relative;overflow:hidden;
-  background:rgba(255,255,255,0.03);
+  flex:0 0 280px;scroll-snap-align:center;
+  cursor:pointer;position:relative;overflow:hidden;
+  border-radius:20px;
+  background:linear-gradient(145deg,rgba(15,12,30,0.95),rgba(8,6,20,0.98));
+  border:1.5px solid rgba(255,255,255,0.08);
+  transition:transform 0.4s cubic-bezier(0.22,1,0.36,1),box-shadow 0.4s;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
 }
-.zp-proj-card:hover{transform:translate(-3px,-3px);border-color:rgba(255,255,255,0.2);box-shadow:5px 5px 0 rgba(0,0,0,0.3)}
-.zp-proj-card:active{transform:translate(0,0)}
-.zp-proj-emoji-area{
-  min-height:90px;display:flex;align-items:center;justify-content:center;
-  font-size:2.6rem;position:relative;overflow:hidden;
+.zp-proj-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+.zp-proj-card:active{transform:scale(0.97)}
+
+/* Holographic shimmer overlay */
+.zp-proj-card::before{
+  content:'';position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.06) 45%,rgba(255,255,255,0.12) 50%,rgba(255,255,255,0.06) 55%,transparent 60%);
+  background-size:200% 100%;
+  animation:holoShimmer 4s ease-in-out infinite;
+  border-radius:20px;
 }
-.zp-proj-emoji-area::after{
-  content:'';position:absolute;inset:0;opacity:0.1;
+@keyframes holoShimmer{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
 }
-.zp-proj-info{padding:13px 14px 16px}
-.zp-proj-name{font-family:var(--font-fun);font-size:0.88rem;font-weight:800;color:#fff;display:block;margin-bottom:4px}
-.zp-proj-desc{font-family:var(--font-sans);font-size:0.68rem;color:rgba(255,255,255,0.42);line-height:1.45;margin-bottom:9px}
-.zp-proj-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:9px}
-.zp-proj-tag{font-family:var(--font-fun);font-size:0.54rem;font-weight:700;padding:2px 7px;letter-spacing:0.04em}
-.zp-proj-open-btn{
-  display:flex;align-items:center;gap:4px;
-  font-family:var(--font-fun);font-size:0.6rem;font-weight:700;
-  letter-spacing:0.05em;text-transform:uppercase;
-  color:rgba(255,255,255,0.4);border:none;background:none;cursor:pointer;
-  padding:0;transition:color 0.2s;
+
+/* Glow ring around card */
+.zp-proj-card::after{
+  content:'';position:absolute;inset:-2px;z-index:-1;
+  border-radius:22px;
+  background:conic-gradient(from var(--card-angle,0deg),var(--card-c1,rgba(124,77,255,0.4)),transparent 30%,var(--card-c2,rgba(200,60,150,0.3)),transparent 60%,var(--card-c1,rgba(124,77,255,0.4)));
+  opacity:0;transition:opacity 0.4s;
+  filter:blur(8px);
 }
-.zp-proj-open-btn:hover{color:#fff}
+.zp-proj-card:hover::after{opacity:1}
+
+/* Screenshot image area */
+.zp-proj-img-area{
+  position:relative;height:320px;overflow:hidden;
+  border-radius:18px 18px 0 0;
+}
+.zp-proj-img-area img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+.zp-proj-card:hover .zp-proj-img-area img{transform:scale(1.05)}
+
+/* Role badge on image */
+.zp-proj-role-badge{
+  position:absolute;top:12px;left:12px;z-index:4;
+  padding:5px 14px;border-radius:8px;
+  font-family:var(--font-fun);font-size:0.6rem;font-weight:800;
+  letter-spacing:0.1em;text-transform:uppercase;
+  background:rgba(0,0,0,0.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.85);
+}
+
+/* Card number */
+.zp-proj-num{
+  position:absolute;bottom:12px;right:14px;z-index:4;
+  font-family:var(--font-fun);font-size:0.6rem;font-weight:600;
+  color:rgba(255,255,255,0.35);letter-spacing:0.06em;
+}
+
+/* Info section */
+.zp-proj-info{padding:16px 18px 20px;position:relative;z-index:2}
+.zp-proj-name{font-family:var(--font-fun);font-size:1.1rem;font-weight:900;color:#fff;display:block;margin-bottom:4px;letter-spacing:-0.01em}
+.zp-proj-desc{font-family:var(--font-sans);font-size:0.7rem;color:rgba(255,255,255,0.4);line-height:1.5;margin-bottom:12px;display:block}
+.zp-proj-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0}
+.zp-proj-tag{font-family:var(--font-fun);font-size:0.56rem;font-weight:700;padding:4px 10px;border-radius:6px;letter-spacing:0.04em}
+
+/* Carousel dots indicator */
+.zp-carousel-dots{
+  display:flex;justify-content:center;gap:6px;padding:8px 0 4px;
+}
+.zp-carousel-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,0.15);transition:all 0.3s;
+}
+.zp-carousel-dot.active{background:rgba(255,255,255,0.6);width:18px;border-radius:3px}
 
 /* Project detail — gallery overlay */
 .zp-proj-detail{
