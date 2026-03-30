@@ -7053,7 +7053,18 @@ let _cachedDecDims={w:-1,h:-1};
 let _mapOpenRafId=null;
 
 function toggleMap(){
-  if(mapTransitioning)return;
+  // Safety valve: if mapTransitioning has been stuck for >5s, force-reset it
+  if(mapTransitioning){
+    if(!toggleMap._stuckSince) toggleMap._stuckSince=performance.now();
+    if(performance.now()-toggleMap._stuckSince>5000){
+      console.warn('toggleMap: force-resetting stuck mapTransitioning');
+      mapTransitioning=false;
+      toggleMap._stuckSince=0;
+    } else {
+      return;
+    }
+  }
+  toggleMap._stuckSince=0;
   mapTransitioning=true;
 
   const mmContainer=document.getElementById('mc');
@@ -7068,12 +7079,23 @@ function toggleMap(){
     // Scan stickers lazily — skip getComputedStyle if data already cached
     if(!stickerData.length) scanStickers();
 
+    // Failsafe: if expand never completes, force-finish after 6s
+    const _expandFailsafe=setTimeout(()=>{
+      if(mapTransitioning){
+        console.warn('toggleMap: expand failsafe triggered');
+        mmContainer.classList.remove('map-opening');
+        mmContainer.classList.add('expanded');
+        mapTransitioning=false;
+        try{recenter()}catch(e){}
+      }
+    },6000);
+
     // Phase 1: Layout only (no decorations yet)
     if(_mapOpenRafId){cancelAnimationFrame(_mapOpenRafId);_mapOpenRafId=null;}
     _mapOpenRafId=requestAnimationFrame(()=>{
       try{
         drawMapLayout();
-      }catch(e){console.error('Map layout error:',e);mapTransitioning=false;return;}
+      }catch(e){console.error('Map layout error:',e);mapTransitioning=false;clearTimeout(_expandFailsafe);mmContainer.classList.remove('map-opening');return;}
 
       // Phase 2: Decorations — use cached layer or build async
       _mapOpenRafId=requestAnimationFrame(()=>{
@@ -7081,7 +7103,6 @@ function toggleMap(){
           const cw=drawMap._cw,ch=drawMap._ch;
           const rCW=Math.round(cw),rCH=Math.round(ch);
           if(_cachedDecLayer&&_cachedDecDims.w===rCW&&_cachedDecDims.h===rCH){
-            // Reuse cached decoration layer
             const old=mapCanvas.querySelector('.map-dec-layer');
             if(old)old.remove();
             mapCanvas.appendChild(_cachedDecLayer);
@@ -7101,6 +7122,7 @@ function toggleMap(){
             updMap();
           }catch(e){console.error('Map clone render error:',e)}
           // Phase 4: finalize after animation
+          clearTimeout(_expandFailsafe);
           setTimeout(()=>{
             mmContainer.classList.remove('map-opening');
             mmContainer.classList.add('expanded');
@@ -7116,17 +7138,22 @@ function toggleMap(){
     mmContainer.classList.remove('expanded');
     mmContainer.classList.add('map-closing');
     setTimeout(()=>{
-      mmExp=false;
-      mmContainer.classList.remove('map-closing');
-      mapTransitioning=false;
-      mapZoomScale=1;
-      // Invalidate expanded map clones so small map rebuilds fresh
-      invalidateMapCloneCache(true);
-      _cachedSmallMapSvgW=-1;_cachedSmallMapSvgH=-1;
-      // Redraw as small minimap — no force-rescan (stickers can't move while map is open)
-      ensureMapData(false);
-      drawMap();
-      updMap();
+      try{
+        mmExp=false;
+        mmContainer.classList.remove('map-closing');
+        mapTransitioning=false;
+        mapZoomScale=1;
+        invalidateMapCloneCache(true);
+        _cachedSmallMapSvgW=-1;_cachedSmallMapSvgH=-1;
+        ensureMapData(false);
+        drawMap();
+        updMap();
+      }catch(e){
+        console.error('Map collapse error:',e);
+        mapTransitioning=false;
+        mmExp=false;
+        mmContainer.classList.remove('map-closing');
+      }
     },550);
   }
 }
