@@ -10731,15 +10731,42 @@ function openZonePanel(zone){
   panel.classList.add('open');
   bd.classList.add('open');
   document.body.style.overflow='hidden';
+  // Spawn floating light particles
+  _spawnZonePanelParticles(panel);
 }
 window.openZonePanel=openZonePanel;
+
+function _spawnZonePanelParticles(panel){
+  // Remove old particles first
+  panel.querySelectorAll('.zp-particle').forEach(p=>p.remove());
+  const count=12;
+  for(let i=0;i<count;i++){
+    const p=document.createElement('div');
+    p.className='zp-particle';
+    const size=2+Math.random()*4;
+    p.style.width=size+'px';
+    p.style.height=size+'px';
+    p.style.left=(8+Math.random()*84)+'%';
+    p.style.top=(10+Math.random()*80)+'%';
+    p.style.setProperty('--dur',(4+Math.random()*6).toFixed(1)+'s');
+    p.style.setProperty('--delay',(Math.random()*4).toFixed(1)+'s');
+    p.style.setProperty('--tx',(Math.random()*60-30).toFixed(0)+'px');
+    p.style.setProperty('--ty',(-40-Math.random()*80).toFixed(0)+'px');
+    p.style.setProperty('--tx2',(Math.random()*40-20).toFixed(0)+'px');
+    p.style.setProperty('--ty2',(-60-Math.random()*100).toFixed(0)+'px');
+    panel.appendChild(p);
+  }
+}
 
 function closeZonePanel(zone){
   const panel=document.getElementById('zp-'+zone);
   const bd=document.getElementById('zpbd-'+zone);
-  if(panel)panel.classList.remove('open');
+  if(panel){
+    panel.classList.remove('open');
+    // Clean up particles after transition
+    setTimeout(()=>{panel.querySelectorAll('.zp-particle').forEach(p=>p.remove())},600);
+  }
   if(bd)bd.classList.remove('open');
-  // Close any open project detail inside this panel
   document.querySelectorAll('.zp-proj-detail.open').forEach(d=>d.classList.remove('open'));
   document.body.style.overflow='';
 }
@@ -10747,13 +10774,19 @@ window.closeZonePanel=closeZonePanel;
 
 function openProject(id){
   const el=document.getElementById('zpd-'+id);
-  if(el)el.classList.add('open');
+  if(el){
+    el.classList.add('open');
+    _spawnZonePanelParticles(el);
+  }
 }
 window.openProject=openProject;
 
 function closeProject(id){
   const el=document.getElementById('zpd-'+id);
-  if(el)el.classList.remove('open');
+  if(el){
+    el.classList.remove('open');
+    setTimeout(()=>{el.querySelectorAll('.zp-particle').forEach(p=>p.remove())},500);
+  }
 }
 window.closeProject=closeProject;
 
