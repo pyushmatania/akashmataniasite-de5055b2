@@ -11016,6 +11016,159 @@ function ensureCompanionStickers(force){
       }
     }
 
+    // Hand Cricket Mini-Game
+    if(item.kind==='hcricket'){
+      const hc=el.querySelector('.zc-hcricket');
+      if(hc){
+        hc.style.pointerEvents='auto';
+        const VALID=[0,1,2,3,4,6];
+        const HAND_EMOJI={0:'✊',1:'☝️',2:'✌️',3:'🤟',4:'🖖',6:'👍'};
+        let phase='bat'; // 'bat','bowl','done'
+        let youScore=0,cpuScore=0,wins=0,losses=0;
+        let target=-1; // target for 2nd innings
+        const phaseEl=hc.querySelector('.hc-phase');
+        const msgEl=hc.querySelector('.hc-msg');
+        const histEl=hc.querySelector('.hc-history');
+        const recEl=hc.querySelector('.hc-record');
+        const youScoreEl=hc.querySelector('[data-who="you"]');
+        const cpuScoreEl=hc.querySelector('[data-who="cpu"]');
+        const youHandEl=hc.querySelector('.hc-hand.you');
+        const cpuHandEl=hc.querySelector('.hc-hand.cpu');
+        const btns=hc.querySelectorAll('.hc-btn');
+
+        // True randomness using crypto API with fallback
+        function trueRandom(){
+          var arr=new Uint32Array(1);
+          if(window.crypto&&window.crypto.getRandomValues){window.crypto.getRandomValues(arr);}
+          else{arr[0]=Math.floor(Math.random()*4294967296);}
+          return VALID[arr[0]%VALID.length];
+        }
+
+        function addBall(type,text){
+          var b=document.createElement('span');
+          b.className='hc-ball '+type;
+          b.textContent=text;
+          histEl.appendChild(b);
+        }
+
+        function resetGame(){
+          youScore=0;cpuScore=0;target=-1;phase='bat';
+          youScoreEl.textContent='0';cpuScoreEl.textContent='0';
+          youScoreEl.classList.add('batting');cpuScoreEl.classList.remove('batting');
+          phaseEl.textContent='you bat first';
+          msgEl.textContent='pick a number to bat!';
+          msgEl.className='hc-msg';
+          histEl.innerHTML='';
+          youHandEl.textContent='✊';cpuHandEl.textContent='✊';
+          youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';
+          btns.forEach(function(b){b.style.display='';});
+        }
+
+        function switchInnings(){
+          target=youScore;
+          phase='bowl';
+          phaseEl.textContent='CPU bats · chase '+target;
+          msgEl.textContent='pick to bowl!';
+          msgEl.className='hc-msg';
+          histEl.innerHTML='';
+          youScoreEl.classList.remove('batting');cpuScoreEl.classList.add('batting');
+          youHandEl.textContent='✊';cpuHandEl.textContent='✊';
+          youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';
+        }
+
+        function endGame(won){
+          phase='done';
+          if(won){wins++;msgEl.textContent='🏆 YOU WIN!';msgEl.className='hc-msg win';}
+          else{losses++;msgEl.textContent='💀 CPU WINS!';msgEl.className='hc-msg out';}
+          recEl.textContent='W:'+wins+' L:'+losses;
+          // Show restart after delay
+          setTimeout(function(){
+            msgEl.textContent+=' · tap any button to play again';
+          },1500);
+        }
+
+        btns.forEach(function(btn){
+          btn.addEventListener('click',function(ev){
+            ev.stopPropagation();ev.preventDefault();
+            if(phase==='done'){resetGame();return;}
+            var pv=parseInt(this.dataset.v);
+            var cv=trueRandom();
+            // Animate hands
+            youHandEl.textContent=HAND_EMOJI[pv];
+            cpuHandEl.textContent=HAND_EMOJI[cv];
+            youHandEl.className='hc-hand you';
+            cpuHandEl.className='hc-hand cpu';
+
+            if(phase==='bat'){
+              // Player is batting
+              if(pv===0){
+                // No ball — player gets CPU's number as runs
+                youHandEl.classList.add('noball');
+                youScore+=cv;
+                youScoreEl.textContent=String(youScore);
+                msgEl.textContent='No Ball! +'+cv+' free runs!';
+                msgEl.className='hc-msg noball';
+                addBall('nb','NB+'+cv);
+              } else if(pv===cv){
+                // OUT!
+                youHandEl.classList.add('match');
+                cpuHandEl.classList.add('match');
+                msgEl.textContent='OUT! You scored '+youScore;
+                msgEl.className='hc-msg out';
+                addBall('out','W');
+                setTimeout(function(){switchInnings();},1800);
+                return;
+              } else {
+                // Runs scored = player's number
+                youScore+=pv;
+                youScoreEl.textContent=String(youScore);
+                if(pv===6){msgEl.textContent='SIX! 🔥 +6';addBall('six','6');}
+                else if(pv===4){msgEl.textContent='FOUR! 💥 +4';addBall('run','4');}
+                else{msgEl.textContent='+'+pv+' run'+(pv>1?'s':'');addBall('run',String(pv));}
+                msgEl.className='hc-msg';
+              }
+            } else if(phase==='bowl'){
+              // CPU is batting, player is bowling
+              if(cv===0){
+                // CPU played no ball — but as bowler, player showed pv. CPU gets pv runs free
+                cpuHandEl.classList.add('noball');
+                // Actually per rules: CPU played fist(0), player showed pv. CPU gets player's number as runs
+                cpuScore+=pv;
+                cpuScoreEl.textContent=String(cpuScore);
+                msgEl.textContent='CPU No Ball! +'+pv+' free runs!';
+                msgEl.className='hc-msg noball';
+                addBall('nb','NB+'+pv);
+              } else if(pv===cv){
+                // CPU OUT!
+                youHandEl.classList.add('match');
+                cpuHandEl.classList.add('match');
+                addBall('out','W');
+                if(cpuScore>=target){
+                  endGame(false);
+                }else{
+                  endGame(true);
+                }
+                return;
+              } else {
+                // CPU scores its number
+                cpuScore+=cv;
+                cpuScoreEl.textContent=String(cpuScore);
+                if(cv===6){msgEl.textContent='CPU SIX! 😱 +6';addBall('six','6');}
+                else if(cv===4){msgEl.textContent='CPU FOUR! 😤 +4';addBall('run','4');}
+                else{msgEl.textContent='CPU +'+cv;addBall('run',String(cv));}
+                msgEl.className='hc-msg';
+              }
+              // Check if CPU chased target
+              if(cpuScore>=target&&target>=0){
+                endGame(false);
+                return;
+              }
+            }
+          });
+        });
+      }
+    }
+
     cv.appendChild(el);
   }
 
