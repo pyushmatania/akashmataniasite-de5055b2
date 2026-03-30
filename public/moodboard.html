@@ -4292,14 +4292,38 @@ function getZoneIntroElement(zone){
     '.zone-intro-card[data-zone="'+zone+'"]'
   );
 }
+function getCanonicalZoneCenter(zone){
+  if(zoneTargets[zone]) return zoneTargets[zone];
+  if(ZONE_DEFS[zone]?.center) return ZONE_DEFS[zone].center;
+  return null;
+}
+function anchorZoneIntroCard(card,zoneOverride){
+  if(!card) return null;
+  const zone=zoneOverride||card.dataset.zone||'hub';
+  const center=getCanonicalZoneCenter(zone);
+  if(!center) return null;
+  const w=card.offsetWidth||380;
+  const h=card.offsetHeight||420;
+  const left=Math.max(0,Math.min(MOODBOARD_WORLD_WIDTH-w,center.x-w/2));
+  const top=Math.max(0,Math.min(MOODBOARD_WORLD_HEIGHT-h,center.y-h/2));
+  card.style.left=left+'px';
+  card.style.top=top+'px';
+  card.style.transform='rotate(0deg)';
+  return {left,top,w,h,x:left+w/2,y:top+h/2};
+}
+function anchorAllZoneIntroCards(){
+  ['hub','introduction','work','portfolio','hobby','fun'].forEach(zone=>{
+    const card=getZoneIntroElement(zone);
+    if(card) anchorZoneIntroCard(card,zone);
+  });
+}
 function getZoneIntroCenter(target){
   const el=getZoneIntroElement(target.zone);
-  if(!el)return {x:target.fallback.x,y:target.fallback.y,found:false};
-  const left=parseFloat(el.style.left)||target.fallback.left;
-  const top=parseFloat(el.style.top)||target.fallback.top;
-  const w=el.offsetWidth||380;
-  const h=el.offsetHeight||420;
-  return {x:left+w/2,y:top+h/2,found:true};
+  const anchored=el?anchorZoneIntroCard(el,target.zone):null;
+  if(anchored)return {x:anchored.x,y:anchored.y,found:true};
+  const center=getCanonicalZoneCenter(target.zone);
+  if(center)return {x:center.x,y:center.y,found:false};
+  return {x:target.fallback.x,y:target.fallback.y,found:false};
 }
 function cycleIntroCards(e){
   if(e){e.preventDefault();e.stopPropagation();}
@@ -6291,6 +6315,7 @@ async function runItemRearrange(triggeredByUser){
   if(!usedCloud){
     if(typeof ensureCompanionStickers==='function')ensureCompanionStickers(true);
   }
+  if(typeof anchorAllZoneIntroCards==='function')anchorAllZoneIntroCards();
   // Clear visual cache and force full rescan + redraw
   if(typeof scanStickers==='function')scanStickers();
   if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
@@ -10499,6 +10524,7 @@ async function bootstrapMap(forceRescan){
       if(didAutoArrange) ensureCompanionStickers(true);
       else ensureCompanionStickers(false);
     }
+    if(typeof anchorAllZoneIntroCards==='function')anchorAllZoneIntroCards();
     normalizeAllStickerBounds();
     ensureMapData(forceRescan);
     drawMap();
@@ -11237,7 +11263,7 @@ function ekPick(el,e){
       }
 
       if(match){
-        if(isCenterGuideSticker(match))return;
+        if(isCenterGuideSticker(match)||isIntroCard(match))return;
         if(typeof d.left==='string')match.style.left=d.left;
         if(typeof d.top==='string')match.style.top=d.top;
         if(typeof d.transform==='string')match.style.transform=d.transform;
