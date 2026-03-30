@@ -7747,10 +7747,7 @@ function addMapDecorations(cw, ch){
   layer.appendChild(sb);
 
   // Lake label
-  const lakeEl=document.createElement('div');lakeEl.className='map-zone-marker';
-  lakeEl.style.cssText='left:36%;top:40%;font-size:'+Math.max(5,cw*0.003)+'px;transform:translate(-50%,-50%);color:rgba(180,220,255,0.8);font-style:italic';
-  lakeEl.textContent='Lake Akash';
-  layer.appendChild(lakeEl);
+  // Lake labels now rendered inline with water bodies above
 
   mapCanvas.appendChild(layer);
 }
