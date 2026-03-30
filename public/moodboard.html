@@ -6619,7 +6619,7 @@ vp.addEventListener('scroll',()=>{
     _scrollRAF=null;
     const now=performance.now();
     // 1) Scroll counter — throttle to every 200ms
-    if(now-_lastScrollCounterUpdate>200){
+    if(now-_lastScrollCounterUpdate>500){
       _lastScrollCounterUpdate=now;
       const bounds=getViewportPanBounds();
       const mx=bounds.maxX,my=bounds.maxY;
