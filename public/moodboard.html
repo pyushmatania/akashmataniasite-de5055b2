@@ -7857,8 +7857,7 @@ function drawMapLayout(){
     mapCanvas.querySelectorAll('.mi,.map-sticker-clone,.small-map-boundaries,.small-map-roads,.small-map-labels').forEach(el=>el.remove());
     if(playerWasInCanvas)mapPlayer.remove();
   } else {
-    // Only remove clones — preserve grid, boundaries, labels, roads
-    mapCanvas.querySelectorAll('.map-sticker-clone').forEach(el=>el.remove());
+    // Preserve grid, boundaries, labels, roads, and cached clones
     if(!mapCanvas.querySelector('.map-canvas-grid')){
       const g=document.createElement('div');g.className='map-canvas-grid';mapCanvas.appendChild(g);
     }
