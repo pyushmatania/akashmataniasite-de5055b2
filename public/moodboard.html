@@ -11776,12 +11776,16 @@ window.openProject=openProject;
     const rotY=pct*MAX_TILT;
     const tx=pct*MAX_SHIFT;
     const sc=1-Math.abs(pct)*0.04;
+    const shadowX=Math.round(-pct*25);
+    const shadowBlur=20+Math.round(Math.abs(pct)*30);
     card.style.transition='none';
     card.style.transform='translateX('+tx+'px) scale('+sc+') perspective(800px) rotateY('+rotY+'deg)';
+    card.style.boxShadow=shadowX+'px 20px '+shadowBlur+'px rgba(0,0,0,0.6), '+Math.round(shadowX*0.4)+'px 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)';
   }
   function resetCardTilt(){
-    card.style.transition='transform 0.6s cubic-bezier(0.34,1.56,0.64,1)';
+    card.style.transition='transform 0.6s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.6s ease';
     card.style.transform='translateX(0) scale(1) perspective(800px) rotateY(0deg)';
+    card.style.boxShadow='';
   }
 
   showcase.addEventListener('touchstart',function(e){
