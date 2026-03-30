@@ -10103,7 +10103,24 @@ function ekPick(el,e){
 
     if(_pinMode==='setup'){
       if(result.error){
-        err.textContent=result.error==='PIN already set'?'PIN already exists':('Could not save PIN');
+        if(result.error==='PIN already set'){
+          // Fallback for stale/setup race: treat as verify flow automatically
+          const verifyResult=await verifyPinRemote(pin,'verify');
+          if(verifyResult&&verifyResult.valid){
+            closePinModal();
+            await doSaveLayout();
+            return;
+          }
+          _pinMode='verify';
+          const title=document.getElementById('pinTitle');
+          const desc=document.getElementById('pinDesc');
+          if(title)title.textContent='🔐 Enter PIN';
+          if(desc)desc.textContent='PIN already exists. Enter it to confirm save';
+          err.textContent='PIN already exists — enter existing PIN';
+          console.error('PIN setup fallback:',result.error);
+          return;
+        }
+        err.textContent='Could not save PIN';
         console.error('PIN save error:',result.error);
         return;
       }
