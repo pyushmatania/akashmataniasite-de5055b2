@@ -4153,9 +4153,12 @@ function scrollToZone(e,zone){
   const worldH=(typeof MOODBOARD_WORLD_HEIGHT==='number'?MOODBOARD_WORLD_HEIGHT:10000);
   const maxX=Math.max(0,worldW*scale-vp.clientWidth);
   const maxY=Math.max(0,worldH*scale-vp.clientHeight);
+  // Compute the visible viewport height (above the fixed bottom nav)
+  const navH=_getNavOcclusionPx();
+  const visibleH=vp.clientHeight-navH;
   vp.scrollTo({
     left:Math.max(0,Math.min(panX*scale-vp.clientWidth/2,maxX)),
-    top:Math.max(0,Math.min(panY*scale-vp.clientHeight/2,maxY)),
+    top:Math.max(0,Math.min(panY*scale-visibleH/2,maxY)),
     behavior:'smooth'
   });
 
