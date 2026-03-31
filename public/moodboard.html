@@ -11090,6 +11090,9 @@ function ensureCompanionStickers(force){
         let youScore=0,cpuScore=0,wins=0,losses=0;
         let target=-1;
         let totalBalls=0;
+        let overBalls=[];  // track current over ball-by-ball
+        let allOvers=[];   // [{balls:[{runs,type}], runsInOver, overNum}]
+        let partnership=0;
 
         function updateStats(){
           var overs=Math.floor(totalBalls/6);
@@ -11099,9 +11102,21 @@ function ensureCompanionStickers(force){
           var oversEl=hc.querySelector('[data-stat="overs"]');
           var ballsEl=hc.querySelector('[data-stat="balls"]');
           var crrEl=hc.querySelector('[data-stat="crr"]');
+          var rrrEl=hc.querySelector('[data-stat="rrr"]');
+          var partEl=hc.querySelector('.hc-partnership span');
           if(oversEl)oversEl.textContent=overs+'.'+ballsInOver;
           if(ballsEl)ballsEl.textContent=String(totalBalls);
           if(crrEl)crrEl.textContent=crr;
+          if(partEl)partEl.textContent=String(partnership);
+          // Required run rate
+          if(rrrEl){
+            if(target>0){
+              var remaining=target+1-((phase==='bat')?youScore:cpuScore);
+              var ballsLeft=Math.max(1,30-totalBalls); // assume 5 over match
+              var rrr=(remaining/(ballsLeft/6)).toFixed(2);
+              rrrEl.textContent=remaining<=0?'—':rrr;
+            }else{rrrEl.textContent='—';}
+          }
         }
 
         const phaseEl=hc.querySelector('.hc-phase');
@@ -11118,6 +11133,7 @@ function ensureCompanionStickers(force){
         const flashEl=hc.querySelector('.hc-boundary-flash');
         const boundaryTextEl=hc.querySelector('.hc-boundary-text');
         const targetBar=hc.querySelector('.hc-target-bar');
+        const scorecardEl=hc.querySelector('.hc-over-scorecard');
 
         // Sound effects via Web Audio API
         var audioCtx=null;
