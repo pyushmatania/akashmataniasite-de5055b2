@@ -8,52 +8,55 @@
 
 ### Zones
 - **Origin** — Intro card with Akash's photo, roles, tutorial
-- **Work** — Professional experience, portfolio panel with case studies
-- **Fun** — Hand Cricket game (Quick Match + IPL 2026 mode), wicket counter, memes, companion stickers
+- **Work** — Professional experience, portfolio panel with case studies (EnterCircles, Recess, Hushh, SmartBhubaneswar, Aribasda)
+- **Fun** — Hand Cricket game, wicket counter, memes, companion stickers
 - **About** — Slide-up panel with skills, education, experience
 - **Contact** — Email, links
 
 ### Key Features & Systems
 
-#### Hand Cricket Game — IPL 2026 Edition
-- **Mode selector**: Quick Match (1 wicket) or IPL 2026 (10 wickets)
-- **IPL 2026**: 10 real IPL teams (CSK, MI, RCB, KKR, SRH, DC, GT, LSG, PBKS, RR) with real player names
-- **Team selection**: Pick your team → pick opponent → choose overs (1/2/3/5)
-- **Full batting lineup**: 11 players per team, select next batsman after wickets
-- **Bowling lineup**: Display current bowler, rotate after overs
-- **10 wickets system**: Full innings with wicket tracking
-- **Over-end scorecard**: Popup after each over showing batting card (R, B, 4s, 6s, SR)
-- **Innings break scorecard**: Shows target for chasing team
-- **Live stats**: Overs, balls, CRR, strike rate, wickets display
-- **Defence logic**: DEF+DEF = OUT, DEF+run = runs scored
-- **Crowd cheers**: Procedural audio crowd roar on boundaries, boo on wickets
-- **Crowd roar overlay**: Visual pulse effect on boundaries/wickets
-- **Crazy effects**: Confetti cannon (40 particles) on SIX, earthquake shake on wicket
-- **Fireworks**: Enhanced particle explosion on SIX (20 particles)
-- **50% bigger game window**: 630px width (was 420px)
-- **Pan-to-ground**: Fun panel cricket launcher scrolls canvas to cricket sticker and auto-opens
-- **Cloud-saved match history** with team names
-
 #### Canvas & Navigation
 - Infinite canvas with momentum scrolling and viewport-aware scaling
-- Minimap + expandable Big Map with zone boundaries
+- Minimap (small) + expandable Big Map with zone boundaries
 - Organic country-style SVG zone boundaries with ray-casting containment
 - Play button cycles through zones starting from Origin
+- Zone ground labels, zone counters using polygon containment
 
 #### Drag & Drop
 - All stickers draggable with touch/mouse via drag handles
 - Position memory saved to cloud (singleton record architecture)
+- Auto-arrange with spiral placement constrained to zone boundaries
+
+#### Hand Cricket Game (Stadium Edition)
+- Full toss system (odd/even call → number reveal → bat/bowl choice)
+- Defence logic: DEF+DEF = OUT, DEF+run = runs scored (for both batting/bowling)
+- Overs, balls, and current run rate (CRR) live tracking
+- Boundary animations (FOUR/SIX flash overlays, fireworks, text pops)
+- Web Audio API procedural SFX (no audio files)
+- Cloud-saved match history via Supabase
 
 #### Portfolio Panel
 - Slide-up overlay with project cards (glassmorphism, hover effects)
+- Each project has a detail page with case study content
+- Project metrics, tech tags, role badges
 
 #### Easter Eggs
-- Triple-tap name → Build Specs panel
+- Triple-tap name → Build Specs panel (features, tech stack, live stats)
 - Photo tap counter with milestone messages and confetti
+- Random wisdom quotes
+- Hidden sticker interactions
+
+#### Performance
+- IntersectionObserver pauses off-screen animations
+- CSS containment on stickers
+- Lazy loading images
+- Gzip compression via vite plugin
+- Single-file architecture for minimal network requests
 
 ### Tech Stack
 - Vanilla HTML/CSS/JS (moodboard)
 - React + Vite + Tailwind (wrapper)
 - Supabase Edge Functions (PIN verify, layout CRUD)
-- Web Audio API (procedural SFX + crowd cheers)
+- Web Audio API (procedural SFX)
 - SVG + ray-casting (zone boundaries)
+- Framer Motion (wrapper animations)
