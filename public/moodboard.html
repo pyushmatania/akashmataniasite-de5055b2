@@ -11512,7 +11512,7 @@ function ensureCompanionStickers(force){
               if(phase==='bat'){
                 if(pv===0&&cv===0){
                   youHandEl.classList.add('match');cpuHandEl.classList.add('match');
-                  sfxOut();showFlash('wicket');showBoundaryText('OUT!','show-out');
+                  sfxOut();sfxCrowd('small');showFlash('wicket');showBoundaryText('OUT!','show-out');
                   commentaryEl.textContent='DEFENCE OUT! You scored '+youScore;
                   commentaryEl.className='hc-commentary out';
                   addBall('out','W');
