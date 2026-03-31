@@ -11154,6 +11154,73 @@ function ensureCompanionStickers(force){
         function sfxLose(){playTone(400,0.2,'sawtooth',0.1);setTimeout(function(){playTone(300,0.2,'sawtooth',0.1);},150);setTimeout(function(){playTone(200,0.4,'sawtooth',0.12);},300);}
         function sfxNoball(){playTone(600,0.1,'triangle',0.1);setTimeout(function(){playTone(700,0.1,'triangle',0.1);},80);}
         function sfxToss(){playTone(1000,0.06,'sine',0.08);setTimeout(function(){playTone(1200,0.06,'sine',0.08);},60);}
+        // Crowd cheer — procedural noise burst
+        function sfxCrowd(intensity){
+          var ctx=getAudio();if(!ctx)return;
+          var dur=intensity==='big'?1.8:1.0;
+          var vol=intensity==='big'?0.12:0.08;
+          // White noise crowd roar
+          var bufSize=ctx.sampleRate*dur;
+          var buf=ctx.createBuffer(1,bufSize,ctx.sampleRate);
+          var data=buf.getChannelData(0);
+          for(var i=0;i<bufSize;i++){data[i]=(Math.random()*2-1)*0.5;}
+          var src=ctx.createBufferSource();src.buffer=buf;
+          var bandpass=ctx.createBiquadFilter();bandpass.type='bandpass';bandpass.frequency.value=800;bandpass.Q.value=0.8;
+          var g=ctx.createGain();
+          g.gain.setValueAtTime(0.001,ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(vol,ctx.currentTime+0.1);
+          g.gain.setValueAtTime(vol,ctx.currentTime+dur*0.5);
+          g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);
+          src.connect(bandpass);bandpass.connect(g);g.connect(ctx.destination);
+          src.start();src.stop(ctx.currentTime+dur);
+          // Add some clapping overtones
+          for(var c=0;c<3;c++){
+            (function(delay){setTimeout(function(){
+              var cl=ctx.createOscillator(),cg=ctx.createGain();
+              cl.type='square';cl.frequency.value=2000+Math.random()*1000;
+              cg.gain.setValueAtTime(0.02,ctx.currentTime);
+              cg.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.05);
+              cl.connect(cg);cg.connect(ctx.destination);cl.start();cl.stop(ctx.currentTime+0.05);
+            },delay);})(100+c*150+Math.random()*100);
+          }
+        }
+        function sfxOverEnd(){
+          // Whistle-like sound for over end
+          playTone(880,0.15,'sine',0.08);setTimeout(function(){playTone(1100,0.2,'sine',0.1);},120);
+        }
+
+        // Over scorecard display
+        function showOverScorecard(){
+          if(!scorecardEl)return;
+          var overNum=allOvers.length;
+          var lastOver=allOvers[overNum-1];
+          if(!lastOver)return;
+          var runsInOver=lastOver.runsInOver;
+          var batScore=(phase==='bat'||phase==='bowl')?((phase==='bat')?youScore:cpuScore):Math.max(youScore,cpuScore);
+          var overs=Math.floor(totalBalls/6);
+          var crr=totalBalls>0?(batScore/(totalBalls/6)).toFixed(2):'0.00';
+          var fours=lastOver.balls.filter(function(b){return b.runs===4;}).length;
+          var sixes=lastOver.balls.filter(function(b){return b.runs===6;}).length;
+          // Build ball display
+          var ballsHtml='';
+          lastOver.balls.forEach(function(b){
+            var cls=b.type;
+            var txt=b.type==='out'?'W':String(b.runs);
+            ballsHtml+='<span class="hc-ball '+cls+'">'+txt+'</span>';
+          });
+          scorecardEl.innerHTML='<div class="hc-sc-title">📋 OVER SUMMARY</div>'+
+            '<div class="hc-sc-over-num">Over '+overNum+' Complete</div>'+
+            '<div class="hc-sc-balls">'+ballsHtml+'</div>'+
+            '<div class="hc-sc-stats">'+
+              '<div class="hc-sc-stat"><div class="hc-sc-stat-label">Runs This Over</div><div class="hc-sc-stat-val green">'+runsInOver+'</div></div>'+
+              '<div class="hc-sc-stat"><div class="hc-sc-stat-label">Total Score</div><div class="hc-sc-stat-val">'+batScore+'</div></div>'+
+              '<div class="hc-sc-stat"><div class="hc-sc-stat-label">Run Rate</div><div class="hc-sc-stat-val gold">'+crr+'</div></div>'+
+              '<div class="hc-sc-stat"><div class="hc-sc-stat-label">4s / 6s</div><div class="hc-sc-stat-val">'+(fours)+' / '+(sixes)+'</div></div>'+
+            '</div>'+
+            '<button class="hc-sc-continue" onclick="this.parentElement.classList.remove(\'show\')">▶ CONTINUE</button>';
+          scorecardEl.classList.add('show');
+          sfxOverEnd();
+        }
 
         // Cloud helpers
         function saveScore(gameType,data){
@@ -11192,8 +11259,18 @@ function ensureCompanionStickers(force){
           b.className='hc-ball '+type;
           b.textContent=text;
           histEl.appendChild(b);
+          var runs=type==='out'?0:parseInt(text)||0;
+          overBalls.push({runs:runs,type:type});
+          partnership+=runs;
           totalBalls++;
           updateStats();
+          // Check for over completion
+          if(totalBalls>0&&totalBalls%6===0&&phase!=='done'){
+            var runsInOver=overBalls.reduce(function(s,b){return s+b.runs;},0);
+            allOvers.push({balls:overBalls.slice(),runsInOver:runsInOver,overNum:allOvers.length+1});
+            overBalls=[];
+            setTimeout(function(){showOverScorecard();},500);
+          }
         }
 
         // Visual effects
