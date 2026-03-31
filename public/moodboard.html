@@ -7647,14 +7647,11 @@ vp.addEventListener('scroll',()=>{
       const mx=bounds.maxX,my=bounds.maxY;
       if(mx+my>0&&_scrollCounterEl)_scrollCounterEl.textContent=Math.round(((vp.scrollLeft+vp.scrollTop)/(mx+my))*100);
     }
-    // 2) Map update — throttle to every 100ms, redraw every 800ms
+    // 2) Map update — throttle to every 100ms
     if(typeof updMap==='function'&&typeof mapTransitioning!=='undefined'&&!mapTransitioning){
       if(now-_lastMapUpdate>100){
         _lastMapUpdate=now;
         updMap();
-      }
-      if(typeof mmExp!=='undefined'&&!mmExp){
-        clearTimeout(window._mapScrollTimer);window._mapScrollTimer=setTimeout(drawMap,800);
       }
     }
   });
@@ -8640,7 +8637,9 @@ function scanStickers(){
   const nextSig=sigParts.join('|');
   if(nextSig!==_mapDataSignature){
     _mapDataSignature=nextSig;
-    invalidateMapCloneCache(true);
+    // Keep existing clone nodes and let renderVisibleClones reuse/reposition them.
+    // This avoids expensive full DOM teardown/rebuild after every layout tweak.
+    invalidateMapCloneCache(false);
   }
 }
 
@@ -11444,9 +11443,8 @@ setTimeout(async ()=>{
   await bootstrapMap(true);
   // Re-center on intro card AFTER items are rearranged
   scrollToZone(null,'hub');
-  requestAnimationFrame(()=>scrollToZone(null,'hub'));
-  setTimeout(()=>{scrollToZone(null,'hub');centerOnIntroCard();},350);
-  setTimeout(()=>{scrollToZone(null,'hub');centerOnIntroCard();},900);
+  requestAnimationFrame(()=>centerOnIntroCard());
+  setTimeout(()=>centerOnIntroCard(),350);
   // Show bitmoji greeting
   const greet=document.createElement('div');
   greet.className='bitmoji-greeting';
