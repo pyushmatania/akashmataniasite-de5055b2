@@ -8546,7 +8546,7 @@ _stickerObserver.observe(cv,{childList:true});
 function scanStickers(){
   stickerData=[];
   const sigParts=[];
-  const stickers=document.querySelectorAll('#canvas > .sticker');
+  const stickers=getAllStickers();
   stickers.forEach(s=>{
     if(!s.dataset.mapId){
       _mapStickerIdCounter++;
@@ -9412,7 +9412,14 @@ function drawMap(){
       invalidateMapCloneCache(true);
     }
     renderAllSmallMapClones(sc,offsetX,offsetY,canvasW,canvasH);
-    if(mapCount)mapCount.textContent=Array.from(stickerData).filter(d=>mFilt==='all'||matchesFilter(d.cat,mFilt)).length+' items';
+    if(mapCount){
+      let count=0;
+      for(let i=0;i<stickerData.length;i++){
+        const d=stickerData[i];
+        if(mFilt==='all'||matchesFilter(d.cat,mFilt))count++;
+      }
+      mapCount.textContent=count+' items';
+    }
     // Use cached SVG overlays
     getOrCreateSmallMapSvgs(canvasW,canvasH);
   }
@@ -9428,8 +9435,9 @@ function renderAllSmallMapClones(sc,ox,oy,cw,ch){
   const baseScale=Math.max(sc,0.01);
   stickerData.forEach(d=>{
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
-    const liveLeft=d.ref&&d.ref.style?parseInt(d.ref.style.left)||d.left:d.left;
-    const liveTop=d.ref&&d.ref.style?parseInt(d.ref.style.top)||d.top:d.top;
+    const isDragging=!!(d.ref&&d.ref.classList&&d.ref.classList.contains('dragging'));
+    const liveLeft=isDragging&&d.ref&&d.ref.style?(parseInt(d.ref.style.left)||d.left):d.left;
+    const liveTop=isDragging&&d.ref&&d.ref.style?(parseInt(d.ref.style.top)||d.top):d.top;
     const renderX=(liveLeft-ox)*sc;
     const renderY=(liveTop-oy)*sc;
     const cloneId=d.id||(d.left+'-'+d.top+'-'+d.cat);
@@ -9605,9 +9613,10 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
 
   stickerData.forEach(d=>{
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
-    // Read LIVE position from DOM ref for accurate placement
-    const liveLeft=d.ref&&d.ref.style?parseInt(d.ref.style.left)||d.left:d.left;
-    const liveTop=d.ref&&d.ref.style?parseInt(d.ref.style.top)||d.top:d.top;
+    // Use cached scan positions for normal rendering; only read live style during active drag.
+    const isDragging=!!(d.ref&&d.ref.classList&&d.ref.classList.contains('dragging'));
+    const liveLeft=isDragging&&d.ref&&d.ref.style?(parseInt(d.ref.style.left)||d.left):d.left;
+    const liveTop=isDragging&&d.ref&&d.ref.style?(parseInt(d.ref.style.top)||d.top):d.top;
     const renderX=(liveLeft-ox)*sc;
     const renderY=(liveTop-oy)*sc;
     const finalScale=computeCloneScale(d,baseScale);
