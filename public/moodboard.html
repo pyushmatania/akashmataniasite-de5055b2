@@ -12800,20 +12800,23 @@ function launchFunPanelCricket(){
   hc.style.pointerEvents='auto';
   var VALID=[0,1,2,3,4,6];
   var HAND_EMOJI={0:'✊',1:'☝️',2:'✌️',3:'🤟',4:'🖖',6:'👍'};
-  var GS_URL='https://secfpttvtutusedpzefm.supabase.co/rest/v1/game_scores';
-  var GS_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlY2ZwdHR2dHV0dXNlZHB6ZWZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4NTEwMDQsImV4cCI6MjA5MDQyNzAwNH0.zDZDAHi_7sowsltXEVXXzzAKX0fgbKWs4LvC0imWx5M';
+  var GS_URL='https://oxlnpnqwrwlnfjyvlmyv.supabase.co/rest/v1/game_scores';
+  var GS_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94bG5wbnF3cndsbmZqeXZsbXl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDk2MjAsImV4cCI6MjA5MDUyNTYyMH0.6Css1oPopST8lq39tBHvD70jr4UXPHYe3TKqh6smYkY';
   var gsHeaders={'Content-Type':'application/json','apikey':GS_KEY,'Authorization':'Bearer '+GS_KEY,'Prefer':'return=representation'};
   var phase='toss_call',tossCall='',tossWonByPlayer=false;
   var youScore=0,cpuScore=0,wins=0,losses=0,target=-1;
-  var totalBalls=0;
+  var totalBalls=0,overBalls=[],allOvers=[],partnership=0;
+  var scorecardEl=hc.querySelector('.hc-over-scorecard');
   function updateStats(){
     var overs=Math.floor(totalBalls/6);var ballsInOver=totalBalls%6;
     var batScore=(phase==='bat')?youScore:cpuScore;
     var crr=totalBalls>0?(batScore/(totalBalls/6)).toFixed(2):'0.00';
-    var oversEl=hc.querySelector('[data-stat="overs"]');var ballsEl=hc.querySelector('[data-stat="balls"]');var crrEl=hc.querySelector('[data-stat="crr"]');
+    var oversEl=hc.querySelector('[data-stat="overs"]');var ballsEl=hc.querySelector('[data-stat="balls"]');var crrEl=hc.querySelector('[data-stat="crr"]');var rrrEl=hc.querySelector('[data-stat="rrr"]');var partEl=hc.querySelector('.hc-partnership span');
     if(oversEl)oversEl.textContent=overs+'.'+ballsInOver;
     if(ballsEl)ballsEl.textContent=String(totalBalls);
     if(crrEl)crrEl.textContent=crr;
+    if(partEl)partEl.textContent=String(partnership);
+    if(rrrEl){if(target>0){var rem=target+1-((phase==='bat')?youScore:cpuScore);var bl=Math.max(1,30-totalBalls);rrrEl.textContent=rem<=0?'—':(rem/(bl/6)).toFixed(2);}else{rrrEl.textContent='—';}}
   }
   var phaseEl=hc.querySelector('.hc-phase');
   var commentaryEl=hc.querySelector('.hc-commentary');
