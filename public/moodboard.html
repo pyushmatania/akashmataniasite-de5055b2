@@ -9395,6 +9395,7 @@ function renderAllSmallMapClones(sc,ox,oy,cw,ch){
   const frag=document.createDocumentFragment();
   let visibleCount=0;
   const activeCloneIds=new Set();
+  const baseScale=Math.max(sc,0.01);
   stickerData.forEach(d=>{
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
     const liveLeft=d.ref&&d.ref.style?parseInt(d.ref.style.left)||d.left:d.left;
@@ -9408,7 +9409,6 @@ function renderAllSmallMapClones(sc,ox,oy,cw,ch){
       clone=makeMapCloneNode(d);
       _mapCloneNodesById.set(cloneId,clone);
     }
-    const baseScale=Math.max(sc,0.01);
     const finalScale=computeCloneScale(d,baseScale);
     applyClonePlacement(clone,d,renderX,renderY,finalScale);
     clone.style.display='block';
@@ -9501,6 +9501,14 @@ function makeMapCloneNode(d){
   clone.style.pointerEvents='auto';
   clone.style.touchAction='manipulation';
   clone.dataset.mapCloneId=d.id||'';
+  clone.style.width=d.w+'px';
+  clone.style.height=d.h+'px';
+  clone._mapW=d.w;
+  clone._mapH=d.h;
+  clone._mapX=NaN;
+  clone._mapY=NaN;
+  clone._mapScale=NaN;
+  clone._mapRot='';
   const activateClone=(ev)=>{
     ev.preventDefault();
     ev.stopPropagation();
@@ -9522,13 +9530,21 @@ function makeMapCloneNode(d){
 
 function applyClonePlacement(clone,d,x,y,scale){
   const rot=(d.ref&&d.ref.style.transform?d.ref.style.transform:'').match(/rotate\([^)]+\)/);
-  clone.style.left=x+'px';
-  clone.style.top=y+'px';
-  clone.style.width=d.w+'px';
-  clone.style.height=d.h+'px';
+  const roundedX=Math.round(x*10)/10;
+  const roundedY=Math.round(y*10)/10;
+  const roundedScale=Math.round(scale*10000)/10000;
+  const rotText=rot?rot[0]:'';
+  if(clone._mapX!==roundedX){clone.style.left=roundedX+'px';clone._mapX=roundedX;}
+  if(clone._mapY!==roundedY){clone.style.top=roundedY+'px';clone._mapY=roundedY;}
+  if(clone._mapW!==d.w){clone.style.width=d.w+'px';clone._mapW=d.w;}
+  if(clone._mapH!==d.h){clone.style.height=d.h+'px';clone._mapH=d.h;}
   clone.style.display='block';
   clone.style.transformOrigin='0 0';
-  clone.style.transform=(rot?rot[0]+' ':'')+'scale('+scale+')';
+  if(clone._mapScale!==roundedScale||clone._mapRot!==rotText){
+    clone.style.transform=(rotText?rotText+' ':'')+'scale('+roundedScale+')';
+    clone._mapScale=roundedScale;
+    clone._mapRot=rotText;
+  }
 }
 
 function renderVisibleClones(sc,ox,oy,cw,ch){
@@ -9555,6 +9571,7 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
   const visibleIds=new Set();
   const frag=document.createDocumentFragment();
   let visibleCount=0;
+  const baseScale=Math.max(sc,0.01);
 
   stickerData.forEach(d=>{
     if(mFilt!=='all'&&!matchesFilter(d.cat,mFilt))return;
@@ -9563,7 +9580,6 @@ function renderVisibleClones(sc,ox,oy,cw,ch){
     const liveTop=d.ref&&d.ref.style?parseInt(d.ref.style.top)||d.top:d.top;
     const renderX=(liveLeft-ox)*sc;
     const renderY=(liveTop-oy)*sc;
-    const baseScale=Math.max(sc,0.01);
     const finalScale=computeCloneScale(d,baseScale);
     const iw=Math.max(d.w*finalScale,2);
     const ih=Math.max(d.h*finalScale,2);
