@@ -626,6 +626,13 @@ body.safety-mode .canvas{background-repeat:repeat!important;image-rendering:auto
 body.safety-mode .sticker{filter:drop-shadow(0 2px 6px rgba(0,0,0,0.08))!important}
 body.safety-mode .interactive-badge{animation:none!important;box-shadow:0 1px 5px rgba(0,0,0,0.18)!important}
 
+/* Runtime perf mode during active pan/drag: keep visuals identical at rest, but
+   temporarily reduce expensive effects while the user is actively interacting. */
+body.perf-interacting .sticker{transition:none!important;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.08))!important}
+body.perf-interacting .zone-intro-card,
+body.perf-interacting .zone-intro-card *{animation-play-state:paused!important}
+body.perf-interacting .map-intro-glow{animation:none!important}
+
 
 /* Notebook paper extras */
 .canvas.theme-notebook::before{
@@ -6659,6 +6666,19 @@ function debounce(fn,ms){
   let t;return function(...a){clearTimeout(t);t=setTimeout(()=>fn.apply(this,a),ms)};
 }
 
+// Chunk heavy synchronous loops into frame-sized slices (prevents long tasks at startup).
+function chunkedForEach(list,fn,batchSize){
+  const items=Array.from(list||[]);
+  const size=Math.max(1,batchSize||32);
+  let i=0;
+  function runChunk(){
+    const end=Math.min(i+size,items.length);
+    for(;i<end;i++) fn(items[i],i);
+    if(i<items.length) requestAnimationFrame(runChunk);
+  }
+  runChunk();
+}
+
 // Batch DOM append via DocumentFragment
 function batchAppend(parent,elements){
   const frag=document.createDocumentFragment();
@@ -6694,6 +6714,13 @@ function clearWalkTimers(){
   if(typeof mapCanvas!=='undefined'&&mapCanvas){
     mapCanvas.querySelectorAll('[style*="z-index:9998"],[style*="z-index:9997"]').forEach(el=>el.remove());
   }
+}
+
+let _perfInteractTimer=null;
+function markPerfInteraction(){
+  document.body.classList.add('perf-interacting');
+  if(_perfInteractTimer)clearTimeout(_perfInteractTimer);
+  _perfInteractTimer=setTimeout(()=>document.body.classList.remove('perf-interacting'),180);
 }
 
 // Shared AudioContext — reuse instead of creating new ones (prevents leaks)
@@ -7582,14 +7609,14 @@ function auditStickerIntegrity(){
 
 // Add interactive badges to ALL interactive stickers
 const _allInteractive='.sticker-throne-game,.sticker-emoji-kitchen,.sticker-tlpuzzle,.sticker-vibecheck,.sticker-skillping,.sticker-startup-rand,.sticker-wheel,.sticker-quiz,.sticker-slots,.sticker-8ball,.sticker-typewriter,.sticker-dice,.sticker-lovemeter,.sticker-scratch,.sticker-mood,.sticker-counter,.sticker-fortune,.sticker-progress,.sticker[onclick],.sticker-meme[onclick]';
-document.querySelectorAll(_allInteractive).forEach(s=>{
+chunkedForEach(document.querySelectorAll(_allInteractive),s=>{
   if(s.querySelector('.interactive-badge'))return;
   if(s.style.position==='relative') s.style.position='';
   const badge=document.createElement('div');
   badge.className='interactive-badge';
   badge.textContent='🎮 PLAY';
   s.appendChild(badge);
-});
+},24);
 
 // Tilt icon stickers slightly for playful depth
 document.querySelectorAll('.sticker-emoji').forEach((s,i)=>{
@@ -7639,6 +7666,7 @@ vp.addEventListener('scroll',()=>{
   if(_scrollRAF)return;
   _scrollRAF=requestAnimationFrame(()=>{
     _scrollRAF=null;
+    markPerfInteraction();
     const now=performance.now();
     // 1) Scroll counter — throttle to every 200ms
     if(now-_lastScrollCounterUpdate>200){
@@ -7666,6 +7694,7 @@ vp.addEventListener('mousedown',e=>{
 });
 document.addEventListener('mousemove',e=>{
   if(!iD)return;e.preventDefault();
+  markPerfInteraction();
   _dragPendingX=e.clientX;_dragPendingY=e.clientY;
   if(!_dragRAF){
     _dragRAF=requestAnimationFrame(()=>{
@@ -7804,6 +7833,7 @@ function _schedStickerMove(e){
   }
   if(isRotating)return;
   if(e.cancelable)e.preventDefault();
+  markPerfInteraction();
   if(_stickerMoveRAF)return;
   _stickerMoveRAF=requestAnimationFrame(()=>{
     _stickerMoveRAF=null;
@@ -10221,6 +10251,7 @@ let _lastCloneRenderLeft=0;
 let _lastCloneRenderTop=0;
 // Re-render visible clones when scrolling expanded map
 document.getElementById('mmInner').addEventListener('scroll',()=>{
+  markPerfInteraction();
   if(mapTransitioning)return;
   if(mmExp&&drawMap._sc){
     const ox=drawMap._ox||0,oy=drawMap._oy||0,sc=drawMap._sc;
@@ -10260,8 +10291,18 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
 // Map scroll update is handled by the unified scroll handler above (near line 3587)
 
 // getAC() already defined above in performance utilities section
+const _sfxCooldownByType=new Map();
+function canPlaySfx(type){
+  const now=performance.now();
+  const minGap=(type==='pop'||type==='click')?40:90;
+  const last=_sfxCooldownByType.get(type)||0;
+  if(now-last<minGap)return false;
+  _sfxCooldownByType.set(type,now);
+  return true;
+}
 
 function playSfx(type){
+  if(!canPlaySfx(type))return;
   try{
     const ac=getAC(),t=ac.currentTime;
     if(type==='click'){const o=ac.createOscillator();o.type='sine';o.frequency.setValueAtTime(800,t);o.frequency.exponentialRampToValueAtTime(1200,t+0.05);const g=ac.createGain();g.gain.setValueAtTime(0.3,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.08);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+0.08)}
@@ -11441,7 +11482,7 @@ function buildZoneCardHTML(meta){return '';}
 // ===== Add drag handles to all interactive sticker cards =====
 (function(){
   const interactiveSelectors='.sticker-throne-game,.sticker-emoji-kitchen,.sticker-tlpuzzle,.sticker-vibecheck,.sticker-skillping,.sticker-startup-rand,.sticker-wheel,.sticker-quiz,.sticker-slots,.sticker-8ball,.sticker-typewriter,.sticker-dice,.sticker-lovemeter,.sticker-scratch,.sticker-mood,.sticker-counter,.sticker-fortune,.sticker-progress,.sticker[onclick],.sticker-meme[onclick]';
-  document.querySelectorAll(interactiveSelectors).forEach(s=>{
+  chunkedForEach(document.querySelectorAll(interactiveSelectors),s=>{
     if(s.classList.contains('has-drag-handle'))return;
     s.classList.add('has-drag-handle');
     if(s.style.position==='relative') s.style.position='';
@@ -11449,7 +11490,7 @@ function buildZoneCardHTML(meta){return '';}
     handle.className='sticker-drag-handle';
     handle.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg>';
     s.insertBefore(handle,s.firstChild);
-  });
+  },20);
 })();
 
 setTimeout(async ()=>{
