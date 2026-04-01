@@ -9366,6 +9366,24 @@ function prog(el,e){
 }
 
 
+// ===== DARK MODE =====
+const DARKMODE_KEY = 'moodboard_darkmode_v1';
+function toggleDarkMode(){
+  const isDark = document.body.classList.toggle('dark-mode');
+  const btn = document.getElementById('darkModeBtn');
+  if(btn) btn.textContent = isDark ? '☀️' : '🌙';
+  try{localStorage.setItem(DARKMODE_KEY, isDark ? '1' : '0')}catch(_){}
+}
+(function initDarkMode(){
+  let dark = false;
+  try{ dark = localStorage.getItem(DARKMODE_KEY) === '1'; }catch(_){}
+  if(dark){
+    document.body.classList.add('dark-mode');
+    const btn = document.getElementById('darkModeBtn');
+    if(btn) btn.textContent = '☀️';
+  }
+})();
+
 // ===== SETTINGS =====
 function toggleSettings(){
   _settingsPanel.classList.toggle('open');
