@@ -8,7 +8,6 @@ const Index = () => {
   const [loaded, setLoaded] = useState(false);
   const [attempt, setAttempt] = useState(0);
   const loadTimerRef = useRef<number | null>(null);
-  const revealTimerRef = useRef<number | null>(null);
 
   const moodboardSrc = useMemo(
     () => (attempt === 0 ? MOODBOARD_SRC : `${MOODBOARD_SRC}?retry=${attempt}`),
@@ -22,14 +21,6 @@ const Index = () => {
       window.clearTimeout(loadTimerRef.current);
     }
 
-    if (revealTimerRef.current !== null) {
-      window.clearTimeout(revealTimerRef.current);
-    }
-
-    revealTimerRef.current = window.setTimeout(() => {
-      setLoaded(true);
-    }, 1800);
-
     loadTimerRef.current = window.setTimeout(() => {
       setAttempt((current) => (current < MAX_IFRAME_RETRIES ? current + 1 : current));
     }, IFRAME_LOAD_TIMEOUT_MS);
@@ -37,10 +28,6 @@ const Index = () => {
     return () => {
       if (loadTimerRef.current !== null) {
         window.clearTimeout(loadTimerRef.current);
-      }
-
-      if (revealTimerRef.current !== null) {
-        window.clearTimeout(revealTimerRef.current);
       }
     };
   }, [attempt]);
@@ -51,11 +38,6 @@ const Index = () => {
       loadTimerRef.current = null;
     }
 
-    if (revealTimerRef.current !== null) {
-      window.clearTimeout(revealTimerRef.current);
-      revealTimerRef.current = null;
-    }
-
     setLoaded(true);
   };
 
@@ -64,13 +46,6 @@ const Index = () => {
       window.clearTimeout(loadTimerRef.current);
       loadTimerRef.current = null;
     }
-
-    if (revealTimerRef.current !== null) {
-      window.clearTimeout(revealTimerRef.current);
-      revealTimerRef.current = null;
-    }
-
-    setLoaded(true);
 
     setAttempt((current) => (current < MAX_IFRAME_RETRIES ? current + 1 : current));
   };

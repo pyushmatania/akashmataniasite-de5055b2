@@ -1843,146 +1843,116 @@ body.map-expanded .scroll-counter{display:none!important}
 @keyframes stumpFly{0%{transform:rotate(0)}30%{transform:rotate(-25deg) translateY(-8px)}60%{transform:rotate(15deg) translateY(-3px)}100%{transform:rotate(0)}}
 .zc-wicket .wk-count{font-family:'Space Grotesk',monospace;font-size:1.8rem;font-weight:900;color:#fff;margin:4px 0 2px}
 .zc-wicket .wk-label{font-family:var(--font-hand);font-size:0.68rem;color:rgba(255,255,255,0.55)}
-/* ── Hand Cricket Mini-Game — ULTIMATE 3D Stadium Edition ── */
-.zc-hcricket{background:linear-gradient(145deg,#040810,#081428,#040810);border-radius:26px;padding:0;width:440px;box-shadow:0 16px 80px rgba(0,0,0,0.8),0 0 0 2px rgba(76,175,80,0.18),0 0 100px rgba(76,175,80,0.06),inset 0 1px 0 rgba(255,255,255,0.06);text-align:center;user-select:none;position:relative;overflow:hidden}
+/* ── Hand Cricket Mini-Game — ULTIMATE Stadium Edition ── */
+.zc-hcricket{background:linear-gradient(145deg,#060e1a,#0a1830,#060e1a);border-radius:26px;padding:0;width:420px;box-shadow:0 12px 60px rgba(0,0,0,0.7),0 0 0 2px rgba(76,175,80,0.15),0 0 80px rgba(76,175,80,0.06),inset 0 1px 0 rgba(255,255,255,0.06);text-align:center;user-select:none;position:relative;overflow:hidden}
 /* Ambient stadium glow */
-.zc-hcricket::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg at 50% 50%,transparent 0%,rgba(76,175,80,0.04) 25%,transparent 50%,rgba(255,215,0,0.03) 75%,transparent 100%);animation:hcAmbientSpin 20s linear infinite;pointer-events:none;z-index:0}
+.zc-hcricket::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg at 50% 50%,transparent 0%,rgba(76,175,80,0.03) 25%,transparent 50%,rgba(255,215,0,0.02) 75%,transparent 100%);animation:hcAmbientSpin 20s linear infinite;pointer-events:none;z-index:0}
 @keyframes hcAmbientSpin{to{transform:rotate(360deg)}}
-/* Stadium background — 3D depth with perspective */
-.zc-hcricket .hc-stadium{position:relative;background:linear-gradient(180deg,#020810 0%,#041828 12%,#082840 24%,#0a3a38 40%,#14703a 58%,#1c9c40 72%,#188c35 85%,#146828 95%,#0a4a1c 100%);padding:20px 20px 16px;border-radius:26px 26px 0 0;overflow:hidden;min-height:150px}
-.zc-hcricket .hc-stadium::before{content:'';position:absolute;bottom:0;left:0;right:0;height:55%;background:radial-gradient(ellipse 160% 100% at 50% 100%,rgba(76,175,80,0.4),rgba(30,100,50,0.2) 50%,transparent);pointer-events:none}
-/* Stars in night sky — more dense */
-.zc-hcricket .hc-stadium::after{content:'';position:absolute;top:0;left:0;right:0;height:40%;background-image:radial-gradient(1px 1px at 15% 25%,rgba(255,255,255,0.6),transparent),radial-gradient(1.5px 1.5px at 25% 8%,rgba(255,255,255,0.7),transparent),radial-gradient(1px 1px at 40% 18%,rgba(255,255,255,0.5),transparent),radial-gradient(1px 1px at 55% 5%,rgba(255,255,255,0.65),transparent),radial-gradient(1px 1px at 68% 22%,rgba(255,255,255,0.4),transparent),radial-gradient(1.5px 1.5px at 78% 10%,rgba(255,255,255,0.55),transparent),radial-gradient(1px 1px at 88% 28%,rgba(255,255,255,0.45),transparent),radial-gradient(1px 1px at 8% 12%,rgba(255,255,255,0.5),transparent),radial-gradient(0.8px 0.8px at 33% 30%,rgba(255,255,255,0.35),transparent),radial-gradient(1.2px 1.2px at 92% 6%,rgba(255,255,255,0.6),transparent),radial-gradient(0.8px 0.8px at 48% 32%,rgba(255,255,255,0.3),transparent),radial-gradient(1px 1px at 62% 14%,rgba(255,255,255,0.5),transparent);pointer-events:none;animation:hcStarsTwinkle 4s ease-in-out infinite alternate}
-@keyframes hcStarsTwinkle{0%{opacity:0.5}100%{opacity:1}}
-/* 3D Floodlight towers with steel structure */
-.zc-hcricket .hc-flood{position:absolute;top:0;width:6px;height:50px;z-index:3;opacity:0.9}
-.zc-hcricket .hc-flood::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:32px;height:7px;background:linear-gradient(180deg,#FFE082,#FFD740,#FFC400);border-radius:4px 4px 2px 2px;box-shadow:0 0 25px rgba(255,215,0,0.8),0 20px 60px rgba(255,215,0,0.2),0 0 80px rgba(255,215,0,0.12)}
-.zc-hcricket .hc-flood::after{content:'';position:absolute;top:7px;left:50%;transform:translateX(-50%);width:3px;height:43px;background:linear-gradient(180deg,#999,#666,#888,#555);border-radius:1px;box-shadow:1px 0 3px rgba(0,0,0,0.4)}
-.zc-hcricket .hc-flood:nth-child(1){left:10%}
-.zc-hcricket .hc-flood:nth-child(2){right:10%}
-/* Light beam cones — volumetric */
-.zc-hcricket .hc-flood-beam{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:65px solid transparent;border-right:65px solid transparent;border-top:110px solid rgba(255,215,0,0.025);pointer-events:none;filter:blur(2px)}
-/* Crowd silhouette — 3D layered rows */
-.zc-hcricket .hc-crowd{position:absolute;bottom:32%;left:0;right:0;height:28px;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.04) 0px,rgba(255,255,255,0.01) 2px,rgba(255,255,255,0.06) 5px,rgba(255,255,255,0.02) 8px);border-radius:50% 50% 0 0;opacity:0.7;animation:hcCrowdWave 3s ease-in-out infinite;}
-@keyframes hcCrowdWave{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-.zc-hcricket .hc-crowd::before{content:'';position:absolute;top:-10px;left:3%;right:3%;height:18px;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.02) 0px,rgba(255,255,255,0.05) 4px,rgba(255,255,255,0.01) 8px);border-radius:50% 50% 0 0;opacity:0.4;animation:hcCrowdWave 3.5s ease-in-out 0.5s infinite}
-.zc-hcricket .hc-crowd::after{content:'';position:absolute;bottom:-8px;left:-5%;right:-5%;height:20px;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.02) 0px,rgba(255,255,255,0.04) 5px,rgba(255,255,255,0.01) 10px);border-radius:50% 50% 0 0;opacity:0.5;animation:hcCrowdWave 2.8s ease-in-out 0.2s infinite}
-/* Boundary rope — 3D ring */
-.zc-hcricket .hc-boundary-rope{position:absolute;bottom:14%;left:8%;right:8%;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.12) 15%,rgba(255,255,255,0.25) 50%,rgba(255,255,255,0.12) 85%,transparent 100%);border-radius:50%;z-index:1}
-/* Pitch strip — 3D perspective */
-.zc-hcricket .hc-pitch{position:absolute;bottom:8px;left:50%;transform:translateX(-50%) perspective(400px) rotateX(35deg);width:42px;height:75px;background:linear-gradient(180deg,#d4b565,#c4a35a,#b8943f);border-radius:3px;opacity:0.35;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
-.zc-hcricket .hc-pitch::before{content:'';position:absolute;top:5px;left:50%;transform:translateX(-50%);width:14px;height:4px;background:rgba(255,255,255,0.35);border-radius:1px;box-shadow:0 0 4px rgba(255,255,255,0.1)}
-.zc-hcricket .hc-pitch::after{content:'';position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:14px;height:4px;background:rgba(255,255,255,0.35);border-radius:1px;box-shadow:0 0 4px rgba(255,255,255,0.1)}
-/* Stumps — tiny 3D at pitch ends */
-.zc-hcricket .hc-stump{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:2px;z-index:2}
-.zc-hcricket .hc-stump span{width:1.5px;height:8px;background:linear-gradient(180deg,#eee,#bbb);border-radius:0.5px}
-.zc-hcricket .hc-stump.top{top:1px}
-.zc-hcricket .hc-stump.bot{bottom:1px}
+/* Stadium background — richer, deeper */
+.zc-hcricket .hc-stadium{position:relative;background:linear-gradient(180deg,#050d1a 0%,#081e38 15%,#0d2847 28%,#14503a 48%,#1a7a33 65%,#1c8c38 78%,#187030 90%,#145a28 100%);padding:18px 20px 14px;border-radius:26px 26px 0 0;overflow:hidden;min-height:130px}
+.zc-hcricket .hc-stadium::before{content:'';position:absolute;bottom:0;left:0;right:0;height:50%;background:radial-gradient(ellipse 140% 100% at 50% 100%,rgba(76,175,80,0.35),rgba(30,100,50,0.18) 55%,transparent);pointer-events:none}
+/* Stars in night sky */
+.zc-hcricket .hc-stadium::after{content:'';position:absolute;top:0;left:0;right:0;height:35%;background-image:radial-gradient(1px 1px at 20% 30%,rgba(255,255,255,0.5),transparent),radial-gradient(1px 1px at 70% 15%,rgba(255,255,255,0.4),transparent),radial-gradient(1px 1px at 45% 8%,rgba(255,255,255,0.6),transparent),radial-gradient(1px 1px at 85% 25%,rgba(255,255,255,0.3),transparent),radial-gradient(1px 1px at 10% 12%,rgba(255,255,255,0.5),transparent),radial-gradient(1px 1px at 55% 22%,rgba(255,255,255,0.35),transparent),radial-gradient(1.5px 1.5px at 30% 5%,rgba(255,255,255,0.45),transparent),radial-gradient(1px 1px at 92% 8%,rgba(255,255,255,0.55),transparent);pointer-events:none;animation:hcStarsTwinkle 4s ease-in-out infinite alternate}
+@keyframes hcStarsTwinkle{0%{opacity:0.6}100%{opacity:1}}
+/* Stadium lights — bigger, brighter, with beams */
+.zc-hcricket .hc-flood{position:absolute;top:6px;width:28px;height:5px;background:#FFD700;border-radius:3px;box-shadow:0 0 20px rgba(255,215,0,0.7),0 15px 50px rgba(255,215,0,0.2),0 0 60px rgba(255,215,0,0.12);opacity:0.9}
+.zc-hcricket .hc-flood:nth-child(1){left:12%}
+.zc-hcricket .hc-flood:nth-child(2){right:12%}
+/* Light beam cones from floods */
+.zc-hcricket .hc-flood::after{content:'';position:absolute;top:5px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:50px solid transparent;border-right:50px solid transparent;border-top:90px solid rgba(255,215,0,0.04);pointer-events:none}
+/* Crowd silhouette — animated wave */
+.zc-hcricket .hc-crowd{position:absolute;bottom:36%;left:0;right:0;height:22px;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.03) 0px,rgba(255,255,255,0.01) 3px,rgba(255,255,255,0.05) 6px,rgba(255,255,255,0.02) 9px);border-radius:50% 50% 0 0;opacity:0.6;animation:hcCrowdWave 3s ease-in-out infinite}
+@keyframes hcCrowdWave{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+/* Second crowd row deeper */
+.zc-hcricket .hc-crowd::after{content:'';position:absolute;bottom:-6px;left:-5%;right:-5%;height:16px;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.02) 0px,rgba(255,255,255,0.04) 5px,rgba(255,255,255,0.01) 10px);border-radius:50% 50% 0 0;opacity:0.4;animation:hcCrowdWave 3s ease-in-out 0.3s infinite}
+/* Pitch strip */
+.zc-hcricket .hc-pitch{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);width:45px;height:70px;background:linear-gradient(180deg,#d4b565,#c4a35a,#b8943f);border-radius:3px;opacity:0.3}
+.zc-hcricket .hc-pitch::before{content:'';position:absolute;top:4px;left:50%;transform:translateX(-50%);width:12px;height:3px;background:rgba(255,255,255,0.3);border-radius:1px}
+.zc-hcricket .hc-pitch::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:12px;height:3px;background:rgba(255,255,255,0.3);border-radius:1px}
 /* Title bar */
-.zc-hcricket .hc-title-bar{display:flex;align-items:center;justify-content:center;gap:10px;position:relative;z-index:2;margin-bottom:6px}
-.zc-hcricket .hc-title{font-family:var(--font-fun);font-size:1.05rem;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:0.14em;text-shadow:0 2px 16px rgba(0,0,0,0.7),0 0 40px rgba(76,175,80,0.15)}
+.zc-hcricket .hc-title-bar{display:flex;align-items:center;justify-content:center;gap:10px;position:relative;z-index:2;margin-bottom:8px}
+.zc-hcricket .hc-title{font-family:var(--font-fun);font-size:1rem;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:0.14em;text-shadow:0 2px 12px rgba(0,0,0,0.6),0 0 30px rgba(76,175,80,0.15)}
 .zc-hcricket .hc-live-badge{font-family:var(--font-fun);font-size:0.48rem;font-weight:900;color:#fff;background:linear-gradient(135deg,#FF1744,#D50000);padding:3px 8px;border-radius:5px;letter-spacing:0.08em;animation:hcLivePulse 1.5s ease-in-out infinite;display:none;box-shadow:0 0 12px rgba(255,23,68,0.4)}
+/* Difficulty selector */
+
+
 .zc-hcricket.playing .hc-live-badge{display:inline-block}
 @keyframes hcLivePulse{0%,100%{opacity:1;box-shadow:0 0 12px rgba(255,23,68,0.4)}50%{opacity:0.6;box-shadow:0 0 4px rgba(255,23,68,0.2)}}
 .zc-hcricket .hc-phase{font-family:var(--font-fun);font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.7);position:relative;z-index:2;letter-spacing:0.06em;text-shadow:0 1px 6px rgba(0,0,0,0.4)}
-/* Scoreboard — premium broadcast TV overlay with 3D depth */
-.zc-hcricket .hc-scoreboard{display:flex;justify-content:space-around;align-items:center;margin:8px 14px 0;padding:14px 16px;background:linear-gradient(180deg,rgba(0,8,20,0.85),rgba(0,4,12,0.7));border-radius:16px;border:1px solid rgba(76,175,80,0.12);position:relative;z-index:2;backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 rgba(255,255,255,0.06),0 6px 30px rgba(0,0,0,0.4),0 0 0 1px rgba(76,175,80,0.06)}
-/* Scoreboard LED accent line */
-.zc-hcricket .hc-scoreboard::before{content:'';position:absolute;top:0;left:15%;right:15%;height:2px;background:linear-gradient(90deg,transparent,rgba(76,175,80,0.4),rgba(76,175,80,0.6),rgba(76,175,80,0.4),transparent);border-radius:2px}
-.zc-hcricket .hc-scoreboard::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.04),transparent)}
-.zc-hcricket .hc-team{text-align:center;min-width:90px}
-.zc-hcricket .hc-team-label{font-family:var(--font-fun);font-size:0.55rem;font-weight:800;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:3px}
-.zc-hcricket .hc-team-score{font-family:'Space Grotesk',monospace;font-size:2.6rem;font-weight:900;color:#fff;transition:transform 0.2s,color 0.2s,text-shadow 0.2s;line-height:1}
-.zc-hcricket .hc-team-score.batting{color:#4CAF50;text-shadow:0 0 25px rgba(76,175,80,0.7),0 0 50px rgba(76,175,80,0.2)}
-/* Wickets display under score */
-.zc-hcricket .hc-team-wkts{font-family:'Space Grotesk',monospace;font-size:0.55rem;color:rgba(255,255,255,0.3);margin-top:2px;letter-spacing:0.05em}
-.zc-hcricket .hc-team-wkts.batting{color:rgba(76,175,80,0.5)}
-.zc-hcricket .hc-vs{display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 8px}
-.zc-hcricket .hc-vs-text{font-family:var(--font-fun);font-size:0.5rem;color:rgba(255,255,255,0.1);text-transform:uppercase;letter-spacing:0.2em}
-.zc-hcricket .hc-vs-divider{width:1px;height:30px;background:linear-gradient(180deg,transparent,rgba(255,255,255,0.1),transparent)}
-.zc-hcricket .hc-target-bar{font-family:var(--font-fun);font-size:0.52rem;color:rgba(255,215,0,0.8);text-align:center;margin-top:6px;letter-spacing:0.08em;display:none;padding:5px 14px;background:linear-gradient(135deg,rgba(255,215,0,0.08),rgba(255,215,0,0.03));border-radius:8px;border:1px solid rgba(255,215,0,0.15);position:relative;z-index:2}
+/* Scoreboard — broadcast TV overlay */
+.zc-hcricket .hc-scoreboard{display:flex;justify-content:space-around;align-items:center;margin:6px 16px 0;padding:12px 14px;background:linear-gradient(180deg,rgba(0,0,0,0.7),rgba(0,0,0,0.5));border-radius:14px;border:1px solid rgba(255,255,255,0.08);position:relative;z-index:2;backdrop-filter:blur(8px);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 4px 20px rgba(0,0,0,0.3)}
+/* Scoreboard LED dots */
+.zc-hcricket .hc-scoreboard::before{content:'';position:absolute;top:4px;left:50%;transform:translateX(-50%);width:40px;height:2px;background:linear-gradient(90deg,transparent,rgba(76,175,80,0.3),transparent);border-radius:2px}
+.zc-hcricket .hc-team{text-align:center;min-width:80px}
+.zc-hcricket .hc-team-label{font-family:var(--font-fun);font-size:0.58rem;font-weight:800;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:2px}
+.zc-hcricket .hc-team-score{font-family:'Space Grotesk',monospace;font-size:2.2rem;font-weight:900;color:#fff;transition:transform 0.2s,color 0.2s,text-shadow 0.2s;line-height:1}
+.zc-hcricket .hc-team-score.batting{color:#4CAF50;text-shadow:0 0 20px rgba(76,175,80,0.6),0 0 40px rgba(76,175,80,0.2)}
+.zc-hcricket .hc-vs{font-family:var(--font-fun);font-size:0.6rem;color:rgba(255,255,255,0.12);text-transform:uppercase;letter-spacing:0.2em;padding:0 6px}
+.zc-hcricket .hc-target-bar{font-family:var(--font-fun);font-size:0.52rem;color:rgba(255,215,0,0.7);text-align:center;margin-top:6px;letter-spacing:0.08em;display:none;padding:4px 12px;background:rgba(255,215,0,0.06);border-radius:6px;border:1px dashed rgba(255,215,0,0.2)}
 .zc-hcricket.chasing .hc-target-bar{display:block}
-/* RRR chip */
-.zc-hcricket .hc-rrr-chip{font-family:var(--font-fun);font-size:0.48rem;color:rgba(255,152,0,0.7);text-align:center;margin-top:4px;letter-spacing:0.06em;display:none;position:relative;z-index:2}
-.zc-hcricket.chasing .hc-rrr-chip{display:block}
 /* Boundary flash overlay — bigger, more dramatic */
 .zc-hcricket .hc-boundary-flash{position:absolute;inset:0;z-index:10;pointer-events:none;opacity:0;border-radius:26px}
-.zc-hcricket .hc-boundary-flash.four{animation:hcFlashFour 1s ease-out;background:radial-gradient(circle at 50% 35%,rgba(76,175,80,0.6),rgba(76,175,80,0.15) 45%,transparent 70%)}
-.zc-hcricket .hc-boundary-flash.six{animation:hcFlashSix 1.2s ease-out;background:radial-gradient(circle at 50% 25%,rgba(255,215,0,0.7),rgba(255,200,0,0.2) 40%,transparent 70%)}
+.zc-hcricket .hc-boundary-flash.four{animation:hcFlashFour 1s ease-out;background:radial-gradient(circle at 50% 40%,rgba(76,175,80,0.5),rgba(76,175,80,0.15) 50%,transparent 75%)}
+.zc-hcricket .hc-boundary-flash.six{animation:hcFlashSix 1.2s ease-out;background:radial-gradient(circle at 50% 30%,rgba(255,215,0,0.6),rgba(255,200,0,0.2) 45%,transparent 75%)}
 .zc-hcricket .hc-boundary-flash.wicket{animation:hcFlashWicket 0.7s ease-out;background:radial-gradient(circle at 50% 50%,rgba(255,23,68,0.5),rgba(255,23,68,0.1) 50%,transparent 75%)}
 @keyframes hcFlashFour{0%{opacity:1;transform:scale(0.8)}100%{opacity:0;transform:scale(1.4)}}
 @keyframes hcFlashSix{0%{opacity:1;transform:scale(0.6)}40%{opacity:0.9;transform:scale(1.1)}100%{opacity:0;transform:scale(1.6)}}
 @keyframes hcFlashWicket{0%{opacity:1}50%{opacity:0.6}100%{opacity:0}}
-/* Boundary text pop — bigger, with 3D transform */
-.zc-hcricket .hc-boundary-text{position:absolute;top:26%;left:50%;transform:translate(-50%,-50%);font-family:var(--font-fun);font-size:3.5rem;font-weight:900;z-index:11;pointer-events:none;opacity:0;text-shadow:0 4px 24px rgba(0,0,0,0.6),0 0 40px currentColor;letter-spacing:0.12em}
+/* Boundary text pop — bigger, more impactful */
+.zc-hcricket .hc-boundary-text{position:absolute;top:28%;left:50%;transform:translate(-50%,-50%);font-family:var(--font-fun);font-size:3.2rem;font-weight:900;z-index:11;pointer-events:none;opacity:0;text-shadow:0 4px 24px rgba(0,0,0,0.6),0 0 40px currentColor;letter-spacing:0.1em}
 .zc-hcricket .hc-boundary-text.show-four{opacity:1;color:#4CAF50;animation:hcTextPop 0.9s ease-out forwards}
 .zc-hcricket .hc-boundary-text.show-six{opacity:1;color:#FFD700;animation:hcTextPopSix 1.1s ease-out forwards}
 .zc-hcricket .hc-boundary-text.show-out{opacity:1;color:#FF1744;animation:hcTextPopOut 0.7s ease-out forwards}
-@keyframes hcTextPop{0%{transform:translate(-50%,-50%) scale(0.2) rotate(-10deg) perspective(600px) rotateX(30deg);opacity:0}25%{transform:translate(-50%,-50%) scale(1.4) rotate(3deg) perspective(600px) rotateX(0);opacity:1}60%{transform:translate(-50%,-55%) scale(1.1) rotate(-1deg);opacity:0.9}100%{transform:translate(-50%,-65%) scale(1);opacity:0}}
-@keyframes hcTextPopSix{0%{transform:translate(-50%,-50%) scale(0.1) perspective(800px) rotateY(90deg);opacity:0;filter:blur(8px)}20%{transform:translate(-50%,-50%) scale(1.6) rotateY(-10deg);opacity:1;filter:blur(0)}50%{transform:translate(-50%,-55%) scale(1.2) rotateY(0);opacity:0.9}100%{transform:translate(-50%,-75%) scale(0.9);opacity:0;filter:blur(2px)}}
-@keyframes hcTextPopOut{0%{transform:translate(-50%,-50%) scale(2) perspective(600px) rotateX(-30deg);opacity:0}20%{transform:translate(-50%,-50%) scale(0.8) rotateX(5deg);opacity:1}40%{transform:translate(-50%,-50%) scale(1.1) rotateX(0);opacity:0.9}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
-/* Hands area — spacious, 3D arena */
-.zc-hcricket .hc-arena{padding:14px 20px;background:linear-gradient(180deg,rgba(0,20,40,0.7),rgba(0,15,30,0.5));position:relative;border-top:1px solid rgba(76,175,80,0.06);border-bottom:1px solid rgba(255,255,255,0.04)}
-/* Arena subtle hex grid pattern */
-.zc-hcricket .hc-arena::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(76,175,80,0.03) 1px,transparent 1px);background-size:18px 18px;pointer-events:none}
-.zc-hcricket .hc-hands{display:flex;justify-content:center;gap:28px;margin-bottom:10px;min-height:95px;align-items:center}
-.zc-hcricket .hc-hand-wrap{display:flex;flex-direction:column;align-items:center;gap:5px}
+@keyframes hcTextPop{0%{transform:translate(-50%,-50%) scale(0.2) rotate(-10deg);opacity:0}25%{transform:translate(-50%,-50%) scale(1.4) rotate(3deg);opacity:1}60%{transform:translate(-50%,-55%) scale(1.1) rotate(-1deg);opacity:0.9}100%{transform:translate(-50%,-65%) scale(1);opacity:0}}
+@keyframes hcTextPopSix{0%{transform:translate(-50%,-50%) scale(0.1);opacity:0;filter:blur(8px)}20%{transform:translate(-50%,-50%) scale(1.6);opacity:1;filter:blur(0)}50%{transform:translate(-50%,-55%) scale(1.2);opacity:0.9}100%{transform:translate(-50%,-75%) scale(0.9);opacity:0;filter:blur(2px)}}
+@keyframes hcTextPopOut{0%{transform:translate(-50%,-50%) scale(2);opacity:0}20%{transform:translate(-50%,-50%) scale(0.8);opacity:1}40%{transform:translate(-50%,-50%) scale(1.1);opacity:0.9}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+/* Hands area — spacious, premium */
+.zc-hcricket .hc-arena{padding:14px 20px;background:linear-gradient(180deg,rgba(0,20,40,0.7),rgba(0,15,30,0.5));position:relative;border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04)}
+/* Arena subtle grid pattern */
+.zc-hcricket .hc-arena::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.02) 1px,transparent 1px);background-size:20px 20px;pointer-events:none}
+.zc-hcricket .hc-hands{display:flex;justify-content:center;gap:24px;margin-bottom:10px;min-height:90px;align-items:center}
+.zc-hcricket .hc-hand-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
 .zc-hcricket .hc-hand-who{font-family:var(--font-fun);font-size:0.5rem;font-weight:800;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.12em}
-.zc-hcricket .hc-hand{width:82px;height:82px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;border:2.5px solid rgba(255,255,255,0.1);transition:all 0.2s cubic-bezier(0.34,1.56,0.64,1);position:relative}
-.zc-hcricket .hc-hand::after{content:'';position:absolute;inset:-5px;border-radius:24px;background:conic-gradient(from 0deg,transparent 0%,rgba(255,255,255,0.06) 25%,transparent 50%);opacity:0;transition:opacity 0.3s;pointer-events:none}
-.zc-hcricket .hc-hand.you{background:linear-gradient(145deg,rgba(76,175,80,0.2),rgba(76,175,80,0.06));color:#4CAF50;box-shadow:inset 0 0 25px rgba(76,175,80,0.1),0 4px 16px rgba(0,0,0,0.3)}
-.zc-hcricket .hc-hand.cpu{background:linear-gradient(145deg,rgba(255,87,34,0.2),rgba(255,87,34,0.06));color:#FF5722;box-shadow:inset 0 0 25px rgba(255,87,34,0.1),0 4px 16px rgba(0,0,0,0.3)}
+.zc-hcricket .hc-hand{width:78px;height:78px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:2rem;border:2.5px solid rgba(255,255,255,0.1);transition:all 0.2s cubic-bezier(0.34,1.56,0.64,1);position:relative}
+.zc-hcricket .hc-hand::after{content:'';position:absolute;inset:-4px;border-radius:22px;background:conic-gradient(from 0deg,transparent 0%,rgba(255,255,255,0.05) 25%,transparent 50%);opacity:0;transition:opacity 0.3s;pointer-events:none}
+.zc-hcricket .hc-hand.you{background:linear-gradient(145deg,rgba(76,175,80,0.18),rgba(76,175,80,0.06));color:#4CAF50;box-shadow:inset 0 0 20px rgba(76,175,80,0.08)}
+.zc-hcricket .hc-hand.cpu{background:linear-gradient(145deg,rgba(255,87,34,0.18),rgba(255,87,34,0.06));color:#FF5722;box-shadow:inset 0 0 20px rgba(255,87,34,0.08)}
 .zc-hcricket .hc-hand.reveal{animation:hcHandReveal 0.5s cubic-bezier(0.34,1.56,0.64,1)}
 .zc-hcricket .hc-hand.reveal::after{opacity:1}
-@keyframes hcHandReveal{0%{transform:scale(0.4) rotateY(90deg);opacity:0.2;filter:blur(4px)}50%{transform:scale(1.2) rotateY(-10deg);filter:blur(0)}75%{transform:scale(0.95) rotateY(5deg) }100%{transform:scale(1) rotateY(0deg) }}
-.zc-hcricket .hc-hand.match{border-color:#FF1744!important;box-shadow:0 0 32px rgba(255,23,68,0.7),inset 0 0 15px rgba(255,23,68,0.15),0 0 60px rgba(255,23,68,0.15);animation:hcShake 0.6s ease}
+@keyframes hcHandReveal{0%{transform:scale(0.4) rotateY(90deg);opacity:0.2;filter:blur(4px)}50%{transform:scale(1.2) rotateY(-10deg);filter:blur(0)}75%{transform:scale(0.95) rotateY(5deg)}100%{transform:scale(1) rotateY(0deg)}}
+.zc-hcricket .hc-hand.match{border-color:#FF1744!important;box-shadow:0 0 28px rgba(255,23,68,0.6),inset 0 0 12px rgba(255,23,68,0.15);animation:hcShake 0.6s ease}
 .zc-hcricket .hc-hand.noball{border-color:#FFD700!important;box-shadow:0 0 20px rgba(255,215,0,0.5)}
 @keyframes hcShake{0%,100%{transform:translateX(0)}15%{transform:translateX(-8px) rotate(-2deg)}30%{transform:translateX(8px) rotate(2deg)}45%{transform:translateX(-6px) rotate(-1deg)}60%{transform:translateX(6px) rotate(1deg)}75%{transform:translateX(-3px)}90%{transform:translateX(3px)}}
-.zc-hcricket .hc-hand.boundary-glow{box-shadow:0 0 36px rgba(76,175,80,0.8),0 0 70px rgba(76,175,80,0.2),inset 0 0 15px rgba(76,175,80,0.12);border-color:rgba(76,175,80,0.7)!important}
-.zc-hcricket .hc-hand.six-glow{box-shadow:0 0 40px rgba(255,215,0,0.8),0 0 80px rgba(255,215,0,0.25),inset 0 0 16px rgba(255,215,0,0.12);border-color:rgba(255,215,0,0.7)!important;animation:hcSixGlowPulse 0.4s ease 2}
-@keyframes hcSixGlowPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-/* Commentary ticker — premium with glow */
+.zc-hcricket .hc-hand.boundary-glow{box-shadow:0 0 32px rgba(76,175,80,0.7),0 0 60px rgba(76,175,80,0.2),inset 0 0 12px rgba(76,175,80,0.1);border-color:rgba(76,175,80,0.7)!important}
+.zc-hcricket .hc-hand.six-glow{box-shadow:0 0 36px rgba(255,215,0,0.7),0 0 70px rgba(255,215,0,0.2),inset 0 0 14px rgba(255,215,0,0.1);border-color:rgba(255,215,0,0.7)!important;animation:hcSixGlowPulse 0.4s ease 2}
+@keyframes hcSixGlowPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+/* Commentary ticker — bigger, more expressive */
 .zc-hcricket .hc-commentary{font-family:var(--font-hand);font-size:0.88rem;color:rgba(255,255,255,0.7);min-height:1.8em;padding:4px 18px;transition:all 0.2s;line-height:1.4}
-.zc-hcricket .hc-commentary.out{color:#FF1744;font-weight:700;font-size:1rem;text-shadow:0 0 16px rgba(255,23,68,0.4)}
-.zc-hcricket .hc-commentary.win{color:#FFD700;font-weight:700;font-size:1rem;text-shadow:0 0 16px rgba(255,215,0,0.4)}
+.zc-hcricket .hc-commentary.out{color:#FF1744;font-weight:700;font-size:1rem;text-shadow:0 0 12px rgba(255,23,68,0.3)}
+.zc-hcricket .hc-commentary.win{color:#FFD700;font-weight:700;font-size:1rem;text-shadow:0 0 12px rgba(255,215,0,0.3)}
 .zc-hcricket .hc-commentary.noball{color:#FFD700;text-shadow:0 0 8px rgba(255,215,0,0.2)}
-.zc-hcricket .hc-commentary.boundary{color:#4CAF50;font-weight:600;text-shadow:0 0 12px rgba(76,175,80,0.3)}
-/* Buttons — 3D tactile with depth */
+.zc-hcricket .hc-commentary.boundary{color:#4CAF50;font-weight:600;text-shadow:0 0 10px rgba(76,175,80,0.2)}
+/* Buttons — BIGGER, more tactile, premium feel */
 .zc-hcricket .hc-controls{padding:12px 18px 14px;background:linear-gradient(180deg,rgba(0,15,30,0.4),rgba(10,22,40,0.9));position:relative}
 .zc-hcricket .hc-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
-.zc-hcricket .hc-btn{width:58px;height:58px;border-radius:16px;border:2px solid rgba(255,255,255,0.1);background:linear-gradient(145deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02));color:#fff;font-size:1.4rem;cursor:pointer;transition:all 0.15s cubic-bezier(0.34,1.56,0.64,1);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;gap:1px;box-shadow:0 3px 10px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08),0 0 0 0.5px rgba(76,175,80,0.05)}
-.zc-hcricket .hc-btn:hover{background:linear-gradient(145deg,rgba(76,175,80,0.28),rgba(76,175,80,0.1));border-color:rgba(76,175,80,0.5);transform:scale(1.15) translateY(-3px);box-shadow:0 8px 25px rgba(76,175,80,0.3),inset 0 1px 0 rgba(255,255,255,0.1)}
-.zc-hcricket .hc-btn:active{transform:scale(0.92) translateY(1px);background:rgba(76,175,80,0.4);box-shadow:0 1px 4px rgba(0,0,0,0.3)}
+.zc-hcricket .hc-btn{width:56px;height:56px;border-radius:14px;border:2px solid rgba(255,255,255,0.1);background:linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));color:#fff;font-size:1.4rem;cursor:pointer;transition:all 0.15s cubic-bezier(0.34,1.56,0.64,1);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;gap:1px;box-shadow:0 2px 8px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.06)}
+.zc-hcricket .hc-btn:hover{background:linear-gradient(145deg,rgba(76,175,80,0.25),rgba(76,175,80,0.1));border-color:rgba(76,175,80,0.5);transform:scale(1.15) translateY(-2px);box-shadow:0 6px 20px rgba(76,175,80,0.25),inset 0 1px 0 rgba(255,255,255,0.1)}
+.zc-hcricket .hc-btn:active{transform:scale(0.92) translateY(1px);background:rgba(76,175,80,0.35);box-shadow:0 1px 4px rgba(0,0,0,0.3)}
 .zc-hcricket .hc-btn-label{font-size:0.42rem;color:rgba(255,255,255,0.4);font-family:var(--font-fun);font-weight:800;line-height:1;letter-spacing:0.04em}
-/* Manhattan chart — mini bar graph of runs per over */
-.zc-hcricket .hc-manhattan{display:flex;align-items:flex-end;gap:2px;justify-content:center;height:28px;margin:6px 16px 4px;padding:0 4px;border-bottom:1px solid rgba(255,255,255,0.06);position:relative;z-index:2}
-.zc-hcricket .hc-manhattan-bar{width:8px;min-height:2px;border-radius:2px 2px 0 0;background:linear-gradient(180deg,rgba(76,175,80,0.7),rgba(76,175,80,0.3));transition:height 0.3s ease;position:relative}
-.zc-hcricket .hc-manhattan-bar.high{background:linear-gradient(180deg,rgba(255,215,0,0.8),rgba(255,215,0,0.4))}
-.zc-hcricket .hc-manhattan-bar::after{content:attr(data-runs);position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-family:var(--font-fun);font-size:0.35rem;color:rgba(255,255,255,0.3);white-space:nowrap}
-/* Streak indicator */
-.zc-hcricket .hc-streak{font-family:var(--font-fun);font-size:0.45rem;color:rgba(255,215,0,0.6);text-align:center;margin-top:2px;letter-spacing:0.06em;min-height:14px;position:relative;z-index:2}
-.zc-hcricket .hc-streak .streak-fire{animation:hcStreakPulse 0.6s ease-in-out infinite alternate}
-@keyframes hcStreakPulse{0%{transform:scale(1)}100%{transform:scale(1.2)}}
 /* Overs counter */
 .zc-hcricket .hc-overs-bar{font-family:var(--font-fun);font-size:0.45rem;color:rgba(255,255,255,0.25);text-align:center;letter-spacing:0.06em;margin-top:2px;text-transform:uppercase}
 /* Ball history — bigger pills */
 .zc-hcricket .hc-history{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;min-height:22px}
-.zc-hcricket .hc-ball{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.52rem;font-family:var(--font-fun);font-weight:900;animation:hcBallPop 0.35s cubic-bezier(0.34,1.56,0.64,1)}
+.zc-hcricket .hc-ball{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.52rem;font-family:var(--font-fun);font-weight:900;animation:hcBallPop 0.35s cubic-bezier(0.34,1.56,0.64,1)}
 .zc-hcricket .hc-ball.run{background:rgba(76,175,80,0.2);color:#4CAF50;border:1px solid rgba(76,175,80,0.15)}
-.zc-hcricket .hc-ball.four{background:rgba(76,175,80,0.4);color:#4CAF50;box-shadow:0 0 10px rgba(76,175,80,0.4);border:1px solid rgba(76,175,80,0.3)}
-.zc-hcricket .hc-ball.six{background:rgba(255,215,0,0.4);color:#FFD700;box-shadow:0 0 12px rgba(255,215,0,0.4);border:1px solid rgba(255,215,0,0.3)}
+.zc-hcricket .hc-ball.four{background:rgba(76,175,80,0.35);color:#4CAF50;box-shadow:0 0 8px rgba(76,175,80,0.35);border:1px solid rgba(76,175,80,0.3)}
+.zc-hcricket .hc-ball.six{background:rgba(255,215,0,0.35);color:#FFD700;box-shadow:0 0 10px rgba(255,215,0,0.35);border:1px solid rgba(255,215,0,0.3)}
 .zc-hcricket .hc-ball.nb{background:rgba(255,215,0,0.15);color:#FFD700;font-size:0.38rem;border:1px solid rgba(255,215,0,0.15)}
-.zc-hcricket .hc-ball.out{background:rgba(255,23,68,0.35);color:#FF1744;border:1px solid rgba(255,23,68,0.25);box-shadow:0 0 8px rgba(255,23,68,0.2)}
-.zc-hcricket .hc-ball.dot{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.06)}
+.zc-hcricket .hc-ball.out{background:rgba(255,23,68,0.3);color:#FF1744;border:1px solid rgba(255,23,68,0.25)}
 @keyframes hcBallPop{0%{transform:scale(0) rotate(-20deg);opacity:0}60%{transform:scale(1.15) rotate(3deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
-/* Bottom section — premium footer with 3D */
-.zc-hcricket .hc-footer{padding:10px 18px 16px;background:linear-gradient(180deg,rgba(0,0,0,0.25),rgba(0,0,0,0.5));border-radius:0 0 26px 26px;position:relative}
-.zc-hcricket .hc-footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(76,175,80,0.08),transparent)}
-/* Match stats summary grid */
-.zc-hcricket .hc-match-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:8px;padding:6px 0}
-.zc-hcricket .hc-match-stat{text-align:center;padding:4px 2px;background:rgba(255,255,255,0.02);border-radius:6px;border:1px solid rgba(255,255,255,0.04)}
-.zc-hcricket .hc-match-stat-val{font-family:'Space Grotesk',monospace;font-size:0.85rem;font-weight:900;color:#4CAF50}
-.zc-hcricket .hc-match-stat-label{font-family:var(--font-fun);font-size:0.38rem;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.06em;margin-top:1px}
+/* Bottom section — premium footer */
+.zc-hcricket .hc-footer{padding:10px 18px 16px;background:linear-gradient(180deg,rgba(0,0,0,0.25),rgba(0,0,0,0.4));border-radius:0 0 26px 26px;position:relative}
+.zc-hcricket .hc-footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent)}
 .zc-hcricket .hc-record{font-family:var(--font-fun);font-size:0.55rem;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.08em;display:flex;align-items:center;justify-content:center;gap:6px}
 .zc-hcricket .hc-record::before{content:'📊';font-size:0.65rem}
 .zc-hcricket .hc-leaderboard{margin-top:8px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.05);max-height:110px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(76,175,80,0.2) transparent}
@@ -1997,25 +1967,24 @@ body.map-expanded .scroll-counter{display:none!important}
 .zc-hcricket .hc-lb-row .lb-result.loss{color:#FF5722}
 .zc-hcricket .hc-lb-row .lb-scores{color:rgba(255,255,255,0.5)}
 .zc-hcricket .hc-lb-row .lb-date{color:rgba(255,255,255,0.2);font-size:0.42rem}
-/* Toss choice buttons — 3D depth */
+/* Toss choice buttons — bigger, more satisfying */
 .zc-hcricket .hc-choice-btns{display:flex;gap:10px;justify-content:center;margin:10px 0}
-.zc-hcricket .hc-choice-btn{border:none;color:#fff;font-family:var(--font-fun);font-size:0.8rem;font-weight:800;padding:14px 30px;border-radius:16px;cursor:pointer;text-transform:uppercase;letter-spacing:0.08em;transition:all 0.15s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden}
-.zc-hcricket .hc-choice-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.18),transparent);pointer-events:none;border-radius:16px}
-.zc-hcricket .hc-choice-btn:hover{transform:scale(1.08) translateY(-3px)}
+.zc-hcricket .hc-choice-btn{border:none;color:#fff;font-family:var(--font-fun);font-size:0.8rem;font-weight:800;padding:13px 28px;border-radius:14px;cursor:pointer;text-transform:uppercase;letter-spacing:0.08em;transition:all 0.15s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden}
+.zc-hcricket .hc-choice-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent);pointer-events:none;border-radius:14px}
+.zc-hcricket .hc-choice-btn:hover{transform:scale(1.08) translateY(-2px)}
 .zc-hcricket .hc-choice-btn:active{transform:scale(0.94) translateY(1px)}
-.zc-hcricket .hc-choice-btn.bat{background:linear-gradient(135deg,#43A047,#2E7D32,#1B5E20);box-shadow:0 8px 28px rgba(76,175,80,0.45),inset 0 1px 0 rgba(255,255,255,0.15),0 0 0 1px rgba(76,175,80,0.3)}
-.zc-hcricket .hc-choice-btn.bowl{background:linear-gradient(135deg,#F4511E,#E64A19,#BF360C);box-shadow:0 8px 28px rgba(255,87,34,0.45),inset 0 1px 0 rgba(255,255,255,0.15),0 0 0 1px rgba(255,87,34,0.3)}
+.zc-hcricket .hc-choice-btn.bat{background:linear-gradient(135deg,#4CAF50,#2E7D32,#1B5E20);box-shadow:0 6px 24px rgba(76,175,80,0.4),inset 0 1px 0 rgba(255,255,255,0.15)}
+.zc-hcricket .hc-choice-btn.bowl{background:linear-gradient(135deg,#FF5722,#E64A19,#BF360C);box-shadow:0 6px 24px rgba(255,87,34,0.4),inset 0 1px 0 rgba(255,255,255,0.15)}
 /* Score pop animation */
 .zc-hcricket .hc-team-score.score-pop{animation:hcScorePop 0.4s cubic-bezier(0.34,1.56,0.64,1)}
-@keyframes hcScorePop{0%{transform:scale(1)}30%{transform:scale(1.5);filter:brightness(1.4)}100%{transform:scale(1) ;filter:brightness(1)}}
-/* Fireworks for SIX — particle explosion with trails */
+@keyframes hcScorePop{0%{transform:scale(1)}30%{transform:scale(1.45);filter:brightness(1.3)}100%{transform:scale(1);filter:brightness(1)}}
+/* Fireworks for SIX — particle explosion */
 .zc-hcricket .hc-firework{position:absolute;width:4px;height:4px;border-radius:50%;z-index:12;pointer-events:none;animation:hcFirework var(--fw-dur,0.8s) ease-out forwards}
-.zc-hcricket .hc-firework::after{content:'';position:absolute;inset:0;border-radius:50%;background:inherit;filter:blur(3px);opacity:0.6}
 @keyframes hcFirework{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--fw-tx,0px),var(--fw-ty,-60px)) scale(0.2)}}
-/* Run chase progress bar — 3D */
-.zc-hcricket .hc-chase-progress{height:4px;background:rgba(255,255,255,0.06);border-radius:4px;margin:6px 14px 0;overflow:hidden;display:none;box-shadow:inset 0 1px 3px rgba(0,0,0,0.3)}
+/* Run chase progress bar */
+.zc-hcricket .hc-chase-progress{height:3px;background:rgba(255,255,255,0.06);border-radius:3px;margin:6px 16px 0;overflow:hidden;display:none}
 .zc-hcricket.chasing .hc-chase-progress{display:block}
-.zc-hcricket .hc-chase-fill{height:100%;background:linear-gradient(90deg,#4CAF50,#66BB6A,#8BC34A);border-radius:4px;transition:width 0.4s ease;width:0%;box-shadow:0 0 8px rgba(76,175,80,0.4)}
+.zc-hcricket .hc-chase-fill{height:100%;background:linear-gradient(90deg,#4CAF50,#8BC34A);border-radius:3px;transition:width 0.4s ease;width:0%}
 
 
 @keyframes termBlink{0%,100%{opacity:1}50%{opacity:0}}
@@ -4546,26 +4515,21 @@ body.map-expanded .scroll-counter{display:none!important}
 
 /* Cricket game stats bar */
 .zc-hcricket .hc-stats-bar{
-  display:flex;justify-content:center;gap:6px;margin:6px 14px 0;position:relative;z-index:2;flex-wrap:wrap;
+  display:flex;justify-content:center;gap:8px;margin:4px 16px 0;position:relative;z-index:2;
 }
 .zc-hcricket .hc-stat-chip{
-  display:flex;align-items:center;gap:3px;
-  padding:4px 10px;border-radius:10px;
-  font-family:var(--font-fun);font-size:0.46rem;font-weight:700;
-  letter-spacing:0.05em;text-transform:uppercase;
-  background:linear-gradient(135deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));
+  display:flex;align-items:center;gap:4px;
+  padding:3px 10px;border-radius:10px;
+  font-family:var(--font-fun);font-size:0.48rem;font-weight:700;
+  letter-spacing:0.06em;text-transform:uppercase;
+  background:rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.08);
-  color:rgba(255,255,255,0.4);
-  backdrop-filter:blur(4px);
-  transition:all 0.2s;
+  color:rgba(255,255,255,0.45);
 }
-.zc-hcricket .hc-stat-chip:hover{background:rgba(255,255,255,0.06);border-color:rgba(76,175,80,0.2)}
 .zc-hcricket .hc-stat-chip .hsc-val{
   color:#4CAF50;font-weight:900;font-size:0.55rem;
 }
 .zc-hcricket .hc-stat-chip .hsc-icon{font-size:0.55rem;}
-.zc-hcricket .hc-stat-chip.fours .hsc-val{color:#66BB6A}
-.zc-hcricket .hc-stat-chip.sixes .hsc-val{color:#FFD740}
 .zp-proj-card-yr{
   font-family:var(--font-sans);font-size:0.58rem;color:rgba(255,255,255,0.28);
   letter-spacing:0.05em;
@@ -7806,10 +7770,10 @@ function getCurrentRotation(el){
 
 // Prevent accidental click handlers right after drag (stops interactive cards from "disappearing")
 // BUT: never suppress clicks on internal interactive elements (flip cards, meters, buttons, etc.)
-const _interactiveInternals='.zc-flip-card,.zc-meter,.zc-flip-inner,button,input,textarea,select,a,.zic-explore-btn,.zic-tap-hint,.zic-tag,.sticker-drag-handle,.settings-btn,.settings-panel,.theme-option,.minimap-container,.minimap,.map-header,.map-bottom-bar,.map-controls-right,.map-close-btn,.mc,.map-ctrl-btn,.bottom-nav,.logo';
+const _interactiveInternals='.zc-flip-card,.zc-meter,.zc-flip-inner,button,input,textarea,select,a,.zic-explore-btn,.zic-tap-hint,.zic-tag,.sticker-drag-handle';
 function isInteractionSuppressed(e){
   if(performance.now()>=suppressStickerClickUntil)return false;
-  // Never suppress real UI controls outside stickers
+  // Never suppress internal interactive element clicks
   if(e&&e.target&&e.target.closest(_interactiveInternals))return false;
   if(e){
     if(e.cancelable)e.preventDefault();
@@ -7820,8 +7784,7 @@ function isInteractionSuppressed(e){
 }
 
 document.addEventListener('click',e=>{
-  if(!e.target.closest('.sticker'))return;
-  isInteractionSuppressed(e);
+  if(e.target.closest('.sticker'))isInteractionSuppressed(e);
 },true);
 
 // Event delegation for sticker drag — handles dynamically added stickers too
@@ -10793,25 +10756,9 @@ async function bootstrapMap(forceRescan){
     drawMap();
     mapBootstrapped=true;
     initBoardStats();
-    return true;
   }catch(e){
     console.error('Init error:',e)
-    return false;
   }
-}
-
-function releaseBootBlockers(){
-  document.body.classList.add('stickers-ready');
-  document.documentElement.style.pointerEvents='auto';
-  document.body.style.pointerEvents='auto';
-  ['#app','#root','.app','.moodboard-app'].forEach(sel=>{
-    const el=document.querySelector(sel);
-    if(el)el.style.pointerEvents='auto';
-  });
-  document.documentElement.classList.remove('loading','is-loading','interaction-suppressed');
-  document.body.classList.remove('loading','is-loading','interaction-suppressed');
-  const blockers=document.querySelectorAll('.loading-overlay,.app-loading-overlay,.app-loading,.app-blocker,[data-loading-overlay]');
-  blockers.forEach(el=>el.remove());
 }
 
 function ensureIntroCluster(){
@@ -10992,7 +10939,7 @@ function ensureCompanionStickers(force){
       // Wicket Counter interactive — Fun zone
       {dx:460,dy:410,html:dragHandleSvg+'<div class="zc-wicket"><div class="wk-title">🏏 WICKET COUNTER</div><div class="wk-stumps">🏏</div><div class="wk-count">0</div><div class="wk-label">bowled \'em!</div></div>',kind:'wicket'},
       // Hand Cricket Mini-Game — Fun zone (Stadium Edition)
-      {dx:0,dy:520,html:dragHandleSvg+'<div class="zc-hcricket-wrap"><img class="hc-cover-img" src="/images/cricket-stadium.png" alt="Hand Cricket" loading="lazy" style="width:480px;border-radius:0;cursor:pointer;box-shadow:none;transition:transform 0.3s;display:block;filter:drop-shadow(0 12px 40px rgba(0,0,0,0.45))" onmouseenter="this.style.transform=\'scale(1.05) rotateY(-2deg)\'" onmouseleave="this.style.transform=\'\'"><div class="hc-cover-label" style="text-align:center;margin-top:8px;font-family:var(--font-fun);font-size:0.75rem;font-weight:800;color:var(--text);letter-spacing:0.08em;text-transform:uppercase;opacity:0.7">✊ Tap to Play</div><div class="zc-hcricket" style="display:none;position:relative"><button class="hc-close-btn" style="position:absolute;top:8px;right:8px;z-index:20;background:rgba(0,0,0,0.6);border:1.5px solid rgba(255,255,255,0.15);color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:0.8rem;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);transition:all 0.2s" onmouseenter="this.style.background=\'rgba(255,23,68,0.7)\'" onmouseleave="this.style.background=\'rgba(0,0,0,0.6)\'">✕</button><div class="hc-boundary-flash"></div><div class="hc-boundary-text"></div><div class="hc-stadium"><div class="hc-flood"><div class="hc-flood-beam"></div></div><div class="hc-flood"><div class="hc-flood-beam"></div></div><div class="hc-crowd"></div><div class="hc-boundary-rope"></div><div class="hc-pitch"><div class="hc-stump top"><span></span><span></span><span></span></div><div class="hc-stump bot"><span></span><span></span><span></span></div></div><div class="hc-title-bar"><span class="hc-title">✊ HAND CRICKET</span><span class="hc-live-badge">● LIVE</span></div><div class="hc-phase">⚡ toss time</div><div class="hc-scoreboard"><div class="hc-team"><div class="hc-team-label">YOU</div><div class="hc-team-score" data-who="you">0</div><div class="hc-team-wkts" data-wkts="you"></div></div><div class="hc-vs"><span class="hc-vs-text">VS</span><div class="hc-vs-divider"></div></div><div class="hc-team"><div class="hc-team-label">CPU</div><div class="hc-team-score" data-who="cpu">0</div><div class="hc-team-wkts" data-wkts="cpu"></div></div></div><div class="hc-stats-bar"><span class="hc-stat-chip"><span class="hsc-icon">🏏</span> <span class="hsc-val" data-stat="overs">0.0</span> ov</span><span class="hc-stat-chip"><span class="hsc-icon">⚡</span> <span class="hsc-val" data-stat="balls">0</span> balls</span><span class="hc-stat-chip"><span class="hsc-icon">🎯</span> CRR <span class="hsc-val" data-stat="crr">0.00</span></span><span class="hc-stat-chip fours"><span class="hsc-icon">4️⃣</span> <span class="hsc-val" data-stat="fours">0</span></span><span class="hc-stat-chip sixes"><span class="hsc-icon">6️⃣</span> <span class="hsc-val" data-stat="sixes">0</span></span></div><div class="hc-streak" data-streak></div><div class="hc-target-bar"></div><div class="hc-rrr-chip" data-rrr></div><div class="hc-chase-progress"><div class="hc-chase-fill"></div></div></div><div class="hc-arena"><div class="hc-hands"><div class="hc-hand-wrap"><div class="hc-hand-who">YOU</div><div class="hc-hand you">✊</div></div><div class="hc-hand-wrap"><div class="hc-hand-who">CPU</div><div class="hc-hand cpu">✊</div></div></div><div class="hc-commentary">call it — odd or even?</div></div><div class="hc-controls"><div class="hc-btns" style="display:none"><button class="hc-btn" data-v="0">✊<span class="hc-btn-label">DEF</span></button><button class="hc-btn" data-v="1">☝️<span class="hc-btn-label">1</span></button><button class="hc-btn" data-v="2">✌️<span class="hc-btn-label">2</span></button><button class="hc-btn" data-v="3">🤟<span class="hc-btn-label">3</span></button><button class="hc-btn" data-v="4">🖖<span class="hc-btn-label">4</span></button><button class="hc-btn" data-v="6">👍<span class="hc-btn-label">6</span></button></div><div class="hc-manhattan"></div><div class="hc-history"></div></div><div class="hc-footer"><div class="hc-match-stats"><div class="hc-match-stat"><div class="hc-match-stat-val" data-mstat="highest">0</div><div class="hc-match-stat-label">Best</div></div><div class="hc-match-stat"><div class="hc-match-stat-val" data-mstat="fours">0</div><div class="hc-match-stat-label">4s</div></div><div class="hc-match-stat"><div class="hc-match-stat-val" data-mstat="sixes">0</div><div class="hc-match-stat-label">6s</div></div><div class="hc-match-stat"><div class="hc-match-stat-val" data-mstat="sr">0</div><div class="hc-match-stat-label">SR</div></div></div><div class="hc-record">W:0 L:0</div><div class="hc-leaderboard"><div class="hc-lb-title">📜 MATCH HISTORY</div></div></div></div></div>',kind:'hcricket'} src="/images/cricket-stadium.png" alt="Hand Cricket" loading="lazy" style="width:480px;border-radius:0;cursor:pointer;box-shadow:none;transition:transform 0.3s;display:block;filter:drop-shadow(0 12px 40px rgba(0,0,0,0.45))" onmouseenter="this.style.transform=\'scale(1.05) rotateY(-2deg)\'" onmouseleave="this.style.transform=\'\'"><div class="hc-cover-label" style="text-align:center;margin-top:8px;font-family:var(--font-fun);font-size:0.75rem;font-weight:800;color:var(--text);letter-spacing:0.08em;text-transform:uppercase;opacity:0.7">✊ Tap to Play</div><div class="zc-hcricket" style="display:none;position:relative"><button class="hc-close-btn" style="position:absolute;top:8px;right:8px;z-index:20;background:rgba(0,0,0,0.6);border:1.5px solid rgba(255,255,255,0.15);color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:0.8rem;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);transition:all 0.2s" onmouseenter="this.style.background=\'rgba(255,23,68,0.7)\'" onmouseleave="this.style.background=\'rgba(0,0,0,0.6)\'">✕</button><div class="hc-boundary-flash"></div><div class="hc-boundary-text"></div><div class="hc-stadium"><div class="hc-flood"></div><div class="hc-flood"></div><div class="hc-crowd"></div><div class="hc-pitch"></div><div class="hc-title-bar"><span class="hc-title">✊ HAND CRICKET</span><span class="hc-live-badge">● LIVE</span></div><div class="hc-phase">⚡ toss time</div><div class="hc-scoreboard"><div class="hc-team"><div class="hc-team-label">YOU</div><div class="hc-team-score" data-who="you">0</div></div><div class="hc-vs">VS</div><div class="hc-team"><div class="hc-team-label">CPU</div><div class="hc-team-score" data-who="cpu">0</div></div></div><div class="hc-stats-bar"><span class="hc-stat-chip"><span class="hsc-icon">🏏</span> <span class="hsc-val" data-stat="overs">0.0</span> ov</span><span class="hc-stat-chip"><span class="hsc-icon">⚡</span> <span class="hsc-val" data-stat="balls">0</span> balls</span><span class="hc-stat-chip"><span class="hsc-icon">🎯</span> CRR <span class="hsc-val" data-stat="crr">0.00</span></span></div><div class="hc-target-bar"></div><div class="hc-chase-progress"><div class="hc-chase-fill"></div></div></div><div class="hc-arena"><div class="hc-hands"><div class="hc-hand-wrap"><div class="hc-hand-who">YOU</div><div class="hc-hand you">✊</div></div><div class="hc-hand-wrap"><div class="hc-hand-who">CPU</div><div class="hc-hand cpu">✊</div></div></div><div class="hc-commentary">call it — odd or even?</div></div><div class="hc-controls"><div class="hc-btns" style="display:none"><button class="hc-btn" data-v="0">✊<span class="hc-btn-label">DEF</span></button><button class="hc-btn" data-v="1">☝️<span class="hc-btn-label">1</span></button><button class="hc-btn" data-v="2">✌️<span class="hc-btn-label">2</span></button><button class="hc-btn" data-v="3">🤟<span class="hc-btn-label">3</span></button><button class="hc-btn" data-v="4">🖖<span class="hc-btn-label">4</span></button><button class="hc-btn" data-v="6">👍<span class="hc-btn-label">6</span></button></div><div class="hc-history"></div></div><div class="hc-footer"><div class="hc-record">W:0 L:0</div><div class="hc-leaderboard"><div class="hc-lb-title">📜 MATCH HISTORY</div></div></div></div></div>',kind:'hcricket'}
+      {dx:0,dy:520,html:dragHandleSvg+'<div class="zc-hcricket-wrap"><img class="hc-cover-img" src="/images/cricket-stadium.png" alt="Hand Cricket" loading="lazy" style="width:480px;border-radius:0;cursor:pointer;box-shadow:none;transition:transform 0.3s;display:block;filter:drop-shadow(0 12px 40px rgba(0,0,0,0.45))" onmouseenter="this.style.transform=\'scale(1.05) rotateY(-2deg)\'" onmouseleave="this.style.transform=\'\'"><div class="hc-cover-label" style="text-align:center;margin-top:8px;font-family:var(--font-fun);font-size:0.75rem;font-weight:800;color:var(--text);letter-spacing:0.08em;text-transform:uppercase;opacity:0.7">✊ Tap to Play</div><div class="zc-hcricket" style="display:none;position:relative"><button class="hc-close-btn" style="position:absolute;top:8px;right:8px;z-index:20;background:rgba(0,0,0,0.6);border:1.5px solid rgba(255,255,255,0.15);color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:0.8rem;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);transition:all 0.2s" onmouseenter="this.style.background=\'rgba(255,23,68,0.7)\'" onmouseleave="this.style.background=\'rgba(0,0,0,0.6)\'">✕</button><div class="hc-boundary-flash"></div><div class="hc-boundary-text"></div><div class="hc-stadium"><div class="hc-flood"></div><div class="hc-flood"></div><div class="hc-crowd"></div><div class="hc-pitch"></div><div class="hc-title-bar"><span class="hc-title">✊ HAND CRICKET</span><span class="hc-live-badge">● LIVE</span></div><div class="hc-phase">⚡ toss time</div><div class="hc-scoreboard"><div class="hc-team"><div class="hc-team-label">YOU</div><div class="hc-team-score" data-who="you">0</div></div><div class="hc-vs">VS</div><div class="hc-team"><div class="hc-team-label">CPU</div><div class="hc-team-score" data-who="cpu">0</div></div></div><div class="hc-stats-bar"><span class="hc-stat-chip"><span class="hsc-icon">🏏</span> <span class="hsc-val" data-stat="overs">0.0</span> ov</span><span class="hc-stat-chip"><span class="hsc-icon">⚡</span> <span class="hsc-val" data-stat="balls">0</span> balls</span><span class="hc-stat-chip"><span class="hsc-icon">🎯</span> CRR <span class="hsc-val" data-stat="crr">0.00</span></span></div><div class="hc-target-bar"></div><div class="hc-chase-progress"><div class="hc-chase-fill"></div></div></div><div class="hc-arena"><div class="hc-hands"><div class="hc-hand-wrap"><div class="hc-hand-who">YOU</div><div class="hc-hand you">✊</div></div><div class="hc-hand-wrap"><div class="hc-hand-who">CPU</div><div class="hc-hand cpu">✊</div></div></div><div class="hc-commentary">call it — odd or even?</div></div><div class="hc-controls"><div class="hc-btns" style="display:none"><button class="hc-btn" data-v="0">✊<span class="hc-btn-label">DEF</span></button><button class="hc-btn" data-v="1">☝️<span class="hc-btn-label">1</span></button><button class="hc-btn" data-v="2">✌️<span class="hc-btn-label">2</span></button><button class="hc-btn" data-v="3">🤟<span class="hc-btn-label">3</span></button><button class="hc-btn" data-v="4">🖖<span class="hc-btn-label">4</span></button><button class="hc-btn" data-v="6">👍<span class="hc-btn-label">6</span></button></div><div class="hc-history"></div></div><div class="hc-footer"><div class="hc-record">W:0 L:0</div><div class="hc-leaderboard"><div class="hc-lb-title">📜 MATCH HISTORY</div></div></div></div></div>',kind:'hcricket'}
     ]
   };
 
@@ -11249,9 +11196,6 @@ function ensureCompanionStickers(force){
         let youScore=0,cpuScore=0,wins=0,losses=0;
         let target=-1;
         let totalBalls=0;
-        let fourCount=0,sixCount=0,streak=0,bestStreak=0;
-        let overRuns=[];let currentOverRuns=0;
-        let highestScore=0;
 
         function updateStats(){
           var overs=Math.floor(totalBalls/6);
@@ -11261,52 +11205,9 @@ function ensureCompanionStickers(force){
           var oversEl=hc.querySelector('[data-stat="overs"]');
           var ballsEl=hc.querySelector('[data-stat="balls"]');
           var crrEl=hc.querySelector('[data-stat="crr"]');
-          var foursEl=hc.querySelector('[data-stat="fours"]');
-          var sixesEl=hc.querySelector('[data-stat="sixes"]');
           if(oversEl)oversEl.textContent=overs+'.'+ballsInOver;
           if(ballsEl)ballsEl.textContent=String(totalBalls);
           if(crrEl)crrEl.textContent=crr;
-          if(foursEl)foursEl.textContent=String(fourCount);
-          if(sixesEl)sixesEl.textContent=String(sixCount);
-          // Streak display
-          var streakEl=hc.querySelector('[data-streak]');
-          if(streakEl){
-            if(streak>=3)streakEl.innerHTML='<span class="streak-fire">🔥</span> '+streak+' BALL STREAK!';
-            else streakEl.textContent='';
-          }
-          // RRR
-          var rrrEl=hc.querySelector('[data-rrr]');
-          if(rrrEl&&target>0&&phase==='bat'){
-            var need=target+1-youScore;
-            var ballsLeft=Math.max(1,30-totalBalls);
-            var rrr=(need/(ballsLeft/6)).toFixed(2);
-            rrrEl.textContent='RRR: '+rrr+' · Need '+need+' off '+ballsLeft;
-          }else if(rrrEl&&target>0&&phase==='bowl'){
-            var need2=target+1-cpuScore;
-            var ballsLeft2=Math.max(1,30-totalBalls);
-            var rrr2=(need2/(ballsLeft2/6)).toFixed(2);
-            rrrEl.textContent='CPU needs '+need2+' off '+ballsLeft2+' · RRR: '+rrr2;
-          }else if(rrrEl){rrrEl.textContent='';}
-          // Match stats
-          var sr=totalBalls>0?Math.round((batScore/totalBalls)*100):0;
-          var srEl=hc.querySelector('[data-mstat="sr"]');if(srEl)srEl.textContent=String(sr);
-          var hEl=hc.querySelector('[data-mstat="highest"]');if(hEl)hEl.textContent=String(highestScore);
-          var mfEl=hc.querySelector('[data-mstat="fours"]');if(mfEl)mfEl.textContent=String(fourCount);
-          var msEl=hc.querySelector('[data-mstat="sixes"]');if(msEl)msEl.textContent=String(sixCount);
-          // Manhattan
-          updateManhattan();
-        }
-        function updateManhattan(){
-          var mEl=hc.querySelector('.hc-manhattan');if(!mEl)return;
-          var allOvers=overRuns.slice();
-          if(currentOverRuns>0||totalBalls%6!==0)allOvers.push(currentOverRuns);
-          if(!allOvers.length){mEl.innerHTML='';return;}
-          var maxR=Math.max.apply(null,allOvers)||1;
-          mEl.innerHTML=allOvers.map(function(r,i){
-            var h=Math.max(2,Math.round((r/maxR)*24));
-            var cls=r>=8?'high':'';
-            return '<div class="hc-manhattan-bar '+cls+'" style="height:'+h+'px" data-runs="'+r+'"></div>';
-          }).join('');
         }
 
         const phaseEl=hc.querySelector('.hc-phase');
@@ -11382,16 +11283,6 @@ function ensureCompanionStickers(force){
           b.textContent=text;
           histEl.appendChild(b);
           totalBalls++;
-          // Track per-over runs for manhattan
-          var runs=parseInt(text)||0;
-          if(type==='four'){fourCount++;runs=4;}
-          if(type==='six'){sixCount++;runs=6;}
-          if(type!=='out')streak++;else streak=0;
-          if(streak>bestStreak)bestStreak=streak;
-          currentOverRuns+=runs;
-          if(totalBalls%6===0){overRuns.push(currentOverRuns);currentOverRuns=0;}
-          var batScore=(phase==='bat')?youScore:cpuScore;
-          if(batScore>highestScore)highestScore=batScore;
           updateStats();
         }
 
@@ -11468,7 +11359,6 @@ function ensureCompanionStickers(force){
         function startToss(){
           phase='toss_call';tossCall='';tossWonByPlayer=false;
           youScore=0;cpuScore=0;target=-1;totalBalls=0;
-          fourCount=0;sixCount=0;streak=0;bestStreak=0;overRuns=[];currentOverRuns=0;
           youScoreEl.textContent='0';cpuScoreEl.textContent='0';
           youScoreEl.classList.remove('batting');cpuScoreEl.classList.remove('batting');
           hc.classList.remove('playing','chasing');
@@ -11739,43 +11629,21 @@ function buildZoneCardHTML(meta){return '';}
 })();
 
 setTimeout(async ()=>{
-  try{
-    ensureIntroCluster();
-    ensureZoneIntroCards();
-    _invalidateStickerCache();
-    await bootstrapMap(true);
-    // Re-center on intro card AFTER items are rearranged
-    scrollToZone(null,'hub');
-    requestAnimationFrame(()=>centerOnIntroCard());
-    setTimeout(()=>centerOnIntroCard(),350);
-    // Show bitmoji greeting
-    const greet=document.createElement('div');
-    greet.className='bitmoji-greeting';
-    greet.innerHTML='<div class="greet-bubble">Hey there! 👋</div><img src="/images/bitmoji-full.webp" alt="Akash waving"/>';
-    document.body.appendChild(greet);
-    setTimeout(()=>greet.remove(),3200);
-  }catch(e){
-    console.error('App boot failed:',e);
-  }finally{
-    releaseBootBlockers();
-  }
+  ensureIntroCluster();
+  ensureZoneIntroCards();
+  _invalidateStickerCache();
+  await bootstrapMap(true);
+  // Re-center on intro card AFTER items are rearranged
+  scrollToZone(null,'hub');
+  requestAnimationFrame(()=>centerOnIntroCard());
+  setTimeout(()=>centerOnIntroCard(),350);
+  // Show bitmoji greeting
+  const greet=document.createElement('div');
+  greet.className='bitmoji-greeting';
+  greet.innerHTML='<div class="greet-bubble">Hey there! 👋</div><img src="/images/bitmoji-full.webp" alt="Akash waving"/>';
+  document.body.appendChild(greet);
+  setTimeout(()=>greet.remove(),3200);
 },120)
-
-window.addEventListener('error',()=>{
-  releaseBootBlockers();
-},{passive:true});
-
-window.addEventListener('unhandledrejection',()=>{
-  releaseBootBlockers();
-},{passive:true});
-
-window.addEventListener('load',()=>{
-  releaseBootBlockers();
-},{once:true,passive:true});
-
-setTimeout(()=>{
-  releaseBootBlockers();
-},1500);
 
 window.addEventListener('resize',debounce(()=>{
   if(mapBootstrapped)bootstrapMap(false);
@@ -12934,7 +12802,7 @@ function launchFunPanelCricket(){
   container.style.display='';
 
   // Inject HTML
-  container.innerHTML=`<div class="zc-hcricket" style="display:block;position:relative;width:100%"><div class="hc-boundary-flash"></div><div class="hc-boundary-text"></div><div class="hc-stadium"><div class="hc-flood"><div class="hc-flood-beam"></div></div><div class="hc-flood"><div class="hc-flood-beam"></div></div><div class="hc-crowd"></div><div class="hc-boundary-rope"></div><div class="hc-pitch"><div class="hc-stump top"><span></span><span></span><span></span></div><div class="hc-stump bot"><span></span><span></span><span></span></div></div><div class="hc-title-bar"><span class="hc-title">✊ HAND CRICKET</span><span class="hc-live-badge">● LIVE</span></div><div class="hc-phase">⚡ toss time</div><div class="hc-scoreboard"><div class="hc-team"><div class="hc-team-label">YOU</div><div class="hc-team-score" data-who="you">0</div><div class="hc-team-wkts" data-wkts="you"></div></div><div class="hc-vs"><span class="hc-vs-text">VS</span><div class="hc-vs-divider"></div></div><div class="hc-team"><div class="hc-team-label">CPU</div><div class="hc-team-score" data-who="cpu">0</div><div class="hc-team-wkts" data-wkts="cpu"></div></div></div><div class="hc-stats-bar"><span class="hc-stat-chip"><span class="hsc-icon">🏏</span> <span class="hsc-val" data-stat="overs">0.0</span> ov</span><span class="hc-stat-chip"><span class="hsc-icon">⚡</span> <span class="hsc-val" data-stat="balls">0</span> balls</span><span class="hc-stat-chip"><span class="hsc-icon">🎯</span> CRR <span class="hsc-val" data-stat="crr">0.00</span></span><span class="hc-stat-chip fours"><span class="hsc-icon">4️⃣</span> <span class="hsc-val" data-stat="fours">0</span></span><span class="hc-stat-chip sixes"><span class="hsc-icon">6️⃣</span> <span class="hsc-val" data-stat="sixes">0</span></span></div><div class="hc-streak" data-streak></div><div class="hc-target-bar"></div><div class="hc-rrr-chip" data-rrr></div><div class="hc-chase-progress"><div class="hc-chase-fill"></div></div></div><div class="hc-arena"><div class="hc-hands"><div class="hc-hand-wrap"><div class="hc-hand-who">YOU</div><div class="hc-hand you">✊</div></div><div class="hc-hand-wrap"><div class="hc-hand-who">CPU</div><div class="hc-hand cpu">✊</div></div></div><div class="hc-commentary">call it — odd or even?</div></div><div class="hc-controls"><div class="hc-btns" style="display:none"><button class="hc-btn" data-v="0">✊<span class="hc-btn-label">DEF</span></button><button class="hc-btn" data-v="1">☝️<span class="hc-btn-label">1</span></button><button class="hc-btn" data-v="2">✌️<span class="hc-btn-label">2</span></button><button class="hc-btn" data-v="3">🤟<span class="hc-btn-label">3</span></button><button class="hc-btn" data-v="4">🖖<span class="hc-btn-label">4</span></button><button class="hc-btn" data-v="6">👍<span class="hc-btn-label">6</span></button></div><div class="hc-manhattan"></div><div class="hc-history"></div></div><div class="hc-footer"><div class="hc-match-stats"><div class="hc-match-stat"><div class="hc-match-stat-val" data-mstat="highest">0</div><div class="hc-match-stat-label">Best</div></div><div class="hc-match-stat"><div class="hc-match-stat-val" data-mstat="fours">0</div><div class="hc-match-stat-label">4s</div></div><div class="hc-match-stat"><div class="hc-match-stat-val" data-mstat="sixes">0</div><div class="hc-match-stat-label">6s</div></div><div class="hc-match-stat"><div class="hc-match-stat-val" data-mstat="sr">0</div><div class="hc-match-stat-label">SR</div></div></div><div class="hc-record">W:0 L:0</div><div class="hc-leaderboard"><div class="hc-lb-title">📜 MATCH HISTORY</div></div></div></div>`;
+  container.innerHTML=`<div class="zc-hcricket" style="display:block;position:relative;width:100%"><div class="hc-boundary-flash"></div><div class="hc-boundary-text"></div><div class="hc-stadium"><div class="hc-flood"></div><div class="hc-flood"></div><div class="hc-crowd"></div><div class="hc-pitch"></div><div class="hc-title-bar"><span class="hc-title">✊ HAND CRICKET</span><span class="hc-live-badge">● LIVE</span></div><div class="hc-phase">⚡ toss time</div><div class="hc-scoreboard"><div class="hc-team"><div class="hc-team-label">YOU</div><div class="hc-team-score" data-who="you">0</div></div><div class="hc-vs">VS</div><div class="hc-team"><div class="hc-team-label">CPU</div><div class="hc-team-score" data-who="cpu">0</div></div></div><div class="hc-stats-bar"><span class="hc-stat-chip"><span class="hsc-icon">🏏</span> <span class="hsc-val" data-stat="overs">0.0</span> ov</span><span class="hc-stat-chip"><span class="hsc-icon">⚡</span> <span class="hsc-val" data-stat="balls">0</span> balls</span><span class="hc-stat-chip"><span class="hsc-icon">🎯</span> CRR <span class="hsc-val" data-stat="crr">0.00</span></span></div><div class="hc-target-bar"></div><div class="hc-chase-progress"><div class="hc-chase-fill"></div></div></div><div class="hc-arena"><div class="hc-hands"><div class="hc-hand-wrap"><div class="hc-hand-who">YOU</div><div class="hc-hand you">✊</div></div><div class="hc-hand-wrap"><div class="hc-hand-who">CPU</div><div class="hc-hand cpu">✊</div></div></div><div class="hc-commentary">call it — odd or even?</div></div><div class="hc-controls"><div class="hc-btns" style="display:none"><button class="hc-btn" data-v="0">✊<span class="hc-btn-label">DEF</span></button><button class="hc-btn" data-v="1">☝️<span class="hc-btn-label">1</span></button><button class="hc-btn" data-v="2">✌️<span class="hc-btn-label">2</span></button><button class="hc-btn" data-v="3">🤟<span class="hc-btn-label">3</span></button><button class="hc-btn" data-v="4">🖖<span class="hc-btn-label">4</span></button><button class="hc-btn" data-v="6">👍<span class="hc-btn-label">6</span></button></div><div class="hc-history"></div></div><div class="hc-footer"><div class="hc-record">W:0 L:0</div><div class="hc-leaderboard"><div class="hc-lb-title">📜 MATCH HISTORY</div></div></div></div>`;
 
   // Init game logic (same as canvas version but scoped to this container)
   var hc=container.querySelector('.zc-hcricket');
@@ -12948,38 +12816,14 @@ function launchFunPanelCricket(){
   var phase='toss_call',tossCall='',tossWonByPlayer=false;
   var youScore=0,cpuScore=0,wins=0,losses=0,target=-1;
   var totalBalls=0;
-  var fourCount=0,sixCount=0,streak=0,bestStreak=0;
-  var overRuns=[],currentOverRuns=0,highestScore=0;
   function updateStats(){
     var overs=Math.floor(totalBalls/6);var ballsInOver=totalBalls%6;
     var batScore=(phase==='bat')?youScore:cpuScore;
     var crr=totalBalls>0?(batScore/(totalBalls/6)).toFixed(2):'0.00';
     var oversEl=hc.querySelector('[data-stat="overs"]');var ballsEl=hc.querySelector('[data-stat="balls"]');var crrEl=hc.querySelector('[data-stat="crr"]');
-    var foursEl=hc.querySelector('[data-stat="fours"]');var sixesEl=hc.querySelector('[data-stat="sixes"]');
     if(oversEl)oversEl.textContent=overs+'.'+ballsInOver;
     if(ballsEl)ballsEl.textContent=String(totalBalls);
     if(crrEl)crrEl.textContent=crr;
-    if(foursEl)foursEl.textContent=String(fourCount);
-    if(sixesEl)sixesEl.textContent=String(sixCount);
-    var streakEl=hc.querySelector('[data-streak]');
-    if(streakEl){if(streak>=3)streakEl.innerHTML='<span class="streak-fire">🔥</span> '+streak+' BALL STREAK!';else streakEl.textContent='';}
-    var rrrEl=hc.querySelector('[data-rrr]');
-    if(rrrEl&&target>0&&phase==='bat'){var need=target+1-youScore;var bl=Math.max(1,30-totalBalls);rrrEl.textContent='RRR: '+(need/(bl/6)).toFixed(2)+' · Need '+need+' off '+bl;}
-    else if(rrrEl&&target>0&&phase==='bowl'){var need2=target+1-cpuScore;var bl2=Math.max(1,30-totalBalls);rrrEl.textContent='CPU needs '+need2+' off '+bl2+' · RRR: '+(need2/(bl2/6)).toFixed(2);}
-    else if(rrrEl){rrrEl.textContent='';}
-    var sr=totalBalls>0?Math.round((batScore/totalBalls)*100):0;
-    var srEl=hc.querySelector('[data-mstat="sr"]');if(srEl)srEl.textContent=String(sr);
-    var hEl=hc.querySelector('[data-mstat="highest"]');if(hEl)hEl.textContent=String(highestScore);
-    var mfEl=hc.querySelector('[data-mstat="fours"]');if(mfEl)mfEl.textContent=String(fourCount);
-    var msEl=hc.querySelector('[data-mstat="sixes"]');if(msEl)msEl.textContent=String(sixCount);
-    updateManhattan();
-  }
-  function updateManhattan(){
-    var mEl=hc.querySelector('.hc-manhattan');if(!mEl)return;
-    var allOvers=overRuns.slice();if(currentOverRuns>0||totalBalls%6!==0)allOvers.push(currentOverRuns);
-    if(!allOvers.length){mEl.innerHTML='';return;}
-    var maxR=Math.max.apply(null,allOvers)||1;
-    mEl.innerHTML=allOvers.map(function(r){var h=Math.max(2,Math.round((r/maxR)*24));return '<div class="hc-manhattan-bar '+(r>=8?'high':'')+'" style="height:'+h+'px" data-runs="'+r+'"></div>';}).join('');
   }
   var phaseEl=hc.querySelector('.hc-phase');
   var commentaryEl=hc.querySelector('.hc-commentary');
@@ -13025,7 +12869,7 @@ function launchFunPanelCricket(){
   function trueRandom(){var arr=new Uint32Array(1);if(window.crypto&&window.crypto.getRandomValues)window.crypto.getRandomValues(arr);else arr[0]=Math.floor(Math.random()*4294967296);return VALID[arr[0]%VALID.length];}
 
   function cpuPick(playerVal){return trueRandom();}
-  function addBall(type,text){var b=document.createElement('span');b.className='hc-ball '+type;b.textContent=text;histEl.appendChild(b);totalBalls++;var runs=parseInt(text)||0;if(type==='four'){fourCount++;runs=4;}if(type==='six'){sixCount++;runs=6;}if(type!=='out')streak++;else streak=0;if(streak>bestStreak)bestStreak=streak;currentOverRuns+=runs;if(totalBalls%6===0){overRuns.push(currentOverRuns);currentOverRuns=0;}var batScore=(phase==='bat')?youScore:cpuScore;if(batScore>highestScore)highestScore=batScore;updateStats();}
+  function addBall(type,text){var b=document.createElement('span');b.className='hc-ball '+type;b.textContent=text;histEl.appendChild(b);totalBalls++;updateStats();}
   function showFlash(type){flashEl.className='hc-boundary-flash';void flashEl.offsetWidth;flashEl.classList.add(type);}
   function showBoundaryText(text,type){boundaryTextEl.textContent=text;boundaryTextEl.className='hc-boundary-text';void boundaryTextEl.offsetWidth;boundaryTextEl.classList.add(type);}
   function popScore(el){el.classList.remove('score-pop');void el.offsetWidth;el.classList.add('score-pop');}
@@ -13041,7 +12885,7 @@ function launchFunPanelCricket(){
   hc.querySelector('.hc-arena').appendChild(choiceDiv);
 
   function showTossButtons(){tossDiv.style.display='flex';tossDiv.innerHTML='<button class="hc-choice-btn bat" data-call="odd">ODD</button><button class="hc-choice-btn bowl" data-call="even">EVEN</button>';choiceDiv.style.display='none';btnsWrap.style.display='none';}
-  function startToss(){phase='toss_call';tossCall='';tossWonByPlayer=false;youScore=0;cpuScore=0;target=-1;totalBalls=0;fourCount=0;sixCount=0;streak=0;bestStreak=0;overRuns=[];currentOverRuns=0;youScoreEl.textContent='0';cpuScoreEl.textContent='0';youScoreEl.classList.remove('batting');cpuScoreEl.classList.remove('batting');hc.classList.remove('playing','chasing');phaseEl.textContent='⚡ TOSS TIME';commentaryEl.textContent='call it — odd or even?';commentaryEl.className='hc-commentary';histEl.innerHTML='';targetBar.style.display='none';youHandEl.textContent='✊';cpuHandEl.textContent='✊';youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';updateStats();showTossButtons();}
+  function startToss(){phase='toss_call';tossCall='';tossWonByPlayer=false;youScore=0;cpuScore=0;target=-1;totalBalls=0;youScoreEl.textContent='0';cpuScoreEl.textContent='0';youScoreEl.classList.remove('batting');cpuScoreEl.classList.remove('batting');hc.classList.remove('playing','chasing');phaseEl.textContent='⚡ TOSS TIME';commentaryEl.textContent='call it — odd or even?';commentaryEl.className='hc-commentary';histEl.innerHTML='';targetBar.style.display='none';youHandEl.textContent='✊';cpuHandEl.textContent='✊';youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';updateStats();showTossButtons();}
   function startBatting(){phase='bat';hc.classList.add('playing');youScoreEl.classList.add('batting');cpuScoreEl.classList.remove('batting');phaseEl.textContent='🏏 YOU BAT';commentaryEl.textContent='pick a number to bat!';commentaryEl.className='hc-commentary';tossDiv.style.display='none';choiceDiv.style.display='none';btnsWrap.style.display='flex';youHandEl.textContent='✊';cpuHandEl.textContent='✊';youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';}
   function startBowling(){phase='bowl';hc.classList.add('playing');youScoreEl.classList.remove('batting');cpuScoreEl.classList.add('batting');phaseEl.textContent='🎯 CPU BATS · YOU BOWL';commentaryEl.textContent='pick a number to bowl!';commentaryEl.className='hc-commentary';tossDiv.style.display='none';choiceDiv.style.display='none';btnsWrap.style.display='flex';youHandEl.textContent='✊';cpuHandEl.textContent='✊';youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';}
   function switchInnings(){target=youScore;hc.classList.add('chasing');phaseEl.textContent='🎯 CPU CHASES '+(target+1);targetBar.textContent='TARGET: '+(target+1);targetBar.style.display='block';commentaryEl.textContent='pick to bowl!';commentaryEl.className='hc-commentary';histEl.innerHTML='';totalBalls=0;updateStats();phase='bowl';youScoreEl.classList.remove('batting');cpuScoreEl.classList.add('batting');youHandEl.textContent='✊';cpuHandEl.textContent='✊';youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';}
