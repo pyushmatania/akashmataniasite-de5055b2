@@ -33,8 +33,7 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
-          "react-vendor": ["react", "react-dom", "react-router-dom"],
-          "framer-motion": ["framer-motion"],
+          "react-vendor": ["react", "react-dom"],
           "ui-utils": ["clsx", "tailwind-merge", "class-variance-authority"],
         },
       },

@@ -712,6 +712,17 @@ body.perf-interacting .zone-intro-card,
 body.perf-interacting .zone-intro-card *{animation-play-state:paused!important}
 body.perf-interacting .map-intro-glow{animation:none!important}
 
+body.loading-phase .sticker,
+body.loading-phase .map-sticker-clone,
+body.loading-phase [class*="sticker"],
+body.loading-phase .bitmoji-greeting,
+body.loading-phase .moodboard-bitmoji-guide{
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  animation:none!important;
+}
+
 
 /* Notebook paper extras */
 .canvas.theme-notebook::before{
@@ -2672,7 +2683,7 @@ body.map-expanded .scroll-counter{display:none!important}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
 <script>if(!window.supabase||typeof window.supabase.createClient!=='function'){console.warn('[Layout] Supabase CDN failed to load — will use REST fallback')}</script>
 </head>
-<body>
+<body class="loading-phase">
 <div class="loader-screen" id="loaderScreen">
   <div class="loader-name">Akash Matania</div>
   <div class="loader-role-wrap">
@@ -13636,6 +13647,7 @@ function returnCricketToCanvas(){
   function dismiss(){
     clearInterval(percentInterval);
     if(percentEl)percentEl.textContent='100';
+    if(document.body)document.body.classList.remove('loading-phase');
     if(loader)loader.classList.add('hide');
     if(vp)vp.classList.add('loaded');
     setTimeout(function(){if(loader)loader.style.display='none'},700);
