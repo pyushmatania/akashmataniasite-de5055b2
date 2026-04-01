@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState, useCallback, memo } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 const MOODBOARD_SRC = "/moodboard.html";
 
-const Index = memo(function Index() {
+export default function Index() {
   const [loaded, setLoaded] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const mountedRef = useRef(true);
@@ -11,7 +11,6 @@ const Index = memo(function Index() {
     if (mountedRef.current) setLoaded(true);
   }, []);
 
-  // Fallback timeout — show iframe even if onLoad doesn't fire
   useEffect(() => {
     mountedRef.current = true;
     if (loaded) return;
@@ -45,6 +44,4 @@ const Index = memo(function Index() {
       />
     </div>
   );
-});
-
-export default Index;
+}
