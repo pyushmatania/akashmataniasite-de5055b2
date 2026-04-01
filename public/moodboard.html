@@ -13683,10 +13683,10 @@ function returnCricketToCanvas(){
     el.style.color=s.color;
     el.style.borderColor=s.color.replace(')',',0.25)').replace('rgb','rgba');
     el.innerHTML='<span style="font-size:1rem">'+s.icon+'</span>'+s.label;
-    var angle=rnd(0,Math.PI*2);
-    var radius=rnd(80,250);
-    el.style.left='calc(50% + '+Math.cos(angle)*rnd(-40,40)+'px)';
-    el.style.top='calc(50% + '+Math.sin(angle)*rnd(-40,40)+'px)';
+    var angle=rnd(-Math.PI*0.8, Math.PI*0.8);
+    var radius=rnd(60,200);
+    el.style.left='calc(50% + '+rnd(-120,120)+'px)';
+    el.style.top='calc(18% + '+rnd(-30,30)+'px)';
     el.style.setProperty('--sx',Math.cos(angle+Math.PI)*radius+'px');
     el.style.setProperty('--sy',Math.sin(angle+Math.PI)*radius+'px');
     el.style.setProperty('--dx',Math.cos(angle)*radius*0.7+'px');
