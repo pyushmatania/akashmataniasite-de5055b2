@@ -11388,8 +11388,8 @@ function ensureCompanionStickers(force){
         let hodlInterval=null,hodlStart=0,hodlBest=0;
         const timerEl=hodl.querySelector('.hodl-timer');
         const recordEl=hodl.querySelector('.hodl-record');
-        const HODL_GS_URL='https://secfpttvtutusedpzefm.supabase.co/rest/v1/game_scores';
-        const HODL_GS_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlY2ZwdHR2dHV0dXNlZHB6ZWZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4NTEwMDQsImV4cCI6MjA5MDQyNzAwNH0.zDZDAHi_7sowsltXEVXXzzAKX0fgbKWs4LvC0imWx5M';
+        const HODL_GS_URL='https://oxlnpnqwrwlnfjyvlmyv.supabase.co/rest/v1/game_scores';
+        const HODL_GS_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94bG5wbnF3cndsbmZqeXZsbXl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDk2MjAsImV4cCI6MjA5MDUyNTYyMH0.6Css1oPopST8lq39tBHvD70jr4UXPHYe3TKqh6smYkY';
         // Load best HODL from cloud
         fetch(HODL_GS_URL+'?game_type=eq.hodl_challenge&order=played_at.desc&limit=1',{headers:{'apikey':HODL_GS_KEY,'Authorization':'Bearer '+HODL_GS_KEY}})
           .then(function(r){return r.json();})
@@ -11566,6 +11566,9 @@ function ensureCompanionStickers(force){
         var closeBtn=hc.querySelector('.hc-close-btn');
         if(closeBtn){closeBtn.addEventListener('click',function(ev){ev.stopPropagation();hc.style.display='none';coverImg.style.display='block';coverLabel.style.display='block';});}
         window.__initHCGame(hc);
+        // Store global reference for single-game-two-views
+        window.__hcGameEl=hc;
+        window.__hcCanvasWrap=wrap;
       }
     }
 
@@ -12027,8 +12030,8 @@ function ekPick(el,e){
 <script>
 // ===== LAYOUT SAVE/LOAD via cloud =====
 (function(){
-  const SUPABASE_URL='https://knjqglglznkwlrhuveiw.supabase.co';
-  const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuanFnbGdsem5rd2xyaHV2ZWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2NjkzMDksImV4cCI6MjA5MDI0NTMwOX0.ID4dFbLbpa4bTmqo7-zVwxZJoH1c1wpWBKohgiPBW9g';
+  const SUPABASE_URL='https://oxlnpnqwrwlnfjyvlmyv.supabase.co';
+  const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94bG5wbnF3cndsbmZqeXZsbXl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDk2MjAsImV4cCI6MjA5MDUyNTYyMH0.6Css1oPopST8lq39tBHvD70jr4UXPHYe3TKqh6smYkY';
   const LAYOUT_ROW_ID='11111111-1111-4111-8111-111111111111';
   const PIN_ROW_ID='22222222-2222-4222-8222-222222222222';
   const REST_BASE=`${SUPABASE_URL}/rest/v1`;
@@ -12683,12 +12686,13 @@ function closeZonePanel(zone){
   const bd=document.getElementById('zpbd-'+zone);
   if(panel){
     panel.classList.remove('open');
-    // Clean up particles after transition
     setTimeout(()=>{panel.querySelectorAll('.zp-particle').forEach(p=>p.remove())},600);
   }
   if(bd)bd.classList.remove('open');
   document.querySelectorAll('.zp-proj-detail.open').forEach(d=>d.classList.remove('open'));
   document.body.style.overflow='';
+  // Return cricket game to canvas when fun panel closes
+  if(zone==='fun'&&typeof returnCricketToCanvas==='function')returnCricketToCanvas();
 }
 window.closeZonePanel=closeZonePanel;
 
@@ -12774,17 +12778,41 @@ window.closeProject=closeProject;
     },100);
   };
 })();
-/* ─── Fun Panel Cricket Launcher ───────────── */
+/* ─── Fun Panel Cricket Launcher — single game, teleport ───────────── */
 function launchFunPanelCricket(){
   var container=document.getElementById('zp-fun-cricket-game');
   if(!container)return;
-  if(container.dataset.init==='1'){container.style.display='';return;}
-  container.dataset.init='1';
+  var hc=window.__hcGameEl;
+  if(!hc){
+    // Fallback: create fresh if canvas game not ready yet
+    container.innerHTML=window.__hcGameHTML({panel:true});
+    hc=container.querySelector('.zc-hcricket');
+    if(hc){window.__initHCGame(hc);window.__hcGameEl=hc;}
+    container.style.display='';
+    return;
+  }
+  // Teleport existing game into panel
+  hc.style.display='';
+  hc.style.width='100%';
+  container.appendChild(hc);
   container.style.display='';
-  container.innerHTML=window.__hcGameHTML({panel:true});
-  var hc=container.querySelector('.zc-hcricket');
-  if(!hc)return;
-  window.__initHCGame(hc);
+  // Hide canvas cover
+  var wrap=window.__hcCanvasWrap;
+  if(wrap){var ci=wrap.querySelector('.hc-cover-img');var cl=wrap.querySelector('.hc-cover-label');if(ci)ci.style.display='none';if(cl)cl.style.display='none';}
+}
+function returnCricketToCanvas(){
+  var hc=window.__hcGameEl;
+  var wrap=window.__hcCanvasWrap;
+  var container=document.getElementById('zp-fun-cricket-game');
+  if(!hc||!wrap)return;
+  // Move back to canvas
+  hc.style.display='none';
+  hc.style.width='';
+  wrap.appendChild(hc);
+  if(container)container.style.display='none';
+  // Show canvas cover again
+  var ci=wrap.querySelector('.hc-cover-img');var cl=wrap.querySelector('.hc-cover-label');
+  if(ci)ci.style.display='block';if(cl)cl.style.display='block';
 }
 </script>
 
