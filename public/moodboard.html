@@ -12073,7 +12073,103 @@ function ekPick(el,e){
     : null;
   window._supabaseLayout=sb;
 
-  // PIN verification is now handled server-side via edge function
+  // ===== ADMIN DELETE MODE =====
+  let _deleteModeActive=false;
+  let _deletedSids=new Set();
+  // Load persisted deleted items
+  try{const raw=localStorage.getItem(LOCAL_DELETED_KEY);if(raw)_deletedSids=new Set(JSON.parse(raw));}catch(_){}
+
+  function persistDeletedIds(){
+    try{localStorage.setItem(LOCAL_DELETED_KEY,JSON.stringify([..._deletedSids]));}catch(_){}
+  }
+
+  function getStickerSid(el){
+    if(!el.dataset.sid){
+      const zone=el.dataset.zone||'na';
+      const type=el.dataset.type||'other';
+      const snippet=(el.textContent||'').trim().substring(0,24).replace(/\s+/g,' ').toLowerCase();
+      el.dataset.sid=(el.id?'id:'+el.id:'auto:'+zone+':'+type+':'+snippet);
+    }
+    return el.dataset.sid;
+  }
+
+  function addDeleteButtons(){
+    document.querySelectorAll('#canvas > .sticker').forEach(s=>{
+      if(s.querySelector('.delete-x'))return;
+      const btn=document.createElement('button');
+      btn.className='delete-x';
+      btn.textContent='✕';
+      btn.title='Delete this item permanently';
+      btn.addEventListener('click',(e)=>{
+        e.stopPropagation();e.preventDefault();
+        const sid=getStickerSid(s);
+        _deletedSids.add(sid);
+        persistDeletedIds();
+        s.style.transition='transform 0.3s, opacity 0.3s';
+        s.style.transform='scale(0.3) rotate(15deg)';s.style.opacity='0';
+        setTimeout(()=>{s.remove();updateDeleteCount();
+          if(typeof initBoardStats==='function')initBoardStats();
+          if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
+          if(typeof queueMapSync==='function')queueMapSync(true);
+        },300);
+      });
+      s.appendChild(btn);
+    });
+  }
+
+  function removeDeleteButtons(){
+    document.querySelectorAll('.delete-x').forEach(b=>b.remove());
+  }
+
+  function updateDeleteCount(){
+    const el=document.getElementById('deleteCount');
+    if(el)el.textContent=_deletedSids.size;
+  }
+
+  window.toggleDeleteMode=function(){
+    _deleteModeActive=!_deleteModeActive;
+    const canvas=document.getElementById('canvas');
+    const btn=document.getElementById('deleteModeBtn');
+    if(_deleteModeActive){
+      canvas.classList.add('delete-mode-active');
+      btn.classList.add('active');
+      btn.innerHTML='🗑 EXIT Delete Mode <span class="dm-count" id="deleteCount">'+_deletedSids.size+'</span>';
+      addDeleteButtons();
+    }else{
+      canvas.classList.remove('delete-mode-active');
+      btn.classList.remove('active');
+      btn.innerHTML='🗑 Delete Mode <span class="dm-count" id="deleteCount">'+_deletedSids.size+'</span>';
+      removeDeleteButtons();
+    }
+  };
+
+  // Auto-remove previously deleted items on page load
+  window.applyDeletedItems=function(){
+    ensureStableStickerIds(document.querySelectorAll('#canvas > .sticker'));
+    if(_deletedSids.size===0)return;
+    let removed=0;
+    document.querySelectorAll('#canvas > .sticker').forEach(s=>{
+      const sid=getStickerSid(s);
+      if(_deletedSids.has(sid)){s.remove();removed++;}
+    });
+    if(removed>0){
+      console.log('[DeleteMode] Removed '+removed+' previously deleted items');
+      updateDeleteCount();
+      if(typeof initBoardStats==='function')initBoardStats();
+      if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
+      if(typeof queueMapSync==='function')queueMapSync(true);
+    }
+  };
+
+  // Undo all deletes (restore)
+  window.resetDeletedItems=function(){
+    _deletedSids.clear();
+    persistDeletedIds();
+    updateDeleteCount();
+    console.log('[DeleteMode] All deleted items cleared — reload to restore');
+  };
+
+
   async function verifyPinRemote(pin, action) {
     const resp = await fetch(SUPABASE_URL + '/functions/v1/verify-pin', {
       method: 'POST',
