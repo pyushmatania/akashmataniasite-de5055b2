@@ -12086,13 +12086,10 @@ function ekPick(el,e){
   }
 
   function getStickerSid(el){
-    if(!el.dataset.sid){
-      const zone=el.dataset.zone||'na';
-      const type=el.dataset.type||'other';
-      const snippet=(el.textContent||'').trim().substring(0,24).replace(/\s+/g,' ').toLowerCase();
-      el.dataset.sid=(el.id?'id:'+el.id:'auto:'+zone+':'+type+':'+snippet);
-    }
-    return el.dataset.sid;
+    if(el.dataset.sid) return el.dataset.sid;
+    // Use ensureStableStickerIds to guarantee consistent format
+    ensureStableStickerIds(document.querySelectorAll('#canvas > .sticker'));
+    return el.dataset.sid || ('fallback:' + (el.id || el.textContent.trim().substring(0,20)));
   }
 
   function addDeleteButtons(){
