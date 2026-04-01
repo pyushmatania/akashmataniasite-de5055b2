@@ -12669,6 +12669,7 @@ function ekPick(el,e){
       if(typeof scanStickers==='function')scanStickers();
       if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
       if(typeof queueMapSync==='function')queueMapSync(true);
+      if(typeof window.applyDeletedItems==='function')window.applyDeletedItems();
       if(typeof initBoardStats==='function')initBoardStats();
     }catch(e){
       console.warn('Deferred cloud hydration failed:',e);
