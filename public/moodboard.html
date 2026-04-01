@@ -12986,7 +12986,7 @@ function launchFunPanelCricket(){
   function trueRandom(){var arr=new Uint32Array(1);if(window.crypto&&window.crypto.getRandomValues)window.crypto.getRandomValues(arr);else arr[0]=Math.floor(Math.random()*4294967296);return VALID[arr[0]%VALID.length];}
 
   function cpuPick(playerVal){return trueRandom();}
-  function addBall(type,text){var b=document.createElement('span');b.className='hc-ball '+type;b.textContent=text;histEl.appendChild(b);totalBalls++;updateStats();}
+  function addBall(type,text){var b=document.createElement('span');b.className='hc-ball '+type;b.textContent=text;histEl.appendChild(b);totalBalls++;var runs=parseInt(text)||0;if(type==='four'){fourCount++;runs=4;}if(type==='six'){sixCount++;runs=6;}if(type!=='out')streak++;else streak=0;if(streak>bestStreak)bestStreak=streak;currentOverRuns+=runs;if(totalBalls%6===0){overRuns.push(currentOverRuns);currentOverRuns=0;}var batScore=(phase==='bat')?youScore:cpuScore;if(batScore>highestScore)highestScore=batScore;updateStats();}
   function showFlash(type){flashEl.className='hc-boundary-flash';void flashEl.offsetWidth;flashEl.classList.add(type);}
   function showBoundaryText(text,type){boundaryTextEl.textContent=text;boundaryTextEl.className='hc-boundary-text';void boundaryTextEl.offsetWidth;boundaryTextEl.classList.add(type);}
   function popScore(el){el.classList.remove('score-pop');void el.offsetWidth;el.classList.add('score-pop');}
