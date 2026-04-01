@@ -13671,7 +13671,6 @@ function returnCricketToCanvas(){
   },30);
 
   function dismiss(){
-    clearInterval(spawnInterval);
     clearInterval(percentInterval);
     if(percentEl)percentEl.textContent='100';
     if(loader)loader.classList.add('hide');
