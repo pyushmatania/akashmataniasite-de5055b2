@@ -12079,6 +12079,7 @@ function ekPick(el,e){
   let _deletedSids=new Set();
   // Load persisted deleted items
   try{const raw=localStorage.getItem(LOCAL_DELETED_KEY);if(raw)_deletedSids=new Set(JSON.parse(raw));}catch(_){}
+  setTimeout(()=>{const el=document.getElementById('deleteCount');if(el)el.textContent=_deletedSids.size;},0);
 
   function persistDeletedIds(){
     try{localStorage.setItem(LOCAL_DELETED_KEY,JSON.stringify([..._deletedSids]));}catch(_){}
