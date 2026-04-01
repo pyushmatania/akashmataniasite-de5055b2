@@ -3094,10 +3094,13 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-cutout" data-anim="pop" data-zone="introduction" style="left:400px;top:850px;width:140px;height:140px" data-sid="sc01"><img src="/stickers/pm-launch-it.png" alt="Launch It sticker" loading="lazy"></div>
 <div class="sticker sticker-cutout" data-anim="bounce" data-zone="introduction" style="left:1600px;top:850px;width:140px;height:140px" data-sid="sc02"><img src="/stickers/pm-genius.png" alt="Product Genius sticker" loading="lazy"></div>
 <!-- 🤖 AI Interactive: Idea Generator -->
-<div class="sticker sticker-meme ai-interactive" data-anim="pop" data-zone="introduction" onclick="aiIdeaGen(this,event)" style="left:1050px;top:850px;cursor:pointer;width:220px;text-align:center" data-sid="ai01">
-  <div class="meme-emoji">🤖</div>
-  <div class="meme-text" id="aiIdeaResult">Tap for an AI product idea!</div>
-  <div class="meme-sub">AI Idea Generator</div>
+<!-- 🎱 AI Interactive: Magic 8-Ball -->
+<div class="sticker ai-8ball" data-anim="pop" data-zone="introduction" onclick="shake8Ball(this,event)" style="left:1050px;top:850px" data-sid="ai01">
+  <div class="ball-sphere">
+    <div class="ball-eight">8</div>
+    <div class="ball-window"><div class="ball-answer" id="ball8Answer">?</div></div>
+  </div>
+  <div class="ball-label">🤖 AI 8-Ball — Ask anything</div>
 </div>
 
 
