@@ -13471,6 +13471,46 @@ function closeProject(id){
 }
 window.closeProject=closeProject;
 
+/* ── Next/Prev Project Navigation ── */
+var PROJECT_ORDER=['entercircles','recess','hushh','smarbhubaneswar','aribasda','neuralos','zombieverse','skillsync','fourthnation','lifeline','assurance'];
+var PROJECT_NAMES={entercircles:'EnterCircles',recess:'Recess',hushh:'Hushh',smarbhubaneswar:'Smart Bhubaneswar',aribasda:'Arribada',neuralos:'Neural OS',zombieverse:'Zombieverse',skillsync:'SkillSync',fourthnation:'The Fourth Nation',lifeline:'Project Lifeline',assurance:'Assurance'};
+var PROJECT_EMOJI={entercircles:'🔗',recess:'📚',hushh:'🎧',smarbhubaneswar:'🏙️',aribasda:'🌊',neuralos:'🧠',zombieverse:'🧟',skillsync:'🧠',fourthnation:'🌍',lifeline:'🏥',assurance:'🎓'};
+
+function navigateProject(currentId,dir){
+  var idx=PROJECT_ORDER.indexOf(currentId);
+  if(idx<0)return;
+  var next=dir==='next'?PROJECT_ORDER[(idx+1)%PROJECT_ORDER.length]:PROJECT_ORDER[(idx-1+PROJECT_ORDER.length)%PROJECT_ORDER.length];
+  closeProject(currentId);
+  setTimeout(function(){openProject(next)},350);
+  var el=document.getElementById('zpd-'+next);
+  if(el)setTimeout(function(){el.scrollTop=0},360);
+}
+window.navigateProject=navigateProject;
+
+(function(){
+  PROJECT_ORDER.forEach(function(id,i){
+    var detail=document.getElementById('zpd-'+id);
+    if(!detail)return;
+    var galleryInfo=detail.querySelector('.gallery-info');
+    if(!galleryInfo)return;
+    var prevIdx=(i-1+PROJECT_ORDER.length)%PROJECT_ORDER.length;
+    var nextIdx=(i+1)%PROJECT_ORDER.length;
+    var prevId=PROJECT_ORDER[prevIdx],nextId=PROJECT_ORDER[nextIdx];
+    var nav=document.createElement('div');
+    nav.className='gi-proj-nav';
+    nav.innerHTML=
+      '<button class="gi-proj-nav-btn gi-proj-nav-prev" onclick="navigateProject(\''+id+'\',\'prev\')">'+
+        '<span class="gi-proj-nav-arrow">←</span>'+
+        '<span class="gi-proj-nav-info"><span class="gi-proj-nav-label">Previous</span><span class="gi-proj-nav-name">'+PROJECT_EMOJI[prevId]+' '+PROJECT_NAMES[prevId]+'</span></span>'+
+      '</button>'+
+      '<button class="gi-proj-nav-btn gi-proj-nav-next" onclick="navigateProject(\''+id+'\',\'next\')">'+
+        '<span class="gi-proj-nav-info" style="text-align:right"><span class="gi-proj-nav-label">Next</span><span class="gi-proj-nav-name">'+PROJECT_NAMES[nextId]+' '+PROJECT_EMOJI[nextId]+'</span></span>'+
+        '<span class="gi-proj-nav-arrow">→</span>'+
+      '</button>';
+    galleryInfo.appendChild(nav);
+  });
+})();
+
 /* ─── PLAY BUTTON ZONE COLOR ──────────────────
    Update play button accent when zone changes   */
 (function(){
