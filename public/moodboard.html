@@ -14677,6 +14677,130 @@ function returnCricketToCanvas(){
   if(ci)ci.style.display='block';if(cl)cl.style.display='block';
 }
 
+/* ── Mobile debug console: triple-tap the Akash logo ── */
+(function(){
+  var overlay=null;
+  var statsTimer=null;
+  var tapTimes=[];
+  var tapLocked=false;
+  var logs=[];
+  var bootCount=1;
+
+  try{
+    bootCount=(parseInt(sessionStorage.getItem('__mb_boot_count__')||'0',10)||0)+1;
+    sessionStorage.setItem('__mb_boot_count__',String(bootCount));
+  }catch(e){}
+
+  function asText(value){
+    if(typeof value==='string')return value;
+    try{return JSON.stringify(value);}catch(e){return String(value);}
+  }
+
+  function ensureOverlay(){
+    if(overlay)return overlay;
+    overlay=document.createElement('pre');
+    overlay.id='__mb_dbg__';
+    overlay.style.cssText='position:fixed;left:0;right:0;bottom:0;max-height:42vh;overflow:auto;z-index:2147483647;margin:0;background:rgba(0,0,0,0.88);color:#0f0;padding:8px;font:10px/1.35 monospace;white-space:pre-wrap;display:none;pointer-events:auto;';
+    document.body.appendChild(overlay);
+    return overlay;
+  }
+
+  function syncOverlay(){
+    if(overlay)overlay.textContent=logs.join('\n');
+  }
+
+  function emit(){
+    var parts=[];
+    for(var i=0;i<arguments.length;i++)parts.push(asText(arguments[i]));
+    var line='['+new Date().toISOString().slice(11,23)+'] '+parts.join(' ');
+    logs.push(line);
+    if(logs.length>80)logs.shift();
+    syncOverlay();
+    try{
+      if(window.parent&&window.parent!==window){
+        window.parent.postMessage({type:'moodboard-debug',args:parts},'*');
+      }
+    }catch(e){}
+  }
+
+  function stopStats(){
+    if(statsTimer){clearInterval(statsTimer);statsTimer=null;}
+  }
+
+  function emitStats(){
+    var nodeCount=0;
+    try{nodeCount=document.querySelectorAll('*').length;}catch(e){}
+    var perf=performance.memory;
+    if(perf&&perf.usedJSHeapSize&&perf.totalJSHeapSize){
+      emit('MEM',Math.round(perf.usedJSHeapSize/1048576)+'/'+Math.round(perf.totalJSHeapSize/1048576)+'MB','NODES',nodeCount);
+    }else{
+      emit('NODES',nodeCount);
+    }
+  }
+
+  function startStats(){
+    if(statsTimer)return;
+    emitStats();
+    statsTimer=setInterval(emitStats,5000);
+  }
+
+  function toggleDebug(){
+    var el=ensureOverlay();
+    var open=el.style.display!=='block';
+    el.style.display=open?'block':'none';
+    if(open){
+      syncOverlay();
+      startStats();
+      emit('DEBUG_OPEN');
+    }else{
+      stopStats();
+    }
+  }
+
+  function registerTap(ev){
+    if(ev){ev.preventDefault();ev.stopPropagation();}
+    var now=performance.now();
+    tapTimes=tapTimes.filter(function(t){return now-t<650;});
+    tapTimes.push(now);
+    if(tapTimes.length>=3&&!tapLocked){
+      tapLocked=true;
+      tapTimes=[];
+      toggleDebug();
+      setTimeout(function(){tapLocked=false;},900);
+    }
+  }
+
+  window.__mbDbgToggle=toggleDebug;
+  window.__mbDbgLog=emit;
+
+  var logo=document.querySelector('.logo');
+  if(logo){
+    logo.addEventListener('touchend',registerTap,{passive:false,capture:true});
+    logo.addEventListener('click',registerTap,true);
+  }
+
+  window.addEventListener('error',function(e){
+    emit('ERR',e.message||'unknown',e.filename?e.filename.split('/').pop():'',e.lineno?('L'+e.lineno):'');
+  });
+
+  window.addEventListener('unhandledrejection',function(e){
+    emit('PROMISE',String(e.reason).slice(0,180));
+  });
+
+  window.addEventListener('beforeunload',function(){emit('BEFOREUNLOAD');});
+  window.addEventListener('pagehide',function(e){emit('PAGEHIDE',e.persisted?'bfcache':'normal');});
+  window.addEventListener('pageshow',function(e){emit('PAGESHOW',e.persisted?'bfcache':'normal');});
+  window.addEventListener('load',function(){emit('WINDOW_LOAD');});
+  document.addEventListener('visibilitychange',function(){emit('VISIBILITY',document.hidden?'hidden':'visible');},{passive:true});
+
+  try{
+    var nav=(performance.getEntriesByType&&performance.getEntriesByType('navigation')[0])||null;
+    emit('BOOT','#'+bootCount,nav&&nav.type?nav.type:'navigate',innerWidth+'x'+innerHeight,'dpr='+devicePixelRatio);
+  }catch(e){
+    emit('BOOT','#'+bootCount,innerWidth+'x'+innerHeight,'dpr='+devicePixelRatio);
+  }
+})();
+
 /* ── Loading screen: percentage counter ── */
 (function(){
   var loader=document.getElementById('loaderScreen');

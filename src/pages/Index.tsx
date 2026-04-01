@@ -6,8 +6,15 @@ export default function Index() {
   const [loaded, setLoaded] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const mountedRef = useRef(true);
+  const iframeLoadCountRef = useRef(0);
 
   const handleLoad = useCallback(() => {
+    iframeLoadCountRef.current += 1;
+    (window as Window & { __dbgLog?: (...args: unknown[]) => void }).__dbgLog?.(
+      "IFRAME_LOAD",
+      "#" + iframeLoadCountRef.current,
+      MOODBOARD_SRC,
+    );
     if (mountedRef.current) setLoaded(true);
   }, []);
 
