@@ -10793,9 +10793,19 @@ async function bootstrapMap(forceRescan){
     drawMap();
     mapBootstrapped=true;
     initBoardStats();
+    return true;
   }catch(e){
     console.error('Init error:',e)
+    return false;
   }
+}
+
+function releaseBootBlockers(){
+  document.body.classList.add('stickers-ready');
+  document.body.style.pointerEvents='';
+  document.documentElement.style.pointerEvents='';
+  const blockers=document.querySelectorAll('.loading-overlay,.app-loading-overlay,[data-loading-overlay]');
+  blockers.forEach(el=>el.remove());
 }
 
 function ensureIntroCluster(){
@@ -11723,21 +11733,31 @@ function buildZoneCardHTML(meta){return '';}
 })();
 
 setTimeout(async ()=>{
-  ensureIntroCluster();
-  ensureZoneIntroCards();
-  _invalidateStickerCache();
-  await bootstrapMap(true);
-  // Re-center on intro card AFTER items are rearranged
-  scrollToZone(null,'hub');
-  requestAnimationFrame(()=>centerOnIntroCard());
-  setTimeout(()=>centerOnIntroCard(),350);
-  // Show bitmoji greeting
-  const greet=document.createElement('div');
-  greet.className='bitmoji-greeting';
-  greet.innerHTML='<div class="greet-bubble">Hey there! 👋</div><img src="/images/bitmoji-full.webp" alt="Akash waving"/>';
-  document.body.appendChild(greet);
-  setTimeout(()=>greet.remove(),3200);
+  try{
+    ensureIntroCluster();
+    ensureZoneIntroCards();
+    _invalidateStickerCache();
+    await bootstrapMap(true);
+    // Re-center on intro card AFTER items are rearranged
+    scrollToZone(null,'hub');
+    requestAnimationFrame(()=>centerOnIntroCard());
+    setTimeout(()=>centerOnIntroCard(),350);
+    // Show bitmoji greeting
+    const greet=document.createElement('div');
+    greet.className='bitmoji-greeting';
+    greet.innerHTML='<div class="greet-bubble">Hey there! 👋</div><img src="/images/bitmoji-full.webp" alt="Akash waving"/>';
+    document.body.appendChild(greet);
+    setTimeout(()=>greet.remove(),3200);
+  }catch(e){
+    console.error('App boot failed:',e);
+  }finally{
+    releaseBootBlockers();
+  }
 },120)
+
+window.addEventListener('error',()=>{
+  releaseBootBlockers();
+},{passive:true});
 
 window.addEventListener('resize',debounce(()=>{
   if(mapBootstrapped)bootstrapMap(false);
