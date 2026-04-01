@@ -13517,6 +13517,23 @@ function returnCricketToCanvas(){
   var ci=wrap.querySelector('.hc-cover-img');var cl=wrap.querySelector('.hc-cover-label');
   if(ci)ci.style.display='block';if(cl)cl.style.display='block';
 }
+
+/* ── Loading screen dismissal ── */
+(function(){
+  var loader=document.getElementById('loaderScreen');
+  var vp=document.querySelector('.canvas-viewport');
+  function dismiss(){
+    if(loader)loader.classList.add('hide');
+    if(vp)vp.classList.add('loaded');
+    setTimeout(function(){if(loader)loader.style.display='none'},700);
+  }
+  // Dismiss after bar animation finishes (~2.6s) or window load, whichever is later
+  var barDone=false,winDone=false;
+  setTimeout(function(){barDone=true;if(winDone)dismiss()},2600);
+  window.addEventListener('load',function(){winDone=true;if(barDone)dismiss()});
+  // Safety fallback
+  setTimeout(dismiss,5000);
+})();
 </script>
 
 </body></html>
