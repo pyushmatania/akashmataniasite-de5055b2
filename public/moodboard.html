@@ -11388,8 +11388,8 @@ function ensureCompanionStickers(force){
         let hodlInterval=null,hodlStart=0,hodlBest=0;
         const timerEl=hodl.querySelector('.hodl-timer');
         const recordEl=hodl.querySelector('.hodl-record');
-        const HODL_GS_URL='https://secfpttvtutusedpzefm.supabase.co/rest/v1/game_scores';
-        const HODL_GS_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlY2ZwdHR2dHV0dXNlZHB6ZWZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4NTEwMDQsImV4cCI6MjA5MDQyNzAwNH0.zDZDAHi_7sowsltXEVXXzzAKX0fgbKWs4LvC0imWx5M';
+        const HODL_GS_URL='https://oxlnpnqwrwlnfjyvlmyv.supabase.co/rest/v1/game_scores';
+        const HODL_GS_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94bG5wbnF3cndsbmZqeXZsbXl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDk2MjAsImV4cCI6MjA5MDUyNTYyMH0.6Css1oPopST8lq39tBHvD70jr4UXPHYe3TKqh6smYkY';
         // Load best HODL from cloud
         fetch(HODL_GS_URL+'?game_type=eq.hodl_challenge&order=played_at.desc&limit=1',{headers:{'apikey':HODL_GS_KEY,'Authorization':'Bearer '+HODL_GS_KEY}})
           .then(function(r){return r.json();})
