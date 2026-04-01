@@ -1863,8 +1863,8 @@ body.map-expanded .scroll-counter{display:none!important}
 /* Light beam cones — volumetric */
 .zc-hcricket .hc-flood-beam{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:65px solid transparent;border-right:65px solid transparent;border-top:110px solid rgba(255,215,0,0.025);pointer-events:none;filter:blur(2px)}
 /* Crowd silhouette — 3D layered rows */
-.zc-hcricket .hc-crowd{position:absolute;bottom:32%;left:0;right:0;height:28px;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.04) 0px,rgba(255,255,255,0.01) 2px,rgba(255,255,255,0.06) 5px,rgba(255,255,255,0.02) 8px);border-radius:50% 50% 0 0;opacity:0.7;animation:hcCrowdWave 3s ease-in-out infinite;transform:translateZ(5px)}
-@keyframes hcCrowdWave{0%,100%{transform:translateY(0) translateZ(5px)}50%{transform:translateY(-4px) translateZ(5px)}}
+.zc-hcricket .hc-crowd{position:absolute;bottom:32%;left:0;right:0;height:28px;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.04) 0px,rgba(255,255,255,0.01) 2px,rgba(255,255,255,0.06) 5px,rgba(255,255,255,0.02) 8px);border-radius:50% 50% 0 0;opacity:0.7;animation:hcCrowdWave 3s ease-in-out infinite;}
+@keyframes hcCrowdWave{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 .zc-hcricket .hc-crowd::before{content:'';position:absolute;top:-10px;left:3%;right:3%;height:18px;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.02) 0px,rgba(255,255,255,0.05) 4px,rgba(255,255,255,0.01) 8px);border-radius:50% 50% 0 0;opacity:0.4;animation:hcCrowdWave 3.5s ease-in-out 0.5s infinite}
 .zc-hcricket .hc-crowd::after{content:'';position:absolute;bottom:-8px;left:-5%;right:-5%;height:20px;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.02) 0px,rgba(255,255,255,0.04) 5px,rgba(255,255,255,0.01) 10px);border-radius:50% 50% 0 0;opacity:0.5;animation:hcCrowdWave 2.8s ease-in-out 0.2s infinite}
 /* Boundary rope — 3D ring */
@@ -1928,13 +1928,13 @@ body.map-expanded .scroll-counter{display:none!important}
 .zc-hcricket .hc-hands{display:flex;justify-content:center;gap:28px;margin-bottom:10px;min-height:95px;align-items:center}
 .zc-hcricket .hc-hand-wrap{display:flex;flex-direction:column;align-items:center;gap:5px}
 .zc-hcricket .hc-hand-who{font-family:var(--font-fun);font-size:0.5rem;font-weight:800;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.12em}
-.zc-hcricket .hc-hand{width:82px;height:82px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;border:2.5px solid rgba(255,255,255,0.1);transition:all 0.2s cubic-bezier(0.34,1.56,0.64,1);position:relative;transform-style:preserve-3d}
+.zc-hcricket .hc-hand{width:82px;height:82px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;border:2.5px solid rgba(255,255,255,0.1);transition:all 0.2s cubic-bezier(0.34,1.56,0.64,1);position:relative}
 .zc-hcricket .hc-hand::after{content:'';position:absolute;inset:-5px;border-radius:24px;background:conic-gradient(from 0deg,transparent 0%,rgba(255,255,255,0.06) 25%,transparent 50%);opacity:0;transition:opacity 0.3s;pointer-events:none}
 .zc-hcricket .hc-hand.you{background:linear-gradient(145deg,rgba(76,175,80,0.2),rgba(76,175,80,0.06));color:#4CAF50;box-shadow:inset 0 0 25px rgba(76,175,80,0.1),0 4px 16px rgba(0,0,0,0.3)}
 .zc-hcricket .hc-hand.cpu{background:linear-gradient(145deg,rgba(255,87,34,0.2),rgba(255,87,34,0.06));color:#FF5722;box-shadow:inset 0 0 25px rgba(255,87,34,0.1),0 4px 16px rgba(0,0,0,0.3)}
 .zc-hcricket .hc-hand.reveal{animation:hcHandReveal 0.5s cubic-bezier(0.34,1.56,0.64,1)}
 .zc-hcricket .hc-hand.reveal::after{opacity:1}
-@keyframes hcHandReveal{0%{transform:scale(0.4) rotateY(90deg) translateZ(20px);opacity:0.2;filter:blur(4px)}50%{transform:scale(1.2) rotateY(-10deg) translateZ(5px);filter:blur(0)}75%{transform:scale(0.95) rotateY(5deg) translateZ(0)}100%{transform:scale(1) rotateY(0deg) translateZ(0)}}
+@keyframes hcHandReveal{0%{transform:scale(0.4) rotateY(90deg);opacity:0.2;filter:blur(4px)}50%{transform:scale(1.2) rotateY(-10deg);filter:blur(0)}75%{transform:scale(0.95) rotateY(5deg) }100%{transform:scale(1) rotateY(0deg) }}
 .zc-hcricket .hc-hand.match{border-color:#FF1744!important;box-shadow:0 0 32px rgba(255,23,68,0.7),inset 0 0 15px rgba(255,23,68,0.15),0 0 60px rgba(255,23,68,0.15);animation:hcShake 0.6s ease}
 .zc-hcricket .hc-hand.noball{border-color:#FFD700!important;box-shadow:0 0 20px rgba(255,215,0,0.5)}
 @keyframes hcShake{0%,100%{transform:translateX(0)}15%{transform:translateX(-8px) rotate(-2deg)}30%{transform:translateX(8px) rotate(2deg)}45%{transform:translateX(-6px) rotate(-1deg)}60%{transform:translateX(6px) rotate(1deg)}75%{transform:translateX(-3px)}90%{transform:translateX(3px)}}
@@ -1950,9 +1950,9 @@ body.map-expanded .scroll-counter{display:none!important}
 /* Buttons — 3D tactile with depth */
 .zc-hcricket .hc-controls{padding:12px 18px 14px;background:linear-gradient(180deg,rgba(0,15,30,0.4),rgba(10,22,40,0.9));position:relative}
 .zc-hcricket .hc-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
-.zc-hcricket .hc-btn{width:58px;height:58px;border-radius:16px;border:2px solid rgba(255,255,255,0.1);background:linear-gradient(145deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02));color:#fff;font-size:1.4rem;cursor:pointer;transition:all 0.15s cubic-bezier(0.34,1.56,0.64,1);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;gap:1px;box-shadow:0 3px 10px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08),0 0 0 0.5px rgba(76,175,80,0.05);transform-style:preserve-3d}
-.zc-hcricket .hc-btn:hover{background:linear-gradient(145deg,rgba(76,175,80,0.28),rgba(76,175,80,0.1));border-color:rgba(76,175,80,0.5);transform:scale(1.15) translateY(-3px) translateZ(5px);box-shadow:0 8px 25px rgba(76,175,80,0.3),inset 0 1px 0 rgba(255,255,255,0.1)}
-.zc-hcricket .hc-btn:active{transform:scale(0.92) translateY(1px) translateZ(-2px);background:rgba(76,175,80,0.4);box-shadow:0 1px 4px rgba(0,0,0,0.3)}
+.zc-hcricket .hc-btn{width:58px;height:58px;border-radius:16px;border:2px solid rgba(255,255,255,0.1);background:linear-gradient(145deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02));color:#fff;font-size:1.4rem;cursor:pointer;transition:all 0.15s cubic-bezier(0.34,1.56,0.64,1);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;gap:1px;box-shadow:0 3px 10px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08),0 0 0 0.5px rgba(76,175,80,0.05)}
+.zc-hcricket .hc-btn:hover{background:linear-gradient(145deg,rgba(76,175,80,0.28),rgba(76,175,80,0.1));border-color:rgba(76,175,80,0.5);transform:scale(1.15) translateY(-3px);box-shadow:0 8px 25px rgba(76,175,80,0.3),inset 0 1px 0 rgba(255,255,255,0.1)}
+.zc-hcricket .hc-btn:active{transform:scale(0.92) translateY(1px);background:rgba(76,175,80,0.4);box-shadow:0 1px 4px rgba(0,0,0,0.3)}
 .zc-hcricket .hc-btn-label{font-size:0.42rem;color:rgba(255,255,255,0.4);font-family:var(--font-fun);font-weight:800;line-height:1;letter-spacing:0.04em}
 /* Manhattan chart — mini bar graph of runs per over */
 .zc-hcricket .hc-manhattan{display:flex;align-items:flex-end;gap:2px;justify-content:center;height:28px;margin:6px 16px 4px;padding:0 4px;border-bottom:1px solid rgba(255,255,255,0.06);position:relative;z-index:2}
@@ -1999,15 +1999,15 @@ body.map-expanded .scroll-counter{display:none!important}
 .zc-hcricket .hc-lb-row .lb-date{color:rgba(255,255,255,0.2);font-size:0.42rem}
 /* Toss choice buttons — 3D depth */
 .zc-hcricket .hc-choice-btns{display:flex;gap:10px;justify-content:center;margin:10px 0}
-.zc-hcricket .hc-choice-btn{border:none;color:#fff;font-family:var(--font-fun);font-size:0.8rem;font-weight:800;padding:14px 30px;border-radius:16px;cursor:pointer;text-transform:uppercase;letter-spacing:0.08em;transition:all 0.15s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden;transform-style:preserve-3d}
+.zc-hcricket .hc-choice-btn{border:none;color:#fff;font-family:var(--font-fun);font-size:0.8rem;font-weight:800;padding:14px 30px;border-radius:16px;cursor:pointer;text-transform:uppercase;letter-spacing:0.08em;transition:all 0.15s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden}
 .zc-hcricket .hc-choice-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.18),transparent);pointer-events:none;border-radius:16px}
-.zc-hcricket .hc-choice-btn:hover{transform:scale(1.08) translateY(-3px) translateZ(8px)}
-.zc-hcricket .hc-choice-btn:active{transform:scale(0.94) translateY(1px) translateZ(-2px)}
+.zc-hcricket .hc-choice-btn:hover{transform:scale(1.08) translateY(-3px)}
+.zc-hcricket .hc-choice-btn:active{transform:scale(0.94) translateY(1px)}
 .zc-hcricket .hc-choice-btn.bat{background:linear-gradient(135deg,#43A047,#2E7D32,#1B5E20);box-shadow:0 8px 28px rgba(76,175,80,0.45),inset 0 1px 0 rgba(255,255,255,0.15),0 0 0 1px rgba(76,175,80,0.3)}
 .zc-hcricket .hc-choice-btn.bowl{background:linear-gradient(135deg,#F4511E,#E64A19,#BF360C);box-shadow:0 8px 28px rgba(255,87,34,0.45),inset 0 1px 0 rgba(255,255,255,0.15),0 0 0 1px rgba(255,87,34,0.3)}
 /* Score pop animation */
 .zc-hcricket .hc-team-score.score-pop{animation:hcScorePop 0.4s cubic-bezier(0.34,1.56,0.64,1)}
-@keyframes hcScorePop{0%{transform:scale(1)}30%{transform:scale(1.5) translateZ(10px);filter:brightness(1.4)}100%{transform:scale(1) translateZ(0);filter:brightness(1)}}
+@keyframes hcScorePop{0%{transform:scale(1)}30%{transform:scale(1.5);filter:brightness(1.4)}100%{transform:scale(1) ;filter:brightness(1)}}
 /* Fireworks for SIX — particle explosion with trails */
 .zc-hcricket .hc-firework{position:absolute;width:4px;height:4px;border-radius:50%;z-index:12;pointer-events:none;animation:hcFirework var(--fw-dur,0.8s) ease-out forwards}
 .zc-hcricket .hc-firework::after{content:'';position:absolute;inset:0;border-radius:50%;background:inherit;filter:blur(3px);opacity:0.6}
