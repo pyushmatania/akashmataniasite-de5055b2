@@ -4363,6 +4363,44 @@ body.map-expanded .scroll-counter{display:none!important}
 .gallery-info .gi-name{
   font-family:var(--font-fun);font-size:2.2rem;font-weight:900;
   color:#fff;line-height:1.05;margin-bottom:6px;
+}
+.gi-live-link{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:8px;margin-bottom:4px;
+  padding:8px 18px 8px 14px;border-radius:50px;
+  font-family:var(--font-fun);font-size:0.78rem;font-weight:600;
+  letter-spacing:0.04em;text-transform:uppercase;
+  color:rgba(255,255,255,0.9);text-decoration:none;
+  background:linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+  position:relative;overflow:hidden;
+}
+.gi-live-link::before{
+  content:'';position:absolute;inset:0;border-radius:50px;
+  background:linear-gradient(135deg,rgba(201,169,110,0.25),rgba(206,147,216,0.2));
+  opacity:0;transition:opacity 0.3s;
+}
+.gi-live-link:hover::before{opacity:1}
+.gi-live-link:hover{
+  border-color:rgba(201,169,110,0.4);
+  transform:translateY(-1px);
+  box-shadow:0 4px 20px rgba(201,169,110,0.15);
+}
+.gi-live-link .gi-live-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#4ADE80;
+  box-shadow:0 0 8px rgba(74,222,128,0.6);
+  animation:livePulse 2s ease-in-out infinite;
+}
+.gi-live-link .gi-live-arrow{
+  transition:transform 0.3s;font-size:0.7rem;
+}
+.gi-live-link:hover .gi-live-arrow{transform:translateX(3px)}
+@keyframes livePulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:0.5;transform:scale(0.8)}
   background:linear-gradient(135deg,#fff 60%,var(--frame-c1,rgba(200,160,255,0.8)));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
@@ -6087,6 +6125,7 @@ function cycleIntroCards(e){
   <div class="gallery-info">
     <div class="gi-tags"><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">Web3</span><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">Fintech</span><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">Marketplace</span><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">Community</span><span class="zp-tag" style="background:rgba(124,77,255,0.15);color:#CE93D8;border:1.5px solid rgba(124,77,255,0.25)">Token Systems</span></div>
     <div class="gi-name">EnterCircles</div>
+    <a class="gi-live-link" href="https://www.entercircles.io" target="_blank" rel="noopener"><span class="gi-live-dot"></span> Visit Live <span class="gi-live-arrow">→</span></a>
     <div class="gi-tagline">// WEB3 :: FINTECH :: FRACTIONAL_OWNERSHIP</div>
     <div class="gi-body">EnterCircles is a platform where stories stop being consumed and start being owned.<br><br>It reimagines movies and music as investable assets — allowing anyone to participate in the success of the content they love.<br><br>From fractional ownership to real-world perks, this transforms entertainment into an active financial layer.<br><br>Fans don't just watch anymore. They invest. They influence. They belong.</div>
     <div class="gi-divider"></div>
@@ -6215,6 +6254,7 @@ function cycleIntroCards(e){
   <div class="gallery-info">
     <div class="gi-tags"><span class="zp-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A;border:1.5px solid rgba(239,83,80,0.25)">AI</span><span class="zp-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A;border:1.5px solid rgba(239,83,80,0.25)">Consumer</span><span class="zp-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A;border:1.5px solid rgba(239,83,80,0.25)">Discovery</span><span class="zp-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A;border:1.5px solid rgba(239,83,80,0.25)">Experience</span><span class="zp-tag" style="background:rgba(239,83,80,0.15);color:#EF9A9A;border:1.5px solid rgba(239,83,80,0.25)">Local</span></div>
     <div class="gi-name">Hushh</div>
+    <a class="gi-live-link" href="https://hushh-jeypore.lovable.app" target="_blank" rel="noopener"><span class="gi-live-dot"></span> Visit Live <span class="gi-live-arrow">→</span></a>
     <div class="gi-tagline">// AI :: DISCOVERY :: EMOTION_ENGINE</div>
     <div class="gi-body">Most platforms help you choose.<br><br>Hushh helps you feel.<br><br>It replaces filters and categories with mood-based discovery — where your vibe becomes the navigation system.</div>
     <div class="gi-divider"></div>
@@ -6279,6 +6319,7 @@ function cycleIntroCards(e){
   <div class="gallery-info">
     <div class="gi-tags"><span class="zp-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4;border:1.5px solid rgba(38,166,154,0.25)">AI</span><span class="zp-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4;border:1.5px solid rgba(38,166,154,0.25)">GovTech</span><span class="zp-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4;border:1.5px solid rgba(38,166,154,0.25)">Civic</span><span class="zp-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4;border:1.5px solid rgba(38,166,154,0.25)">Systems</span><span class="zp-tag" style="background:rgba(38,166,154,0.15);color:#80CBC4;border:1.5px solid rgba(38,166,154,0.25)">Blockchain</span></div>
     <div class="gi-name">Smart Bhubaneswar</div>
+    <a class="gi-live-link" href="https://smartbhubaneswar.xyz" target="_blank" rel="noopener"><span class="gi-live-dot"></span> Visit Live <span class="gi-live-arrow">→</span></a>
     <div class="gi-tagline">// AI :: GOVERNANCE :: CITY_SYSTEMS</div>
     <div class="gi-body">Cities run like systems.<br>But no one gets to see them.<br><br>Smart Bhubaneswar turns governance into a visible, interactive layer — where citizens can track, understand, and engage with how their city works.<br><br>It's not just infrastructure anymore.<br>It's an interface.</div>
     <div class="gi-divider"></div>
@@ -6343,6 +6384,7 @@ function cycleIntroCards(e){
   <div class="gallery-info">
     <div class="gi-tags"><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">AI</span><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">GovTech</span><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">Data</span><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">Ecology</span><span class="zp-tag" style="background:rgba(255,112,67,0.15);color:#FFAB91;border:1.5px solid rgba(255,112,67,0.25)">Live Systems</span></div>
     <div class="gi-name">Arribada</div>
+    <a class="gi-live-link" href="https://arribadaturtle.xyz" target="_blank" rel="noopener"><span class="gi-live-dot"></span> Visit Live <span class="gi-live-arrow">→</span></a>
     <div class="gi-tagline">// AI :: ECOLOGY :: LIVE_TRACKING</div>
     <div class="gi-body">Some of the most powerful events in nature happen unseen.<br><br>Arribada turns turtle migration into a real-time experience — making conservation visible, interactive, and engaging.<br><br>Instead of telling people to care, it lets them witness it live.</div>
     <div class="gi-divider"></div>
@@ -6472,6 +6514,7 @@ function cycleIntroCards(e){
   <div class="gallery-info">
     <div class="gi-tags"><span class="zp-tag" style="background:rgba(76,175,80,0.15);color:#A5D6A7;border:1.5px solid rgba(76,175,80,0.25)">Game</span><span class="zp-tag" style="background:rgba(76,175,80,0.15);color:#A5D6A7;border:1.5px solid rgba(76,175,80,0.25)">Strategy</span><span class="zp-tag" style="background:rgba(76,175,80,0.15);color:#A5D6A7;border:1.5px solid rgba(76,175,80,0.25)">Systems</span><span class="zp-tag" style="background:rgba(76,175,80,0.15);color:#A5D6A7;border:1.5px solid rgba(76,175,80,0.25)">AI</span><span class="zp-tag" style="background:rgba(76,175,80,0.15);color:#A5D6A7;border:1.5px solid rgba(76,175,80,0.25)">Simulation</span></div>
     <div class="gi-name">Zombieverse</div>
+    <a class="gi-live-link" href="https://www.zombieverse.xyz" target="_blank" rel="noopener"><span class="gi-live-dot"></span> Visit Live <span class="gi-live-arrow">→</span></a>
     <div class="gi-tagline">// GAME :: STRATEGY :: SURVIVAL_SYSTEMS</div>
     <div class="gi-body">Survival isn't chaos.<br>It's systems.<br><br>Zombieverse is built around decisions that compound — where every resource, move, and expansion defines survival.<br><br>This isn't just gameplay.<br>It's strategic thinking under pressure.</div>
     <div class="gi-divider"></div>
