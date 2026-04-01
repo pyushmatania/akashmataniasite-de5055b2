@@ -12229,7 +12229,10 @@ function ekPick(el,e){
 
   function serializeLayout(){
     const stickers=ensureStableStickerIds(document.querySelectorAll('#canvas > .sticker'));
-    const data=[{_version:LAYOUT_VERSION}]; // version sentinel at index 0
+    const sentinel={_version:LAYOUT_VERSION};
+    // Include deleted items in the layout data for cloud sync
+    if(_deletedSids.size>0) sentinel._deleted=[..._deletedSids];
+    const data=[sentinel];
     stickers.forEach((s,idx)=>{
       const id=s.id||'';
       const sid=s.dataset.sid||'';
