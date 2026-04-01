@@ -723,6 +723,366 @@ body.loading-phase .moodboard-bitmoji-guide{
   animation:none!important;
 }
 
+/* ===== DARK MODE ===== */
+body.dark-mode{
+  --bg:#0a0812;--grid:rgba(201,169,110,0.12);--accent:#C9A96E;
+  --text:#E8E4DF;--text2:rgba(255,255,255,0.6);--text3:rgba(255,255,255,0.35);
+  --yellow:#FFD54F;--yellow-hl:rgba(201,169,110,0.25);--pink:#CE93D8;--green:#81C784;
+  --purple:#CE93D8;--blue:#90CAF9;--orange:#FFAB91;--mint:#80CBC4;
+}
+
+/* Canvas & viewport */
+body.dark-mode,
+body.dark-mode .canvas-viewport{background:#0a0812!important}
+body.dark-mode .canvas{
+  background-color:#0a0812!important;
+  background-image:
+    radial-gradient(circle at 15% 20%,rgba(201,169,110,0.06) 0%,transparent 40%),
+    radial-gradient(circle at 85% 60%,rgba(206,147,216,0.06) 0%,transparent 40%),
+    radial-gradient(circle at 50% 80%,rgba(201,169,110,0.04) 0%,transparent 40%),
+    linear-gradient(rgba(201,169,110,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,169,110,0.1) 1px, transparent 1px)!important;
+}
+
+/* Logo */
+body.dark-mode .logo{
+  color:#fff!important;
+  background:linear-gradient(135deg,rgba(201,169,110,0.2),rgba(206,147,216,0.15))!important;
+  border:1px solid rgba(201,169,110,0.25);
+}
+
+/* Bottom nav */
+body.dark-mode .bottom-nav{
+  background:rgba(10,8,18,0.97)!important;
+  border-top:1px solid rgba(201,169,110,0.15)!important;
+  box-shadow:0 -2px 24px rgba(0,0,0,0.4)!important;
+}
+body.dark-mode .bottom-nav a{color:rgba(255,255,255,0.4)!important}
+body.dark-mode .bottom-nav a.active,
+body.dark-mode .bottom-nav a:hover{color:#C9A96E!important}
+body.dark-mode .bottom-nav a.active svg,
+body.dark-mode .bottom-nav a:hover svg{stroke:#C9A96E!important}
+body.dark-mode .bottom-nav a svg{stroke:rgba(255,255,255,0.35)!important}
+body.dark-mode .bottom-nav a.nav-play{color:#C9A96E!important}
+body.dark-mode .bottom-nav a.nav-play svg{stroke:#C9A96E!important}
+body.dark-mode .bottom-nav a.nav-play::after{background:linear-gradient(90deg,#C9A96E,#CE93D8)!important}
+
+/* Settings button */
+body.dark-mode .settings-btn{
+  background:rgba(20,16,30,0.9)!important;
+  border-color:rgba(201,169,110,0.25)!important;
+  box-shadow:0 2px 10px rgba(0,0,0,0.3)!important;
+}
+body.dark-mode .settings-btn svg{color:rgba(255,255,255,0.6)!important}
+
+/* Dark mode toggle button */
+.darkmode-btn{
+  position:fixed;top:14px;right:120px;z-index:1001;width:40px;height:40px;
+  border-radius:50%;background:#fff;border:2px solid #E8E4DF;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);transition:all 0.3s;
+  font-size:1.1rem;line-height:1;
+}
+.darkmode-btn:hover{box-shadow:0 4px 16px rgba(0,0,0,0.12);transform:scale(1.08)}
+body.dark-mode .darkmode-btn{
+  background:rgba(20,16,30,0.9)!important;
+  border-color:rgba(201,169,110,0.25)!important;
+  box-shadow:0 2px 10px rgba(0,0,0,0.3)!important;
+}
+body.map-expanded .darkmode-btn{display:none!important}
+.minimap-container.expanded~.darkmode-btn{display:none!important}
+
+/* Scroll counter */
+body.dark-mode .scroll-counter{color:rgba(255,255,255,0.04)!important}
+
+/* Swipe hint */
+body.dark-mode .swipe-hint{
+  background:rgba(20,16,30,0.9)!important;
+  color:rgba(255,255,255,0.5)!important;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3)!important;
+}
+
+/* Canvas edges */
+body.dark-mode .canvas-edge-line{
+  background:repeating-linear-gradient(90deg,rgba(201,169,110,0.15) 0,rgba(201,169,110,0.15) 12px,transparent 12px,transparent 20px)!important;
+}
+body.dark-mode .canvas-edge-left .canvas-edge-line,
+body.dark-mode .canvas-edge-right .canvas-edge-line{
+  background:repeating-linear-gradient(180deg,rgba(201,169,110,0.15) 0,rgba(201,169,110,0.15) 12px,transparent 12px,transparent 20px)!important;
+}
+body.dark-mode .canvas-edge-label{
+  color:rgba(201,169,110,0.35)!important;
+  background:rgba(10,8,18,0.8)!important;
+  border-color:rgba(201,169,110,0.2)!important;
+}
+
+/* Zone ground labels */
+body.dark-mode .zone-ground-label{color:rgba(201,169,110,0.12)!important;text-shadow:none!important}
+
+/* Zone boundary SVG */
+body.dark-mode .zone-boundary-svg path{opacity:0.6}
+
+/* ── STICKERS — Dark Glassmorphism ── */
+body.dark-mode .sticker{
+  filter:drop-shadow(0 3px 12px rgba(0,0,0,0.4))!important;
+}
+body.dark-mode .sticker:hover{
+  filter:drop-shadow(0 8px 28px rgba(201,169,110,0.2))!important;
+}
+
+/* White-bg stickers → dark glass */
+body.dark-mode .sticker-postit{
+  background:rgba(20,16,30,0.85)!important;
+  color:rgba(255,255,255,0.8)!important;
+  box-shadow:0 2px 12px rgba(0,0,0,0.3)!important;
+  border:1px solid rgba(201,169,110,0.15);
+}
+body.dark-mode .sticker-badge{
+  background:rgba(20,16,30,0.85)!important;
+  border-color:rgba(201,169,110,0.2)!important;
+  color:rgba(255,255,255,0.7)!important;
+}
+body.dark-mode .sticker-text{color:rgba(255,255,255,0.6)!important}
+body.dark-mode .sticker-meme{
+  background:rgba(20,16,30,0.85)!important;
+  border-color:rgba(201,169,110,0.15)!important;
+  box-shadow:0 2px 16px rgba(0,0,0,0.3)!important;
+}
+body.dark-mode .sticker-meme .meme-text{color:rgba(255,255,255,0.8)!important}
+body.dark-mode .sticker-meme .meme-sub{color:rgba(255,255,255,0.35)!important}
+
+body.dark-mode .sticker-counter{
+  background:rgba(20,16,30,0.85)!important;
+  border-color:rgba(201,169,110,0.15)!important;
+  box-shadow:0 2px 16px rgba(0,0,0,0.3)!important;
+}
+body.dark-mode .sticker-counter .c-count{color:#C9A96E!important}
+body.dark-mode .sticker-counter .c-label{color:rgba(255,255,255,0.4)!important}
+
+body.dark-mode .sticker-mood{
+  background:rgba(20,16,30,0.85)!important;
+  border-color:rgba(201,169,110,0.15)!important;
+}
+body.dark-mode .sticker-mood .m-label{color:rgba(255,255,255,0.6)!important}
+
+body.dark-mode .sticker-progress{
+  background:rgba(20,16,30,0.85)!important;
+  border-color:rgba(201,169,110,0.15)!important;
+}
+body.dark-mode .sticker-progress .p-title{color:rgba(255,255,255,0.8)!important}
+body.dark-mode .sticker-progress .p-bar{background:rgba(201,169,110,0.15)!important}
+body.dark-mode .sticker-progress .p-label{color:rgba(255,255,255,0.35)!important}
+
+body.dark-mode .sticker-wheel{
+  background:rgba(20,16,30,0.85)!important;
+  border-color:rgba(201,169,110,0.15)!important;
+}
+body.dark-mode .sticker-wheel .wheel-title{color:rgba(255,255,255,0.8)!important}
+body.dark-mode .sticker-wheel .wheel-result{color:#C9A96E!important}
+
+body.dark-mode .sticker-typewriter{
+  background:rgba(20,16,30,0.85)!important;
+  border-color:rgba(201,169,110,0.15)!important;
+}
+body.dark-mode .sticker-typewriter .tw-header{color:rgba(255,255,255,0.8)!important}
+body.dark-mode .sticker-typewriter .tw-paper{
+  background:rgba(10,8,18,0.6)!important;
+  border-color:rgba(201,169,110,0.15)!important;
+  color:rgba(255,255,255,0.7)!important;
+}
+body.dark-mode .sticker-typewriter .tw-paper::after{color:rgba(201,169,110,0.7)!important}
+
+body.dark-mode .sticker-scratch{
+  background:rgba(20,16,30,0.85)!important;
+  border-color:rgba(201,169,110,0.15)!important;
+}
+body.dark-mode .sticker-scratch .scratch-cover{
+  background:linear-gradient(135deg,#C9A96E,#CE93D8)!important;
+}
+
+body.dark-mode .sticker-illustrated{
+  background:rgba(20,16,30,0.85)!important;
+  border-color:rgba(201,169,110,0.15)!important;
+}
+
+/* Project cards */
+body.dark-mode .sticker-project{
+  background:rgba(20,16,30,0.85)!important;
+  border-color:rgba(201,169,110,0.15)!important;
+  box-shadow:0 4px 24px rgba(0,0,0,0.3)!important;
+}
+body.dark-mode .sticker-project .proj-title{color:rgba(255,255,255,0.9)!important}
+body.dark-mode .sticker-project .proj-tag{color:rgba(255,255,255,0.4)!important}
+body.dark-mode .sticker-project .proj-desc{color:rgba(255,255,255,0.55)!important}
+
+/* Photo stickers */
+body.dark-mode .sticker-photo-polaroid{
+  background:rgba(20,16,30,0.9)!important;
+  box-shadow:0 4px 20px rgba(0,0,0,0.4)!important;
+}
+body.dark-mode .sticker-photo-polaroid .pp-cap{color:rgba(255,255,255,0.5)!important}
+body.dark-mode .sticker-photo-tilt{
+  background:rgba(20,16,30,0.9)!important;
+}
+body.dark-mode .sticker-photo-tilt .pt-tape{background:rgba(201,169,110,0.3)!important}
+body.dark-mode .sticker-photo-circle .pc-img{border-color:rgba(201,169,110,0.3)!important}
+
+/* Hero photos */
+body.dark-mode .sticker-hero-photo{
+  box-shadow:0 6px 30px rgba(0,0,0,0.4)!important;
+}
+body.dark-mode .sticker-hero-photo .hero-name-tag{
+  background:rgba(20,16,30,0.95)!important;
+}
+body.dark-mode .sticker-hero-photo .hnt-name{color:rgba(255,255,255,0.9)!important}
+body.dark-mode .sticker-hero-photo .hnt-sub{color:rgba(255,255,255,0.4)!important}
+
+/* ── Zone intro cards — dark glass ── */
+body.dark-mode .zone-intro-creative{
+  background:rgba(15,12,25,0.92)!important;
+  border-color:rgba(201,169,110,0.18)!important;
+  box-shadow:0 12px 48px rgba(0,0,0,0.4),0 0 0 1px rgba(201,169,110,0.08)!important;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+}
+body.dark-mode .zone-intro-creative .zic-tag{
+  border-color:rgba(255,255,255,0.1)!important;
+  color:rgba(255,255,255,0.7)!important;
+}
+body.dark-mode .zone-intro-creative .zic-divider{
+  background:linear-gradient(90deg,transparent,rgba(201,169,110,0.2),transparent)!important;
+}
+body.dark-mode .zone-intro-creative .zic-stat{color:rgba(255,255,255,0.5)!important}
+body.dark-mode .zone-intro-creative .zic-counter{color:rgba(255,255,255,0.4)!important}
+body.dark-mode .zone-intro-creative .zic-counter button{
+  background:rgba(20,16,30,0.8)!important;
+  border-color:rgba(201,169,110,0.2)!important;
+  color:rgba(255,255,255,0.7)!important;
+}
+body.dark-mode .zone-intro-creative .zic-subtitle{color:rgba(255,255,255,0.45)!important}
+
+/* Intro card (Hub guidance card) */
+body.dark-mode .intro-card{
+  background:rgba(15,12,25,0.92)!important;
+  border-color:rgba(201,169,110,0.18)!important;
+  box-shadow:0 12px 48px rgba(0,0,0,0.4)!important;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+}
+body.dark-mode .intro-card .gc-step{
+  background:rgba(20,16,30,0.6)!important;
+  border-color:rgba(201,169,110,0.12)!important;
+}
+body.dark-mode .intro-card .gc-step:hover{
+  background:rgba(30,24,45,0.8)!important;
+  border-color:rgba(201,169,110,0.25)!important;
+}
+body.dark-mode .intro-card .gc-step-label{color:rgba(255,255,255,0.85)!important}
+body.dark-mode .intro-card .gc-step-desc{color:rgba(255,255,255,0.4)!important}
+body.dark-mode .intro-card .gc-quirky{
+  background:linear-gradient(135deg,rgba(201,169,110,0.1),rgba(206,147,216,0.08))!important;
+  border-color:rgba(201,169,110,0.2)!important;
+}
+body.dark-mode .intro-card .gc-quirky-text{color:rgba(255,255,255,0.7)!important}
+body.dark-mode .intro-card .gc-quirky-sub{color:rgba(255,255,255,0.35)!important}
+body.dark-mode .intro-card .gc-dot{
+  border-color:rgba(201,169,110,0.25)!important;
+  background:rgba(20,16,30,0.6)!important;
+}
+body.dark-mode .intro-card .gc-footer-quip{color:rgba(255,255,255,0.3)!important}
+
+/* Highlight styles */
+body.dark-mode .sticker-highlight .hl{
+  background:rgba(201,169,110,0.2)!important;
+  color:rgba(255,255,255,0.85)!important;
+}
+body.dark-mode .hl-glow{
+  background:linear-gradient(120deg,rgba(201,169,110,0.15),rgba(206,147,216,0.12),rgba(201,169,110,0.15))!important;
+  box-shadow:0 0 18px rgba(201,169,110,0.15)!important;
+}
+
+/* Hollywood signpost */
+body.dark-mode .hollywood-signpost .hp-board{
+  box-shadow:0 6px 24px rgba(0,0,0,0.5),inset 0 -3px 8px rgba(0,0,0,0.3)!important;
+}
+
+/* Fortune sticker */
+body.dark-mode .sticker-fortune{
+  background:linear-gradient(135deg,rgba(201,169,110,0.2),rgba(206,147,216,0.15))!important;
+}
+body.dark-mode .sticker-fortune .f-text{color:rgba(255,255,255,0.8)!important}
+body.dark-mode .sticker-fortune .f-label{color:rgba(255,255,255,0.4)!important}
+
+/* Dice */
+body.dark-mode .sticker-dice{
+  background:linear-gradient(135deg,rgba(20,16,30,0.85),rgba(30,24,45,0.85))!important;
+  border-color:rgba(201,169,110,0.2)!important;
+}
+body.dark-mode .sticker-dice .dice-title{color:#C9A96E!important}
+body.dark-mode .sticker-dice .dice-result{color:rgba(255,255,255,0.6)!important}
+
+/* Quiz */
+body.dark-mode .sticker-quiz{
+  background:linear-gradient(135deg,rgba(20,16,30,0.85),rgba(30,24,45,0.85))!important;
+}
+body.dark-mode .sticker-quiz .quiz-header{color:#CE93D8!important}
+body.dark-mode .sticker-quiz .quiz-q{color:rgba(255,255,255,0.8)!important}
+body.dark-mode .sticker-quiz .quiz-opt{
+  background:rgba(20,16,30,0.6)!important;
+  border-color:rgba(206,147,216,0.2)!important;
+  color:rgba(255,255,255,0.7)!important;
+}
+
+/* Drag handle */
+body.dark-mode .sticker-drag-handle{
+  background:rgba(201,169,110,0.12)!important;
+}
+body.dark-mode .sticker-drag-handle:hover{
+  background:rgba(201,169,110,0.25)!important;
+}
+body.dark-mode .sticker-drag-handle svg{color:rgba(255,255,255,0.5)!important}
+
+/* Smooth transition */
+body{transition:background-color 0.5s ease}
+.canvas-viewport,.canvas,.bottom-nav,.logo,.settings-btn,.sticker,.zone-intro-creative,.intro-card,.sticker-postit,.sticker-badge,.sticker-meme,.sticker-counter,.sticker-project,.sticker-photo-polaroid,.sticker-photo-tilt,.sticker-hero-photo .hero-name-tag,.canvas-edge-label,.swipe-hint,.darkmode-btn{
+  transition:background 0.5s ease,color 0.5s ease,border-color 0.5s ease,box-shadow 0.5s ease!important;
+}
+
+/* Dark mode theme overrides for canvas backgrounds */
+body.dark-mode .canvas.theme-dots{
+  background-image:
+    radial-gradient(circle at 15% 20%,rgba(201,169,110,0.06) 0%,transparent 40%),
+    radial-gradient(circle at 85% 60%,rgba(206,147,216,0.06) 0%,transparent 40%),
+    radial-gradient(circle at 50% 80%,rgba(201,169,110,0.04) 0%,transparent 40%),
+    radial-gradient(circle, rgba(201,169,110,0.18) 1.4px, transparent 1.4px)!important;
+}
+body.dark-mode .canvas.theme-combo{
+  background-image:
+    radial-gradient(circle at 15% 20%,rgba(201,169,110,0.06) 0%,transparent 40%),
+    radial-gradient(circle at 85% 60%,rgba(206,147,216,0.06) 0%,transparent 40%),
+    radial-gradient(circle, rgba(201,169,110,0.15) 1.2px, transparent 1.2px),
+    linear-gradient(rgba(201,169,110,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,169,110,0.08) 1px, transparent 1px)!important;
+}
+body.dark-mode .canvas.theme-notebook{
+  background-color:#0a0812!important;
+  background-image:
+    linear-gradient(180deg, rgba(201,169,110,0.06) 0%, transparent 3%),
+    repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(201,169,110,0.15) 31px, rgba(201,169,110,0.15) 32px),
+    linear-gradient(90deg, transparent 59px, rgba(206,147,216,0.2) 59px, rgba(206,147,216,0.2) 62px, transparent 62px),
+    radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.08), transparent 70%)!important;
+}
+body.dark-mode .canvas.theme-notebook::before{opacity:0.02!important}
+body.dark-mode .canvas.theme-notebook::after{
+  background:linear-gradient(90deg, transparent, rgba(206,147,216,0.12) 30%, rgba(206,147,216,0.2) 50%, rgba(206,147,216,0.12) 70%, transparent)!important;
+}
+body.dark-mode .canvas.theme-pixel{
+  background-color:#0a0812!important;
+  background-image:
+    linear-gradient(180deg, #0a0812 0%, #0a0812 55%, rgba(201,169,110,0.15) 55%, rgba(201,169,110,0.15) 62%, rgba(206,147,216,0.1) 62%, rgba(206,147,216,0.1) 100%),
+    repeating-linear-gradient(90deg, transparent, transparent 63px, rgba(201,169,110,0.06) 63px, rgba(201,169,110,0.06) 64px),
+    repeating-linear-gradient(0deg, transparent, transparent 63px, rgba(201,169,110,0.06) 63px, rgba(201,169,110,0.06) 64px)!important;
+}
+body.dark-mode .canvas.theme-pixel::before{opacity:0.05!important}
+
 
 /* Notebook paper extras */
 .canvas.theme-notebook::before{
