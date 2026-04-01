@@ -4546,21 +4546,26 @@ body.map-expanded .scroll-counter{display:none!important}
 
 /* Cricket game stats bar */
 .zc-hcricket .hc-stats-bar{
-  display:flex;justify-content:center;gap:8px;margin:4px 16px 0;position:relative;z-index:2;
+  display:flex;justify-content:center;gap:6px;margin:6px 14px 0;position:relative;z-index:2;flex-wrap:wrap;
 }
 .zc-hcricket .hc-stat-chip{
-  display:flex;align-items:center;gap:4px;
-  padding:3px 10px;border-radius:10px;
-  font-family:var(--font-fun);font-size:0.48rem;font-weight:700;
-  letter-spacing:0.06em;text-transform:uppercase;
-  background:rgba(255,255,255,0.04);
+  display:flex;align-items:center;gap:3px;
+  padding:4px 10px;border-radius:10px;
+  font-family:var(--font-fun);font-size:0.46rem;font-weight:700;
+  letter-spacing:0.05em;text-transform:uppercase;
+  background:linear-gradient(135deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));
   border:1px solid rgba(255,255,255,0.08);
-  color:rgba(255,255,255,0.45);
+  color:rgba(255,255,255,0.4);
+  backdrop-filter:blur(4px);
+  transition:all 0.2s;
 }
+.zc-hcricket .hc-stat-chip:hover{background:rgba(255,255,255,0.06);border-color:rgba(76,175,80,0.2)}
 .zc-hcricket .hc-stat-chip .hsc-val{
   color:#4CAF50;font-weight:900;font-size:0.55rem;
 }
 .zc-hcricket .hc-stat-chip .hsc-icon{font-size:0.55rem;}
+.zc-hcricket .hc-stat-chip.fours .hsc-val{color:#66BB6A}
+.zc-hcricket .hc-stat-chip.sixes .hsc-val{color:#FFD740}
 .zp-proj-card-yr{
   font-family:var(--font-sans);font-size:0.58rem;color:rgba(255,255,255,0.28);
   letter-spacing:0.05em;
