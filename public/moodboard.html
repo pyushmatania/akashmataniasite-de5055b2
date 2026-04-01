@@ -18,27 +18,32 @@
 }
 .loader-screen.hide{opacity:0;transform:scale(1.08);pointer-events:none}
 
-/* PM sticker chips */
-.loader-sticker{
-  position:absolute;opacity:0;pointer-events:none;
-  will-change:transform,opacity;
-  padding:6px 14px;border-radius:20px;
-  font-family:'Space Grotesk',sans-serif;font-size:0.72rem;font-weight:700;
+/* PM sticker chips — static, top-anchored */
+.loader-stickers-bar{
+  position:absolute;top:28px;left:0;right:0;z-index:12;pointer-events:none;
+  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+  padding:0 16px;max-width:420px;margin:0 auto;
+}
+.loader-chip{
+  padding:5px 12px;border-radius:18px;
+  font-family:'Space Grotesk',sans-serif;font-size:0.65rem;font-weight:700;
   letter-spacing:0.04em;white-space:nowrap;
-  border:1.5px solid rgba(255,255,255,0.12);
+  border:1.5px solid rgba(255,255,255,0.1);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  box-shadow:0 4px 16px rgba(0,0,0,0.25);
-  display:flex;align-items:center;gap:6px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.3);
+  display:flex;align-items:center;gap:5px;
+  opacity:0;animation:chipIn var(--delay,0.3s) ease-out forwards, chipFloat var(--float-dur,3s) var(--float-delay,0s) ease-in-out infinite;
 }
-.loader-sticker.fly{
-  animation:chipFly var(--dur,3s) cubic-bezier(0.22,1,0.36,1) forwards;
+@keyframes chipIn{
+  0%{opacity:0;transform:translateY(-20px) scale(0.6) rotate(var(--rot-start,-8deg))}
+  60%{opacity:1;transform:translateY(2px) scale(1.05) rotate(calc(var(--rot-start,-8deg)*-0.3))}
+  100%{opacity:1;transform:translateY(0) scale(1) rotate(0deg)}
 }
-@keyframes chipFly{
-  0%{opacity:0;transform:translate(var(--sx,0),var(--sy,0)) rotate(var(--sr,0deg)) scale(0.4)}
-  18%{opacity:1;transform:translate(calc(var(--sx,0)*0.3),calc(var(--sy,0)*0.3)) rotate(calc(var(--sr,0deg)*0.3)) scale(1.08)}
-  45%{opacity:1;transform:translate(0,0) rotate(var(--er,0deg)) scale(1)}
-  75%{opacity:0.8;transform:translate(var(--dx,0),var(--dy,0)) rotate(calc(var(--er,0deg)+10deg)) scale(0.92)}
-  100%{opacity:0;transform:translate(calc(var(--dx,0)*1.8),calc(var(--dy,0)*1.8)) rotate(calc(var(--er,0deg)+30deg)) scale(0.4)}
+@keyframes chipFloat{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  25%{transform:translateY(var(--bob-y,-4px)) rotate(var(--bob-r,2deg))}
+  50%{transform:translateY(var(--bob-y2,3px)) rotate(var(--bob-r2,-1.5deg))}
+  75%{transform:translateY(var(--bob-y3,-2px)) rotate(var(--bob-r3,1deg))}
 }
 
 /* Percentage counter */
@@ -2696,8 +2701,16 @@ body.map-expanded .scroll-counter{display:none!important}
 </head>
 <body>
 <div class="loader-screen" id="loaderScreen">
-  <!-- Scattered colorful stickers — spawned by JS -->
-  <div id="loaderStickers"></div>
+  <div class="loader-stickers-bar" id="loaderStickers">
+    <div class="loader-chip" style="background:rgba(66,165,245,0.15);color:#64B5F6;--delay:0.2s;--float-dur:3.2s;--float-delay:0s;--rot-start:-6deg;--bob-y:-5px;--bob-r:2deg;--bob-y2:3px;--bob-r2:-1deg;--bob-y3:-2px;--bob-r3:0.5deg"><span>📋</span>SPRINT</div>
+    <div class="loader-chip" style="background:rgba(255,183,77,0.15);color:#FFB74D;--delay:0.35s;--float-dur:2.8s;--float-delay:0.2s;--rot-start:8deg;--bob-y:-3px;--bob-r:-2deg;--bob-y2:4px;--bob-r2:1.5deg;--bob-y3:-1px;--bob-r3:-0.5deg"><span>🎯</span>OKRs</div>
+    <div class="loader-chip" style="background:rgba(129,199,132,0.15);color:#81C784;--delay:0.5s;--float-dur:3.5s;--float-delay:0.4s;--rot-start:-10deg;--bob-y:-6px;--bob-r:1.5deg;--bob-y2:2px;--bob-r2:-2deg;--bob-y3:-3px;--bob-r3:1deg"><span>📊</span>METRICS</div>
+    <div class="loader-chip" style="background:rgba(255,112,67,0.15);color:#FF7043;--delay:0.65s;--float-dur:2.6s;--float-delay:0.6s;--rot-start:5deg;--bob-y:-4px;--bob-r:-1deg;--bob-y2:5px;--bob-r2:2deg;--bob-y3:-2px;--bob-r3:-1.5deg"><span>🚀</span>SHIP IT</div>
+    <div class="loader-chip" style="background:rgba(186,104,200,0.15);color:#CE93D8;--delay:0.8s;--float-dur:3s;--float-delay:0.3s;--rot-start:-7deg;--bob-y:-3px;--bob-r:1deg;--bob-y2:4px;--bob-r2:-1.5deg;--bob-y3:-1px;--bob-r3:0.8deg"><span>🔄</span>RETRO</div>
+    <div class="loader-chip" style="background:rgba(0,188,212,0.15);color:#00BCD4;--delay:0.95s;--float-dur:3.3s;--float-delay:0.5s;--rot-start:9deg;--bob-y:-5px;--bob-r:-2.5deg;--bob-y2:3px;--bob-r2:1deg;--bob-y3:-4px;--bob-r3:1.5deg"><span>💎</span>MVP</div>
+    <div class="loader-chip" style="background:rgba(244,67,54,0.15);color:#EF5350;--delay:1.1s;--float-dur:2.5s;--float-delay:0.1s;--rot-start:-4deg;--bob-y:-2px;--bob-r:1.5deg;--bob-y2:6px;--bob-r2:-2deg;--bob-y3:-3px;--bob-r3:0.5deg"><span>🔥</span>P0 BUG</div>
+    <div class="loader-chip" style="background:rgba(102,187,106,0.15);color:#66BB6A;--delay:1.25s;--float-dur:3.1s;--float-delay:0.7s;--rot-start:6deg;--bob-y:-4px;--bob-r:-1.5deg;--bob-y2:2px;--bob-r2:2.5deg;--bob-y3:-2px;--bob-r3:-1deg"><span>✅</span>SHIPPED</div>
+  </div>
   <div class="loader-name">Akash Matania</div>
   <div class="loader-role-wrap">
     <div class="loader-role-track">
@@ -13638,72 +13651,16 @@ function returnCricketToCanvas(){
   if(ci)ci.style.display='block';if(cl)cl.style.display='block';
 }
 
-/* ── Loading screen: PM sticker spawner + percentage counter + theme sync ── */
+/* ── Loading screen: percentage counter ── */
 (function(){
   var loader=document.getElementById('loaderScreen');
   var vp=document.querySelector('.canvas-viewport');
-  var container=document.getElementById('loaderStickers');
   var percentEl=document.getElementById('loaderPercent');
   var startTime=Date.now();
   var DURATION=3200;
 
-  // PM-themed sticker chips
-  var pmStickers=[
-    {icon:'📋',label:'SPRINT PLANNING',bg:'rgba(66,165,245,0.15)',color:'#64B5F6'},
-    {icon:'🎯',label:'OKRs',bg:'rgba(255,183,77,0.15)',color:'#FFB74D'},
-    {icon:'📊',label:'METRICS',bg:'rgba(129,199,132,0.15)',color:'#81C784'},
-    {icon:'🚀',label:'SHIP IT',bg:'rgba(255,112,67,0.15)',color:'#FF7043'},
-    {icon:'💡',label:'IDEATION',bg:'rgba(255,241,118,0.15)',color:'#FFF176'},
-    {icon:'🔄',label:'RETRO',bg:'rgba(186,104,200,0.15)',color:'#CE93D8'},
-    {icon:'📝',label:'USER STORY',bg:'rgba(77,182,172,0.15)',color:'#4DB6AC'},
-    {icon:'⚡',label:'VELOCITY',bg:'rgba(255,213,79,0.15)',color:'#FFD54F'},
-    {icon:'🏗️',label:'ROADMAP',bg:'rgba(144,164,174,0.15)',color:'#90A4AE'},
-    {icon:'🎨',label:'DESIGN REVIEW',bg:'rgba(240,98,146,0.15)',color:'#F06292'},
-    {icon:'🔍',label:'DISCOVERY',bg:'rgba(121,134,203,0.15)',color:'#7986CB'},
-    {icon:'📦',label:'BACKLOG',bg:'rgba(255,138,101,0.15)',color:'#FF8A65'},
-    {icon:'✅',label:'ACCEPTANCE',bg:'rgba(102,187,106,0.15)',color:'#66BB6A'},
-    {icon:'🧪',label:'A/B TEST',bg:'rgba(171,71,188,0.15)',color:'#AB47BC'},
-    {icon:'📈',label:'GROWTH',bg:'rgba(41,182,246,0.15)',color:'#29B6F6'},
-    {icon:'🤝',label:'STANDUP',bg:'rgba(255,167,38,0.15)',color:'#FFA726'},
-    {icon:'🛠',label:'BUILD',bg:'rgba(201,169,110,0.15)',color:'#C9A96E'},
-    {icon:'💎',label:'MVP',bg:'rgba(0,188,212,0.15)',color:'#00BCD4'},
-    {icon:'🔥',label:'P0 BUG',bg:'rgba(244,67,54,0.15)',color:'#EF5350'},
-    {icon:'🎪',label:'DEMO DAY',bg:'rgba(156,39,176,0.15)',color:'#AB47BC'},
-  ];
-
   // Always black splash
   loader.style.backgroundColor='#000';
-
-  function rnd(a,b){return a+Math.random()*(b-a)}
-  function spawnSticker(){
-    var s=pmStickers[Math.floor(Math.random()*pmStickers.length)];
-    var el=document.createElement('div');
-    el.className='loader-sticker';
-    el.style.background=s.bg;
-    el.style.color=s.color;
-    el.style.borderColor=s.color.replace(')',',0.25)').replace('rgb','rgba');
-    el.innerHTML='<span style="font-size:1rem">'+s.icon+'</span>'+s.label;
-    var angle=rnd(-Math.PI*0.8, Math.PI*0.8);
-    var radius=rnd(60,200);
-    el.style.left='calc(50% + '+rnd(-120,120)+'px)';
-    el.style.top='calc(18% + '+rnd(-30,30)+'px)';
-    el.style.setProperty('--sx',Math.cos(angle+Math.PI)*radius+'px');
-    el.style.setProperty('--sy',Math.sin(angle+Math.PI)*radius+'px');
-    el.style.setProperty('--dx',Math.cos(angle)*radius*0.7+'px');
-    el.style.setProperty('--dy',Math.sin(angle)*radius*0.7+'px');
-    el.style.setProperty('--sr',rnd(-120,120)+'deg');
-    el.style.setProperty('--er',rnd(-25,25)+'deg');
-    el.style.setProperty('--dur',rnd(2.2,3.8)+'s');
-    container.appendChild(el);
-    requestAnimationFrame(function(){el.classList.add('fly')});
-    setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el)},4200);
-  }
-
-  // Spawn in waves
-  var spawnInterval=setInterval(function(){
-    var count=Math.floor(rnd(2,4));
-    for(var i=0;i<count;i++) setTimeout(spawnSticker,i*120);
-  },500);
 
   // Percentage counter
   var percentInterval=setInterval(function(){
@@ -13714,7 +13671,6 @@ function returnCricketToCanvas(){
   },30);
 
   function dismiss(){
-    clearInterval(spawnInterval);
     clearInterval(percentInterval);
     if(percentEl)percentEl.textContent='100';
     if(loader)loader.classList.add('hide');
