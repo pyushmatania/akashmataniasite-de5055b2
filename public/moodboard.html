@@ -12066,6 +12066,7 @@ function ekPick(el,e){
   const REST_BASE=`${SUPABASE_URL}/rest/v1`;
   const LAYOUT_FN_URL=`${SUPABASE_URL}/functions/v1/moodboard-layout`;
   const LOCAL_LAYOUT_KEY='moodboard_layout_backup_v5';
+  const LOCAL_DELETED_KEY='moodboard_deleted_items_v1';
   const LAYOUT_VERSION=5; // bump this to force all clients back to default HP positions
   const sb=(window.supabase&&typeof window.supabase.createClient==='function')
     ? window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}})
