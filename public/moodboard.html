@@ -13835,18 +13835,86 @@ function returnCricketToCanvas(){
   if(ci)ci.style.display='block';if(cl)cl.style.display='block';
 }
 
-/* ── Loading screen dismissal ── */
+/* ── Loading screen: sticker spawner + percentage counter ── */
 (function(){
   var loader=document.getElementById('loaderScreen');
   var vp=document.querySelector('.canvas-viewport');
+  var container=document.getElementById('loaderStickers');
+  var percentEl=document.getElementById('loaderPercent');
+  var startTime=Date.now();
+  var DURATION=3200;
+
+  // Sticker pool — emojis + colored SVG shapes
+  var emojis=['🔥','⚡','🎯','💎','🌈','🎨','🚀','✨','🎪','🧩','🎲','💜','🟢','🔴','🟡','🔵','🟠','⭐','🪄','🎭'];
+  var colors=['#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#FF6EC7','#98D8C8','#F7DC6F','#BB8FCE','#85C1E9','#F0B27A'];
+
+  function makeSVGShape(){
+    var col=colors[Math.floor(Math.random()*colors.length)];
+    var shapes=[
+      '<svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="'+col+'" opacity="0.85"/></svg>',
+      '<svg width="48" height="48" viewBox="0 0 48 48"><rect x="6" y="6" width="36" height="36" rx="4" fill="'+col+'" opacity="0.85" transform="rotate(15 24 24)"/></svg>',
+      '<svg width="48" height="48" viewBox="0 0 48 48"><polygon points="24,4 44,40 4,40" fill="'+col+'" opacity="0.85"/></svg>',
+      '<svg width="52" height="52" viewBox="0 0 52 52"><polygon points="26,2 33,18 50,20 37,32 40,50 26,42 12,50 15,32 2,20 19,18" fill="'+col+'" opacity="0.85"/></svg>',
+      '<svg width="48" height="48" viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="28" fill="'+col+'" opacity="0.85" transform="rotate(45 24 24)"/></svg>',
+      '<svg width="48" height="48" viewBox="0 0 48 48"><path d="M24 4C28 4 32 10 32 16C32 10 38 4 44 8C38 14 44 20 38 24C44 28 38 34 44 40C38 44 32 38 32 32C32 38 28 44 24 44C20 44 16 38 16 32C16 38 10 44 4 40C10 34 4 28 10 24C4 20 10 14 4 8C10 4 16 10 16 16C16 10 20 4 24 4Z" fill="'+col+'" opacity="0.8"/></svg>'
+    ];
+    return shapes[Math.floor(Math.random()*shapes.length)];
+  }
+
+  function rnd(a,b){return a+Math.random()*(b-a)}
+  function spawnSticker(){
+    var isEmoji=Math.random()>0.4;
+    var el=document.createElement('div');
+    el.className=isEmoji?'loader-sticker':'loader-shape-svg';
+    if(isEmoji){
+      el.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+      el.style.fontSize=rnd(1.4,3.2)+'rem';
+    }else{
+      el.innerHTML=makeSVGShape();
+      var s=rnd(0.5,1.4);
+      el.style.width=(48*s)+'px';el.style.height=(48*s)+'px';
+    }
+    var angle=rnd(0,Math.PI*2);
+    var radius=rnd(60,220);
+    el.style.left='calc(50% + '+Math.cos(angle)*rnd(-30,30)+'px)';
+    el.style.top='calc(50% + '+Math.sin(angle)*rnd(-30,30)+'px)';
+    el.style.setProperty('--sx',Math.cos(angle+Math.PI)*radius+'px');
+    el.style.setProperty('--sy',Math.sin(angle+Math.PI)*radius+'px');
+    el.style.setProperty('--dx',Math.cos(angle)*radius*0.8+'px');
+    el.style.setProperty('--dy',Math.sin(angle)*radius*0.8+'px');
+    el.style.setProperty('--sr',rnd(-180,180)+'deg');
+    el.style.setProperty('--er',rnd(-45,45)+'deg');
+    el.style.setProperty('--dur',rnd(2,3.5)+'s');
+    el.style.setProperty('--delay','0s');
+    container.appendChild(el);
+    requestAnimationFrame(function(){el.classList.add('fly')});
+    setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el)},4000);
+  }
+
+  // Spawn stickers in waves
+  var spawnInterval=setInterval(function(){
+    var count=Math.floor(rnd(2,5));
+    for(var i=0;i<count;i++) setTimeout(spawnSticker,i*80);
+  },400);
+
+  // Percentage counter
+  var percentInterval=setInterval(function(){
+    var elapsed=Date.now()-startTime;
+    var pct=Math.min(100,Math.round((elapsed/DURATION)*100));
+    if(percentEl)percentEl.textContent=pct;
+    if(pct>=100)clearInterval(percentInterval);
+  },30);
+
   function dismiss(){
+    clearInterval(spawnInterval);
+    clearInterval(percentInterval);
+    if(percentEl)percentEl.textContent='100';
     if(loader)loader.classList.add('hide');
     if(vp)vp.classList.add('loaded');
     setTimeout(function(){if(loader)loader.style.display='none'},700);
   }
-  // Dismiss after bar animation finishes (~2.6s) or window load, whichever is later
   var barDone=false,winDone=false;
-  setTimeout(function(){barDone=true;if(winDone)dismiss()},3200);
+  setTimeout(function(){barDone=true;if(winDone)dismiss()},DURATION);
   window.addEventListener('load',function(){winDone=true;if(barDone)dismiss()});
   setTimeout(dismiss,5500);
 })();
