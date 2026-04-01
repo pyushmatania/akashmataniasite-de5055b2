@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { forwardRef, Component } from "react";
 import type { ReactNode, ErrorInfo } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -44,15 +44,19 @@ class ErrorBoundary extends Component<
   }
 }
 
-const App = () => {
+const App = forwardRef<HTMLDivElement>(function App(_props, ref) {
   const pathname = window.location.pathname;
   const isKnownRoute = pathname === "/" || pathname === "/index";
 
   return (
-    <ErrorBoundary>
-      {isKnownRoute ? <Index /> : <NotFound />}
-    </ErrorBoundary>
+    <div ref={ref}>
+      <ErrorBoundary>
+        {isKnownRoute ? <Index /> : <NotFound />}
+      </ErrorBoundary>
+    </div>
   );
-};
+});
+
+App.displayName = "App";
 
 export default App;

@@ -1,35 +1,50 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, memo } from "react";
 
 const MOODBOARD_SRC = "/moodboard.html";
 
-const Index = () => {
+const Index = memo(function Index() {
   const [loaded, setLoaded] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const mountedRef = useRef(true);
 
   const handleLoad = useCallback(() => {
-    setLoaded(true);
+    if (mountedRef.current) setLoaded(true);
   }, []);
 
-  // Fallback: if iframe doesn't trigger onLoad within 8s, show it anyway
+  // Fallback timeout — show iframe even if onLoad doesn't fire
   useEffect(() => {
+    mountedRef.current = true;
     if (loaded) return;
-    const t = window.setTimeout(() => setLoaded(true), 8000);
-    return () => window.clearTimeout(t);
+    const t = window.setTimeout(() => {
+      if (mountedRef.current) setLoaded(true);
+    }, 6000);
+    return () => {
+      mountedRef.current = false;
+      window.clearTimeout(t);
+    };
   }, [loaded]);
 
   return (
-    <div className="relative w-full" style={{ height: "100dvh" }}>
+    <div className="relative w-full" style={{ height: "100dvh", contain: "strict" }}>
       <iframe
         ref={iframeRef}
         src={MOODBOARD_SRC}
         title="Akash's Moodboard"
         className="w-full border-0"
-        style={{ height: "100dvh", overflow: "hidden", opacity: loaded ? 1 : 0, transition: "opacity 0.3s" }}
+        loading="eager"
+        style={{
+          height: "100dvh",
+          overflow: "hidden",
+          opacity: loaded ? 1 : 0,
+          transition: "opacity 0.25s ease-out",
+          willChange: loaded ? "auto" : "opacity",
+          contain: "strict",
+        }}
         onLoad={handleLoad}
         allow="autoplay"
       />
     </div>
   );
-};
+});
 
 export default Index;
