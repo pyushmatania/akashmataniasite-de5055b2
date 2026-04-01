@@ -1165,6 +1165,64 @@ body.dark-mode .about-panel .skill-tag{
   color:rgba(255,255,255,0.7)!important;
 }
 
+/* ── Companion stickers (zc-*) — Dark glassmorphism ── */
+body.dark-mode .zc-sticky,
+body.dark-mode .zc-mini-card{
+  background:rgba(20,16,30,0.88)!important;
+  color:rgba(255,255,255,0.75)!important;
+  border-color:rgba(201,169,110,0.18)!important;
+  border-bottom-color:rgba(201,169,110,0.2)!important;
+  box-shadow:2px 3px 12px rgba(0,0,0,0.35)!important;
+}
+body.dark-mode .zc-badge{
+  background:rgba(201,169,110,0.1)!important;
+  color:rgba(255,255,255,0.7)!important;
+  border-color:rgba(201,169,110,0.2)!important;
+}
+body.dark-mode .zc-cutout-wrap{
+  background:rgba(20,16,30,0.85)!important;
+  border-color:rgba(201,169,110,0.18)!important;
+  box-shadow:0 4px 16px rgba(0,0,0,0.35)!important;
+}
+
+/* ── Companion inline-styled cards (Core Values, Mr Puchu, Tier lists, etc.) ── */
+/* Force dark bg/text on ALL .zic-companion children with inline styles */
+body.dark-mode .zic-companion > div:not(.zc-emoji-float){
+  background:rgba(20,16,30,0.88)!important;
+  border-color:rgba(201,169,110,0.18)!important;
+  box-shadow:0 4px 18px rgba(0,0,0,0.4)!important;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+body.dark-mode .zic-companion > div:not(.zc-emoji-float) div{
+  color:rgba(255,255,255,0.75)!important;
+}
+body.dark-mode .zic-companion > div:not(.zc-emoji-float) [style*="color:#5C4A1E"],
+body.dark-mode .zic-companion > div:not(.zc-emoji-float) [style*="color:#8B6914"],
+body.dark-mode .zic-companion > div:not(.zc-emoji-float) [style*="color:#1B5E20"],
+body.dark-mode .zic-companion > div:not(.zc-emoji-float) [style*="color:#E65100"],
+body.dark-mode .zic-companion > div:not(.zc-emoji-float) [style*="color:#AD1457"],
+body.dark-mode .zic-companion > div:not(.zc-emoji-float) [style*="color:#0D47A1"],
+body.dark-mode .zic-companion > div:not(.zc-emoji-float) [style*="color:#283593"],
+body.dark-mode .zic-companion > div:not(.zc-emoji-float) [style*="color:#4527A0"],
+body.dark-mode .zic-companion > div:not(.zc-emoji-float) [style*="color:#880E4F"],
+body.dark-mode .zic-companion > div:not(.zc-emoji-float) [style*="color:#C62828"],
+body.dark-mode .zic-companion > div:not(.zc-emoji-float) [style*="color:#BF360C"]{
+  color:#C9A96E!important;
+}
+body.dark-mode .zic-companion > div:not(.zc-emoji-float) [style*="background:rgba(201,169,110,0.1)"],
+body.dark-mode .zic-companion > div:not(.zc-emoji-float) [style*="background:rgba(229,57,53,0.06)"],
+body.dark-mode .zic-companion > div:not(.zc-emoji-float) [style*="background:rgba(255,255,255"]{
+  background:rgba(201,169,110,0.08)!important;
+}
+
+/* Flip cards in dark mode */
+body.dark-mode .sticker-meme[style*="background:#fff"],
+body.dark-mode .sticker-meme[style*="background:#FFF"],
+body.dark-mode [style*="background:linear-gradient(145deg,#fff"],
+body.dark-mode [style*="background:linear-gradient(145deg,#FFFBF0"]{
+  background:rgba(20,16,30,0.88)!important;
+}
+
 /* Minimap in dark mode */
 body.dark-mode .minimap-container{
   box-shadow:0 4px 20px rgba(0,0,0,0.4)!important;
