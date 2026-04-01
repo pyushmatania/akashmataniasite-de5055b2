@@ -10772,6 +10772,405 @@ function ensureZoneIntroCards(){
   ensureCompanionStickers();
 }
 
+/* ── Shared Hand Cricket HTML & Game Engine ── */
+window.__hcGameHTML=function(opts){
+  var isPanel=opts&&opts.panel;
+  var closeBtn=isPanel?'':'<button class="hc-close-btn" style="position:absolute;top:8px;right:8px;z-index:20;background:rgba(0,0,0,0.6);border:1.5px solid rgba(255,255,255,0.15);color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:0.8rem;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);transition:all 0.2s" onmouseenter="this.style.background=\'rgba(255,23,68,0.7)\'" onmouseleave="this.style.background=\'rgba(0,0,0,0.6)\'">✕</button>';
+  var display=isPanel?'display:block;':'display:none;';
+  var width=isPanel?'width:100%;':'';
+  return '<div class="zc-hcricket" style="'+display+'position:relative;'+width+'">'+closeBtn+
+    '<div class="hc-boundary-flash"></div><div class="hc-boundary-text"></div><div class="hc-ball-3d" style="left:50%;top:45%"></div>'+
+    '<div class="hc-innings-break"></div><div class="hc-endgame"></div>'+
+    '<div class="hc-stadium">'+
+      '<div class="hc-flood"></div><div class="hc-flood"></div><div class="hc-crowd"></div><div class="hc-pitch"></div>'+
+      '<div class="hc-stumps-3d"><div class="hc-stump"></div><div class="hc-stump"></div><div class="hc-stump"></div><div class="hc-bail"></div><div class="hc-bail"></div></div>'+
+      '<div class="hc-title-bar">'+
+        '<span class="hc-title"><span class="hc-logo">🏏</span>HAND CRICKET</span>'+
+        '<span class="hc-format-badge">5 OV</span>'+
+        '<span class="hc-live-badge">LIVE</span>'+
+      '</div>'+
+      '<div class="hc-phase">⚡ TOSS TIME</div>'+
+      '<div class="hc-scoreboard">'+
+        '<div class="hc-team" data-side="you">'+
+          '<div class="hc-team-header"><div class="hc-team-badge you-badge">🧑</div><div class="hc-team-label">YOU</div></div>'+
+          '<div class="hc-team-score" data-who="you">0</div>'+
+          '<div class="hc-team-overs" data-overs-who="you"></div>'+
+        '</div>'+
+        '<div class="hc-vs">VS</div>'+
+        '<div class="hc-team" data-side="cpu">'+
+          '<div class="hc-team-header"><div class="hc-team-badge cpu-badge">🤖</div><div class="hc-team-label">CPU</div></div>'+
+          '<div class="hc-team-score" data-who="cpu">0</div>'+
+          '<div class="hc-team-overs" data-overs-who="cpu"></div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="hc-stats-bar">'+
+        '<span class="hc-stat-chip"><span class="hsc-icon">🏏</span> <span class="hsc-val" data-stat="overs">0.0</span> ov</span>'+
+        '<span class="hc-stat-chip"><span class="hsc-icon">📊</span> SR <span class="hsc-val" data-stat="sr">0.00</span></span>'+
+        '<span class="hc-stat-chip"><span class="hsc-icon">🎯</span> CRR <span class="hsc-val" data-stat="crr">0.00</span></span>'+
+        '<span class="hc-stat-chip highlight" style="display:none" data-stat-rrr><span class="hsc-icon">⚡</span> RRR <span class="hsc-val" data-stat="rrr">0.00</span></span>'+
+      '</div>'+
+      '<div class="hc-target-bar"></div>'+
+      '<div class="hc-chase-progress"><div class="hc-chase-fill"></div></div>'+
+    '</div>'+
+    '<div class="hc-arena">'+
+      '<div class="hc-hands">'+
+        '<div class="hc-hand-wrap"><div class="hc-hand-who">YOU</div><div class="hc-hand you">✊</div></div>'+
+        '<div class="hc-vs-anim">⚔️</div>'+
+        '<div class="hc-hand-wrap"><div class="hc-hand-who">CPU</div><div class="hc-hand cpu">✊</div></div>'+
+      '</div>'+
+      '<div class="hc-commentary">call it — odd or even?</div>'+
+    '</div>'+
+    '<div class="hc-controls">'+
+      '<div class="hc-format-selector">'+
+        '<span class="hc-format-opt active" data-fmt="5">5 OVERS</span>'+
+        '<span class="hc-format-opt" data-fmt="10">10 OVERS</span>'+
+        '<span class="hc-format-opt" data-fmt="0">∞ UNLIMITED</span>'+
+      '</div>'+
+      '<div class="hc-btns" style="display:none">'+
+        '<button class="hc-btn" data-v="0">✊<span class="hc-btn-label">DEF</span></button>'+
+        '<button class="hc-btn" data-v="1">☝️<span class="hc-btn-label">1</span></button>'+
+        '<button class="hc-btn" data-v="2">✌️<span class="hc-btn-label">2</span></button>'+
+        '<button class="hc-btn" data-v="3">🤟<span class="hc-btn-label">3</span></button>'+
+        '<button class="hc-btn" data-v="4">🖖<span class="hc-btn-label">4</span></button>'+
+        '<button class="hc-btn" data-v="6">👍<span class="hc-btn-label">6</span></button>'+
+      '</div>'+
+      '<div class="hc-history"></div>'+
+    '</div>'+
+    '<div class="hc-footer">'+
+      '<div class="hc-record"><span class="rec-stat"><span class="rec-w">W:0</span></span> <span class="rec-stat"><span class="rec-l">L:0</span></span> <span class="rec-streak"></span></div>'+
+      '<div class="hc-leaderboard"><div class="hc-lb-title">📜 MATCH HISTORY</div></div>'+
+    '</div>'+
+  '</div>';
+};
+
+window.__initHCGame=function(hc){
+  hc.style.pointerEvents='auto';
+  var VALID=[0,1,2,3,4,6];
+  var HAND_EMOJI={0:'✊',1:'☝️',2:'✌️',3:'🤟',4:'🖖',6:'👍'};
+  var GS_URL='https://oxlnpnqwrwlnfjyvlmyv.supabase.co/rest/v1/game_scores';
+  var GS_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94bG5wbnF3cndsbmZqeXZsbXl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDk2MjAsImV4cCI6MjA5MDUyNTYyMH0.6Css1oPopST8lq39tBHvD70jr4UXPHYe3TKqh6smYkY';
+  var gsHeaders={'Content-Type':'application/json','apikey':GS_KEY,'Authorization':'Bearer '+GS_KEY,'Prefer':'return=representation'};
+
+  // State
+  var phase='toss_call',tossCall='',tossWonByPlayer=false;
+  var youScore=0,cpuScore=0,wins=0,losses=0,target=-1;
+  var totalBalls=0,innings1Balls=0,maxOvers=5,streak=0;
+  var fours=0,sixes=0,dots=0,partnerships=0;
+  var isLocked=false;
+
+  // DOM refs
+  var phaseEl=hc.querySelector('.hc-phase');
+  var commentaryEl=hc.querySelector('.hc-commentary');
+  var histEl=hc.querySelector('.hc-history');
+  var recEl=hc.querySelector('.hc-record');
+  var lbEl=hc.querySelector('.hc-leaderboard');
+  var youScoreEl=hc.querySelector('[data-who="you"]');
+  var cpuScoreEl=hc.querySelector('[data-who="cpu"]');
+  var youOversEl=hc.querySelector('[data-overs-who="you"]');
+  var cpuOversEl=hc.querySelector('[data-overs-who="cpu"]');
+  var youHandEl=hc.querySelector('.hc-hand.you');
+  var cpuHandEl=hc.querySelector('.hc-hand.cpu');
+  var btns=hc.querySelectorAll('.hc-btn');
+  var btnsWrap=hc.querySelector('.hc-btns');
+  var flashEl=hc.querySelector('.hc-boundary-flash');
+  var boundaryTextEl=hc.querySelector('.hc-boundary-text');
+  var targetBar=hc.querySelector('.hc-target-bar');
+  var formatBadge=hc.querySelector('.hc-format-badge');
+  var formatSelector=hc.querySelector('.hc-format-selector');
+  var inningsBreak=hc.querySelector('.hc-innings-break');
+  var endgameEl=hc.querySelector('.hc-endgame');
+  var ball3d=hc.querySelector('.hc-ball-3d');
+  var rrrChip=hc.querySelector('[data-stat-rrr]');
+  var youTeamDiv=hc.querySelector('[data-side="you"]');
+  var cpuTeamDiv=hc.querySelector('[data-side="cpu"]');
+
+  // Format selector
+  if(formatSelector){
+    formatSelector.addEventListener('click',function(ev){
+      var opt=ev.target.closest('.hc-format-opt');if(!opt)return;
+      ev.stopPropagation();
+      formatSelector.querySelectorAll('.hc-format-opt').forEach(function(o){o.classList.remove('active')});
+      opt.classList.add('active');
+      maxOvers=parseInt(opt.dataset.fmt)||0;
+      formatBadge.textContent=maxOvers?maxOvers+' OV':'∞';
+    });
+  }
+
+  function updateStats(){
+    var overs=Math.floor(totalBalls/6);var ballsInOver=totalBalls%6;
+    var batScore=(phase==='bat')?youScore:cpuScore;
+    var oversDone=totalBalls/6;
+    var crr=oversDone>0?(batScore/oversDone).toFixed(2):'0.00';
+    var sr=totalBalls>0?((batScore/totalBalls)*100).toFixed(1):'0.0';
+    var oversEl=hc.querySelector('[data-stat="overs"]');
+    var crrEl=hc.querySelector('[data-stat="crr"]');
+    var srEl=hc.querySelector('[data-stat="sr"]');
+    if(oversEl)oversEl.textContent=overs+'.'+ballsInOver;
+    if(crrEl)crrEl.textContent=crr;
+    if(srEl)srEl.textContent=sr;
+    // Update overs display under score
+    var batOversEl=(phase==='bat')?youOversEl:cpuOversEl;
+    if(batOversEl)batOversEl.textContent='('+overs+'.'+ballsInOver+(maxOvers?' / '+maxOvers:'')+' ov)';
+    // RRR
+    if(target>=0&&rrrChip){
+      var remaining=target+1-batScore;
+      var ballsLeft=maxOvers?maxOvers*6-totalBalls:30-totalBalls;
+      if(ballsLeft<=0)ballsLeft=1;
+      var rrr=(remaining/(ballsLeft/6)).toFixed(2);
+      var rrrEl=hc.querySelector('[data-stat="rrr"]');
+      if(rrrEl)rrrEl.textContent=rrr;
+      rrrChip.style.display='';
+    }
+    // Active team highlight
+    if(youTeamDiv&&cpuTeamDiv){
+      youTeamDiv.classList.toggle('active-team',phase==='bat');
+      cpuTeamDiv.classList.toggle('active-team',phase==='bowl');
+    }
+  }
+
+  // SFX
+  var audioCtx=null;
+  function getAudio(){if(!audioCtx)try{audioCtx=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}return audioCtx;}
+  function playTone(freq,dur,type,vol){var ctx=getAudio();if(!ctx)return;var o=ctx.createOscillator(),g=ctx.createGain();o.type=type||'sine';o.frequency.value=freq;g.gain.setValueAtTime(vol||0.15,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+dur);}
+  function sfxTap(){playTone(800,0.08,'square',0.06);}
+  function sfxFour(){playTone(523,0.1,'sine',0.12);setTimeout(function(){playTone(659,0.1,'sine',0.12)},80);setTimeout(function(){playTone(784,0.15,'sine',0.15)},160);}
+  function sfxSix(){playTone(523,0.08,'sine',0.15);setTimeout(function(){playTone(784,0.08,'sine',0.15)},60);setTimeout(function(){playTone(1047,0.25,'sine',0.18)},120);}
+  function sfxOut(){playTone(300,0.15,'sawtooth',0.1);setTimeout(function(){playTone(200,0.3,'sawtooth',0.12)},100);}
+  function sfxWin(){[523,659,784,1047].forEach(function(f,i){setTimeout(function(){playTone(f,0.15,'sine',0.12)},i*100)});}
+  function sfxLose(){playTone(400,0.2,'sawtooth',0.1);setTimeout(function(){playTone(300,0.2,'sawtooth',0.1)},150);setTimeout(function(){playTone(200,0.4,'sawtooth',0.12)},300);}
+  function sfxToss(){playTone(1000,0.06,'sine',0.08);setTimeout(function(){playTone(1200,0.06,'sine',0.08)},60);}
+
+  // Cloud
+  function saveScore(gt,data){fetch(GS_URL,{method:'POST',headers:gsHeaders,body:JSON.stringify({game_type:gt,score_data:data})}).catch(function(){});}
+  function loadHistory(){
+    fetch(GS_URL+'?game_type=eq.hand_cricket&order=played_at.desc&limit=10',{headers:{'apikey':GS_KEY,'Authorization':'Bearer '+GS_KEY}})
+      .then(function(r){return r.json()}).then(function(rows){
+        if(!Array.isArray(rows)||!rows.length)return;
+        var html='<div class="hc-lb-title">📜 MATCH HISTORY</div>';
+        rows.forEach(function(r){var d=r.score_data||{};var dt=new Date(r.played_at);var ds=dt.toLocaleDateString('en-IN',{day:'numeric',month:'short'});html+='<div class="hc-lb-row"><span class="lb-result '+(d.won?'win':'loss')+'">'+(d.won?'W':'L')+'</span><span class="lb-scores">You:'+d.you+' CPU:'+d.cpu+'</span><span class="lb-date">'+ds+'</span></div>';});
+        var w=rows.filter(function(r){return r.score_data&&r.score_data.won}).length;
+        var l=rows.filter(function(r){return r.score_data&&!r.score_data.won}).length;
+        wins=w;losses=l;
+        recEl.querySelector('.rec-w').textContent='W:'+w;
+        recEl.querySelector('.rec-l').textContent='L:'+l;
+        lbEl.innerHTML=html;
+      }).catch(function(){});
+  }
+  loadHistory();
+
+  function trueRandom(){var arr=new Uint32Array(1);if(window.crypto&&window.crypto.getRandomValues)window.crypto.getRandomValues(arr);else arr[0]=Math.floor(Math.random()*4294967296);return VALID[arr[0]%VALID.length];}
+
+  function addBall(type,text){
+    var b=document.createElement('span');b.className='hc-ball '+type;b.textContent=text;
+    // Over separator
+    if(totalBalls>0&&totalBalls%6===0){
+      var sep=document.createElement('span');sep.className='hc-ball over-sep';histEl.appendChild(sep);
+    }
+    histEl.appendChild(b);totalBalls++;
+    if(type==='four')fours++;if(type==='six')sixes++;if(type==='dot')dots++;
+    updateStats();
+  }
+
+  // Effects
+  function showFlash(type){flashEl.className='hc-boundary-flash';void flashEl.offsetWidth;flashEl.classList.add(type);}
+  function showBoundaryText(text,type){boundaryTextEl.textContent=text;boundaryTextEl.className='hc-boundary-text';void boundaryTextEl.offsetWidth;boundaryTextEl.classList.add(type);}
+  function popScore(el){el.classList.remove('score-pop');void el.offsetWidth;el.classList.add('score-pop');}
+  function revealHand(handEl){handEl.classList.add('reveal');setTimeout(function(){handEl.classList.remove('reveal')},500);}
+  function animateBall(){if(!ball3d)return;ball3d.classList.remove('animate');void ball3d.offsetWidth;ball3d.style.opacity='1';ball3d.classList.add('animate');}
+  function animateStumps(){hc.classList.add('wicket-anim');setTimeout(function(){hc.classList.remove('wicket-anim')},1200);}
+  function spawnFireworks(){
+    var colors=['#FFD700','#FF6D00','#FFAB00','#FFF176','#4CAF50','#FF1744','#E040FB','#00E5FF'];
+    for(var i=0;i<24;i++){var fw=document.createElement('div');fw.className='hc-firework';var angle=Math.random()*Math.PI*2;var dist=50+Math.random()*100;fw.style.left='50%';fw.style.top='25%';fw.style.background=colors[Math.floor(Math.random()*colors.length)];fw.style.setProperty('--fw-tx',Math.cos(angle)*dist+'px');fw.style.setProperty('--fw-ty',Math.sin(angle)*dist+'px');fw.style.setProperty('--fw-dur',(0.5+Math.random()*0.7)+'s');fw.style.width=(3+Math.random()*5)+'px';fw.style.height=fw.style.width;hc.appendChild(fw);(function(el){setTimeout(function(){el.remove()},1400)})(fw);}
+  }
+  function updateChaseProgress(){var fill=hc.querySelector('.hc-chase-fill');if(!fill||target<=0)return;var batScore=(phase==='bat')?youScore:cpuScore;var pct=Math.min(100,Math.round((batScore/(target+1))*100));fill.style.width=pct+'%';if(pct>80)fill.style.background='linear-gradient(90deg,#4CAF50,#FFD700)';else if(pct>50)fill.style.background='linear-gradient(90deg,#4CAF50,#8BC34A)';}
+
+  // Innings break screen
+  function showInningsBreak(score,balls,who,cb){
+    var overs=Math.floor(balls/6)+'.'+balls%6;
+    var sr=balls>0?((score/balls)*100).toFixed(1):'0.0';
+    inningsBreak.innerHTML='<div class="ib-title">INNINGS BREAK</div>'+
+      '<div class="ib-score">'+who+': '+score+'</div>'+
+      '<div class="ib-stats"><div class="ib-stat"><div class="ib-stat-val">'+overs+'</div>Overs</div>'+
+      '<div class="ib-stat"><div class="ib-stat-val">'+sr+'</div>SR</div>'+
+      '<div class="ib-stat"><div class="ib-stat-val">'+fours+'</div>4s</div>'+
+      '<div class="ib-stat"><div class="ib-stat-val">'+sixes+'</div>6s</div></div>';
+    inningsBreak.classList.add('show');
+    setTimeout(function(){inningsBreak.classList.remove('show');fours=0;sixes=0;dots=0;if(cb)cb();},2500);
+  }
+
+  // End game celebration
+  function showEndgame(won){
+    var trophy=won?'🏆':'💀';
+    var sr=totalBalls>0?((youScore/totalBalls)*100).toFixed(1):'0.0';
+    endgameEl.innerHTML='<div class="eg-trophy">'+trophy+'</div>'+
+      '<div class="eg-result '+(won?'won':'lost')+'">'+(won?'YOU WIN!':'CPU WINS!')+'</div>'+
+      '<div class="eg-scores">You: '+youScore+' — CPU: '+cpuScore+'</div>'+
+      '<div class="eg-stats">'+
+        '<div class="eg-stat"><div class="eg-stat-val">'+fours+'</div><div class="eg-stat-label">Fours</div></div>'+
+        '<div class="eg-stat"><div class="eg-stat-val">'+sixes+'</div><div class="eg-stat-label">Sixes</div></div>'+
+        '<div class="eg-stat"><div class="eg-stat-val">'+sr+'</div><div class="eg-stat-label">Strike Rate</div></div>'+
+      '</div>'+
+      '<button class="eg-btn" onclick="this.closest(\'.hc-endgame\').classList.remove(\'show\')">🏏 NEW MATCH</button>';
+    endgameEl.classList.add('show');
+    if(won)spawnFireworks();
+    endgameEl.querySelector('.eg-btn').addEventListener('click',function(ev){
+      ev.stopPropagation();endgameEl.classList.remove('show');startToss();
+    });
+  }
+
+  // Toss/choice UI
+  var tossDiv=document.createElement('div');tossDiv.className='hc-choice-btns';
+  tossDiv.innerHTML='<button class="hc-choice-btn bat" data-call="odd">ODD</button><button class="hc-choice-btn bowl" data-call="even">EVEN</button>';
+  hc.querySelector('.hc-arena').appendChild(tossDiv);
+  var choiceDiv=document.createElement('div');choiceDiv.className='hc-choice-btns';choiceDiv.style.display='none';
+  choiceDiv.innerHTML='<button class="hc-choice-btn bat" data-pick="bat">🏏 BAT</button><button class="hc-choice-btn bowl" data-pick="bowl">🎯 BOWL</button>';
+  hc.querySelector('.hc-arena').appendChild(choiceDiv);
+
+  function showTossButtons(){tossDiv.style.display='flex';tossDiv.innerHTML='<button class="hc-choice-btn bat" data-call="odd">ODD</button><button class="hc-choice-btn bowl" data-call="even">EVEN</button>';choiceDiv.style.display='none';btnsWrap.style.display='none';if(formatSelector)formatSelector.style.display='flex';}
+
+  function startToss(){
+    phase='toss_call';tossCall='';tossWonByPlayer=false;
+    youScore=0;cpuScore=0;target=-1;totalBalls=0;innings1Balls=0;fours=0;sixes=0;dots=0;
+    youScoreEl.textContent='0';cpuScoreEl.textContent='0';
+    if(youOversEl)youOversEl.textContent='';if(cpuOversEl)cpuOversEl.textContent='';
+    youScoreEl.classList.remove('batting');cpuScoreEl.classList.remove('batting');
+    hc.classList.remove('playing','chasing','wicket-anim');
+    phaseEl.textContent='⚡ TOSS TIME';
+    commentaryEl.textContent='call it — odd or even?';commentaryEl.className='hc-commentary';
+    histEl.innerHTML='';targetBar.style.display='none';
+    if(rrrChip)rrrChip.style.display='none';
+    youHandEl.textContent='✊';cpuHandEl.textContent='✊';
+    youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';
+    updateStats();showTossButtons();isLocked=false;
+  }
+
+  function startBatting(){
+    phase='bat';hc.classList.add('playing');
+    youScoreEl.classList.add('batting');cpuScoreEl.classList.remove('batting');
+    phaseEl.textContent='🏏 YOU BAT';commentaryEl.textContent='pick a number!';commentaryEl.className='hc-commentary';
+    tossDiv.style.display='none';choiceDiv.style.display='none';btnsWrap.style.display='flex';
+    if(formatSelector)formatSelector.style.display='none';
+    youHandEl.textContent='✊';cpuHandEl.textContent='✊';youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';
+  }
+  function startBowling(){
+    phase='bowl';hc.classList.add('playing');
+    youScoreEl.classList.remove('batting');cpuScoreEl.classList.add('batting');
+    phaseEl.textContent='🎯 CPU BATS';commentaryEl.textContent='pick to bowl!';commentaryEl.className='hc-commentary';
+    tossDiv.style.display='none';choiceDiv.style.display='none';btnsWrap.style.display='flex';
+    if(formatSelector)formatSelector.style.display='none';
+    youHandEl.textContent='✊';cpuHandEl.textContent='✊';youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';
+  }
+
+  function checkOversLimit(){
+    if(maxOvers<=0)return false;
+    return totalBalls>=maxOvers*6;
+  }
+
+  function switchInnings(){
+    innings1Balls=totalBalls;
+    target=youScore;hc.classList.add('chasing');
+    showInningsBreak(youScore,totalBalls,'YOU',function(){
+      phaseEl.textContent='🎯 CPU CHASES '+(target+1);
+      targetBar.textContent='TARGET: '+(target+1)+' from '+(maxOvers||'∞')+' ov';
+      targetBar.style.display='block';commentaryEl.textContent='pick to bowl!';commentaryEl.className='hc-commentary';
+      histEl.innerHTML='';totalBalls=0;updateStats();phase='bowl';
+      youScoreEl.classList.remove('batting');cpuScoreEl.classList.add('batting');
+      youHandEl.textContent='✊';cpuHandEl.textContent='✊';youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';
+    });
+  }
+  function switchInningsBowlFirst(){
+    innings1Balls=totalBalls;
+    target=cpuScore;hc.classList.add('chasing');
+    showInningsBreak(cpuScore,totalBalls,'CPU',function(){
+      phaseEl.textContent='🏏 YOU CHASE '+(target+1);
+      targetBar.textContent='TARGET: '+(target+1)+' from '+(maxOvers||'∞')+' ov';
+      targetBar.style.display='block';commentaryEl.textContent='pick a number!';commentaryEl.className='hc-commentary';
+      histEl.innerHTML='';totalBalls=0;updateStats();phase='bat';
+      youScoreEl.classList.add('batting');cpuScoreEl.classList.remove('batting');
+      youHandEl.textContent='✊';cpuHandEl.textContent='✊';youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';
+    });
+  }
+
+  function endGame(won){
+    phase='done';hc.classList.remove('playing');isLocked=true;
+    if(won){wins++;streak=Math.max(0,streak)+1;sfxWin();}else{losses++;streak=Math.min(0,streak)-1;sfxLose();}
+    btnsWrap.style.display='none';
+    var streakEl=recEl.querySelector('.rec-streak');
+    if(streakEl)streakEl.textContent=streak>1?'🔥'+streak:'';
+    recEl.querySelector('.rec-w').textContent='W:'+wins;
+    recEl.querySelector('.rec-l').textContent='L:'+losses;
+    saveScore('hand_cricket',{won:won,you:youScore,cpu:cpuScore,overs:maxOvers,fours:fours,sixes:sixes});
+    setTimeout(function(){showEndgame(won);loadHistory();},600);
+  }
+
+  // Commentary
+  var batComm={0:['Defended solidly!','Solid block'],1:['nudged for a single','quick single!'],2:['pushed for a couple!','nice running — 2!'],3:['good running! 3 runs','hustled for three!'],4:['FOUR! 💥 cracked to the boundary!','FOUR! pierced the gap!','BOUNDARY! 🔥 what a shot!'],6:['SIX! 🚀 into the stands!','MASSIVE SIX! 💥 gone!','SIX! out of the park! 🏟️','MAXIMUM! 🎆']};
+  var bowlComm={0:['CPU blocks it'],1:['CPU nudges for one'],2:['CPU runs two'],3:['CPU runs three'],4:['CPU FOUR! 😤 through the gap!','CPU FOUR! races to the rope!'],6:['CPU SIX! 😱 massive hit!','CPU SIX! into the crowd!']};
+  function rndFrom(a){return a[Math.floor(Math.random()*a.length)];}
+
+  // Event handlers
+  tossDiv.addEventListener('click',function(ev){
+    ev.stopPropagation();ev.preventDefault();var btn=ev.target.closest('button');if(!btn)return;
+    var call=btn.dataset.call;
+    if(call==='restart'){showTossButtons();startToss();return;}
+    if(phase==='toss_call'){sfxTap();tossCall=call;phase='toss_num';phaseEl.textContent='⚡ TOSS · '+call.toUpperCase();commentaryEl.textContent='now show a number!';tossDiv.style.display='none';btnsWrap.style.display='flex';}
+  });
+  choiceDiv.addEventListener('click',function(ev){
+    ev.stopPropagation();ev.preventDefault();var btn=ev.target.closest('button');if(!btn)return;
+    sfxTap();choiceDiv.style.display='none';if(btn.dataset.pick==='bat')startBatting();else startBowling();
+  });
+
+  btns.forEach(function(btn){btn.addEventListener('click',function(ev){
+    ev.stopPropagation();ev.preventDefault();
+    if(isLocked)return;sfxTap();animateBall();
+    var pv=parseInt(this.dataset.v);var cv=(phase==='toss_num')?trueRandom():trueRandom();
+    youHandEl.textContent=HAND_EMOJI[pv];youHandEl.className='hc-hand you';revealHand(youHandEl);
+    cpuHandEl.textContent='❓';
+    isLocked=true;
+    setTimeout(function(){cpuHandEl.textContent=HAND_EMOJI[cv];cpuHandEl.className='hc-hand cpu';revealHand(cpuHandEl);},200);
+
+    if(phase==='toss_num'){
+      setTimeout(function(){
+        sfxToss();var sum=pv+cv;var sumType=(sum%2===0)?'even':'odd';
+        tossWonByPlayer=(sumType===tossCall);
+        phaseEl.textContent=pv+' + '+cv+' = '+sum+' ('+sumType+')';btnsWrap.style.display='none';
+        if(tossWonByPlayer){commentaryEl.textContent='🎉 You won the toss!';commentaryEl.className='hc-commentary win';setTimeout(function(){phase='toss_choice';commentaryEl.textContent='choose to bat or bowl';commentaryEl.className='hc-commentary';choiceDiv.style.display='flex';isLocked=false;},1500);}
+        else{commentaryEl.textContent='CPU won toss — CPU bats first';commentaryEl.className='hc-commentary out';setTimeout(function(){startBowling();isLocked=false;},2000);}
+      },250);return;
+    }
+    if(phase==='done'){startToss();return;}
+
+    setTimeout(function(){
+      if(phase==='bat'){
+        if(pv===0&&cv===0){youHandEl.classList.add('match');cpuHandEl.classList.add('match');sfxOut();showFlash('wicket');showBoundaryText('OUT!','show-out');animateStumps();commentaryEl.textContent='DEFENCE OUT! '+youScore+' runs';commentaryEl.className='hc-commentary out';addBall('out','W');isLocked=false;if(target>=0){youScore>target?endGame(true):endGame(false);}else{setTimeout(switchInnings,1800);}return;}
+        else if(pv===0&&cv!==0){youScore+=cv;youScoreEl.textContent=String(youScore);popScore(youScoreEl);commentaryEl.textContent='Defence beaten! +'+cv;commentaryEl.className='hc-commentary';addBall('run',String(cv));}
+        else if(pv===cv){youHandEl.classList.add('match');cpuHandEl.classList.add('match');sfxOut();showFlash('wicket');showBoundaryText('OUT!','show-out');animateStumps();commentaryEl.textContent='OUT! '+youScore+' runs';commentaryEl.className='hc-commentary out';addBall('out','W');isLocked=false;if(target>=0){youScore>target?endGame(true):endGame(false);}else{setTimeout(switchInnings,1800);}return;}
+        else{youScore+=pv;youScoreEl.textContent=String(youScore);popScore(youScoreEl);
+          if(pv===6){sfxSix();showFlash('six');showBoundaryText('SIX!','show-six');spawnFireworks();youHandEl.classList.add('six-glow');commentaryEl.textContent=rndFrom(batComm[6]);commentaryEl.className='hc-commentary boundary';addBall('six','6');setTimeout(function(){youHandEl.classList.remove('six-glow')},800);}
+          else if(pv===4){sfxFour();showFlash('four');showBoundaryText('FOUR!','show-four');youHandEl.classList.add('boundary-glow');commentaryEl.textContent=rndFrom(batComm[4]);commentaryEl.className='hc-commentary boundary';addBall('four','4');setTimeout(function(){youHandEl.classList.remove('boundary-glow')},600);}
+          else{commentaryEl.textContent=rndFrom(batComm[pv]||['+'+pv]);commentaryEl.className='hc-commentary';addBall('run',String(pv));}
+        }
+        if(target>=0&&youScore>target){isLocked=false;endGame(true);return;}
+        if(checkOversLimit()){isLocked=false;if(target>=0){youScore>target?endGame(true):endGame(false);}else{setTimeout(switchInnings,800);}return;}
+        updateChaseProgress();
+      }else if(phase==='bowl'){
+        if(cv===0&&pv===0){youHandEl.classList.add('match');cpuHandEl.classList.add('match');sfxOut();showFlash('wicket');showBoundaryText('OUT!','show-out');animateStumps();addBall('out','W');isLocked=false;if(target>=0){cpuScore>target?endGame(false):endGame(true);}else{commentaryEl.textContent='DEFENCE OUT! CPU: '+cpuScore;commentaryEl.className='hc-commentary win';setTimeout(switchInningsBowlFirst,1800);}return;}
+        else if(cv===0&&pv!==0){cpuScore+=pv;cpuScoreEl.textContent=String(cpuScore);popScore(cpuScoreEl);commentaryEl.textContent='CPU defence beaten! +'+pv;commentaryEl.className='hc-commentary';addBall('run',String(pv));}
+        else if(pv===cv){youHandEl.classList.add('match');cpuHandEl.classList.add('match');sfxOut();showFlash('wicket');showBoundaryText('OUT!','show-out');animateStumps();addBall('out','W');isLocked=false;if(target>=0){cpuScore>target?endGame(false):endGame(true);}else{commentaryEl.textContent='OUT! CPU: '+cpuScore;commentaryEl.className='hc-commentary win';setTimeout(switchInningsBowlFirst,1800);}return;}
+        else{cpuScore+=cv;cpuScoreEl.textContent=String(cpuScore);popScore(cpuScoreEl);
+          if(cv===6){sfxSix();showFlash('six');showBoundaryText('SIX!','show-six');spawnFireworks();cpuHandEl.classList.add('six-glow');commentaryEl.textContent=rndFrom(bowlComm[6]);commentaryEl.className='hc-commentary boundary';addBall('six','6');setTimeout(function(){cpuHandEl.classList.remove('six-glow')},800);}
+          else if(cv===4){sfxFour();showFlash('four');showBoundaryText('FOUR!','show-four');cpuHandEl.classList.add('boundary-glow');commentaryEl.textContent=rndFrom(bowlComm[4]);commentaryEl.className='hc-commentary boundary';addBall('four','4');setTimeout(function(){cpuHandEl.classList.remove('boundary-glow')},600);}
+          else{commentaryEl.textContent=rndFrom(bowlComm[cv]||['CPU +'+cv]);commentaryEl.className='hc-commentary';addBall('run',String(cv));}
+        }
+        if(cpuScore>target&&target>=0){isLocked=false;endGame(false);return;}
+        if(checkOversLimit()){isLocked=false;if(target>=0){cpuScore>target?endGame(false):endGame(true);}else{commentaryEl.textContent='Overs done! CPU: '+cpuScore;setTimeout(switchInningsBowlFirst,800);}return;}
+        updateChaseProgress();
+      }
+      isLocked=false;
+    },280);
+  });});
+};
+
 function ensureCompanionStickers(force){
   if(force){
     document.querySelectorAll('.zic-companion').forEach(el=>el.remove());
