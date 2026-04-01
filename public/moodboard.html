@@ -11365,6 +11365,16 @@ function ensureCompanionStickers(force){
           b.textContent=text;
           histEl.appendChild(b);
           totalBalls++;
+          // Track per-over runs for manhattan
+          var runs=parseInt(text)||0;
+          if(type==='four'){fourCount++;runs=4;}
+          if(type==='six'){sixCount++;runs=6;}
+          if(type!=='out')streak++;else streak=0;
+          if(streak>bestStreak)bestStreak=streak;
+          currentOverRuns+=runs;
+          if(totalBalls%6===0){overRuns.push(currentOverRuns);currentOverRuns=0;}
+          var batScore=(phase==='bat')?youScore:cpuScore;
+          if(batScore>highestScore)highestScore=batScore;
           updateStats();
         }
 
