@@ -12778,135 +12778,14 @@ window.closeProject=closeProject;
 function launchFunPanelCricket(){
   var container=document.getElementById('zp-fun-cricket-game');
   if(!container)return;
-  // If already launched, just show it
   if(container.dataset.init==='1'){container.style.display='';return;}
   container.dataset.init='1';
   container.style.display='';
-
-  // Inject HTML
-  container.innerHTML=`<div class="zc-hcricket" style="display:block;position:relative;width:100%"><div class="hc-boundary-flash"></div><div class="hc-boundary-text"></div><div class="hc-stadium"><div class="hc-flood"></div><div class="hc-flood"></div><div class="hc-crowd"></div><div class="hc-pitch"></div><div class="hc-title-bar"><span class="hc-title">✊ HAND CRICKET</span><span class="hc-live-badge">● LIVE</span></div><div class="hc-phase">⚡ toss time</div><div class="hc-scoreboard"><div class="hc-team"><div class="hc-team-label">YOU</div><div class="hc-team-score" data-who="you">0</div></div><div class="hc-vs">VS</div><div class="hc-team"><div class="hc-team-label">CPU</div><div class="hc-team-score" data-who="cpu">0</div></div></div><div class="hc-stats-bar"><span class="hc-stat-chip"><span class="hsc-icon">🏏</span> <span class="hsc-val" data-stat="overs">0.0</span> ov</span><span class="hc-stat-chip"><span class="hsc-icon">⚡</span> <span class="hsc-val" data-stat="balls">0</span> balls</span><span class="hc-stat-chip"><span class="hsc-icon">🎯</span> CRR <span class="hsc-val" data-stat="crr">0.00</span></span></div><div class="hc-target-bar"></div><div class="hc-chase-progress"><div class="hc-chase-fill"></div></div></div><div class="hc-arena"><div class="hc-hands"><div class="hc-hand-wrap"><div class="hc-hand-who">YOU</div><div class="hc-hand you">✊</div></div><div class="hc-hand-wrap"><div class="hc-hand-who">CPU</div><div class="hc-hand cpu">✊</div></div></div><div class="hc-commentary">call it — odd or even?</div></div><div class="hc-controls"><div class="hc-btns" style="display:none"><button class="hc-btn" data-v="0">✊<span class="hc-btn-label">DEF</span></button><button class="hc-btn" data-v="1">☝️<span class="hc-btn-label">1</span></button><button class="hc-btn" data-v="2">✌️<span class="hc-btn-label">2</span></button><button class="hc-btn" data-v="3">🤟<span class="hc-btn-label">3</span></button><button class="hc-btn" data-v="4">🖖<span class="hc-btn-label">4</span></button><button class="hc-btn" data-v="6">👍<span class="hc-btn-label">6</span></button></div><div class="hc-history"></div></div><div class="hc-footer"><div class="hc-record">W:0 L:0</div><div class="hc-leaderboard"><div class="hc-lb-title">📜 MATCH HISTORY</div></div></div></div>`;
-
-  // Init game logic (same as canvas version but scoped to this container)
+  container.innerHTML=window.__hcGameHTML({panel:true});
   var hc=container.querySelector('.zc-hcricket');
   if(!hc)return;
-  hc.style.pointerEvents='auto';
-  var VALID=[0,1,2,3,4,6];
-  var HAND_EMOJI={0:'✊',1:'☝️',2:'✌️',3:'🤟',4:'🖖',6:'👍'};
-  var GS_URL='https://secfpttvtutusedpzefm.supabase.co/rest/v1/game_scores';
-  var GS_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlY2ZwdHR2dHV0dXNlZHB6ZWZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4NTEwMDQsImV4cCI6MjA5MDQyNzAwNH0.zDZDAHi_7sowsltXEVXXzzAKX0fgbKWs4LvC0imWx5M';
-  var gsHeaders={'Content-Type':'application/json','apikey':GS_KEY,'Authorization':'Bearer '+GS_KEY,'Prefer':'return=representation'};
-  var phase='toss_call',tossCall='',tossWonByPlayer=false;
-  var youScore=0,cpuScore=0,wins=0,losses=0,target=-1;
-  var totalBalls=0;
-  function updateStats(){
-    var overs=Math.floor(totalBalls/6);var ballsInOver=totalBalls%6;
-    var batScore=(phase==='bat')?youScore:cpuScore;
-    var crr=totalBalls>0?(batScore/(totalBalls/6)).toFixed(2):'0.00';
-    var oversEl=hc.querySelector('[data-stat="overs"]');var ballsEl=hc.querySelector('[data-stat="balls"]');var crrEl=hc.querySelector('[data-stat="crr"]');
-    if(oversEl)oversEl.textContent=overs+'.'+ballsInOver;
-    if(ballsEl)ballsEl.textContent=String(totalBalls);
-    if(crrEl)crrEl.textContent=crr;
-  }
-  var phaseEl=hc.querySelector('.hc-phase');
-  var commentaryEl=hc.querySelector('.hc-commentary');
-  var histEl=hc.querySelector('.hc-history');
-  var recEl=hc.querySelector('.hc-record');
-  var lbEl=hc.querySelector('.hc-leaderboard');
-  var youScoreEl=hc.querySelector('[data-who="you"]');
-  var cpuScoreEl=hc.querySelector('[data-who="cpu"]');
-  var youHandEl=hc.querySelector('.hc-hand.you');
-  var cpuHandEl=hc.querySelector('.hc-hand.cpu');
-  var btns=hc.querySelectorAll('.hc-btn');
-  var btnsWrap=hc.querySelector('.hc-btns');
-  var flashEl=hc.querySelector('.hc-boundary-flash');
-  var boundaryTextEl=hc.querySelector('.hc-boundary-text');
-  var targetBar=hc.querySelector('.hc-target-bar');
-
-  var audioCtx=null;
-  function getAudio(){if(!audioCtx)try{audioCtx=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}return audioCtx;}
-  function playTone(freq,dur,type,vol){var ctx=getAudio();if(!ctx)return;var o=ctx.createOscillator(),g=ctx.createGain();o.type=type||'sine';o.frequency.value=freq;g.gain.setValueAtTime(vol||0.15,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+dur);}
-  function sfxTap(){playTone(800,0.08,'square',0.08);}
-  function sfxFour(){playTone(523,0.1,'sine',0.12);setTimeout(function(){playTone(659,0.1,'sine',0.12)},80);setTimeout(function(){playTone(784,0.15,'sine',0.15)},160);}
-  function sfxSix(){playTone(523,0.08,'sine',0.15);setTimeout(function(){playTone(784,0.08,'sine',0.15)},60);setTimeout(function(){playTone(1047,0.25,'sine',0.18)},120);}
-  function sfxOut(){playTone(300,0.15,'sawtooth',0.1);setTimeout(function(){playTone(200,0.3,'sawtooth',0.12)},100);}
-  function sfxWin(){[523,659,784,1047].forEach(function(f,i){setTimeout(function(){playTone(f,0.15,'sine',0.12)},i*100)});}
-  function sfxLose(){playTone(400,0.2,'sawtooth',0.1);setTimeout(function(){playTone(300,0.2,'sawtooth',0.1)},150);setTimeout(function(){playTone(200,0.4,'sawtooth',0.12)},300);}
-  function sfxNoball(){playTone(600,0.1,'triangle',0.1);setTimeout(function(){playTone(700,0.1,'triangle',0.1)},80);}
-  function sfxToss(){playTone(1000,0.06,'sine',0.08);setTimeout(function(){playTone(1200,0.06,'sine',0.08)},60);}
-
-  function saveScore(gt,data){fetch(GS_URL,{method:'POST',headers:gsHeaders,body:JSON.stringify({game_type:gt,score_data:data})}).catch(function(){});}
-  function loadHistory(){
-    fetch(GS_URL+'?game_type=eq.hand_cricket&order=played_at.desc&limit=10',{headers:{'apikey':GS_KEY,'Authorization':'Bearer '+GS_KEY}})
-      .then(function(r){return r.json()}).then(function(rows){
-        if(!Array.isArray(rows)||!rows.length)return;
-        var html='<div class="hc-lb-title">📜 MATCH HISTORY</div>';
-        rows.forEach(function(r){var d=r.score_data||{};var dt=new Date(r.played_at);var ds=dt.toLocaleDateString('en-IN',{day:'numeric',month:'short'});html+='<div class="hc-lb-row"><span class="lb-result '+(d.won?'win':'loss')+'">'+(d.won?'W':'L')+'</span><span class="lb-scores">You:'+d.you+' CPU:'+d.cpu+'</span><span class="lb-date">'+ds+'</span></div>';});
-        var w=rows.filter(function(r){return r.score_data&&r.score_data.won}).length;
-        var l=rows.filter(function(r){return r.score_data&&!r.score_data.won}).length;
-        wins=w;losses=l;recEl.textContent='W:'+w+' L:'+l;lbEl.innerHTML=html;
-      }).catch(function(){});
-  }
-  loadHistory();
-
-  function trueRandom(){var arr=new Uint32Array(1);if(window.crypto&&window.crypto.getRandomValues)window.crypto.getRandomValues(arr);else arr[0]=Math.floor(Math.random()*4294967296);return VALID[arr[0]%VALID.length];}
-
-  function cpuPick(playerVal){return trueRandom();}
-  function addBall(type,text){var b=document.createElement('span');b.className='hc-ball '+type;b.textContent=text;histEl.appendChild(b);totalBalls++;updateStats();}
-  function showFlash(type){flashEl.className='hc-boundary-flash';void flashEl.offsetWidth;flashEl.classList.add(type);}
-  function showBoundaryText(text,type){boundaryTextEl.textContent=text;boundaryTextEl.className='hc-boundary-text';void boundaryTextEl.offsetWidth;boundaryTextEl.classList.add(type);}
-  function popScore(el){el.classList.remove('score-pop');void el.offsetWidth;el.classList.add('score-pop');}
-  function revealHand(handEl){handEl.classList.add('reveal');setTimeout(function(){handEl.classList.remove('reveal')},500);}
-  function spawnFireworks(){var colors=['#FFD700','#FF6D00','#FFAB00','#FFF176','#4CAF50','#FF1744'];for(var i=0;i<16;i++){var fw=document.createElement('div');fw.className='hc-firework';var angle=Math.random()*Math.PI*2;var dist=40+Math.random()*80;fw.style.left='50%';fw.style.top='30%';fw.style.background=colors[Math.floor(Math.random()*colors.length)];fw.style.setProperty('--fw-tx',Math.cos(angle)*dist+'px');fw.style.setProperty('--fw-ty',Math.sin(angle)*dist+'px');fw.style.setProperty('--fw-dur',(0.5+Math.random()*0.6)+'s');fw.style.width=(3+Math.random()*4)+'px';fw.style.height=fw.style.width;hc.appendChild(fw);(function(el){setTimeout(function(){el.remove()},1200)})(fw);}}
-  function updateChaseProgress(){var fill=hc.querySelector('.hc-chase-fill');if(!fill||target<=0)return;var batScore=(phase==='bat')?youScore:cpuScore;var pct=Math.min(100,Math.round((batScore/target)*100));fill.style.width=pct+'%';if(pct>75)fill.style.background='linear-gradient(90deg,#4CAF50,#FFD700)';else if(pct>50)fill.style.background='linear-gradient(90deg,#4CAF50,#8BC34A)';}
-
-  var tossDiv=document.createElement('div');tossDiv.className='hc-choice-btns';
-  tossDiv.innerHTML='<button class="hc-choice-btn bat" data-call="odd">ODD</button><button class="hc-choice-btn bowl" data-call="even">EVEN</button>';
-  hc.querySelector('.hc-arena').appendChild(tossDiv);
-  var choiceDiv=document.createElement('div');choiceDiv.className='hc-choice-btns';choiceDiv.style.display='none';
-  choiceDiv.innerHTML='<button class="hc-choice-btn bat" data-pick="bat">🏏 BAT</button><button class="hc-choice-btn bowl" data-pick="bowl">🎯 BOWL</button>';
-  hc.querySelector('.hc-arena').appendChild(choiceDiv);
-
-  function showTossButtons(){tossDiv.style.display='flex';tossDiv.innerHTML='<button class="hc-choice-btn bat" data-call="odd">ODD</button><button class="hc-choice-btn bowl" data-call="even">EVEN</button>';choiceDiv.style.display='none';btnsWrap.style.display='none';}
-  function startToss(){phase='toss_call';tossCall='';tossWonByPlayer=false;youScore=0;cpuScore=0;target=-1;totalBalls=0;youScoreEl.textContent='0';cpuScoreEl.textContent='0';youScoreEl.classList.remove('batting');cpuScoreEl.classList.remove('batting');hc.classList.remove('playing','chasing');phaseEl.textContent='⚡ TOSS TIME';commentaryEl.textContent='call it — odd or even?';commentaryEl.className='hc-commentary';histEl.innerHTML='';targetBar.style.display='none';youHandEl.textContent='✊';cpuHandEl.textContent='✊';youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';updateStats();showTossButtons();}
-  function startBatting(){phase='bat';hc.classList.add('playing');youScoreEl.classList.add('batting');cpuScoreEl.classList.remove('batting');phaseEl.textContent='🏏 YOU BAT';commentaryEl.textContent='pick a number to bat!';commentaryEl.className='hc-commentary';tossDiv.style.display='none';choiceDiv.style.display='none';btnsWrap.style.display='flex';youHandEl.textContent='✊';cpuHandEl.textContent='✊';youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';}
-  function startBowling(){phase='bowl';hc.classList.add('playing');youScoreEl.classList.remove('batting');cpuScoreEl.classList.add('batting');phaseEl.textContent='🎯 CPU BATS · YOU BOWL';commentaryEl.textContent='pick a number to bowl!';commentaryEl.className='hc-commentary';tossDiv.style.display='none';choiceDiv.style.display='none';btnsWrap.style.display='flex';youHandEl.textContent='✊';cpuHandEl.textContent='✊';youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';}
-  function switchInnings(){target=youScore;hc.classList.add('chasing');phaseEl.textContent='🎯 CPU CHASES '+(target+1);targetBar.textContent='TARGET: '+(target+1);targetBar.style.display='block';commentaryEl.textContent='pick to bowl!';commentaryEl.className='hc-commentary';histEl.innerHTML='';totalBalls=0;updateStats();phase='bowl';youScoreEl.classList.remove('batting');cpuScoreEl.classList.add('batting');youHandEl.textContent='✊';cpuHandEl.textContent='✊';youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';}
-  function switchInningsBowlFirst(){target=cpuScore;hc.classList.add('chasing');phaseEl.textContent='🏏 YOU CHASE '+(target+1);targetBar.textContent='TARGET: '+(target+1);targetBar.style.display='block';commentaryEl.textContent='pick a number to bat!';commentaryEl.className='hc-commentary';histEl.innerHTML='';totalBalls=0;updateStats();phase='bat';youScoreEl.classList.add('batting');cpuScoreEl.classList.remove('batting');youHandEl.textContent='✊';cpuHandEl.textContent='✊';youHandEl.className='hc-hand you';cpuHandEl.className='hc-hand cpu';}
-  function endGame(won){phase='done';hc.classList.remove('playing');if(won){wins++;commentaryEl.textContent='🏆 YOU WIN!';commentaryEl.className='hc-commentary win';sfxWin();}else{losses++;commentaryEl.textContent='💀 CPU WINS!';commentaryEl.className='hc-commentary out';sfxLose();}recEl.textContent='W:'+wins+' L:'+losses;btnsWrap.style.display='none';saveScore('hand_cricket',{won:won,you:youScore,cpu:cpuScore});setTimeout(function(){loadHistory();commentaryEl.textContent+=' · tap NEW MATCH';tossDiv.style.display='flex';tossDiv.innerHTML='<button class="hc-choice-btn bat" data-call="restart">🏏 NEW MATCH</button>';},1800);}
-  var batComm={1:['nudged for a single','quick single taken'],2:['pushed for a couple','excellent running — 2!'],3:['good running! 3 runs','hustled for three'],4:['FOUR! 💥 cracked to the boundary!','FOUR! pierced the gap!','BOUNDARY! 🔥'],6:['SIX! 🚀 into the stands!','MASSIVE SIX! 💥','SIX! out of the park! 🏟️']};
-  var bowlComm={1:['CPU singles'],2:['CPU runs two'],3:['CPU runs three'],4:['CPU FOUR! 😤 through the gap!','CPU FOUR! races to the rope!'],6:['CPU SIX! 😱 massive hit!','CPU SIX! into the crowd!']};
-  function rndFrom(a){return a[Math.floor(Math.random()*a.length)];}
-
-  tossDiv.addEventListener('click',function(ev){ev.stopPropagation();ev.preventDefault();var btn=ev.target.closest('button');if(!btn)return;var call=btn.dataset.call;if(call==='restart'){showTossButtons();startToss();return;}if(phase==='toss_call'){sfxTap();tossCall=call;phase='toss_num';phaseEl.textContent='⚡ TOSS · '+call.toUpperCase();commentaryEl.textContent='now show a number!';tossDiv.style.display='none';btnsWrap.style.display='flex';}});
-  choiceDiv.addEventListener('click',function(ev){ev.stopPropagation();ev.preventDefault();var btn=ev.target.closest('button');if(!btn)return;sfxTap();choiceDiv.style.display='none';if(btn.dataset.pick==='bat')startBatting();else startBowling();});
-
-  btns.forEach(function(btn){btn.addEventListener('click',function(ev){
-    ev.stopPropagation();ev.preventDefault();sfxTap();
-    var pv=parseInt(this.dataset.v),cv=(phase==='toss_num')?trueRandom():cpuPick(pv);
-    youHandEl.textContent=HAND_EMOJI[pv];youHandEl.className='hc-hand you';revealHand(youHandEl);
-    cpuHandEl.textContent='❓';setTimeout(function(){cpuHandEl.textContent=HAND_EMOJI[cv];cpuHandEl.className='hc-hand cpu';revealHand(cpuHandEl);},200);
-    if(phase==='toss_num'){setTimeout(function(){sfxToss();var sum=pv+cv;var sumType=(sum%2===0)?'even':'odd';tossWonByPlayer=(sumType===tossCall);phaseEl.textContent=pv+' + '+cv+' = '+sum+' ('+sumType+')';btnsWrap.style.display='none';if(tossWonByPlayer){commentaryEl.textContent='🎉 You won the toss!';commentaryEl.className='hc-commentary win';setTimeout(function(){phase='toss_choice';commentaryEl.textContent='choose to bat or bowl';commentaryEl.className='hc-commentary';choiceDiv.style.display='flex';},1500);}else{commentaryEl.textContent='CPU won toss! CPU bats first';commentaryEl.className='hc-commentary out';setTimeout(function(){startBowling();},2000);}},250);return;}
-    if(phase==='done'){startToss();return;}
-    setTimeout(function(){
-      if(phase==='bat'){
-        if(pv===0&&cv===0){youHandEl.classList.add('match');cpuHandEl.classList.add('match');sfxOut();showFlash('wicket');showBoundaryText('OUT!','show-out');commentaryEl.textContent='DEFENCE OUT! You scored '+youScore;commentaryEl.className='hc-commentary out';addBall('out','W');if(target>=0){youScore>target?endGame(true):endGame(false);}else{setTimeout(function(){switchInnings();},1800);}return;}
-        else if(pv===0){youScore+=cv;youScoreEl.textContent=String(youScore);popScore(youScoreEl);commentaryEl.textContent='Defence beaten! +'+cv+' runs';commentaryEl.className='hc-commentary';addBall('run',String(cv));}
-        else if(pv===cv){youHandEl.classList.add('match');cpuHandEl.classList.add('match');sfxOut();showFlash('wicket');showBoundaryText('OUT!','show-out');commentaryEl.textContent='OUT! You scored '+youScore;commentaryEl.className='hc-commentary out';addBall('out','W');if(target>=0){youScore>target?endGame(true):endGame(false);}else{setTimeout(function(){switchInnings();},1800);}return;}
-        else{youScore+=pv;youScoreEl.textContent=String(youScore);popScore(youScoreEl);if(pv===6){sfxSix();showFlash('six');showBoundaryText('SIX!','show-six');spawnFireworks();youHandEl.classList.add('six-glow');commentaryEl.textContent=rndFrom(batComm[6]);commentaryEl.className='hc-commentary boundary';addBall('six','6');setTimeout(function(){youHandEl.classList.remove('six-glow')},800);}else if(pv===4){sfxFour();showFlash('four');showBoundaryText('FOUR!','show-four');youHandEl.classList.add('boundary-glow');commentaryEl.textContent=rndFrom(batComm[4]);commentaryEl.className='hc-commentary boundary';addBall('four','4');setTimeout(function(){youHandEl.classList.remove('boundary-glow')},600);}else{commentaryEl.textContent=rndFrom(batComm[pv]||['+'+pv]);commentaryEl.className='hc-commentary';addBall('run',String(pv));}}
-        if(target>=0&&youScore>target){endGame(true);return;}
-        updateChaseProgress();
-      }else if(phase==='bowl'){
-        if(cv===0&&pv===0){youHandEl.classList.add('match');cpuHandEl.classList.add('match');sfxOut();showFlash('wicket');showBoundaryText('OUT!','show-out');addBall('out','W');if(target>=0){cpuScore>target?endGame(false):endGame(true);}else{commentaryEl.textContent='DEFENCE OUT! CPU scored '+cpuScore;commentaryEl.className='hc-commentary win';setTimeout(function(){switchInningsBowlFirst();},1800);}return;}
-        else if(cv===0){cpuScore+=pv;cpuScoreEl.textContent=String(cpuScore);popScore(cpuScoreEl);commentaryEl.textContent='CPU defence beaten! +'+pv+' runs';commentaryEl.className='hc-commentary';addBall('run',String(pv));}
-        else if(pv===cv){youHandEl.classList.add('match');cpuHandEl.classList.add('match');sfxOut();showFlash('wicket');showBoundaryText('OUT!','show-out');addBall('out','W');if(target>=0){cpuScore>target?endGame(false):endGame(true);}else{commentaryEl.textContent='OUT! CPU scored '+cpuScore;commentaryEl.className='hc-commentary win';setTimeout(function(){switchInningsBowlFirst();},1800);}return;}
-        else{cpuScore+=cv;cpuScoreEl.textContent=String(cpuScore);popScore(cpuScoreEl);if(cv===6){sfxSix();showFlash('six');showBoundaryText('SIX!','show-six');spawnFireworks();cpuHandEl.classList.add('six-glow');commentaryEl.textContent=rndFrom(bowlComm[6]);commentaryEl.className='hc-commentary boundary';addBall('six','6');setTimeout(function(){cpuHandEl.classList.remove('six-glow')},800);}else if(cv===4){sfxFour();showFlash('four');showBoundaryText('FOUR!','show-four');cpuHandEl.classList.add('boundary-glow');commentaryEl.textContent=rndFrom(bowlComm[4]);commentaryEl.className='hc-commentary boundary';addBall('four','4');setTimeout(function(){cpuHandEl.classList.remove('boundary-glow')},600);}else{commentaryEl.textContent=rndFrom(bowlComm[cv]||['CPU +'+cv]);commentaryEl.className='hc-commentary';addBall('run',String(cv));}}
-        if(cpuScore>target&&target>=0){endGame(false);return;}
-        updateChaseProgress();
-      }
-    },250);
-  });});
+  window.__initHCGame(hc);
 }
-window.launchFunPanelCricket=launchFunPanelCricket;
 </script>
 
 </body></html>
