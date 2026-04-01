@@ -42,7 +42,6 @@ export default defineConfig(({ mode }) => ({
     reportCompressedSize: false,
   },
   optimizeDeps: {
-    force: true,
     include: [
       "react",
       "react-dom",
