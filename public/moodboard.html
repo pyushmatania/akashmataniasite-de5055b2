@@ -8504,16 +8504,20 @@ function safeTimeout(fn,ms){
 function cancelAllTimers(){_activeTimers.forEach(id=>clearTimeout(id));_activeTimers.clear()}
 
 // Pause background work when tab/app is hidden (prevents crashy timer build-up on mobile)
+// Also freezes all CSS animations via class toggle for instant GPU memory recovery
 (function(){
   let wasHidden=false;
   document.addEventListener('visibilitychange',function(){
     if(document.hidden){
       wasHidden=true;
+      document.body.classList.add('tab-hidden');
+      cancelAllTimers();
       try{ if(window._mapScrollTimer){ clearTimeout(window._mapScrollTimer); window._mapScrollTimer=null; } }catch(e){}
       try{ if(window._walkSyncTimers){ window._walkSyncTimers.forEach(clearTimeout); window._walkSyncTimers=[]; } }catch(e){}
     }else if(wasHidden){
       wasHidden=false;
-      try{ if(typeof updMap==='function') updMap(); }catch(e){}
+      document.body.classList.remove('tab-hidden');
+      try{ if(typeof updMap==='function') requestAnimationFrame(updMap); }catch(e){}
     }
   },{passive:true});
 })();
