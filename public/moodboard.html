@@ -964,9 +964,41 @@ body.dark-mode .zone-intro-creative .zic-subtitle{color:rgba(255,255,255,0.45)!i
 body.dark-mode .intro-card{
   background:rgba(15,12,25,0.92)!important;
   border-color:rgba(201,169,110,0.18)!important;
-  box-shadow:0 12px 48px rgba(0,0,0,0.4)!important;
+  box-shadow:0 12px 48px rgba(0,0,0,0.4),0 0 0 1px rgba(201,169,110,0.08)!important;
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
 }
+/* Intro card — name & text */
+body.dark-mode .intro-card .intro-name{
+  background:linear-gradient(135deg,#fff 20%,#C9A96E 50%,#CE93D8 80%)!important;
+  -webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important;
+}
+body.dark-mode .intro-card .intro-name .hl-name{
+  background:linear-gradient(135deg,#C9A96E 0%,#CE93D8 100%)!important;
+  -webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important;
+}
+body.dark-mode .intro-card .intro-tagline{color:rgba(255,255,255,0.5)!important}
+body.dark-mode .intro-card .photo-caption{
+  background:rgba(20,16,30,0.9)!important;
+  border-color:rgba(201,169,110,0.25)!important;
+  color:#C9A96E!important;
+}
+body.dark-mode .intro-card .intro-photo{
+  box-shadow:0 0 0 3px rgba(10,8,18,0.8),0 0 0 5px rgba(201,169,110,0.5),0 0 0 8px rgba(206,147,216,0.15),0 10px 40px rgba(0,0,0,0.4)!important;
+}
+body.dark-mode .intro-card .intro-role{
+  background:rgba(201,169,110,0.1)!important;
+  border-color:rgba(201,169,110,0.25)!important;
+  color:rgba(255,255,255,0.7)!important;
+}
+body.dark-mode .intro-card .intro-role:hover{
+  background:rgba(201,169,110,0.18)!important;
+  border-color:#C9A96E!important;
+  color:#C9A96E!important;
+}
+body.dark-mode .intro-card .gc-welcome{color:#C9A96E!important}
+body.dark-mode .intro-card .gc-divider{background:linear-gradient(90deg,transparent,rgba(201,169,110,0.2),transparent)!important}
+body.dark-mode .intro-card .gc-divider::after{background:rgba(15,12,25,0.95)!important;color:#C9A96E!important}
+body.dark-mode .intro-card .gc-howto-title{color:rgba(255,255,255,0.4)!important}
 body.dark-mode .intro-card .gc-step{
   background:rgba(20,16,30,0.6)!important;
   border-color:rgba(201,169,110,0.12)!important;
@@ -974,6 +1006,11 @@ body.dark-mode .intro-card .gc-step{
 body.dark-mode .intro-card .gc-step:hover{
   background:rgba(30,24,45,0.8)!important;
   border-color:rgba(201,169,110,0.25)!important;
+  box-shadow:0 4px 16px rgba(201,169,110,0.08)!important;
+}
+body.dark-mode .intro-card .gc-step-icon{
+  background:linear-gradient(135deg,rgba(201,169,110,0.15),rgba(206,147,216,0.1))!important;
+  border-color:rgba(201,169,110,0.2)!important;
 }
 body.dark-mode .intro-card .gc-step-label{color:rgba(255,255,255,0.85)!important}
 body.dark-mode .intro-card .gc-step-desc{color:rgba(255,255,255,0.4)!important}
@@ -987,7 +1024,145 @@ body.dark-mode .intro-card .gc-dot{
   border-color:rgba(201,169,110,0.25)!important;
   background:rgba(20,16,30,0.6)!important;
 }
+body.dark-mode .intro-card .gc-dot.active{
+  background:linear-gradient(135deg,#C9A96E,#CE93D8)!important;
+  box-shadow:0 0 8px rgba(201,169,110,0.4)!important;
+}
+body.dark-mode .intro-card .gc-dot-label{color:rgba(255,255,255,0.3)!important}
 body.dark-mode .intro-card .gc-footer-quip{color:rgba(255,255,255,0.3)!important}
+body.dark-mode .intro-card .gc-cta-btn{
+  background:linear-gradient(135deg,#C9A96E,#CE93D8)!important;
+  color:#0a0812!important;
+  box-shadow:0 6px 20px rgba(201,169,110,0.3)!important;
+}
+
+/* ══════════════════════════════════════════════════════
+   DARK MODE PREMIUM: Gradient Text, Glow & Sparkles
+   ══════════════════════════════════════════════════════ */
+
+/* ── 1. GRADIENT TEXT — Splash screen palette on key elements ── */
+@keyframes dmGradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+/* Zone titles */
+body.dark-mode .zone-intro-creative .zic-title{
+  background:linear-gradient(135deg,#C9A96E 0%,#CE93D8 40%,#C9A96E 80%)!important;
+  background-size:200% auto!important;
+  -webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important;
+  animation:dmGradientShift 4s ease infinite!important;
+}
+body.dark-mode .zic-fun .zic-title{
+  background:linear-gradient(135deg,#EF5350 0%,#C9A96E 40%,#CE93D8 70%,#EF5350 100%)!important;
+  background-size:200% auto!important;
+  -webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important;
+  animation:dmGradientShift 4s ease infinite!important;
+}
+body.dark-mode .zic-hobby .zic-title{
+  background:linear-gradient(135deg,#FFA726 0%,#C9A96E 40%,#CE93D8 70%,#FFA726 100%)!important;
+  background-size:200% auto!important;
+  -webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important;
+  animation:dmGradientShift 4s ease infinite!important;
+}
+
+/* Section headings in panels */
+body.dark-mode .about-panel h2,
+body.dark-mode .work-panel .section-label,
+body.dark-mode .zp-zone-chip{
+  background:linear-gradient(135deg,#C9A96E,#CE93D8)!important;
+  -webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important;
+}
+
+/* Bottom nav active label */
+body.dark-mode .bottom-nav a.active .nav-label{
+  background:linear-gradient(135deg,#C9A96E,#CE93D8)!important;
+  -webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important;
+}
+
+/* ── 2. SUBTLE GLOW BORDERS — Gold/purple hover glow ── */
+body.dark-mode .sticker:hover{
+  filter:drop-shadow(0 0 8px rgba(201,169,110,0.2)) drop-shadow(0 0 16px rgba(206,147,216,0.12))!important;
+}
+body.dark-mode .zone-intro-creative:hover{
+  box-shadow:0 12px 48px rgba(0,0,0,0.4),0 0 0 1px rgba(201,169,110,0.15),0 0 24px rgba(201,169,110,0.06),0 0 48px rgba(206,147,216,0.04)!important;
+}
+body.dark-mode .intro-card:hover{
+  box-shadow:0 12px 48px rgba(0,0,0,0.4),0 0 0 1px rgba(201,169,110,0.2),0 0 32px rgba(201,169,110,0.08)!important;
+}
+
+/* ── 3. ANIMATED GRADIENT ACCENT LINE under key headings ── */
+@keyframes dmAccentSweep{0%{background-position:-200% 0}100%{background-position:200% 0}}
+
+body.dark-mode .zone-intro-creative .zic-title::after{
+  content:''!important;display:block!important;
+  width:60%!important;height:2px!important;margin-top:6px!important;
+  background:linear-gradient(90deg,transparent,#C9A96E,#CE93D8,#C9A96E,transparent)!important;
+  background-size:200% 100%!important;
+  animation:dmAccentSweep 3s linear infinite!important;
+  border-radius:2px!important;
+}
+body.dark-mode .intro-card .gc-howto-title::after{
+  content:''!important;display:block!important;
+  width:40%!important;height:1.5px!important;margin-top:4px!important;
+  background:linear-gradient(90deg,transparent,#C9A96E,#CE93D8,transparent)!important;
+  background-size:200% 100%!important;
+  animation:dmAccentSweep 3s linear infinite!important;
+}
+
+/* ── 4. GRADIENT CTA BUTTONS ── */
+body.dark-mode .gc-cta-btn,
+body.dark-mode .zic-explore-cta,
+body.dark-mode .zone-intro-creative button{
+  background:linear-gradient(135deg,#C9A96E,#CE93D8)!important;
+  color:#0a0812!important;
+  border:none!important;
+  box-shadow:0 4px 16px rgba(201,169,110,0.25)!important;
+}
+body.dark-mode .gc-cta-btn:hover,
+body.dark-mode .zic-explore-cta:hover{
+  box-shadow:0 6px 24px rgba(201,169,110,0.35),0 0 20px rgba(206,147,216,0.15)!important;
+}
+
+/* ── 5. FLOATING SPARKLE PARTICLES ── */
+@keyframes dmSparkleFloat1{
+  0%{transform:translate(0,0) scale(1);opacity:0}
+  10%{opacity:0.8}
+  90%{opacity:0.8}
+  100%{transform:translate(120px,-180px) scale(0.3);opacity:0}
+}
+@keyframes dmSparkleFloat2{
+  0%{transform:translate(0,0) scale(1);opacity:0}
+  10%{opacity:0.6}
+  90%{opacity:0.6}
+  100%{transform:translate(-100px,-150px) scale(0.2);opacity:0}
+}
+@keyframes dmSparkleFloat3{
+  0%{transform:translate(0,0) scale(1);opacity:0}
+  10%{opacity:0.7}
+  90%{opacity:0.7}
+  100%{transform:translate(80px,-200px) scale(0.4);opacity:0}
+}
+@keyframes dmSparklePulse{0%,100%{opacity:0.4;transform:scale(1)}50%{opacity:1;transform:scale(1.5)}}
+
+body.dark-mode .canvas::after{
+  content:''!important;
+  position:absolute!important;top:0!important;left:0!important;right:0!important;bottom:0!important;
+  pointer-events:none!important;z-index:1!important;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, #C9A96E 50%, transparent 100%),
+    radial-gradient(1px 1px at 25% 35%, #CE93D8 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 40% 65%, #C9A96E 50%, transparent 100%),
+    radial-gradient(1px 1px at 55% 25%, #CE93D8 50%, transparent 100%),
+    radial-gradient(1px 1px at 70% 75%, #C9A96E 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 85% 45%, #CE93D8 50%, transparent 100%),
+    radial-gradient(1px 1px at 15% 80%, #C9A96E 50%, transparent 100%),
+    radial-gradient(1px 1px at 60% 90%, #CE93D8 50%, transparent 100%),
+    radial-gradient(1px 1px at 90% 10%, #C9A96E 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 35% 50%, #CE93D8 50%, transparent 100%),
+    radial-gradient(1px 1px at 5% 55%, #C9A96E 50%, transparent 100%),
+    radial-gradient(1px 1px at 75% 5%, #CE93D8 50%, transparent 100%)!important;
+  background-size:var(--world-size) var(--world-size)!important;
+  animation:dmSparklePulse 4s ease-in-out infinite!important;
+  opacity:0.5!important;
+}
 
 /* Highlight styles */
 body.dark-mode .sticker-highlight .hl{
