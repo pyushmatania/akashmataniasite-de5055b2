@@ -716,6 +716,8 @@ body.safety-mode .doodle-stars .star-3{animation:none!important}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}
 }
+/* Freeze all animations when tab is hidden — recovers GPU memory */
+body.tab-hidden *,body.tab-hidden *::before,body.tab-hidden *::after{animation-play-state:paused!important;transition:none!important}
 
 /* Runtime perf mode during active pan/drag: keep visuals identical at rest, but
    temporarily reduce expensive effects while the user is actively interacting. */
