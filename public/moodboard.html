@@ -103,18 +103,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker-drag-handle{position:absolute;top:8px;right:8px;z-index:100;width:32px;height:32px;border-radius:8px;background:rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;transition:all 0.2s;opacity:0.5}
 .sticker-drag-handle:hover{opacity:1;background:rgba(0,0,0,0.1);transform:scale(1.1)}
 .sticker-drag-handle:active{cursor:grabbing;opacity:1;transform:scale(0.95)}
-
-/* ===== ADMIN DELETE MODE ===== */
-.delete-mode-active .sticker{position:relative;outline:2px dashed rgba(229,57,53,0.35);outline-offset:4px;border-radius:12px}
-.sticker .delete-x{display:none;position:absolute;top:-10px;right:-10px;z-index:10000;width:28px;height:28px;border-radius:50%;background:#E53935;color:#fff;border:2px solid #fff;font-size:0.85rem;font-weight:900;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(229,57,53,0.4);transition:transform 0.15s;line-height:1;font-family:var(--font-fun)}
-.sticker .delete-x:hover{transform:scale(1.2);background:#C62828}
-.sticker .delete-x:active{transform:scale(0.9)}
-.delete-mode-active .sticker .delete-x{display:flex}
-.delete-mode-active .sticker{cursor:default!important}
-.delete-mode-btn{display:flex;align-items:center;gap:6px;width:100%;padding:10px 14px;border:2px dashed rgba(229,57,53,0.4);border-radius:10px;background:rgba(229,57,53,0.08);color:#E53935;font-family:var(--font-fun);font-size:0.72rem;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:10px}
-.delete-mode-btn:hover{background:rgba(229,57,53,0.15);border-color:rgba(229,57,53,0.6)}
-.delete-mode-btn.active{background:rgba(229,57,53,0.2);border-color:#E53935;box-shadow:0 0 12px rgba(229,57,53,0.3)}
-.delete-mode-btn .dm-count{margin-left:auto;background:rgba(229,57,53,0.15);padding:2px 8px;border-radius:8px;font-size:0.65rem}
 .sticker-drag-handle svg{width:16px;height:16px;color:var(--text3)}
 .sticker.has-drag-handle{cursor:default!important}
 .sticker.has-drag-handle:active{cursor:default!important}
@@ -2590,7 +2578,6 @@ body.map-expanded .scroll-counter{display:none!important}
     <button class="save-layout-btn" id="saveLayoutBtn" onclick="window.saveLayout()">💾 Save Layout</button>
   </div>
   <div class="rearrange-note">Save locks current arrangement</div>
-  <button class="delete-mode-btn" id="deleteModeBtn" onclick="toggleDeleteMode()">🗑 Delete Mode <span class="dm-count" id="deleteCount">0</span></button>
   <div class="rearrange-note" id="layoutSyncStatus" style="opacity:0.7;margin-top:2px;font-size:0.58rem"></div>
   <div class="board-stats" id="boardStats">
     <div class="stats-total">— <span id="statsTotal">…</span> items on board —</div>
@@ -10768,7 +10755,6 @@ async function bootstrapMap(forceRescan){
     ensureMapData(forceRescan);
     drawMap();
     mapBootstrapped=true;
-    if(typeof window.applyDeletedItems==='function')window.applyDeletedItems();
     initBoardStats();
   }catch(e){
     console.error('Init error:',e)
@@ -12066,108 +12052,13 @@ function ekPick(el,e){
   const REST_BASE=`${SUPABASE_URL}/rest/v1`;
   const LAYOUT_FN_URL=`${SUPABASE_URL}/functions/v1/moodboard-layout`;
   const LOCAL_LAYOUT_KEY='moodboard_layout_backup_v5';
-  const LOCAL_DELETED_KEY='moodboard_deleted_items_v1';
   const LAYOUT_VERSION=5; // bump this to force all clients back to default HP positions
   const sb=(window.supabase&&typeof window.supabase.createClient==='function')
     ? window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}})
     : null;
   window._supabaseLayout=sb;
 
-  // ===== ADMIN DELETE MODE =====
-  let _deleteModeActive=false;
-  let _deletedSids=new Set();
-  // Load persisted deleted items
-  try{const raw=localStorage.getItem(LOCAL_DELETED_KEY);if(raw)_deletedSids=new Set(JSON.parse(raw));}catch(_){}
-  setTimeout(()=>{const el=document.getElementById('deleteCount');if(el)el.textContent=_deletedSids.size;},0);
-
-  function persistDeletedIds(){
-    try{localStorage.setItem(LOCAL_DELETED_KEY,JSON.stringify([..._deletedSids]));}catch(_){}
-  }
-
-  function getStickerSid(el){
-    if(el.dataset.sid) return el.dataset.sid;
-    // Use ensureStableStickerIds to guarantee consistent format
-    ensureStableStickerIds(document.querySelectorAll('#canvas > .sticker'));
-    return el.dataset.sid || ('fallback:' + (el.id || el.textContent.trim().substring(0,20)));
-  }
-
-  function addDeleteButtons(){
-    document.querySelectorAll('#canvas > .sticker').forEach(s=>{
-      if(s.querySelector('.delete-x'))return;
-      const btn=document.createElement('button');
-      btn.className='delete-x';
-      btn.textContent='✕';
-      btn.title='Delete this item permanently';
-      btn.addEventListener('click',(e)=>{
-        e.stopPropagation();e.preventDefault();
-        const sid=getStickerSid(s);
-        _deletedSids.add(sid);
-        persistDeletedIds();
-        s.style.transition='transform 0.3s, opacity 0.3s';
-        s.style.transform='scale(0.3) rotate(15deg)';s.style.opacity='0';
-        setTimeout(()=>{s.remove();updateDeleteCount();
-          if(typeof initBoardStats==='function')initBoardStats();
-          if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
-          if(typeof queueMapSync==='function')queueMapSync(true);
-        },300);
-      });
-      s.appendChild(btn);
-    });
-  }
-
-  function removeDeleteButtons(){
-    document.querySelectorAll('.delete-x').forEach(b=>b.remove());
-  }
-
-  function updateDeleteCount(){
-    const el=document.getElementById('deleteCount');
-    if(el)el.textContent=_deletedSids.size;
-  }
-
-  window.toggleDeleteMode=function(){
-    _deleteModeActive=!_deleteModeActive;
-    const canvas=document.getElementById('canvas');
-    const btn=document.getElementById('deleteModeBtn');
-    if(_deleteModeActive){
-      canvas.classList.add('delete-mode-active');
-      btn.classList.add('active');
-      btn.innerHTML='🗑 EXIT Delete Mode <span class="dm-count" id="deleteCount">'+_deletedSids.size+'</span>';
-      addDeleteButtons();
-    }else{
-      canvas.classList.remove('delete-mode-active');
-      btn.classList.remove('active');
-      btn.innerHTML='🗑 Delete Mode <span class="dm-count" id="deleteCount">'+_deletedSids.size+'</span>';
-      removeDeleteButtons();
-    }
-  };
-
-  // Auto-remove previously deleted items on page load
-  window.applyDeletedItems=function(){
-    ensureStableStickerIds(document.querySelectorAll('#canvas > .sticker'));
-    if(_deletedSids.size===0)return;
-    let removed=0;
-    document.querySelectorAll('#canvas > .sticker').forEach(s=>{
-      const sid=getStickerSid(s);
-      if(_deletedSids.has(sid)){s.remove();removed++;}
-    });
-    if(removed>0){
-      console.log('[DeleteMode] Removed '+removed+' previously deleted items');
-      updateDeleteCount();
-      if(typeof initBoardStats==='function')initBoardStats();
-      if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
-      if(typeof queueMapSync==='function')queueMapSync(true);
-    }
-  };
-
-  // Undo all deletes (restore)
-  window.resetDeletedItems=function(){
-    _deletedSids.clear();
-    persistDeletedIds();
-    updateDeleteCount();
-    console.log('[DeleteMode] All deleted items cleared — reload to restore');
-  };
-
-
+  // PIN verification is now handled server-side via edge function
   async function verifyPinRemote(pin, action) {
     const resp = await fetch(SUPABASE_URL + '/functions/v1/verify-pin', {
       method: 'POST',
@@ -12228,10 +12119,7 @@ function ekPick(el,e){
 
   function serializeLayout(){
     const stickers=ensureStableStickerIds(document.querySelectorAll('#canvas > .sticker'));
-    const sentinel={_version:LAYOUT_VERSION};
-    // Include deleted items in the layout data for cloud sync
-    if(_deletedSids.size>0) sentinel._deleted=[..._deletedSids];
-    const data=[sentinel];
+    const data=[{_version:LAYOUT_VERSION}]; // version sentinel at index 0
     stickers.forEach((s,idx)=>{
       const id=s.id||'';
       const sid=s.dataset.sid||'';
@@ -12256,12 +12144,6 @@ function ekPick(el,e){
 
   function applyLayout(data){
     if(!data||!data.length)return;
-    // Extract deleted items from cloud sentinel and merge
-    if(data[0]&&Array.isArray(data[0]._deleted)){
-      data[0]._deleted.forEach(sid=>_deletedSids.add(sid));
-      persistDeletedIds();
-      updateDeleteCount();
-    }
     // Strip version sentinel before applying
     if(data[0]&&data[0]._version!==undefined)data=data.slice(1);
     const stickers=ensureStableStickerIds(Array.from(document.querySelectorAll('#canvas > .sticker')));
@@ -12675,7 +12557,6 @@ function ekPick(el,e){
       if(typeof scanStickers==='function')scanStickers();
       if(typeof invalidateMapCloneCache==='function')invalidateMapCloneCache(true);
       if(typeof queueMapSync==='function')queueMapSync(true);
-      if(typeof window.applyDeletedItems==='function')window.applyDeletedItems();
       if(typeof initBoardStats==='function')initBoardStats();
     }catch(e){
       console.warn('Deferred cloud hydration failed:',e);
