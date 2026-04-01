@@ -3168,10 +3168,19 @@ body.map-expanded .scroll-counter{display:none!important}
 <div class="sticker sticker-cutout" data-anim="tada" data-zone="hobby" style="left:716px;top:5250px;width:150px;height:150px" data-sid="sc16"><img src="/stickers/spidey-power.png" alt="With Great Power sticker" loading="lazy"></div>
 <div class="sticker sticker-cutout" data-anim="pop" data-zone="hobby" style="left:1183px;top:5250px;width:150px;height:150px" data-sid="sc17"><img src="/stickers/spidey-thwip.png" alt="Thwip sticker" loading="lazy"></div>
 <!-- 🤖 AI Interactive: AI Prompt Roulette -->
-<div class="sticker sticker-meme ai-interactive" data-anim="bounce" data-zone="hobby" onclick="aiPromptRoulette(this,event)" style="left:1650px;top:5250px;cursor:pointer;width:220px;text-align:center" data-sid="ai04">
-  <div class="meme-emoji">🎰</div>
-  <div class="meme-text" id="aiPromptResult">Tap for AI prompt!</div>
-  <div class="meme-sub">AI Prompt Roulette</div>
+<!-- 🎰 AI Interactive: Slot Machine -->
+<div class="sticker ai-slots" data-anim="bounce" data-zone="hobby" onclick="pullSlots(this,event)" style="left:1650px;top:5250px" data-sid="ai04">
+  <div class="slots-body">
+    <div class="slots-title">🎰 AI PROMPT SLOTS</div>
+    <div class="slots-reels">
+      <div class="slots-reel" id="reel1"><span>🧠</span></div>
+      <div class="slots-reel" id="reel2"><span>🚀</span></div>
+      <div class="slots-reel" id="reel3"><span>✨</span></div>
+    </div>
+    <div class="slots-handle"></div>
+  </div>
+  <div class="slots-result" id="slotsResult">Pull the lever!</div>
+  <div class="slots-label">AI Prompt Roulette</div>
 </div>
 
 
