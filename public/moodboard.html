@@ -12686,12 +12686,13 @@ function closeZonePanel(zone){
   const bd=document.getElementById('zpbd-'+zone);
   if(panel){
     panel.classList.remove('open');
-    // Clean up particles after transition
     setTimeout(()=>{panel.querySelectorAll('.zp-particle').forEach(p=>p.remove())},600);
   }
   if(bd)bd.classList.remove('open');
   document.querySelectorAll('.zp-proj-detail.open').forEach(d=>d.classList.remove('open'));
   document.body.style.overflow='';
+  // Return cricket game to canvas when fun panel closes
+  if(zone==='fun'&&typeof returnCricketToCanvas==='function')returnCricketToCanvas();
 }
 window.closeZonePanel=closeZonePanel;
 
