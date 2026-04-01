@@ -13520,6 +13520,22 @@ function openProject(id){
 }
 window.openProject=openProject;
 
+/* ── Scroll progress bars ── */
+(function(){
+  document.querySelectorAll('.zp-proj-detail').forEach(function(panel){
+    var bar=document.createElement('div');
+    bar.className='zp-scroll-progress';
+    var fill=document.createElement('div');
+    fill.className='zp-scroll-progress-fill';
+    bar.appendChild(fill);
+    panel.insertBefore(bar,panel.firstChild);
+    panel.addEventListener('scroll',function(){
+      var sh=panel.scrollHeight-panel.clientHeight;
+      fill.style.width=sh>0?((panel.scrollTop/sh)*100)+'%':'0%';
+    },{passive:true});
+  });
+})();
+
 
 
 
