@@ -13671,18 +13671,8 @@ function returnCricketToCanvas(){
     {icon:'🎪',label:'DEMO DAY',bg:'rgba(156,39,176,0.15)',color:'#AB47BC'},
   ];
 
-  // Sync loader background with saved theme
-  try{
-    var savedTheme=localStorage.getItem('moodboard_theme_v1');
-    if(savedTheme && typeof themes!=='undefined' && themes[savedTheme]){
-      var t=themes[savedTheme];
-      loader.style.backgroundColor=t.canvasBg;
-      if(t.textColor){
-        var nameEl=loader.querySelector('.loader-name');
-        if(nameEl){nameEl.style.background='linear-gradient(135deg,'+t.textColor+' 30%,#C9A96E 60%,#CE93D8 90%)';nameEl.style.webkitBackgroundClip='text';nameEl.style.backgroundClip='text';}
-      }
-    }
-  }catch(_e){}
+  // Always black splash
+  loader.style.backgroundColor='#000';
 
   function rnd(a,b){return a+Math.random()*(b-a)}
   function spawnSticker(){
