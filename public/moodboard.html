@@ -4313,16 +4313,23 @@ body.map-expanded .scroll-counter{display:none!important}
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   position:relative;overflow:hidden;
 }
+/* Poster image inside frame */
+.gallery-artwork-poster{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  z-index:1;
+}
 
 /* Animated gradient fill */
 .gallery-artwork::before{
-  content:'';position:absolute;inset:0;
+  content:'';position:absolute;inset:0;z-index:3;
   background:
     radial-gradient(ellipse at 30% 25%,var(--frame-c1,rgba(120,80,220,0.6)) 0%,transparent 55%),
     radial-gradient(ellipse at 70% 75%,var(--frame-c2,rgba(200,60,150,0.5)) 0%,transparent 55%),
     radial-gradient(ellipse at 50% 100%,var(--frame-c3,rgba(255,180,60,0.3)) 0%,transparent 40%),
     radial-gradient(ellipse at 20% 80%,var(--frame-c4,rgba(60,120,255,0.3)) 0%,transparent 45%);
   opacity:0;transition:opacity 0.8s 0.4s;
+  mix-blend-mode:soft-light;
 }
 .zp-proj-detail.open .gallery-artwork::before{
   opacity:1;
@@ -6291,8 +6298,7 @@ function cycleIntroCards(e){
       <div class="gallery-frame">
         <div class="gallery-frame-inner">
           <div class="gallery-artwork">
-            <span class="gallery-artwork-emoji">📚</span>
-            <span class="gallery-artwork-label">Recess</span>
+            <img src="/images/recess-poster.webp" alt="Recess" class="gallery-artwork-poster" loading="lazy">
           </div>
         </div>
       </div>
@@ -6355,8 +6361,7 @@ function cycleIntroCards(e){
       <div class="gallery-frame">
         <div class="gallery-frame-inner">
           <div class="gallery-artwork">
-            <span class="gallery-artwork-emoji">🎧</span>
-            <span class="gallery-artwork-label">Hushh</span>
+            <img src="/images/hushh-poster.webp" alt="Hushh" class="gallery-artwork-poster" loading="lazy">
           </div>
         </div>
       </div>
@@ -6485,8 +6490,7 @@ function cycleIntroCards(e){
       <div class="gallery-frame">
         <div class="gallery-frame-inner">
           <div class="gallery-artwork">
-            <span class="gallery-artwork-emoji">🌊</span>
-            <span class="gallery-artwork-label">Arribada</span>
+            <img src="/images/arribada-poster.webp" alt="Arribada" class="gallery-artwork-poster" loading="lazy">
           </div>
         </div>
       </div>
@@ -6615,8 +6619,7 @@ function cycleIntroCards(e){
       <div class="gallery-frame">
         <div class="gallery-frame-inner">
           <div class="gallery-artwork">
-            <span class="gallery-artwork-emoji">🧟</span>
-            <span class="gallery-artwork-label">Zombieverse</span>
+            <img src="/images/zombieverse-poster.webp" alt="Zombieverse" class="gallery-artwork-poster" loading="lazy">
           </div>
         </div>
       </div>
