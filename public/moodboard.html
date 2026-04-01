@@ -13799,10 +13799,9 @@ function returnCricketToCanvas(){
   }
   // Dismiss after bar animation finishes (~2.6s) or window load, whichever is later
   var barDone=false,winDone=false;
-  setTimeout(function(){barDone=true;if(winDone)dismiss()},2600);
+  setTimeout(function(){barDone=true;if(winDone)dismiss()},3200);
   window.addEventListener('load',function(){winDone=true;if(barDone)dismiss()});
-  // Safety fallback
-  setTimeout(dismiss,5000);
+  setTimeout(dismiss,5500);
 })();
 </script>
 
