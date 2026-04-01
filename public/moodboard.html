@@ -9202,9 +9202,11 @@ function getThemeOptionEl(themeName){
 }
 
 function setTheme(name, el){
+  // Fallback if theme was removed
+  if(!themes[name]) name = 'grid';
   const t = themes[name];
-  if(!t)return;
   const c = document.getElementById('canvas');
+  if(!c) return;
   c.dataset.theme = name;
   c.style.backgroundColor = t.canvasBg;
   c.style.backgroundImage = t.bgImage;
@@ -9219,17 +9221,16 @@ function setTheme(name, el){
   const logo = document.querySelector('.logo');
   const counter = document.getElementById('scrollCounter');
   if(t.textColor){
-    logo.style.color = t.textColor;
-    logo.style.background = 'rgba(255,255,255,0.08)';
-    counter.style.color = 'rgba(255,255,255,0.06)';
+    if(logo){logo.style.color = t.textColor;logo.style.background = 'rgba(255,255,255,0.08)';}
+    if(counter) counter.style.color = 'rgba(255,255,255,0.06)';
   } else {
-    logo.style.color = '';
-    logo.style.background = '';
-    counter.style.color = '';
+    if(logo){logo.style.color = '';logo.style.background = '';}
+    if(counter) counter.style.color = '';
   }
   
-  // Remove all theme classes, then apply selected theme class
-  Object.keys(themes).forEach(themeKey => c.classList.remove('theme-' + themeKey));
+  // Remove all theme classes (including removed themes), then apply selected
+  var allThemeKeys = Object.keys(themes).concat(['neon','blueprint','vaporwave','lava','matrix']);
+  allThemeKeys.forEach(function(k){ c.classList.remove('theme-' + k); });
   c.classList.add('theme-' + name);
   
   // Update active state
@@ -9244,7 +9245,8 @@ function setTheme(name, el){
   let initialTheme='grid';
   try{
     const saved=localStorage.getItem(THEME_STORAGE_KEY);
-    if(saved&&themes[saved])initialTheme=saved;
+    if(saved && themes[saved]) initialTheme=saved;
+    else if(saved) localStorage.removeItem(THEME_STORAGE_KEY); // clear stale
   }catch(_e){}
   setTheme(initialTheme,getThemeOptionEl(initialTheme));
 })();
