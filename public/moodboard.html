@@ -11451,6 +11451,7 @@ function ensureCompanionStickers(force){
         function startToss(){
           phase='toss_call';tossCall='';tossWonByPlayer=false;
           youScore=0;cpuScore=0;target=-1;totalBalls=0;
+          fourCount=0;sixCount=0;streak=0;bestStreak=0;overRuns=[];currentOverRuns=0;
           youScoreEl.textContent='0';cpuScoreEl.textContent='0';
           youScoreEl.classList.remove('batting');cpuScoreEl.classList.remove('batting');
           hc.classList.remove('playing','chasing');
