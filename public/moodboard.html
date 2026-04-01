@@ -10802,9 +10802,15 @@ async function bootstrapMap(forceRescan){
 
 function releaseBootBlockers(){
   document.body.classList.add('stickers-ready');
-  document.body.style.pointerEvents='';
-  document.documentElement.style.pointerEvents='';
-  const blockers=document.querySelectorAll('.loading-overlay,.app-loading-overlay,[data-loading-overlay]');
+  document.documentElement.style.pointerEvents='auto';
+  document.body.style.pointerEvents='auto';
+  ['#app','#root','.app','.moodboard-app'].forEach(sel=>{
+    const el=document.querySelector(sel);
+    if(el)el.style.pointerEvents='auto';
+  });
+  document.documentElement.classList.remove('loading','is-loading','interaction-suppressed');
+  document.body.classList.remove('loading','is-loading','interaction-suppressed');
+  const blockers=document.querySelectorAll('.loading-overlay,.app-loading-overlay,.app-loading,.app-blocker,[data-loading-overlay]');
   blockers.forEach(el=>el.remove());
 }
 
@@ -11758,6 +11764,18 @@ setTimeout(async ()=>{
 window.addEventListener('error',()=>{
   releaseBootBlockers();
 },{passive:true});
+
+window.addEventListener('unhandledrejection',()=>{
+  releaseBootBlockers();
+},{passive:true});
+
+window.addEventListener('load',()=>{
+  releaseBootBlockers();
+},{once:true,passive:true});
+
+setTimeout(()=>{
+  releaseBootBlockers();
+},1500);
 
 window.addEventListener('resize',debounce(()=>{
   if(mapBootstrapped)bootstrapMap(false);
