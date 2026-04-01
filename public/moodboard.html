@@ -12257,6 +12257,12 @@ function ekPick(el,e){
 
   function applyLayout(data){
     if(!data||!data.length)return;
+    // Extract deleted items from cloud sentinel and merge
+    if(data[0]&&Array.isArray(data[0]._deleted)){
+      data[0]._deleted.forEach(sid=>_deletedSids.add(sid));
+      persistDeletedIds();
+      updateDeleteCount();
+    }
     // Strip version sentinel before applying
     if(data[0]&&data[0]._version!==undefined)data=data.slice(1);
     const stickers=ensureStableStickerIds(Array.from(document.querySelectorAll('#canvas > .sticker')));
