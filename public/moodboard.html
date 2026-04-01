@@ -2501,6 +2501,10 @@ body.map-expanded .scroll-counter{display:none!important}
   opacity:0;transform:translateY(8px);transition:all 0.25s ease;pointer-events:none;
 }
 .save-layout-toast.show{opacity:1;transform:translateY(0)}
+
+/* Cutout sticker images */
+.sticker.sticker-cutout{background:none!important;border:none!important;box-shadow:none!important;padding:0!important;overflow:visible}
+.sticker.sticker-cutout img{width:100%;height:100%;object-fit:contain;pointer-events:none;filter:drop-shadow(2px 4px 8px rgba(0,0,0,0.15))}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
 <script>if(!window.supabase||typeof window.supabase.createClient!=='function'){console.warn('[Layout] Supabase CDN failed to load — will use REST fallback')}</script>
@@ -3037,6 +3041,10 @@ body.map-expanded .scroll-counter{display:none!important}
 
 
 <div class="sticker sticker-badge" data-anim="heartbeat" data-zone="introduction" style="left:250px;top:675px;border-color:#E91E63;color:#E91E63" data-sid="s036">SCOLIOSIS SURVIVOR 🦴</div>
+<div class="sticker sticker-cutout" data-anim="pop" data-zone="introduction" style="left:400px;top:850px;width:140px;height:140px" data-sid="sc01"><img src="/stickers/pm-ship-it.png" alt="Ship It sticker" loading="lazy"></div>
+<div class="sticker sticker-cutout" data-anim="bounce" data-zone="introduction" style="left:850px;top:850px;width:140px;height:140px" data-sid="sc02"><img src="/stickers/pm-user-first.png" alt="User First sticker" loading="lazy"></div>
+<div class="sticker sticker-cutout" data-anim="tada" data-zone="introduction" style="left:1600px;top:850px;width:150px;height:150px" data-sid="sc03"><img src="/stickers/friends-how-you-doin.png" alt="How You Doin sticker" loading="lazy"></div>
+
 
 
 
@@ -3093,6 +3101,10 @@ body.map-expanded .scroll-counter{display:none!important}
 
 
 <div class="sticker sticker-badge" data-anim="tada" data-zone="hobby" style="left:2583px;top:4850px;border-color:#FF5722;color:#FF5722" data-sid="s047">PANIPURI CHAMPION 🍜</div>
+<div class="sticker sticker-cutout" data-anim="pop" data-zone="hobby" style="left:250px;top:5050px;width:140px;height:140px" data-sid="sc07"><img src="/stickers/pm-roadmap.png" alt="Roadmap sticker" loading="lazy"></div>
+<div class="sticker sticker-cutout" data-anim="bounce" data-zone="hobby" style="left:716px;top:5050px;width:140px;height:140px" data-sid="sc08"><img src="/stickers/pm-sprint.png" alt="Daily Sprint sticker" loading="lazy"></div>
+<div class="sticker sticker-cutout" data-anim="tada" data-zone="hobby" style="left:1183px;top:5050px;width:150px;height:150px" data-sid="sc09"><img src="/stickers/friends-central-perk.png" alt="Central Perk sticker" loading="lazy"></div>
+
 
 
 
@@ -3270,6 +3282,10 @@ body.map-expanded .scroll-counter{display:none!important}
 
 
 
+<div class="sticker sticker-meme" data-anim="tada" data-zone="fun" onclick="corpBS_gen(this,event)" style="left:3950px;top:3500px;cursor:pointer;width:220px;text-align:center" 
+<div class="sticker sticker-cutout" data-anim="shake" data-zone="fun" style="left:3950px;top:3250px;width:140px;height:140px" data-sid="sc10"><img src="/stickers/pm-backlog-zero.png" alt="Backlog Zero sticker" loading="lazy"></div>
+<div class="sticker sticker-cutout" data-anim="pop" data-zone="fun" style="left:4416px;top:3250px;width:140px;height:140px" data-sid="sc11"><img src="/stickers/pm-standup.png" alt="Standup sticker" loading="lazy"></div>
+<div class="sticker sticker-cutout" data-anim="tada" data-zone="fun" style="left:4883px;top:3250px;width:150px;height:150px" data-sid="sc12"><img src="/stickers/hp-platform.png" alt="Platform 9 3/4 sticker" loading="lazy"></div>
 <div class="sticker sticker-meme" data-anim="tada" data-zone="fun" onclick="corpBS_gen(this,event)" style="left:3950px;top:3500px;cursor:pointer;width:220px;text-align:center" data-sid="s069">
   <div class="meme-emoji">🎪</div>
   <div class="meme-text" id="corpBSResult">Tap for corporate speak</div>
@@ -3629,6 +3645,10 @@ body.map-expanded .scroll-counter{display:none!important}
 
 <!-- ===== THE WAR ROOM 🎯 (top-right 4000-7000, 200-1700) — Work & Professional ===== -->
 <div class="sticker sticker-badge" data-anim="pop" data-zone="work" style="left:4883px;top:1625px;transform:rotate(-3deg)" data-sid="s090">FOUNDER MODE 🔥</div>
+<div class="sticker sticker-cutout" data-anim="bounce" data-zone="work" style="left:5350px;top:1800px;width:140px;height:140px" data-sid="sc04"><img src="/stickers/pm-mvp.png" alt="MVP sticker" loading="lazy"></div>
+<div class="sticker sticker-cutout" data-anim="pop" data-zone="work" style="left:5816px;top:1800px;width:140px;height:140px" data-sid="sc05"><img src="/stickers/pm-ab-test.png" alt="A/B Test sticker" loading="lazy"></div>
+<div class="sticker sticker-cutout" data-anim="tada" data-zone="work" style="left:6283px;top:1800px;width:150px;height:150px" data-sid="sc06"><img src="/stickers/hp-mischief-managed.png" alt="Mischief Managed sticker" loading="lazy"></div>
+
 <div class="sticker sticker-stamp" data-anim="pop" data-zone="work" style="left:5350px;top:1625px;transform:rotate(-15deg);color:#C9A96E;border-color:#C9A96E" data-sid="s091">SHIPPED</div>
 
 <!-- ===== LAUNCH PAD 🚀 (center-left 200-2600, 1800-3400) — Portfolio & Creative ===== -->
