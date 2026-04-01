@@ -719,10 +719,13 @@ body.safety-mode .doodle-stars .star-3{animation:none!important}
 
 /* Runtime perf mode during active pan/drag: keep visuals identical at rest, but
    temporarily reduce expensive effects while the user is actively interacting. */
-body.perf-interacting .sticker{transition:none!important;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.08))!important}
+body.perf-interacting .sticker{transition:none!important;filter:none!important}
 body.perf-interacting .zone-intro-card,
 body.perf-interacting .zone-intro-card *{animation-play-state:paused!important}
 body.perf-interacting .map-intro-glow{animation:none!important}
+body.perf-interacting .canvas::after{display:none!important}
+body.perf-interacting .zone-tint{opacity:0!important}
+body.perf-interacting .doodle,.perf-interacting .hollywood-signpost{visibility:hidden!important}
 
 body.loading-phase .sticker,
 body.loading-phase .map-sticker-clone,
