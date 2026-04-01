@@ -1040,9 +1040,139 @@ body.dark-mode .sticker-drag-handle:hover{
 }
 body.dark-mode .sticker-drag-handle svg{color:rgba(255,255,255,0.5)!important}
 
+/* ── CATCH-ALL: Force dark on ALL remaining light stickers ── */
+body.dark-mode .sticker-factcard,
+body.dark-mode .sticker-dna,
+body.dark-mode .sticker-hottake,
+body.dark-mode .sticker-currently,
+body.dark-mode .sticker-stackbuilder,
+body.dark-mode .sticker-tlpuzzle,
+body.dark-mode .sticker-startup-rand,
+body.dark-mode .sticker-emoji-kitchen,
+body.dark-mode .sticker-lovemeter,
+body.dark-mode .sticker-illustrated{
+  background:rgba(20,16,30,0.85)!important;
+  border-color:rgba(201,169,110,0.18)!important;
+  box-shadow:0 4px 20px rgba(0,0,0,0.35)!important;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+
+/* Factcard */
+body.dark-mode .sticker-factcard .fc-title{color:rgba(255,255,255,0.9)!important}
+body.dark-mode .sticker-factcard .fc-body{color:rgba(255,255,255,0.65)!important}
+body.dark-mode .sticker-factcard .fc-footer{color:rgba(255,255,255,0.35)!important}
+body.dark-mode .sticker-factcard .fc-num{background:linear-gradient(135deg,#C9A96E,#CE93D8)!important}
+
+/* DNA sticker */
+body.dark-mode .sticker-dna .dna-title{color:#81C784!important}
+body.dark-mode .sticker-dna .dna-label{color:rgba(255,255,255,0.6)!important}
+body.dark-mode .sticker-dna .dna-bar{background:rgba(76,175,80,0.15)!important}
+
+/* Hot take */
+body.dark-mode .sticker-hottake .ht-title{color:#FFB74D!important}
+body.dark-mode .sticker-hottake .ht-body{color:rgba(255,255,255,0.7)!important}
+body.dark-mode .sticker-hottake .ht-cta{color:#FFB74D!important}
+
+/* Currently */
+body.dark-mode .sticker-currently .cur-title{color:#90CAF9!important}
+body.dark-mode .sticker-currently .cur-item{
+  background:rgba(66,165,245,0.1)!important;
+  color:rgba(255,255,255,0.75)!important;
+  border-left-color:#42A5F5!important;
+}
+body.dark-mode .sticker-currently .cur-cta{color:#64B5F6!important}
+
+/* Stack builder */
+body.dark-mode .sticker-stackbuilder .sb-title{color:#90CAF9!important}
+body.dark-mode .sticker-stackbuilder .sb-sub{color:rgba(255,255,255,0.4)!important}
+body.dark-mode .sb-skill{color:rgba(255,255,255,0.8)!important}
+body.dark-mode .sb-stack-zone{
+  background:rgba(63,81,181,0.08)!important;
+  border-color:rgba(201,169,110,0.2)!important;
+}
+body.dark-mode .sb-feedback{color:#C9A96E!important}
+body.dark-mode .sb-clear{color:rgba(255,255,255,0.5)!important;border-color:rgba(201,169,110,0.2)!important}
+
+/* Timeline puzzle */
+body.dark-mode .sticker-tlpuzzle .tlg-title{color:rgba(255,255,255,0.9)!important}
+body.dark-mode .sticker-tlpuzzle .tlg-sub{color:rgba(255,255,255,0.4)!important}
+body.dark-mode .tlg-item{
+  background:rgba(201,169,110,0.08)!important;
+  border-color:rgba(201,169,110,0.18)!important;
+  color:rgba(255,255,255,0.7)!important;
+}
+body.dark-mode .tlg-move-btn{
+  background:rgba(20,16,30,0.7)!important;
+  border-color:rgba(201,169,110,0.3)!important;
+  color:rgba(255,255,255,0.7)!important;
+}
+
+/* Startup randomizer */
+body.dark-mode .sticker-startup-rand .sr-title{color:#CE93D8!important}
+body.dark-mode .sticker-startup-rand .sr-sub{color:rgba(255,255,255,0.45)!important}
+
+/* Emoji kitchen */
+body.dark-mode .sticker-emoji-kitchen .ek-title{color:#CE93D8!important}
+body.dark-mode .sticker-emoji-kitchen .ek-sub{color:rgba(255,255,255,0.45)!important}
+
+/* Love meter */
+body.dark-mode .sticker-lovemeter .lm-title{color:#CE93D8!important}
+body.dark-mode .sticker-lovemeter .lm-bar{background:rgba(206,147,216,0.15)!important;border-color:rgba(206,147,216,0.3)!important}
+body.dark-mode .sticker-lovemeter .lm-result{color:#CE93D8!important}
+
+/* Stamp stickers */
+body.dark-mode .sticker-stamp{
+  background:rgba(20,16,30,0.85)!important;
+  color:rgba(255,255,255,0.7)!important;
+}
+
+/* ── UNIVERSAL catch-all for any remaining white/light children ── */
+body.dark-mode .sticker[class*="sticker-"]{
+  color:var(--text)!important;
+}
+
+/* Panels (slide-up detail panels) */
+body.dark-mode .about-panel,
+body.dark-mode .work-panel,
+body.dark-mode .portfolio-panel,
+body.dark-mode .hobby-panel,
+body.dark-mode .fun-panel{
+  background:#0a0812!important;
+  color:var(--text)!important;
+}
+body.dark-mode .about-panel *,
+body.dark-mode .work-panel *,
+body.dark-mode .portfolio-panel *,
+body.dark-mode .hobby-panel *,
+body.dark-mode .fun-panel *{
+  color:inherit;
+}
+body.dark-mode .about-panel .about-back,
+body.dark-mode .work-panel .work-back{
+  border-color:rgba(201,169,110,0.2)!important;
+  color:rgba(255,255,255,0.7)!important;
+}
+body.dark-mode .about-panel .about-back:hover,
+body.dark-mode .work-panel .work-back:hover{
+  background:rgba(201,169,110,0.08)!important;
+}
+body.dark-mode .skill-row .sk-bar{background:rgba(201,169,110,0.12)!important}
+body.dark-mode .skill-row .sk-name{color:rgba(255,255,255,0.85)!important}
+body.dark-mode .skill-row .sk-pct{color:#C9A96E!important}
+body.dark-mode .skill-tag,
+body.dark-mode .about-panel .skill-tag{
+  background:rgba(201,169,110,0.12)!important;
+  color:rgba(255,255,255,0.7)!important;
+}
+
+/* Minimap in dark mode */
+body.dark-mode .minimap-container{
+  box-shadow:0 4px 20px rgba(0,0,0,0.4)!important;
+}
+
 /* Smooth transition */
 body{transition:background-color 0.5s ease}
-.canvas-viewport,.canvas,.bottom-nav,.logo,.settings-btn,.sticker,.zone-intro-creative,.intro-card,.sticker-postit,.sticker-badge,.sticker-meme,.sticker-counter,.sticker-project,.sticker-photo-polaroid,.sticker-photo-tilt,.sticker-hero-photo .hero-name-tag,.canvas-edge-label,.swipe-hint,.darkmode-btn{
+.canvas-viewport,.canvas,.bottom-nav,.logo,.settings-btn,.sticker,.zone-intro-creative,.intro-card,.sticker-postit,.sticker-badge,.sticker-meme,.sticker-counter,.sticker-project,.sticker-photo-polaroid,.sticker-photo-tilt,.sticker-hero-photo .hero-name-tag,.canvas-edge-label,.swipe-hint,.darkmode-btn,.sticker-factcard,.sticker-dna,.sticker-hottake,.sticker-currently,.sticker-stackbuilder,.sticker-tlpuzzle,.sticker-startup-rand,.sticker-emoji-kitchen,.sticker-lovemeter,.sticker-illustrated,.sticker-stamp{
   transition:background 0.5s ease,color 0.5s ease,border-color 0.5s ease,box-shadow 0.5s ease!important;
 }
 
