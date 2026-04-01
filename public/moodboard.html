@@ -10391,7 +10391,33 @@ function meetingBingo(el,e){e.stopPropagation();playSfx('click');const word=bing
 const salaries=['Startup equity (worth TBD) 📊','Paid in experience 🎓','Paid in learnings 📚','Actual money (rare!) 💰','Paid in pizza on demo day 🍕','Stock options (cliff: ♾️)'];
 function salaryRoulette(el,e){e.stopPropagation();playSfx('spin');const r=el.querySelector('.meme-text');r.textContent='🎡 Spinning...';setTimeout(()=>{const pick=salaries[Math.floor(Math.random()*salaries.length)];r.textContent=pick;playSfx(pick.includes('money')?'kaching':'fail');spawnConfetti(e.clientX||0,e.clientY||0)},500)}
 
-// ===== SPIN WHEEL =====
+// ===== FRIENDS QUOTE GENERATOR =====
+const friendsQuotes=[
+  '"PIVOT! PIVOT! PIVOT!" — Ross 🛋️',
+  '"We were on a break!" — Ross 😤',
+  '"How you doin\'?" — Joey 😏',
+  '"Oh. My. God." — Janice 🗣️',
+  '"Could I BE wearing any more clothes?" — Joey 👔',
+  '"I\'m not great at the advice. Can I offer a sarcastic comment?" — Chandler 😂',
+  '"It\'s like all my life everyone told me you\'re a shoe" — Rachel 👠',
+  '"UNAGI" — Ross 🥋',
+  '"That\'s not even a word!" — Joey 📖',
+  '"I KNOW!" — Monica 🧹',
+  '"MY SANDWICH?!" — Ross 🥪',
+  '"Joey doesn\'t share food!" — Joey 🍕'
+];
+function friendsQuote(el,e){e.stopPropagation();playSfx('pop');const q=friendsQuotes[Math.floor(Math.random()*friendsQuotes.length)];el.querySelector('.meme-text').textContent=q;spawnConfetti(e.clientX||0,e.clientY||0)}
+
+// ===== SORTING HAT =====
+const hogwartsHouses=[
+  {house:'Gryffindor 🦁',color:'#740001',trait:'brave & daring'},
+  {house:'Slytherin 🐍',color:'#1a472a',trait:'ambitious & cunning'},
+  {house:'Ravenclaw 🦅',color:'#0e1a40',trait:'wise & creative'},
+  {house:'Hufflepuff 🦡',color:'#ecb939',trait:'loyal & kind'}
+];
+function sortingHat(el,e){e.stopPropagation();playSfx('pop');const r=el.querySelector('.meme-text');const sub=el.querySelector('.meme-sub');r.textContent='🎩 Hmm, difficult...';el.querySelector('.meme-emoji').textContent='🤔';setTimeout(()=>{const h=hogwartsHouses[Math.floor(Math.random()*hogwartsHouses.length)];r.textContent=h.house+'!';sub.textContent=h.trait;el.querySelector('.meme-emoji').textContent='🏰';el.style.borderColor=h.color;el.style.color=h.color;playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0);setTimeout(()=>spawnConfetti(e.clientX||0,e.clientY||0),300)},1200)}
+
+
 const wheelOptions=['AI App 🤖','SaaS 💼','Game 🎮','Web3 🌐','EdTech 🎓','FinTech 💰'];
 let wheelSpinning=false;
 function spinWheel(el,e){
