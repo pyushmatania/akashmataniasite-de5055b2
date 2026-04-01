@@ -8,6 +8,65 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&family=Caveat:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ── Loading Screen ── */
+.loader-screen{
+  position:fixed;inset:0;z-index:99999;
+  background:#0a0812;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity 0.6s cubic-bezier(0.4,0,0.2,1),transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.loader-screen.hide{opacity:0;transform:scale(1.05);pointer-events:none}
+.loader-logo{
+  font-family:'Space Grotesk',sans-serif;font-size:2.4rem;font-weight:900;
+  background:linear-gradient(135deg,#fff 40%,#C9A96E 70%,#CE93D8);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  opacity:0;animation:loaderFadeUp 0.8s 0.2s forwards;
+}
+.loader-tagline{
+  font-family:'DM Sans',sans-serif;font-size:0.8rem;
+  color:rgba(255,255,255,0.35);margin-top:10px;letter-spacing:0.12em;
+  opacity:0;animation:loaderFadeUp 0.7s 0.5s forwards;
+}
+.loader-bar-wrap{
+  width:140px;height:3px;border-radius:3px;
+  background:rgba(255,255,255,0.06);margin-top:32px;overflow:hidden;
+  opacity:0;animation:loaderFadeUp 0.5s 0.7s forwards;
+}
+.loader-bar{
+  height:100%;width:0;border-radius:3px;
+  background:linear-gradient(90deg,#C9A96E,#CE93D8);
+  animation:loaderProgress 1.8s 0.8s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+.loader-dots{
+  display:flex;gap:6px;margin-top:18px;
+  opacity:0;animation:loaderFadeUp 0.5s 0.6s forwards;
+}
+.loader-dot{
+  width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.15);
+  animation:loaderPulse 1.2s ease-in-out infinite;
+}
+.loader-dot:nth-child(2){animation-delay:0.2s}
+.loader-dot:nth-child(3){animation-delay:0.4s}
+@keyframes loaderFadeUp{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes loaderProgress{
+  0%{width:0}
+  60%{width:70%}
+  100%{width:100%}
+}
+@keyframes loaderPulse{
+  0%,100%{opacity:0.15;transform:scale(1)}
+  50%{opacity:0.6;transform:scale(1.4)}
+}
+/* Canvas entrance */
+.canvas-viewport{opacity:0;transform:scale(0.96)}
+.canvas-viewport.loaded{
+  opacity:1;transform:scale(1);
+  transition:opacity 0.5s 0.1s ease-out,transform 0.5s 0.1s ease-out;
+}
+
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
   --bg:#FAF8F5;--grid:#E8E4DF;--accent:#C9A96E;--text:#1A1A1A;--text2:#5C5C5C;--text3:#8A8A8A;
