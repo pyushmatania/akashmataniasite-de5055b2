@@ -4363,6 +4363,44 @@ body.map-expanded .scroll-counter{display:none!important}
 .gallery-info .gi-name{
   font-family:var(--font-fun);font-size:2.2rem;font-weight:900;
   color:#fff;line-height:1.05;margin-bottom:6px;
+}
+.gi-live-link{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:8px;margin-bottom:4px;
+  padding:8px 18px 8px 14px;border-radius:50px;
+  font-family:var(--font-fun);font-size:0.78rem;font-weight:600;
+  letter-spacing:0.04em;text-transform:uppercase;
+  color:rgba(255,255,255,0.9);text-decoration:none;
+  background:linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+  position:relative;overflow:hidden;
+}
+.gi-live-link::before{
+  content:'';position:absolute;inset:0;border-radius:50px;
+  background:linear-gradient(135deg,rgba(201,169,110,0.25),rgba(206,147,216,0.2));
+  opacity:0;transition:opacity 0.3s;
+}
+.gi-live-link:hover::before{opacity:1}
+.gi-live-link:hover{
+  border-color:rgba(201,169,110,0.4);
+  transform:translateY(-1px);
+  box-shadow:0 4px 20px rgba(201,169,110,0.15);
+}
+.gi-live-link .gi-live-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#4ADE80;
+  box-shadow:0 0 8px rgba(74,222,128,0.6);
+  animation:livePulse 2s ease-in-out infinite;
+}
+.gi-live-link .gi-live-arrow{
+  transition:transform 0.3s;font-size:0.7rem;
+}
+.gi-live-link:hover .gi-live-arrow{transform:translateX(3px)}
+@keyframes livePulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:0.5;transform:scale(0.8)}
   background:linear-gradient(135deg,#fff 60%,var(--frame-c1,rgba(200,160,255,0.8)));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
