@@ -12777,17 +12777,41 @@ window.closeProject=closeProject;
     },100);
   };
 })();
-/* ─── Fun Panel Cricket Launcher ───────────── */
+/* ─── Fun Panel Cricket Launcher — single game, teleport ───────────── */
 function launchFunPanelCricket(){
   var container=document.getElementById('zp-fun-cricket-game');
   if(!container)return;
-  if(container.dataset.init==='1'){container.style.display='';return;}
-  container.dataset.init='1';
+  var hc=window.__hcGameEl;
+  if(!hc){
+    // Fallback: create fresh if canvas game not ready yet
+    container.innerHTML=window.__hcGameHTML({panel:true});
+    hc=container.querySelector('.zc-hcricket');
+    if(hc){window.__initHCGame(hc);window.__hcGameEl=hc;}
+    container.style.display='';
+    return;
+  }
+  // Teleport existing game into panel
+  hc.style.display='';
+  hc.style.width='100%';
+  container.appendChild(hc);
   container.style.display='';
-  container.innerHTML=window.__hcGameHTML({panel:true});
-  var hc=container.querySelector('.zc-hcricket');
-  if(!hc)return;
-  window.__initHCGame(hc);
+  // Hide canvas cover
+  var wrap=window.__hcCanvasWrap;
+  if(wrap){var ci=wrap.querySelector('.hc-cover-img');var cl=wrap.querySelector('.hc-cover-label');if(ci)ci.style.display='none';if(cl)cl.style.display='none';}
+}
+function returnCricketToCanvas(){
+  var hc=window.__hcGameEl;
+  var wrap=window.__hcCanvasWrap;
+  var container=document.getElementById('zp-fun-cricket-game');
+  if(!hc||!wrap)return;
+  // Move back to canvas
+  hc.style.display='none';
+  hc.style.width='';
+  wrap.appendChild(hc);
+  if(container)container.style.display='none';
+  // Show canvas cover again
+  var ci=wrap.querySelector('.hc-cover-img');var cl=wrap.querySelector('.hc-cover-label');
+  if(ci)ci.style.display='block';if(cl)cl.style.display='block';
 }
 </script>
 
