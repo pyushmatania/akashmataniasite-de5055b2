@@ -110,8 +110,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker .delete-x:hover{transform:scale(1.2);background:#C62828}
 .sticker .delete-x:active{transform:scale(0.9)}
 .delete-mode-active .sticker .delete-x{display:flex}
-.delete-mode-active .sticker{cursor:default!important;animation:delete-wobble 0.3s ease-in-out infinite alternate}
-@keyframes delete-wobble{0%{transform:rotate(-0.5deg)}100%{transform:rotate(0.5deg)}}
+.delete-mode-active .sticker{cursor:default!important;animation:delete-wobble 0.3s ease-in-out infinite alternate;outline:2px dashed rgba(229,57,53,0.35);outline-offset:4px;border-radius:12px}
+@keyframes delete-wobble{0%{box-shadow:0 0 0 3px rgba(229,57,53,0.15)}100%{box-shadow:0 0 0 6px rgba(229,57,53,0.08)}}
 .delete-mode-btn{display:flex;align-items:center;gap:6px;width:100%;padding:10px 14px;border:2px dashed rgba(229,57,53,0.4);border-radius:10px;background:rgba(229,57,53,0.08);color:#E53935;font-family:var(--font-fun);font-size:0.72rem;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:10px}
 .delete-mode-btn:hover{background:rgba(229,57,53,0.15);border-color:rgba(229,57,53,0.6)}
 .delete-mode-btn.active{background:rgba(229,57,53,0.2);border-color:#E53935;box-shadow:0 0 12px rgba(229,57,53,0.3)}
@@ -12086,13 +12086,10 @@ function ekPick(el,e){
   }
 
   function getStickerSid(el){
-    if(!el.dataset.sid){
-      const zone=el.dataset.zone||'na';
-      const type=el.dataset.type||'other';
-      const snippet=(el.textContent||'').trim().substring(0,24).replace(/\s+/g,' ').toLowerCase();
-      el.dataset.sid=(el.id?'id:'+el.id:'auto:'+zone+':'+type+':'+snippet);
-    }
-    return el.dataset.sid;
+    if(el.dataset.sid) return el.dataset.sid;
+    // Use ensureStableStickerIds to guarantee consistent format
+    ensureStableStickerIds(document.querySelectorAll('#canvas > .sticker'));
+    return el.dataset.sid || ('fallback:' + (el.id || el.textContent.trim().substring(0,20)));
   }
 
   function addDeleteButtons(){
@@ -12232,7 +12229,10 @@ function ekPick(el,e){
 
   function serializeLayout(){
     const stickers=ensureStableStickerIds(document.querySelectorAll('#canvas > .sticker'));
-    const data=[{_version:LAYOUT_VERSION}]; // version sentinel at index 0
+    const sentinel={_version:LAYOUT_VERSION};
+    // Include deleted items in the layout data for cloud sync
+    if(_deletedSids.size>0) sentinel._deleted=[..._deletedSids];
+    const data=[sentinel];
     stickers.forEach((s,idx)=>{
       const id=s.id||'';
       const sid=s.dataset.sid||'';
@@ -12257,6 +12257,12 @@ function ekPick(el,e){
 
   function applyLayout(data){
     if(!data||!data.length)return;
+    // Extract deleted items from cloud sentinel and merge
+    if(data[0]&&Array.isArray(data[0]._deleted)){
+      data[0]._deleted.forEach(sid=>_deletedSids.add(sid));
+      persistDeletedIds();
+      updateDeleteCount();
+    }
     // Strip version sentinel before applying
     if(data[0]&&data[0]._version!==undefined)data=data.slice(1);
     const stickers=ensureStableStickerIds(Array.from(document.querySelectorAll('#canvas > .sticker')));
