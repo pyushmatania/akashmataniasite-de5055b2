@@ -48,7 +48,11 @@ const App = () => {
   const pathname = window.location.pathname;
   const isKnownRoute = pathname === "/" || pathname === "/index";
 
-  return <ErrorBoundary>{isKnownRoute ? <Index /> : <NotFound />}</ErrorBoundary>;
+  return (
+    <ErrorBoundary>
+      {isKnownRoute ? <Index /> : <NotFound />}
+    </ErrorBoundary>
+  );
 };
 
 export default App;
