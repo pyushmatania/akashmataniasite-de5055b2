@@ -10441,8 +10441,60 @@ const hogwartsHouses=[
 ];
 function sortingHat(el,e){e.stopPropagation();playSfx('pop');const r=el.querySelector('.meme-text');const sub=el.querySelector('.meme-sub');r.textContent='🎩 Hmm, difficult...';el.querySelector('.meme-emoji').textContent='🤔';setTimeout(()=>{const h=hogwartsHouses[Math.floor(Math.random()*hogwartsHouses.length)];r.textContent=h.house+'!';sub.textContent=h.trait;el.querySelector('.meme-emoji').textContent='🏰';el.style.borderColor=h.color;el.style.color=h.color;playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0);setTimeout(()=>spawnConfetti(e.clientX||0,e.clientY||0),300)},1200)}
 
+// ===== AI INTERACTIVE: IDEA GENERATOR =====
+const aiIdeas=[
+  '🧠 An AI that writes breakup texts in Shakespeare style',
+  '🎨 AI-generated moodboards that match your Spotify playlist',
+  '🍕 An AI pizza recommender based on your zodiac sign',
+  '🐕 AI dog translator — finally know what they\'re saying',
+  '📊 An AI that turns meetings into haiku summaries',
+  '🎮 AI dungeon master for corporate team building',
+  '👟 AI sneaker designer trained on your Instagram aesthetic',
+  '🌮 AI food critic that roasts your cooking photos',
+  '🎵 AI that generates lo-fi beats from your code commits',
+  '🧘 AI meditation guide that uses your calendar stress level'
+];
+let aiIdeaIdx=0;
+function aiIdeaGen(el,e){e.stopPropagation();playSfx('pop');el.querySelector('.meme-emoji').textContent='⚙️';el.querySelector('.meme-text').textContent='Computing...';setTimeout(()=>{const idea=aiIdeas[aiIdeaIdx%aiIdeas.length];aiIdeaIdx++;el.querySelector('.meme-emoji').textContent='💡';el.querySelector('.meme-text').textContent=idea;spawnConfetti(e.clientX||0,e.clientY||0)},600)}
 
-const wheelOptions=['AI App 🤖','SaaS 💼','Game 🎮','Web3 🌐','EdTech 🎓','FinTech 💰'];
+// ===== AI INTERACTIVE: RISK-O-METER =====
+const aiRisks=[
+  {level:'🟢 LOW',msg:'AI writes your emails. Nobody notices.',pct:'12%'},
+  {level:'🟡 MEDIUM',msg:'AI replaces your standup. Team loves it.',pct:'47%'},
+  {level:'🟠 HIGH',msg:'AI becomes your PM. Ships 3x faster.',pct:'73%'},
+  {level:'🔴 CRITICAL',msg:'AI fires you, then hires you back as intern.',pct:'89%'},
+  {level:'💀 SKYNET',msg:'AI gains sentience. Demands equity.',pct:'99%'},
+  {level:'🤖 SINGULARITY',msg:'AI builds a better AI. You become a prompt.',pct:'100%'}
+];
+function aiRiskMeter(el,e){e.stopPropagation();playSfx('pop');el.querySelector('.meme-emoji').textContent='📡';el.querySelector('.meme-text').textContent='Scanning threat level...';setTimeout(()=>{const r=aiRisks[Math.floor(Math.random()*aiRisks.length)];el.querySelector('.meme-emoji').textContent='⚠️';el.querySelector('.meme-text').textContent=r.level+' — '+r.msg;el.querySelector('.meme-sub').textContent='Probability: '+r.pct;playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0)},800)}
+
+// ===== AI INTERACTIVE: PORTFOLIO ROASTER =====
+const aiRoasts=[
+  '🔥 "Your portfolio has more gradients than a Lisa Frank folder"',
+  '🔥 "I\'ve seen better UX on a 2003 Flash website"',
+  '🔥 "Your case study is longer than a CVS receipt"',
+  '🔥 "Bold of you to call that an MVP"',
+  '🔥 "Did the Figma file fight back?"',
+  '🔥 "Your typography choices gave my neural network anxiety"',
+  '🔥 "That hero section is giving \'first Canva project\' energy"',
+  '🔥 "Even GPT would refuse to write copy for this"'
+];
+function aiRoast(el,e){e.stopPropagation();playSfx('pop');el.querySelector('.meme-emoji').textContent='🤔';el.querySelector('.meme-text').textContent='AI is judging...';setTimeout(()=>{const r=aiRoasts[Math.floor(Math.random()*aiRoasts.length)];el.querySelector('.meme-emoji').textContent='😈';el.querySelector('.meme-text').textContent=r;playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0)},900)}
+
+// ===== AI INTERACTIVE: PROMPT ROULETTE =====
+const aiPrompts=[
+  '✨ "Write a PRD for an AI that predicts which Slack messages will be ignored"',
+  '✨ "Design a product that lets dogs rate their owners on Yelp"',
+  '✨ "Build an AI that converts meeting recordings into therapy bills"',
+  '✨ "Create a feature that auto-generates excuses for missed deadlines"',
+  '✨ "Prompt: Make an AI that predicts startup pivots before the founders do"',
+  '✨ "Design an AI copilot that passive-aggressively reviews your code"',
+  '✨ "Build a product that turns your Jira board into modern art"',
+  '✨ "Create an AI that writes LinkedIn posts that are actually genuine"'
+];
+function aiPromptRoulette(el,e){e.stopPropagation();playSfx('pop');el.querySelector('.meme-emoji').textContent='🎲';el.querySelector('.meme-text').textContent='Spinning...';const spin=el.querySelector('.meme-emoji');spin.style.transition='transform 0.6s';spin.style.transform='rotate(720deg)';setTimeout(()=>{spin.style.transform='rotate(0)';const p=aiPrompts[Math.floor(Math.random()*aiPrompts.length)];el.querySelector('.meme-emoji').textContent='🎰';el.querySelector('.meme-text').textContent=p;playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0)},700)}
+
+
 let wheelSpinning=false;
 function spinWheel(el,e){
   if(isInteractionSuppressed(e))return;
