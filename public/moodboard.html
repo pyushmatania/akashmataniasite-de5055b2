@@ -9860,10 +9860,12 @@ function doSplash(el,e){
   // Batch body-level elements via DocumentFragment
   const bodyEls=[];
 
-  // 3 rings (reduced from 5)
-  for(let i=0;i<3;i++){const r=document.createElement('div');r.className='splash-ring';r.style.left=photoCX+'px';r.style.top=photoCY+'px';r.style.animationDelay=(i*.15)+'s';r.style.borderWidth=(3-i*.5)+'px';bodyEls.push(r);safeTimeout(()=>r.remove(),1500);}
-  // 15 drops (reduced from 40)
-  for(let i=0;i<15;i++){const d=document.createElement('div');d.className='splash-drop';const a=Math.random()*Math.PI*2;
+  // Rings: 2 on mobile, 3 on desktop
+  const ringCount = IS_LOW_POWER_DEVICE ? 2 : 3;
+  for(let i=0;i<ringCount;i++){const r=document.createElement('div');r.className='splash-ring';r.style.left=photoCX+'px';r.style.top=photoCY+'px';r.style.animationDelay=(i*.15)+'s';r.style.borderWidth=(3-i*.5)+'px';bodyEls.push(r);safeTimeout(()=>r.remove(),1500);}
+  // Drops: 8 on mobile, 15 on desktop
+  const dropCount = IS_LOW_POWER_DEVICE ? 8 : 15;
+  for(let i=0;i<dropCount;i++){const d=document.createElement('div');d.className='splash-drop';const a=Math.random()*Math.PI*2;
     const startX=photoCX+Math.cos(a)*(elRect.width/2*0.6);
     const startY=photoCY+Math.sin(a)*(elRect.height/2*0.6);
     const dist=30+Math.random()*120;
