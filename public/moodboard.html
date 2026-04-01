@@ -4396,6 +4396,60 @@ body.map-expanded .scroll-counter{display:none!important}
   font-family:var(--font-sans);font-size:0.74rem;color:rgba(255,255,255,0.45);line-height:1.6;
 }
 
+/* ── CTA Footer (detail pages + portfolio panel) ── */
+.gi-cta-section{
+  margin-top:28px;padding:28px 0 0;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.gi-cta-title{
+  font-family:var(--font-fun);font-size:0.58rem;font-weight:800;
+  letter-spacing:0.16em;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);margin-bottom:16px;text-align:center;
+}
+.gi-cta-buttons{
+  display:flex;flex-direction:column;gap:10px;
+}
+.gi-cta-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:16px 20px;border:none;border-radius:14px;
+  font-family:var(--font-fun);font-size:0.78rem;font-weight:800;
+  letter-spacing:0.04em;cursor:pointer;
+  transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
+  text-decoration:none;position:relative;overflow:hidden;
+}
+.gi-cta-btn::after{
+  content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);
+  transition:left 0.5s;
+}
+.gi-cta-btn:hover::after,.gi-cta-btn:active::after{left:200%}
+.gi-cta-btn:active{transform:scale(0.96)}
+.gi-cta-btn-primary{
+  background:linear-gradient(135deg,var(--frame-c1,rgba(149,117,205,0.9)),var(--frame-c2,rgba(206,147,216,0.8)));
+  color:#fff;box-shadow:0 4px 20px var(--frame-c1,rgba(149,117,205,0.3));
+}
+.gi-cta-btn-primary:hover{box-shadow:0 6px 28px var(--frame-c1,rgba(149,117,205,0.5));transform:translateY(-1px)}
+.gi-cta-btn-secondary{
+  background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.7);
+  border:1.5px solid rgba(255,255,255,0.1);
+}
+.gi-cta-btn-secondary:hover{background:rgba(255,255,255,0.08);color:#fff;border-color:rgba(255,255,255,0.2)}
+.gi-cta-btn-icon{font-size:1.1rem;flex-shrink:0}
+.gi-cta-row{display:flex;gap:10px}
+.gi-cta-row .gi-cta-btn{flex:1}
+
+/* Portfolio panel CTA strip */
+.zp-portfolio-cta{
+  padding:24px 28px 20px;
+  background:linear-gradient(180deg,transparent,rgba(149,117,205,0.04));
+  border-top:1px solid rgba(149,117,205,0.1);
+}
+.zp-portfolio-cta .gi-cta-title{color:rgba(149,117,205,0.5)}
+.zp-portfolio-cta .gi-cta-btn-primary{
+  background:linear-gradient(135deg,rgba(149,117,205,0.9),rgba(206,147,216,0.8));
+  box-shadow:0 4px 20px rgba(149,117,205,0.3);
+}
+
 /* Tag shimmer */
 .zp-tag{position:relative;overflow:hidden}
 .zp-tag::after{
