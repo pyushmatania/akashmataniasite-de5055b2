@@ -10511,58 +10511,105 @@ const hogwartsHouses=[
 ];
 function sortingHat(el,e){e.stopPropagation();playSfx('pop');const r=el.querySelector('.meme-text');const sub=el.querySelector('.meme-sub');r.textContent='🎩 Hmm, difficult...';el.querySelector('.meme-emoji').textContent='🤔';setTimeout(()=>{const h=hogwartsHouses[Math.floor(Math.random()*hogwartsHouses.length)];r.textContent=h.house+'!';sub.textContent=h.trait;el.querySelector('.meme-emoji').textContent='🏰';el.style.borderColor=h.color;el.style.color=h.color;playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0);setTimeout(()=>spawnConfetti(e.clientX||0,e.clientY||0),300)},1200)}
 
-// ===== AI INTERACTIVE: IDEA GENERATOR =====
-const aiIdeas=[
-  '🧠 An AI that writes breakup texts in Shakespeare style',
-  '🎨 AI-generated moodboards that match your Spotify playlist',
-  '🍕 An AI pizza recommender based on your zodiac sign',
-  '🐕 AI dog translator — finally know what they\'re saying',
-  '📊 An AI that turns meetings into haiku summaries',
-  '🎮 AI dungeon master for corporate team building',
-  '👟 AI sneaker designer trained on your Instagram aesthetic',
-  '🌮 AI food critic that roasts your cooking photos',
-  '🎵 AI that generates lo-fi beats from your code commits',
-  '🧘 AI meditation guide that uses your calendar stress level'
+// ===== AI MAGIC 8-BALL =====
+const ball8Answers=[
+  'AI says YES','Signs point to SHIP IT','Reply hazy, ask your PM','Better not tell you now',
+  'My sources say DEPLOY','Outlook: needs more data','It is certain','Don\'t count on it',
+  'Ask again after standup','Concentrate and ask again','Without a doubt','Very doubtful',
+  'Most likely','Cannot predict (try GPT)','Yes, definitely','Better pivot first'
 ];
-let aiIdeaIdx=0;
-function aiIdeaGen(el,e){e.stopPropagation();playSfx('pop');el.querySelector('.meme-emoji').textContent='⚙️';el.querySelector('.meme-text').textContent='Computing...';setTimeout(()=>{const idea=aiIdeas[aiIdeaIdx%aiIdeas.length];aiIdeaIdx++;el.querySelector('.meme-emoji').textContent='💡';el.querySelector('.meme-text').textContent=idea;spawnConfetti(e.clientX||0,e.clientY||0)},600)}
+function shake8Ball(el,e){
+  e.stopPropagation();playSfx('pop');
+  const sphere=el.querySelector('.ball-sphere');
+  const ans=el.querySelector('.ball-answer');
+  ans.classList.remove('visible');
+  sphere.classList.remove('shaking');void sphere.offsetWidth;
+  sphere.classList.add('shaking');
+  ans.textContent='...';ans.classList.add('visible');
+  setTimeout(()=>{
+    const pick=ball8Answers[Math.floor(Math.random()*ball8Answers.length)];
+    ans.textContent=pick;playSfx('win');
+    spawnConfetti(e.clientX||0,e.clientY||0);
+  },600);
+}
 
-// ===== AI INTERACTIVE: RISK-O-METER =====
-const aiRisks=[
-  {level:'🟢 LOW',msg:'AI writes your emails. Nobody notices.',pct:'12%'},
-  {level:'🟡 MEDIUM',msg:'AI replaces your standup. Team loves it.',pct:'47%'},
-  {level:'🟠 HIGH',msg:'AI becomes your PM. Ships 3x faster.',pct:'73%'},
-  {level:'🔴 CRITICAL',msg:'AI fires you, then hires you back as intern.',pct:'89%'},
-  {level:'💀 SKYNET',msg:'AI gains sentience. Demands equity.',pct:'99%'},
-  {level:'🤖 SINGULARITY',msg:'AI builds a better AI. You become a prompt.',pct:'100%'}
+// ===== AI THREAT GAUGE =====
+const gaugeData=[
+  {pct:8,color:'#4CAF50',emoji:'😎',level:'SAFE',msg:'AI writes your emails. Nobody notices.'},
+  {pct:25,color:'#8BC34A',emoji:'🤔',level:'LOW',msg:'AI automates your standups. Team prefers it.'},
+  {pct:45,color:'#FFC107',emoji:'😬',level:'MODERATE',msg:'AI becomes Scrum Master. Velocity triples.'},
+  {pct:65,color:'#FF9800',emoji:'😰',level:'HIGH',msg:'AI ships your roadmap before you finish the PRD.'},
+  {pct:80,color:'#FF5722',emoji:'🫣',level:'CRITICAL',msg:'AI fires you, then hires you back as prompt engineer.'},
+  {pct:95,color:'#D32F2F',emoji:'💀',level:'SKYNET',msg:'AI gains sentience. Demands equity and a corner office.'}
 ];
-function aiRiskMeter(el,e){e.stopPropagation();playSfx('pop');el.querySelector('.meme-emoji').textContent='📡';el.querySelector('.meme-text').textContent='Scanning threat level...';setTimeout(()=>{const r=aiRisks[Math.floor(Math.random()*aiRisks.length)];el.querySelector('.meme-emoji').textContent='⚠️';el.querySelector('.meme-text').textContent=r.level+' — '+r.msg;el.querySelector('.meme-sub').textContent='Probability: '+r.pct;playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0)},800)}
+function spinGauge(el,e){
+  e.stopPropagation();playSfx('pop');
+  var fill=document.getElementById('gaugeFill');
+  var lvl=document.getElementById('gaugeLevel');
+  var msg=document.getElementById('gaugeMsg');
+  var center=el.querySelector('.gauge-emoji');
+  fill.style.strokeDasharray='0 283';lvl.textContent='SCANNING...';center.textContent='📡';msg.textContent='Analyzing threat vectors...';
+  setTimeout(function(){
+    var d=gaugeData[Math.floor(Math.random()*gaugeData.length)];
+    var arc=Math.round(d.pct/100*212);
+    fill.style.stroke=d.color;fill.style.strokeDasharray=arc+' 283';
+    center.textContent=d.emoji;lvl.textContent=d.level;lvl.style.color=d.color;msg.textContent=d.msg;
+    playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0);
+  },1000);
+}
 
-// ===== AI INTERACTIVE: PORTFOLIO ROASTER =====
-const aiRoasts=[
-  '🔥 "Your portfolio has more gradients than a Lisa Frank folder"',
-  '🔥 "I\'ve seen better UX on a 2003 Flash website"',
-  '🔥 "Your case study is longer than a CVS receipt"',
-  '🔥 "Bold of you to call that an MVP"',
-  '🔥 "Did the Figma file fight back?"',
-  '🔥 "Your typography choices gave my neural network anxiety"',
-  '🔥 "That hero section is giving \'first Canva project\' energy"',
-  '🔥 "Even GPT would refuse to write copy for this"'
+// ===== AI CRYSTAL BALL =====
+const crystalVisions=[
+  '"Your next feature will go viral... on the internal Slack."',
+  '"I see... many meetings in your future. So many meetings."',
+  '"The backlog clears itself... in a parallel universe."',
+  '"A wild stakeholder appears with just one small change."',
+  '"I foresee... you deploying on Friday. Bold choice."',
+  '"Your portfolio radiates big energy. MVP energy specifically."',
+  '"The stars align for a pivot. The 7th pivot."',
+  '"I see success... right after this sprint. No wait, the next one."'
 ];
-function aiRoast(el,e){e.stopPropagation();playSfx('pop');el.querySelector('.meme-emoji').textContent='🤔';el.querySelector('.meme-text').textContent='AI is judging...';setTimeout(()=>{const r=aiRoasts[Math.floor(Math.random()*aiRoasts.length)];el.querySelector('.meme-emoji').textContent='😈';el.querySelector('.meme-text').textContent=r;playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0)},900)}
+function gazeOrb(el,e){
+  e.stopPropagation();playSfx('pop');
+  var orb=el.querySelector('.crystal-orb');
+  var txt=document.getElementById('crystalText');
+  orb.classList.remove('active');void orb.offsetWidth;orb.classList.add('active');
+  txt.style.opacity='0';txt.textContent='✨ Channeling...';txt.style.opacity='1';
+  setTimeout(function(){
+    var v=crystalVisions[Math.floor(Math.random()*crystalVisions.length)];
+    txt.textContent=v;playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0);
+  },1000);
+}
 
-// ===== AI INTERACTIVE: PROMPT ROULETTE =====
-const aiPrompts=[
-  '✨ "Write a PRD for an AI that predicts which Slack messages will be ignored"',
-  '✨ "Design a product that lets dogs rate their owners on Yelp"',
-  '✨ "Build an AI that converts meeting recordings into therapy bills"',
-  '✨ "Create a feature that auto-generates excuses for missed deadlines"',
-  '✨ "Prompt: Make an AI that predicts startup pivots before the founders do"',
-  '✨ "Design an AI copilot that passive-aggressively reviews your code"',
-  '✨ "Build a product that turns your Jira board into modern art"',
-  '✨ "Create an AI that writes LinkedIn posts that are actually genuine"'
+// ===== AI SLOT MACHINE =====
+const slotEmojis=['🧠','🚀','✨','🤖','💡','🎯','⚡','🔥','💎','🎨'];
+const slotPrizes=[
+  'Write a PRD for an AI that predicts ignored Slack messages',
+  'Design a product that lets dogs rate their owners',
+  'Build an AI that converts meetings into therapy bills',
+  'Auto-generate excuses for missed deadlines',
+  'Predict startup pivots before the founders do',
+  'An AI copilot that passive-aggressively reviews code',
+  'Turn your Jira board into modern art',
+  'AI that writes genuine LinkedIn posts'
 ];
-function aiPromptRoulette(el,e){e.stopPropagation();playSfx('pop');el.querySelector('.meme-emoji').textContent='🎲';el.querySelector('.meme-text').textContent='Spinning...';const spin=el.querySelector('.meme-emoji');spin.style.transition='transform 0.6s';spin.style.transform='rotate(720deg)';setTimeout(()=>{spin.style.transform='rotate(0)';const p=aiPrompts[Math.floor(Math.random()*aiPrompts.length)];el.querySelector('.meme-emoji').textContent='🎰';el.querySelector('.meme-text').textContent=p;playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0)},700)}
+var slotsSpinning=false;
+function pullSlots(el,e){
+  e.stopPropagation();if(slotsSpinning)return;slotsSpinning=true;playSfx('spin');
+  var r1=document.getElementById('reel1'),r2=document.getElementById('reel2'),r3=document.getElementById('reel3');
+  var res=document.getElementById('slotsResult');
+  [r1,r2,r3].forEach(function(r){r.classList.add('spinning')});
+  res.textContent='🎰 Spinning...';
+  var pick=function(){return slotEmojis[Math.floor(Math.random()*slotEmojis.length)]};
+  setTimeout(function(){r1.classList.remove('spinning');r1.querySelector('span').textContent=pick()},400);
+  setTimeout(function(){r2.classList.remove('spinning');r2.querySelector('span').textContent=pick()},700);
+  setTimeout(function(){
+    r3.classList.remove('spinning');r3.querySelector('span').textContent=pick();
+    var prize=slotPrizes[Math.floor(Math.random()*slotPrizes.length)];
+    res.textContent='✨ '+prize;playSfx('win');spawnConfetti(e.clientX||0,e.clientY||0);
+    slotsSpinning=false;
+  },1000);
+}
 
 
 let wheelSpinning=false;
