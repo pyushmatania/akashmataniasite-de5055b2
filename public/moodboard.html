@@ -10664,68 +10664,7 @@ function pickQuizOpt(optEl,e){
   },3000);
 }
 
-// ===== SLOT MACHINE =====
-const slotSymbols=['🚀','💰','🔥','💎','⭐','🎯','🧠','🦄','📈','🎬'];
-const slotWins={'🚀🚀🚀':'UNICORN STATUS! 🦄','💰💰💰':'FUNDED! Series A! 💸','🔥🔥🔥':'VIRAL LAUNCH! 📈','💎💎💎':'DIAMOND HANDS! 💎','⭐⭐⭐':'PRODUCT HUNT #1! 🏆'};
-let slotsSpinning=false;
-function pullSlots(el,e){
-  if(isInteractionSuppressed(e))return;
-  e.stopPropagation();
-  if(slotsSpinning)return;
-  slotsSpinning=true;
-  playSfx('spin');
-  const reels=el.querySelectorAll('.slot-reel');
-  const result=el.querySelector('.slots-result');
-  result.textContent='🎰 Spinning...';
-  const picks=[];
-  reels.forEach((r,i)=>{
-    let count=0;
-    const interval=setInterval(()=>{
-      r.textContent=slotSymbols[Math.floor(Math.random()*slotSymbols.length)];
-      count++;
-      if(count>(10+i*5)){
-        clearInterval(interval);
-        const final=slotSymbols[Math.floor(Math.random()*slotSymbols.length)];
-        r.textContent=final;
-        picks.push(final);
-        if(picks.length===3){
-          const key=picks.join('');
-          if(slotWins[key]){
-            result.textContent=slotWins[key];
-            playSfx('bingo');
-            spawnConfetti(e.clientX||0,e.clientY||0);
-            setTimeout(()=>spawnConfetti(e.clientX||0,e.clientY||0),300);
-          } else if(picks[0]===picks[1]||picks[1]===picks[2]){
-            result.textContent='Close! 2/3 match 😅';
-            playSfx('click');
-          } else {
-            const msgs=['Pivot time! 🔄','Try again, founder! 💪','The market isn\'t ready 📊','Pre-seed vibes 🌱'];
-            result.textContent=msgs[Math.floor(Math.random()*msgs.length)];
-            playSfx('fail');
-          }
-          slotsSpinning=false;
-        }
-      }
-    },80);
-  });
-}
-
-// ===== MAGIC 8 BALL =====
-const eightBallAnswers=['Absolutely, ship it! 🚀','Ask your co-founder 🤷','The data says yes 📊','Pivot immediately 🔄','Not in this sprint 🏃','Mercury is in retrograde 🌙','Consult the roadmap 🗺️','Signs point to MVP 📱','Better ask the intern 😅','100% — trust the vision 💡','Debug first, decide later 🐛','Only if there\'s chai ☕'];
-function shake8Ball(el,e){
-  if(isInteractionSuppressed(e))return;
-  e.stopPropagation();
-  playSfx('pop');
-  const txt=el.querySelector('.ball-text');
-  txt.textContent='...';
-  el.style.transform='rotate(10deg)';
-  setTimeout(()=>{el.style.transform='rotate(-8deg)'},150);
-  setTimeout(()=>{
-    el.style.transform='';
-    txt.textContent=eightBallAnswers[Math.floor(Math.random()*eightBallAnswers.length)];
-    spawnConfetti(e.clientX||0,e.clientY||0);
-  },600);
-}
+// (duplicate slot machine & 8-ball removed — originals defined above)
 
 // ===== TYPEWRITER =====
 const twThoughts=['Day 1: Started building. No clue what I\'m doing. Ship anyway.','Day 47: Users love it. Or hate it. Same feedback form.','Day 120: Pivoted for the 3rd time. This one feels right.','Day 200: First paying user! Celebrated with panipuri.','Day 365: The startup didn\'t die. That\'s the win.','Day 500: Team of 6 now. We argue about fonts daily.','Day 730: Revenue > costs. Is this... profit?','Day ∞: Still building. Always building. 🚀'];
