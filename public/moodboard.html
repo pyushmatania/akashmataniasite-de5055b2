@@ -110,8 +110,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker .delete-x:hover{transform:scale(1.2);background:#C62828}
 .sticker .delete-x:active{transform:scale(0.9)}
 .delete-mode-active .sticker .delete-x{display:flex}
-.delete-mode-active .sticker{cursor:default!important;animation:delete-wobble 0.3s ease-in-out infinite alternate}
-@keyframes delete-wobble{0%{transform:rotate(-0.5deg)}100%{transform:rotate(0.5deg)}}
+.delete-mode-active .sticker{cursor:default!important;animation:delete-wobble 0.3s ease-in-out infinite alternate;outline:2px dashed rgba(229,57,53,0.35);outline-offset:4px;border-radius:12px}
+@keyframes delete-wobble{0%{box-shadow:0 0 0 3px rgba(229,57,53,0.15)}100%{box-shadow:0 0 0 6px rgba(229,57,53,0.08)}}
 .delete-mode-btn{display:flex;align-items:center;gap:6px;width:100%;padding:10px 14px;border:2px dashed rgba(229,57,53,0.4);border-radius:10px;background:rgba(229,57,53,0.08);color:#E53935;font-family:var(--font-fun);font-size:0.72rem;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:10px}
 .delete-mode-btn:hover{background:rgba(229,57,53,0.15);border-color:rgba(229,57,53,0.6)}
 .delete-mode-btn.active{background:rgba(229,57,53,0.2);border-color:#E53935;box-shadow:0 0 12px rgba(229,57,53,0.3)}
