@@ -13651,72 +13651,16 @@ function returnCricketToCanvas(){
   if(ci)ci.style.display='block';if(cl)cl.style.display='block';
 }
 
-/* ── Loading screen: PM sticker spawner + percentage counter + theme sync ── */
+/* ── Loading screen: percentage counter ── */
 (function(){
   var loader=document.getElementById('loaderScreen');
   var vp=document.querySelector('.canvas-viewport');
-  var container=document.getElementById('loaderStickers');
   var percentEl=document.getElementById('loaderPercent');
   var startTime=Date.now();
   var DURATION=3200;
 
-  // PM-themed sticker chips
-  var pmStickers=[
-    {icon:'📋',label:'SPRINT PLANNING',bg:'rgba(66,165,245,0.15)',color:'#64B5F6'},
-    {icon:'🎯',label:'OKRs',bg:'rgba(255,183,77,0.15)',color:'#FFB74D'},
-    {icon:'📊',label:'METRICS',bg:'rgba(129,199,132,0.15)',color:'#81C784'},
-    {icon:'🚀',label:'SHIP IT',bg:'rgba(255,112,67,0.15)',color:'#FF7043'},
-    {icon:'💡',label:'IDEATION',bg:'rgba(255,241,118,0.15)',color:'#FFF176'},
-    {icon:'🔄',label:'RETRO',bg:'rgba(186,104,200,0.15)',color:'#CE93D8'},
-    {icon:'📝',label:'USER STORY',bg:'rgba(77,182,172,0.15)',color:'#4DB6AC'},
-    {icon:'⚡',label:'VELOCITY',bg:'rgba(255,213,79,0.15)',color:'#FFD54F'},
-    {icon:'🏗️',label:'ROADMAP',bg:'rgba(144,164,174,0.15)',color:'#90A4AE'},
-    {icon:'🎨',label:'DESIGN REVIEW',bg:'rgba(240,98,146,0.15)',color:'#F06292'},
-    {icon:'🔍',label:'DISCOVERY',bg:'rgba(121,134,203,0.15)',color:'#7986CB'},
-    {icon:'📦',label:'BACKLOG',bg:'rgba(255,138,101,0.15)',color:'#FF8A65'},
-    {icon:'✅',label:'ACCEPTANCE',bg:'rgba(102,187,106,0.15)',color:'#66BB6A'},
-    {icon:'🧪',label:'A/B TEST',bg:'rgba(171,71,188,0.15)',color:'#AB47BC'},
-    {icon:'📈',label:'GROWTH',bg:'rgba(41,182,246,0.15)',color:'#29B6F6'},
-    {icon:'🤝',label:'STANDUP',bg:'rgba(255,167,38,0.15)',color:'#FFA726'},
-    {icon:'🛠',label:'BUILD',bg:'rgba(201,169,110,0.15)',color:'#C9A96E'},
-    {icon:'💎',label:'MVP',bg:'rgba(0,188,212,0.15)',color:'#00BCD4'},
-    {icon:'🔥',label:'P0 BUG',bg:'rgba(244,67,54,0.15)',color:'#EF5350'},
-    {icon:'🎪',label:'DEMO DAY',bg:'rgba(156,39,176,0.15)',color:'#AB47BC'},
-  ];
-
   // Always black splash
   loader.style.backgroundColor='#000';
-
-  function rnd(a,b){return a+Math.random()*(b-a)}
-  function spawnSticker(){
-    var s=pmStickers[Math.floor(Math.random()*pmStickers.length)];
-    var el=document.createElement('div');
-    el.className='loader-sticker';
-    el.style.background=s.bg;
-    el.style.color=s.color;
-    el.style.borderColor=s.color.replace(')',',0.25)').replace('rgb','rgba');
-    el.innerHTML='<span style="font-size:1rem">'+s.icon+'</span>'+s.label;
-    var angle=rnd(-Math.PI*0.8, Math.PI*0.8);
-    var radius=rnd(60,200);
-    el.style.left='calc(50% + '+rnd(-120,120)+'px)';
-    el.style.top='calc(18% + '+rnd(-30,30)+'px)';
-    el.style.setProperty('--sx',Math.cos(angle+Math.PI)*radius+'px');
-    el.style.setProperty('--sy',Math.sin(angle+Math.PI)*radius+'px');
-    el.style.setProperty('--dx',Math.cos(angle)*radius*0.7+'px');
-    el.style.setProperty('--dy',Math.sin(angle)*radius*0.7+'px');
-    el.style.setProperty('--sr',rnd(-120,120)+'deg');
-    el.style.setProperty('--er',rnd(-25,25)+'deg');
-    el.style.setProperty('--dur',rnd(2.2,3.8)+'s');
-    container.appendChild(el);
-    requestAnimationFrame(function(){el.classList.add('fly')});
-    setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el)},4200);
-  }
-
-  // Spawn in waves
-  var spawnInterval=setInterval(function(){
-    var count=Math.floor(rnd(2,4));
-    for(var i=0;i<count;i++) setTimeout(spawnSticker,i*120);
-  },500);
 
   // Percentage counter
   var percentInterval=setInterval(function(){
