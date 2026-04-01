@@ -12,6 +12,8 @@ function dbg(...args: any[]) {
   if (el) el.textContent = logs.join("\n");
 }
 
+(window as any).__dbgLog = dbg;
+
 // Catch uncaught errors
 window.addEventListener("error", (e) => {
   dbg("ERR", e.message, e.filename?.split("/").pop(), "L" + e.lineno);
@@ -76,24 +78,54 @@ pre.style.cssText =
   "display:none;";
 document.body.appendChild(pre);
 
-// Triple-tap bottom-right corner to toggle debug overlay
-let tapCount = 0;
-let tapTimer: number;
-document.addEventListener("click", (e) => {
-  const x = e.clientX, y = e.clientY;
-  if (x > innerWidth - 60 && y > innerHeight - 60) {
-    tapCount++;
-    clearTimeout(tapTimer);
-    tapTimer = window.setTimeout(() => { tapCount = 0; }, 600);
-    if (tapCount >= 3) {
-      tapCount = 0;
-      pre.style.display = pre.style.display === "none" ? "block" : "none";
-    }
+const toggleDebug = () => {
+  pre.style.display = pre.style.display === "none" ? "block" : "none";
+  pre.textContent = logs.join("\n");
+};
+
+(window as any).__dbgToggle = toggleDebug;
+
+const hit = document.createElement("button");
+hit.id = "__dbg_hit__";
+hit.type = "button";
+hit.setAttribute("aria-label", "Toggle debug console");
+hit.style.cssText =
+  "position:fixed;left:0;top:0;width:88px;height:88px;z-index:2147483647;" +
+  "opacity:0;border:0;background:transparent;padding:0;margin:0;pointer-events:auto;" +
+  "touch-action:manipulation;-webkit-tap-highlight-color:transparent;";
+document.body.appendChild(hit);
+
+let tapTimes: number[] = [];
+let tapLock = false;
+
+const registerDebugTap = (e?: Event) => {
+  e?.preventDefault();
+  e?.stopPropagation();
+  const now = performance.now();
+  tapTimes = tapTimes.filter((t) => now - t < 600);
+  tapTimes.push(now);
+  if (tapTimes.length >= 3 && !tapLock) {
+    tapLock = true;
+    tapTimes = [];
+    toggleDebug();
+    window.setTimeout(() => {
+      tapLock = false;
+    }, 800);
   }
+};
+
+hit.addEventListener("touchend", registerDebugTap, { passive: false, capture: true });
+hit.addEventListener("click", registerDebugTap, true);
+
+window.addEventListener("message", (event) => {
+  const data = event.data;
+  if (!data || data.type !== "moodboard-debug" || !Array.isArray(data.args)) return;
+  dbg("MB", ...data.args);
 });
 
 dbg("BOOT", navigator.userAgent.slice(0, 80));
 dbg("SCREEN", innerWidth + "x" + innerHeight, "dpr=" + devicePixelRatio);
+dbg("DEBUG_HIT", "triple-tap top-left corner");
 
 // Mount React
 createRoot(document.getElementById("root")!).render(<App />);
