@@ -4852,6 +4852,27 @@ body.map-expanded .scroll-counter{display:none!important}
   -webkit-overflow-scrolling:touch;
 }
 .zp-proj-detail.open{opacity:1;visibility:visible}
+
+/* ── Scroll progress bar ── */
+.zp-scroll-progress{
+  position:fixed;top:0;left:0;right:0;height:3px;z-index:10012;
+  background:transparent;pointer-events:none;
+  opacity:0;transition:opacity 0.3s;
+}
+.zp-proj-detail.open .zp-scroll-progress{opacity:1}
+.zp-scroll-progress-fill{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--frame-c1,rgba(124,77,255,0.9)),var(--frame-c2,rgba(206,147,216,0.8)),var(--frame-c1,rgba(124,77,255,0.9)));
+  background-size:200% 100%;
+  animation:scrollBarShimmer 3s linear infinite;
+  border-radius:0 2px 2px 0;
+  transition:width 0.1s linear;
+  box-shadow:0 0 8px var(--frame-c1,rgba(124,77,255,0.5));
+}
+@keyframes scrollBarShimmer{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
 .zp-proj-detail-back{
   position:fixed;top:16px;left:16px;z-index:10011;
   width:40px;height:40px;border-radius:50%;
