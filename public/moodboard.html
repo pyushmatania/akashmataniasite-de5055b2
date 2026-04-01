@@ -96,12 +96,12 @@
   --font-sans:'DM Sans',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;
   --font-hand:'Caveat',cursive;--font-fun:'Space Grotesk',sans-serif;
 }
-html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);background:#FAF8F5;margin:0;padding:0;overscroll-behavior:none}
+html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);background:#FAF8F5;margin:0;padding:0;overscroll-behavior:none;-webkit-font-smoothing:antialiased;text-rendering:optimizeSpeed}
 *{-webkit-tap-highlight-color:transparent}
-.canvas-viewport{width:100vw;height:100vh;height:100dvh;overflow:auto;cursor:grab;position:relative;margin:0;padding:0;background:#FAF8F5;overscroll-behavior:none}
-.canvas{transform-origin:0 0;overflow:visible}
-@media(max-width:768px){.canvas{transform:scale(0.6)}}
-@media(min-width:769px){.canvas{transform:scale(0.72)}}
+.canvas-viewport{width:100vw;height:100vh;height:100dvh;overflow:auto;cursor:grab;position:relative;margin:0;padding:0;background:#FAF8F5;overscroll-behavior:none;-webkit-overflow-scrolling:touch;will-change:scroll-position}
+.canvas{transform-origin:0 0;overflow:visible;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+@media(max-width:768px){.canvas{transform:scale(0.6) translateZ(0)}}
+@media(min-width:769px){.canvas{transform:scale(0.72) translateZ(0)}}
 .canvas-viewport:active{cursor:grabbing}
 .canvas-viewport::-webkit-scrollbar{display:none}
 .canvas-viewport{scrollbar-width:none;-ms-overflow-style:none}
