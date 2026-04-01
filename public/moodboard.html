@@ -10769,6 +10769,7 @@ async function bootstrapMap(forceRescan){
     ensureMapData(forceRescan);
     drawMap();
     mapBootstrapped=true;
+    if(typeof window.applyDeletedItems==='function')window.applyDeletedItems();
     initBoardStats();
   }catch(e){
     console.error('Init error:',e)
