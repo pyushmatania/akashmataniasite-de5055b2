@@ -11566,6 +11566,9 @@ function ensureCompanionStickers(force){
         var closeBtn=hc.querySelector('.hc-close-btn');
         if(closeBtn){closeBtn.addEventListener('click',function(ev){ev.stopPropagation();hc.style.display='none';coverImg.style.display='block';coverLabel.style.display='block';});}
         window.__initHCGame(hc);
+        // Store global reference for single-game-two-views
+        window.__hcGameEl=hc;
+        window.__hcCanvasWrap=wrap;
       }
     }
 
