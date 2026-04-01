@@ -7806,10 +7806,10 @@ function getCurrentRotation(el){
 
 // Prevent accidental click handlers right after drag (stops interactive cards from "disappearing")
 // BUT: never suppress clicks on internal interactive elements (flip cards, meters, buttons, etc.)
-const _interactiveInternals='.zc-flip-card,.zc-meter,.zc-flip-inner,button,input,textarea,select,a,.zic-explore-btn,.zic-tap-hint,.zic-tag,.sticker-drag-handle';
+const _interactiveInternals='.zc-flip-card,.zc-meter,.zc-flip-inner,button,input,textarea,select,a,.zic-explore-btn,.zic-tap-hint,.zic-tag,.sticker-drag-handle,.settings-btn,.settings-panel,.theme-option,.minimap-container,.minimap,.map-header,.map-bottom-bar,.map-controls-right,.map-close-btn,.mc,.map-ctrl-btn,.bottom-nav,.logo';
 function isInteractionSuppressed(e){
   if(performance.now()>=suppressStickerClickUntil)return false;
-  // Never suppress internal interactive element clicks
+  // Never suppress real UI controls outside stickers
   if(e&&e.target&&e.target.closest(_interactiveInternals))return false;
   if(e){
     if(e.cancelable)e.preventDefault();
@@ -7820,7 +7820,8 @@ function isInteractionSuppressed(e){
 }
 
 document.addEventListener('click',e=>{
-  if(e.target.closest('.sticker'))isInteractionSuppressed(e);
+  if(!e.target.closest('.sticker'))return;
+  isInteractionSuppressed(e);
 },true);
 
 // Event delegation for sticker drag — handles dynamically added stickers too
