@@ -11232,6 +11232,9 @@ function ensureCompanionStickers(force){
         let youScore=0,cpuScore=0,wins=0,losses=0;
         let target=-1;
         let totalBalls=0;
+        let fourCount=0,sixCount=0,streak=0,bestStreak=0;
+        let overRuns=[];let currentOverRuns=0;
+        let highestScore=0;
 
         function updateStats(){
           var overs=Math.floor(totalBalls/6);
@@ -11241,9 +11244,52 @@ function ensureCompanionStickers(force){
           var oversEl=hc.querySelector('[data-stat="overs"]');
           var ballsEl=hc.querySelector('[data-stat="balls"]');
           var crrEl=hc.querySelector('[data-stat="crr"]');
+          var foursEl=hc.querySelector('[data-stat="fours"]');
+          var sixesEl=hc.querySelector('[data-stat="sixes"]');
           if(oversEl)oversEl.textContent=overs+'.'+ballsInOver;
           if(ballsEl)ballsEl.textContent=String(totalBalls);
           if(crrEl)crrEl.textContent=crr;
+          if(foursEl)foursEl.textContent=String(fourCount);
+          if(sixesEl)sixesEl.textContent=String(sixCount);
+          // Streak display
+          var streakEl=hc.querySelector('[data-streak]');
+          if(streakEl){
+            if(streak>=3)streakEl.innerHTML='<span class="streak-fire">🔥</span> '+streak+' BALL STREAK!';
+            else streakEl.textContent='';
+          }
+          // RRR
+          var rrrEl=hc.querySelector('[data-rrr]');
+          if(rrrEl&&target>0&&phase==='bat'){
+            var need=target+1-youScore;
+            var ballsLeft=Math.max(1,30-totalBalls);
+            var rrr=(need/(ballsLeft/6)).toFixed(2);
+            rrrEl.textContent='RRR: '+rrr+' · Need '+need+' off '+ballsLeft;
+          }else if(rrrEl&&target>0&&phase==='bowl'){
+            var need2=target+1-cpuScore;
+            var ballsLeft2=Math.max(1,30-totalBalls);
+            var rrr2=(need2/(ballsLeft2/6)).toFixed(2);
+            rrrEl.textContent='CPU needs '+need2+' off '+ballsLeft2+' · RRR: '+rrr2;
+          }else if(rrrEl){rrrEl.textContent='';}
+          // Match stats
+          var sr=totalBalls>0?Math.round((batScore/totalBalls)*100):0;
+          var srEl=hc.querySelector('[data-mstat="sr"]');if(srEl)srEl.textContent=String(sr);
+          var hEl=hc.querySelector('[data-mstat="highest"]');if(hEl)hEl.textContent=String(highestScore);
+          var mfEl=hc.querySelector('[data-mstat="fours"]');if(mfEl)mfEl.textContent=String(fourCount);
+          var msEl=hc.querySelector('[data-mstat="sixes"]');if(msEl)msEl.textContent=String(sixCount);
+          // Manhattan
+          updateManhattan();
+        }
+        function updateManhattan(){
+          var mEl=hc.querySelector('.hc-manhattan');if(!mEl)return;
+          var allOvers=overRuns.slice();
+          if(currentOverRuns>0||totalBalls%6!==0)allOvers.push(currentOverRuns);
+          if(!allOvers.length){mEl.innerHTML='';return;}
+          var maxR=Math.max.apply(null,allOvers)||1;
+          mEl.innerHTML=allOvers.map(function(r,i){
+            var h=Math.max(2,Math.round((r/maxR)*24));
+            var cls=r>=8?'high':'';
+            return '<div class="hc-manhattan-bar '+cls+'" style="height:'+h+'px" data-runs="'+r+'"></div>';
+          }).join('');
         }
 
         const phaseEl=hc.querySelector('.hc-phase');
