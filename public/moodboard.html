@@ -9843,6 +9843,8 @@ function sU(e){
 
 
 function doSplash(el,e){
+  // Skip splash entirely on mobile if in safety mode
+  if(window._mobileSplashReduced && document.body.classList.contains('safety-mode')) return;
   // Cooldown guard to prevent DOM explosion from rapid taps
   const now=performance.now();
   if(now-_lastSplashTime<SPLASH_COOLDOWN)return;
