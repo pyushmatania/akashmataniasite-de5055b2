@@ -96,12 +96,12 @@
   --font-sans:'DM Sans',sans-serif;--font-serif:'Instrument Serif',Georgia,serif;
   --font-hand:'Caveat',cursive;--font-fun:'Space Grotesk',sans-serif;
 }
-html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);background:#FAF8F5;margin:0;padding:0;overscroll-behavior:none}
+html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);background:#FAF8F5;margin:0;padding:0;overscroll-behavior:none;-webkit-font-smoothing:antialiased;text-rendering:optimizeSpeed}
 *{-webkit-tap-highlight-color:transparent}
-.canvas-viewport{width:100vw;height:100vh;height:100dvh;overflow:auto;cursor:grab;position:relative;margin:0;padding:0;background:#FAF8F5;overscroll-behavior:none}
-.canvas{transform-origin:0 0;overflow:visible}
-@media(max-width:768px){.canvas{transform:scale(0.6)}}
-@media(min-width:769px){.canvas{transform:scale(0.72)}}
+.canvas-viewport{width:100vw;height:100vh;height:100dvh;overflow:auto;cursor:grab;position:relative;margin:0;padding:0;background:#FAF8F5;overscroll-behavior:none;-webkit-overflow-scrolling:touch;will-change:scroll-position}
+.canvas{transform-origin:0 0;overflow:visible;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+@media(max-width:768px){.canvas{transform:scale(0.6) translateZ(0)}}
+@media(min-width:769px){.canvas{transform:scale(0.72) translateZ(0)}}
 .canvas-viewport:active{cursor:grabbing}
 .canvas-viewport::-webkit-scrollbar{display:none}
 .canvas-viewport{scrollbar-width:none;-ms-overflow-style:none}
@@ -141,8 +141,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .sticker:active{cursor:grabbing}
 .sticker.dragging{z-index:9999!important;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2))!important;will-change:left,top,filter;transition:none!important}
 /* Pause all animations inside off-screen elements — applied by IntersectionObserver */
-.sticker.paused-offscreen,.sticker.paused-offscreen *,.zone-intro-card.paused-offscreen,.zone-intro-card.paused-offscreen *{animation-play-state:paused!important;transition:none!important}
-.zone-intro-card{will-change:translate}
+.sticker.paused-offscreen,.sticker.paused-offscreen *,.zone-intro-card.paused-offscreen,.zone-intro-card.paused-offscreen *,.doodle.paused-offscreen,.doodle.paused-offscreen *,.hollywood-signpost.paused-offscreen,.hollywood-signpost.paused-offscreen *{animation-play-state:paused!important;transition:none!important;will-change:auto!important}
+.zone-intro-card{will-change:auto}
 
 /* ===== ZONE VISUAL TINTS ===== */
 .zone-tint{position:absolute;pointer-events:none;z-index:1;border-radius:40px;opacity:0.06;transition:opacity 0.3s;contain:strict;content-visibility:auto;contain-intrinsic-size:auto 800px}
@@ -716,13 +716,18 @@ body.safety-mode .doodle-stars .star-3{animation:none!important}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}
 }
+/* Freeze all animations when tab is hidden — recovers GPU memory */
+body.tab-hidden *,body.tab-hidden *::before,body.tab-hidden *::after{animation-play-state:paused!important;transition:none!important}
 
 /* Runtime perf mode during active pan/drag: keep visuals identical at rest, but
    temporarily reduce expensive effects while the user is actively interacting. */
-body.perf-interacting .sticker{transition:none!important;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.08))!important}
+body.perf-interacting .sticker{transition:none!important;filter:none!important}
 body.perf-interacting .zone-intro-card,
 body.perf-interacting .zone-intro-card *{animation-play-state:paused!important}
 body.perf-interacting .map-intro-glow{animation:none!important}
+body.perf-interacting .canvas::after{display:none!important}
+body.perf-interacting .zone-tint{opacity:0!important}
+body.perf-interacting .doodle,.perf-interacting .hollywood-signpost{visibility:hidden!important}
 
 body.loading-phase .sticker,
 body.loading-phase .map-sticker-clone,
@@ -8406,11 +8411,26 @@ function cycleIntroCards(e){
 <script>
 (function(){
   var confettiColors=['#a8d8b9','#f5deb3','#d4b8e8','#b8d4f0','#f0b8b8','#f5c842','#7bc49a'];
+  var confettiPool=[];
+  var MAX_CONFETTI=60; // reuse pool cap
+  var _lastConfetti=0;
+
+  function getConfettiEl(){
+    if(confettiPool.length>0)return confettiPool.pop();
+    if(document.querySelectorAll('.confetti-piece').length>MAX_CONFETTI)return null;
+    var el=document.createElement('div');
+    el.className='confetti-piece';
+    return el;
+  }
 
   function burstConfetti(x,y,count){
-    for(var i=0;i<count;i++){
-      var el=document.createElement('div');
-      el.className='confetti-piece';
+    var now=performance.now();
+    if(now-_lastConfetti<400)return; // cooldown
+    _lastConfetti=now;
+    var actual=Math.min(count,12); // cap per burst
+    for(var i=0;i<actual;i++){
+      var el=getConfettiEl();
+      if(!el)continue;
       el.style.left=(x+Math.random()*60-30)+'px';
       el.style.top=(y+Math.random()*20-10)+'px';
       el.style.background=confettiColors[Math.floor(Math.random()*confettiColors.length)];
@@ -8421,9 +8441,14 @@ function cycleIntroCards(e){
       var dist=60+Math.random()*80;
       el.style.setProperty('--tx',(Math.sin(angle*Math.PI/180)*dist)+'px');
       el.style.setProperty('--ty',(-40-Math.random()*100)+'px');
+      el.style.animation='none';
+      void el.offsetWidth; // force reflow for animation restart
       el.style.animation='confetti-burst 0.8s cubic-bezier(0.25,0.46,0.45,0.94) forwards';
       document.body.appendChild(el);
-      setTimeout(function(e){e.remove()}.bind(null,el),900);
+      setTimeout(function(e){
+        if(e.parentNode)e.parentNode.removeChild(e);
+        if(confettiPool.length<MAX_CONFETTI)confettiPool.push(e);
+      }.bind(null,el),900);
     }
   }
 
@@ -8437,7 +8462,7 @@ function cycleIntroCards(e){
     var pill=e.target&&e.target.closest?e.target.closest('.stat-pill'):null;
     if(pill){
       var r=pill.getBoundingClientRect();
-      burstConfetti(r.left+r.width/2, r.top+r.height/2, 18);
+      burstConfetti(r.left+r.width/2, r.top+r.height/2, 12);
       pill.classList.remove('popped');
       void pill.offsetWidth;
       pill.classList.add('popped');
@@ -8483,7 +8508,7 @@ const MOODBOARD_WORLD_HEIGHT=MOODBOARD_WORLD_WIDTH;
 // Insert scroll-limiter wrapper so native scroll cannot exceed visual canvas bounds
 const MOODBOARD_VIEW_SCALE=window.innerWidth<=768?0.6:0.72;
 const SCALE=MOODBOARD_VIEW_SCALE;
-(function(){const w=document.createElement('div');w.id='cvWrap';w.style.cssText='position:relative;flex-shrink:0;overflow:hidden;';w.style.width=MOODBOARD_WORLD_WIDTH*SCALE+'px';w.style.height=MOODBOARD_WORLD_HEIGHT*SCALE+'px';cv.parentNode.insertBefore(w,cv);w.appendChild(cv);cv.style.transform='scale('+SCALE+')';})();
+(function(){const w=document.createElement('div');w.id='cvWrap';w.style.cssText='position:relative;flex-shrink:0;overflow:hidden;contain:strict;';w.style.width=MOODBOARD_WORLD_WIDTH*SCALE+'px';w.style.height=MOODBOARD_WORLD_HEIGHT*SCALE+'px';cv.parentNode.insertBefore(w,cv);w.appendChild(cv);cv.style.transform='scale('+SCALE+') translateZ(0)';})();
 const MOODBOARD_ITEM_SAFE_MARGIN=400;
 const MOODBOARD_VIEW_WIDTH=MOODBOARD_WORLD_WIDTH*MOODBOARD_VIEW_SCALE;
 const MOODBOARD_VIEW_HEIGHT=MOODBOARD_WORLD_HEIGHT*MOODBOARD_VIEW_SCALE;
@@ -8501,16 +8526,20 @@ function safeTimeout(fn,ms){
 function cancelAllTimers(){_activeTimers.forEach(id=>clearTimeout(id));_activeTimers.clear()}
 
 // Pause background work when tab/app is hidden (prevents crashy timer build-up on mobile)
+// Also freezes all CSS animations via class toggle for instant GPU memory recovery
 (function(){
   let wasHidden=false;
   document.addEventListener('visibilitychange',function(){
     if(document.hidden){
       wasHidden=true;
+      document.body.classList.add('tab-hidden');
+      cancelAllTimers();
       try{ if(window._mapScrollTimer){ clearTimeout(window._mapScrollTimer); window._mapScrollTimer=null; } }catch(e){}
       try{ if(window._walkSyncTimers){ window._walkSyncTimers.forEach(clearTimeout); window._walkSyncTimers=[]; } }catch(e){}
     }else if(wasHidden){
       wasHidden=false;
-      try{ if(typeof updMap==='function') updMap(); }catch(e){}
+      document.body.classList.remove('tab-hidden');
+      try{ if(typeof updMap==='function') requestAnimationFrame(updMap); }catch(e){}
     }
   },{passive:true});
 })();
@@ -13295,22 +13324,22 @@ function ensureCompanionStickers(force){
 function buildZoneCardHTML(meta){return '';}
 
 // ===== INTERSECTION OBSERVER: pause animations on off-screen stickers =====
-// Runs once after DOM is ready. Observes all stickers against the scroll viewport.
 // Off-screen stickers get class 'paused-offscreen' → CSS kills all their animations.
-// rootMargin:400px keeps a 400px lookahead so entering stickers resume before being seen.
+// Tighter margin on mobile to reduce active animation count (fewer composited layers).
 (function(){
   if(!window.IntersectionObserver)return;
+  const margin=IS_LOW_POWER_DEVICE?'100px':'200px';
   const obs=new IntersectionObserver(entries=>{
     for(let i=0;i<entries.length;i++){
       const e=entries[i];
       if(e.target.classList.contains('dragging'))continue;
       e.target.classList.toggle('paused-offscreen',!e.isIntersecting);
     }
-  },{root:vp,rootMargin:'200px',threshold:0});
-  // Observe stickers AND zone intro cards
-  setTimeout(()=>{
-    document.querySelectorAll('#canvas > .sticker, #canvas .zone-intro-card').forEach(s=>obs.observe(s));
-  },500);
+  },{root:vp,rootMargin:margin,threshold:0});
+  // Observe stickers, zone intro cards, AND doodle decorations
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('#canvas > .sticker, #canvas .zone-intro-card, #canvas .doodle, #canvas .hollywood-signpost').forEach(s=>obs.observe(s));
+  });
 })();
 
 // ===== Add drag handles to all interactive sticker cards =====
