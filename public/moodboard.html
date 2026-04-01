@@ -13324,22 +13324,22 @@ function ensureCompanionStickers(force){
 function buildZoneCardHTML(meta){return '';}
 
 // ===== INTERSECTION OBSERVER: pause animations on off-screen stickers =====
-// Runs once after DOM is ready. Observes all stickers against the scroll viewport.
 // Off-screen stickers get class 'paused-offscreen' → CSS kills all their animations.
-// rootMargin:400px keeps a 400px lookahead so entering stickers resume before being seen.
+// Tighter margin on mobile to reduce active animation count (fewer composited layers).
 (function(){
   if(!window.IntersectionObserver)return;
+  const margin=IS_LOW_POWER_DEVICE?'100px':'200px';
   const obs=new IntersectionObserver(entries=>{
     for(let i=0;i<entries.length;i++){
       const e=entries[i];
       if(e.target.classList.contains('dragging'))continue;
       e.target.classList.toggle('paused-offscreen',!e.isIntersecting);
     }
-  },{root:vp,rootMargin:'200px',threshold:0});
-  // Observe stickers AND zone intro cards
-  setTimeout(()=>{
-    document.querySelectorAll('#canvas > .sticker, #canvas .zone-intro-card').forEach(s=>obs.observe(s));
-  },500);
+  },{root:vp,rootMargin:margin,threshold:0});
+  // Observe stickers, zone intro cards, AND doodle decorations
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('#canvas > .sticker, #canvas .zone-intro-card, #canvas .doodle, #canvas .hollywood-signpost').forEach(s=>obs.observe(s));
+  });
 })();
 
 // ===== Add drag handles to all interactive sticker cards =====
