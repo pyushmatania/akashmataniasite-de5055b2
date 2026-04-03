@@ -179,3 +179,23 @@ body.dark-mode .minimap-compass .compass-arrow{color:#c9a96e !important}
 
 /* Map divider paths glow in dark mode */
 body.dark-mode .minimap-container.expanded svg path[stroke]{filter:drop-shadow(0 0 4px currentColor) !important}
+
+/* Flip card dark mode - fix white backgrounds */
+body.dark-mode .zc-flip-card .zc-flip-inner > div{background:linear-gradient(145deg,rgba(20,16,30,0.92),rgba(30,24,45,0.88)) !important;border-color:rgba(201,169,110,0.25) !important;box-shadow:0 4px 16px rgba(0,0,0,0.3) !important}
+body.dark-mode .zc-flip-card .zc-flip-inner > div > div{color:rgba(255,255,255,0.85) !important}
+
+/* PM Roast dark mode */
+body.dark-mode .zc-pm-roast{background:linear-gradient(145deg,rgba(30,20,10,0.92),rgba(40,25,15,0.88)) !important;border-color:rgba(255,152,0,0.3) !important;box-shadow:0 6px 24px rgba(0,0,0,0.3) !important}
+body.dark-mode .zc-pm-roast .pmr-text{color:#FFB74D !important}
+body.dark-mode .zc-pm-roast span[style*="color:#E65100"]{color:#FF9800 !important}
+
+/* Corp Life dark mode */
+body.dark-mode .zc-corp-life{background:linear-gradient(145deg,rgba(15,15,35,0.92),rgba(20,20,50,0.88)) !important;border-color:rgba(63,81,181,0.3) !important;box-shadow:0 6px 24px rgba(0,0,0,0.3) !important}
+body.dark-mode .zc-corp-life .cl-text{color:#90CAF9 !important}
+body.dark-mode .zc-corp-life span[style*="color:#1A237E"]{color:#7986CB !important}
+
+/* Sticky notes dark mode */
+body.dark-mode .zc-sticky{background:rgba(20,16,30,0.85) !important;color:rgba(255,255,255,0.8) !important;border-bottom-color:rgba(201,169,110,0.2) !important}
+
+/* Mini card dark mode */
+body.dark-mode .zc-mini-card{background:rgba(20,16,30,0.85) !important;color:rgba(255,255,255,0.75) !important;border-color:rgba(201,169,110,0.2) !important}
