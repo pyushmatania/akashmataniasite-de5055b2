@@ -3800,7 +3800,7 @@ body.map-expanded .scroll-counter{display:none!important}
     </div>
     <!-- Photo zone -->
     <div class="zic-photo-area zic-introduction-screen" style="position:relative">
-      <img src="/images/akash-photo.webp" alt="Akash" style="width:100%;height:190px;object-fit:cover;object-position:top;display:block;filter:contrast(1.1) brightness(1.05)">
+      <img src="/images/akash-photo.webp" alt="Akash" loading="lazy" decoding="async" style="width:100%;height:190px;object-fit:cover;object-position:top;display:block;filter:contrast(1.1) brightness(1.05)">
       <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,14,0,0.9));z-index:1"></div>
       <div style="position:absolute;bottom:12px;left:16px;z-index:2">
         <div style="font-family:monospace;font-size:0.55rem;color:rgba(76,255,80,0.7);margin-bottom:3px;letter-spacing:0.06em">// SUBJECT_IDENTIFIED · ACCESS_GRANTED</div>
@@ -4843,8 +4843,8 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="map-player" id="mapPlayer">
       <div class="map-player-ping"></div>
       <svg class="map-arrow-svg" width="16" height="16" viewBox="0 0 24 24"><defs><linearGradient id="arrowGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFE082"/><stop offset="100%" stop-color="#FFB300"/></linearGradient></defs><polygon points="12,1 22,22 12,16 2,22" fill="url(#arrowGrad)" stroke="#E65100" stroke-width="1.2" stroke-linejoin="round"/></svg>
-      <img class="map-arrow map-arrow-head" src="/images/bitmoji-head.webp" alt="You" decoding="async" />
-      <img class="map-arrow map-arrow-full" src="/images/bitmoji-full.webp" alt="You" decoding="async" />
+      <img class="map-arrow map-arrow-head" src="/images/bitmoji-head.webp" alt="You" decoding="async" loading="lazy" />
+      <img class="map-arrow map-arrow-full" src="/images/bitmoji-full.webp" alt="You" decoding="async" loading="lazy" />
     </div>
     <div class="map-hint"></div>
     <div class="minimap-radar"></div>
@@ -7895,7 +7895,7 @@ function cycleIntroCards(e){
       <div class="zp-sec-label">🏏 Mini Games</div>
       <div id="zp-fun-cricket" style="margin-top:12px;display:flex;flex-direction:column;align-items:center;gap:12px">
         <div onclick="launchFunPanelCricket()" style="cursor:pointer;width:100%;max-width:360px;background:linear-gradient(145deg,rgba(255,82,82,0.08),rgba(255,82,82,0.02));border:1.5px solid rgba(255,82,82,0.18);border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:14px;transition:all 0.2s" onmouseenter="this.style.borderColor='rgba(255,82,82,0.4)';this.style.transform='translateY(-2px)'" onmouseleave="this.style.borderColor='rgba(255,82,82,0.18)';this.style.transform=''">
-          <img src="images/cricket-stadium.png" style="width:56px;height:56px;object-fit:cover;border-radius:12px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4))" alt="Cricket">
+          <img src="images/cricket-stadium.png" loading="lazy" decoding="async" style="width:56px;height:56px;object-fit:cover;border-radius:12px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4))" alt="Cricket">
           <div style="flex:1">
             <div style="font-family:var(--font-fun);font-size:0.82rem;font-weight:800;color:#EF5350;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">Hand Cricket</div>
             <div style="font-family:var(--font-sans);font-size:0.7rem;color:rgba(255,255,255,0.45);line-height:1.4">Stadium edition — toss, bat or bowl, full scoreboard</div>
