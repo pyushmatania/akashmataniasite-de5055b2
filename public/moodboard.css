@@ -131,3 +131,51 @@ body.loading-phase .canvas-viewport {
   width:6px; height:6px; border-radius:50%;
   animation: ember-rise 0.7s ease-out forwards;
 }
+
+
+/* === Dark Mode: Startup Idea Machine visibility fix === */
+body.dark-mode .sticker-startup-rand .sr-slot{background:rgba(255,255,255,0.08) !important;border-color:rgba(201,169,110,0.2) !important;color:rgba(255,255,255,0.7) !important}
+body.dark-mode .sticker-startup-rand .sr-result{color:#c9a96e !important}
+body.dark-mode .sticker-startup-rand .sr-cta{color:rgba(206,147,216,0.7) !important}
+
+/* === Fix signpost flicker during drag === */
+.hollywood-signpost.paused-offscreen{opacity:1 !important;visibility:visible !important;contain:layout style !important}
+
+/* === Dark Mode: Small Map (minimap) night mode === */
+body.dark-mode .minimap-container{background:rgba(10,8,18,0.95) !important;border-color:rgba(201,169,110,0.2) !important;box-shadow:0 4px 20px rgba(0,0,0,0.5) !important}
+body.dark-mode .minimap-container .map-canvas{background:#0d1b2a !important}
+body.dark-mode .minimap-container .map-canvas-grid{background-image:linear-gradient(rgba(201,169,110,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(201,169,110,0.08) 1px,transparent 1px),linear-gradient(rgba(201,169,110,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,169,110,0.04) 1px,transparent 1px) !important}
+body.dark-mode .minimap-container .map-region-label{color:rgba(201,169,110,0.5) !important}
+body.dark-mode .minimap-container .map-border-overlay{box-shadow:inset 0 0 80px rgba(0,0,0,0.4) !important}
+body.dark-mode .minimap-container .minimap-compass{background:rgba(10,8,18,0.9) !important;border-color:rgba(201,169,110,0.25) !important}
+
+/* === Dark Mode: Big Map (expanded) night mode with full moon === */
+body.dark-mode .minimap-container.expanded{background:rgba(8,6,16,0.98) !important}
+body.dark-mode .minimap-container.expanded .map-canvas{background:radial-gradient(ellipse at 75% 15%,rgba(201,169,110,0.08) 0%,transparent 40%),#0d1b2a !important}
+body.dark-mode .minimap-container.expanded .map-canvas-grid{background-image:linear-gradient(rgba(201,169,110,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(201,169,110,0.06) 1px,transparent 1px),linear-gradient(rgba(201,169,110,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,169,110,0.03) 1px,transparent 1px) !important}
+body.dark-mode .minimap-container.expanded .map-border-overlay{box-shadow:inset 0 0 120px rgba(0,0,0,0.5) !important;display:block !important}
+
+/* Map terrain dark mode - night landscape */
+body.dark-mode .map-dec-layer [style*="map-terrain"]{background:linear-gradient(160deg,#1a2f1a 0%,#1e3620 20%,#162e18 40%,#1b3320 60%,#142a16 80%,#183018 100%) !important}
+body.dark-mode .minimap-container [data-map-terrain],body.dark-mode .minimap-container div[style*="linear-gradient(160deg,#5a9e3e"]{background:linear-gradient(160deg,#1a2f1a 0%,#1e3620 20%,#162e18 40%,#1b3320 60%,#142a16 80%,#183018 100%) !important}
+
+/* Full moon in big map */
+body.dark-mode .minimap-container.expanded .map-canvas::before{content:'';position:absolute;top:6%;right:12%;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#fffde7,#fdd835 30%,rgba(253,216,53,0.4) 60%,transparent 80%);box-shadow:0 0 40px rgba(253,216,53,0.3),0 0 80px rgba(253,216,53,0.15),0 0 120px rgba(253,216,53,0.08);z-index:1;pointer-events:none}
+
+/* Stars in big map */
+body.dark-mode .minimap-container.expanded .map-canvas::after{content:'✦ ✧ ✦ ✧ ✦ ✧ ✦';position:absolute;top:3%;left:5%;width:90%;font-size:8px;letter-spacing:40px;color:rgba(255,255,255,0.15);pointer-events:none;z-index:1;animation:mapStarsTwinkle 4s ease-in-out infinite alternate}
+@keyframes mapStarsTwinkle{0%{opacity:.3}50%{opacity:.7}100%{opacity:.4}}
+
+/* Map zone labels in dark mode */
+body.dark-mode .map-zone-label{color:rgba(255,255,255,0.7) !important;text-shadow:0 1px 4px rgba(0,0,0,0.5) !important}
+
+/* Map sticker clones in dark mode */
+body.dark-mode .map-sticker-clone{filter:brightness(0.85) !important}
+
+/* Minimap compass in dark mode */
+body.dark-mode .minimap-compass-ring{background:rgba(10,8,18,0.9) !important;border-color:rgba(201,169,110,0.3) !important}
+body.dark-mode .minimap-compass .compass-label{color:rgba(201,169,110,0.6) !important}
+body.dark-mode .minimap-compass .compass-arrow{color:#c9a96e !important}
+
+/* Map divider paths glow in dark mode */
+body.dark-mode .minimap-container.expanded svg path[stroke]{filter:drop-shadow(0 0 4px currentColor) !important}
