@@ -9803,8 +9803,7 @@ function sU(e){
     as.style.left=next.left+'px';
     as.style.top=next.top+'px';
     suppressStickerClickUntil=performance.now()+DRAG_CLICK_GUARD_MS;
-    if(typeof scanStickers==='function')scanStickers();
-    if(typeof queueMapSync==='function')queueMapSync(true);
+    if(typeof queueMapSync==='function')queueMapSync(false);
   }
   if(isRotating){isRotating=false;as=null;return;}
   if(!didMove&&(Date.now()-tapTime)<400){
@@ -14703,8 +14702,7 @@ function returnCricketToCanvas(){
   }
 
   function emitStats(){
-    var nodeCount=0;
-    try{nodeCount=document.querySelectorAll('*').length;}catch(e){}
+    var nodeCount='~';
     var perf=performance.memory;
     if(perf&&perf.usedJSHeapSize&&perf.totalJSHeapSize){
       emit('MEM',Math.round(perf.usedJSHeapSize/1048576)+'/'+Math.round(perf.totalJSHeapSize/1048576)+'MB','NODES',nodeCount);
