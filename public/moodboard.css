@@ -206,3 +206,20 @@ body.dark-mode .canvas.theme-notebook{background-color:#0d0a06 !important;backgr
 /* ===== PIXEL THEME FIXES ===== */
 .canvas.theme-pixel{background-image:linear-gradient(180deg,#5C94FC 0%,#5C94FC 55%,#C84C0C 55%,#C84C0C 62%,#80D010 62%,#80D010 100%),repeating-linear-gradient(90deg,transparent,transparent 63px,rgba(0,0,0,0.18) 63px,rgba(0,0,0,0.18) 64px),repeating-linear-gradient(0deg,transparent,transparent 63px,rgba(0,0,0,0.18) 63px,rgba(0,0,0,0.18) 64px) !important;background-size:100% 100%,64px 64px,64px 64px !important}
 body.dark-mode .canvas.theme-pixel{background-color:#0e0e2a !important;background-image:linear-gradient(180deg,#1a1a3e 0%,#1a1a3e 55%,#3a1a0a 55%,#3a1a0a 62%,#1a3a10 62%,#1a3a10 100%),repeating-linear-gradient(90deg,transparent,transparent 63px,rgba(255,255,255,0.12) 63px,rgba(255,255,255,0.12) 64px),repeating-linear-gradient(0deg,transparent,transparent 63px,rgba(255,255,255,0.12) 63px,rgba(255,255,255,0.12) 64px) !important;background-size:100% 100%,64px 64px,64px 64px !important}
+
+/* ===== iOS CRASH FIX: Disable backdrop-blur on mobile (GPU memory killer) ===== */
+body.safety-mode *{-webkit-backdrop-filter:none !important;backdrop-filter:none !important}
+body.safety-mode .sticker.paused-offscreen{contain:layout style paint !important;content-visibility:auto !important}
+body.safety-mode .sticker.paused-offscreen *{will-change:auto !important}
+body.safety-mode .zone-boundary-svg{will-change:auto !important}
+body.safety-mode .map-dec-layer *{animation:none !important}
+body.safety-mode .confetti{animation-duration:0.8s !important}
+body.safety-mode .splash-ring,body.safety-mode .splash-drop{animation-duration:0.4s !important}
+body.safety-mode .zic-companion .zc-emoji-float{animation:none !important}
+body.safety-mode .loader-role-track{animation-duration:1.5s !important}
+/* Reduce box-shadow complexity on mobile */
+body.safety-mode .sticker-project,body.safety-mode .zone-intro-creative,body.safety-mode .intro-card{box-shadow:0 4px 16px rgba(0,0,0,0.1) !important}
+body.safety-mode .sticker-project:hover,body.safety-mode .zone-intro-creative:hover{box-shadow:0 4px 16px rgba(0,0,0,0.12) !important;transform:none !important}
+/* Kill expensive dark-mode glassmorphism layers on mobile */
+body.safety-mode.dark-mode .zone-intro-creative,body.safety-mode.dark-mode .intro-card,body.safety-mode.dark-mode .sticker-project,body.safety-mode.dark-mode .zic-companion>div:not(.zc-emoji-float){background:rgba(20,16,30,0.92) !important;-webkit-backdrop-filter:none !important;backdrop-filter:none !important}
+body.safety-mode.dark-mode .zp-back-btn,body.safety-mode.dark-mode .settings-panel,body.safety-mode.dark-mode .bottom-nav{-webkit-backdrop-filter:none !important;backdrop-filter:none !important}
