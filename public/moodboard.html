@@ -3638,8 +3638,8 @@ body.map-expanded .scroll-counter{display:none!important}
 }
 .save-layout-toast.show{opacity:1;transform:translateY(0)}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-<script>if(!window.supabase||typeof window.supabase.createClient!=='function'){console.warn('[Layout] Supabase CDN failed to load — will use REST fallback')}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){if(!window.supabase||typeof window.supabase.createClient!=='function'){console.warn('[Layout] Supabase CDN failed to load — will use REST fallback')}})</script>
 </head>
 <body class="loading-phase">
 <div class="loader-screen" id="loaderScreen">
