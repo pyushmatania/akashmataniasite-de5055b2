@@ -73,3 +73,15 @@ body.loading-phase .canvas-viewport {
 .rlb-score{font-family:var(--font-fun);font-size:0.85rem;font-weight:900;color:#FF6B35;}
 .rlb-rank-badge{font-size:0.75rem;}
 .rlb-loading{text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:0.7rem;font-family:var(--font-fun);}
+
+/* Burn sizzle effect on PM Roast tap */
+@keyframes roast-sizzle {
+  0% { box-shadow: 0 4px 18px rgba(0,0,0,0.08), 0 0 0 0 rgba(255,87,34,0); }
+  20% { box-shadow: 0 4px 18px rgba(0,0,0,0.08), 0 0 20px 4px rgba(255,87,34,0.5), 0 0 40px 8px rgba(255,152,0,0.2); }
+  50% { box-shadow: 0 4px 18px rgba(0,0,0,0.08), 0 0 15px 2px rgba(255,87,34,0.3), 0 0 30px 6px rgba(255,152,0,0.1); }
+  100% { box-shadow: 0 4px 18px rgba(0,0,0,0.08), 0 0 0 0 rgba(255,87,34,0); }
+}
+.zc-pm-roast.sizzle {
+  animation: roast-sizzle 0.5s ease-out;
+  border-color: rgba(255,87,34,0.5);
+}
