@@ -10401,7 +10401,7 @@ function syncMapFromMoodboard(force){
 
 function queueMapSync(force){
   clearTimeout(_mapSyncTimer);
-  _mapSyncTimer=setTimeout(()=>syncMapFromMoodboard(force),150);
+  _mapSyncTimer=setTimeout(()=>syncMapFromMoodboard(force),force?150:400);
 }
 
 const _stickerObserver=new MutationObserver((mutations)=>{
@@ -10416,7 +10416,7 @@ const _stickerObserver=new MutationObserver((mutations)=>{
     }
     if(stickerNodesChanged)break;
   }
-  if(stickerNodesChanged)queueMapSync(true);
+  if(stickerNodesChanged){_invalidateStickerCache();queueMapSync(true);}
 });
 _stickerObserver.observe(cv,{childList:true});
 
