@@ -353,20 +353,27 @@ function toggleMap(){
 window.toggleMap=toggleMap;
 var _mmTapGuard=false;
 function _handleMiniMapClosedTap(e){
+  console.log('[MAP-TAP] event='+((e&&e.type)||'direct')+' mmExp='+mmExp+' mapTransitioning='+mapTransitioning+' guard='+_mmTapGuard);
   if(e){
     if(e.cancelable)e.preventDefault();
     e.stopPropagation();
   }
-  if(!mc||!mm||mmExp||mapTransitioning)return;
-  if(_mmTapGuard)return;
+  if(!mc||!mm){console.warn('[MAP-TAP] mc or mm null');return;}
+  if(mmExp){console.log('[MAP-TAP] already expanded');return;}
+  if(mapTransitioning){console.log('[MAP-TAP] transitioning');return;}
+  if(_mmTapGuard){console.log('[MAP-TAP] guard active');return;}
   _mmTapGuard=true;
   setTimeout(function(){_mmTapGuard=false;},800);
+  console.log('[MAP-TAP] calling toggleMap');
   toggleMap();
 }
+window._handleMiniMapClosedTap=_handleMiniMapClosedTap;
 if(mc){
   mc.addEventListener('pointerup',_handleMiniMapClosedTap,{passive:false});
   mc.addEventListener('touchend',_handleMiniMapClosedTap,{passive:false});
   mc.addEventListener('click',_handleMiniMapClosedTap);
+  mc.style.cursor='pointer';
+  console.log('[MAP-INIT] minimap tap listeners bound on mc');
 }
 if(mm){
   mm.addEventListener('click',function(e){if(mmExp)e.stopPropagation();});
