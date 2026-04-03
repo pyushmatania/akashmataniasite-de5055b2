@@ -560,3 +560,35 @@ var now=performance.now();tapTimes=tapTimes.filter(function(t){return now-t<650;
 window.__mbDbgToggle=toggleDebug;window.__mbDbgLog=emit;var logo=document.querySelector('.logo');if(logo){logo.addEventListener('touchend',registerTap,{passive:false,capture:true});logo.addEventListener('click',registerTap,true);}
 window.addEventListener('error',function(e){emit('ERR',e.message||'unknown',e.filename?e.filename.split('/').pop():'',e.lineno?('L'+e.lineno):'');});window.addEventListener('unhandledrejection',function(e){emit('PROMISE',String(e.reason).slice(0,180));});window.addEventListener('beforeunload',function(){emit('BEFOREUNLOAD');});window.addEventListener('pagehide',function(e){emit('PAGEHIDE',e.persisted?'bfcache':'normal');});window.addEventListener('pageshow',function(e){emit('PAGESHOW',e.persisted?'bfcache':'normal');});window.addEventListener('load',function(){emit('WINDOW_LOAD');});document.addEventListener('visibilitychange',function(){emit('VISIBILITY',document.hidden?'hidden':'visible');},{passive:true});try{var nav=(performance.getEntriesByType&&performance.getEntriesByType('navigation')[0])||null;emit('BOOT','#'+bootCount,nav&&nav.type?nav.type:'navigate',innerWidth+'x'+innerHeight,'dpr='+devicePixelRatio);}catch(e){emit('BOOT','#'+bootCount,innerWidth+'x'+innerHeight,'dpr='+devicePixelRatio);}})();(function(){var loader=document.getElementById('loaderScreen');var vp=document.querySelector('.canvas-viewport');var percentEl=document.getElementById('loaderPercent');var startTime=Date.now();var DURATION=3200;loader.style.backgroundColor='#000';var percentInterval=setInterval(function(){var elapsed=Date.now()-startTime;var pct=Math.min(100,Math.round((elapsed/DURATION)*100));if(percentEl)percentEl.textContent=pct;if(pct>=100)clearInterval(percentInterval);},80);function dismiss(){clearInterval(percentInterval);if(percentEl)percentEl.textContent='100';if(document.body)document.body.classList.remove('loading-phase');if(loader)loader.classList.add('hide');if(vp)vp.classList.add('loaded');setTimeout(function(){if(loader)loader.style.display='none'},700);}
 var barDone=false,winDone=false;setTimeout(function(){barDone=true;if(winDone)dismiss()},DURATION);window.addEventListener('load',function(){winDone=true;if(barDone)dismiss()});setTimeout(dismiss,5500);})();
+;(function(){
+  function applyMapDarkMode(){
+    var isDark=document.body.classList.contains('dark-mode');
+    var terrains=document.querySelectorAll('.map-terrain-bg');
+    terrains.forEach(function(t){
+      if(isDark){
+        t.style.background='linear-gradient(160deg,#1a2f1a 0%,#1e3620 20%,#162e18 40%,#1b3320 60%,#142a16 80%,#183018 100%)';
+      }else{
+        t.style.background='linear-gradient(160deg,#5a9e3e 0%,#6bb848 20%,#4e9035 40%,#5da842 60%,#4a8830 80%,#528f38 100%)';
+      }
+    });
+    var mapCanvas=document.querySelector('.minimap-container .map-canvas');
+    if(mapCanvas){
+      if(isDark){
+        mapCanvas.style.background='#0d1b2a';
+      }else{
+        mapCanvas.style.background='';
+      }
+    }
+  }
+  var dmBtn=document.querySelector('.darkmode-btn');
+  if(dmBtn){
+    dmBtn.addEventListener('click',function(){setTimeout(applyMapDarkMode,50);});
+  }
+  var origDmToggle=window.toggleDarkMode;
+  window.toggleDarkMode=function(){
+    if(typeof origDmToggle==='function')origDmToggle.apply(this,arguments);
+    setTimeout(applyMapDarkMode,50);
+  };
+  setTimeout(applyMapDarkMode,500);
+  new MutationObserver(function(){applyMapDarkMode();}).observe(document.body,{attributes:true,attributeFilter:['class']});
+})();
