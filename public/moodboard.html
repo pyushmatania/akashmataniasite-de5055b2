@@ -1027,7 +1027,7 @@ OPEN FULL DOSSIER
 <div class="sticker sticker-counter" data-anim="pop" data-zone="fun" style="left:4416px;top:3925px;transform:rotate(3deg)" onclick="incr(this,event)" data-sid="s095"><div class="c-emoji">🐛</div><div><div class="c-count" data-count="0">0</div><div class="c-label">bugs "fixed"</div></div></div>
 </div></main>
 <!-- MAP v6 -->
-<div class="minimap-container" id="mc">
+<div class="minimap-container" id="mc" onclick="if(!this.classList.contains('expanded')&&typeof toggleMap==='function')toggleMap()">
 <!-- Cardinal markers on rim -->
 <div class="minimap-cardinal mc-n">N</div>
 <div class="minimap-cardinal mc-s">S</div>
