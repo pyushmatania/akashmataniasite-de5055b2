@@ -9590,7 +9590,7 @@ vp.addEventListener('scroll',()=>{
     }
     // 2) Map update — throttle to every 100ms
     if(typeof updMap==='function'&&typeof mapTransitioning!=='undefined'&&!mapTransitioning){
-      if(now-_lastMapUpdate>100){
+      if(now-_lastMapUpdate>(IS_LOW_POWER_DEVICE?200:100)){
         _lastMapUpdate=now;
         updMap();
       }
@@ -12159,7 +12159,7 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
   if(mmExp && drawMap._sc){
     const curL=mmInner.scrollLeft||0;
     const curT=mmInner.scrollTop||0;
-    if(Math.abs(curL-_lastCloneRenderLeft)<120&&Math.abs(curT-_lastCloneRenderTop)<120)return;
+    if(Math.abs(curL-_lastCloneRenderLeft)<200&&Math.abs(curT-_lastCloneRenderTop)<200)return;
     clearTimeout(mapCloneTimer);
     mapCloneTimer=setTimeout(()=>{
       if(!drawMap._sc){return;}
@@ -12171,7 +12171,7 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
         _lastCloneRenderTop=curT;
         updMap();
       }catch(e){}
-    },320);
+    },IS_LOW_POWER_DEVICE?500:320);
   }
 },{passive:true});
 // Map scroll update is handled by the unified scroll handler above (near line 3587)
