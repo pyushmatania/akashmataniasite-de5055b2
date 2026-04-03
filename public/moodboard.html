@@ -4941,8 +4941,9 @@ body.map-expanded .scroll-counter{display:none!important}
   transition:transform 0.52s cubic-bezier(0.32,0.72,0,1);
   overflow-y:auto;overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
+  content-visibility:hidden;
 }
-.zone-panel.open{transform:translateY(0)}
+.zone-panel.open{transform:translateY(0);content-visibility:visible}
 
 /* ═══ STUDIO LIGHTING EFFECTS ═══ */
 
