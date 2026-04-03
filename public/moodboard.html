@@ -13974,7 +13974,9 @@ function ekPick(el,e){
   }
 
   window.promptPinForSave=async function(){
-    const {data:pinData,error:pinReadError,status:pinReadStatus}=await sb.from('moodboard_pins').select('id').eq('id',PIN_ROW_ID).maybeSingle();
+    const _sb=getSb();
+    if(!_sb){console.warn('[PIN] Supabase client not available');return;}
+    const {data:pinData,error:pinReadError,status:pinReadStatus}=await _sb.from('moodboard_pins').select('id').eq('id',PIN_ROW_ID).maybeSingle();
     if(pinReadError&&pinReadStatus!==406){
       console.error('PIN read error:',pinReadError);
       return;
@@ -14085,10 +14087,10 @@ function ekPick(el,e){
     }
 
     // Path A: Supabase client
-    if(sb){
+    if(getSb()){
       for(let attempt=1;attempt<=2;attempt++){
         try{
-          const {error}=await sb
+          const {error}=await getSb()
             .from('moodboard_layouts')
             .upsert(payload,{onConflict:'id'});
           if(error)throw error;
@@ -14154,9 +14156,9 @@ function ekPick(el,e){
     }
 
     // Path A: Supabase client
-    if(sb){
+    if(getSb()){
       try{
-        const {data:singleLayout,error:singleError,status:singleStatus}=await sb
+        const {data:singleLayout,error:singleError,status:singleStatus}=await getSb()
           .from('moodboard_layouts')
           .select('layout_data')
           .eq('id',LAYOUT_ROW_ID)
@@ -14165,7 +14167,7 @@ function ekPick(el,e){
         if(singleError&&singleStatus!==406)throw singleError;
         if(singleLayout&&singleLayout.layout_data)return singleLayout.layout_data;
 
-        const {data:legacy,error:legacyError}=await sb
+        const {data:legacy,error:legacyError}=await getSb()
           .from('moodboard_layouts')
           .select('layout_data')
           .order('updated_at',{ascending:false})
