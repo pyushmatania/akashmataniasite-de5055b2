@@ -8441,8 +8441,6 @@ function cycleIntroCards(e){
       var dist=60+Math.random()*80;
       el.style.setProperty('--tx',(Math.sin(angle*Math.PI/180)*dist)+'px');
       el.style.setProperty('--ty',(-40-Math.random()*100)+'px');
-      el.style.animation='none';
-      void el.offsetWidth; // force reflow for animation restart
       el.style.animation='confetti-burst 0.8s cubic-bezier(0.25,0.46,0.45,0.94) forwards';
       document.body.appendChild(el);
       setTimeout(function(e){
@@ -8533,9 +8531,10 @@ function cancelAllTimers(){_activeTimers.forEach(id=>clearTimeout(id));_activeTi
     if(document.hidden){
       wasHidden=true;
       document.body.classList.add('tab-hidden');
-      cancelAllTimers();
-      try{ if(window._mapScrollTimer){ clearTimeout(window._mapScrollTimer); window._mapScrollTimer=null; } }catch(e){}
-      try{ if(window._walkSyncTimers){ window._walkSyncTimers.forEach(clearTimeout); window._walkSyncTimers=[]; } }catch(e){}
+      // Only cancel walk/map timers — do NOT cancel all timers (breaks state on resume)
+       try{ if(window._mapScrollTimer){ clearTimeout(window._mapScrollTimer); window._mapScrollTimer=null; } }catch(e){}
+       try{ if(window._walkSyncTimers){ window._walkSyncTimers.forEach(clearTimeout); window._walkSyncTimers=[]; } }catch(e){}
+       try{ clearWalkTimers(); }catch(e){}
     }else if(wasHidden){
       wasHidden=false;
       document.body.classList.remove('tab-hidden');
@@ -8604,42 +8603,18 @@ function getCachedCanvasRect(){
   // Reduce splash effects on mobile
   window._mobileSplashReduced = true;
   
-  // Periodic DOM cleanup — remove orphaned animation elements
-  setInterval(function(){
-    // Clean up any lingering animation elements
-    document.querySelectorAll('.splash-ring, .splash-drop, .confetti-piece, .fun-debris, .fun-impact-ring, .fun-axe-projectile').forEach(function(el){
-      if(!el.parentNode) return;
-      var rect = el.getBoundingClientRect();
-      // If element is invisible (opacity 0 or off-screen), remove it
-      var style = getComputedStyle(el);
-      if(style.opacity === '0' || rect.bottom < -50 || rect.top > innerHeight + 50){
-        el.remove();
-      }
-    });
-    
-    // Check DOM node count — if over 20K, force cleanup
-    var nodeCount = document.querySelectorAll('*').length;
-    if(nodeCount > 20000){
-      console.warn('[MEM] DOM nodes:', nodeCount, '— forcing cleanup');
-      // Remove all temporary animation elements
-      document.querySelectorAll('.splash-ring, .splash-drop, .fun-debris, .confetti-piece').forEach(function(el){ el.remove(); });
-    }
-  }, 5000);
+   // Periodic DOM cleanup — lightweight orphan removal (no getComputedStyle, no querySelectorAll('*'))
+   var _cleanupSel='.splash-ring, .splash-drop, .confetti-piece, .fun-debris, .fun-impact-ring, .fun-axe-projectile';
+   setInterval(function(){
+     var els=document.querySelectorAll(_cleanupSel);
+     // Only clean if there are orphaned animation elements
+     if(els.length>30){
+       els.forEach(function(el){ el.remove(); });
+     }
+   }, 12000);
   
-  // Use Performance Observer for memory pressure if available
-  if(typeof PerformanceObserver !== 'undefined'){
-    try{
-      var memObs = new PerformanceObserver(function(list){
-        for(var e of list.getEntries()){
-          if(e.duration > 200){
-            console.warn('[MEM] Long task detected:', Math.round(e.duration), 'ms — entering safety mode');
-            document.body.classList.add('safety-mode');
-          }
-        }
-      });
-      memObs.observe({type:'longtask', buffered:false});
-    }catch(e){}
-  }
+   // Long-task observer removed — safety-mode is already set on boot for low-power devices.
+   // Adding it reactively on every long task caused cascading class mutations and MutationObserver storms.
 })();
 
 // Walk animation timer tracking for cancellation
@@ -9828,8 +9803,7 @@ function sU(e){
     as.style.left=next.left+'px';
     as.style.top=next.top+'px';
     suppressStickerClickUntil=performance.now()+DRAG_CLICK_GUARD_MS;
-    if(typeof scanStickers==='function')scanStickers();
-    if(typeof queueMapSync==='function')queueMapSync(true);
+    if(typeof queueMapSync==='function')queueMapSync(false);
   }
   if(isRotating){isRotating=false;as=null;return;}
   if(!didMove&&(Date.now()-tapTime)<400){
@@ -10427,7 +10401,7 @@ function syncMapFromMoodboard(force){
 
 function queueMapSync(force){
   clearTimeout(_mapSyncTimer);
-  _mapSyncTimer=setTimeout(()=>syncMapFromMoodboard(force),150);
+  _mapSyncTimer=setTimeout(()=>syncMapFromMoodboard(force),force?150:400);
 }
 
 const _stickerObserver=new MutationObserver((mutations)=>{
@@ -10442,7 +10416,7 @@ const _stickerObserver=new MutationObserver((mutations)=>{
     }
     if(stickerNodesChanged)break;
   }
-  if(stickerNodesChanged)queueMapSync(true);
+  if(stickerNodesChanged){_invalidateStickerCache();queueMapSync(true);}
 });
 _stickerObserver.observe(cv,{childList:true});
 
@@ -14728,8 +14702,7 @@ function returnCricketToCanvas(){
   }
 
   function emitStats(){
-    var nodeCount=0;
-    try{nodeCount=document.querySelectorAll('*').length;}catch(e){}
+    var nodeCount='~';
     var perf=performance.memory;
     if(perf&&perf.usedJSHeapSize&&perf.totalJSHeapSize){
       emit('MEM',Math.round(perf.usedJSHeapSize/1048576)+'/'+Math.round(perf.totalJSHeapSize/1048576)+'MB','NODES',nodeCount);
@@ -14818,7 +14791,7 @@ function returnCricketToCanvas(){
     var pct=Math.min(100,Math.round((elapsed/DURATION)*100));
     if(percentEl)percentEl.textContent=pct;
     if(pct>=100)clearInterval(percentInterval);
-  },30);
+  },80);
 
   function dismiss(){
     clearInterval(percentInterval);
