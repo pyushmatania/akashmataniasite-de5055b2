@@ -11359,33 +11359,19 @@ function makeMapCloneNode(d){
   let clone;
   if(d.ref){
     clone=d.ref.cloneNode(true);
-    clone.removeAttribute('onclick');
-    clone.removeAttribute('ondragstart');
-    clone.removeAttribute('ondrop');
-    clone.removeAttribute('ondragover');
-    clone.removeAttribute('draggable');
-    clone.removeAttribute('data-anim');
-    clone.removeAttribute('data-splash');
-    clone.removeAttribute('data-contra');
-    clone.classList.remove('dragging');
+    // Batch strip all attributes in a single tree walk instead of multiple querySelectorAll
+    var _stripAttrs=['onclick','ondblclick','onmousedown','onmouseup','onpointerdown','onpointerup','ontouchstart','ontouchend','ondragstart','ondragover','ondrop','draggable','data-anim','data-splash','data-contra'];
+    var walker=document.createTreeWalker(clone,1/*ELEMENT*/);
+    var node=clone;
+    while(node){
+      for(var ai=0;ai<_stripAttrs.length;ai++) node.removeAttribute(_stripAttrs[ai]);
+      if(node.classList){
+        if(node.classList.contains('sticker-drag-handle')){node.remove();node=walker.nextNode();continue;}
+        node.classList.remove('dragging');
+      }
+      node=walker.nextNode();
+    }
     clone.classList.add('no-anim-children');
-    // Strip nested inline handlers so map taps always trigger navigation
-    clone.querySelectorAll('[onclick],[ondblclick],[onmousedown],[onmouseup],[onpointerdown],[onpointerup],[ontouchstart],[ontouchend],[ondragstart],[ondragover],[ondrop]').forEach(el=>{
-      el.removeAttribute('onclick');
-      el.removeAttribute('ondblclick');
-      el.removeAttribute('onmousedown');
-      el.removeAttribute('onmouseup');
-      el.removeAttribute('onpointerdown');
-      el.removeAttribute('onpointerup');
-      el.removeAttribute('ontouchstart');
-      el.removeAttribute('ontouchend');
-      el.removeAttribute('ondragstart');
-      el.removeAttribute('ondragover');
-      el.removeAttribute('ondrop');
-    });
-    clone.querySelectorAll('[draggable="true"]').forEach(el=>el.removeAttribute('draggable'));
-    // Remove drag handles from map clones
-    clone.querySelectorAll('.sticker-drag-handle').forEach(h=>h.remove());
     // Add glowing border for zone intro cards on map
     if(d.ref.classList.contains('zone-intro-creative')){
       const zone=d.ref.dataset.zone;
