@@ -11362,16 +11362,16 @@ function makeMapCloneNode(d){
     clone=d.ref.cloneNode(true);
     // Batch strip all attributes in a single tree walk instead of multiple querySelectorAll
     var _stripAttrs=['onclick','ondblclick','onmousedown','onmouseup','onpointerdown','onpointerup','ontouchstart','ontouchend','ondragstart','ondragover','ondrop','draggable','data-anim','data-splash','data-contra'];
-    var walker=document.createTreeWalker(clone,1/*ELEMENT*/);
-    var node=clone;
-    while(node){
-      for(var ai=0;ai<_stripAttrs.length;ai++) node.removeAttribute(_stripAttrs[ai]);
-      if(node.classList){
-        if(node.classList.contains('sticker-drag-handle')){node.remove();node=walker.nextNode();continue;}
-        node.classList.remove('dragging');
-      }
-      node=walker.nextNode();
+    var allEls=clone.querySelectorAll('*');
+    for(var ei=0;ei<_stripAttrs.length;ei++) clone.removeAttribute(_stripAttrs[ei]);
+    clone.classList.remove('dragging');
+    var toRemove=[];
+    for(var ni=0;ni<allEls.length;ni++){
+      var nel=allEls[ni];
+      for(var ai=0;ai<_stripAttrs.length;ai++) nel.removeAttribute(_stripAttrs[ai]);
+      if(nel.classList&&nel.classList.contains('sticker-drag-handle')) toRemove.push(nel);
     }
+    for(var ri=0;ri<toRemove.length;ri++) toRemove[ri].remove();
     clone.classList.add('no-anim-children');
     // Add glowing border for zone intro cards on map
     if(d.ref.classList.contains('zone-intro-creative')){
