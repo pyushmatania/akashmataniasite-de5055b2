@@ -13792,10 +13792,16 @@ function ekPick(el,e){
   const LAYOUT_FN_URL=`${SUPABASE_URL}/functions/v1/moodboard-layout`;
   const LOCAL_LAYOUT_KEY='moodboard_layout_backup_v5';
   const LAYOUT_VERSION=5; // bump this to force all clients back to default HP positions
-  const sb=(window.supabase&&typeof window.supabase.createClient==='function')
-    ? window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}})
-    : null;
-  window._supabaseLayout=sb;
+  let sb=null;
+  function getSb(){
+    if(sb)return sb;
+    if(window.supabase&&typeof window.supabase.createClient==='function'){
+      sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
+      window._supabaseLayout=sb;
+    }
+    return sb;
+  }
+  window._supabaseLayout=null;
 
   // PIN verification is now handled server-side via edge function
   async function verifyPinRemote(pin, action) {
