@@ -77,6 +77,36 @@ export type Database = {
         }
         Relationships: []
       }
+      roast_leaderboard: {
+        Row: {
+          created_at: string
+          id: string
+          roast_count: number
+          updated_at: string
+          visitor_id: string
+          visitor_name: string
+          zone_stats: Json
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          roast_count?: number
+          updated_at?: string
+          visitor_id: string
+          visitor_name?: string
+          zone_stats?: Json
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          roast_count?: number
+          updated_at?: string
+          visitor_id?: string
+          visitor_name?: string
+          zone_stats?: Json
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
