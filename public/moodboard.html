@@ -8,10 +8,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&family=Caveat:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&family=Caveat:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
-<link rel="preload" href="/moodboard.css" as="style">
 <link rel="preload" href="/moodboard.js" as="script">
 <link rel="preload" href="/images/akash-photo.webp" as="image" type="image/webp">
-<link rel="stylesheet" href="/moodboard.css">
+<link rel="preload" href="/moodboard.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="/moodboard.css"></noscript>
 
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
 <script>window.addEventListener('DOMContentLoaded',function(){if(!window.supabase||typeof window.supabase.createClient!=='function'){console.warn('[Layout] Supabase CDN failed to load — will use REST fallback')}})</script>
@@ -362,7 +362,7 @@ TAP TO OPEN
 <div class="sticker sticker-hero-photo" data-anim="tada" data-zone="introduction" style="left:250px;top:200px;transform:rotate(3deg);width:252px;background:linear-gradient(135deg,#FFD54F,#FFC107,#FF8F00)" data-sid="s006">
 <div class="corner-deco tl" style="border-color:#FFF"></div><div class="corner-deco tr" style="border-color:#FFF"></div>
 <div class="corner-deco bl" style="border-color:#FFF"></div><div class="corner-deco br" style="border-color:#FFF"></div>
-<div class="hero-frame"><img src="/images/akash-photo.webp" decoding="async" loading="lazy"><div class="hero-name-tag"><div class="hnt-emoji">🖤</div><div><div class="hnt-name">Akash</div><div class="hnt-sub">main character energy ✨</div></div></div></div>
+<div class="hero-frame"><img src="/images/akash-photo.webp" decoding="async"><div class="hero-name-tag"><div class="hnt-emoji">🖤</div><div><div class="hnt-name">Akash</div><div class="hnt-sub">main character energy ✨</div></div></div></div>
 </div>
 <!-- ===== NEW STICKERS: 96 items across 5 zones ===== -->
 <div class="sticker sticker-meme" data-anim="wiggle" data-zone="work" style="left:3950px;top:200px" data-sid="s007">
@@ -1117,7 +1117,7 @@ OPEN FULL DOSSIER
 <p class="quote anim-item">I believe the best products happen when craft meets curiosity. I care about the details that most people won't notice but everyone will feel — the clarity of a user flow, the precision of a roadmap, the moment a feature earns its place.</p>
 <p class="philosophy anim-item">"I build with AI the way a photographer works with light — it's a medium, not a shortcut. The taste, the decisions, the product direction? That's still very human. That's still mine."</p>
 <div class="photo-frame anim-item">
-<img src="/images/akash-photo.webp" alt="Akash Matania" decoding="async" loading="lazy" />
+<img src="/images/akash-photo.webp" alt="Akash Matania" decoding="async" />
 </div>
 <div class="skill-tags anim-item">
 <span class="skill-tag" style="background:#eef5ee;color:#5a8a5a;border-color:#d5e8d5">PRODUCT STRATEGY</span>
@@ -2393,7 +2393,7 @@ Back
 <div class="zp-sec-label">🏏 Mini Games</div>
 <div id="zp-fun-cricket" style="margin-top:12px;display:flex;flex-direction:column;align-items:center;gap:12px">
 <div onclick="launchFunPanelCricket()" style="cursor:pointer;width:100%;max-width:360px;background:linear-gradient(145deg,rgba(255,82,82,0.08),rgba(255,82,82,0.02));border:1.5px solid rgba(255,82,82,0.18);border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:14px;transition:all 0.2s" onmouseenter="this.style.borderColor='rgba(255,82,82,0.4)';this.style.transform='translateY(-2px)'" onmouseleave="this.style.borderColor='rgba(255,82,82,0.18)';this.style.transform=''">
-<img src="/images/cricket-stadium.webp" loading="lazy" decoding="async" loading="lazy" decoding="async" style="width:56px;height:56px;object-fit:cover;border-radius:12px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4))" alt="Cricket">
+<img src="/images/cricket-stadium.webp" loading="lazy" decoding="async" style="width:56px;height:56px;object-fit:cover;border-radius:12px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4))" alt="Cricket">
 <div style="flex:1">
 <div style="font-family:var(--font-fun);font-size:0.82rem;font-weight:800;color:#EF5350;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">Hand Cricket</div>
 <div style="font-family:var(--font-sans);font-size:0.7rem;color:rgba(255,255,255,0.45);line-height:1.4">Stadium edition — toss, bat or bowl, full scoreboard</div>
