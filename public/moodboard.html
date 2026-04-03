@@ -5824,8 +5824,9 @@ body.map-expanded .scroll-counter{display:none!important}
   transition:opacity 0.5s cubic-bezier(0.32,0.72,0,1),visibility 0.5s;
   overflow-y:auto;overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
+  content-visibility:hidden;
 }
-.zp-proj-detail.open{opacity:1;visibility:visible}
+.zp-proj-detail.open{opacity:1;visibility:visible;content-visibility:visible}
 
 /* ── Scroll progress bar ── */
 .zp-scroll-progress{
