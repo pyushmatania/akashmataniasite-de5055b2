@@ -8604,42 +8604,18 @@ function getCachedCanvasRect(){
   // Reduce splash effects on mobile
   window._mobileSplashReduced = true;
   
-  // Periodic DOM cleanup — remove orphaned animation elements
-  setInterval(function(){
-    // Clean up any lingering animation elements
-    document.querySelectorAll('.splash-ring, .splash-drop, .confetti-piece, .fun-debris, .fun-impact-ring, .fun-axe-projectile').forEach(function(el){
-      if(!el.parentNode) return;
-      var rect = el.getBoundingClientRect();
-      // If element is invisible (opacity 0 or off-screen), remove it
-      var style = getComputedStyle(el);
-      if(style.opacity === '0' || rect.bottom < -50 || rect.top > innerHeight + 50){
-        el.remove();
-      }
-    });
-    
-    // Check DOM node count — if over 20K, force cleanup
-    var nodeCount = document.querySelectorAll('*').length;
-    if(nodeCount > 20000){
-      console.warn('[MEM] DOM nodes:', nodeCount, '— forcing cleanup');
-      // Remove all temporary animation elements
-      document.querySelectorAll('.splash-ring, .splash-drop, .fun-debris, .confetti-piece').forEach(function(el){ el.remove(); });
-    }
-  }, 5000);
+   // Periodic DOM cleanup — lightweight orphan removal (no getComputedStyle, no querySelectorAll('*'))
+   var _cleanupSel='.splash-ring, .splash-drop, .confetti-piece, .fun-debris, .fun-impact-ring, .fun-axe-projectile';
+   setInterval(function(){
+     var els=document.querySelectorAll(_cleanupSel);
+     // Only clean if there are orphaned animation elements
+     if(els.length>30){
+       els.forEach(function(el){ el.remove(); });
+     }
+   }, 12000);
   
-  // Use Performance Observer for memory pressure if available
-  if(typeof PerformanceObserver !== 'undefined'){
-    try{
-      var memObs = new PerformanceObserver(function(list){
-        for(var e of list.getEntries()){
-          if(e.duration > 200){
-            console.warn('[MEM] Long task detected:', Math.round(e.duration), 'ms — entering safety mode');
-            document.body.classList.add('safety-mode');
-          }
-        }
-      });
-      memObs.observe({type:'longtask', buffered:false});
-    }catch(e){}
-  }
+   // Long-task observer removed — safety-mode is already set on boot for low-power devices.
+   // Adding it reactively on every long task caused cascading class mutations and MutationObserver storms.
 })();
 
 // Walk animation timer tracking for cancellation
