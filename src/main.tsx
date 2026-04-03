@@ -66,7 +66,7 @@ setInterval(() => {
     const total = Math.round(perf.totalJSHeapSize / 1048576);
     dbg("MEM", used + "/" + total + "MB");
   }
-}, 10000);
+}, 30000);
 
 // Create debug overlay
 const pre = document.createElement("pre");
