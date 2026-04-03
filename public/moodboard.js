@@ -217,7 +217,8 @@ let _lastToggleMapTime=0;
 
 function toggleMap(){
   var now=performance.now();
-  if(now-_lastToggleMapTime<800){
+  console.log('[TOGGLE-MAP] called, mmExp='+mmExp+' transitioning='+mapTransitioning+' timeSinceLast='+(now-_lastToggleMapTime).toFixed(0)+'ms');
+  if(now-_lastToggleMapTime<600){
     console.log('toggleMap: debounced (double-fire prevention)');
     return;
   }
