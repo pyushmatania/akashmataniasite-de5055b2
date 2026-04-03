@@ -6,7 +6,8 @@
 <title>Akash's Moodboard — Playground</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&family=Caveat:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&family=Caveat:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&family=Caveat:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <style>
 /* ── Loading Screen — PM Edition ── */
 .loader-screen{
@@ -3638,8 +3639,8 @@ body.map-expanded .scroll-counter{display:none!important}
 }
 .save-layout-toast.show{opacity:1;transform:translateY(0)}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-<script>if(!window.supabase||typeof window.supabase.createClient!=='function'){console.warn('[Layout] Supabase CDN failed to load — will use REST fallback')}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){if(!window.supabase||typeof window.supabase.createClient!=='function'){console.warn('[Layout] Supabase CDN failed to load — will use REST fallback')}})</script>
 </head>
 <body class="loading-phase">
 <div class="loader-screen" id="loaderScreen">
@@ -3800,7 +3801,7 @@ body.map-expanded .scroll-counter{display:none!important}
     </div>
     <!-- Photo zone -->
     <div class="zic-photo-area zic-introduction-screen" style="position:relative">
-      <img src="/images/akash-photo.webp" alt="Akash" style="width:100%;height:190px;object-fit:cover;object-position:top;display:block;filter:contrast(1.1) brightness(1.05)">
+      <img src="/images/akash-photo.webp" alt="Akash" loading="lazy" decoding="async" style="width:100%;height:190px;object-fit:cover;object-position:top;display:block;filter:contrast(1.1) brightness(1.05)">
       <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,14,0,0.9));z-index:1"></div>
       <div style="position:absolute;bottom:12px;left:16px;z-index:2">
         <div style="font-family:monospace;font-size:0.55rem;color:rgba(76,255,80,0.7);margin-bottom:3px;letter-spacing:0.06em">// SUBJECT_IDENTIFIED · ACCESS_GRANTED</div>
@@ -4843,8 +4844,8 @@ body.map-expanded .scroll-counter{display:none!important}
     <div class="map-player" id="mapPlayer">
       <div class="map-player-ping"></div>
       <svg class="map-arrow-svg" width="16" height="16" viewBox="0 0 24 24"><defs><linearGradient id="arrowGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFE082"/><stop offset="100%" stop-color="#FFB300"/></linearGradient></defs><polygon points="12,1 22,22 12,16 2,22" fill="url(#arrowGrad)" stroke="#E65100" stroke-width="1.2" stroke-linejoin="round"/></svg>
-      <img class="map-arrow map-arrow-head" src="/images/bitmoji-head.webp" alt="You" decoding="async" />
-      <img class="map-arrow map-arrow-full" src="/images/bitmoji-full.webp" alt="You" decoding="async" />
+      <img class="map-arrow map-arrow-head" src="/images/bitmoji-head.webp" alt="You" decoding="async" loading="lazy" />
+      <img class="map-arrow map-arrow-full" src="/images/bitmoji-full.webp" alt="You" decoding="async" loading="lazy" />
     </div>
     <div class="map-hint"></div>
     <div class="minimap-radar"></div>
@@ -4941,8 +4942,9 @@ body.map-expanded .scroll-counter{display:none!important}
   transition:transform 0.52s cubic-bezier(0.32,0.72,0,1);
   overflow-y:auto;overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
+  content-visibility:hidden;
 }
-.zone-panel.open{transform:translateY(0)}
+.zone-panel.open{transform:translateY(0);content-visibility:visible}
 
 /* ═══ STUDIO LIGHTING EFFECTS ═══ */
 
@@ -5824,8 +5826,9 @@ body.map-expanded .scroll-counter{display:none!important}
   transition:opacity 0.5s cubic-bezier(0.32,0.72,0,1),visibility 0.5s;
   overflow-y:auto;overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
+  content-visibility:hidden;
 }
-.zp-proj-detail.open{opacity:1;visibility:visible}
+.zp-proj-detail.open{opacity:1;visibility:visible;content-visibility:visible}
 
 /* ── Scroll progress bar ── */
 .zp-scroll-progress{
@@ -7895,7 +7898,7 @@ function cycleIntroCards(e){
       <div class="zp-sec-label">🏏 Mini Games</div>
       <div id="zp-fun-cricket" style="margin-top:12px;display:flex;flex-direction:column;align-items:center;gap:12px">
         <div onclick="launchFunPanelCricket()" style="cursor:pointer;width:100%;max-width:360px;background:linear-gradient(145deg,rgba(255,82,82,0.08),rgba(255,82,82,0.02));border:1.5px solid rgba(255,82,82,0.18);border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:14px;transition:all 0.2s" onmouseenter="this.style.borderColor='rgba(255,82,82,0.4)';this.style.transform='translateY(-2px)'" onmouseleave="this.style.borderColor='rgba(255,82,82,0.18)';this.style.transform=''">
-          <img src="images/cricket-stadium.png" style="width:56px;height:56px;object-fit:cover;border-radius:12px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4))" alt="Cricket">
+          <img src="images/cricket-stadium.png" loading="lazy" decoding="async" style="width:56px;height:56px;object-fit:cover;border-radius:12px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4))" alt="Cricket">
           <div style="flex:1">
             <div style="font-family:var(--font-fun);font-size:0.82rem;font-weight:800;color:#EF5350;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">Hand Cricket</div>
             <div style="font-family:var(--font-sans);font-size:0.7rem;color:rgba(255,255,255,0.45);line-height:1.4">Stadium edition — toss, bat or bowl, full scoreboard</div>
@@ -13792,10 +13795,16 @@ function ekPick(el,e){
   const LAYOUT_FN_URL=`${SUPABASE_URL}/functions/v1/moodboard-layout`;
   const LOCAL_LAYOUT_KEY='moodboard_layout_backup_v5';
   const LAYOUT_VERSION=5; // bump this to force all clients back to default HP positions
-  const sb=(window.supabase&&typeof window.supabase.createClient==='function')
-    ? window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}})
-    : null;
-  window._supabaseLayout=sb;
+  let sb=null;
+  function getSb(){
+    if(sb)return sb;
+    if(window.supabase&&typeof window.supabase.createClient==='function'){
+      sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
+      window._supabaseLayout=sb;
+    }
+    return sb;
+  }
+  window._supabaseLayout=null;
 
   // PIN verification is now handled server-side via edge function
   async function verifyPinRemote(pin, action) {
@@ -13968,7 +13977,9 @@ function ekPick(el,e){
   }
 
   window.promptPinForSave=async function(){
-    const {data:pinData,error:pinReadError,status:pinReadStatus}=await sb.from('moodboard_pins').select('id').eq('id',PIN_ROW_ID).maybeSingle();
+    const _sb=getSb();
+    if(!_sb){console.warn('[PIN] Supabase client not available');return;}
+    const {data:pinData,error:pinReadError,status:pinReadStatus}=await _sb.from('moodboard_pins').select('id').eq('id',PIN_ROW_ID).maybeSingle();
     if(pinReadError&&pinReadStatus!==406){
       console.error('PIN read error:',pinReadError);
       return;
@@ -14079,10 +14090,10 @@ function ekPick(el,e){
     }
 
     // Path A: Supabase client
-    if(sb){
+    if(getSb()){
       for(let attempt=1;attempt<=2;attempt++){
         try{
-          const {error}=await sb
+          const {error}=await getSb()
             .from('moodboard_layouts')
             .upsert(payload,{onConflict:'id'});
           if(error)throw error;
@@ -14148,9 +14159,9 @@ function ekPick(el,e){
     }
 
     // Path A: Supabase client
-    if(sb){
+    if(getSb()){
       try{
-        const {data:singleLayout,error:singleError,status:singleStatus}=await sb
+        const {data:singleLayout,error:singleError,status:singleStatus}=await getSb()
           .from('moodboard_layouts')
           .select('layout_data')
           .eq('id',LAYOUT_ROW_ID)
@@ -14159,7 +14170,7 @@ function ekPick(el,e){
         if(singleError&&singleStatus!==406)throw singleError;
         if(singleLayout&&singleLayout.layout_data)return singleLayout.layout_data;
 
-        const {data:legacy,error:legacyError}=await sb
+        const {data:legacy,error:legacyError}=await getSb()
           .from('moodboard_layouts')
           .select('layout_data')
           .order('updated_at',{ascending:false})
