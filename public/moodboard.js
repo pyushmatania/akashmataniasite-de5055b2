@@ -596,5 +596,5 @@ var barDone=false,winDone=false;setTimeout(function(){barDone=true;if(winDone)di
     setTimeout(applyMapDarkMode,50);
   };
   setTimeout(applyMapDarkMode,500);
-  new MutationObserver(function(){applyMapDarkMode();}).observe(document.body,{attributes:true,attributeFilter:['class']});
+  var _lastDarkModeState=document.body.classList.contains('dark-mode');new MutationObserver(function(){var isDark=document.body.classList.contains('dark-mode');if(isDark!==_lastDarkModeState){_lastDarkModeState=isDark;applyMapDarkMode();}}).observe(document.body,{attributes:true,attributeFilter:['class']});
 })();
