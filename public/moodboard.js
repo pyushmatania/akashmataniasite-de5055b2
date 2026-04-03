@@ -567,6 +567,7 @@ window.addEventListener('error',function(e){emit('ERR',e.message||'unknown',e.fi
 var barDone=false,winDone=false;setTimeout(function(){barDone=true;if(winDone)dismiss()},DURATION);window.addEventListener('load',function(){winDone=true;if(barDone)dismiss()});setTimeout(dismiss,5500);})();
 ;(function(){
   function applyMapDarkMode(){
+    if(mapTransitioning)return;
     var isDark=document.body.classList.contains('dark-mode');
     var terrains=document.querySelectorAll('.map-terrain-bg');
     terrains.forEach(function(t){
@@ -576,12 +577,12 @@ var barDone=false,winDone=false;setTimeout(function(){barDone=true;if(winDone)di
         t.style.background='linear-gradient(160deg,#5a9e3e 0%,#6bb848 20%,#4e9035 40%,#5da842 60%,#4a8830 80%,#528f38 100%)';
       }
     });
-    var mapCanvas=document.querySelector('.minimap-container .map-canvas');
-    if(mapCanvas){
+    var mc=document.querySelector('.minimap-container .map-canvas');
+    if(mc && !mmExp){
       if(isDark){
-        mapCanvas.style.background='#0d1b2a';
+        mc.style.background='#0d1b2a';
       }else{
-        mapCanvas.style.background='';
+        mc.style.background='';
       }
     }
   }
