@@ -227,3 +227,13 @@ body.safety-mode.dark-mode .zp-back-btn,body.safety-mode.dark-mode .settings-pan
 /* Companion dark mode overrides (class-based, not [style*=]) */
 body.dark-mode .zic-companion>div:not(.zc-emoji-float) div{color:rgba(255,255,255,0.75) !important}
 body.dark-mode .zic-companion>div:not(.zc-emoji-float) span{color:rgba(255,255,255,0.65) !important}
+
+
+/* Expanded map reliability fixes */
+.minimap-container.expanded .minimap-inner{overflow:auto;-webkit-overflow-scrolling:touch}
+.minimap-container.expanded .map-canvas{overflow:visible;z-index:1}
+.minimap-container.expanded .map-header,.minimap-container.expanded .map-bottom-bar,.minimap-container.expanded .map-controls-right,.minimap-container.expanded .map-coord-display{position:absolute;z-index:40;pointer-events:auto}
+.minimap-container.expanded .map-header{top:max(12px,env(safe-area-inset-top,0)+12px);left:12px;right:12px}
+.minimap-container.expanded .map-controls-right{z-index:41}
+.minimap-container.expanded .map-close-btn{position:relative;z-index:45;pointer-events:auto;touch-action:manipulation}
+.minimap-container.expanded .map-sticker-clone{overflow:visible !important}
