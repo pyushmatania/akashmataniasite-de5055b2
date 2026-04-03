@@ -135,6 +135,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font-sans);ba
 .map-sticker-clone *{pointer-events:none!important}
 /* STICKER BASE */
 .sticker{position:absolute;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;-webkit-touch-callout:none;z-index:10;transition:filter 0.15s,transform 0.15s,opacity 0.3s;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.1));opacity:1;contain:layout style}
+.sticker.paused-offscreen{content-visibility:auto;contain-intrinsic-size:auto 200px}
 .sticker *{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 
 .sticker:hover{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.15));z-index:50}
@@ -9590,7 +9591,7 @@ vp.addEventListener('scroll',()=>{
     }
     // 2) Map update — throttle to every 100ms
     if(typeof updMap==='function'&&typeof mapTransitioning!=='undefined'&&!mapTransitioning){
-      if(now-_lastMapUpdate>100){
+      if(now-_lastMapUpdate>(IS_LOW_POWER_DEVICE?200:100)){
         _lastMapUpdate=now;
         updMap();
       }
@@ -11359,33 +11360,19 @@ function makeMapCloneNode(d){
   let clone;
   if(d.ref){
     clone=d.ref.cloneNode(true);
-    clone.removeAttribute('onclick');
-    clone.removeAttribute('ondragstart');
-    clone.removeAttribute('ondrop');
-    clone.removeAttribute('ondragover');
-    clone.removeAttribute('draggable');
-    clone.removeAttribute('data-anim');
-    clone.removeAttribute('data-splash');
-    clone.removeAttribute('data-contra');
+    // Batch strip all attributes in a single tree walk instead of multiple querySelectorAll
+    var _stripAttrs=['onclick','ondblclick','onmousedown','onmouseup','onpointerdown','onpointerup','ontouchstart','ontouchend','ondragstart','ondragover','ondrop','draggable','data-anim','data-splash','data-contra'];
+    var allEls=clone.querySelectorAll('*');
+    for(var ei=0;ei<_stripAttrs.length;ei++) clone.removeAttribute(_stripAttrs[ei]);
     clone.classList.remove('dragging');
+    var toRemove=[];
+    for(var ni=0;ni<allEls.length;ni++){
+      var nel=allEls[ni];
+      for(var ai=0;ai<_stripAttrs.length;ai++) nel.removeAttribute(_stripAttrs[ai]);
+      if(nel.classList&&nel.classList.contains('sticker-drag-handle')) toRemove.push(nel);
+    }
+    for(var ri=0;ri<toRemove.length;ri++) toRemove[ri].remove();
     clone.classList.add('no-anim-children');
-    // Strip nested inline handlers so map taps always trigger navigation
-    clone.querySelectorAll('[onclick],[ondblclick],[onmousedown],[onmouseup],[onpointerdown],[onpointerup],[ontouchstart],[ontouchend],[ondragstart],[ondragover],[ondrop]').forEach(el=>{
-      el.removeAttribute('onclick');
-      el.removeAttribute('ondblclick');
-      el.removeAttribute('onmousedown');
-      el.removeAttribute('onmouseup');
-      el.removeAttribute('onpointerdown');
-      el.removeAttribute('onpointerup');
-      el.removeAttribute('ontouchstart');
-      el.removeAttribute('ontouchend');
-      el.removeAttribute('ondragstart');
-      el.removeAttribute('ondragover');
-      el.removeAttribute('ondrop');
-    });
-    clone.querySelectorAll('[draggable="true"]').forEach(el=>el.removeAttribute('draggable'));
-    // Remove drag handles from map clones
-    clone.querySelectorAll('.sticker-drag-handle').forEach(h=>h.remove());
     // Add glowing border for zone intro cards on map
     if(d.ref.classList.contains('zone-intro-creative')){
       const zone=d.ref.dataset.zone;
@@ -11465,7 +11452,7 @@ function applyClonePlacement(clone,d,x,y,scale){
 function renderVisibleClones(sc,ox,oy,cw,ch){
   if(!sc||!mapCanvas)return;
   const now=performance.now();
-  if(now-_lastCloneRenderTime<50)return;
+  if(now-_lastCloneRenderTime<(IS_LOW_POWER_DEVICE?120:50))return;
   _lastCloneRenderTime=now;
 
   const scrollL=mmInner.scrollLeft||0;
@@ -12159,7 +12146,7 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
   if(mmExp && drawMap._sc){
     const curL=mmInner.scrollLeft||0;
     const curT=mmInner.scrollTop||0;
-    if(Math.abs(curL-_lastCloneRenderLeft)<120&&Math.abs(curT-_lastCloneRenderTop)<120)return;
+    if(Math.abs(curL-_lastCloneRenderLeft)<200&&Math.abs(curT-_lastCloneRenderTop)<200)return;
     clearTimeout(mapCloneTimer);
     mapCloneTimer=setTimeout(()=>{
       if(!drawMap._sc){return;}
@@ -12171,7 +12158,7 @@ document.getElementById('mmInner').addEventListener('scroll',()=>{
         _lastCloneRenderTop=curT;
         updMap();
       }catch(e){}
-    },320);
+    },IS_LOW_POWER_DEVICE?500:320);
   }
 },{passive:true});
 // Map scroll update is handled by the unified scroll handler above (near line 3587)
