@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
 const MOODBOARD_SRC = "/moodboard.html";
+const LOAD_TIMEOUT_MS = 4000;
 
 export default function Index() {
   const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const mountedRef = useRef(true);
   const iframeLoadCountRef = useRef(0);
@@ -15,20 +17,46 @@ export default function Index() {
       "#" + iframeLoadCountRef.current,
       MOODBOARD_SRC,
     );
-    if (mountedRef.current) setLoaded(true);
+    if (mountedRef.current) {
+      setLoaded(true);
+      setError(false);
+    }
+  }, []);
+
+  const handleError = useCallback(() => {
+    if (mountedRef.current) {
+      setError(true);
+      setLoaded(true);
+    }
   }, []);
 
   useEffect(() => {
     mountedRef.current = true;
     if (loaded) return;
     const t = window.setTimeout(() => {
-      if (mountedRef.current) setLoaded(true);
-    }, 6000);
+      if (mountedRef.current && !loaded) setLoaded(true);
+    }, LOAD_TIMEOUT_MS);
     return () => {
       mountedRef.current = false;
       window.clearTimeout(t);
     };
   }, [loaded]);
+
+  if (error) {
+    return (
+      <div style={{ height: "100dvh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "system-ui" }}>
+        <div style={{ textAlign: "center" }}>
+          <p>Failed to load moodboard.</p>
+          <button
+            onClick={() => { setError(false); setLoaded(false); }}
+            style={{ marginTop: 12, padding: "8px 20px", borderRadius: 8, border: "1px solid #ccc", cursor: "pointer" }}
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full" style={{ height: "100dvh", contain: "strict" }}>
@@ -47,6 +75,7 @@ export default function Index() {
           contain: "strict",
         }}
         onLoad={handleLoad}
+        onError={handleError}
         allow="autoplay"
       />
     </div>

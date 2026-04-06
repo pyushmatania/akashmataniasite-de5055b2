@@ -5,9 +5,9 @@ import NotFound from "./pages/NotFound";
 
 class ErrorBoundary extends Component<
   { children: ReactNode },
-  { hasError: boolean }
+  { hasError: boolean; errorCount: number }
 > {
-  state = { hasError: false };
+  state = { hasError: false, errorCount: 0 };
 
   static getDerivedStateFromError() {
     return { hasError: true };
@@ -15,7 +15,16 @@ class ErrorBoundary extends Component<
 
   componentDidCatch(error: Error, info: ErrorInfo) {
     console.error("App crashed:", error, info);
+    this.setState((prev) => ({ errorCount: prev.errorCount + 1 }));
   }
+
+  handleRetry = () => {
+    if (this.state.errorCount >= 3) {
+      window.location.reload();
+    } else {
+      this.setState({ hasError: false });
+    }
+  };
 
   render() {
     if (this.state.hasError) {
@@ -24,7 +33,7 @@ class ErrorBoundary extends Component<
           <h2>Something went wrong</h2>
           <p>Please refresh the page to continue.</p>
           <button
-            onClick={() => window.location.reload()}
+            onClick={this.handleRetry}
             style={{
               marginTop: 16,
               padding: "10px 24px",
@@ -34,7 +43,7 @@ class ErrorBoundary extends Component<
               fontSize: 14,
             }}
           >
-            Refresh
+            {this.state.errorCount >= 3 ? "Refresh Page" : "Try Again"}
           </button>
         </div>
       );
@@ -46,7 +55,7 @@ class ErrorBoundary extends Component<
 
 export default function App() {
   const pathname = window.location.pathname;
-  const isKnownRoute = pathname === "/" || pathname === "/index";
+  const isKnownRoute = pathname === "/" || pathname === "/index" || pathname === "/index.html";
 
   return (
     <ErrorBoundary>

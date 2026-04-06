@@ -2,14 +2,15 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 
-// ── Debug logger to diagnose mobile reload loop ──
+// ── Debug logger (lightweight, capped) ──
+const MAX_LOGS = 40;
 const logs: string[] = [];
-function dbg(...args: any[]) {
+function dbg(...args: unknown[]) {
   const s = `[${new Date().toISOString().slice(11, 23)}] ${args.map(x => typeof x === "string" ? x : JSON.stringify(x)).join(" ")}`;
   logs.push(s);
-  if (logs.length > 60) logs.shift();
+  if (logs.length > MAX_LOGS) logs.splice(0, logs.length - MAX_LOGS);
   const el = document.getElementById("__dbg__");
-  if (el) el.textContent = logs.join("\n");
+  if (el && el.style.display !== "none") el.textContent = logs.join("\n");
 }
 
 (window as any).__dbgLog = dbg;
@@ -22,11 +23,15 @@ window.addEventListener("unhandledrejection", (e) => {
   dbg("PROMISE", String(e.reason).slice(0, 120));
 });
 
-// Track resizes (address bar, keyboard, orientation)
+// Track resizes — debounced to avoid log spam
 let resizeCount = 0;
+let resizeTimer: ReturnType<typeof setTimeout> | null = null;
 window.addEventListener("resize", () => {
   resizeCount++;
-  dbg("RESIZE #" + resizeCount, innerWidth + "x" + innerHeight);
+  if (resizeTimer) clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    dbg("RESIZE #" + resizeCount, innerWidth + "x" + innerHeight);
+  }, 300);
 });
 
 // Track page visibility
@@ -58,17 +63,28 @@ if (typeof PerformanceObserver !== "undefined") {
   } catch (_) {}
 }
 
-// Memory monitor (runs every 10s)
-setInterval(() => {
-  const perf = (performance as any).memory;
-  if (perf) {
-    const used = Math.round(perf.usedJSHeapSize / 1048576);
-    const total = Math.round(perf.totalJSHeapSize / 1048576);
-    dbg("MEM", used + "/" + total + "MB");
-  }
-}, 30000);
+// Memory monitor — only runs when debug overlay is visible, with cleanup on page hide
+let memMonitorId: ReturnType<typeof setInterval> | null = null;
+function startMemMonitor() {
+  if (memMonitorId) return;
+  memMonitorId = setInterval(() => {
+    const perf = (performance as any).memory;
+    if (perf) {
+      const used = Math.round(perf.usedJSHeapSize / 1048576);
+      const total = Math.round(perf.totalJSHeapSize / 1048576);
+      dbg("MEM", used + "/" + total + "MB");
+    }
+  }, 30000);
+}
+function stopMemMonitor() {
+  if (memMonitorId) { clearInterval(memMonitorId); memMonitorId = null; }
+}
+// Stop monitoring when tab is hidden to save resources
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) stopMemMonitor();
+});
 
-// Create debug overlay
+// Create debug overlay (hidden by default, no perf cost when hidden)
 const pre = document.createElement("pre");
 pre.id = "__dbg__";
 pre.style.cssText =
@@ -79,8 +95,14 @@ pre.style.cssText =
 document.body.appendChild(pre);
 
 const toggleDebug = () => {
-  pre.style.display = pre.style.display === "none" ? "block" : "none";
-  pre.textContent = logs.join("\n");
+  const isHidden = pre.style.display === "none";
+  pre.style.display = isHidden ? "block" : "none";
+  if (isHidden) {
+    pre.textContent = logs.join("\n");
+    startMemMonitor();
+  } else {
+    stopMemMonitor();
+  }
 };
 
 (window as any).__dbgToggle = toggleDebug;
@@ -127,6 +149,11 @@ dbg("BOOT", navigator.userAgent.slice(0, 80));
 dbg("SCREEN", innerWidth + "x" + innerHeight, "dpr=" + devicePixelRatio);
 dbg("DEBUG_HIT", "triple-tap top-left corner");
 
-// Mount React
-createRoot(document.getElementById("root")!).render(<App />);
-dbg("REACT_MOUNTED");
+// Mount React with safety check
+const root = document.getElementById("root");
+if (root) {
+  createRoot(root).render(<App />);
+  dbg("REACT_MOUNTED");
+} else {
+  console.error("Root element not found — cannot mount React app");
+}
