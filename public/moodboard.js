@@ -221,9 +221,7 @@ let _lastToggleMapTime=0;
 function toggleMap(forceImmediate){
   var now=performance.now();
   var bypassDebounce=forceImmediate===true;
-  console.log('[TOGGLE-MAP] called, mmExp='+mmExp+' transitioning='+mapTransitioning+' timeSinceLast='+(now-_lastToggleMapTime).toFixed(0)+'ms force='+bypassDebounce);
   if(now-_lastToggleMapTime<600&&!(bypassDebounce&&mmExp)){
-    console.log('toggleMap: debounced (double-fire prevention)');
     return;
   }
   _lastToggleMapTime=now;
@@ -358,18 +356,16 @@ function toggleMap(forceImmediate){
 window.toggleMap=toggleMap;
 var _mmTapGuard=false;
 function _handleMiniMapClosedTap(e){
-  console.log('[MAP-TAP] event='+((e&&e.type)||'direct')+' mmExp='+mmExp+' mapTransitioning='+mapTransitioning+' guard='+_mmTapGuard);
   if(e){
     if(e.cancelable)e.preventDefault();
     e.stopPropagation();
   }
-  if(!mc||!mm){console.warn('[MAP-TAP] mc or mm null');return;}
-  if(mmExp){console.log('[MAP-TAP] already expanded');return;}
-  if(mapTransitioning){console.log('[MAP-TAP] transitioning');return;}
-  if(_mmTapGuard){console.log('[MAP-TAP] guard active');return;}
+  if(!mc||!mm)return;
+  if(mmExp)return;
+  if(mapTransitioning)return;
+  if(_mmTapGuard)return;
   _mmTapGuard=true;
   setTimeout(function(){_mmTapGuard=false;},800);
-  console.log('[MAP-TAP] calling toggleMap');
   toggleMap();
 }
 window._handleMiniMapClosedTap=_handleMiniMapClosedTap;

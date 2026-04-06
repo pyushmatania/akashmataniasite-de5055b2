@@ -122,7 +122,7 @@ Deno.serve(async (req) => {
 
       if (saveError) throw saveError;
 
-      return jsonResponse({ ok: true, count: layoutData.length });
+      return jsonResponse({ ok: true, count: (layoutData as unknown[]).length });
     }
 
     return jsonResponse({ error: "Method not allowed" }, 405);
