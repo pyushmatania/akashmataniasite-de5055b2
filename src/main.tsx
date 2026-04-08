@@ -84,61 +84,6 @@ document.addEventListener("visibilitychange", () => {
   if (document.hidden) stopMemMonitor();
 });
 
-// Create debug overlay (hidden by default, no perf cost when hidden)
-const pre = document.createElement("pre");
-pre.id = "__dbg__";
-pre.style.cssText =
-  "position:fixed;left:0;right:0;bottom:0;max-height:35vh;overflow:auto;" +
-  "z-index:2147483647;margin:0;background:rgba(0,0,0,0.85);color:#0f0;" +
-  "padding:8px;font:10px/1.3 monospace;white-space:pre-wrap;pointer-events:auto;" +
-  "display:none;";
-document.body.appendChild(pre);
-
-const toggleDebug = () => {
-  const isHidden = pre.style.display === "none";
-  pre.style.display = isHidden ? "block" : "none";
-  if (isHidden) {
-    pre.textContent = logs.join("\n");
-    startMemMonitor();
-  } else {
-    stopMemMonitor();
-  }
-};
-
-(window as any).__dbgToggle = toggleDebug;
-
-const hit = document.createElement("button");
-hit.id = "__dbg_hit__";
-hit.type = "button";
-hit.setAttribute("aria-label", "Toggle debug console");
-hit.style.cssText =
-  "position:fixed;left:0;top:0;width:88px;height:88px;z-index:2147483647;" +
-  "opacity:0;border:0;background:transparent;padding:0;margin:0;pointer-events:auto;" +
-  "touch-action:manipulation;-webkit-tap-highlight-color:transparent;";
-document.body.appendChild(hit);
-
-let tapTimes: number[] = [];
-let tapLock = false;
-
-const registerDebugTap = (e?: Event) => {
-  e?.preventDefault();
-  e?.stopPropagation();
-  const now = performance.now();
-  tapTimes = tapTimes.filter((t) => now - t < 600);
-  tapTimes.push(now);
-  if (tapTimes.length >= 3 && !tapLock) {
-    tapLock = true;
-    tapTimes = [];
-    toggleDebug();
-    window.setTimeout(() => {
-      tapLock = false;
-    }, 800);
-  }
-};
-
-hit.addEventListener("touchend", registerDebugTap, { passive: false, capture: true });
-hit.addEventListener("click", registerDebugTap, true);
-
 window.addEventListener("message", (event) => {
   const data = event.data;
   if (!data || data.type !== "moodboard-debug" || !Array.isArray(data.args)) return;
@@ -147,7 +92,6 @@ window.addEventListener("message", (event) => {
 
 dbg("BOOT", navigator.userAgent.slice(0, 80));
 dbg("SCREEN", innerWidth + "x" + innerHeight, "dpr=" + devicePixelRatio);
-dbg("DEBUG_HIT", "triple-tap top-left corner");
 
 // Mount React with safety check
 const root = document.getElementById("root");
