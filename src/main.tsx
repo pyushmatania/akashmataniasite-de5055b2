@@ -79,9 +79,10 @@ function startMemMonitor() {
 function stopMemMonitor() {
   if (memMonitorId) { clearInterval(memMonitorId); memMonitorId = null; }
 }
-// Stop monitoring when tab is hidden to save resources
+// Start/stop monitoring based on tab visibility to save resources
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) stopMemMonitor();
+  else startMemMonitor();
 });
 
 window.addEventListener("message", (event) => {
