@@ -1,3 +1,4 @@
+if(typeof fetchWithTimeout==="undefined")var fetchWithTimeout=function(u,o,t){t=t||8000;var c=new AbortController();var tid=setTimeout(function(){c.abort();},t);o=Object.assign({},o,{signal:c.signal});return fetch(u,o).finally(function(){clearTimeout(tid);});};
 function toggleAboutPanel(e){e.preventDefault();e.stopPropagation();var p=document.getElementById('aboutPanel');var b=document.getElementById('aboutBackdrop');if(p)p.classList.add('open');if(b)b.classList.add('open');document.body.style.overflow='hidden';}
 function closeAboutPanel(){var p=document.getElementById('aboutPanel');var b=document.getElementById('aboutBackdrop');if(p)p.classList.remove('open');if(b)b.classList.remove('open');document.body.style.overflow='';}
 function toggleContactPanel(e){e.preventDefault();e.stopPropagation();var p=document.getElementById('contactPanel');var b=document.getElementById('contactBackdrop');if(p)p.classList.add('open');if(b)b.classList.add('open');document.body.style.overflow='hidden';}
@@ -706,7 +707,7 @@ continue;}
 if(code>=0xDC00&&code<=0xDFFF)continue;out+=str[i];}
 return out;}
 function toSafeSnippet(input,maxLen){const cleaned=stripUnpairedSurrogates(input);const chars=Array.from(cleaned);return chars.slice(0,maxLen||60).join('').trim();}
-function fetchWithTimeout(url,opts,timeoutMs){timeoutMs=timeoutMs||8000;var controller=new AbortController();var tid=setTimeout(function(){controller.abort();},timeoutMs);opts=Object.assign({},opts,{signal:controller.signal});return fetch(url,opts).finally(function(){clearTimeout(tid);});}
+window.fetchWithTimeout=function(url,opts,timeoutMs){timeoutMs=timeoutMs||8000;var controller=new AbortController();var tid=setTimeout(function(){controller.abort();},timeoutMs);opts=Object.assign({},opts,{signal:controller.signal});return fetch(url,opts).finally(function(){clearTimeout(tid);});};
 function sanitizeJsonValue(value){if(typeof value==='string')return stripUnpairedSurrogates(value);if(Array.isArray(value))return value.map(sanitizeJsonValue);if(value&&typeof value==='object'){const out={};for(const[k,v]of Object.entries(value))out[k]=sanitizeJsonValue(v);return out;}
 return value;}
 function ensureStableStickerIds(stickers){const list=Array.from(stickers||document.querySelectorAll('#canvas > .sticker'));list.forEach((s,index)=>{if(s.dataset.sid)return;if(s.id){s.dataset.sid='id:'+s.id;return;}
