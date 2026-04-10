@@ -237,3 +237,23 @@ body.dark-mode .zic-companion>div:not(.zc-emoji-float) span{color:rgba(255,255,2
 .minimap-container.expanded .map-controls-right{z-index:41}
 .minimap-container.expanded .map-close-btn{position:relative;z-index:45;pointer-events:auto;touch-action:manipulation}
 .minimap-container.expanded .map-sticker-clone{overflow:visible !important}
+
+/* ─── Project Cutout Stickers ─── */
+.sticker-proj-cutout{width:220px;text-align:center;background:none !important;border:none !important;box-shadow:none !important;padding:0 !important;position:relative;transition:transform .3s cubic-bezier(.4,0,.2,1),filter .3s !important}
+.sticker-proj-cutout img{width:200px;height:200px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(0,0,0,0.25));transition:transform .35s cubic-bezier(.4,0,.2,1),filter .35s;pointer-events:none}
+.sticker-proj-cutout:hover img{transform:scale(1.12) rotate(3deg);filter:drop-shadow(0 12px 32px rgba(0,0,0,0.35)) brightness(1.1)}
+.sticker-proj-cutout:active img{transform:scale(0.95)}
+.sticker-proj-cutout .proj-cutout-badge{position:absolute;top:-8px;right:-4px;background:var(--badge-color,#c9a96e);color:#fff;font-family:var(--font-fun);font-size:.55rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.2);z-index:2;animation:badgePulse 2.5s ease-in-out infinite}
+.sticker-proj-cutout .proj-cutout-label{font-family:var(--font-fun);font-size:.72rem;font-weight:700;color:var(--text);margin-top:6px;letter-spacing:.02em;text-shadow:0 1px 3px rgba(255,255,255,0.8);transition:color .3s}
+.sticker-proj-cutout:hover .proj-cutout-label{color:var(--accent)}
+.sticker-proj-cutout::after{content:'';position:absolute;inset:-6px;border-radius:20px;background:radial-gradient(circle,var(--badge-color,#c9a96e) 0%,transparent 70%);opacity:0;transition:opacity .3s;z-index:-1;pointer-events:none}
+.sticker-proj-cutout:hover::after{opacity:.15}
+@keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+/* shimmer sweep on cutout images */
+.sticker-proj-cutout::before{content:'';position:absolute;top:0;left:-60%;width:50%;height:100%;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,0.4) 50%,transparent 70%);transform:skewX(-15deg);z-index:1;pointer-events:none;opacity:0;transition:opacity .2s}
+.sticker-proj-cutout:hover::before{opacity:1;animation:shimmerSweep 1s ease-out forwards}
+@keyframes shimmerSweep{0%{left:-60%}100%{left:120%}}
+/* dark mode adjustments */
+body.dark-mode .sticker-proj-cutout .proj-cutout-label{color:rgba(255,255,255,0.85);text-shadow:0 1px 6px rgba(0,0,0,0.5)}
+body.dark-mode .sticker-proj-cutout img{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.5))}
+body.dark-mode .sticker-proj-cutout:hover img{filter:drop-shadow(0 12px 36px rgba(0,0,0,0.6)) brightness(1.15)}
