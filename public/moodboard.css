@@ -271,5 +271,92 @@ body.dark-mode .sticker-proj-cutout:hover img{filter:drop-shadow(0 12px 36px rgb
 /* Corner fold effect */
 .sticker-doc-download::after{content:'';position:absolute;top:0;right:0;width:24px;height:24px;background:linear-gradient(225deg,rgba(201,169,110,0.3) 0%,rgba(201,169,110,0.1) 50%,transparent 50%);border-radius:0 20px 0 0}
 
-/* ── Connect Strip (redesigned Get in Touch) ── */
-.gi-connect-strip{margin-top:24px;padding:20px 0 0;border-top:1px solid rgba(255,255,255,0.08)}.gi-connect-title{font-family:var(--font-hand);font-size:1.1rem;color:rgba(255,255,255,0.4);margin-bottom:14px;letter-spacing:.02em}.gi-connect-links{display:flex;gap:10px;flex-wrap:wrap}.gi-connect-item{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);text-decoration:none;color:rgba(255,255,255,0.7);transition:all .25s ease;min-width:72px;position:relative;overflow:hidden}.gi-connect-item::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.06),transparent);opacity:0;transition:opacity .25s}.gi-connect-item:hover{transform:translateY(-3px);border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);box-shadow:0 8px 24px rgba(0,0,0,0.2)}.gi-connect-item:hover::before{opacity:1}.gi-connect-item:active{transform:scale(.95)}.gi-connect-icon{font-size:1.3rem;line-height:1}.gi-connect-label{font-family:var(--font-fun);font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.8}
+/* ── Signal Board (funky Get in Touch) ── */
+@keyframes cx-scanline{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+@keyframes cx-glitch{0%,100%{transform:translate(0)}20%{transform:translate(-2px,1px)}40%{transform:translate(2px,-1px)}60%{transform:translate(-1px,2px)}80%{transform:translate(1px,-2px)}}
+@keyframes cx-blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes cx-ping{0%{box-shadow:0 0 0 0 rgba(0,255,136,0.7)}70%{box-shadow:0 0 0 8px rgba(0,255,136,0)}100%{box-shadow:0 0 0 0 rgba(0,255,136,0)}}
+@keyframes cx-float{0%,100%{transform:translateY(0) rotate(var(--cx-rot,0deg))}50%{transform:translateY(-4px) rotate(var(--cx-rot,0deg))}}
+
+.cx-signal-board{margin-top:28px;padding:24px 0 0;border-top:2px dashed rgba(255,255,255,0.06);position:relative}
+.cx-signal-title{font-family:'Courier New',monospace;font-size:.75rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(0,255,136,0.6);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.cx-signal-ping{width:8px;height:8px;border-radius:50%;background:#00ff88;display:inline-block;animation:cx-ping 1.5s infinite}
+.cx-signal-blink{animation:cx-blink .8s step-end infinite;color:#00ff88}
+
+.cx-card-fan{display:flex;gap:8px;flex-wrap:wrap;perspective:600px}
+
+.cx-card{
+  position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:72px;height:96px;border-radius:12px;text-decoration:none;
+  overflow:hidden;cursor:pointer;
+  transition:all .35s cubic-bezier(.34,1.56,.64,1);
+  animation:cx-float 3s ease-in-out infinite;
+  border:2px solid transparent;
+}
+.cx-card::before{
+  content:'';position:absolute;inset:0;opacity:.12;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,0.03) 2px,rgba(255,255,255,0.03) 4px);
+  pointer-events:none;z-index:1;
+}
+.cx-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(255,255,255,0.08));
+  animation:cx-scanline 2.5s linear infinite;
+  pointer-events:none;z-index:2;opacity:0;transition:opacity .3s;
+}
+.cx-card:hover::after{opacity:1}
+.cx-card:hover{
+  transform:translateY(-10px) scale(1.12) !important;
+  z-index:10;
+  animation:cx-glitch .3s ease 1;
+  box-shadow:0 0 20px var(--cx-glow),0 10px 40px rgba(0,0,0,0.4);
+}
+.cx-card:active{transform:scale(.92) !important;transition-duration:.1s}
+
+/* Individual card colors */
+.cx-card-email{
+  --cx-rot:-3deg;--cx-glow:rgba(255,107,107,0.5);
+  background:linear-gradient(135deg,#1a1a2e,#16213e);
+  border-color:rgba(255,107,107,0.3);
+  animation-delay:0s;
+}
+.cx-card-wa{
+  --cx-rot:2deg;--cx-glow:rgba(37,211,102,0.5);
+  background:linear-gradient(135deg,#0a2e1a,#1a3a2a);
+  border-color:rgba(37,211,102,0.3);
+  animation-delay:.4s;
+}
+.cx-card-li{
+  --cx-rot:-1.5deg;--cx-glow:rgba(0,119,181,0.5);
+  background:linear-gradient(135deg,#0a1628,#162d50);
+  border-color:rgba(0,119,181,0.3);
+  animation-delay:.8s;
+}
+.cx-card-cv{
+  --cx-rot:3.5deg;--cx-glow:rgba(255,193,7,0.5);
+  background:linear-gradient(135deg,#2a1f0a,#3a2a10);
+  border-color:rgba(255,193,7,0.3);
+  animation-delay:1.2s;
+}
+
+.cx-card-glyph{
+  font-size:1.6rem;line-height:1;margin-bottom:4px;position:relative;z-index:3;
+  filter:drop-shadow(0 0 6px var(--cx-glow));
+}
+.cx-card-li .cx-card-glyph{font-family:'Arial Black',sans-serif;font-size:1.3rem;font-weight:900;color:#0077b5}
+.cx-card-email .cx-card-glyph{filter:drop-shadow(0 0 6px rgba(255,107,107,0.6))}
+.cx-card-wa .cx-card-glyph{filter:drop-shadow(0 0 6px rgba(37,211,102,0.6))}
+.cx-card-cv .cx-card-glyph{filter:drop-shadow(0 0 6px rgba(255,193,7,0.6))}
+
+.cx-card-name{
+  font-family:var(--font-fun,'Space Grotesk',sans-serif);font-size:.55rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.85);
+  position:relative;z-index:3;
+}
+.cx-card-handle{
+  font-family:'Courier New',monospace;font-size:.5rem;
+  color:rgba(255,255,255,0.3);letter-spacing:.04em;
+  position:relative;z-index:3;margin-top:2px;
+}
+.cx-card:hover .cx-card-handle{color:rgba(255,255,255,0.6)}
+.cx-card:hover .cx-card-name{text-shadow:0 0 8px var(--cx-glow)}
