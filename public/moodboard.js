@@ -140,7 +140,7 @@ as.classList.remove('dragging');if(didMove){const left=parseFloat(as.style.left)
 if(isRotating){isRotating=false;as=null;return;}
 if(!didMove&&(Date.now()-tapTime)<400){if(as.dataset.splash)doSplash(as,e);if(as.dataset.anim)triggerAnim(as,e);if(as.onclick)as.onclick(e);}
 as=null;document.body.style.userSelect='';document.body.style.webkitUserSelect='';}
-function doSplash(el,e){if(window._mobileSplashReduced&&document.body.classList.contains('safety-mode'))return;const now=performance.now();if(now-_lastSplashTime<SPLASH_COOLDOWN)return;_lastSplashTime=now;let cx,cy;if(e&&e.changedTouches&&e.changedTouches.length){cx=e.changedTouches[0].clientX;cy=e.changedTouches[0].clientY;}
+function doSplash(el,e){if(IS_LOW_POWER_DEVICE)return;const now=performance.now();if(now-_lastSplashTime<SPLASH_COOLDOWN)return;_lastSplashTime=now;let cx,cy;if(e&&e.changedTouches&&e.changedTouches.length){cx=e.changedTouches[0].clientX;cy=e.changedTouches[0].clientY;}
 else if(e){cx=e.clientX;cy=e.clientY;}
 else{const r=el.getBoundingClientRect();cx=r.left+r.width/2;cy=r.top+r.height/2;}
 const elRect=el.getBoundingClientRect();const photoCX=elRect.left+elRect.width/2,photoCY=elRect.top+elRect.height/2;const bodyEls=[];const ringCount=IS_LOW_POWER_DEVICE?1:3;for(let i=0;i<ringCount;i++){const r=document.createElement('div');r.className='splash-ring';r.style.left=photoCX+'px';r.style.top=photoCY+'px';r.style.animationDelay=(i*.15)+'s';r.style.borderWidth=(3-i*.5)+'px';bodyEls.push(r);safeTimeout(()=>r.remove(),1500);}
