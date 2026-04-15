@@ -10,7 +10,8 @@
 <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&family=Caveat:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <link rel="preload" href="/moodboard.js" as="script">
 <link rel="preload" href="/images/akash-photo.webp" as="image" type="image/webp">
-<link rel="preload" href="/moodboard.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<style>body{opacity:0}body.css-ready,body.loading-phase{opacity:1}</style>
+<link rel="preload" href="/moodboard.css" as="style" onload="this.onload=null;this.rel='stylesheet';document.body.classList.add('css-ready')">
 <noscript><link rel="stylesheet" href="/moodboard.css"></noscript>
 
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
