@@ -270,4 +270,4 @@ body.dark-mode .sticker-proj-cutout:hover img{filter:drop-shadow(0 12px 36px rgb
 .sticker-doc-download:hover .doc-action{background:rgba(201,169,110,0.25);color:#8b6914}
 /* Corner fold effect */
 .sticker-doc-download::after{content:'';position:absolute;top:0;right:0;width:24px;height:24px;background:linear-gradient(225deg,rgba(201,169,110,0.3) 0%,rgba(201,169,110,0.1) 50%,transparent 50%);border-radius:0 20px 0 0}
-body.dark-mode .zc-hcricket-wrap{background:transparent !important;border:none !important;box-shadow:none !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
+body.dark-mode .zc-hcricket-wrap{background:transparent !important;border:none !important;box-shadow:none !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important}.minimap-container.expanded .minimap-inner{cursor:grab}.minimap-container.expanded .minimap-inner:active{cursor:grabbing}
